@@ -59,7 +59,8 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	private void initView() {
 		setTitle(R.string.money_withdrawals_confirm);
 		btn_confirm.setOnClickListener(this);
-		tv_amount_max.setText(getString(R.string.money_max_amount_hint, LangCurrTools.getCurrencyValue(mContext) + amountTotal));
+		//tv_amount_max.setText(getString(R.string.money_max_amount_hint, LangCurrTools.getCurrencyValue(mContext) + amountTotal));
+		et_amount.setHint(getString(R.string.money_max_amount_hint, LangCurrTools.getCurrencyValue(mContext) + amountTotal));
 		et_amount.addTextChangedListener(new TextWatcher() {
 			
 			@Override
