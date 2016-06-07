@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:splitMotionEvents="false" >
+
+    <LinearLayout
+        android:id="@+id/layoutTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal" >
+        
+        <Button
+            android:id="@+id/buttonCloth1"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:text="1" />
+        <Button
+            android:id="@+id/buttonsProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product" />
+          <Button
+            android:id="@+id/buttonsModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Model" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <Button
+            android:id="@+id/buttonUndo"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="U"
+          />
+
+        <Button
+            android:id="@+id/buttonRedo"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/buttonUndo"
+            android:text="R"
+           />
+
+        <Button
+            android:id="@+id/buttonMoveDown"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/buttonRedo"
+            android:text="MD"
+             />
+
+        <Button
+            android:id="@+id/buttonMoveUp"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/buttonMoveDown"
+            android:text="MU"
+           />
+        
+<!--         <Button -->
+<!--             android:id="@+id/buttonAdd" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_alignParentTop="true" -->
+<!--             android:layout_toRightOf="@+id/buttonMoveUp" -->
+<!--             android:text="A" /> -->
+        
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/buttonMoveUp"
+            android:text="D"
+           />
+        
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/buttonDelete"
+            android:text="S"
+           />
+        
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutCollageArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutTop"
+        android:layout_above="@+id/layoutBottom"
+         >
+    </RelativeLayout>
+    
+	<FrameLayout
+	    android:id="@+id/fragmentContainer"
+	    android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:layout_marginTop="150dp"
+        android:layout_alignParentBottom="true"/>
+	
+	<fragment android:name="com.spshop.stylistpark.fragment.ProductMainFragment"
+	    android:id="@+id/productMain_Fragment"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_alignParentBottom="true" />
+    
+
+</RelativeLayout>

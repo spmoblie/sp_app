@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_app" >
+
+    <RelativeLayout
+        android:id="@+id/setting_rl_language"
+        style="@style/setting_lay_item" >
+
+        <TextView
+            android:id="@+id/setting_tv_language_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/setting_language" />
+
+        <TextView
+            android:id="@+id/setting_tv_language_content"
+            style="@style/setting_lay_text_content"
+            android:textColor="@color/text_color_red_1" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_rl_currency"
+        style="@style/setting_lay_item"
+        android:layout_below="@id/setting_rl_language" >
+
+        <TextView
+            android:id="@+id/setting_tv_currency_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/setting_currency" />
+
+        <TextView
+            android:id="@+id/setting_tv_currency_content"
+            style="@style/setting_lay_text_content"
+            android:textColor="@color/text_color_red_1" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_rl_feedback"
+        style="@style/setting_lay_item"
+        android:layout_below="@id/setting_rl_currency" >
+
+        <TextView
+            android:id="@+id/setting_tv_feedback_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/setting_feedback" />
+
+        <TextView
+            android:id="@+id/setting_tv_feedback_content"
+            style="@style/setting_lay_text_content" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/setting_rl_about_us"
+        style="@style/setting_lay_item"
+        android:layout_below="@id/setting_rl_feedback" >
+
+        <TextView
+            android:id="@+id/setting_tv_about_us_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/setting_about_us" />
+
+        <TextView
+            android:id="@+id/setting_tv_about_us_content"
+            style="@style/setting_lay_text_content" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_rl_version"
+        style="@style/setting_lay_item"
+        android:layout_below="@id/setting_rl_about_us" >
+
+        <TextView
+            android:id="@+id/setting_tv_version_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/setting_version" />
+
+        <TextView
+            android:id="@+id/setting_tv_version_content"
+            style="@style/setting_lay_text_content" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_rl_logout"
+        style="@style/setting_lay_item"
+        android:layout_alignParentBottom="true" >
+
+        <TextView
+            android:id="@+id/setting_tv_logout"
+            style="@style/setting_lay_text_title"
+            android:layout_centerInParent="true"
+            android:text="@string/setting_logout" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+</RelativeLayout>

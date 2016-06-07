@@ -1,0 +1,16 @@
+StylistPark/.gradle/
+StylistPark/.idea/
+*.iml
+*.gradle
+*.properties
+StylistPark/gradlew
+StylistPark/gradlew.bat
+StylistPark/import-summary.txt
+StylistPark/gradle/
+StylistPark/build/
+StylistPark/facebook3220/build/
+StylistPark/gPUImageLib/build/
+StylistPark/main/build/
+StylistPark/rangeBar/build/
+StylistPark/weiboSDK/build/
+StylistPark/stylistPark/build/

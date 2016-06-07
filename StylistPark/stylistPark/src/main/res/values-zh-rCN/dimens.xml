@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+		<dimen name="create_collage_title_font">20dp</dimen>
+		<dimen name="en7zh12">12dp</dimen>
+		<dimen name="clean_btn_width">52dp</dimen>
+</resources>

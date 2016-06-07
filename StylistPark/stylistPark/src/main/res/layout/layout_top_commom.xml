@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top_commom_ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/title_height" >
+
+    <ImageView
+        android:id="@+id/top_commom_iv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:paddingLeft="15dp"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/btn_pressed_back" />
+
+    <TextView
+        android:id="@+id/top_commom_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="100dp"
+        android:gravity="center"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text=""
+        android:textColor="@color/text_color_title"
+        android:textSize="@dimen/text_size_20" />
+    
+    <Button
+        android:id="@+id/top_commom_btn_right_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/btn_top_text_btn_short"
+        android:textColor="@color/text_color_content"
+        android:textSize="@dimen/text_size_18" />
+    
+    <ImageView
+        style="@style/set_line_horizontal_bg"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="@string/desc" />
+
+</RelativeLayout>

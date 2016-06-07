@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_app" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <include layout="@layout/layout_topbar_radio_group" />
+
+        <com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView
+            android:id="@+id/list_radio_common_refresh_lv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/ui_bg_color_gray" />
+    </LinearLayout>
+    
+    <include layout="@layout/layout_loading_anim_large" />
+    
+    <include layout="@layout/layout_loading_no_data" />
+
+    <ImageView
+        android:id="@+id/list_radio_common_iv_to_top"
+        style="@style/common_to_top"
+        android:contentDescription="@string/desc" />
+
+</FrameLayout>

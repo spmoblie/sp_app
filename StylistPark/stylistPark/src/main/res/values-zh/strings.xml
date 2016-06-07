@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- testing version -->
+    <string name="app_name">名尚公園</string>
+
+    <!-- General -->
+    <string name="confirm">確定</string>
+    <string name="cancel">取消</string>
+    <string name="proceed">繼續</string>
+    <string name="being_not">暫不</string>
+    <string name="retry">重試</string>
+    <string name="back">返回</string>
+    <string name="save">儲存</string>
+    <string name="dont_save">不儲存</string>
+    <string name="save_ok">儲存成功</string>
+    <string name="my_new">新建</string>
+    <string name="add">添加</string>
+    <string name="all">全部</string>
+    <string name="select_all">全選</string>
+    <string name="total">合計：</string>
+    <string name="item_price">價格：</string>
+    <string name="item_number">數量：</string>
+    <string name="item_select_no">請選擇：</string>
+    <string name="item_select_ok">已選擇：</string>
+    <string name="color">顔色</string>
+    <string name="size">尺碼</string>
+    <string name="clean">清除</string>
+    <string name="done">完成</string>
+    <string name="desc">""</string>
+    <string name="dot">・</string>
+    <string name="sign_semicolon">：</string>
+    <string name="time_divided">:</string>
+    <string name="number_0">0</string>
+    <string name="num_total">共%1$d件</string>
+    <string name="prompt">操作提示</string>
+    <string name="delete">刪除</string>
+    <string name="delete_pain">忍痛刪了</string>
+    <string name="delete_think">我再想想</string>
+    <string name="delete_confirm">&#160;確定要刪除麽？</string>
+    <string name="leave_confirm">去意已決</string>
+    <string name="abandon_confirm">確定放棄？</string>
+    <string name="send_confirm">確認發送</string>
+    <string name="next">下壹步</string>
+    <string name="skip">跳過</string>
+    <string name="send">發送</string>
+    <string name="submit">提交</string>
+    <string name="submit_success">提交成功</string>
+    <string name="setting">設置</string>
+    <string name="other">其它</string>
+    <string name="error">錯誤</string>
+    <string name="post">發佈</string>
+    <string name="title">標題</string>
+    <string name="undo">復原</string>
+    <string name="redo">重做</string>
+    <string name="edit">編輯</string>
+    <string name="unfold">展開</string>
+    <string name="put_away">收起</string>
+    <string name="day">天</string>
+    <string name="hour">時</string>
+    <string name="minute">分</string>
+    <string name="second">秒</string>
+    <string name="viewpager_indicator">%1$d/%2$d</string>
+    
+    <!-- Toast -->
+    <string name="toast_exit_prompt">再按壹次退出程序</string>
+    <string name="toast_server_busy">服務器繁忙！請稍後再試！</string>
+    <string name="toast_error_data_null">數據出現錯誤！請重新加載頁面！</string>
+        
+    <!-- Dialog -->
+    <string name="dialog_leave_app">離開 STYLISTPARK ?</string>
+    <string name="dialog_version_new">您當前版本已是最新版本</string>
+    <string name="dialog_version_update">檢測到新版本，點擊確定開始更新</string>
+    <string name="dialog_version_update_force">您當前版本低于最低版本！需要升級後才能正常使用！</string>
+    <string name="dialog_error_msg">發生錯誤，請稍後再嘗試</string>
+    <string name="dialog_error_video_url">視頻出現錯誤，無法播放</string>
+    
+    <!-- network -->
+    <string name="network">網絡</string>
+    <string name="network_closed">未能連接到Stylistpark</string>
+    <string name="network_fault">請檢查您的網絡連線</string>
+    <string name="network_no_wifi">檢測到您當前未使用Wifi，建議您在Wifi網絡下觀看視頻</string>
+    
+    <!-- loading -->
+    <string name="loading">請稍候&#8230;</string>
+    <string name="loading_pull_refresh">下拉刷新</string>
+    <string name="loading_release_refresh">松開刷新</string>
+    <string name="loading_loading">加載中&#8230;</string>
+    <string name="loading_update_time">上次更新時間 </string>
+    <string name="loading_load_more">加載更多</string>
+    <string name="loading_strive_loading">奮力加載中&#8230;</string>
+    <string name="loading_no_more">没有更多了哦~</string>
+    <string name="loading_no_data">您還沒有%1$s哦!</string>
+    <string name="loading_click_load">點擊加載</string>
+    <string name="loading_submit_fail">上載失敗</string>
+    
+    <!-- home -->
+    <string name="home_tab_text_one">首頁</string>
+    <string name="home_tab_text_two">搭配</string>
+    <string name="home_tab_text_three">創建搭配</string>
+    <string name="home_tab_text_four">購物車</string>
+    <string name="home_tab_text_five">我的</string>
+    
+    <!-- title -->
+    <string name="title_category">分類</string>
+    <string name="title_screen">篩選</string>
+    <string name="title_qr_code_scan">二維碼掃描</string>
+    <string name="title_fragment_four">我的購物車</string>
+    <string name="title_fragment_five">我的名尚</string>
+    <string name="title_product_detail">商品詳情</string>
+    <string name="title_login">用戶登入</string>
+    <string name="title_register">郵箱注冊</string>
+    <string name="title_reset">找回密碼</string>
+    <string name="title_my_address">我的收貨地址</string>
+    <string name="title_delivery_info">收貨信息</string>
+    <string name="title_order_confirm">確認訂單</string>
+    <string name="title_order_detail">訂單詳情</string>
+    
+    <!-- Product Page-->
+    <string name="product_top_tab_1">默認</string>
+    <string name="product_top_tab_2">銷量</string>
+    <string name="product_top_tab_3">價格</string>
+    <string name="product_top_tab_4">品牌</string>
+    <string name="product_detail_tab_1">详情</string>
+    <string name="product_detail_tab_2">評價</string>
+    <string name="product_detail_tab_3">搭配</string>
+    <string name="product_clear_options">清除選項</string>
+    <string name="product_stock">有貨</string>
+    <string name="product_search">搜索</string>
+    <string name="product_search_hot">熱搜</string>
+    <string name="product_search_hot_words_1">長裙</string>
+    <string name="product_search_hot_words_2">包</string>
+    <string name="product_search_hot_words_3">鞋</string>
+    <string name="product_search_hot_words_4">化妝品</string>
+    <string name="product_search_et_hint">輸入商品關鍵字</string>
+    <string name="product_search_history">曆史搜索</string>
+    <string name="product_search_history_no">暫無搜索記錄</string>
+    <string name="product_search_history_clear">清除曆史記錄</string>
+    <string name="product_search_no_data">沒有符合條件的商品</string>
+    <string name="product_price_fell">售價</string>
+    <string name="product_price_full">原價:</string>
+    <string name="product_full_minus">滿減</string>
+    <string name="product_mail">直郵</string>
+    <string name="product_genuine_safeguard">正品保證</string>
+    <string name="product_carefree_return">無憂退換</string>
+    <string name="product_cash_delivery">貨到付款</string>
+    <string name="product_brand_go">進入品牌</string>
+    <string name="product_play_video">视频</string>
+    <string name="product_collection">收藏</string>
+    <string name="product_cart">購物車</string>
+    <string name="product_call">客服</string>
+    <string name="product_add_cart">加入購物車</string>
+    <string name="product_buy_number">購買數量</string>
+    <string name="product_color_size">顔色 尺碼</string>
+    <string name="product_drag_up">繼續拖動，查看圖文詳情</string>
+    <string name="product_drag_down">繼續拖動，查看商品簡介</string>
+    
+    <!-- Cart page -->
+    <string name="cart_no_goods">購物車還沒有商品</string>
+    <string name="cart_go_add">快去添加吧~</string>
+    <string name="cart_go_shopping">去逛逛</string>
+    <string name="cart_goods_num">共%1$d件商品</string>
+    <string name="cart_buy_now">立即購買</string>
+    <string name="cart_error_data_null">數據同步出現異常！請下拉刷新購物車商品！</string>
+    
+    <!-- Member page -->
+    <string name="member_top_tab_1">最新客戶</string>
+    <string name="member_top_tab_2">活躍排名</string>
+    <string name="member_top_tab_3">訂單排名</string>
+    <string name="member_top_tab_4">收入排名</string>
+    <string name="member_no_order">您的會員還沒有%1$s哦~</string>
+    <string name="member_no_member">您還沒有會員，\n去邀請好友成爲您的會員吧。</string>
+        
+    <!-- Bouns page -->
+    <string name="bouns_bouns">紅包</string>
+    <string name="bouns_top_tab_1">@string/all</string>
+    <string name="bouns_top_tab_2">未使用</string>
+    <string name="bouns_top_tab_3">已過期</string>
+    <string name="bouns_top_tab_4">已使用</string>
+    <string name="bouns_used_sum">已抵用%1$s</string>
+    <string name="bouns_add_ok">添加成功</string>
+    <string name="bouns_input_hint">紅包序列號</string>
+    <string name="bouns_input_error">請輸入紅包的序列號</string>
+    
+    <!-- Order page -->
+    <string name="order_order">訂單</string>
+    <string name="order_list">訂單列表</string>
+    <string name="order_order_no">訂單編號：%1$s</string>
+    <string name="order_order_date">訂單日期：%1$s</string>
+    <string name="order_logistics_name">物流公司：%1$s</string>
+    <string name="order_logistics_no">物流單號：%1$s</string>
+    <string name="order_goods_lists">商品列表</string>
+    <string name="order_support_pay">支持支付方式</string>
+    <string name="order_use_bouns">使用紅包抵用</string>
+    <string name="order_invoice_name">開票信息：</string>
+    <string name="order_invoice_hint">開票擡頭</string>
+    <string name="order_buyer_name">訂單備注：</string>
+    <string name="order_buyer_hint">備注信息</string>
+    <string name="order_total_name">商品總價：</string>
+    <string name="order_fee_name">商品運費：</string>
+    <string name="order_charges_name">貨到付款：</string>
+    <string name="order_bouns_name">紅包抵用：</string>
+    <string name="order_discount_name">活動優惠：</string>
+    <string name="order_pay_name">應付金額：</string>
+    <string name="order_pay_type">支付方式：%1$s</string>
+    <string name="order_sn">訂單號：%1$s</string>
+    <string name="order_time_close">%1$s後&#160;關閉</string>
+    <string name="order_close">交易關閉</string>
+    <string name="order_valid_time">請在%1$s內完成支付，超時訂單自動關閉</string>
+    <string name="order_pay">應付：%1$s</string>
+    <string name="order_pay_now">立即支付</string>
+    <string name="order_cacel">取消訂單</string>
+    <string name="order_cacel_confirm">確定取消訂單？</string>
+    <string name="order_delete">刪除訂單</string>
+    <string name="order_confirm_receive">確認收貨</string>
+    <string name="order_check_logistic">查看物流</string>
+    <string name="order_logistic_title">物流信息</string>
+    <string name="order_logistic_no_data">暫無物流信息</string>
+    <string name="order_logistic_expired">物流信息已過期</string>
+    <string name="order_top_tab_1">@string/all</string>
+    <string name="order_top_tab_2">@string/profile_wait_pay</string>
+    <string name="order_top_tab_3">@string/profile_wait_delivery</string>
+    <string name="order_top_tab_4">@string/profile_wait_receive</string>
+    <string name="order_top_tab_5">@string/profile_repair_return</string>
+    
+    <!-- Pay page -->
+    <string name="pay_title">在線支付</string>
+    <string name="pay_wait">待支付</string>
+    <string name="pay_amount">支付金額</string>
+    <string name="pay_type">支付方式</string>
+    <string name="pay_confirm">確認支付</string>
+    <string name="pay_wechat">微信支付</string>
+    <string name="pay_wechat_hint">微信安全支付</string>
+    <string name="pay_alipay">支付寶</string>
+    <string name="pay_alipay_hint">支付寶便捷支付</string>
+    <string name="pay_union">銀聯支付</string>
+    <string name="pay_union_hint">銀聯在線支付</string>
+    <string name="pay_abandon">確定放棄支付麽?</string>
+    <string name="pay_select_null">請選擇壹種支付方式</string>
+    <string name="pay_continue">繼續支付</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_fail">支付失敗</string>
+    <string name="pay_cancel">支付取消</string>
+    <string name="pay_wait_notice">等待支付通知</string>
+    <string name="pay_result_abnormal">獲取支付結果異常，請與商家確認是否已支付成功！</string>
+    <string name="pay_info_error">未獲取支付信息，請與商家確認是否已支付?</string>
+    <string name="pay_order_error">支付訂單數據出現錯誤！請刷新訂單信息！</string>
+    
+    <!-- Photo page -->
+    <string name="photo_select_title">選擇相冊</string>
+    <string name="photo_select_one_title">選擇壹張照片</string>
+    <string name="photo_select_no_data">沒有檢測到相片</string>
+    <string name="photo_editor_title">相片編輯</string>
+    <string name="photo_clip_head_title">頭像裁剪</string>
+    <string name="photo_change_head">修改頭像</string>
+    <string name="photo_shoot_upload">拍照上傳</string>
+    <string name="photo_choose_upload">本地上傳</string>
+    <string name="photo_upload_img">正在上傳%1$s，請稍後&#8230;</string>
+    <string name="photo_upload_img_ok">上傳%1$s成功</string>
+    <string name="photo_img_url_error">%1$s出錯！請重新編輯！</string>
+    <string name="photo_upload_head_fail">上傳頭像失敗！請點擊頭像重新上傳！</string>
+    <string name="photo_clip_error">裁剪相片時出現錯誤！請重新選擇相片！</string>
+    <string name="photo_ID_photo">身份證明相片</string>
+    <string name="photo_ID_photo_null">身份證明相片不能爲空</string>
+    <string name="photo_upload_ID_fail">上傳身份證明相片失敗！請重新提交審核！</string>
+    <string name="photo_clip_upload_hint">請拍攝或選擇壹張真實的身份證明相片並提交審核，相片審核通過即實名認證通過，此操作直接影響到賬戶余額的提現功能，請謹慎操作。</string>
+    <string name="photo_show_save_one">保存1張</string>
+    <string name="photo_show_save_more">保存%1$d張</string>
+    <string name="photo_show_save_image">保存到手機</string>
+    <string name="photo_show_save_ok">保存成功</string>
+    <string name="photo_show_save_fail">保存圖片出錯！請檢查SD卡是否正確安裝或重試！</string>
+    <string name="photo_save_sd_error">沒有儲存卡</string>
+    <string name="photo_save_directory_error">沒有找到儲存目錄</string>
+    <string name="photo_scan_text_hint">將二維碼放入框內, 即可自動掃描</string>
+    <string name="photo_crop_image_instru">移動並縮放相片以符合空間大小</string>
+    <string name="photo_camera_authority">您已禁用攝像頭權限，請到設置或手機管家的權限管理中重新配置權限。</string>
+    
+    <!-- Setting Page -->
+    <string name="setting_language">語言</string>
+    <string name="setting_currency">貨幣</string>
+    <string name="setting_feedback">意見反饋</string>
+    <string name="setting_version">檢查更新</string>
+    <string name="setting_about_us">關於我們</string>
+    <string name="setting_logout">登出帳戶</string>
+    <string name="setting_logout_confirm">&#160;確定要退出登入麽？</string>
+    <string name="setting_input_hint_feedback">寫下您的意見或建議</string>
+    <string name="setting_input_error_feedback">意見或建議不能爲空哦~</string>
+    
+    <!-- language currency -->
+    <string name="currency_rmb_sign">¥</string>
+    <string name="currency_hkd_sign">$</string>
+    <string name="currency_usd_sign">$</string>
+   	<string name="currency_hkd">HKD($)</string>
+   	<string name="currency_rmb">RMB(¥)</string>
+   	<string name="currency_usd">USD($)</string>
+   	<string name="language_zh">香港(繁體)</string>
+   	<string name="language_cn">中国(简体)</string>
+   	<string name="language_en">English(US)</string>
+    
+    <!-- Login Register -->
+    <string name="login_login">登入</string>
+    <string name="login_register">注冊</string>
+    <string name="login_user_name">郵箱/卡號</string>
+    <string name="login_input_user_name">請輸入郵箱/卡號</string>
+    <string name="login_password">密碼</string>
+    <string name="login_input_password">請輸入密碼</string>
+    <string name="login_input_password_again">請再次輸入密碼</string>
+    <string name="login_password_error">兩次輸入的密碼不壹致！請重新輸入！</string>
+    <string name="login_input_email">請輸入郵箱地址</string>
+    <string name="login_email_format_error">請檢查郵箱格式是否正確？</string>
+    <string name="login_input_verify_code">輸入右側驗證碼</string>
+    <string name="login_error_verify_code">驗證碼錯誤！請重新輸入！</string>
+    <string name="login_new_register">新用戶注冊</string>
+    <string name="login_forget_password">忘記密碼？</string>
+    <string name="login_quick">第三方賬號快速登入</string>
+    <string name="login_oauth_cancel">登入取消</string>
+    <string name="login_error_oauth">授權登入出現錯誤！請重試！</string>
+    <string name="login_bound">綁定賬號</string>
+    <string name="login_immediately_bound">立即綁定</string>
+    <string name="login_no_account">沒有賬號？馬上去注冊</string>
+    <string name="login_bound_reminder">溫馨提示：如您已有SP賬號，請先綁定賬號。跳過將默認爲您新建壹個SP賬號並自動綁定，請謹慎操作。</string>
+    <string name="login_timeout">登入超時！請重新登入！</string>
+    
+    <!-- Share -->
+    <string name="share">分享</string>
+   	<string name="share_qq">QQ</string>
+   	<string name="share_friends">朋友圈</string>
+   	<string name="share_wechat">Wechat</string>
+   	<string name="share_weibo">微博</string>
+   	<string name="share_fb">Facebook</string>
+   	<string name="share_whatsapp">Whatsapp</string>
+   	<string name="share_line">Line</string>
+   	<string name="share_alipay">支付寶</string>
+   	<string name="share_copy">復制鏈接</string>
+   	<string name="share_msg_no_wechat">請先下載 WeChat</string>
+    <string name="share_msg_no_facebook">請先下載 Facebook</string>
+    <string name="share_msg_no_whatsapp">請先下載 Whatsapp</string>
+    <string name="share_msg_no_line">請先下載 Line</string>
+    <string name="share_msg_error_license">授权失败，请重试！</string>
+    <string name="share_msg_error_oauth">获取授权信息异常，请关闭页面后重新授权。</string>
+	<string name="share_msg_success">分享成功</string>
+	<string name="share_msg_error">分享出錯</string>
+	<string name="share_msg_cancel">分享取消</string>
+	<string name="share_msg_copy_link_ok">鏈接已復制</string>
+	<string name="share_msg_entity_error">分享參數出錯，請重新打開商品頁面。</string>
+	
+	<!-- Address -->
+    <string name="address_default">設爲默認地址</string>
+    <string name="address_consignee">收貨人姓名</string>
+   	<string name="address_phone_number">移动手機號碼</string>
+   	<string name="address_email_address">電郵地址</string>
+	<string name="address_china">中國</string>
+	<string name="address_area">地區信息</string>
+	<string name="address_province">省</string>
+	<string name="address_city">市</string>
+	<string name="address_district">區</string>
+	<string name="address_detailed_address">街道門牌號等信息</string>
+	<string name="address_input_full_address">請輸入完整的詳細地址</string>
+	<string name="address_error_name_empty">請輸入收貨人姓名</string>
+	<string name="address_error_phone_empty">請輸入手機號碼</string>
+	<string name="address_error_area_empty">請選擇地區信息</string>
+	<string name="address_error_address_empty">請輸入詳細的地址信息</string>
+	<string name="address_error_load_area">加載地區信息出現錯誤！請關閉頁面後重試！</string>
+	<string name="address_error_no_select">請填寫收貨地址</string>
+	<string name="address_error_data_null">還沒有收貨地址哦，去新增收貨地址吧。</string>
+    
+    <!-- Profile Page -->
+    <string name="profile_page">個人專頁</string>
+    <string name="profile_head">頭像</string>
+   	<string name="profile_name">姓名</string>
+    <string name="profile_nickname">昵稱</string>
+    <string name="profile_intro">間介</string>
+   	<string name="profile_gender">性別</string>
+   	<string name="profile_gender_male">男</string>
+   	<string name="profile_gender_female">女</string>
+   	<string name="profile_gender_confidential">保密</string>
+   	<string name="profile_birthday">生日</string>
+    <string name="profile_collection">收藏商品</string>
+    <string name="profile_history">浏覽記錄</string>
+    <string name="profile_my_order">我的訂單</string>
+    <string name="profile_check_all_order">查看全部訂單</string>
+    <string name="profile_done">已完成</string>
+    <string name="profile_wait_commission">待分成</string>
+    <string name="profile_wait_pay">待付款</string>
+    <string name="profile_wait_delivery">待發貨</string>
+    <string name="profile_wait_receive">待收貨</string>
+    <string name="profile_repair_return">退換貨</string>
+    <string name="profile_my_address">收貨地址</string>
+    <string name="profile_account_money">賬戶余額</string>
+    <string name="profile_bonus">我的紅包</string>
+    <string name="profile_my_member">我的會員</string>
+    <string name="profile_check_my_member">查看我的會員</string>
+    <string name="profile_member_list">會員列表</string>
+    <string name="profile_member_order">會員訂單</string>
+    <string name="profile_customer_list">顧客名單</string>
+    <string name="profile_customer_order">顧客訂單</string>
+    <string name="profile_my_collages">我的配搭</string>
+    <string name="profile_my_favorite">我的最愛</string>
+    <string name="profile_submit_audit">提交審核</string>
+    <string name="profile_change_nick">修改昵稱</string>
+    <string name="profile_input_nick">請輸入昵稱</string>
+    <string name="profile_change_sex">修改性別</string>
+    <string name="profile_change_email">修改郵箱</string>
+    <string name="profile_email_verify">郵箱驗證</string>
+    <string name="profile_send_email_ok">郵件發送成功</string>
+    <string name="profile_send_email_hint">確認發送壹封驗證郵件至%1$s麽？在您驗證此郵件後方可修改郵箱地址。如有疑問請聯系官方客服。</string>
+    <string name="profile_change_email_notice">注意：修改郵箱將不再發送確認郵件，務必認真檢查輸入的郵箱是您本人的且沒有輸入錯誤，如有疑問請聯系官方客服。</string>
+    <string name="profile_set_banner_photo">設定封面相片</string>
+    
+    <!-- Money -->
+    <string name="money_balance_burrency">余額(%1$s)</string>
+    <string name="money_balance_detail">余額明細</string>
+    <string name="money_no_detail">暫無明細</string>
+    <string name="money_withdrawals">提現</string>
+    <string name="money_auth">實名認證</string>
+    <string name="money_auth_ok">已實名認證</string>
+    <string name="money_auth_hint">余額提現功能僅對實名認證用戶開放，</string>
+    <string name="money_auth_go">立即實名認證</string>
+    <string name="money_auth_input_name_hint">請輸入您的真實姓名</string>
+    <string name="money_withdrawals_confirm">確認提現</string>
+    <string name="money_withdrawals_success">提現申請已提交</string>
+    <string name="money_input_card_hint">請輸入您本人名下的銀行卡卡號</string>
+    <string name="money_input_amount_hint">請輸入提現金額</string>
+    <string name="money_max_amount_hint">當前可提現金額：%1$s</string>
+    <string name="money_withdrawals_reminder">溫馨提示：\n1、確認提現成功後，我們會在七個工作日內將提現金額打款至您輸入的銀行卡；\n2、輸入的銀行卡持卡人姓名必須與實名認證的姓名保持壹致，如有疑問請聯系官方客服；</string>
+        
+    <!-- Collage -->
+    <string name="collage_video_title">時尚自拍</string>
+    <string name="collage_video_desc">上傳您著用Stylistpark商品的照片。</string>
+    <string name="collage_collage_title">造型拼貼</string>
+    <string name="collage_collage_desc">運用你的潮流觸覺創造不同風格的搭配</string>
+    <string name="collage_multiangle_title">多角度</string>
+    <string name="collage_multiangle_desc">以不同角度，透過模特兒展示服飾</string>
+    <string name="collage_upload">立即上傳</string>
+    <string name="collage_create">立即製作</string>
+    <string name="collage_create_multiangle">多角度創作</string>
+    <string name="collage_create_free">自由創作</string>
+    <string name="collage_create_template">預設創作</string>
+    <string name="collage_select_template">選擇模板</string>
+    <string name="collage_select_product">搭配貨品</string>
+    <string name="collage_items">配搭貨品Collage Items</string>
+    <string name="collage_no_item">請選取搭配的貨品</string>
+    <string name="collage_creation_edit">編輯搭配簡介</string>
+    <string name="collage_creation_delete">刪除搭配</string>
+    <string name="collage_creation_report">檢舉問題內容</string>
+    <string name="collage_info">配搭信息</string>
+    <string name="collage_description">配搭簡介</string>
+    <string name="collage_msg_product_too_many">已經超出貨品上限</string>
+    <string name="collage_msg_decor_too_many">已經超出素材上限</string>
+    <string name="collage_msg_over_word_max">超出字數上限</string>
+    <string name="collage_msg_fill_title_comment">請填寫標題及創作解說</string>
+    <string name="collage_error_load_draft">載入失敗，草稿已被刪除</string>
+    <string name="collage_move_upward">上移一層</string>
+    <string name="collage_move_downward">下移一層</string>
+    <string name="collage_leave_create">離開創作</string>
+    <string name="collage_msg_leave_create">在離開前保存草稿？</string>
+    <string name="collage_msg_leave_confirm">確認離開?</string>
+    <string name="collage_continue_last_create">繼續上次的創作</string>
+    <string name="collage_start_new_create">開始新創作</string>
+    <string name="collage_select_photo">選擇相片</string>
+    <string name="collage_change_item">更換貨品</string>
+    <string name="collage_items_select_product">請從下方選取配搭貨品</string>
+    <string name="collage_need_choose_template">請選擇所需的模板</string>
+    <string name="collage_select_4_image">請選擇4張相片</string>
+    <string name="collage_instru_add_photo">按下方格子新增相片</string>
+    <string name="collage_instru_photo_added_1">可調整格子內相片的大小及角度</string>
+    <string name="collage_instru_photo_added_2">按下方格子可繼續新增相片</string>
+        
+    <!-- product menu fragment -->
+    <string name="txt_start">推介</string>
+    <string name="txt_new">最新</string>
+    <string name="txt_favourite">喜愛</string>
+    <string name="txt_shirt">上裝</string>
+    <string name="txt_coat">外套</string>
+    <string name="txt_skirt">裙</string>
+    <string name="txt_trouser">褲</string>
+    <string name="txt_dress">連衣裝</string>
+    <string name="txt_nail">美甲</string>
+    <string name="txt_perfume">香水</string>
+    <string name="txt_skincare">護膚品</string>
+    <string name="txt_makeup">化妝品</string>
+    <string name="txt_haircare">頭髪護理</string>
+    <string name="txt_homefragrance">家居香氛</string>
+    <string name="txt_accessorie">配飾</string>
+    <string name="txt_bag">手袋</string>
+    <string name="txt_shoes">鞋</string>
+    <string name="txt_decoration">素材</string>
+        
+    <!-- Filter -->
+    <string name="filter">篩選</string>
+    <string name="filter_color">篩選顏色</string>
+    <string name="filter_item_brand">品牌</string>
+    <string name="filter_item_color">顏色</string>
+    <string name="filter_item_price">價錢</string>
+    <string name="filter_item_above">或以上</string>
+    <string name="filter_select_color">選擇顔色</string>
+    <string name="filter_select_brand">選擇品牌</string>
+    <string name="filter_search_brand">搜尋品牌</string>
+    <string name="filter_stroke">劃</string>
+	<string name="filter_stroke_more">劃以上</string>
+	
+	<!-- Color CN -->
+    <string name="txt_color_grid">格纹</string>
+    <string name="txt_color_dot">波点</string>
+    <string name="txt_color_print">印花</string>
+    <string name="txt_color_line">条纹</string>
+    <string name="txt_color_red">红色</string>
+    <string name="txt_color_pink">粉红</string>
+    <string name="txt_color_orange">橙色</string>
+    <string name="txt_color_yellow">黄色</string>
+    <string name="txt_color_green">绿色</string>
+    <string name="txt_color_deep_blue">深蓝</string>
+    <string name="txt_color_blue">蓝色</string>
+    <string name="txt_color_purple">紫色</string>
+    <string name="txt_color_brown">棕色</string>
+    <string name="txt_color_light_brown">杏色</string>
+    <string name="txt_color_light_yellow">米色</string>
+    <string name="txt_color_white">白色</string>
+    <string name="txt_color_black">黑色</string>
+    <string name="txt_color_grey">灰色</string>
+    <string name="txt_color_gold">金色</string>
+    <string name="txt_color_silver">银色</string>
+    <string name="txt_color_muti_color">彩色</string>
+    <!-- Color ZH -->
+	<string name="txt_color_grid_zh">格紋</string>
+    <string name="txt_color_dot_zh">波點</string>
+    <string name="txt_color_print_zh">印花</string>
+    <string name="txt_color_line_zh">條紋</string>
+    <string name="txt_color_red_zh">紅色</string>
+    <string name="txt_color_pink_zh">粉紅</string>
+    <string name="txt_color_orange_zh">橙色</string>
+    <string name="txt_color_yellow_zh">黃色</string>
+    <string name="txt_color_green_zh">綠色</string>
+    <string name="txt_color_deep_blue_zh">深藍</string>
+    <string name="txt_color_blue_zh">藍色</string>
+    <string name="txt_color_purple_zh">紫色</string>
+    <string name="txt_color_brown_zh">棕色</string>
+    <string name="txt_color_light_brown_zh">杏色</string>
+    <string name="txt_color_light_yellow_zh">米色</string>
+    <string name="txt_color_white_zh">白色</string>
+    <string name="txt_color_black_zh">黑色</string>
+    <string name="txt_color_grey_zh">灰色</string>
+    <string name="txt_color_gold_zh">金色</string>
+    <string name="txt_color_silver_zh">銀色</string>
+    <string name="txt_color_muti_color_zh">彩色</string>
+
+    
+    <string-array name="array_wechat">
+        <item >分享至聯絡人</item>
+        <item >發佈到朋友圈</item>
+    </string-array>
+    
+    <string-array name="collage_array_share_comment">
+    	<item >不論上班或是約會都非常適合。</item>
+    	<item >無論是PARTY還是宴會都是完美得體的著裝。</item>
+    	<item >女生的衣櫥必有的配搭。</item>
+    	<item >衣服顯瘦，時尚休閒的配搭</item>
+    </string-array>
+    
+</resources>

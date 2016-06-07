@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 底部more弹出layout -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/ui_bg_color_percent_80"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/popup_add_cart_rl_finish"
+        style="@style/layout_weight_style"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2" >
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/popup_add_cart_ll_show"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@color/ui_bg_color_white"
+        android:orientation="vertical" >
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@color/ui_bg_color_white" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RelativeLayout
+                    android:id="@+id/popup_add_cart_rl_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/ui_bg_color_white" >
+
+                    <ImageView
+                        android:id="@+id/popup_add_cart_iv_img"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:contentDescription="@string/desc"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/bg_img_white" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="15dp" >
+
+                    <TextView
+                        android:id="@+id/popup_add_cart_tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="2"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textColor="@color/text_color_content"
+                        android:textSize="@dimen/text_size_16"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/popup_add_cart_tv_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text=""
+                        android:textColor="@color/text_color_red_1"
+                        android:textSize="@dimen/text_size_30"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/popup_add_cart_tv_prompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/item_select_no"
+                        android:textColor="@color/text_color_assist"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:id="@+id/popup_add_cart_tv_select"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_toRightOf="@id/popup_add_cart_tv_prompt"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textColor="@color/text_color_assist"
+                        android:textSize="@dimen/text_size_14" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:layout_alignParentBottom="true"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.spshop.stylistpark.widgets.ScrollViewListView
+                    android:id="@+id/popup_add_cart_svlv"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@color/ui_bg_color_app" />
+
+                <RelativeLayout
+                    android:id="@+id/popup_add_cart_rl_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="20dp" >
+
+                    <TextView
+                        android:id="@+id/popup_add_cart_tv_num_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/product_buy_number"
+                        android:textColor="@color/text_color_assist"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:id="@+id/popup_add_cart_rl_num_minus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp" >
+
+                            <ImageView
+                                android:id="@+id/popup_add_cart_iv_num_minus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/selector_btn_num_minus"
+                                android:contentDescription="@string/desc" />
+                        </RelativeLayout>
+
+                        <ImageView
+                            style="@style/set_line_vertical_bg"
+                            android:contentDescription="@string/desc" />
+
+                        <TextView
+                            android:id="@+id/popup_add_cart_tv_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center"
+                            android:text="@string/number_0"
+                            android:textColor="@color/text_color_title"
+                            android:textSize="@dimen/text_size_16" />
+
+                        <ImageView
+                            style="@style/set_line_vertical_bg"
+                            android:contentDescription="@string/desc" />
+
+                        <RelativeLayout
+                            android:id="@+id/popup_add_cart_rl_num_add"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp" >
+
+                            <ImageView
+                                android:id="@+id/popup_add_cart_iv_num_add"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/selector_btn_num_add"
+                                android:contentDescription="@string/desc" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/popup_add_cart_tv_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/text_color_thin"
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_18" />
+    </LinearLayout>
+
+</LinearLayout>

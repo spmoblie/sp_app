@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/layout_full" >
+
+    <LinearLayout
+        style="@style/layout_full"
+        android:background="@color/ui_bg_color_app"
+        android:orientation="vertical" >
+
+        <include layout="@layout/layout_top_commom" />
+
+        <com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView
+            android:id="@+id/fragment_four_ptrsv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:scrollbars="none" >
+
+        </com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView>
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+
+        <LinearLayout
+            android:id="@+id/fragment_four_ll_billing"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <LinearLayout
+                android:id="@+id/fragment_four_ll_select_all"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:id="@+id/fragment_four_iv_select_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/btn_select_hook_no" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/select_all"
+                    android:textColor="@color/text_color_assist"
+                    android:textSize="@dimen/text_size_13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="35dp" >
+
+                <TextView
+                    android:id="@+id/fragment_four_tv_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number_0"
+                    android:textColor="@color/text_color_red_1"
+                    android:textSize="@dimen/text_size_26"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/fragment_four_tv_buy_now"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/text_color_black"
+                android:gravity="center"
+                android:text="@string/cart_buy_now"
+                android:textColor="@color/text_color_white"
+                android:textSize="@dimen/text_size_18" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/layout_loading_anim_large" />
+
+    <include layout="@layout/layout_loading_fail" />
+
+</FrameLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_list_balance_ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ui_bg_color_white" >
+
+    <TextView 
+        android:id="@+id/item_list_balance_tv_title"
+        style="@style/setting_lay_text_title"
+        android:layout_marginTop="10dp"
+        android:layout_centerVertical="false" />
+
+    <TextView 
+        android:id="@+id/item_list_balance_tv_time"
+        style="@style/setting_lay_text_title"
+        android:layout_centerVertical="false"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/item_list_balance_tv_title"
+        android:textColor="@color/text_color_assist"
+        android:textSize="@dimen/text_size_14" />
+    
+    <TextView 
+        android:id="@+id/item_list_balance_tv_money"
+        style="@style/setting_lay_text_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp" />
+    
+    <ImageView
+        style="@style/set_line_horizontal_bg"
+        android:layout_below="@id/item_list_balance_tv_time"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:contentDescription="@string/desc" />
+    
+</RelativeLayout>

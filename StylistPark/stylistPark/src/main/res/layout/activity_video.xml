@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_ll_video_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_app"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/popup_rl_close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/topbar_icon_clear" />
+    </RelativeLayout>
+
+    <VideoView
+        android:id="@+id/popup_videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+</LinearLayout>

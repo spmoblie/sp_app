@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="15dp" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/filterMain_priceLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_frame_tv_white_gray_4"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/filter_item_price"
+                    android:textSize="@dimen/text_size_16" />
+
+                <ImageView
+                    android:id="@+id/filterMain_priceCrossImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/filter_main_brand_bar_height"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/topbar_icon_clear"
+                    android:contentDescription="@string/desc" />
+            </RelativeLayout>
+
+            <com.edmodo.rangebar.RangeBar
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/filterMain_rangeBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                custom:barColor="@color/collage_light_grey_221_221_221"
+                custom:barWeight="5dp"
+                custom:connectingLineColor="@color/collage_green"
+                custom:thumbImageNormal="@drawable/generator_filter_price_btn_crop"
+                custom:thumbImagePressed="@drawable/generator_filter_price_btn_crop" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" >
+
+                <TextView
+                    android:id="@+id/filterMain_minPriceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="0"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/filterMain_maxPriceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="15000"
+                    android:textSize="@dimen/text_size_14" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/filterMain_brandLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/filter_main_brand_bar_height"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_frame_tv_white_gray_4"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp" >
+
+            <TextView
+                android:id="@+id/filterMain_brandTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/filter_item_brand"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/filterMain_brandNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="-7dp"
+                android:layout_toLeftOf="@+id/filterMain_brandListImageView"
+                android:layout_toRightOf="@+id/filterMain_brandTextView"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textSize="@dimen/text_size_16" />
+
+            <ImageView
+                android:id="@+id/filterMain_brandCrossImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/topbar_icon_clear"
+                android:contentDescription="@string/desc"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/filterMain_brandListImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/generator_filter_list_arrow"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/filterMain_colorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/filter_main_brand_bar_height"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_frame_tv_white_gray_4"
+            android:paddingLeft="10dp" >
+
+            <TextView
+                android:id="@+id/filterMain_colorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/filter_item_color"
+                android:textSize="@dimen/text_size_16" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@+id/filterMain_colorCrossImageView"
+                android:layout_toRightOf="@+id/filterMain_colorTextView" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" >
+
+                    <ImageView
+                        android:id="@+id/filterMain_colorIconImageView"
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/desc" />
+
+                    <TextView
+                        android:id="@+id/filterMain_colorNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/text_color_black"
+                        android:textSize="@dimen/text_size_16" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/filterMain_colorCrossImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/topbar_icon_clear"
+                android:contentDescription="@string/desc"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/filterMain_colorListImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/generator_filter_list_arrow"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/filterMain_resetLayout"
+            android:layout_width="141dp"
+            android:layout_height="35dp"
+            android:background="@drawable/shape_frame_bg_black_2"
+            android:text="@string/clean"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/filterMain_completeLayout"
+            android:layout_width="141dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shape_frame_bg_green_2"
+            android:text="@string/done"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</RelativeLayout>

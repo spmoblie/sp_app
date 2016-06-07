@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/brand_indexRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/brand_indexLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/brand_cell_header_height"
+        android:background="@color/collage_light_grey_241_241_241"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/brand_indexNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/brand_cell_header_text_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/brand_itemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/brand_cell_item_height"
+        android:background="@color/text_color_white" >
+
+        <TextView
+            android:id="@+id/brand_nameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/brand_cell_item_text_size" />
+
+        <ImageView
+            android:id="@+id/brand_dividerImageView"
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+</LinearLayout>

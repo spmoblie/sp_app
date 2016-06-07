@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/productDisplay_mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/collage_transparent"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
+
+    <LinearLayout
+        android:id="@+id/productDisplay_mainLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ui_bg_color_white"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <!-- product top bar -->
+
+        <include
+            android:id="@+id/productDisplay_productTopBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/layout_top_bar_product" />
+
+        <!-- Decoration top bar -->
+
+        <include
+            android:id="@+id/productDisplay_decorationTopBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/layout_top_bar_decoration"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/productDisplay_listContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/collage_transparent" >
+        </FrameLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/productDisplay_bottomLineImageView"
+        style="@style/set_line_horizontal_bg"
+        android:layout_above="@+id/productDisplay_MenuContainer"
+        android:contentDescription="@string/desc" />
+
+    <FrameLayout
+        android:id="@+id/productDisplay_MenuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/product_menu_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/collage_transparent" >
+    </FrameLayout>
+
+    <View
+        android:id="@+id/productDisplay_interceptLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+</RelativeLayout>

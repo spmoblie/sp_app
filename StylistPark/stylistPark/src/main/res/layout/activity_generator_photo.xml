@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000" >
+
+    <com.spshop.stylistpark.widgets.SquareCameraPreview
+        android:id="@+id/photo_view_camera_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/photo_view_cover_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/photo_view_camera_preview"
+        android:background="@android:color/black" />
+
+    <ImageView
+        android:id="@+id/photo_iv_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/desc"
+        android:scaleType="centerInside"
+        android:src="@drawable/topbar_icon_back_white" />
+
+    <ImageView
+        android:id="@+id/photo_iv_switch"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/desc"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_change_cam" />
+
+    <View
+        android:id="@+id/photo_view_cover_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignBottom="@id/photo_view_camera_preview"
+        android:background="@android:color/black" />
+
+    <RelativeLayout
+        android:id="@+id/camera_tools_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photo_view_camera_preview"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/black" >
+
+        <ImageView
+            android:id="@+id/photo_iv_choose"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:contentDescription="@string/desc"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_gallery" />
+
+        <ImageView
+            android:id="@+id/photo_iv_take"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/btn_pressed_capture_photo" />
+    </RelativeLayout>
+
+</RelativeLayout>

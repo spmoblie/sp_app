@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ptrsv_cart_ll_child_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <com.spshop.stylistpark.widgets.ScrollListView
+        android:id="@+id/ptrsv_cart_scroll_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ui_bg_color_app" />
+
+    <RelativeLayout
+        android:id="@+id/ptrsv_cart_rl_no_more"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/ui_bg_color_gray"
+        android:visibility="gone" >
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/loading_no_more"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/text_color_title"
+            android:textSize="@dimen/text_size_14" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ptrsv_cart_ll_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/cart_no_goods"
+            android:textColor="@color/text_color_assist"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/cart_go_add"
+            android:textColor="@color/text_color_assist"
+            android:textSize="@dimen/text_size_14" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/bg_no_data" />
+
+        <TextView
+            android:id="@+id/ptrsv_cart_iv_go_shopping"
+            android:layout_width="90dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_frame_bg_black_4"
+            android:gravity="center"
+            android:text="@string/cart_go_shopping"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_16" />
+    </LinearLayout>
+
+</LinearLayout>

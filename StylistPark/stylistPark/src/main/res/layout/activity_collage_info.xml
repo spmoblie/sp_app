@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/root_layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+
+	<RelativeLayout
+		android:id="@+id/layout2EditText"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/ui_bg_color_white" >
+
+		<RelativeLayout
+			android:id="@+id/layoutHeaderNImage"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" >
+
+			<ImageView
+				android:id="@+id/ivCollage"
+				android:layout_width="@dimen/collage_preview_side"
+				android:layout_height="@dimen/collage_preview_side"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="20dp"
+				android:background="#000"
+				android:scaleType="fitXY"
+				android:contentDescription="@string/desc" />
+		</RelativeLayout>
+
+		<TextView
+			android:id="@+id/tvHeading"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/layoutHeaderNImage"
+			android:layout_marginLeft="12dp"
+			android:layout_marginTop="10dp"
+			android:text="@string/title"
+			android:textColor="@color/text_color_grey" />
+
+		<com.spshop.stylistpark.widgets.EditTextBackEvent
+			android:id="@+id/etHeading"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:layout_below="@+id/tvHeading"
+			android:layout_marginLeft="12dp"
+			android:layout_marginRight="12dp"
+			android:layout_marginTop="3dp"
+			android:background="@drawable/shape_frame_et_white_gray_0"
+			android:focusableInTouchMode="true"
+			android:gravity="center_vertical"
+			android:lines="1"
+			android:maxLength="20"
+			android:maxLines="1"
+			android:paddingLeft="9dp"
+			android:paddingRight="9dp"
+			android:scrollHorizontally="true"
+			android:singleLine="true" />
+
+		<TextView
+			android:id="@+id/tvComment"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/etHeading"
+			android:layout_marginLeft="12dp"
+			android:layout_marginTop="10dp"
+			android:text="@string/collage_description"
+			android:textColor="@color/text_color_grey" />
+
+		<com.spshop.stylistpark.widgets.EditTextBackEvent
+			android:id="@+id/etComment"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/tvComment"
+			android:layout_marginBottom="8dp"
+			android:layout_marginLeft="12dp"
+			android:layout_marginRight="12dp"
+			android:layout_marginTop="3dp"
+			android:background="@drawable/shape_frame_et_white_gray_0"
+			android:focusableInTouchMode="true"
+			android:gravity="top"
+			android:lines="4"
+			android:maxLength="60"
+			android:maxLines="4"
+			android:padding="9dp"
+			android:paddingBottom="33dp" />
+
+		<ImageButton
+			android:id="@+id/btnAddComment"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/etComment"
+			android:layout_alignRight="@+id/etComment"
+			android:layout_marginBottom="9dp"
+			android:layout_marginRight="9dp"
+			android:background="@drawable/generator_message"
+			android:onClick="clickAddComment" />
+	</RelativeLayout>
+
+	<Button
+		android:id="@+id/btnShareSave"
+		android:layout_width="320dp"
+		android:layout_height="45dp"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="10dp"
+		android:layout_marginLeft="12dp"
+		android:layout_marginRight="12dp"
+		android:background="@drawable/shape_frame_bg_black_20"
+		android:onClick="clickShareSave"
+		android:text="@string/post"
+		android:textColor="@color/text_color_white"
+		android:textSize="@dimen/text_size_16"
+		android:textStyle="bold" />
+
+	<View
+		android:id="@+id/viewDim"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/ui_bg_color_percent_50"
+		android:visibility="gone" />
+
+	<RelativeLayout
+		android:id="@+id/layoutPopup"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:background="@color/ui_bg_color_white"
+		android:paddingBottom="10dp"
+		android:visibility="gone" >
+
+		<com.spshop.stylistpark.widgets.NonScrollableListView
+			android:id="@+id/lvComment"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_above="@+id/btnCancel"
+			android:layout_marginLeft="12dp"
+			android:layout_marginRight="12dp"
+			android:divider="@color/ui_bg_color_line_tiny"
+			android:dividerHeight="1dp"
+			android:listSelector="@color/collage_transparent"
+			android:scrollbars="none" />
+
+		<Button
+			android:id="@+id/btnCancel"
+			style="@style/BlackButton"
+			android:layout_width="match_parent"
+			android:layout_height="45dp"
+			android:layout_alignParentBottom="true"
+			android:layout_marginLeft="12dp"
+			android:layout_marginRight="12dp"
+			android:layout_marginTop="5dp"
+			android:text="@string/cancel" />
+	</RelativeLayout>
+
+</RelativeLayout>

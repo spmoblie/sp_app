@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/clothes_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_black" >
+
+    <com.spshop.stylistpark.widgets.InterceptTouchListView
+        android:id="@+id/clothes_ListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/clothes_dummyLayout"
+        android:background="@color/ui_bg_color_white"
+        android:cacheColorHint="@color/collage_transparent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:fastScrollEnabled="false"
+        android:listSelector="@color/collage_transparent" />
+
+    <ProgressBar
+        android:id="@+id/clothes_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/clothes_dummyLayout"
+        android:layout_centerHorizontal="true" />
+
+    <include
+        android:id="@+id/clothes_dummyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/layout_list_footer_load" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/clothes_dummyLayout"
+        android:visibility="invisible" >
+
+        <TextView
+            android:id="@+id/clothes_errNoResultTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/product_search_no_data"
+            android:textSize="@dimen/text_size_14"
+            android:visibility="invisible" />
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/clothes_dummyLayout"
+        android:visibility="invisible" >
+
+        <include
+            android:id="@+id/clothes_errNoNetworkLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/layout_error_no_network" />
+    </ScrollView>
+
+</RelativeLayout>

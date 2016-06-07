@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_gray"
+    android:orientation="vertical" >
+
+    <ImageView
+        style="@style/set_line_horizontal_bg"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/desc" />
+
+    <RelativeLayout
+        style="@style/common_vertical_item_layout"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp" >
+
+        <TextView
+            android:id="@+id/payment_tv_pay_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/pay_wait"
+            android:textColor="@color/text_color_title"
+            android:textSize="@dimen/text_size_17" />
+    </RelativeLayout>
+
+    <ImageView
+        style="@style/set_line_horizontal_bg"
+        android:contentDescription="@string/desc" />
+
+    <ImageView
+        style="@style/set_line_horizontal_bg"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/desc" />
+
+    <RelativeLayout
+        style="@style/common_vertical_item_layout"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/pay_amount"
+            android:textColor="@color/text_color_assist"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/payment_tv_pay_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/text_color_title"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ImageView
+        style="@style/set_line_horizontal_bg"
+        android:contentDescription="@string/desc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="5"
+        android:background="@color/ui_bg_color_white"
+        android:orientation="vertical" >
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+
+        <RelativeLayout style="@style/common_vertical_item_layout" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pay_type"
+                android:textColor="@color/text_color_assist"
+                android:textSize="@dimen/text_size_15" />
+        </RelativeLayout>
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_marginLeft="15dp"
+            android:contentDescription="@string/desc" />
+
+        <RelativeLayout 
+            android:id="@+id/payment_rl_select_zfb"
+            style="@style/common_vertical_item_layout" >
+
+            <ImageView
+                android:id="@+id/payment_iv_pay_zfb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/payment_zfb" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/payment_iv_pay_zfb"
+                android:text="@string/pay_alipay"
+                android:textColor="@color/text_color_title"
+                android:textSize="@dimen/text_size_17" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/payment_iv_pay_zfb"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/payment_iv_pay_zfb"
+                android:text="@string/pay_alipay_hint"
+                android:textColor="@color/text_color_assist"
+                android:textSize="@dimen/text_size_13" />
+
+            <ImageView
+                android:id="@+id/payment_iv_select_zfb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/btn_select_single_focused"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_marginLeft="15dp"
+            android:contentDescription="@string/desc" />
+
+        <RelativeLayout 
+            android:id="@+id/payment_rl_select_weixi"
+            style="@style/common_vertical_item_layout" >
+
+            <ImageView
+                android:id="@+id/payment_iv_pay_weixi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/payment_weixi" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/payment_iv_pay_weixi"
+                android:text="@string/pay_wechat"
+                android:textColor="@color/text_color_title"
+                android:textSize="@dimen/text_size_17" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/payment_iv_pay_weixi"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/payment_iv_pay_weixi"
+                android:text="@string/pay_wechat_hint"
+                android:textColor="@color/text_color_assist"
+                android:textSize="@dimen/text_size_13" />
+
+            <ImageView
+                android:id="@+id/payment_iv_select_weixi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/btn_select_single_normal"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+        
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_marginLeft="15dp"
+            android:contentDescription="@string/desc" />
+
+        <RelativeLayout 
+            android:id="@+id/payment_rl_select_union"
+            style="@style/common_vertical_item_layout" >
+
+            <ImageView
+                android:id="@+id/payment_iv_pay_union"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/payment_union" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/payment_iv_pay_union"
+                android:text="@string/pay_union"
+                android:textColor="@color/text_color_title"
+                android:textSize="@dimen/text_size_17" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/payment_iv_pay_union"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/payment_iv_pay_union"
+                android:text="@string/pay_union_hint"
+                android:textColor="@color/text_color_assist"
+                android:textSize="@dimen/text_size_13" />
+
+            <ImageView
+                android:id="@+id/payment_iv_select_union"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/btn_select_single_normal"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+    </LinearLayout>
+
+    <ImageView
+        style="@style/set_line_horizontal_bg"
+        android:contentDescription="@string/desc" />
+
+    <LinearLayout
+        android:id="@+id/payment_ll_pay_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/ui_bg_color_white"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <include layout="@layout/layout_bottom_button_one" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/payment_ll_pay_done"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/ui_bg_color_white"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <include layout="@layout/layout_bottom_button_two" />
+    </LinearLayout>
+
+</LinearLayout>

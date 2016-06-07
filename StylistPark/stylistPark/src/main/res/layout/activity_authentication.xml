@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_app"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/photo_clip_upload_hint"
+        android:textColor="@color/text_color_assist"
+        android:textSize="@dimen/text_size_14" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_frame_tv_white_gray_4" >
+
+            <ImageView
+                android:id="@+id/authentication_iv_preview"
+                android:layout_width="@dimen/collage_preview_side"
+                android:layout_height="@dimen/collage_preview_side"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/icon_authentication" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:id="@+id/authentication_iv_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/icon_photo_camera" />
+
+            <ImageView
+                android:id="@+id/authentication_iv_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/authentication_iv_camera"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/icon_photo_select" />
+        </RelativeLayout>
+    </LinearLayout>
+    
+    <EditText 
+        android:id="@+id/authentication_et_name"
+        style="@style/Register_EditText"
+        android:layout_marginTop="30dp"
+        android:hint="@string/money_auth_input_name_hint" />
+
+    <Button
+        android:id="@+id/authentication_btn_submit"
+        style="@style/Register_Button"
+        android:layout_marginTop="30dp"
+        android:text="@string/profile_submit_audit" />
+
+</LinearLayout>

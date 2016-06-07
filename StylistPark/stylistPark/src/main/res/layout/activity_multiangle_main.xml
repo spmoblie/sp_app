@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- selected product layout -->
+
+    <RelativeLayout
+        android:id="@+id/multiangle_InfoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:text="@string/collage_instru_add_photo"
+            android:textColor="@color/ui_bg_color_black" />
+    </RelativeLayout>
+    <!-- selected product layout -->
+
+    <LinearLayout
+        android:id="@+id/multiangle_selectedInfoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible" >
+
+        <!-- product info -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/multiangle_photoImageView"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/desc" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/multiangle_brandTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/multiangle_nameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/multiangle_priceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView 
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+
+        <!-- info -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/multiangle_desc1TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/collage_instru_photo_added_1"
+                    android:textColor="@color/ui_bg_color_black" />
+
+                <TextView
+                    android:id="@+id/multiangle_desc2TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/collage_instru_photo_added_2"
+                    android:textColor="@color/ui_bg_color_black" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/multiAngle_canvasLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/multiangle_selectedInfoLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <com.spshop.stylistpark.widgets.InterceptRelativeLayout
+                    android:id="@+id/multiAngle_cell1Layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/ui_bg_color_white" >
+
+                    <!--
+                       <com.spshop.stylistpark.collageviews.CollageView 
+					    android:id="@+id/multiAngle_cell1ImageView"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_centerInParent="true"
+					    android:src="@drawable/google_logo"
+					   	android:adjustViewBounds="true"
+					   />
+                    -->
+
+                </com.spshop.stylistpark.widgets.InterceptRelativeLayout>
+
+                <com.spshop.stylistpark.widgets.InterceptRelativeLayout
+                    android:id="@+id/multiAngle_cell2Layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/ui_bg_color_white" >
+
+                    <!--
+                       <com.spshop.stylistpark.collageviews.CollageView 
+					    android:id="@+id/multiAngle_cell2ImageView"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_centerInParent="true"
+					    android:src="@drawable/google_logo"
+					
+					   android:adjustViewBounds="true"
+					   />
+                    -->
+                    <!--
+                    <ImageView
+					    android:id="@+id/multiAngle_cell2ImageView"
+					    android:layout_width="match_parent"
+					    android:layout_height="wrap_content"
+					    android:src="@drawable/generator_filter_cloth"
+					   
+					android:background="@color/light_grey_221_221_221"
+					   />
+                    -->
+
+                </com.spshop.stylistpark.widgets.InterceptRelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <com.spshop.stylistpark.widgets.InterceptRelativeLayout
+                    android:id="@+id/multiAngle_cell3Layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/ui_bg_color_white" >
+
+                    <!--
+                       <com.spshop.stylistpark.collageviews.CollageView 
+					    android:id="@+id/multiAngle_cell3ImageView"
+					     android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_centerInParent="true"
+					    android:src="@drawable/google_logo"
+					
+					   android:adjustViewBounds="true"
+					   />
+                    -->
+
+                </com.spshop.stylistpark.widgets.InterceptRelativeLayout>
+
+                <com.spshop.stylistpark.widgets.InterceptRelativeLayout
+                    android:id="@+id/multiAngle_cell4Layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/ui_bg_color_white" >
+
+                    <!--
+                       <com.spshop.stylistpark.collageviews.CollageView 
+					    android:id="@+id/multiAngle_cell4ImageView"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_centerInParent="true"
+					    android:src="@drawable/google_logo"
+					
+					   android:adjustViewBounds="true"
+					   />
+                    -->
+
+                </com.spshop.stylistpark.widgets.InterceptRelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- grid line layout -->
+
+        <RelativeLayout
+            android:id="@+id/multiAngle_gridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/ui_bg_color_black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/ui_bg_color_black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_centerVertical="true"
+                android:background="@color/ui_bg_color_black" />
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:background="@color/ui_bg_color_black" />
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@color/ui_bg_color_black" />
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:background="@color/ui_bg_color_black" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/multiAngle_changeProductBtn"
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/shape_frame_bg_black_2"
+        android:text="@string/collage_change_item"
+        android:textColor="@color/ui_bg_color_white"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/multiAngle_testBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/shape_frame_bg_black_2"
+        android:text="Test Me"
+        android:textColor="@color/ui_bg_color_white"
+        android:visibility="gone" />
+
+</RelativeLayout>
