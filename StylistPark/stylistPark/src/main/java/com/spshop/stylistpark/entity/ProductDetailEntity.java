@@ -107,9 +107,9 @@ public class ProductDetailEntity extends BaseEntity{
 	private String isCollection;
 	
 	/**
-	 * 是否有视频
+	 * 是否有视频(0:无/1:有)
 	 */
-	private String isVideo;
+	private int isVideo;
 	
 	/**
 	 * 视频路径
@@ -347,12 +347,12 @@ public class ProductDetailEntity extends BaseEntity{
 	}
 
 
-	public String getIsVideo() {
+	public int getIsVideo() {
 		return isVideo;
 	}
 
 
-	public void setIsVideo(String isVideo) {
+	public void setIsVideo(int isVideo) {
 		this.isVideo = isVideo;
 	}
 

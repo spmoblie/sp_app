@@ -1,14 +1,5 @@
 package com.spshop.stylistpark.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -34,6 +25,15 @@ import android.view.WindowManager;
 
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
 
 public class BitmapUtil {
 	
@@ -135,7 +135,7 @@ public class BitmapUtil {
 	 * 
 	 * @param path 指定图片的绝对路径
 	 */
-	public static Bitmap getBitmap(String path) {
+	public static Bitmap getBitmap(String path) throws Exception {
 		return BitmapFactory.decodeFile(path);
 	}
 

@@ -146,7 +146,8 @@
 
             <RelativeLayout
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="10dp"
+                android:visibility="gone" >
 
                 <TextView
                     android:id="@+id/order_detail_tv_invoice"

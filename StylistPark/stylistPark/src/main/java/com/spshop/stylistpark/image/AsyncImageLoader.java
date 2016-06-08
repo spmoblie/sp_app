@@ -1,11 +1,5 @@
 package com.spshop.stylistpark.image;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.util.EntityUtils;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,6 +9,12 @@ import android.os.Message;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.util.EntityUtils;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * 执行图片下载任务并缓存到集合
@@ -134,19 +134,24 @@ public class AsyncImageLoader {
 		}
 		Bitmap bm = null;
 		if (readCach) {
-			// 判定缓存集合中是否存在图片,如果存在则直接返回
-			bm = caches.getBitmap(newPath);
-			if (bm != null) {
-				return bm;
-			}
-			// 判定SD卡中是否存在图片,如果存在则直接返回
-			File file = BitmapUtil.createPath(newPath, false);
-			if (file == null) {
-    			return bm;
-			}
-			bm = BitmapUtil.getBitmap(file.getAbsolutePath());
-			if (bm != null) {
-				return bm;
+			try {
+				// 判定缓存集合中是否存在图片,如果存在则直接返回
+				bm = caches.getBitmap(newPath);
+				if (bm != null) {
+                    return bm;
+                }
+				// 判定SD卡中是否存在图片,如果存在则直接返回
+				File file = BitmapUtil.createPath(newPath, false);
+				if (file == null) {
+                    return bm;
+                }
+				bm = BitmapUtil.getBitmap(file.getAbsolutePath());
+				if (bm != null) {
+                    return bm;
+                }
+			} catch (Exception e) {
+				ExceptionUtil.handle(context, e);
+				return  null;
 			}
 		}
 		// 缓存及SD卡都不存在图片则新建任务加入任务队列

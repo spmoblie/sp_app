@@ -252,7 +252,7 @@ public class JsonParser {
 		mainEn.setComputePrice(StringUtil.getInteger(goods.getString("bag_price")));
 		mainEn.setDiscount(goods.getString("sale"));
 		mainEn.setIsCollection(goods.getString("collect"));
-		mainEn.setIsVideo(goods.getString("is_video"));
+		mainEn.setIsVideo(StringUtil.getInteger(goods.getString("is_video")));
 		mainEn.setVideoUrl(goods.getString("goods_sn"));
 		
 		JSONObject brands = jsonObject.getJSONObject("brand");
@@ -337,7 +337,7 @@ public class JsonParser {
 		BrandEntity brandEn = new BrandEntity();
 		brandEn.setBrandId(data.getString("id"));
 		brandEn.setName(data.getString("name"));
-		brandEn.setDefineURL(data.getString("logo"));
+		brandEn.setDefineURL(data.getString("banner"));
 		brandEn.setDesc(data.getString("desc"));
 		return brandEn;
 	}
@@ -348,16 +348,15 @@ public class JsonParser {
 	public static GoodsCartEntity postCartProductData(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		int errCode = -1;
-		String errInfo = "";
 		if (jsonObject.has("error")) {
 			errCode = Integer.valueOf(jsonObject.getString("error"));
 		}
+		String errInfo = "";
+		if (jsonObject.has("message")) {
+			errInfo = jsonObject.getString("message");
+		}
 		GoodsCartEntity cartEn = new GoodsCartEntity(errCode, errInfo);
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			if (jsonObject.has("message")) {
-				errInfo = jsonObject.getString("message");
-				cartEn.setErrInfo(errInfo);
-			}
 			cartEn.setGoodsTotal(StringUtil.getInteger(jsonObject.getString("content")));
 		}
 		return cartEn;
@@ -825,26 +824,22 @@ public class JsonParser {
 		BalanceDetailEntity mainEn = new BalanceDetailEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
 			mainEn.setCountTotal(StringUtil.getInteger(jsonObject.getString("count")));
-			mainEn.setAmount(StringUtil.getInteger(jsonObject.getString("my_amount")));
+			mainEn.setAmount(StringUtil.getInteger(jsonObject.getString("amount")));
 			mainEn.setStatus(StringUtil.getInteger(jsonObject.getString("content")));
 			mainEn.setStatusHint(jsonObject.getString("message"));
 			List<BalanceDetailEntity> mainLists = new ArrayList<BalanceDetailEntity>();
-			JSONArray data = jsonObject.getJSONArray("data");
-			String currStr = "";
+			JSONArray data = jsonObject.getJSONArray("account");
 			if (data != null && !data.equals("")) {
 				BalanceDetailEntity en = null;
 				for (int i = 0; i < data.length(); i++) {
 					JSONObject item = data.getJSONObject(i);
 					en = new BalanceDetailEntity();
-					en.setChangeDesc(item.getString("title"));
-					en.setChangeTime(item.getString("time"));
+					en.setChangeDesc(item.getString("change_desc"));
+					en.setChangeTime(item.getString("change_time"));
 					en.setType(item.getString("type"));
-					en.setChangeMoney(item.getString("user_money"));
-					currStr = item.getString("currency");
-					en.setCurrency(currStr);
+					en.setChangeMoney(item.getString("amount"));
 					mainLists.add(en);
 				}
-				mainEn.setCurrency(currStr);
 				mainEn.setMainLists(mainLists);
 			}
 		}

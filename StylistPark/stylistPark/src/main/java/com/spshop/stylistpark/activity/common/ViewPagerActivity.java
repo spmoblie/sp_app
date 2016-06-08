@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.activity.common;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +29,9 @@ import com.spshop.stylistpark.widgets.DragImageView;
 import com.spshop.stylistpark.widgets.DragImageView.ImgOnClickListener;
 import com.spshop.stylistpark.widgets.DragImageView.ImgOnLongClickListener;
 import com.tencent.stat.StatService;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * 相片查看器
@@ -134,6 +134,7 @@ public class ViewPagerActivity extends BaseActivity {
 			imageView.setmActivity(this);
 			imageView.setScreen_H(AppApplication.screenHeight - state_height);
 			imageView.setScreen_W(AppApplication.screenWidth);
+			//imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 			// 加载图片对象
 			Bitmap bm = asyncImageLoader.loadImage(true, imgUrl, 0);
 			if (bm != null) {

@@ -74,7 +74,7 @@ public class DragImageView extends ImageView {
 	private long mTime = 0;
 	
 	private boolean isOnClick = false;// 单击事件
-	
+
 	private boolean isOnLongClick = false;// 长按事件
 	
 	private boolean isMultiTouch = false;// 多点触摸
@@ -121,7 +121,6 @@ public class DragImageView extends ImageView {
 
 		MIN_W = bitmap_W / 2;
 		MIN_H = bitmap_H / 2;
-
 	}
 
 	@Override
@@ -134,7 +133,6 @@ public class DragImageView extends ImageView {
 			start_Bottom = bottom;
 			start_Right = right;
 		}
-
 	}
 
 	/***
@@ -160,8 +158,9 @@ public class DragImageView extends ImageView {
 			break;
 
 		case MotionEvent.ACTION_MOVE:
-			onTouchMove(event);
 			if (Math.abs(mX - event.getX()) > 8 || Math.abs(mY - event.getY()) > 8) {
+				LogUtil.i("DragImageView", "ACTION_MOVE");
+				onTouchMove(event);
 				isOnClick = false;
 				isOnLongClick = false;
 			}

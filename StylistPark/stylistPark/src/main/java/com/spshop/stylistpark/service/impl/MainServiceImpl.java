@@ -572,11 +572,11 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public BalanceDetailEntity getBalanceDetailList(int count, int page) throws Exception {
-		String uri = AppConfig.URL_COMMON_MY_URL;
+		String uri = AppConfig.URL_COMMON_USER_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		params.add(new MyNameValuePair("app", "account_detail"));
-		params.add(new MyNameValuePair("size", String.valueOf(count)));
-		params.add(new MyNameValuePair("page", String.valueOf(page)));
+		params.add(new MyNameValuePair("act", "account_detail"));
+		params.add(new MyNameValuePair("size", String.valueOf(page)));
+		params.add(new MyNameValuePair("page", String.valueOf(count)));
 		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);

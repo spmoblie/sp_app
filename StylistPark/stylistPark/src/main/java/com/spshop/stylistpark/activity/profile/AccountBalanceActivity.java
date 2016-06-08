@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.activity.profile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +25,9 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountBalanceActivity extends BaseActivity implements OnClickListener{
 	
@@ -348,7 +348,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	 * 数量小于一页或没有更多数据时停止加载翻页数据
 	 */
 	private boolean isStop(){
-		return lv_lists_show.size() > 0 && (lv_lists_show.size() < Page_Count || lv_lists_show.size() == countTotal);
+		return lv_lists_show.size() > 0 && lv_lists_show.size() == countTotal;
 	}
 	
 }

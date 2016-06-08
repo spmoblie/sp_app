@@ -1,12 +1,12 @@
 package com.spshop.stylistpark.utils;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import android.content.Context;
 
 import com.spshop.stylistpark.AppConfig;
 import com.tencent.stat.StatService;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 public class ExceptionUtil {
 	

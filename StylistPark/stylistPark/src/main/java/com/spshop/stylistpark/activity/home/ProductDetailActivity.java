@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.home;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -77,6 +73,10 @@ import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.stat.StatService;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * "商品详情"Activity
@@ -921,7 +921,7 @@ public class ProductDetailActivity extends BaseActivity implements
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE:
 			if (mainEn != null) {
-				if (!StringUtil.isNull(mainEn.getIsVideo()) && !StringUtil.isNull(mainEn.getVideoUrl())) {
+				if (mainEn.getIsVideo() == 1 && !StringUtil.isNull(mainEn.getVideoUrl())) {
 					iv_video.setVisibility(View.VISIBLE);
 				}else {
 					iv_video.setVisibility(View.GONE);

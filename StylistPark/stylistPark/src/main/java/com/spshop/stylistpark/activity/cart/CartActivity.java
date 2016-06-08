@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.cart;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,6 +36,10 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * "购物车"Activity
@@ -491,7 +491,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	}
 
 	/**
-	 * 更新购物车中商品数量
+	 * 更新购物车中商品数据
 	 */
 	private void updateCartNum(int newSkuNum) {
 		lv_datas.get(mPosition).setCartNum(updateNum);

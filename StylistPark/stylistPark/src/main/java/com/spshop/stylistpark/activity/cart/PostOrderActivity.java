@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.activity.cart;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -37,12 +34,14 @@ import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
-import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.wxapi.WXPayEntryActivity;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressLint("NewApi")
 public class PostOrderActivity extends BaseActivity implements OnClickListener{

@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.activity.profile;
 
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +33,8 @@ import com.spshop.stylistpark.utils.TimeUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.wxapi.WXPayEntryActivity;
 import com.tencent.stat.StatService;
+
+import java.util.List;
 
 public class OrderDetailActivity extends BaseActivity implements OnClickListener{
 	
@@ -141,7 +141,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			if (addrEn != null) {
 				tv_name.setText(addrEn.getName());
 				tv_phone.setText(addrEn.getPhone());
-				tv_address.setText(addrEn.getCountry()+addrEn.getAddress());
+				tv_address.setText(addrEn.getAddress());
 			}
 			// 订单状态
 			ll_logistics.setVisibility(View.GONE);

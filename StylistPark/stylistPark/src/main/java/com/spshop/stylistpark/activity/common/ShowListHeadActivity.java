@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.common;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -42,6 +38,10 @@ import com.spshop.stylistpark.widgets.stikkyheader.HeaderStikkyAnimator;
 import com.spshop.stylistpark.widgets.stikkyheader.StikkyHeader;
 import com.spshop.stylistpark.widgets.stikkyheader.StikkyHeaderBuilder;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * "有头部跟随滑动的商品展示列表"

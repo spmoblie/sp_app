@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +18,9 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.slider.SlideView;
+
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
