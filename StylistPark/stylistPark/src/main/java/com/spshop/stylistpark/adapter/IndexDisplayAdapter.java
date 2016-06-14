@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
@@ -10,10 +8,12 @@ import android.view.ViewGroup;
 
 import com.spshop.stylistpark.entity.IndexDisplay;
 
+import java.util.List;
+
 public abstract class IndexDisplayAdapter extends AppBaseAdapter<Pair<String, List<? extends IndexDisplay>>> {
 
 	final String TAG="IndexDisplayAdapter";
-	
+
 	public interface OnIndexDisplayItemClick {
 		
 		public void onIndexDisplayItemClick(IndexDisplay indexDisplay);
@@ -23,7 +23,7 @@ public abstract class IndexDisplayAdapter extends AppBaseAdapter<Pair<String, Li
 	public IndexDisplayAdapter(Context mContext) {
 		super(mContext);
 	}
-	
+
 	@Override
 	public IndexDisplay getItem(int position) {
 	

@@ -93,7 +93,8 @@
                     android:background="@color/text_color_red_1"
                     android:gravity="center"
                     android:padding="2dp"
-                    android:text=""
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:textColor="@color/text_color_white"
                     android:textSize="@dimen/text_size_08"
                     android:visibility="gone" />

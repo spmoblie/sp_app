@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.View;
@@ -19,6 +17,8 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.utils.StringUtil;
+
+import java.util.List;
 
 /**
  * 商品列表GridView适配器 

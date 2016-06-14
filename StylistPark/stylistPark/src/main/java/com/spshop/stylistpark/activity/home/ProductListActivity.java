@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.home;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -48,6 +44,10 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshGridView;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * "商品列表"Activity

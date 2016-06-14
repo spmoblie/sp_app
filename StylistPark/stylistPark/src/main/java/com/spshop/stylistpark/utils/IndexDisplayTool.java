@@ -1,16 +1,17 @@
 package com.spshop.stylistpark.utils;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 import android.content.Context;
 import android.util.Pair;
 import android.util.SparseArray;
 
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.IndexDisplay;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 public class IndexDisplayTool {
 	
@@ -80,12 +81,17 @@ public class IndexDisplayTool {
 	 * 													 "":[Bcc,Buu] }
 	 */
 	public static ArrayList<Pair<String, List<? extends IndexDisplay>>> buildIndexListChineseAndEngEmptyHeader(Context context,List<? extends IndexDisplay> dataList){
-		return buildIndexListChineseAndEng(context,dataList,true);
+		return buildIndexListChineseAndEng(context, dataList, null, true);
 	}
 	public static ArrayList<Pair<String, List<? extends IndexDisplay>>> buildIndexListChineseAndEng(Context context,List<? extends IndexDisplay> dataList){
-		return buildIndexListChineseAndEng(context,dataList,false);
+		return buildIndexListChineseAndEng(context, dataList, null, false);
 	}
-	private static ArrayList<Pair<String, List<? extends IndexDisplay>>> buildIndexListChineseAndEng(Context context,List<? extends IndexDisplay> dataList,boolean emptyHeader) {
+	public static ArrayList<Pair<String, List<? extends IndexDisplay>>> buildIndexListChineseAndEng(
+			Context context,List<? extends IndexDisplay> dataList, HashMap<String, Integer> hm_index){
+		return buildIndexListChineseAndEng(context, dataList, hm_index, false);
+	}
+	private static ArrayList<Pair<String, List<? extends IndexDisplay>>> buildIndexListChineseAndEng(
+			Context context, List<? extends IndexDisplay> dataList, HashMap<String, Integer> hm_index, boolean emptyHeader) {
 		ArrayList<Pair<String, List<? extends IndexDisplay>>> result = new ArrayList<Pair<String, List<? extends IndexDisplay>>>();
 
 		//ArrayList<StationDAO> stationList = getStationList(keyword);
@@ -103,16 +109,21 @@ public class IndexDisplayTool {
 			int i = 0;
 			ArrayList<IndexDisplay> l = null;
 			String strokeString;
+			if (hm_index != null) {
+				hm_index.clear();
+			}
 			for (IndexDisplay s : dataList) {
 				if (index.indexOfKey(i) >= 0) {
 					l = new ArrayList<IndexDisplay>();
 					strokeString = index.get(i);
+					if (hm_index != null && !hm_index.containsKey(strokeString)) {
+						hm_index.put(strokeString, i);
+					}
 					if(emptyHeader){
 						result.add(new Pair<String, List<? extends IndexDisplay>>("", l));
 					}else{
 						result.add(new Pair<String, List<? extends IndexDisplay>>(strokeString, l));
 					}
-					
 				}
 				l.add(s);
 				i++;
@@ -121,9 +132,7 @@ public class IndexDisplayTool {
 			e.printStackTrace();
 			result=null;
 		}
-
 		return result;
-
 	}
 	
 	public static List<IndexDisplay> extractNumItem(List<? extends IndexDisplay> dataList){

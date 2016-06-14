@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -16,6 +14,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.MemberEntity;
+
+import java.util.List;
 
 /**
  * 会员列表适配器
@@ -134,7 +134,7 @@ public class MemberListAdapter extends BaseAdapter {
 		holder.tv_last_login.setText(data.getLastLogin());
 		holder.tv_order_count.setText(data.getOrderCount());
 		holder.tv_order_money.setText(data.getOrderMoney());
-		
+
 		ImageLoader.getInstance().displayImage(data.getHeadImg(), holder.iv_head, options);
 		holder.iv_head.setOnClickListener(new OnClickListener() {
 			

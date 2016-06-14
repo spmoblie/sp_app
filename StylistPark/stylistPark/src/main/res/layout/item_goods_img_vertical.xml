@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal" >
 
         <ImageView
@@ -19,12 +20,11 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:contentDescription="@string/desc"
-            android:scaleType="fitXY"
             android:src="@drawable/bg_img_icon_120" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingLeft="15dp" >
 
             <TextView

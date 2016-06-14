@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.profile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -12,8 +8,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +24,10 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * "会员列表"Activity
@@ -115,13 +113,6 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initRaidoGroup() {
-		RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		params.setMargins(20, 0, 20, 0);
-		btn_1.setLayoutParams(params);
-		btn_2.setLayoutParams(params);
-		btn_3.setLayoutParams(params);
-		btn_4.setLayoutParams(params);
-		
 		btn_1.setText(getString(R.string.member_top_tab_1));
 		btn_1.setOnClickListener(this);
 		btn_2.setText(getString(R.string.member_top_tab_2));

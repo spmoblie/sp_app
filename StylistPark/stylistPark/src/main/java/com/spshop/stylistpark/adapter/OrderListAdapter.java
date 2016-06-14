@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +19,8 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.utils.LangCurrTools;
+
+import java.util.List;
 
 /**
  * 我的订单列表适配器

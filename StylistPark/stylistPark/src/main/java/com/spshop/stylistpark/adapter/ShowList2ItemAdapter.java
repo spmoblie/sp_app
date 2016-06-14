@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.View;
@@ -20,6 +18,8 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.utils.StringUtil;
+
+import java.util.List;
 
 public class ShowList2ItemAdapter extends BaseAdapter{
 	

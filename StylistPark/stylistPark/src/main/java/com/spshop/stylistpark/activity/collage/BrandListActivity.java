@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.collage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +28,10 @@ import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.IndexDisplayTool;
 import com.spshop.stylistpark.utils.LogUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class BrandListActivity extends BaseActivity {
 

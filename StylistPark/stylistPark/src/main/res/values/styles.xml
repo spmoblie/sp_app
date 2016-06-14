@@ -76,7 +76,7 @@
     <!-- 设置页面布局样式 -->
     <style name="setting_lay_item">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dip</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:background">@color/ui_bg_color_white</item>
     </style>
 
@@ -156,11 +156,9 @@
     
     <!-- Top RadioGroup样式 -->
     <style name="RadioGroup_RadioButton">
-        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginLeft">15dp</item>
-        <item name="android:layout_marginRight">15dp</item>
         <item name="android:background">@drawable/btn_checked_bg_line</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
@@ -186,6 +184,8 @@
         <item name="android:drawableLeft">@drawable/icon_support</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:gravity">center</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/text_size_10</item>
         <item name="android:textColor">@color/text_color_assist</item>
     </style>
@@ -196,6 +196,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:drawablePadding">10dp</item>
         <item name="android:gravity">center</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/text_size_12</item>
         <item name="android:textColor">@color/text_color_content</item>
     </style>
@@ -324,9 +326,9 @@
     
     <!-- 通用红点数字提醒TextView样式 -->
     <style name="commom_warn_red_number_text">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/index_wran_icon</item>
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_height">15dp</item>
+        <item name="android:background">@drawable/shape_frame_bg_red_90</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:gravity">center</item>
@@ -342,6 +344,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/text_size_12</item>
         <item name="android:textColor">@color/text_color_assist</item>
     </style>

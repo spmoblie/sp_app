@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.utils;
 
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -12,6 +10,8 @@ import android.location.LocationManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+
+import java.util.Locale;
 
 /**
  * 手机硬件配置信息工具类

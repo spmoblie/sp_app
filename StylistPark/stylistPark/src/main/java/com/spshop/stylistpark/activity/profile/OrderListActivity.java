@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.profile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +11,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,6 +33,10 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshLis
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.spshop.stylistpark.wxapi.WXPayEntryActivity;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * "订单列表"Activity
@@ -139,29 +137,21 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initRaidoGroup() {
-		RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		if (rootType == 0) {
-			params.setMargins(20, 0, 20, 0);
 			btn_1.setText(getString(R.string.order_top_tab_1));
 			btn_2.setText(getString(R.string.order_top_tab_2));
 			btn_3.setText(getString(R.string.order_top_tab_3));
 			btn_4.setText(getString(R.string.order_top_tab_4));
 			
-			btn_5.setLayoutParams(params);
 			btn_5.setVisibility(View.VISIBLE);
 			btn_5.setText(getString(R.string.order_top_tab_5));
 			btn_5.setOnClickListener(this);
 		}else { //会员订单
-			params.setMargins(40, 0, 40, 0);
 			btn_1.setText(getString(R.string.order_top_tab_1));
 			btn_2.setText(getString(R.string.profile_done));
 			btn_3.setText(getString(R.string.profile_wait_commission));
 			btn_4.setText(getString(R.string.order_top_tab_4));
 		}
-		btn_1.setLayoutParams(params);
-		btn_2.setLayoutParams(params);
-		btn_3.setLayoutParams(params);
-		btn_4.setLayoutParams(params);
 		btn_1.setOnClickListener(this);
 		btn_2.setOnClickListener(this);
 		btn_3.setOnClickListener(this);

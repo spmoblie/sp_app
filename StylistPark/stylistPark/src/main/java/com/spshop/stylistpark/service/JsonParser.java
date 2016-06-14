@@ -87,13 +87,17 @@ public class JsonParser {
 			childLists1 = new ArrayList<CategoryListEntity>();
 			JSONArray data1 = item.getJSONArray("list");
 			if (data1 != null) {
+				int show = 0;
 				for (int j = 0; j < data1.length(); j++) {
 					JSONObject item1 = data1.getJSONObject(j);
 					child1 = new CategoryListEntity();
 					child1.setTypeId(StringUtil.getInteger((item1.getString("id"))));
 					child1.setImageUrl(item1.getString("cat_ico"));
 					child1.setName(item1.getString("name"));
-					childLists1.add(child1);
+					show = StringUtil.getInteger(item1.getString("show_in_nav"));
+					if (show == 1) {
+						childLists1.add(child1);
+					}
 					// 解析第二子分类
 					//childLists2 = new ArrayList<CategoryListEntity>();
 					JSONArray data2 = item1.getJSONArray("list");
@@ -105,7 +109,10 @@ public class JsonParser {
 							child2.setImageUrl(item2.getString("cat_ico"));
 							child2.setName(item2.getString("name"));
 							//childLists2.add(child2);
-							childLists1.add(child2);
+							show = StringUtil.getInteger(item2.getString("show_in_nav"));
+							if (show == 1) {
+								childLists1.add(child2);
+							}
 						}
 					}
 					//child1.setChildLists(childLists2);
@@ -126,9 +133,7 @@ public class JsonParser {
 		CategoryListEntity mainEn;
 		BrandEntity brandEn;
 		List<BrandEntity> brandLists;
-		JSONObject jsonObject = new JSONObject(jsonStr);
-		// 获取品牌分类
-		JSONObject brand = jsonObject.getJSONObject("brandList");
+		JSONObject brand = new JSONObject(jsonStr);
 		// 解析父分类
 		mainEn = new CategoryListEntity();
 		mainEn.setTypeId(StringUtil.getInteger(brand.getString("id")));

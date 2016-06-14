@@ -383,9 +383,9 @@
     <string name="profile_done">Done</string>
     <string name="profile_wait_commission">Commission</string>
     <string name="profile_wait_pay">Wait Pay</string>
-    <string name="profile_wait_delivery">Wait Delivery</string>
-    <string name="profile_wait_receive">Wait Receive</string>
-    <string name="profile_repair_return">Return Goods</string>
+    <string name="profile_wait_delivery">Delivery</string>
+    <string name="profile_wait_receive">Receive</string>
+    <string name="profile_repair_return">Return</string>
     <string name="profile_my_address">My Address</string>
     <string name="profile_account_money">Account Balance</string>
     <string name="profile_bonus">My Coupon</string>

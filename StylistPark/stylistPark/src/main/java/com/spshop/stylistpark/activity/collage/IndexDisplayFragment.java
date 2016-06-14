@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.activity.collage;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -18,24 +16,35 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.spshop.stylistpark.R;
+import com.spshop.stylistpark.adapter.ContentAdapter;
 import com.spshop.stylistpark.adapter.IndexDisplayAdapter;
 import com.spshop.stylistpark.entity.IndexDisplay;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.widgets.SectionIndexerView;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class IndexDisplayFragment extends BaseFragment {
 
 	private static final String TAG = "IndexDisplayFragment";
+	private static final String[] indexs = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I",
+			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"};
 	public static final long LIST_POSITION_DIALOG_DELAY_TIME = 1000;
 
 	ListView indexDisplay_ListView;
+	SectionIndexerView mSection;
 	View headerView;
-	IndexDisplayAdapter adapter;
+	IndexDisplayAdapter indexAdapter;
 	OnItemClickListener onItemClickListener;
 	List<Pair<String, List<? extends IndexDisplay>>> dataList;
+	HashMap<String, Integer> indexHm;
 	TextView indexTextView;
 	Handler mHandler;
 	boolean mReady;
 	boolean mShowing;
+	boolean isShowRight = false;
 	WindowManager mWindowManager;
 	RemoveWindow mRemoveWindow = new RemoveWindow();
 
@@ -53,7 +62,7 @@ public class IndexDisplayFragment extends BaseFragment {
 	}
 
 	public void setAdapter(IndexDisplayAdapter adapter) {
-		this.adapter = adapter;
+		this.indexAdapter = adapter;
 	}
 
 	public void setAdapterOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -65,17 +74,22 @@ public class IndexDisplayFragment extends BaseFragment {
 	}
 
 	public void updateDataList(List<Pair<String, List<? extends IndexDisplay>>> dataList) {
-		if (adapter != null) {
-			adapter.setDataList(dataList);
-			adapter.notifyDataSetChanged();
-			indexDisplay_ListView.setAdapter(adapter);
+		if (indexAdapter != null) {
+			indexAdapter.setDataList(dataList);
+			indexAdapter.notifyDataSetChanged();
+			indexDisplay_ListView.setAdapter(indexAdapter);
 		}
 	}
 
+	public void setIndexHashMap(HashMap<String, Integer> indexHm) {
+		this.indexHm = indexHm;
+		isShowRight = true;
+	}
+
 	public void refreshListView() {
-		if (indexDisplay_ListView != null && adapter != null) {
-			indexDisplay_ListView.setAdapter(adapter);
-			adapter.notifyDataSetChanged();
+		if (indexDisplay_ListView != null && indexAdapter != null) {
+			indexDisplay_ListView.setAdapter(indexAdapter);
+			indexAdapter.notifyDataSetChanged();
 		}
 	}
 
@@ -107,9 +121,38 @@ public class IndexDisplayFragment extends BaseFragment {
 		if (onItemClickListener != null) {
 			indexDisplay_ListView.setOnItemClickListener(onItemClickListener);
 		}
+		mSection = (SectionIndexerView) view.findViewById(R.id.indexDisplay_section_indexer);
+		initSection();
 		indexTextView = (TextView) getActivity().getLayoutInflater().inflate(R.layout.item_list_position, null);
 		indexTextView.setVisibility(View.INVISIBLE);
 		return view;
+	}
+
+	private void initSection() {
+		List<String> rightList = Arrays.asList(indexs);
+		ContentAdapter adapter = new ContentAdapter(getActivity(), android.R.layout.simple_list_item_1, rightList);
+		mSection.setSectionIndexer(adapter);
+		mSection.setSectionListener(new SectionIndexerView.SectionIndexerListener() {
+			@Override
+			public void onSectionChange(int status, int position, Object newSection) {
+				String keyStr = "";
+				if (position >= 0 && position < indexs.length) {
+					keyStr = indexs[position];
+				}
+				if (indexHm != null && indexHm.containsKey(keyStr)) {
+					int selectId = indexHm.get(keyStr);
+					indexDisplay_ListView.setSelection(selectId);
+				}
+				if (!mShowing) {
+					mShowing = true;
+					indexTextView.setVisibility(View.VISIBLE);
+				}
+				indexTextView.setText(keyStr);
+				mHandler.removeCallbacks(mRemoveWindow);
+				mHandler.postDelayed(mRemoveWindow, LIST_POSITION_DIALOG_DELAY_TIME);
+				mPrevString = keyStr;
+			}
+		});
 	}
 
 	@Override
@@ -117,7 +160,7 @@ public class IndexDisplayFragment extends BaseFragment {
 		super.onActivityCreated(savedInstanceState);
 
 		LogUtil.i(TAG, "onActivityCreated() called");
-		if (adapter == null) {
+		if (indexAdapter == null) {
 			return;
 		}
 		if (onItemClickListener != null) {
@@ -127,8 +170,8 @@ public class IndexDisplayFragment extends BaseFragment {
 			indexDisplay_ListView.addHeaderView(headerView);
 		}
 		if (dataList != null) {
-			adapter.setDataList(dataList);
-			indexDisplay_ListView.setAdapter(adapter);
+			indexAdapter.setDataList(dataList);
+			indexDisplay_ListView.setAdapter(indexAdapter);
 		}
 
 		mWindowManager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
@@ -153,12 +196,12 @@ public class IndexDisplayFragment extends BaseFragment {
 						LogUtil.i(TAG, "firstVisibleItem=" + firstVisibleItem);
 						if (!mReady)
 							return;
-						if (adapter == null)
+						if (indexAdapter == null)
 							return;
 						// String groupTitle=dataList.get(firstVisibleItem).getRouteNo().substring(0,1);
 						// String groupTitle=adapter.getFirstChar(firstVisibleItem);
-						String groupTitle = adapter.getIndexChar(firstVisibleItem);
-						if (groupTitle != null && !groupTitle.equals("")) {
+						String groupTitle = indexAdapter.getIndexChar(firstVisibleItem);
+						if (!isShowRight && groupTitle != null && !groupTitle.equals("")) {
 							if (!mShowing && !groupTitle.equalsIgnoreCase(mPrevString)) {
 								mShowing = true;
 								indexTextView.setVisibility(View.VISIBLE);
@@ -180,6 +223,11 @@ public class IndexDisplayFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		if (isShowRight) {
+			mSection.setVisibility(View.VISIBLE);
+		}else {
+			mSection.setVisibility(View.GONE);
+		}
 	}
 
 	@Override

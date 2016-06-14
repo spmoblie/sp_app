@@ -132,7 +132,7 @@ public class AppApplication extends Application implements OnDataListener{
 			.showImageOnFail(drawableId)
 			.cacheInMemory(true) // 内存缓存
 			.cacheOnDisc(true) // sdcard缓存
-			.imageScaleType(ImageScaleType.EXACTLY)
+			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 			.bitmapConfig(Bitmap.Config.RGB_565).build();
 		}else {
 			imageOptions = new DisplayImageOptions.Builder()
@@ -141,7 +141,7 @@ public class AppApplication extends Application implements OnDataListener{
 			.showImageOnFail(drawableId)
 			.cacheInMemory(true) // 内存缓存
 			.cacheOnDisc(true) // sdcard缓存
-			.imageScaleType(ImageScaleType.EXACTLY)
+			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 			.bitmapConfig(Bitmap.Config.RGB_565).build();
 		}
 		return imageOptions;

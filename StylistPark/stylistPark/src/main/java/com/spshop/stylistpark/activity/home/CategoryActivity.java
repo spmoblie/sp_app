@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.activity.home;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +38,10 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.tencent.stat.StatService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * "商品分类"Activity
  */
@@ -69,6 +70,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	private List<CategoryListEntity> lv_lists = new ArrayList<CategoryListEntity>();
 	private List<CategoryListEntity> gv_lists = new ArrayList<CategoryListEntity>();
 	private List<BrandEntity> brandList = new ArrayList<BrandEntity>();
+	private HashMap<String, Integer> hm_index = new HashMap<String, Integer>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -182,8 +184,9 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 
 		});
 		indexDisplayFragment = IndexDisplayFragment.newInstance();
-		indexDisplayFragment.setDataList(IndexDisplayTool.buildIndexListChineseAndEng(this, brandList));
+		indexDisplayFragment.setDataList(IndexDisplayTool.buildIndexListChineseAndEng(this, brandList, hm_index));
 		indexDisplayFragment.setAdapter(adapter);
+		indexDisplayFragment.setIndexHashMap(hm_index);
 
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();

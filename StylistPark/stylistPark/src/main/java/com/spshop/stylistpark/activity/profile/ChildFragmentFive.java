@@ -136,27 +136,43 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			ImageLoader.getInstance().displayImage(infoEn.getHeadImg(), iv_info, options);
 			tv_money.setText(infoEn.getMoney());
 			tv_bonus.setText(infoEn.getBonus());
-			if (infoEn.getOrder_1() > 0) { //待付款
+			int order_1 = infoEn.getOrder_1();
+			if (order_1 > 0) { //待付款
+				if (order_1 > 99) {
+					order_1 = 99;
+				}
 				tv_pay_num.setVisibility(View.VISIBLE);
-				tv_pay_num.setText(String.valueOf(infoEn.getOrder_1()));
+				tv_pay_num.setText(String.valueOf(order_1));
 			}else {
 				tv_pay_num.setVisibility(View.GONE);
 			}
-			if (infoEn.getOrder_2() > 0) { //待发货
+			int order_2 = infoEn.getOrder_2();
+			if (order_2 > 0) { //待发货
+				if (order_2 > 99) {
+					order_2 = 99;
+				}
 				tv_delivery_num.setVisibility(View.VISIBLE);
-				tv_delivery_num.setText(String.valueOf(infoEn.getOrder_2()));
+				tv_delivery_num.setText(String.valueOf(order_2));
 			}else {
 				tv_delivery_num.setVisibility(View.GONE);
 			}
-			if (infoEn.getOrder_3() > 0) { //待收货
+			int order_3 = infoEn.getOrder_3();
+			if (order_3 > 0) { //待收货
+				if (order_3 > 99) {
+					order_3 = 99;
+				}
 				tv_receive_num.setVisibility(View.VISIBLE);
-				tv_receive_num.setText(String.valueOf(infoEn.getOrder_3()));
+				tv_receive_num.setText(String.valueOf(order_3));
 			}else {
 				tv_receive_num.setVisibility(View.GONE);
 			}
-			if (infoEn.getOrder_4() > 0) { //返修、退换
+			int order_4 = infoEn.getOrder_4();
+			if (order_4 > 0) { //返修、退换
+				if (order_4 > 99) {
+					order_4 = 99;
+				}
 				tv_return_num.setVisibility(View.VISIBLE);
-				tv_return_num.setText(String.valueOf(infoEn.getOrder_4()));
+				tv_return_num.setText(String.valueOf(order_4));
 			}else {
 				tv_return_num.setVisibility(View.GONE);
 			}

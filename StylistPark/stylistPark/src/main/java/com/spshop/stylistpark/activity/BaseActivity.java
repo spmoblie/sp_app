@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.activity;
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -55,6 +52,9 @@ import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 所有Activity的父类

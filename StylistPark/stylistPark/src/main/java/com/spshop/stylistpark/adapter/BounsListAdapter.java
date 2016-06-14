@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +12,8 @@ import android.widget.TextView;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.BounsEntity;
 import com.spshop.stylistpark.utils.StringUtil;
+
+import java.util.List;
 
 /**
  * 红包列表适配器
