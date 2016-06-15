@@ -19,7 +19,7 @@ public class SectionIndexerView extends View implements OnTouchListener {
     private SectionIndexer mSectionIndex;
 
     /**
-     * 背景画笔
+     * 默认背景画笔
      */
     private Paint mBackgroundPaint;
 
@@ -57,7 +57,6 @@ public class SectionIndexerView extends View implements OnTouchListener {
      * 字母显示间隔
      */
     private int mAlphaInterval;
-
 
     private boolean mBackground = true;
 
@@ -97,8 +96,8 @@ public class SectionIndexerView extends View implements OnTouchListener {
          */
         mBackgroundPaint = new Paint();
         mBackgroundPaint.setAntiAlias(true);
-        mBackgroundPaint.setColor(Color.BLACK);
-        mBackgroundPaint.setAlpha(50);
+        mBackgroundPaint.setColor(Color.WHITE);
+        mBackgroundPaint.setAlpha(100);
 
         /**
          *
@@ -190,9 +189,9 @@ public class SectionIndexerView extends View implements OnTouchListener {
         for (int i = 0; i < mSections.length; i++) {
 
             if (mCurrentSection == i)
-                mAlphaPaint.setColor(Color.BLACK);
+                mAlphaPaint.setColor(Color.RED);
             else
-                mAlphaPaint.setColor(Color.WHITE);
+                mAlphaPaint.setColor(Color.BLACK);
 
             y += mAlphaPadding + mAlphaInterval;
             canvas.drawText(mSections[i].toString(), x, y, mAlphaPaint);
@@ -206,7 +205,7 @@ public class SectionIndexerView extends View implements OnTouchListener {
 
 
         int index = (int) event.getY() / (mHeight + mAlphaInterval);
-        int status = 0;
+        int status = 2;
 
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
@@ -242,8 +241,7 @@ public class SectionIndexerView extends View implements OnTouchListener {
 
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right,
-                            int bottom) {
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         /**
          * 	view 的高度大于列表显示的高度, 在每一个字母之间加入一些间隔,
          * 		使每一个字母对齐,并填满整个view.

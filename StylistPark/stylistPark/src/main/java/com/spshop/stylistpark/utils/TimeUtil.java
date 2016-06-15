@@ -44,19 +44,21 @@ public class TimeUtil {
 	}
 	
 	/**
-	 * 将秒格式的时间换成自定义的格式：[23,59,59]
+	 * 将秒格式的时间换成自定义的格式：[1,23,59,59]
 	 */
 	public static Integer[] getArrayIntegerTime(Context context, long time){
-		Integer[] times = new Integer[3];
+		Integer[] times = new Integer[4];
+		int day = (int) (time / 86400);
 		long dayTime = time % 86400;
 		int hour = (int) (dayTime / 3600);
 		long hourTime = dayTime % 3600;
 		int minute = (int) (hourTime / 60);
 		long minuteTime = hourTime % 60;
 		int second = (int) minuteTime;
-		times[0] = hour;
-		times[1] = minute;
-		times[2] = second;
+		times[0] = day;
+		times[1] = hour;
+		times[2] = minute;
+		times[3] = second;
 		return times;
 	}
 	

@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.activity.common;
 
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +17,8 @@ import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.tencent.stat.StatService;
+
+import java.util.List;
 
 /**
  * 选择列表Activity
@@ -59,7 +59,8 @@ public class SelectListActivity extends BaseActivity {
 		if (data != null) {
 			setTitle(data.getTypeName()); //标题
 			selectEn = data.getSelectEn();
-			if (dataType == SelectListAdapter.DATA_TYPE_4) {
+			if (dataType == SelectListAdapter.DATA_TYPE_4
+					| dataType == SelectListAdapter.DATA_TYPE_7) {
 				setBtnRight(getString(R.string.clean)); //右边按钮
 				if (selectEn == null) {
 					setBtnRightGone(View.GONE);
@@ -77,6 +78,10 @@ public class SelectListActivity extends BaseActivity {
 		super.OnListenerRight();
 		if (dataType == SelectListAdapter.DATA_TYPE_4 && ProductListActivity.instance != null) {
 			ProductListActivity.instance.updateScreenParameter(null);
+			finish();
+		}
+		if (dataType == SelectListAdapter.DATA_TYPE_7 && ShowListHeadActivity.instance != null) {
+			ShowListHeadActivity.instance.updateScreenParameter(null);
 			finish();
 		}
 	}
@@ -120,6 +125,16 @@ public class SelectListActivity extends BaseActivity {
 					break;
 				case SelectListAdapter.DATA_TYPE_6: //PostOrderActivity --> SelectListActivity
 					isChange = true;
+					finish();
+					break;
+				case SelectListAdapter.DATA_TYPE_7: //ShowListHeadActivity --> SelectListActivity
+					if (ShowListHeadActivity.instance != null) {
+						if (selectEn != null && selectEn.getChildId() != 0) {
+							ShowListHeadActivity.instance.updateScreenParameter(selectEn);
+						}else {
+							ShowListHeadActivity.instance.updateScreenParameter(null);
+						}
+					}
 					finish();
 					break;
 				}

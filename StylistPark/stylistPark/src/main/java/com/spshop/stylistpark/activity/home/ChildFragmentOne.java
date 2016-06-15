@@ -448,10 +448,10 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			String hour = "00";
 			String minute = "00";
 			String second = "00";
-        	if (times != null && times.length > 2) {
-        		hour = changeTime(times[0]);
-        		minute = changeTime(times[1]);
-        		second = changeTime(times[2]);
+        	if (times != null && times.length > 3) {
+        		hour = changeTime(times[1]);
+        		minute = changeTime(times[2]);
+        		second = changeTime(times[3]);
 			}
         	tv_time_hour.setText(hour);
         	tv_time_minute.setText(minute);

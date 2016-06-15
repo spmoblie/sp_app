@@ -8,7 +8,12 @@ public class BrandEntity implements IndexDisplay, Parcelable {
 	String brandId;
 	String name;
 	String defineUrl;
+	String logoUrl;
 	String desc;
+	String favourable;
+	long endTime;
+
+	SelectListEntity selectEn;
 
 	public BrandEntity() {
 	}
@@ -37,12 +42,44 @@ public class BrandEntity implements IndexDisplay, Parcelable {
 		return defineUrl;
 	}
 
+	public String getLogoUrl() {
+		return logoUrl;
+	}
+
+	public void setLogoUrl(String logoUrl) {
+		this.logoUrl = logoUrl;
+	}
+
+	public String getFavourable() {
+		return favourable;
+	}
+
+	public void setFavourable(String favourable) {
+		this.favourable = favourable;
+	}
+
+	public long getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(long endTime) {
+		this.endTime = endTime;
+	}
+
 	public String getDesc() {
 		return desc;
 	}
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public SelectListEntity getSelectEn() {
+		return selectEn;
+	}
+
+	public void setSelectEn(SelectListEntity selectEn) {
+		this.selectEn = selectEn;
 	}
 
 	@Override

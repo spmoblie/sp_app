@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +17,8 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.utils.StringUtil;
 
+import java.util.List;
+
 /**
  * 选择列表适配器
  */
@@ -31,7 +31,8 @@ public class SelectListAdapter extends BaseAdapter{
 	public static final int DATA_TYPE_4 = 4; //ProductListActivity --> SelectListActivity
 	public static final int DATA_TYPE_5 = 5; //PersonalActivity --> SelectListActivity
 	public static final int DATA_TYPE_6 = 6; //PostOrderActivity --> SelectListActivity
-	
+	public static final int DATA_TYPE_7 = 7; //ShowListHeadActivity --> SelectListActivity
+
 	private Context context;
 	private SelectListEntity selectData;
 	private List<SelectListEntity> datas;
@@ -128,6 +129,8 @@ public class SelectListAdapter extends BaseAdapter{
 			}
 			break;
 		case DATA_TYPE_2: //ScreenListActivity --> SelectListActivity
+		case DATA_TYPE_4: //ProductListActivity --> SelectListActivity
+		case DATA_TYPE_7: //ShowListHeadActivity --> SelectListActivity
 			itemChangeTextColor(holder, data);
 			break;
 		case DATA_TYPE_3: //ProductListActivity
@@ -137,12 +140,7 @@ public class SelectListAdapter extends BaseAdapter{
 			holder.iv_logo.setVisibility(View.GONE);
 			holder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_gray));
 			break;
-		case DATA_TYPE_4: //ProductListActivity --> SelectListActivity
-			itemChangeTextColor(holder, data);
-			break;
 		case DATA_TYPE_5: //PersonalActivity --> SelectListActivity
-			itemChangeImgTick(holder, data);
-			break;
 		case DATA_TYPE_6: //PostOrderActivity --> SelectListActivity
 			itemChangeImgTick(holder, data);
 			break;

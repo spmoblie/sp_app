@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,13 +25,16 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
+import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.adapter.ShowList2ItemAdapter;
 import com.spshop.stylistpark.entity.BrandEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
+import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
+import com.spshop.stylistpark.utils.TimeUtil;
 import com.spshop.stylistpark.widgets.listener.OnLoadMoreListener;
 import com.spshop.stylistpark.widgets.listener.OnMyScrollListener;
 import com.spshop.stylistpark.widgets.stikkyheader.AnimatorBuilder;
@@ -51,6 +55,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	
 	private static final String TAG = "ShowListHeadActivity";
 	public static ShowListHeadActivity instance = null;
+	public boolean isUpdate = false;
 	public static final int PAGE_ROOT_CODE_1 = 1001; //CategoryActivity 或 ProductDetailActivity
 	
 	private static final int Page_Count = 40;  //每页加载条数
@@ -63,16 +68,19 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private int topType = 1; //Top标记(1:默认/3:价格)
 	private int isStock = 0; //有货标记(0:默认/1:有货)
 	private int goodsTotal = 0; //商品总数量
+	private long endTime = 0;
 	private boolean btn_3_flag = true; //价格排序控制符(true:价格升序/false:价格降序)
 	private boolean isLoadOk = true;
 	private boolean isFrist = true; //识别是否第一次打开页面
 	
-	private LinearLayout ll_stikky_main, ll_foot_main;
+	private LinearLayout ll_stikky_main, ll_favourable_time, ll_foot_main;
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
 	private Button btn_screen;
-	private ImageView iv_to_top, iv_brand_img;
-	private TextView tv_brand_desc, tv_unfold, tv_radio_other, tv_footer, tv_page_num;
+	private ImageView iv_to_top, iv_brand_img, iv_brand_logo;
+	private TextView tv_brand_name, tv_brand_desc, tv_unfold, tv_radio_other, tv_footer, tv_page_num;
+	private TextView tv_favourable_title, tv_time_day, tv_time_hour, tv_time_minute, tv_time_second;
 	private Drawable rank_up, rank_down, rank_normal, select_yes, select_no;
+	private MyCount mc;
 	private StikkyHeader lv_header;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
@@ -81,10 +89,13 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	
 	private int pageCode = PAGE_ROOT_CODE_1;
 	private int brandId = 0;
-	private int logo_height, desc_max_height, desc_min_height, desc_lines;
+	private int selectId = 0;
+	private int logo_height, other_height, desc_max_height, desc_min_height, desc_lines;
 	private boolean isGone = true;
 	private String brandName = "";
+	private String selectName = "";
 	private BrandEntity brandEn;
+	private SelectListEntity selectEn;
 	private ProductListEntity product_MainEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_lists_show = new ArrayList<ProductListEntity>();
@@ -117,15 +128,23 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private void findViewById() {
 		mListView = (ListView) findViewById(R.id.show_list_listView);
 		ll_stikky_main = (LinearLayout) findViewById(R.id.show_list_ll_stikky_main);
+		ll_favourable_time = (LinearLayout) findViewById(R.id.show_list_ll_favourable_time);
 		btn_1 = (RadioButton) findViewById(R.id.topbar_radio_rb_1);
 		btn_2 = (RadioButton) findViewById(R.id.topbar_radio_rb_2);
 		btn_3 = (RadioButton) findViewById(R.id.topbar_radio_rb_3);
 		btn_4 = (RadioButton) findViewById(R.id.topbar_radio_rb_4);
 		btn_screen = (Button) findViewById(R.id.topbar_radio_btn_screen);
 		iv_brand_img = (ImageView) findViewById(R.id.show_list_iv_brand_img);
+		iv_brand_logo = (ImageView) findViewById(R.id.show_list_iv_brand_img_logo);
 		iv_to_top = (ImageView) findViewById(R.id.show_list_iv_to_top);
+		tv_brand_name = (TextView) findViewById(R.id.show_list_tv_brand_name);
 		tv_brand_desc = (TextView) findViewById(R.id.show_list_tv_brand_desc);
 		tv_unfold = (TextView) findViewById(R.id.show_list_tv_unfold);
+		tv_favourable_title = (TextView) findViewById(R.id.show_list_tv_favourable);
+		tv_time_day = (TextView) findViewById(R.id.show_list_tv_time_day);
+		tv_time_hour = (TextView) findViewById(R.id.show_list_tv_time_hour);
+		tv_time_minute = (TextView) findViewById(R.id.show_list_tv_time_minute);
+		tv_time_second = (TextView) findViewById(R.id.show_list_tv_time_second);
 		tv_radio_other = (TextView) findViewById(R.id.topbar_radio_tv_other);
 		tv_page_num = (TextView) findViewById(R.id.show_list_tv_page_num);
 		tv_footer = (TextView) findViewById(R.id.loading_anim_samll_tv_show);
@@ -171,71 +190,97 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		btn_4.setVisibility(View.GONE);
 		btn_screen.setVisibility(View.GONE);
 		tv_radio_other.setVisibility(View.VISIBLE);
-		tv_radio_other.setText(R.string.product_stock);
-		tv_radio_other.setCompoundDrawables(select_no, null, null, null);
+		tv_radio_other.setText(R.string.filter);
+		//tv_radio_other.setCompoundDrawables(select_no, null, null, null);
 		tv_radio_other.setOnClickListener(this);
 	}
 
 	private void setHeadView() {
 		if (brandEn != null) {
-			ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + brandEn.getDefineUrl(), iv_brand_img, options);
-			logo_height = iv_brand_img.getHeight();
-			tv_brand_desc.setText(brandEn.getDesc());
-			
-			desc_lines = tv_brand_desc.getLineCount();
-			if (desc_lines > 2) {
-				tv_unfold.setVisibility(View.VISIBLE);
-				desc_min_height = 3 * tv_brand_desc.getLineHeight() + CommonTools.dip2px(mContext, 25);
-				desc_max_height = (desc_lines + 1) * tv_brand_desc.getLineHeight() + CommonTools.dip2px(mContext, 25);
-				goneDescTo2Line();
+			selectEn = brandEn.getSelectEn();
+			endTime = brandEn.getEndTime();
+			if (endTime > 0) {
+				ll_favourable_time.setVisibility(View.VISIBLE);
+				tv_favourable_title.setText(brandEn.getFavourable());
+				mc = new MyCount(endTime*1000, 1000);
+				mc.start(); //开始倒计时
 			}else {
-				tv_unfold.setVisibility(View.GONE);
-				if (StringUtil.isNull(brandEn.getDesc())) {
+				ll_favourable_time.setVisibility(View.GONE);
+			}
+			ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + brandEn.getDefineUrl(), iv_brand_img, options);
+			ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + brandEn.getLogoUrl(), iv_brand_logo, options);
+			tv_brand_name.setText(brandEn.getName());
+			tv_brand_desc.setText(brandEn.getDesc());
+		}
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				logo_height = iv_brand_img.getHeight();
+				if (endTime > 0) {
+					other_height = CommonTools.dip2px(mContext, 100);
+				}else {
+					other_height = CommonTools.dip2px(mContext, 36);
+				}
+				int spaceHeight = CommonTools.dip2px(mContext, 15);
+				desc_lines = tv_brand_desc.getLineCount();
+				desc_min_height = 0;
+				if (brandEn == null || StringUtil.isNull(brandEn.getDesc())) {
+					tv_unfold.setVisibility(View.GONE);
 					desc_max_height = 0;
 				}else {
-					desc_max_height = desc_lines * tv_brand_desc.getLineHeight() + CommonTools.dip2px(mContext, 15);
+					tv_unfold.setVisibility(View.VISIBLE);
+					desc_max_height = desc_lines * tv_brand_desc.getLineHeight() + spaceHeight;
 				}
-				showDescAll();
+				goneDesc();
+//				if (desc_lines > 2) {
+//					tv_unfold.setVisibility(View.VISIBLE);
+//					desc_min_height = 2 * tv_brand_desc.getLineHeight() + spaceHeight;
+//					desc_max_height = desc_lines * tv_brand_desc.getLineHeight() + spaceHeight;
+//					goneDesc();
+//				} else {
+//					tv_unfold.setVisibility(View.GONE);
+//					if (StringUtil.isNull(brandEn.getDesc())) {
+//						desc_max_height = 0;
+//					} else {
+//						desc_max_height = desc_lines * tv_brand_desc.getLineHeight() + spaceHeight;
+//					}
+//					showDesc();
+//				}
 			}
-			/*tv_brand_desc.setOnClickListener(new OnClickListener() {
+		}, 1000);
+		tv_unfold.setOnClickListener(new OnClickListener() {
 
-				@Override
-				public void onClick(View v) {
-					showOrGoneDesc();
-				}
-			});*/
-			tv_unfold.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					showOrGoneDesc();
-				}
-				
-			});
-		}
+			@Override
+			public void onClick(View v) {
+				showOrGoneDesc();
+			}
+
+		});
 	}
 
 	private void showOrGoneDesc() {
-		if (desc_lines <= 2) return;
+//		if (desc_lines <= 2) return;
 		if (isGone) {
-			showDescAll();
+			showDesc();
 		}else {
-			goneDescTo2Line();
+			goneDesc();
 		}
 	}
 
-	private void goneDescTo2Line() {
+	private void goneDesc() {
 		isGone = true;
-		tv_unfold.setText(R.string.unfold);
-		tv_brand_desc.setLines(2);
-		lv_header.setHeightHeader(logo_height + desc_min_height + CommonTools.dip2px(mContext, 36));
+		tv_unfold.setText(R.string.profile_intro);
+		tv_brand_desc.setVisibility(View.GONE);
+		//tv_brand_desc.setLines(0);
+		lv_header.setHeightHeader(logo_height + desc_min_height +  other_height);
 	}
 
-	private void showDescAll() {
+	private void showDesc() {
 		isGone = false;
 		tv_unfold.setText(R.string.put_away);
-		tv_brand_desc.setLines(desc_lines);
-		lv_header.setHeightHeader(logo_height + desc_max_height + CommonTools.dip2px(mContext, 36));
+		tv_brand_desc.setVisibility(View.VISIBLE);
+		//tv_brand_desc.setLines(desc_lines);
+		lv_header.setHeightHeader(logo_height + desc_max_height + other_height);
 	}
 
 	/**
@@ -357,6 +402,37 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		request(AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE);
 	}
 
+	/**
+	 * 筛选
+	 */
+	public void updateScreenParameter(SelectListEntity newEn){
+		int newId = -1;
+		if (newEn != null) {
+			newId = newEn.getChildId();
+			selectName = newEn.getChildShowName();
+		}else {
+			newId = 0;
+			selectName = "";
+		}
+		if (selectEn != null) {
+			selectEn.setSelectEn(newEn);
+		}
+		if (selectId != newId) {
+			isUpdate = true;
+		}
+		selectId = newId;
+	}
+
+	/**
+	 * 判定是否有筛选项
+	 */
+	private boolean isScreenOR() {
+		if (selectEn != null && selectEn.getSelectEn() != null) {
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public void onClick(View v) {
 		if (!isLoadOk) { //加载频率控制
@@ -402,17 +478,26 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 				}
 			}
 			break;
-		case R.id.topbar_radio_tv_other: //有货
-			if (isStock == 1) {
-				isStock = 0; //默认
-				tv_radio_other.setTextColor(getResources().getColor(R.color.text_color_assist));
-				tv_radio_other.setCompoundDrawables(select_no, null, null, null);
+		case R.id.topbar_radio_tv_other: //有货或筛选
+//			if (isStock == 1) {
+//				isStock = 0; //默认
+//				tv_radio_other.setTextColor(getResources().getColor(R.color.text_color_assist));
+//				tv_radio_other.setCompoundDrawables(select_no, null, null, null);
+//			}else {
+//				isStock = 1; //有货
+//				tv_radio_other.setTextColor(getResources().getColor(R.color.text_color_black));
+//				tv_radio_other.setCompoundDrawables(select_yes, null, null, null);
+//			}
+//			updateAllDatas();
+			if (selectEn != null) {
+				selectEn.setTypeName(getString(R.string.filter));
+				Intent intent = new Intent(mContext, SelectListActivity.class);
+				intent.putExtra("data", selectEn);
+				intent.putExtra("dataType", SelectListAdapter.DATA_TYPE_7);
+				startActivity(intent);
 			}else {
-				isStock = 1; //有货
-				tv_radio_other.setTextColor(getResources().getColor(R.color.text_color_black));
-				tv_radio_other.setCompoundDrawables(select_yes, null, null, null);
+				CommonTools.showToast(mContext, getString(R.string.toast_error_data_null), 1000);
 			}
-			updateAllDatas();
 			break;
 		case R.id.show_list_iv_to_top: //回顶
 			iv_to_top.setVisibility(View.GONE);
@@ -455,6 +540,18 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
         StatService.onResume(this);
+
+		if (isUpdate) {
+			isUpdate = false;
+			updateAllDatas();
+			if (isScreenOR()) {
+				tv_radio_other.setText(selectName);
+				tv_radio_other.setTextColor(mContext.getResources().getColor(R.color.text_color_red_1));
+			}else {
+				tv_radio_other.setText(getString(R.string.filter));
+				tv_radio_other.setTextColor(mContext.getResources().getColor(R.color.text_color_assist));
+			}
+		}
 	}
 
 	@Override
@@ -469,6 +566,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		// 取消倒计时
+		if (mc != null) {
+			mc.cancel();
+		}
 	}
 	
 	class MyOnLoadListener implements OnLoadMoreListener{
@@ -523,7 +624,58 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
             return AnimatorBuilder.create().applyVerticalParallax(mHeader_image);
         }
     }
-	
+
+	/*定义一个倒计时的内部类*/
+	private class MyCount extends CountDownTimer {
+		public MyCount(long millisInFuture, long countDownInterval) {
+			super(millisInFuture, countDownInterval);
+		}
+		@Override
+		public void onFinish() {
+			getSVDatas();
+		}
+		@Override
+		public void onTick(long millisUntilFinished) {
+			long time = millisUntilFinished/1000;
+			updateTime(time);
+			if (time == 1) {
+				new Handler().postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						updateTime(0);
+					}
+				}, 1000);
+			}
+		}
+
+		private void updateTime(long time) {
+			Integer[] times = TimeUtil.getArrayIntegerTime(mContext, time);
+			String day = "00";
+			String hour = "00";
+			String minute = "00";
+			String second = "00";
+			if (times != null && times.length > 3) {
+				day = changeTime(times[0]);
+				hour = changeTime(times[1]);
+				minute = changeTime(times[2]);
+				second = changeTime(times[3]);
+			}
+			tv_time_day.setText(day);
+			tv_time_hour.setText(hour);
+			tv_time_minute.setText(minute);
+			tv_time_second.setText(second);
+		}
+
+		private String changeTime(int time) {
+			if (time < 10) {
+				return "0" + time;
+			}else {
+				return String.valueOf(time);
+			}
+		}
+	}
+
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
 		switch (requestCode) {
@@ -532,7 +684,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			return brandEn;
 		case AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE:
 			product_MainEn = null;
-			product_MainEn = sc.getProductListDatas(0, sortType, brandId, Page_Count, current_Page, "", "", isStock);
+			product_MainEn = sc.getProductListDatas(0, sortType, brandId, Page_Count, current_Page, selectName, "", isStock);
 			return product_MainEn;
 		}
 		return null;

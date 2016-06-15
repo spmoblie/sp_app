@@ -189,13 +189,12 @@ public class JsonParser {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		mainLists = new ArrayList<SelectListEntity>();
 		// 获取品牌分类
-		JSONObject brand = jsonObject.getJSONObject("brandList");
 		brandEn = new SelectListEntity();
-		brandEn.setTypeName(brand.getString("title"));
+		brandEn.setTypeName(jsonObject.getString("title"));
 		
 		childLists = new ArrayList<SelectListEntity>();
 		childLists.add(new SelectListEntity(0, allStr, ""));
-		JSONArray brandLists = brand.getJSONArray("list");
+		JSONArray brandLists = jsonObject.getJSONArray("list");
 		for (int i = 0; i < brandLists.length(); i++) {
 			JSONObject item = brandLists.getJSONObject(i);
 			childEn = new SelectListEntity();
@@ -343,7 +342,29 @@ public class JsonParser {
 		brandEn.setBrandId(data.getString("id"));
 		brandEn.setName(data.getString("name"));
 		brandEn.setDefineURL(data.getString("banner"));
+		brandEn.setLogoUrl(data.getString("logo"));
 		brandEn.setDesc(data.getString("desc"));
+		brandEn.setFavourable(data.getString("favourable"));
+		brandEn.setEndTime(StringUtil.getLong(data.getString("time")));
+
+		JSONArray cats = jsonObject.getJSONArray("cat");
+		if (cats != null && !cats.equals("")) {
+			SelectListEntity selectEn, childEn;
+			List<SelectListEntity> childLists = null;
+			// 获取筛选分类
+			selectEn = new SelectListEntity();
+			childLists = new ArrayList<SelectListEntity>();
+			for (int i = 0; i < cats.length(); i++) {
+				JSONObject item = cats.getJSONObject(i);
+				childEn = new SelectListEntity();
+				childEn.setChildId(StringUtil.getInteger(item.getString("cat_id")));
+				childEn.setChildShowName(item.getString("cat_name"));
+				//childEn.setChildLogoUrl(item.getString("url"));
+				childLists.add(childEn);
+			}
+			selectEn.setChildLists(childLists);
+			brandEn.setSelectEn(selectEn);
+		}
 		return brandEn;
 	}
 
