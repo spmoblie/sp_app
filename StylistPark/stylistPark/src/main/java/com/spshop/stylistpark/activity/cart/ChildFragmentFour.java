@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.cart;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +43,10 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @SuppressLint("UseSparseArrays")
 public class ChildFragmentFour extends Fragment implements OnClickListener, OnDataListener {
@@ -104,7 +104,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 			findViewById(view);
 			initView();
 		} catch (Exception e) {
-			ExceptionUtil.handle(getActivity(), e);
+			ExceptionUtil.handle(mContext, e);
 		}
 		return view;
 	}
@@ -309,10 +309,10 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.fragment_four_tv_buy_now:
-			startActivity(new Intent(getActivity(), PostOrderActivity.class));
+			startActivity(new Intent(mContext, PostOrderActivity.class));
 			break;
 		case R.id.ptrsv_cart_iv_go_shopping:
-			startActivity(new Intent(getActivity(), CategoryActivity.class));
+			startActivity(new Intent(mContext, CategoryActivity.class));
 			break;
 		case R.id.loading_fail_tv_update:
 			getSVDatas();
@@ -337,7 +337,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(getActivity());
+		StatService.onResume(mContext);
 		
 		checkLogin();
 	}
@@ -354,7 +354,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-		StatService.onPause(getActivity());
+		StatService.onPause(mContext);
 	}
 
 	@Override
@@ -504,7 +504,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	}
 	
 	private void openLoginActivity(){
-		Intent intent = new Intent(getActivity(), LoginActivity.class);
+		Intent intent = new Intent(mContext, LoginActivity.class);
 		intent.putExtra("rootPage", TAG);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);

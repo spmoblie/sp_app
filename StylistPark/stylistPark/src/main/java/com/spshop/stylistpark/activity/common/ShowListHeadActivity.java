@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,8 +32,8 @@ import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.spshop.stylistpark.utils.TimeUtil;
 import com.spshop.stylistpark.widgets.listener.OnLoadMoreListener;
 import com.spshop.stylistpark.widgets.listener.OnMyScrollListener;
 import com.spshop.stylistpark.widgets.stikkyheader.AnimatorBuilder;
@@ -80,7 +79,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private TextView tv_brand_name, tv_brand_desc, tv_unfold, tv_radio_other, tv_footer, tv_page_num;
 	private TextView tv_favourable_title, tv_time_day, tv_time_hour, tv_time_minute, tv_time_second;
 	private Drawable rank_up, rank_down, rank_normal, select_yes, select_no;
-	private MyCount mc;
+	private MyCountDownTimer mcdt;
 	private StikkyHeader lv_header;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
@@ -200,12 +199,15 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			selectEn = brandEn.getSelectEn();
 			endTime = brandEn.getEndTime();
 			if (endTime > 0) {
-				ll_favourable_time.setVisibility(View.VISIBLE);
 				tv_favourable_title.setText(brandEn.getFavourable());
-				mc = new MyCount(endTime*1000, 1000);
-				mc.start(); //开始倒计时
-			}else {
-				ll_favourable_time.setVisibility(View.GONE);
+				mcdt = new MyCountDownTimer(mContext, tv_time_day, tv_time_hour, tv_time_minute, tv_time_second,
+						endTime * 1000, 1000, new MyCountDownTimer.MyTimerCallback() {
+					@Override
+					public void onFinish() {
+						getSVDatas();
+					}
+				});
+				mcdt.start(); //开始倒计时
 			}
 			ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + brandEn.getDefineUrl(), iv_brand_img, options);
 			ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + brandEn.getLogoUrl(), iv_brand_logo, options);
@@ -217,8 +219,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			public void run() {
 				logo_height = iv_brand_img.getHeight();
 				if (endTime > 0) {
+					ll_favourable_time.setVisibility(View.VISIBLE); //height = 64
 					other_height = CommonTools.dip2px(mContext, 100);
 				}else {
+					ll_favourable_time.setVisibility(View.GONE);
 					other_height = CommonTools.dip2px(mContext, 36);
 				}
 				int spaceHeight = CommonTools.dip2px(mContext, 15);
@@ -567,8 +571,8 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
 		// 取消倒计时
-		if (mc != null) {
-			mc.cancel();
+		if (mcdt != null) {
+			mcdt.cancel();
 		}
 	}
 	
@@ -624,57 +628,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
             return AnimatorBuilder.create().applyVerticalParallax(mHeader_image);
         }
     }
-
-	/*定义一个倒计时的内部类*/
-	private class MyCount extends CountDownTimer {
-		public MyCount(long millisInFuture, long countDownInterval) {
-			super(millisInFuture, countDownInterval);
-		}
-		@Override
-		public void onFinish() {
-			getSVDatas();
-		}
-		@Override
-		public void onTick(long millisUntilFinished) {
-			long time = millisUntilFinished/1000;
-			updateTime(time);
-			if (time == 1) {
-				new Handler().postDelayed(new Runnable() {
-
-					@Override
-					public void run() {
-						updateTime(0);
-					}
-				}, 1000);
-			}
-		}
-
-		private void updateTime(long time) {
-			Integer[] times = TimeUtil.getArrayIntegerTime(mContext, time);
-			String day = "00";
-			String hour = "00";
-			String minute = "00";
-			String second = "00";
-			if (times != null && times.length > 3) {
-				day = changeTime(times[0]);
-				hour = changeTime(times[1]);
-				minute = changeTime(times[2]);
-				second = changeTime(times[3]);
-			}
-			tv_time_day.setText(day);
-			tv_time_hour.setText(hour);
-			tv_time_minute.setText(minute);
-			tv_time_second.setText(second);
-		}
-
-		private String changeTime(int time) {
-			if (time < 10) {
-				return "0" + time;
-			}else {
-				return String.valueOf(time);
-			}
-		}
-	}
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {

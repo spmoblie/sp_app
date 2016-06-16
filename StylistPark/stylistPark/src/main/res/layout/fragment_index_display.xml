@@ -13,7 +13,7 @@
         android:dividerHeight="0dp"
         android:scrollbars="none"
         android:minHeight="40dip" 
-        android:fastScrollEnabled="true" >
+        android:fastScrollEnabled="false" >
     </ListView>
 
     <com.spshop.stylistpark.widgets.SectionIndexerView

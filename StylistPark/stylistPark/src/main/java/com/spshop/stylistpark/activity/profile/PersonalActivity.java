@@ -1,6 +1,5 @@
 package com.spshop.stylistpark.activity.profile;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.ActivityNotFoundException;
@@ -201,6 +200,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 					});
 					Map<String, String> postData = new HashMap<String, String>();
 					postData.put("userid", UserManager.getInstance().getUserId());
+					postData.put("avatar", new File(headUrl).getName());
 					asyncImageUpload.uploadImage(AppConfig.API_UPDATE_PROFILE, postData, headUrl);
 				}
 			}, 2000);
@@ -283,7 +283,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			month = c.get(Calendar.MONTH);
 			day = c.get(Calendar.DAY_OF_MONTH);
 		}
-		new DatePickerDialog(this, AlertDialog.THEME_HOLO_LIGHT, new OnDateSetListener() {
+		new DatePickerDialog(this, 0, new OnDateSetListener() {
 			
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

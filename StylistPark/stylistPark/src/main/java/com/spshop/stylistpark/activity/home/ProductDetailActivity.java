@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -63,8 +62,8 @@ import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.spshop.stylistpark.utils.TimeUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.ObservableScrollView;
 import com.spshop.stylistpark.widgets.ObservableScrollView.ScrollViewListener;
@@ -119,7 +118,7 @@ public class ProductDetailActivity extends BaseActivity implements
 	private ProductAttrEntity attrEn;
 	private GoodsCartEntity cartEn;
 	private DisplayImageOptions options;
-	private MyCount mc;
+	private MyCountDownTimer mcdt;
 	private boolean isShow = false;
 	private boolean isNext = false;
 	private boolean isColl = false;
@@ -259,9 +258,14 @@ public class ProductDetailActivity extends BaseActivity implements
 			// 判定商品折价倒计时
 			if (mainEn.getPromoteTime() > 0) {
 				tv_timer.setVisibility(View.VISIBLE);
-				tv_timer.setText(TimeUtil.getTextTime(mContext, mainEn.getPromoteTime()));
-				mc = new MyCount(mainEn.getPromoteTime(), 1000);
-				mc.start(); //开始倒计时
+				mcdt = new MyCountDownTimer(mContext, tv_timer, 0,
+						mainEn.getPromoteTime(), 1000, new MyCountDownTimer.MyTimerCallback() {
+					@Override
+					public void onFinish() {
+						getSVDatas();
+					}
+				});
+				mcdt.start(); //开始倒计时
 				propertyNum = 2;
 			}else {
 				propertyNum = 3;
@@ -841,8 +845,8 @@ public class ProductDetailActivity extends BaseActivity implements
 	protected void onDestroy() {
 		LogUtil.i(TAG, "onDestroy");
 		// 取消倒计时
-		if (mc != null) {
-			mc.cancel();
+		if (mcdt != null) {
+			mcdt.cancel();
 		}
 		if (mShareView != null) {
 			mShareView.onDestroy();
@@ -872,31 +876,6 @@ public class ProductDetailActivity extends BaseActivity implements
 			}
 		}
 	}
-	
-	/*定义一个倒计时的内部类*/ 
-    private class MyCount extends CountDownTimer {     
-        public MyCount(long millisInFuture, long countDownInterval) {     
-            super(millisInFuture, countDownInterval);     
-        }     
-        @Override     
-        public void onFinish() {     
-        	getSVDatas();
-        }     
-        @Override     
-        public void onTick(long millisUntilFinished) {     
-        	long time = millisUntilFinished/1000;
-			tv_timer.setText(TimeUtil.getTextTime(mContext, time));
-			if (time == 1) {
-				new Handler().postDelayed(new Runnable() {
-					
-					@Override
-					public void run() {
-						tv_timer.setText(TimeUtil.getTextTime(mContext, 0));
-					}
-				}, 1000);
-			}
-        }    
-    }   
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {

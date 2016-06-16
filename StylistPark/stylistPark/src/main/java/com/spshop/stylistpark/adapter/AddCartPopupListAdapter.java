@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Paint;
@@ -22,6 +18,10 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ProductAttrEntity;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.StringUtil;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -45,7 +45,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 		this.callback = callback;
 		
 		pdWidth = CommonTools.dip2px(context, 15);
-		mgWidth = CommonTools.dip2px(context, 10);
+		mgWidth = CommonTools.dip2px(context, 15);
 		
 		getAttrDatas(attrEn);
 		if (datas == null) {

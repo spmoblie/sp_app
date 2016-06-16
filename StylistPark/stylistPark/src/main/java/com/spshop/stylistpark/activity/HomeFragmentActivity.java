@@ -25,6 +25,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.cart.ChildFragmentFour;
+import com.spshop.stylistpark.activity.category.ChildFragmentTwo;
 import com.spshop.stylistpark.activity.collage.ChildFragmentThree;
 import com.spshop.stylistpark.activity.home.ChildFragmentOne;
 import com.spshop.stylistpark.activity.login.LoginActivity;

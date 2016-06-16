@@ -41,7 +41,7 @@ public class AppConfig {
 	public static final String API_GET_BRAND_LIST = ENVIRONMENT_PRESENT_URL_APP + "getBrandList.php";
 	public static final String API_SUBMIT_LOOKBOOK = ENVIRONMENT_PRESENT_URL_APP + "submitLookBook.php";
 	public static final String API_UPDATE_PROFILE = ENVIRONMENT_PRESENT_URL_APP + "updateUserProfilePicture.php";
-	//public static final String API_UPDATE_PROFILE = "http://192.168.11.155/api/mobile/my.php?app=file";
+	//public static final String API_UPDATE_PROFILE = "http://192.168.11.155/user.php?act=edit_avatar";
 	//public static final String API_UPDATE_PROFILE = "http://192.168.11.155/user.php?act=act_edit_profile";
 	public static final String URL_DECOR_DB = "http://download.cherrypicks.com/StylishPark/SP/DecorationElement.zip";
 	public static final String URL_TEMPLATE_JSON = "http://download.cherrypicks.com/StylishPark/SP/TemplateJsonSample.json";

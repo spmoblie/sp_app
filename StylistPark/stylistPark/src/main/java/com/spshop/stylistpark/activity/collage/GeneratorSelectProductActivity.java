@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.activity.collage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +39,9 @@ import com.spshop.stylistpark.entity.Product;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeneratorSelectProductActivity extends BaseActivity implements
 		OnProductClickListener, SoftKeyBoardListener, OnProductListSlideListener {

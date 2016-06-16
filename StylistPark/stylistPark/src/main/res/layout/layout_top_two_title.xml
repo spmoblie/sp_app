@@ -14,8 +14,12 @@
         android:src="@drawable/btn_pressed_back" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/top_two_title_iv_left"
+        android:layout_toLeftOf="@+id/top_two_title_btn_right"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_centerInParent="true"
         android:orientation="horizontal" >
 
@@ -62,7 +66,8 @@
         android:layout_marginRight="15dp"
         android:background="@color/ui_bg_color_percent_100"
         android:textColor="@color/text_color_content"
-        android:textSize="@dimen/text_size_18" />
+        android:textSize="@dimen/text_size_18"
+        android:visibility="gone" />
 
     <ImageView
         style="@style/set_line_horizontal_bg"

@@ -109,6 +109,7 @@ public class NetworkUtil {
 					conn.setDoInput(true);
 					conn.setDoOutput(true);
 					conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+					conn.setRequestProperty("Cookie", FileManager.readFileSaveString(ctx, AppConfig.cookiesFileName, true));
 					conn.setRequestMethod("POST");
 					// Starts the query
 					conn.connect();
@@ -135,7 +136,7 @@ public class NetworkUtil {
 					out.flush();
 					out.close();
 				}else{
-					String boundary = "*****";
+					/*String boundary = "*****";
 					byte[] buffer;
 					int maxBufferSize = 1 * 1024 * 1024;
 					int bytesRead, bytesAvailable, bufferSize;
@@ -188,7 +189,9 @@ public class NetworkUtil {
 //		            }
 					DataOutputStream out = new DataOutputStream(conn.getOutputStream());
 					out.writeBytes("--"+boundary+"\r\n");
+					String fileName = fileToUpload;
 					if(postData != null) {
+						fileName = postData.get("avatar");
 						StringBuffer res = new StringBuffer("");
 						Iterator<Map.Entry<String, String>> iterator = postData.entrySet().iterator();
 
@@ -201,7 +204,7 @@ public class NetworkUtil {
 						out.writeBytes(res.toString());
 					}
 
-					out.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"" + fileToUpload + "\"\r\n");
+					out.writeBytes("Content-Disposition: form-data; type=\"file\";filename=\"" + fileName + "\"\r\n");
 					out.writeBytes("\r\n");
 
 					bytesAvailable = fileInputStream.available(); // create a buffer of maximum size
@@ -226,8 +229,56 @@ public class NetworkUtil {
 					// close the streams //
 					fileInputStream.close();
 					out.flush();
-					out.close();
+					out.close();*/
 
+					String end = "\r\n";
+					String twoHyphens = "--";
+					String boundary = "******";
+					try
+					{
+						File sourceFile = new File(fileToUpload);
+						if (!sourceFile.isFile()) {
+							Log.e("getInputStream", "Source File Does not exist");
+							return null;
+						}
+						// 设置每次传输的流大小，可以有效防止手机因为内存不足崩溃
+						// 此方法用于在预先不知道内容长度时启用没有进行内部缓冲的 HTTP 请求正文的流。
+						conn.setChunkedStreamingMode(128 * 1024);// 128K
+						// 允许输入输出流
+						conn.setDoInput(true);
+						conn.setDoOutput(true);
+						conn.setUseCaches(false);
+						// 使用POST方法
+						conn.setRequestMethod("POST");
+						conn.setRequestProperty("Connection", "Keep-Alive");
+						conn.setRequestProperty("Charset", "UTF-8");
+						conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+						conn.setRequestProperty("Cookie", FileManager.readFileSaveString(ctx, AppConfig.cookiesFileName, true));
+
+						DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+						dos.writeBytes(twoHyphens + boundary + end);
+						dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\"; filename=\""
+								+ postData.get("avatar") + "\"" + end);
+						dos.writeBytes(end);
+
+						FileInputStream fis = new FileInputStream(sourceFile);
+						byte[] buffer = new byte[8192]; // 8k
+						int count = 0;
+						// 读取文件
+						while ((count = fis.read(buffer)) != -1)
+						{
+							dos.write(buffer, 0, count);
+						}
+						fis.close();
+
+						dos.writeBytes(end);
+						dos.writeBytes(twoHyphens + boundary + twoHyphens + end);
+						dos.flush();
+						dos.close();
+					} catch (Exception e)
+					{
+						e.printStackTrace();
+					}
 				}
 
 			}else{

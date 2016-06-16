@@ -70,7 +70,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 
 		LogUtil.i(TAG, "onCreate");
 		instance = this;
-		mContext = getActivity().getApplicationContext();
+		mContext = getActivity();
 		atm = AsyncTaskManager.getInstance(mContext);
 		options = AppApplication.getImageOptions(90, R.drawable.head_portrait_80);
 		
@@ -80,7 +80,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			findViewById(view);
 			initView();
 		} catch (Exception e) {
-			ExceptionUtil.handle(getActivity(), e);
+			ExceptionUtil.handle(mContext, e);
 		}
 		return view;
 	}
@@ -233,7 +233,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.fragment_five_iv_top_left) {
-			startActivity(new Intent(getActivity(), SettingActivity.class));
+			startActivity(new Intent(mContext, SettingActivity.class));
 			return;
 		}
 		if (!isLogined) { //未登入
@@ -278,10 +278,10 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			startOrderListActivity(0, OrderListActivity.TYPE_5);
 			break;
 		case R.id.fragment_five_rl_address:
-			startActivity(new Intent(getActivity(), MyAddressActivity.class));
+			startActivity(new Intent(mContext, MyAddressActivity.class));
 			break;
 		case R.id.fragment_five_rl_wallet:
-			startActivity(new Intent(getActivity(), AccountBalanceActivity.class));
+			startActivity(new Intent(mContext, AccountBalanceActivity.class));
 			break;
 		case R.id.fragment_five_rl_bonus:
 			startBounsListActivity(BounsListActivity.TYPE_1);
@@ -303,7 +303,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	 * 跳转个人专页
 	 */
 	private void startPersonalActivity() {
-		Intent intent = new Intent(getActivity(), PersonalActivity.class);
+		Intent intent = new Intent(mContext, PersonalActivity.class);
 		intent.putExtra("data", infoEn);
 		startActivity(intent);
 	}
@@ -312,7 +312,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	 * 跳转到会员列表
 	 */
 	private void startMemberListActivity(int topType) {
-		Intent intent = new Intent(getActivity(), MemberListActivity.class);
+		Intent intent = new Intent(mContext, MemberListActivity.class);
 		intent.putExtra("topType", topType);
 		startActivity(intent);
 	}
@@ -321,7 +321,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	 * 跳转到订单列表
 	 */
 	private void startOrderListActivity(int rootType, int topType) {
-		Intent intent = new Intent(getActivity(), OrderListActivity.class);
+		Intent intent = new Intent(mContext, OrderListActivity.class);
 		intent.putExtra("rootType", rootType);
 		intent.putExtra("topType", topType);
 		startActivity(intent);
@@ -331,7 +331,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	 * 跳转到红包列表
 	 */
 	private void startBounsListActivity(int topType) {
-		Intent intent = new Intent(getActivity(), BounsListActivity.class);
+		Intent intent = new Intent(mContext, BounsListActivity.class);
 		intent.putExtra("topType", topType);
 		intent.putExtra("root", TAG);
 		intent.putExtra("bounsId", "");
@@ -343,7 +343,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(getActivity());
+		StatService.onResume(mContext);
 		checkLogin();
 	}
 
@@ -352,7 +352,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(getActivity());
+        StatService.onPause(mContext);
 	}
 
 	@Override

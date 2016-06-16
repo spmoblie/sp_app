@@ -8,8 +8,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -46,7 +44,7 @@ import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
-import com.spshop.stylistpark.utils.TimeUtil;
+import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
@@ -68,7 +66,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private boolean rotation = true;
 	private Context mContext;
 	private NetworkInfo netInfo;
-	private MyCount mc;
+	private MyCountDownTimer mcdt;
 	private ConnectivityManager cm;
 	private AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
@@ -157,8 +155,14 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		tv_time_second = (TextView) ll_head_main.findViewById(R.id.home_list_head_tv_time_second);
 		mListView.addHeaderView(ll_head_main);
 		initViewPager();
-		mc = new MyCount(36000000, 1000);
-		mc.start(); //开始倒计时
+		mcdt = new MyCountDownTimer(mContext, null, tv_time_hour, tv_time_minute, tv_time_second,
+				36000000, 1000, new MyCountDownTimer.MyTimerCallback() {
+			@Override
+			public void onFinish() {
+				getSVDatas();
+			}
+		});
+		mcdt.start(); //开始倒计时
 	}
 
 	private void initViewPager() {
@@ -365,7 +369,10 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		Intent intent = null;
 		switch (v.getId()) {
 		case R.id.fragment_one_topbar_rl_category:
-			intent = new Intent(getActivity(), CategoryActivity.class);
+			//intent = new Intent(getActivity(), CategoryActivity.class);
+			intent = new Intent(mContext, ProductListActivity.class);
+			intent.putExtra("typeId", "0");
+			intent.putExtra("typeName", getString(R.string.product_search));
 			break;
 		case R.id.fragment_one_topbar_rl_search:
 			intent = new Intent(mContext, ProductListActivity.class);
@@ -411,62 +418,14 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
 		// 取消倒计时
-		if (mc != null) {
-			mc.cancel();
+		if (mcdt != null) {
+			mcdt.cancel();
 		}
-		if(myBroadcastReceiver != null){ 
+		if(myBroadcastReceiver != null){
 			mContext.unregisterReceiver(myBroadcastReceiver); 
         }
 	}
-	
-	/*定义一个倒计时的内部类*/ 
-    private class MyCount extends CountDownTimer {     
-        public MyCount(long millisInFuture, long countDownInterval) {     
-            super(millisInFuture, countDownInterval);     
-        }     
-        @Override     
-        public void onFinish() {     
-        	getSVDatas();
-        }     
-        @Override     
-        public void onTick(long millisUntilFinished) {     
-        	long time = millisUntilFinished/1000;
-        	updateTime(time);
-			if (time == 1) {
-				new Handler().postDelayed(new Runnable() {
-					
-					@Override
-					public void run() {
-						updateTime(0);
-					}
-				}, 1000);
-			}
-        }
-        
-		private void updateTime(long time) {
-			Integer[] times = TimeUtil.getArrayIntegerTime(mContext, time);
-			String hour = "00";
-			String minute = "00";
-			String second = "00";
-        	if (times != null && times.length > 3) {
-        		hour = changeTime(times[1]);
-        		minute = changeTime(times[2]);
-        		second = changeTime(times[3]);
-			}
-        	tv_time_hour.setText(hour);
-        	tv_time_minute.setText(minute);
-        	tv_time_second.setText(second);
-		}
-		
-		private String changeTime(int time) {
-			if (time < 10) {
-				return "0" + time;
- 			}else {
-				return String.valueOf(time);
-			}
-		}    
-    } 
-	
+
 	class MyScrollListener implements OnScrollListener {
 
 		@Override

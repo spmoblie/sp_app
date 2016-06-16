@@ -97,7 +97,7 @@
     
     <!-- home -->
     <string name="home_tab_text_one">Home</string>
-    <string name="home_tab_text_two">Collage</string>
+    <string name="home_tab_text_two">@string/title_category</string>
     <string name="home_tab_text_three">Create</string>
     <string name="home_tab_text_four">Cart</string>
     <string name="home_tab_text_five">Profile</string>

@@ -65,7 +65,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/show_list_iv_brand_img_logo"
                         android:textColor="@color/text_color_white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_16" />
 
 
                     <TextView
@@ -145,7 +145,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="天"
+                        android:text="@string/day"
                         android:textColor="@color/text_color_assist"
                         android:textSize="@dimen/text_size_14" />
 
@@ -161,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="时"
+                        android:text="@string/hour"
                         android:textColor="@color/text_color_assist"
                         android:textSize="@dimen/text_size_14" />
 
@@ -177,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="分"
+                        android:text="@string/minute"
                         android:textColor="@color/text_color_assist"
                         android:textSize="@dimen/text_size_14" />
 
@@ -193,7 +193,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="秒"
+                        android:text="@string/second"
                         android:textColor="@color/text_color_assist"
                         android:textSize="@dimen/text_size_14" />
                 </LinearLayout>
