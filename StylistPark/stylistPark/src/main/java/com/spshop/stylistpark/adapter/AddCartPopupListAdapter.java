@@ -35,7 +35,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 	private HashMap<String, Integer> skuHashMap = new HashMap<String, Integer>();
 	private HashMap<Integer, ProductAttrEntity> attrHashMap = new HashMap<Integer, ProductAttrEntity>();;
 	private AddCartCallback callback;
-	private int mgWidth, pdWidth, size;
+	private int mgWidth, pdWidth, vvWidth, size;
 	private int select_id_1, select_id_2;
 	private String attr_name_1, attr_name_2, select_name_1, select_name_2;
 	private View[] views_1, views_2;
@@ -45,8 +45,9 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 		this.callback = callback;
 		
 		pdWidth = CommonTools.dip2px(context, 15);
-		mgWidth = CommonTools.dip2px(context, 15);
-		
+		mgWidth = CommonTools.dip2px(context, 10);
+		vvWidth = CommonTools.dip2px(context, 2);
+
 		getAttrDatas(attrEn);
 		if (datas == null) {
 			datas = new ArrayList<ProductAttrEntity>();
@@ -158,7 +159,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			// 计算str的宽度
 			pFont.getTextBounds(str, 0, str.length(), rect);
 			strWidth = CommonTools.dip2px(context, rect.width());
-			widthTotal += (strWidth*1.5 + pdWidth);
+			widthTotal += (strWidth*1.5 + pdWidth + vvWidth);
 			
 			viewId = nameLists.get(i).getAttrId();
 			if (i > 0) {

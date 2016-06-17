@@ -201,7 +201,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 					Map<String, String> postData = new HashMap<String, String>();
 					postData.put("userid", UserManager.getInstance().getUserId());
 					postData.put("avatar", new File(headUrl).getName());
-					asyncImageUpload.uploadImage(AppConfig.API_UPDATE_PROFILE, postData, headUrl);
+					asyncImageUpload.uploadImage(AppConfig.API_UPDATE_PROFILE, null, headUrl);
 				}
 			}, 2000);
 		} else {

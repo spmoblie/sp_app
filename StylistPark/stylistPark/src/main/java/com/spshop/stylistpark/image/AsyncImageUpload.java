@@ -71,6 +71,10 @@ public class AsyncImageUpload {
 						// 从任务队列获取任务
 						ImageLoadTask task = tasks.remove(0);
 						try {
+//							HttpEntity entity = HttpUtil.getEntity(task.url, null, HttpUtil.METHOD_POST);
+//							String jsonStr = HttpUtil.getString(entity);
+//							LogUtil.i("JsonParser", jsonStr);
+
 							JSONObject jsonObj = NetworkUtil.getJSONFromURL(context, task.url, task.postData, task.path);
 							APIResult result = new APIResult(context, jsonObj, "imgUrl", null);
 							Message msg = new Message();

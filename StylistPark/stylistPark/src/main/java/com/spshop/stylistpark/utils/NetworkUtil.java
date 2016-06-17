@@ -93,14 +93,14 @@ public class NetworkUtil {
 		}
 	}
 
-	private static InputStream getInputStream(Context ctx, String path, boolean usePost, Map<String, String> postData, String fileToUpload )
-			throws Exception{
+	private static InputStream getInputStream(Context ctx, String path, boolean usePost, Map<String, String> postData, String fileToUpload ) throws Exception{
 		URL url;
 		HttpURLConnection conn = null;
 		try {
 			url = new URL(path);
 			conn = (HttpURLConnection)url.openConnection();
-
+			String cookie = FileManager.readFileSaveString(ctx, AppConfig.cookiesFileName, true);
+			LogUtil.i("JsonParser", "read cookie = " + cookie);
 			if(usePost){
 				if(fileToUpload == null || fileToUpload.isEmpty()){
 					conn.setReadTimeout(12000 /* milliseconds */);
@@ -109,17 +109,14 @@ public class NetworkUtil {
 					conn.setDoInput(true);
 					conn.setDoOutput(true);
 					conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
-					conn.setRequestProperty("Cookie", FileManager.readFileSaveString(ctx, AppConfig.cookiesFileName, true));
+					conn.setRequestProperty("Cookie", cookie);
 					conn.setRequestMethod("POST");
 					// Starts the query
 					conn.connect();
 					DataOutputStream out = new DataOutputStream(conn.getOutputStream());
 					String content = "";
-
 					if(postData != null) {
-
 						Iterator<Map.Entry<String, String>> iterator = postData.entrySet().iterator();
-
 						while (iterator.hasNext()) {
 							Map.Entry<String, String> mapEntry = (Map.Entry<String, String>) iterator.next();
 							if(mapEntry.getValue() == null || mapEntry.getKey() == null){
@@ -131,12 +128,13 @@ public class NetworkUtil {
 							content += mapEntry.getKey() + "=" + URLEncoder.encode(mapEntry.getValue(), "utf-8");
 						}
 					}
-
 					out.writeBytes(content);
 					out.flush();
 					out.close();
 				}else{
-					/*String boundary = "*****";
+					String twoHyphens = "--";
+					String boundary = "*****";
+					String end = "\r\n";
 					byte[] buffer;
 					int maxBufferSize = 1 * 1024 * 1024;
 					int bytesRead, bytesAvailable, bufferSize;
@@ -153,85 +151,52 @@ public class NetworkUtil {
 					conn.setRequestMethod("POST");
 					conn.setRequestProperty("Connection", "Keep-Alive");
 					conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-					conn.setRequestProperty("Content-Type","multipart/form-data;boundary="+boundary+"; charset=utf-8");
-					conn.setRequestProperty("Cookie", FileManager.readFileSaveString(ctx, AppConfig.cookiesFileName, true));
-					// not work
-//		            conn.setRequestProperty("Accept-Charset", "utf-8");
-//		            conn.setRequestProperty("contentType", "utf-8");
+					conn.setRequestProperty("Content-Type","multipart/form-data;boundary=" + boundary + "; charset=utf-8");
+					conn.setRequestProperty("Cookie", cookie);
+					conn.setRequestProperty("file", fileToUpload);
 
-//		            File file = new File(fileToUpload);
-//		            FileInputStream fin = null;
-//		            byte[] fileContent;
-//		            String fileContent2Str = null;
-//		            try {
-//		                // create FileInputStream object
-//		                fin = new FileInputStream(file);
-//
-//		                fileContent = new byte[(int)file.length()];
-//
-//		                // Reads up to certain bytes of data from this input stream into an array of bytes.
-//		                fin.read(fileContent);
-//		                //create string from byte array
-//		                fileContent2Str = new String(fileContent);
-//		                Log.d("raydebug", "File content: " + fileContent2Str);
-//		            }
-//		            catch (FileNotFoundException e) {
-//		                Log.d("raydebug", "File not found" + e);
-//		            }
-//		            catch (IOException ioe) {
-//		                Log.d("raydebug", "Exception while reading file " + ioe);
-//		            }
-					conn.setRequestProperty("file", fileToUpload); // byte[]
-//		            if(fileToUpload.endsWith("png")){
-//		                conn.setRequestProperty("file", fileContent2Str);
-//		            }else{
-//		                conn.setRequestProperty("file", fileToUpload);
-//		            }
 					DataOutputStream out = new DataOutputStream(conn.getOutputStream());
-					out.writeBytes("--"+boundary+"\r\n");
+					out.writeBytes(twoHyphens + boundary + end);
 					String fileName = fileToUpload;
 					if(postData != null) {
 						fileName = postData.get("avatar");
 						StringBuffer res = new StringBuffer("");
 						Iterator<Map.Entry<String, String>> iterator = postData.entrySet().iterator();
-
 						while (iterator.hasNext()) {
 							Map.Entry<String, String> mapEntry = (Map.Entry<String, String>) iterator.next();
-							res.append("Content-Disposition: form-data; name=\"").append(mapEntry.getKey()).append("\"\r\n")
-									.append("\r\n").append(URLEncoder.encode(mapEntry.getValue(), "utf-8")).append("\r\n")
-									.append("--").append(boundary).append("\r\n");
+							res.append("Content-Disposition: form-data; name=\"")
+									.append(mapEntry.getKey()).append("\"")
+									.append(end).append(end)
+									.append(URLEncoder.encode(mapEntry.getValue(), "utf-8"))
+									.append(end)
+									.append(twoHyphens).append(boundary).append(end);
 						}
 						out.writeBytes(res.toString());
 					}
 
-					out.writeBytes("Content-Disposition: form-data; type=\"file\";filename=\"" + fileName + "\"\r\n");
-					out.writeBytes("\r\n");
+					out.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"" + fileName + "\"" + end);
+					out.writeBytes(end);
 
 					bytesAvailable = fileInputStream.available(); // create a buffer of maximum size
-
 					bufferSize = Math.min(bytesAvailable, maxBufferSize);
 					buffer = new byte[bufferSize];
-
 					// read file and write it into form...
 					bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
 					while (bytesRead > 0) {
 						out.write(buffer, 0, bufferSize);
 						bytesAvailable = fileInputStream.available();
 						bufferSize = Math.min(bytesAvailable, maxBufferSize);
 						bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 					}
-
 					// send multipart form data necesssary after file data...
-					out.writeBytes("\r\n");
-					out.writeBytes("--"+boundary+"--\r\n");
-
+					out.writeBytes(end);
+					out.writeBytes(twoHyphens + boundary + twoHyphens + end);
 					// close the streams //
 					fileInputStream.close();
 					out.flush();
-					out.close();*/
+					out.close();
 
-					String end = "\r\n";
+					/*String end = "\r\n";
 					String twoHyphens = "--";
 					String boundary = "******";
 					try
@@ -253,7 +218,19 @@ public class NetworkUtil {
 						conn.setRequestProperty("Connection", "Keep-Alive");
 						conn.setRequestProperty("Charset", "UTF-8");
 						conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-						conn.setRequestProperty("Cookie", FileManager.readFileSaveString(ctx, AppConfig.cookiesFileName, true));
+						conn.setRequestProperty("Cookie", cookie);
+
+						StringBuilder sb = new StringBuilder();
+						if (postData != null) {
+							// 首先组拼文本类型的参数
+							for (Map.Entry<String, String> entry : postData.entrySet()) {
+								sb.append(URLEncoder.encode(entry.getKey(), "utf-8"));
+								sb.append("=");
+								sb.append(URLEncoder.encode(entry.getValue(), "utf-8"));
+								sb.append("&");
+							}
+							LogUtil.i("JsonParser", "postdata merge = " + sb.toString());
+						}
 
 						DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 						dos.writeBytes(twoHyphens + boundary + end);
@@ -278,12 +255,13 @@ public class NetworkUtil {
 					} catch (Exception e)
 					{
 						e.printStackTrace();
-					}
+					}*/
 				}
 
 			}else{
 				conn.setRequestMethod("GET");
 				conn.setConnectTimeout(3000);
+				conn.setRequestProperty("Cookie", cookie);
 			}
 
 			int resCode = conn.getResponseCode();
