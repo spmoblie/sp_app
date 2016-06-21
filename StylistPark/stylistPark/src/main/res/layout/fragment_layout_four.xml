@@ -65,10 +65,8 @@
 
                 <TextView
                     android:id="@+id/fragment_four_tv_total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/common_text_price"
                     android:text="@string/number_0"
-                    android:textColor="@color/text_color_red_1"
                     android:textSize="@dimen/text_size_26"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -78,7 +76,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:background="@color/text_color_black"
+                android:background="@drawable/shape_frame_bg_app_buttom_0"
                 android:gravity="center"
                 android:text="@string/cart_buy_now"
                 android:textColor="@color/text_color_white"

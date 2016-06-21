@@ -309,23 +309,21 @@
         
         <TextView 
             android:id="@+id/post_order_tv_pay_total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/common_text_price"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:textStyle="bold"
-            android:textSize="@dimen/text_size_28"
-            android:textColor="@color/text_color_red_1" />
+            android:textSize="@dimen/text_size_28" />
         
         <TextView 
             android:id="@+id/post_order_tv_pay_now"
             style="@style/common_text_bg_frame"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/shape_frame_tv_white_gray_4"
+            android:background="@drawable/shape_frame_bg_app_hollow_4"
             android:text="@string/order_pay_now"
             android:textSize="@dimen/text_size_16"
-            android:textColor="@color/text_color_thin" />
+            android:textColor="@color/ui_bg_color_bar" />
     </RelativeLayout>
 
 </LinearLayout>

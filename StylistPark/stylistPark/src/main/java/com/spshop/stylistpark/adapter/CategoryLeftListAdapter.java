@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +12,8 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.CategoryListEntity;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LangCurrTools.Language;
+
+import java.util.List;
 
 
 /**
@@ -94,7 +94,7 @@ public class CategoryLeftListAdapter extends BaseAdapter{
 		
 		if (index == position) {
 			holder.rl_item.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_white));
-			holder.tv_name.setTextColor(context.getResources().getColor(R.color.text_color_content));
+			holder.tv_name.setTextColor(context.getResources().getColor(R.color.text_color_app_bar));
 		}else {
 			holder.rl_item.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_gray));
 			holder.tv_name.setTextColor(context.getResources().getColor(R.color.text_color_assist));

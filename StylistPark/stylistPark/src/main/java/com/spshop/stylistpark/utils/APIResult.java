@@ -1,12 +1,12 @@
 package com.spshop.stylistpark.utils;
 
-import java.util.HashMap;
+import android.content.Context;
+import android.text.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.text.TextUtils;
+import java.util.HashMap;
 
 public class APIResult {
 

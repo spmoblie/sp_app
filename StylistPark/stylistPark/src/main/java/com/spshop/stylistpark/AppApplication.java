@@ -146,7 +146,36 @@ public class AppApplication extends Application implements OnDataListener{
 		}
 		return imageOptions;
 	}
-	
+
+	/**
+	 * 获取不缓存图片的加载器对象
+	 *
+	 * @param circular 加载圆形效果的数值
+	 * @param drawableId 默认图片Id
+	 */
+	public static DisplayImageOptions getNotCacheImageOptions(int circular, int drawableId){
+		DisplayImageOptions imageOptions = null;
+		if (circular == 0) {
+			imageOptions = new DisplayImageOptions.Builder()
+			.showImageForEmptyUri(drawableId)
+			.showImageOnFail(drawableId)
+			.cacheInMemory(false) // 内存缓存
+			.cacheOnDisc(false) // sdcard缓存
+			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+			.bitmapConfig(Bitmap.Config.RGB_565).build();
+		}else {
+			imageOptions = new DisplayImageOptions.Builder()
+			.displayer(new RoundedBitmapDisplayer(circular))
+			.showImageForEmptyUri(drawableId)
+			.showImageOnFail(drawableId)
+			.cacheInMemory(false) // 内存缓存
+			.cacheOnDisc(false) // sdcard缓存
+			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+			.bitmapConfig(Bitmap.Config.RGB_565).build();
+		}
+		return imageOptions;
+	}
+
 	public static SharedPreferences getSharedPreferences(){
 		if (shared == null) {
 			shared = new SharedConfig(spApp).GetConfig();

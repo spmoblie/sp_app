@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.utils;
 
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,6 +7,8 @@ import android.content.res.Configuration;
 import android.text.TextUtils;
 
 import com.spshop.stylistpark.R;
+
+import java.util.Locale;
 
 
 /**

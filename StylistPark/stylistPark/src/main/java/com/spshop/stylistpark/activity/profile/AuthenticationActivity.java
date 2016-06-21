@@ -23,10 +23,10 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.common.ClipImageSquareActivity;
 import com.spshop.stylistpark.activity.common.ClipPhotoGridActivity;
 import com.spshop.stylistpark.activity.common.ShowPhotoActivity;
+import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.image.AsyncImageUpload;
 import com.spshop.stylistpark.image.AsyncImageUpload.AsyncImageUploadCallback;
-import com.spshop.stylistpark.utils.APIResult;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -167,9 +167,9 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 					asyncImageUpload = AsyncImageUpload.getInstance(mContext, new AsyncImageUploadCallback() {
 						
 						@Override
-						public void uploadImageUrls(APIResult result) {
-							if (result != null) {
-								uploadOk = result.isSuccess() ? true : false;
+						public void uploadImageUrls(BaseEntity baseEn) {
+							if (baseEn != null) {
+								uploadOk = baseEn.getErrCode() == 1 ? true : false;
 								if (uploadOk) {
 									asyncImageUpload.quit();
 									postAuthName();

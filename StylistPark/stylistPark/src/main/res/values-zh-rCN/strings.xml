@@ -97,7 +97,7 @@
     <!-- home -->
     <string name="home_tab_text_one">首页</string>
     <string name="home_tab_text_two">@string/title_category</string>
-    <string name="home_tab_text_three">创建搭配</string>
+    <string name="home_tab_text_three">发现</string>
     <string name="home_tab_text_four">购物车</string>
     <string name="home_tab_text_five">我的</string>
     

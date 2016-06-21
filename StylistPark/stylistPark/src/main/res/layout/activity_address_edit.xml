@@ -271,7 +271,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/shape_frame_bg_black_4"
+            android:background="@drawable/shape_frame_bg_app_buttom_4"
             android:gravity="center"
             android:text="@string/confirm"
             android:textColor="@color/text_color_white"

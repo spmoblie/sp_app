@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.SectionIndexer;
 
+import com.spshop.stylistpark.R;
+
 public class SectionIndexerView extends View implements OnTouchListener {
 
     /**     */
@@ -189,7 +191,7 @@ public class SectionIndexerView extends View implements OnTouchListener {
         for (int i = 0; i < mSections.length; i++) {
 
             if (mCurrentSection == i)
-                mAlphaPaint.setColor(Color.RED);
+                mAlphaPaint.setColor(getResources().getColor(R.color.text_color_app_bar));
             else
                 mAlphaPaint.setColor(Color.BLACK);
 

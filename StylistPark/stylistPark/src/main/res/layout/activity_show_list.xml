@@ -138,7 +138,7 @@
                         android:id="@+id/show_list_tv_time_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_color_red_1"
+                        android:textColor="@color/text_color_app_bar"
                         android:textSize="@dimen/text_size_18" />
 
                     <TextView
@@ -154,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/text_color_red_1"
+                        android:textColor="@color/text_color_app_bar"
                         android:textSize="@dimen/text_size_18" />
 
                     <TextView
@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/text_color_red_1"
+                        android:textColor="@color/text_color_app_bar"
                         android:textSize="@dimen/text_size_18" />
 
                     <TextView
@@ -186,7 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/text_color_red_1"
+                        android:textColor="@color/text_color_app_bar"
                         android:textSize="@dimen/text_size_18" />
 
                     <TextView

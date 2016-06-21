@@ -65,14 +65,13 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	 * 与Activity不一样
 	 */
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		LogUtil.i(TAG, "onCreate");
 		instance = this;
 		mContext = getActivity();
 		atm = AsyncTaskManager.getInstance(mContext);
-		options = AppApplication.getImageOptions(90, R.drawable.head_portrait_80);
+		options = AppApplication.getNotCacheImageOptions(90, R.drawable.head_portrait);
 		
 		View view = null;
 		try {
@@ -133,7 +132,8 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 
 	private void setView() {
 		if (infoEn != null) {
-			ImageLoader.getInstance().displayImage(infoEn.getHeadImg(), iv_info, options);
+			ImageLoader.getInstance().displayImage(
+					AppConfig.ENVIRONMENT_PRESENT_IMG_APP + infoEn.getHeadImg(), iv_info, options);
 			tv_money.setText(infoEn.getMoney());
 			tv_bonus.setText(infoEn.getBonus());
 			int order_1 = infoEn.getOrder_1();
@@ -185,7 +185,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			}
 			updateCartTotal(infoEn.getCartTotal());
 		}else {
-			iv_info.setImageDrawable(getResources().getDrawable(R.drawable.head_portrait_80));
+			iv_info.setImageDrawable(getResources().getDrawable(R.drawable.head_portrait));
 			String num = getString(R.string.number_0);
 			tv_pay_num.setText(num);
 			tv_pay_num.setVisibility(View.GONE);

@@ -24,7 +24,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:text=""
-        android:textColor="@color/text_color_title"
+        android:textColor="@color/ui_bg_color_bar"
         android:textSize="@dimen/text_size_20" />
     
     <Button
@@ -35,7 +35,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
         android:background="@drawable/btn_top_text_btn_short"
-        android:textColor="@color/text_color_content"
+        android:textColor="@color/ui_bg_color_bar"
         android:textSize="@dimen/text_size_18" />
     
     <ImageView

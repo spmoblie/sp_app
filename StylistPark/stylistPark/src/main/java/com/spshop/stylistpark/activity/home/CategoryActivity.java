@@ -297,15 +297,15 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 		switch (index) {
 		case 0:
 			tv_title_1.setTextColor(getResources().getColor(R.color.text_color_white));
-			tv_title_1.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_black_4));
-			tv_title_2.setTextColor(getResources().getColor(R.color.text_color_title));
-			tv_title_2.setBackground(getResources().getDrawable(R.drawable.shape_frame_tv_white_black_4));
+			tv_title_1.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_4));
+			tv_title_2.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+			tv_title_2.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_hollow_4));
 			break;
 		case 1:
-			tv_title_1.setTextColor(getResources().getColor(R.color.text_color_title));
-			tv_title_1.setBackground(getResources().getDrawable(R.drawable.shape_frame_tv_white_black_4));
+			tv_title_1.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+			tv_title_1.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_hollow_4));
 			tv_title_2.setTextColor(getResources().getColor(R.color.text_color_white));
-			tv_title_2.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_black_4));
+			tv_title_2.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_4));
 			break;
 		}
 	}

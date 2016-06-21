@@ -73,6 +73,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
+                    android:textColor="@color/ui_bg_color_bar"
                     android:textSize="@dimen/text_size_16"
                     android:textStyle="bold" />
             </RelativeLayout>

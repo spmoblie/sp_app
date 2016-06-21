@@ -274,7 +274,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
-        android:background="@drawable/shape_frame_bg_black_2"
+        android:background="@drawable/shape_frame_bg_app_buttom_2"
         android:text="@string/collage_change_item"
         android:textColor="@color/ui_bg_color_white"
         android:visibility="gone" />
@@ -285,7 +285,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/shape_frame_bg_black_2"
+        android:background="@drawable/shape_frame_bg_app_buttom_2"
         android:text="Test Me"
         android:textColor="@color/ui_bg_color_white"
         android:visibility="gone" />

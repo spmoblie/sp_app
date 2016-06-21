@@ -15,7 +15,7 @@
             android:id="@+id/filterMain_priceLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_frame_tv_white_gray_4"
+            android:background="@drawable/shape_frame_bg_app_hollow_4"
             android:orientation="vertical" >
 
             <RelativeLayout
@@ -50,7 +50,7 @@
                 android:layout_marginRight="10dp"
                 custom:barColor="@color/collage_light_grey_221_221_221"
                 custom:barWeight="5dp"
-                custom:connectingLineColor="@color/collage_green"
+                custom:connectingLineColor="@color/ui_bg_color_bar"
                 custom:thumbImageNormal="@drawable/generator_filter_price_btn_crop"
                 custom:thumbImagePressed="@drawable/generator_filter_price_btn_crop" />
 
@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/filter_main_brand_bar_height"
             android:layout_marginTop="10dp"
-            android:background="@drawable/shape_frame_tv_white_gray_4"
+            android:background="@drawable/shape_frame_bg_app_hollow_4"
             android:orientation="horizontal"
             android:paddingLeft="10dp" >
 
@@ -137,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/filter_main_brand_bar_height"
             android:layout_marginTop="10dp"
-            android:background="@drawable/shape_frame_tv_white_gray_4"
+            android:background="@drawable/shape_frame_bg_app_hollow_4"
             android:paddingLeft="10dp" >
 
             <TextView
@@ -215,9 +215,9 @@
             android:id="@+id/filterMain_resetLayout"
             android:layout_width="141dp"
             android:layout_height="35dp"
-            android:background="@drawable/shape_frame_bg_black_2"
+            android:background="@drawable/shape_frame_bg_app_hollow_2"
             android:text="@string/clean"
-            android:textColor="@color/text_color_white"
+            android:textColor="@color/text_color_app_bar"
             android:textSize="@dimen/text_size_14"
             android:textStyle="bold" />
 
@@ -226,7 +226,7 @@
             android:layout_width="141dp"
             android:layout_height="35dp"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/shape_frame_bg_green_2"
+            android:background="@drawable/shape_frame_bg_app_buttom_2"
             android:text="@string/done"
             android:textColor="@color/text_color_white"
             android:textSize="@dimen/text_size_14"

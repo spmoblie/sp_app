@@ -151,7 +151,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				tv_phone.setText(addrEn.getPhone());
 				tv_address.setText(addrEn.getAddress());
 				addressOk = true;
-				tv_pay_now.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_black_4));
+				tv_pay_now.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_4));
 				tv_pay_now.setTextColor(getResources().getColor(R.color.text_color_white));
 			}else {
 				tv_name.setVisibility(View.GONE);
@@ -159,8 +159,8 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				tv_address.setVisibility(View.GONE);
 				tv_address_hint.setVisibility(View.VISIBLE);
 				addressOk = false;
-				tv_pay_now.setBackground(getResources().getDrawable(R.drawable.shape_frame_tv_white_gray_4));
-				tv_pay_now.setTextColor(getResources().getColor(R.color.text_color_thin));
+				tv_pay_now.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_hollow_4));
+				tv_pay_now.setTextColor(getResources().getColor(R.color.text_color_app_bar));
 			}
 			// 付款方式
 			payType = orderEn.getPayId();

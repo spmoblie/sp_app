@@ -50,7 +50,7 @@
                 android:id="@+id/search_et_search"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/shape_frame_et_white_gray_4"
+                android:background="@drawable/shape_frame_bg_app_hollow_4"
                 android:hint="@string/product_search_et_hint"
                 android:imeOptions="actionSearch"
                 android:paddingLeft="35dp"
@@ -94,7 +94,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="@string/product_search"
-                android:textColor="@color/text_color_black"
+                android:textColor="@color/ui_bg_color_bar"
                 android:textSize="@dimen/text_size_18" />
         </RelativeLayout>
     </LinearLayout>

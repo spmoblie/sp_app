@@ -5,12 +5,19 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
-import com.spshop.stylistpark.utils.APIResult;
+import com.spshop.stylistpark.AppConfig;
+import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.service.JsonParser;
 import com.spshop.stylistpark.utils.ExceptionUtil;
-import com.spshop.stylistpark.utils.NetworkUtil;
+import com.spshop.stylistpark.utils.FileManager;
+import com.spshop.stylistpark.utils.LogUtil;
 
-import org.json.JSONObject;
-
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -46,21 +53,11 @@ public class AsyncImageUpload {
 		this.handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
-				APIResult result = null;
+				BaseEntity baseEn = null;
 				if (msg.obj != null) {
-					result = (APIResult) msg.obj;
+					baseEn = (BaseEntity) msg.obj;
 				}
-				callback.uploadImageUrls(result);
-				/*if (imageUrl.equals("error") || StringUtil.isNull(imageUrl)) {
-					callback.uploadImageUrls(imageUrls);
-					imageUrls.clear();
-				} else {
-					imageUrls.add(imageUrl);
-					if (imageUrls.size() == pathCount) {
-						callback.uploadImageUrls(imageUrls);
-						imageUrls.clear();
-					}
-				}*/
+				callback.uploadImageUrls(baseEn);
 			};
 		};
 		this.workThread = new Thread() {
@@ -71,51 +68,65 @@ public class AsyncImageUpload {
 						// 从任务队列获取任务
 						ImageLoadTask task = tasks.remove(0);
 						try {
-//							HttpEntity entity = HttpUtil.getEntity(task.url, null, HttpUtil.METHOD_POST);
-//							String jsonStr = HttpUtil.getString(entity);
-//							LogUtil.i("JsonParser", jsonStr);
+							URL url = new URL(task.url);
+							HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+							String cookie = FileManager.readFileSaveString(context, AppConfig.cookiesFileName, true);
+							LogUtil.i("JsonParser", "read cookie = " + cookie);
 
-							JSONObject jsonObj = NetworkUtil.getJSONFromURL(context, task.url, task.postData, task.path);
-							APIResult result = new APIResult(context, jsonObj, "imgUrl", null);
+							String end = "\r\n";
+							String twoHyphens = "--";
+							String boundary = "******";
+							File sourceFile = new File(task.path);
+							// 设置每次传输的流大小，可以有效防止手机因为内存不足崩溃
+							// 此方法用于在预先不知道内容长度时启用没有进行内部缓冲的 HTTP 请求正文的流。
+							conn.setChunkedStreamingMode(128 * 1024);// 128K
+							// 允许输入输出流
+							conn.setDoInput(true);
+							conn.setDoOutput(true);
+							conn.setUseCaches(false);
+							// 使用POST方法
+							conn.setRequestMethod("POST");
+							conn.setRequestProperty("Connection", "Keep-Alive");
+							conn.setRequestProperty("Charset", "UTF-8");
+							conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+							conn.setRequestProperty("Cookie", cookie);
+
+							String fileName = "";
+							if (task.postData != null) {
+								fileName = task.postData.get("fileName") + ".png";
+							}
+							DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+							dos.writeBytes(twoHyphens + boundary + end);
+							dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"" + fileName + "\"" + end);
+							dos.writeBytes(end);
+
+							FileInputStream fis = new FileInputStream(sourceFile);
+							byte[] buffer = new byte[8192]; // 8k
+							int count = 0;
+							// 读取文件
+							while ((count = fis.read(buffer)) != -1)
+							{
+								dos.write(buffer, 0, count);
+							}
+							fis.close();
+
+							dos.writeBytes(end);
+							dos.writeBytes(twoHyphens + boundary + twoHyphens + end);
+							dos.flush();
+							dos.close();
+
+							// 取得Response内容
+							InputStream is = conn.getInputStream();
+							int ch;
+							StringBuffer jsonStr = new StringBuffer();
+							while ((ch = is.read()) != -1) {
+								jsonStr.append((char) ch);
+							}
+							LogUtil.i("JsonParser", task.url + "\n" + jsonStr.toString());
+							BaseEntity baseEn = JsonParser.getCommonResult(jsonStr.toString());
 							Message msg = new Message();
-							msg.obj = result;
+							msg.obj = baseEn;
 							handler.sendMessage(msg);
-
-//							URL url = new URL(task.url);
-//							HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//							con.setConnectTimeout(10000);
-//							// 允许Input、Output，不使用Cache
-//							con.setDoInput(true);
-//							con.setDoOutput(true);
-//							con.setUseCaches(false);
-//							// 设置传送的method=POST
-//							con.setRequestMethod("POST");
-//							con.setRequestProperty("Connection", "Keep-Alive");
-//							con.setRequestProperty("Charset", "UTF-8");
-//							con.setRequestProperty("Cookie", FileManager.readFileSaveString(context, AppConfig.cookiesFileName, true));
-//							// 设置DataOutputStream
-//							DataOutputStream ds = new DataOutputStream(con.getOutputStream());
-//							LogUtil.i("path", task.path);
-//							Bitmap bm = BitmapUtil.getBitmap(task.path);
-//							bm = BitmapUtil.resizeImageByWidth(bm, 640);
-//							byte[] bytes = BitmapUtil.bmpToByteArray(context, bm, true);
-//							ds.write(bytes, 0, bytes.length);
-//							ds.flush();
-//							// 取得Response内容
-//							InputStream is = con.getInputStream();
-//							int ch;
-//							StringBuffer jsonStr = new StringBuffer();
-//							while ((ch = is.read()) != -1) {
-//								jsonStr.append((char) ch);
-//							}
-//							ds.close();
-//
-//							String imageUrl = JsonParser.getUploadImageUrl(jsonStr.toString());
-//
-//							Message msg = new Message();
-//							msg.obj = imageUrl;
-//							handler.sendMessage(msg);
-
 						} catch (Exception e) {
 							exceptionHandle(e);
 						}
@@ -207,7 +218,7 @@ public class AsyncImageUpload {
 	}
 
 	public interface AsyncImageUploadCallback {
-		void uploadImageUrls(APIResult result);
+		void uploadImageUrls(BaseEntity baseEn);
 	}
 
 }

@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.activity.collage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.GridView;
@@ -13,6 +10,9 @@ import com.spshop.stylistpark.adapter.AppBaseAdapter.OnItemCellClickListener;
 import com.spshop.stylistpark.adapter.ColorAdapter;
 import com.spshop.stylistpark.entity.FilterColor;
 import com.spshop.stylistpark.utils.UserTracker;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ColorActivity extends BaseActivity {
 	
@@ -183,7 +183,7 @@ public class ColorActivity extends BaseActivity {
 		tmp = new FilterColor();
 		tmp.setName(getResources().getString(R.string.txt_color_white));
 		tmp.setDisplayName(getResources().getString(R.string.txt_color_white_zh));
-		tmp.setDrawableId(R.drawable.shape_frame_iv_white_gray_2, R.drawable.shape_frame_iv_white_gray_2);
+		tmp.setDrawableId(R.drawable.shape_frame_white_gray_2, R.drawable.shape_frame_white_gray_2);
 		colorList.add(tmp);
 
 		tmp = new FilterColor();
@@ -291,7 +291,7 @@ public class ColorActivity extends BaseActivity {
 		tmp = new FilterColor();
 		tmp.setName("white");
 		tmp.setDisplayName(getResources().getString(R.string.txt_color_white_zh));
-		tmp.setDrawableId(R.drawable.shape_frame_iv_white_gray_2, R.drawable.shape_frame_iv_white_gray_2);
+		tmp.setDrawableId(R.drawable.shape_frame_bg_app_hollow_2, R.drawable.shape_frame_bg_app_hollow_2);
 		colorList.add(tmp);
 
 		tmp = new FilterColor();

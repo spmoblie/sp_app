@@ -159,7 +159,7 @@ public class NetworkUtil {
 					out.writeBytes(twoHyphens + boundary + end);
 					String fileName = fileToUpload;
 					if(postData != null) {
-						fileName = postData.get("avatar");
+						fileName = postData.get("fileName");
 						StringBuffer res = new StringBuffer("");
 						Iterator<Map.Entry<String, String>> iterator = postData.entrySet().iterator();
 						while (iterator.hasNext()) {
@@ -195,69 +195,7 @@ public class NetworkUtil {
 					fileInputStream.close();
 					out.flush();
 					out.close();
-
-					/*String end = "\r\n";
-					String twoHyphens = "--";
-					String boundary = "******";
-					try
-					{
-						File sourceFile = new File(fileToUpload);
-						if (!sourceFile.isFile()) {
-							Log.e("getInputStream", "Source File Does not exist");
-							return null;
-						}
-						// 设置每次传输的流大小，可以有效防止手机因为内存不足崩溃
-						// 此方法用于在预先不知道内容长度时启用没有进行内部缓冲的 HTTP 请求正文的流。
-						conn.setChunkedStreamingMode(128 * 1024);// 128K
-						// 允许输入输出流
-						conn.setDoInput(true);
-						conn.setDoOutput(true);
-						conn.setUseCaches(false);
-						// 使用POST方法
-						conn.setRequestMethod("POST");
-						conn.setRequestProperty("Connection", "Keep-Alive");
-						conn.setRequestProperty("Charset", "UTF-8");
-						conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-						conn.setRequestProperty("Cookie", cookie);
-
-						StringBuilder sb = new StringBuilder();
-						if (postData != null) {
-							// 首先组拼文本类型的参数
-							for (Map.Entry<String, String> entry : postData.entrySet()) {
-								sb.append(URLEncoder.encode(entry.getKey(), "utf-8"));
-								sb.append("=");
-								sb.append(URLEncoder.encode(entry.getValue(), "utf-8"));
-								sb.append("&");
-							}
-							LogUtil.i("JsonParser", "postdata merge = " + sb.toString());
-						}
-
-						DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-						dos.writeBytes(twoHyphens + boundary + end);
-						dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\"; filename=\""
-								+ postData.get("avatar") + "\"" + end);
-						dos.writeBytes(end);
-
-						FileInputStream fis = new FileInputStream(sourceFile);
-						byte[] buffer = new byte[8192]; // 8k
-						int count = 0;
-						// 读取文件
-						while ((count = fis.read(buffer)) != -1)
-						{
-							dos.write(buffer, 0, count);
-						}
-						fis.close();
-
-						dos.writeBytes(end);
-						dos.writeBytes(twoHyphens + boundary + twoHyphens + end);
-						dos.flush();
-						dos.close();
-					} catch (Exception e)
-					{
-						e.printStackTrace();
-					}*/
 				}
-
 			}else{
 				conn.setRequestMethod("GET");
 				conn.setConnectTimeout(3000);

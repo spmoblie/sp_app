@@ -25,7 +25,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
                 android:contentDescription="@string/desc"
-                android:src="@drawable/head_portrait_80" />
+                android:src="@drawable/head_portrait" />
 
             <ImageView
                 android:id="@+id/item_list_order_member_iv_rank"

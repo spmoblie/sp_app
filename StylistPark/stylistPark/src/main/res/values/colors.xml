@@ -304,7 +304,8 @@
     
     
     <!-- UI背景常用颜色值 -->
-    <color name="ui_bg_color_app">#FFFFFF</color><!-- App主要背景色 -->
+    <color name="ui_bg_color_app">#FFFFFF</color><!-- AppUI背景色 -->
+    <color name="ui_bg_color_bar">#f383b6</color><!-- AppUI状态色 -->
     <color name="ui_bg_color_white">#FFFFFF</color><!-- 白色 -->
     <color name="ui_bg_color_black">#000000</color><!-- 黑色 -->
     <color name="ui_bg_color_gray">#F4F4F4</color><!-- 灰色 -->
@@ -318,9 +319,11 @@
     <color name="ui_bg_color_percent_white_50">#CFFFFFFF</color><!-- 白色50%透明度 -->
      
     <!-- Text字体常用颜色值 -->
-    <color name="text_color_orange">#F19964</color><!-- 橙色 -->
-    <color name="text_color_red_0">#ff0000</color><!-- 红色 -->
-    <color name="text_color_red_1">#E6697D</color><!-- 淡红色 -->
+    <color name="text_color_app_bar">#f383b6</color><!-- AppTV状态色 -->
+    <!--<color name="text_color_red_0">#ff0000</color>&lt;!&ndash; 红色 &ndash;&gt;-->
+    <!--<color name="text_color_red_1">#E6697D</color>&lt;!&ndash; 淡红色 &ndash;&gt;-->
+    <color name="text_color_red_0">@color/text_color_app_bar</color>
+    <color name="text_color_red_1">@color/text_color_app_bar</color>
     <color name="text_color_white">#ffffff</color><!-- 白色 -->
     <color name="text_color_black">#000000</color><!-- 黑色 -->
     <color name="text_color_title">#333333</color><!-- 标题颜色值:黑色 -->
@@ -358,7 +361,6 @@
     <color name="collage_menu_divide">@color/ui_bg_color_line_tiny</color>
     <color name="collage_transparent">@color/ui_bg_color_percent_100</color>
     <color name="collage_template_bg">#66dddddd</color>
-    <color name="collage_green">#48C3B0</color>
     <color name="collage_grey_83_83_83">#535353</color>
     <color name="collage_light_grey_221_221_221">#DDDDDD</color>
     <color name="collage_light_grey_241_241_241">#F1F1F1</color>
@@ -370,7 +372,7 @@
     <color name="generator_collage_border">#C8C8C8</color>
     
     <!-- product menu -->
-    <color name="product_menu_bg_down_color">@color/collage_green</color>
+    <color name="product_menu_bg_down_color">@color/ui_bg_color_bar</color>
     <color name="product_menu_bg_up_color">@color/ui_bg_color_white</color>
 
 </resources>

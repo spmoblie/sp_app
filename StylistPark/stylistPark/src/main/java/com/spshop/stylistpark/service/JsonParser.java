@@ -54,14 +54,6 @@ public class JsonParser {
 		//JSONObject item = jsonObject.getJSONObject("data");
 		return new UpdateVersionEntity(0, "", "desc", jsonStr, "url", false);
 	}
-	
-	/**
-	 * 解析"上传图片"Json格式数据并返回图片URL
-	 */
-	public static String getUploadImageUrl(String jsonStr) throws JSONException {
-		String imageUrl = "";
-		return imageUrl;
-	}
 
 	/**
 	 * 解析商品分类数据

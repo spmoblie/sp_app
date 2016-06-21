@@ -149,7 +149,7 @@
         <item name="android:padding">3dp</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/shape_frame_tv_white_gray_4</item>
+        <item name="android:background">@drawable/shape_frame_bg_app_hollow_4</item>
         <item name="android:textColor">@color/text_color_assist</item>
         <item name="android:textSize">@dimen/text_size_14</item>
     </style>
@@ -164,6 +164,14 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/selector_text_home_bottom</item>
         <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <!-- 通用价格文本样式 -->
+    <style name="common_text_price">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_color_app_bar</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
         
     <!-- 购物车商品属性文本样式:灰色 -->
@@ -217,7 +225,7 @@
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:inputType">textEmailAddress</item>
-        <item name="android:background">@drawable/shape_frame_tv_white_gray_4</item>
+        <item name="android:background">@drawable/shape_frame_bg_app_hollow_4</item>
         <item name="android:textColorHint">@color/text_color_assist</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:textColor">@color/text_color_title</item>
@@ -228,7 +236,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_marginTop">30dp</item>
-        <item name="android:background">@drawable/shape_frame_bg_black_4</item>
+        <item name="android:background">@drawable/shape_frame_bg_app_buttom_4</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_size_20</item>
         <item name="android:textColor">@color/text_color_white</item>
@@ -308,11 +316,11 @@
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingRight">15dp</item>
         <item name="android:paddingBottom">5dp</item>
-        <item name="android:background">@drawable/shape_frame_tv_white_black_4</item>
-        <item name="android:textColor">@color/text_color_title</item>
+        <item name="android:background">@drawable/shape_frame_bg_app_hollow_4</item>
+        <item name="android:textColor">@color/ui_bg_color_bar</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
-    
+
     <!-- 通用红点提醒ImageView样式 -->
     <style name="commom_warn_red_img">
         <item name="android:layout_width">wrap_content</item>
@@ -354,7 +362,7 @@
     <style name="common_btn_text_left">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@drawable/shape_frame_tv_white_black_4</item>
+        <item name="android:background">@drawable/shape_frame_bg_app_hollow_4</item>
         <item name="android:text">@string/cancel</item>
         <item name="android:textColor">@color/text_color_black</item>
         <item name="android:textSize">@dimen/text_size_16</item>
@@ -364,7 +372,7 @@
     <style name="common_btn_text_right">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@drawable/shape_frame_bg_black_4</item>
+        <item name="android:background">@drawable/shape_frame_bg_app_buttom_4</item>
         <item name="android:text">@string/confirm</item>
         <item name="android:textColor">@color/text_color_white</item>
         <item name="android:textSize">@dimen/text_size_16</item>
@@ -389,9 +397,9 @@
         <item name="android:src">@drawable/common_go_right</item>
     </style>
     
-    <!-- 黑色按钮 -->
+    <!-- 通用按钮 -->
     <style name="BlackButton" parent="android:Widget.Holo.Light.Button">
-        <item name="android:background">@drawable/shape_frame_bg_black_2</item>
+        <item name="android:background">@drawable/shape_frame_bg_app_buttom_2</item>
         <item name="android:textColor">@color/text_color_white</item>
     </style>
 

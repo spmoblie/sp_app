@@ -27,7 +27,6 @@ import com.spshop.stylistpark.service.MainService;
 import com.spshop.stylistpark.utils.APIResult;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
-import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 
 import org.apache.http.HttpEntity;
@@ -715,7 +714,8 @@ public class MainServiceImpl implements MainService {
 		postData.put("html", html);
 		postData.put("mobileHtml", mobileHtml);
 		postData.put("isAndroid", "1");
-		JSONObject jsonObj = NetworkUtil.getJSONFromURL(ctx, AppConfig.API_SUBMIT_LOOKBOOK, postData, filePath);
+		//JSONObject jsonObj = NetworkUtil.getJSONFromURL(ctx, AppConfig.API_SUBMIT_LOOKBOOK, postData, filePath);
+		JSONObject jsonObj = new JSONObject();
 		return new APIResult(ctx, jsonObj, "url", "mediaUrl");
 	}
 

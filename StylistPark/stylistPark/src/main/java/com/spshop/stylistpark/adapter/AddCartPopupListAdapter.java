@@ -170,11 +170,11 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			// 判定库存数
 			int skuNum = nameLists.get(i).getSkuNum();
 			if (skuNum > 0) {
-				tv.setTextColor(context.getResources().getColor(R.color.text_color_black));
+				tv.setTextColor(context.getResources().getColor(R.color.ui_bg_color_bar));
 				tv.setBackground(context.getResources().getDrawable(R.drawable.selector_btn_small));
 			}else {
 				tv.setTextColor(context.getResources().getColor(R.color.text_color_thin));
-				tv.setBackground(context.getResources().getDrawable(R.drawable.shape_frame_tv_white_gray_4));
+				tv.setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_gray_4));
 			}
 			// 记录库存数
 			skuHashMap.put(String.valueOf(viewId), skuNum);
@@ -304,9 +304,9 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			num = getSkuNum(String.valueOf(views[i].getId()));
 			if (num == 0) {
 				tv_item.setTextColor(context.getResources().getColor(R.color.text_color_thin));
-				views[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_tv_white_gray_4));
+				views[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_gray_4));
 			}else {
-				tv_item.setTextColor(context.getResources().getColor(R.color.text_color_black));
+				tv_item.setTextColor(context.getResources().getColor(R.color.ui_bg_color_bar));
 				views[i].setBackground(context.getResources().getDrawable(R.drawable.selector_btn_small));
 				views[i].setSelected(false);
 			}
@@ -353,9 +353,9 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			num = getSkuNum(String.valueOf(selectId) + "|" + String.valueOf(views_2[i].getId()));
 			if (num == 0) {
 				tv_item.setTextColor(context.getResources().getColor(R.color.text_color_thin));
-				views_2[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_tv_white_gray_4));
+				views_2[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_gray_4));
 			}else {
-				tv_item.setTextColor(context.getResources().getColor(R.color.text_color_black));
+				tv_item.setTextColor(context.getResources().getColor(R.color.ui_bg_color_bar));
 				views_2[i].setBackground(context.getResources().getDrawable(R.drawable.selector_btn_small));
 				views_2[i].setSelected(false);
 			}

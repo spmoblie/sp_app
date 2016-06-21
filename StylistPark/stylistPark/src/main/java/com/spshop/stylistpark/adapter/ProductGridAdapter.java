@@ -110,7 +110,7 @@ public class ProductGridAdapter extends BaseAdapter{
 			holder.item_full_price.setVisibility(View.GONE);
 			holder.item_discount.setVisibility(View.GONE);
 		} else {
-			holder.item_sell_price.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
+			holder.item_sell_price.setTextColor(context.getResources().getColor(R.color.text_color_app_bar));
 			holder.item_full_price.setText(full_price);
 			holder.item_full_price.setVisibility(View.VISIBLE);
 			holder.item_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);

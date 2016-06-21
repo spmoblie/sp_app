@@ -72,27 +72,20 @@
 
                 <TextView
                     android:id="@+id/list_commodity_two_left_tv_sell_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/text_color_red_1"
-                    android:textSize="@dimen/text_size_12" />
+                    style="@style/common_text_price" />
 
                 <TextView
                     android:id="@+id/list_commodity_two_left_tv_full_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/common_text_price"
                     android:layout_marginLeft="2dp"
-                    android:text=""
-                    android:textColor="@color/text_color_content"
-                    android:textSize="@dimen/text_size_12" />
+                    android:textColor="@color/text_color_content" />
 
                 <TextView
                     android:id="@+id/list_commodity_two_left_tv_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:background="@color/text_color_red_1"
+                    android:background="@drawable/shape_frame_bg_app_buttom_0"
                     android:gravity="center"
                     android:padding="2dp"
                     android:ellipsize="end"
@@ -176,27 +169,20 @@
 
                     <TextView
                         android:id="@+id/list_commodity_two_right_tv_sell_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/text_color_red_1"
-                        android:textSize="@dimen/text_size_12" />
+                        style="@style/common_text_price" />
 
                     <TextView
                         android:id="@+id/list_commodity_two_right_tv_full_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/common_text_price"
                         android:layout_marginLeft="2dp"
-                        android:text=""
-                        android:textColor="@color/text_color_content"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textColor="@color/text_color_content" />
 
                     <TextView
                         android:id="@+id/list_commodity_two_right_tv_discount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:background="@color/text_color_red_1"
+                        android:background="@drawable/shape_frame_bg_app_buttom_0"
                         android:gravity="center"
                         android:padding="2dp"
                         android:ellipsize="end"

@@ -85,7 +85,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		infoEn = (UserInfoEntity) getIntent().getExtras().get("data");
 		userManager = UserManager.getInstance();
 		dm = new DialogManager(mContext);
-		options = AppApplication.getImageOptions(90, R.drawable.head_portrait_80);
+		options = AppApplication.getNotCacheImageOptions(90, R.drawable.head_portrait);
 		
 		findViewById();
 		initView();
@@ -162,7 +162,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			tv_auth_go.setVisibility(View.VISIBLE);
 			tv_auth_ok.setVisibility(View.GONE);
 		}
-		ImageLoader.getInstance().displayImage(headUrl, iv_head, options);
+		ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + headUrl, iv_head, options);
 	}
 
 	private void uploadImage() {
@@ -181,9 +181,9 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 					asyncImageUpload = AsyncImageUpload.getInstance(mContext, new AsyncImageUploadCallback() {
 						
 						@Override
-						public void uploadImageUrls(APIResult result) {
-							if (result != null) {
-								isUpload = result.isSuccess() ? false : true;
+						public void uploadImageUrls(BaseEntity baseEn) {
+							if (baseEn != null) {
+								isUpload = baseEn.getErrCode() == 1 ? false : true;
 								if (!isUpload) {
 									update_fragment = true;
 									asyncImageUpload.quit();
@@ -199,9 +199,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 						
 					});
 					Map<String, String> postData = new HashMap<String, String>();
-					postData.put("userid", UserManager.getInstance().getUserId());
-					postData.put("avatar", new File(headUrl).getName());
-					asyncImageUpload.uploadImage(AppConfig.API_UPDATE_PROFILE, null, headUrl);
+					postData.put("fileName", UserManager.getInstance().getUserId());
+					asyncImageUpload.uploadImage(AppConfig.API_UPDATE_PROFILE, postData, headUrl);
 				}
 			}, 2000);
 		} else {
@@ -283,7 +282,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			month = c.get(Calendar.MONTH);
 			day = c.get(Calendar.DAY_OF_MONTH);
 		}
-		new DatePickerDialog(this, 0, new OnDateSetListener() {
+		new DatePickerDialog(this, DatePickerDialog.THEME_HOLO_LIGHT, new OnDateSetListener() {
 			
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

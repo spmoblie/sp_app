@@ -12,7 +12,7 @@
         android:id="@+id/item_tv_promotion_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/text_color_red_1"
+        android:background="@drawable/shape_frame_bg_app_buttom_0"
         android:gravity="center"
         android:padding="2dp"
         android:text="@string/product_full_minus"

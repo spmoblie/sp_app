@@ -28,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/shape_frame_bg_black_4"
+            android:background="@drawable/shape_frame_bg_app_buttom_4"
             android:ellipsize="end"
             android:singleLine="true"
             android:gravity="center"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
-            android:background="@drawable/shape_frame_tv_white_black_4"
+            android:background="@drawable/shape_frame_bg_app_hollow_4"
             android:ellipsize="end"
             android:singleLine="true"
             android:gravity="center"
@@ -53,7 +53,7 @@
             android:paddingTop="5dp"
             android:paddingRight="15dp"
             android:paddingBottom="5dp"
-            android:textColor="@color/text_color_title"
+            android:textColor="@color/ui_bg_color_bar"
             android:textSize="@dimen/text_size_16" />
     </LinearLayout>
 

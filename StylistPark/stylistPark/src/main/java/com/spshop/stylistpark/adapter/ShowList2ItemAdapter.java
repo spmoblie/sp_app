@@ -122,7 +122,7 @@ public class ShowList2ItemAdapter extends BaseAdapter{
 				holder.left_full_price.setVisibility(View.GONE);
 				holder.left_discount.setVisibility(View.GONE);
 			} else {
-				holder.left_sell_price.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
+				holder.left_sell_price.setTextColor(context.getResources().getColor(R.color.text_color_app_bar));
 				holder.left_full_price.setText(full_price);
 				holder.left_full_price.setVisibility(View.VISIBLE);
 				holder.left_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -159,7 +159,7 @@ public class ShowList2ItemAdapter extends BaseAdapter{
 				holder.right_full_price.setVisibility(View.GONE);
 				holder.right_discount.setVisibility(View.GONE);
 			} else {
-				holder.right_sell_price.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
+				holder.right_sell_price.setTextColor(context.getResources().getColor(R.color.text_color_app_bar));
 				holder.right_full_price.setText(full_price);
 				holder.right_full_price.setVisibility(View.VISIBLE);
 				holder.right_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);

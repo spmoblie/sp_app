@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
+import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.MemberEntity;
 
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class MemberListAdapter extends BaseAdapter {
 	
-	//private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
+	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	public static final int TYPE_CHECK = 1;
 	public static final int TYPE_PAY = 2;
 	public static final int TYPE_CACEL = 3;
@@ -39,7 +40,7 @@ public class MemberListAdapter extends BaseAdapter {
 		this.context = context;
 		this.datas = datas;
 		this.adapterCallback = adapterCallback;
-		options = AppApplication.getImageOptions(90, R.drawable.head_portrait_80);
+		options = AppApplication.getImageOptions(90, R.drawable.head_portrait);
 		
 		rank_0 = context.getResources().getDrawable(R.drawable.icon_rank_0);
 		rank_1 = context.getResources().getDrawable(R.drawable.icon_rank_1);
@@ -135,7 +136,7 @@ public class MemberListAdapter extends BaseAdapter {
 		holder.tv_order_count.setText(data.getOrderCount());
 		holder.tv_order_money.setText(data.getOrderMoney());
 
-		ImageLoader.getInstance().displayImage(data.getHeadImg(), holder.iv_head, options);
+		ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + data.getHeadImg(), holder.iv_head, options);
 		holder.iv_head.setOnClickListener(new OnClickListener() {
 			
 			@Override

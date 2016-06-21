@@ -17,7 +17,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:contentDescription="@string/desc"
-            android:src="@drawable/head_portrait_80" />
+            android:src="@drawable/head_portrait" />
     </LinearLayout>
 
     <LinearLayout

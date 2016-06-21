@@ -28,7 +28,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:contentDescription="@string/desc"
-            android:src="@drawable/head_portrait_80" />
+            android:src="@drawable/head_portrait" />
 
         <RelativeLayout
             android:layout_width="match_parent"

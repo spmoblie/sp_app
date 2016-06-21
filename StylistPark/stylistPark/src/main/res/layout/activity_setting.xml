@@ -16,7 +16,7 @@
         <TextView
             android:id="@+id/setting_tv_language_content"
             style="@style/setting_lay_text_content"
-            android:textColor="@color/text_color_red_1" />
+            android:textColor="@color/text_color_app_bar" />
 
         <ImageView
             style="@style/set_line_horizontal_bg"
@@ -37,7 +37,7 @@
         <TextView
             android:id="@+id/setting_tv_currency_content"
             style="@style/setting_lay_text_content"
-            android:textColor="@color/text_color_red_1" />
+            android:textColor="@color/text_color_app_bar" />
 
         <ImageView
             style="@style/set_line_horizontal_bg"

@@ -61,6 +61,7 @@ import com.spshop.stylistpark.share.ShareView;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -130,7 +131,7 @@ public class ProductDetailActivity extends BaseActivity implements
 	private int skuNum = 1;
 	private int propertyNum = 3;
 	private int selectId_1, selectId_2, attrNum, price, mathPrice;
-	private String attrNameStr, fristGoodsImgUrl, fristGoodsImgPath, fristPromotionName;
+	private String currStr, attrNameStr, fristGoodsImgUrl, fristGoodsImgPath, fristPromotionName;
 	private ArrayList<View> viewLists = new ArrayList<View>();
 	private ArrayList<String> urlLists = new ArrayList<String>();
 	private ArrayList<ProductDetailEntity> imgEns = new ArrayList<ProductDetailEntity>();
@@ -146,6 +147,7 @@ public class ProductDetailActivity extends BaseActivity implements
 		instance = this;
 		goodsId = getIntent().getIntExtra("goodsId", 0);
 		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+		currStr = LangCurrTools.getCurrencyValue(this) + " ";
 		
 		findViewById();
 		initView();
@@ -315,7 +317,7 @@ public class ProductDetailActivity extends BaseActivity implements
 	private void changeCollectionStatus() {
 		if (isColl) {
 			tv_collection.setSelected(true);
-			tv_collection.setTextColor(getResources().getColor(R.color.text_color_black));
+			tv_collection.setTextColor(getResources().getColor(R.color.text_color_app_bar));
 		}else {
 			tv_collection.setSelected(false);
 			tv_collection.setTextColor(getResources().getColor(R.color.text_color_assist));
@@ -596,13 +598,13 @@ public class ProductDetailActivity extends BaseActivity implements
 							tv_popup_select.setTextColor(getResources().getColor(R.color.text_color_assist));
 						}else {
 							tv_popup_prompt.setText(getString(R.string.item_select_ok));
-							tv_popup_select.setTextColor(getResources().getColor(R.color.text_color_black));
+							tv_popup_select.setTextColor(getResources().getColor(R.color.ui_bg_color_bar));
 						}
 						// 刷新商品价格及数量
 						selectId_1 = id1;
 						selectId_2 = id2;
 						mathPrice = price + attrPrice;
-						tv_popup_price.setText(String.valueOf(mathPrice));
+						tv_popup_price.setText(currStr + String.valueOf(mathPrice));
 						skuNum = 1; //默认库存数量
 						buyNumber = 1; //默认购买数量
 						iv_num_add.setSelected(false); //不可+
@@ -621,7 +623,7 @@ public class ProductDetailActivity extends BaseActivity implements
 						}
 						updateBuyNumber(buyNumber);
 						if (isNext) {
-							tv_popup_confirm.setBackgroundColor(getResources().getColor(R.color.text_color_red_1));
+							tv_popup_confirm.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_0));
 						}else {
 							tv_popup_confirm.setBackgroundColor(getResources().getColor(R.color.text_color_thin));
 						}
@@ -643,7 +645,7 @@ public class ProductDetailActivity extends BaseActivity implements
 				}
 				updateBuyNumber(buyNumber);
 				if (isNext) {
-					tv_popup_confirm.setBackgroundColor(getResources().getColor(R.color.text_color_red_1));
+					tv_popup_confirm.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_0));
 				}else {
 					tv_popup_confirm.setBackgroundColor(getResources().getColor(R.color.text_color_thin));
 				}
@@ -978,7 +980,7 @@ public class ProductDetailActivity extends BaseActivity implements
 		final TextView tv_name = new TextView(mContext);
 		tv_name.setGravity(Gravity.CENTER);
 		tv_name.setText("+" + addNum);
-		tv_name.setTextColor(mContext.getResources().getColor(R.color.text_color_red_0));
+		tv_name.setTextColor(mContext.getResources().getColor(R.color.text_color_app_bar));
 		tv_name.setTextSize(14);
 		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
 				ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

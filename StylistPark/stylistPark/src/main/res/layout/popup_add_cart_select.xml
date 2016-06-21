@@ -73,11 +73,8 @@
 
                     <TextView
                         android:id="@+id/popup_add_cart_tv_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/common_text_price"
                         android:layout_marginTop="10dp"
-                        android:text=""
-                        android:textColor="@color/text_color_red_1"
                         android:textSize="@dimen/text_size_30"
                         android:textStyle="bold" />
 

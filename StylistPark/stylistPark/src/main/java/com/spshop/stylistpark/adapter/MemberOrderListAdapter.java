@@ -39,7 +39,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 		//this.adapterCallback = adapterCallback;
 		this.mInflater = LayoutInflater.from(context);
 		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
-		head_options = AppApplication.getImageOptions(90, R.drawable.head_portrait_80);
+		head_options = AppApplication.getImageOptions(90, R.drawable.head_portrait);
 	}
 
 	public void updateAdapter(List<OrderEntity> datas) {
@@ -99,7 +99,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 		
 		UserInfoEntity infoEn = data.getUserInfo();
 		if (infoEn != null) {
-			ImageLoader.getInstance().displayImage(infoEn.getHeadImg(), holder.iv_head, head_options);
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + infoEn.getHeadImg(), holder.iv_head, head_options);
 			switch (infoEn.getUserRankType()) {
 			case 0:
 				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_0));

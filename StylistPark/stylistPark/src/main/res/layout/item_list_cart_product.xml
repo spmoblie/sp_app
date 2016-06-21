@@ -73,12 +73,10 @@
 
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_price"
+                    style="@style/common_text_price"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text=""
-                    android:textColor="@color/text_color_red_1"
                     android:textSize="@dimen/text_size_14"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -108,7 +106,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_frame_tv_white_gray_4"
+                    android:background="@drawable/shape_frame_white_gray_4"
                     android:orientation="horizontal" >
 
                     <RelativeLayout

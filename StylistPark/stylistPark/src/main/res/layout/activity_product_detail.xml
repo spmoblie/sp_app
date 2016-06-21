@@ -110,21 +110,15 @@
 
                         <TextView
                             android:id="@+id/product_detail_tv_product_price_sell"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/text_color_red_1"
+                            style="@style/common_text_price"
                             android:textSize="@dimen/text_size_20"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/product_detail_tv_product_price_full"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/common_text_price"
                             android:layout_marginLeft="5dp"
-                            android:text=""
                             android:textColor="@color/text_color_assist"
-                            android:textSize="@dimen/text_size_12"
                             android:visibility="gone" />
 
                         <TextView
@@ -132,7 +126,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:background="@color/text_color_red_1"
+                            android:background="@drawable/shape_frame_bg_app_buttom_0"
                             android:gravity="center"
                             android:padding="2dp"
                             android:text=""
@@ -233,7 +227,7 @@
                         android:layout_width="52dp"
                         android:layout_height="52dp"
                         android:layout_marginLeft="10dp"
-                        android:background="@drawable/shape_frame_tv_white_gray_4" >
+                        android:background="@drawable/shape_frame_white_gray_4" >
 
                         <ImageView
                             android:id="@+id/product_detail_iv_brand_logo"
@@ -275,7 +269,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
-                        android:background="@drawable/shape_frame_tv_white_gray_4"
+                        android:background="@drawable/shape_frame_white_gray_4"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="@string/product_brand_go"
@@ -378,7 +372,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/text_color_red_1"
+                android:background="@drawable/shape_frame_bg_app_buttom_0"
                 android:gravity="center"
                 android:text="@string/product_add_cart"
                 android:textColor="@color/text_color_white"

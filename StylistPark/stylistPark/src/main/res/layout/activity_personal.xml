@@ -21,7 +21,7 @@
             android:layout_height="60dp"
             android:layout_toLeftOf="@+id/personal_tv_head_content"
             android:layout_centerVertical="true"
-            android:src="@drawable/head_portrait_80"
+            android:src="@drawable/head_portrait"
             android:contentDescription="@string/desc" />
 
         <TextView
@@ -151,7 +151,7 @@
             android:id="@+id/personal_tv_auth_go"
             style="@style/setting_lay_text_content"
             android:text="@string/money_auth_go"
-            android:textColor="@color/text_color_red_0" />
+            android:textColor="@color/text_color_app_bar" />
 
         <TextView
             android:id="@+id/personal_tv_auth_ok"

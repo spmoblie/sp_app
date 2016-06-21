@@ -35,7 +35,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/shape_frame_et_white_gray_4" >
+                android:background="@drawable/shape_frame_bg_app_hollow_4" >
 
                 <ImageView
                     android:id="@+id/brandList_searchIconImageView"
