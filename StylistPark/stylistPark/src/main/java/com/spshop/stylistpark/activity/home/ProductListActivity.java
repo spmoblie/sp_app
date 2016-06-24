@@ -98,7 +98,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private ProductGridAdapter gv_adapter;
 	
 	private int mFirstVisibleItem = 0;
-	private int typeId = 0; //0:商品列表  非0:搜索页面
+	private int typeId = 0; //0:搜索页面  非0:商品列表
 	private String typeName = "";
 	private String searchStr = "";
 	private String wordsHistoryStr = "";
@@ -123,8 +123,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		
 		instance = this;
 		typeId = getIntent().getIntExtra("typeId", 0);
-		typeName = getIntent().getStringExtra("typeName");
-		
+
 		findViewById();
 		initView();
 	}
@@ -198,7 +197,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			rl_search_txt.setVisibility(View.GONE);
 			rl_search_line.setVisibility(View.GONE);
 			tv_title.setVisibility(View.VISIBLE);
-			tv_title.setText(typeName);
+			//tv_title.setText(typeName);
 			ll_hot_words.setVisibility(View.GONE);
 			ll_radio_group.setVisibility(View.VISIBLE);
 			rl_screen.setVisibility(View.VISIBLE);
@@ -795,7 +794,11 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			if (product_MainEn != null && product_MainEn.getMainLists() != null) {
 				ll_other.setVisibility(View.VISIBLE);
 				ll_search_history.setVisibility(View.GONE);
-				
+
+				if (typeId != 0 && StringUtil.isNull(typeName)) {
+					typeName = product_MainEn.getCategoryName();
+					tv_title.setText(typeName);
+				}
 				int total = product_MainEn.getTotal();
 				List<ProductListEntity> lists = product_MainEn.getMainLists();
 				if (lists.size() > 0) {

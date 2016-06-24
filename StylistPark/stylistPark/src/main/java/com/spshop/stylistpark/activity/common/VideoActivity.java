@@ -178,6 +178,9 @@ public class VideoActivity extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		if (videoView != null) {
+			videoView.stopPlayback();
+		}
 	}
 
 	@Override

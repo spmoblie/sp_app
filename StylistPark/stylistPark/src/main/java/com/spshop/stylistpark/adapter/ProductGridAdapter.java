@@ -16,6 +16,7 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ProductListEntity;
+import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.StringUtil;
 
 import java.util.List;
@@ -31,11 +32,13 @@ public class ProductGridAdapter extends BaseAdapter{
 	private List<ProductListEntity> datas;
 	private AdapterCallback apCallback;
     private DisplayImageOptions options;
+	private String currStr;
 	
 	public ProductGridAdapter(Context context, List<ProductListEntity> datas, AdapterCallback callback) {
 		this.context = context;
 		this.datas = datas;
 		this.apCallback = callback;
+		currStr = LangCurrTools.getCurrencyValue(context);
         options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
 	}
 	
@@ -100,8 +103,8 @@ public class ProductGridAdapter extends BaseAdapter{
 		} else {
 			holder.item_img.setImageResource(R.drawable.bg_img_white);
 		}
-        holder.item_name.setText(data.getName()); //商品名称
-		holder.item_sell_price.setText(data.getSellPrice()); //商品卖价
+        holder.item_name.setText(data.getBrand() + " " + data.getName()); //商品名称
+		holder.item_sell_price.setText(currStr + data.getSellPrice()); //商品卖价
 		
 		String full_price = data.getFullPrice(); //商品原价
 		if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {

@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.wxapi;
 
-import org.json.JSONException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +20,8 @@ import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
+
+import org.json.JSONException;
 
 public class WXEntryActivity extends Activity {
 

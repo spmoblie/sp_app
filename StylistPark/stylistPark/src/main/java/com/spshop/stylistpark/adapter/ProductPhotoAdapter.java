@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
@@ -14,6 +12,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
+
+import java.util.List;
 
 public class ProductPhotoAdapter extends AppBaseAdapter<List<String>> {
 

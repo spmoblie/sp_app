@@ -30,6 +30,10 @@ public class AppConfig {
 	public static final String URL_COMMON_FLOW_URL = "http://192.168.11.155/flow.php";
 	// 用户提交URL
 	public static final String URL_COMMON_USER_URL = "http://192.168.11.155/user.php";
+	// 广告详情URL
+	public static final String URL_COMMON_TOPIC_URL = "http://192.168.11.155/topic-app.php";
+	// 专题详情URL
+	public static final String URL_COMMON_ARTICLE_URL = "http://192.168.11.155/article-app.php";
 	// 用户拉取URL
 	public static final String URL_COMMON_MY_URL = ENVIRONMENT_PRESENT_URL_APP + "my.php";
 	// 其它通用URL
@@ -145,8 +149,10 @@ public class AppConfig {
 	// 校验Sessions
 	public static final int REQUEST_SV_GET_SESSIONS_CODE = 0X0001;
 	
+	// 加载首页展示头部数据
+	public static final int REQUEST_SV_GET_HOME_SHOW_HEAD_CODE = 0X1010;
 	// 加载首页展示列表数据
-	public static final int REQUEST_SV_GET_HOME_SHOW_LIST_CODE = 0X1010;
+	public static final int REQUEST_SV_GET_HOME_SHOW_LIST_CODE = 0X1011;
 	// 加载本地商品分类数据
 	public static final int REQUEST_DB_GET_CATEGORY_LIST_CODE = 0X1030;
 	// 加载服务器商品分类数据
@@ -165,7 +171,10 @@ public class AppConfig {
 	public static final int REQUEST_SV_POST_CART_PRODUCT_CODE = 0X1070;
 	// 提交收藏商品请求
 	public static final int REQUEST_SV_POST_COLLECITON_CODE = 0X1080;
-	
+
+	// 加载专题列表请求
+	public static final int REQUEST_SV_GET_SPECIAL_LIST_CODE = 0X3001;
+
 	// 加载购物车商品列表
 	public static final int REQUEST_SV_GET_CART_LIST_CODE = 0X4010;
 	// 删除购物车商品

@@ -17,6 +17,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
+import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.StringUtil;
 
 import java.util.List;
@@ -29,11 +30,13 @@ public class ShowList2ItemAdapter extends BaseAdapter{
 	private List<ListShowTwoEntity> datas;
 	private AdapterCallback apCallback;
     private DisplayImageOptions options;
+	private String currStr;
 	
 	public ShowList2ItemAdapter(Context context, List<ListShowTwoEntity> datas, AdapterCallback callback) {
 		this.context = context;
 		this.datas = datas;
 		this.apCallback = callback;
+		currStr = LangCurrTools.getCurrencyValue(context);
         options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
 	}
 	
@@ -103,7 +106,7 @@ public class ShowList2ItemAdapter extends BaseAdapter{
 		}else {
 			holder.item_main.setPadding(12, 0, 12, 12);
 		}
-		final ProductListEntity leftEn = data.getLeftEn();
+		final ProductListEntity leftEn = (ProductListEntity) data.getLeftEn();
 		if (leftEn != null) {
 			// 网络图片地址
 			String imageUrl = IMAGE_URL_HTTP + leftEn.getImageUrl();
@@ -113,7 +116,7 @@ public class ShowList2ItemAdapter extends BaseAdapter{
 				holder.left_img.setImageResource(R.drawable.bg_img_white);
 			}
 			holder.left_name.setText(leftEn.getName()); //商品名称
-			holder.left_sell_price.setText(leftEn.getSellPrice()); //商品卖价
+			holder.left_sell_price.setText(currStr + leftEn.getSellPrice()); //商品卖价
 			
 			String full_price = leftEn.getFullPrice(); //商品原价
 			if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {
@@ -139,7 +142,7 @@ public class ShowList2ItemAdapter extends BaseAdapter{
 				}
 			});
 		}
-		final ProductListEntity rightEn = data.getRightEn();
+		final ProductListEntity rightEn = (ProductListEntity) data.getRightEn();
 		if (rightEn != null) {
 			holder.right_main.setVisibility(View.VISIBLE);
 			// 网络图片地址
@@ -150,7 +153,7 @@ public class ShowList2ItemAdapter extends BaseAdapter{
 				holder.right_img.setImageResource(R.drawable.bg_img_white);
 			}
 			holder.right_name.setText(rightEn.getName()); //商品名称
-			holder.right_sell_price.setText(rightEn.getSellPrice()); //商品卖价
+			holder.right_sell_price.setText(currStr + rightEn.getSellPrice()); //商品卖价
 			
 			String full_price = rightEn.getFullPrice(); //商品原价
 			if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {

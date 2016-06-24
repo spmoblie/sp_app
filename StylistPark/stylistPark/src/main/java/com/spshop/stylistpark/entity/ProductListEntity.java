@@ -60,7 +60,12 @@ public class ProductListEntity extends BaseEntity{
 	 * 商品总数量
 	 */
 	private int total;
-	
+
+	/**
+	 * 商品分类名称
+	 */
+	private String categoryName;
+
 	/**
 	 * 集合打包传输
 	 */
@@ -205,6 +210,13 @@ public class ProductListEntity extends BaseEntity{
 		this.total = total;
 	}
 
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 
 	public List<ProductListEntity> getMainLists() {
 		return mainLists;

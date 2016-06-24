@@ -21,7 +21,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_weight="0.7"
-            android:background="@drawable/shape_frame_bg_app_hollow_4" >
+            android:background="@drawable/shape_frame_white_gray_4" >
 
             <ImageView
                 android:id="@+id/decoration_searchIconImageView"
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/filter_color"
-                    android:textColor="@color/ui_bg_color_bar" />
+                    android:textColor="@color/text_color_app_top" />
 
                 <ImageView
                     android:layout_width="wrap_content"

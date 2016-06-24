@@ -17,6 +17,7 @@ import com.spshop.stylistpark.entity.ProductAttrEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -53,6 +54,114 @@ public class JsonParser {
 		//int errCode = Integer.parseInt(jsonObject.getString("error"));
 		//JSONObject item = jsonObject.getJSONObject("data");
 		return new UpdateVersionEntity(0, "", "desc", jsonStr, "url", false);
+	}
+
+	/**
+	 * 解析首页展示数据
+	 */
+	public static ThemeEntity getHomeHeadDatas(String jsonStr) throws JSONException {
+		JSONObject jsonObj = new JSONObject(jsonStr);
+		ThemeEntity mainEn = new ThemeEntity();
+		if (jsonObj.has("error")) {
+			mainEn.setErrCode(Integer.parseInt(jsonObj.getString("error")));
+		}
+		// 解析广告
+		if (jsonObj.has("ad")) {
+			ThemeEntity adEn = new ThemeEntity();
+			List<ThemeEntity> adLists = new ArrayList<ThemeEntity>();
+			ThemeEntity childEn = null;
+			JSONArray datas = jsonObj.getJSONArray("ad");
+			if (datas != null) {
+				for (int j = 0; j < datas.length(); j++) {
+					JSONObject item = datas.getJSONObject(j);
+					childEn = new ThemeEntity();
+					childEn.setId(StringUtil.getInteger(item.getString("topic_id")));
+					childEn.setTitle(item.getString("title"));
+					childEn.setImgUrl(item.getString("title_pic"));
+					adLists.add(childEn);
+				}
+				adEn.setMainLists(adLists);
+			}
+			mainEn.setAdEn(adEn);
+		}
+		// 解析热销商品
+		if (jsonObj.has("best")) {
+			ProductListEntity goodsEn = new ProductListEntity();
+			goodsEn.setMainLists(getProductListsFormJson(jsonObj, "best"));
+			mainEn.setGoodsEn(goodsEn);
+		}
+		// 解析今日专题
+		/*if (jsonObj.has("paida")) {
+			ThemeEntity peidaEn = new ThemeEntity();
+			List<ThemeEntity> peidaLists = new ArrayList<ThemeEntity>();
+			ThemeEntity childEn = null;
+			JSONArray datas = jsonObj.getJSONArray("paida");
+			if (datas != null) {
+				for (int j = 0; j < datas.length(); j++) {
+					JSONObject item = datas.getJSONObject(j);
+					childEn = new ThemeEntity();
+					childEn.setId(StringUtil.getInteger(item.getString("id")));
+					childEn.setTitle(item.getString("title"));
+					childEn.setImgUrl(item.getString("file_url"));
+					peidaLists.add(childEn);
+				}
+				peidaEn.setMainLists(peidaLists);
+			}
+			mainEn.setPeidaEn(peidaEn);
+		}*/
+		// 限时活动
+		if (jsonObj.has("activity")) {
+			ThemeEntity saleEn = new ThemeEntity();
+			List<ThemeEntity> saleLists = new ArrayList<ThemeEntity>();
+			ThemeEntity childEn = null;
+			JSONArray datas = jsonObj.getJSONArray("activity");
+			if (datas != null) {
+				for (int j = 0; j < datas.length(); j++) {
+					JSONObject item = datas.getJSONObject(j);
+					childEn = new ThemeEntity();
+					childEn.setId(StringUtil.getInteger(item.getString("id")));
+					childEn.setTitle(item.getString("name"));
+					childEn.setImgUrl(item.getString("logo"));
+					childEn.setType(StringUtil.getInteger(item.getString("act_range")));
+					childEn.setEndTime(StringUtil.getLong(item.getString("end_time")));
+					saleLists.add(childEn);
+				}
+				saleEn.setMainLists(saleLists);
+			}
+			mainEn.setSaleEn(saleEn);
+		}
+		return mainEn;
+	}
+
+	/**
+	 * 解析专题列表数据
+	 */
+	public static ThemeEntity getSpecialListDatas(String jsonStr) throws JSONException {
+		JSONObject jsonObj = new JSONObject(jsonStr);
+		ThemeEntity mainEn = new ThemeEntity();
+		if (jsonObj.has("error")) {
+			mainEn.setErrCode(Integer.parseInt(jsonObj.getString("error")));
+		}
+		// 解析今日专题
+		if (jsonObj.has("paida")) {
+			ThemeEntity peidaEn = new ThemeEntity();
+			List<ThemeEntity> peidaLists = new ArrayList<ThemeEntity>();
+			ThemeEntity childEn = null;
+			JSONArray datas = jsonObj.getJSONArray("paida");
+			if (datas != null) {
+				for (int j = 0; j < datas.length(); j++) {
+					JSONObject item = datas.getJSONObject(j);
+					childEn = new ThemeEntity();
+					childEn.setId(StringUtil.getInteger(item.getString("id")));
+					childEn.setTitle(item.getString("title"));
+					childEn.setImgUrl(item.getString("file_url"));
+					peidaLists.add(childEn);
+				}
+				peidaEn.setMainLists(peidaLists);
+			}
+			mainEn.setPeidaEn(peidaEn);
+		}
+		return mainEn;
 	}
 
 	/**
@@ -165,6 +274,9 @@ public class JsonParser {
 		}else {
 			if (jsonObject.has("count")) {
 				mainEn.setTotal(StringUtil.getInteger(jsonObject.getString("count")));
+			}
+			if (jsonObject.has("name")) {
+				mainEn.setCategoryName(jsonObject.getString("name"));
 			}
 			mainEn.setMainLists(getProductListsFormJson(jsonObject, "data"));
 		}
@@ -952,6 +1064,7 @@ public class JsonParser {
 					en = new ProductListEntity();
 					en.setId(StringUtil.getInteger((item.getString("goods_id"))));
 					en.setImageUrl(item.getString("goods_thumb"));
+					en.setBrand(item.getString("brand_name"));
 					en.setName(item.getString("goods_name"));
 					en.setFullPrice(item.getString("prices"));
 					en.setSellPrice(item.getString("price"));

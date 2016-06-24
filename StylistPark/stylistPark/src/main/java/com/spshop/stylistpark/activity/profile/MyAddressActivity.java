@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.activity.profile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +22,9 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MyAddressActivity extends BaseActivity {

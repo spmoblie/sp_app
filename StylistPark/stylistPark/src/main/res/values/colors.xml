@@ -320,6 +320,7 @@
      
     <!-- Text字体常用颜色值 -->
     <color name="text_color_app_bar">#f383b6</color><!-- AppTV状态色 -->
+    <color name="text_color_app_top">#333333</color><!-- AppTop颜色值 -->
     <!--<color name="text_color_red_0">#ff0000</color>&lt;!&ndash; 红色 &ndash;&gt;-->
     <!--<color name="text_color_red_1">#E6697D</color>&lt;!&ndash; 淡红色 &ndash;&gt;-->
     <color name="text_color_red_0">@color/text_color_app_bar</color>
@@ -374,5 +375,12 @@
     <!-- product menu -->
     <color name="product_menu_bg_down_color">@color/ui_bg_color_bar</color>
     <color name="product_menu_bg_up_color">@color/ui_bg_color_white</color>
+
+    <!-- video -->
+    <color name="uvv_gray">#969696</color>
+    <!--<color name="uvv_black">#ff000000</color>-->
+    <color name="uvv_black">@color/ui_bg_color_percent_100</color>
+    <color name="uvv_light_gray">#ffF0F0F0</color>
+    <color name="uvv_titlebar_bg">#7f000000</color>
 
 </resources>

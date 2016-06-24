@@ -26,7 +26,7 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.cart.ChildFragmentFour;
 import com.spshop.stylistpark.activity.category.ChildFragmentTwo;
-import com.spshop.stylistpark.activity.collage.ChildFragmentThree;
+import com.spshop.stylistpark.activity.events.ChildFragmentThree2;
 import com.spshop.stylistpark.activity.home.ChildFragmentOne;
 import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.activity.profile.ChildFragmentFive;
@@ -238,10 +238,6 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			img_two_warn.setVisibility(View.GONE);
 			break;
 		case 2:
-			if (!UserManager.getInstance().checkIsLogined()) {
-				openLoginActivity();
-				return;
-			}
 			fragment = (Fragment) mFragmentPagerAdapter.instantiateItem(fl_container, R.id.home_fragment_fl_three);
 			img_three_warn.setVisibility(View.GONE);
 			break;
@@ -277,10 +273,6 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			break;
 		case R.id.home_fragment_fl_three:
 			if (current_index == 2) return;
-			if (!UserManager.getInstance().checkIsLogined()) {
-				openLoginActivity();
-				return;
-			}
 			current_index = 2;
 			img_three_warn.setVisibility(View.GONE);
 			break;
@@ -368,7 +360,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			case R.id.home_fragment_fl_three:
 				fragment = (Fragment) manager.findFragmentByTag(current_fragment);
 				if (fragment == null) {
-					fragment = new ChildFragmentThree();
+					fragment = new ChildFragmentThree2();
 				}
 				return fragment;
 			case R.id.home_fragment_fl_four:

@@ -3,7 +3,7 @@
     android:id="@+id/home_list_head_ll_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/ui_bg_color_gray"
+    android:background="@color/ui_bg_color_app"
     android:orientation="vertical" >
 
     <FrameLayout
@@ -26,180 +26,57 @@
         </LinearLayout>
     </FrameLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/ui_bg_color_white"
-        android:baselineAligned="false"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp" >
+    <include
+        android:id="@+id/home_list_head_ll_goods_title"
+        layout="@layout/layout_text_two_line"/>
 
-        <FrameLayout
-            android:id="@+id/home_list_head_fl_type_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-            <TextView
-                android:id="@+id/home_list_head_tv_type_1"
-                style="@style/Order_Type_TextView"
-                android:drawableTop="@drawable/generator_items_heart"
-                android:text="标题1" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/home_list_head_fl_type_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-            <TextView
-                android:id="@+id/home_list_head_tv_type_2"
-                style="@style/Order_Type_TextView"
-                android:drawableTop="@drawable/generator_items_hoodies"
-                android:text="标题2" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/home_list_head_fl_type_3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-            <TextView
-                android:id="@+id/home_list_head_tv_type_3"
-                style="@style/Order_Type_TextView"
-                android:drawableTop="@drawable/generator_items_jumpsuit"
-                android:text="标题3" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/home_list_head_fl_type_4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingRight="10dp" >
-
-            <TextView
-                android:id="@+id/home_list_head_tv_type_4"
-                style="@style/Order_Type_TextView"
-                android:drawableTop="@drawable/generator_items_new"
-                android:ellipsize="end"
-                android:lines="1"
-                android:text="标题4" />
-        </FrameLayout>
-    </LinearLayout>
-
-    <LinearLayout
+    <HorizontalScrollView
+        android:id="@+id/home_list_head_sv_goods_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/ui_bg_color_white"
-        android:orientation="vertical"
-        android:paddingTop="10dp" >
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:scrollbars="none"
+        android:visibility="gone" >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="大标题"
-            android:textColor="@color/text_color_title"
-            android:textSize="@dimen/text_size_16" />
+        <LinearLayout
+            android:id="@+id/home_list_head_ll_goods_main"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </HorizontalScrollView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="小标题"
-            android:textColor="@color/text_color_title"
-            android:textSize="@dimen/text_size_14" />
+    <include
+        android:id="@+id/home_list_head_ll_peida_title"
+        layout="@layout/layout_text_two_line"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/bg_profile_top_login_no"
-            android:paddingBottom="15dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="15dp" >
+    <HorizontalScrollView
+        android:id="@+id/home_list_head_sv_peida_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:scrollbars="none"
+        android:visibility="gone" >
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:orientation="vertical" >
+        <LinearLayout
+            android:id="@+id/home_list_head_ll_peida_main"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </HorizontalScrollView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/generator_items_accessories"
-                    android:text="秒杀令"
-                    android:textColor="@color/text_color_red_0"
-                    android:textSize="@dimen/text_size_28"
-                    android:textStyle="bold" />
+    <include
+        android:id="@+id/home_list_head_ll_sale_title"
+        layout="@layout/layout_text_two_line"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="限时抢购 超低折扣"
-                    android:textColor="@color/text_color_content"
-                    android:textSize="@dimen/text_size_14" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/home_list_head_tv_time_hour"
-                        style="@style/home_text_time" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/time_divided"
-                        android:textColor="@color/text_color_red_0"
-                        android:textSize="@dimen/text_size_28" />
-
-                    <TextView
-                        android:id="@+id/home_list_head_tv_time_minute"
-                        style="@style/home_text_time" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/time_divided"
-                        android:textColor="@color/text_color_red_0"
-                        android:textSize="@dimen/text_size_28" />
-
-                    <TextView
-                        android:id="@+id/home_list_head_tv_time_second"
-                        style="@style/home_text_time" />
-                </LinearLayout>
-            </LinearLayout>
-        </RelativeLayout>
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_marginTop="2dp"
-            android:contentDescription="@string/desc" />
-
-        <GridView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/ui_bg_color_white"
-            android:columnWidth="90dp"
-            android:horizontalSpacing="1dp"
-            android:numColumns="2"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp" >
-        </GridView>
+    <LinearLayout
+        android:id="@+id/home_list_head_ll_sale_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
     </LinearLayout>
 
 </LinearLayout>

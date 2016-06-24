@@ -16,6 +16,7 @@ import com.spshop.stylistpark.entity.PaymentEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.utils.APIResult;
@@ -30,8 +31,12 @@ public interface MainService {
 
 	UpdateVersionEntity checkVersionUpdate(int type, String version) throws Exception;
 	
+	ThemeEntity getHomeHeadDatas() throws Exception;
+
+	ThemeEntity getSpecialListDatas(int page, int count) throws Exception;
+
 	CategoryListEntity getCategoryListDatas() throws Exception;
-	
+
 	CategoryListEntity getCategoryBrandDatas() throws Exception;
 
 	ProductListEntity getProductListDatas(int typeId, int dataType, int brandId, 

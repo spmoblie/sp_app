@@ -147,7 +147,7 @@ public class ProductDetailActivity extends BaseActivity implements
 		instance = this;
 		goodsId = getIntent().getIntExtra("goodsId", 0);
 		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
-		currStr = LangCurrTools.getCurrencyValue(this) + " ";
+		currStr = LangCurrTools.getCurrencyValue(mContext);
 		
 		findViewById();
 		initView();
@@ -235,7 +235,7 @@ public class ProductDetailActivity extends BaseActivity implements
 			price = mainEn.getComputePrice();
 			mathPrice = mainEn.getComputePrice();
 			tv_name.setText(mainEn.getName());
-			tv_price_sell.setText(mainEn.getSellPrice()); //商品卖价
+			tv_price_sell.setText(currStr + mainEn.getSellPrice()); //商品卖价
 			
 			String full_price = mainEn.getFullPrice(); //商品原价
 			if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {
@@ -575,7 +575,7 @@ public class ProductDetailActivity extends BaseActivity implements
 			if (mainEn != null) {
 				ImageLoader.getInstance().displayImage(fristGoodsImgUrl, iv_goods_img, options);
 				tv_popup_name.setText(mainEn.getName());
-				tv_popup_price.setText(String.valueOf(mainEn.getSellPrice()));
+				tv_popup_price.setText(currStr + String.valueOf(mathPrice));
 			}
 			
 			if (attrNum > 0) {
@@ -742,7 +742,6 @@ public class ProductDetailActivity extends BaseActivity implements
 				Intent intent = new Intent(mContext, ShowListHeadActivity.class);
 				intent.putExtra("pageCode", ShowListHeadActivity.PAGE_ROOT_CODE_1);
 				intent.putExtra("brandId", StringUtil.getInteger(mainEn.getBrandId()));
-				intent.putExtra("brandName", mainEn.getBrandName());
 				startActivity(intent);
 			}
 			break;

@@ -1,8 +1,8 @@
 package com.spshop.stylistpark.entity;
 
-import java.util.ArrayList;
-
 import android.net.Uri;
+
+import java.util.ArrayList;
 
 public class ShareEntity extends BaseEntity {
 

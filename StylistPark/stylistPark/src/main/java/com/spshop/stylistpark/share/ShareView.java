@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.share;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.ClipboardManager;
@@ -55,6 +52,9 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 
 public class ShareView{

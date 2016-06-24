@@ -16,6 +16,7 @@ import com.spshop.stylistpark.entity.PaymentEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.service.impl.MainServiceImpl;
@@ -57,6 +58,20 @@ public class ServiceContext {
 	 */
 	public UpdateVersionEntity checkVersionUpdate(int type, String version) throws Exception {
 		return ms.checkVersionUpdate(type, version);
+	}
+
+	/**
+	 * 获取首页展示数据
+	 */
+	public ThemeEntity getHomeHeadDatas() throws Exception {
+		return ms.getHomeHeadDatas();
+	}
+
+	/**
+	 * 获取专题列表数据
+	 */
+	public ThemeEntity getSpecialListDatas(int page, int count) throws Exception {
+		return ms.getSpecialListDatas(page, count);
 	}
 
 	/**

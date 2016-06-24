@@ -55,7 +55,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private static final String TAG = "ShowListHeadActivity";
 	public static ShowListHeadActivity instance = null;
 	public boolean isUpdate = false;
-	public static final int PAGE_ROOT_CODE_1 = 1001; //CategoryActivity 或 ProductDetailActivity
+	public static final int PAGE_ROOT_CODE_1 = 1001; //CategoryActivity 或 ProductDetailActivity 或 ChildFragmentOne
 	
 	private static final int Page_Count = 40;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页
@@ -91,7 +91,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private int selectId = 0;
 	private int logo_height, other_height, desc_max_height, desc_min_height, desc_lines;
 	private boolean isGone = true;
-	private String brandName = "";
 	private String selectName = "";
 	private BrandEntity brandEn;
 	private SelectListEntity selectEn;
@@ -116,8 +115,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		instance = this;
 		pageCode = getIntent().getIntExtra("pageCode", PAGE_ROOT_CODE_1);
 		brandId = getIntent().getIntExtra("brandId", 0);
-		brandName = getIntent().getStringExtra("brandName");
-		
+
 		options = AppApplication.getImageOptions(0, 0);
 		
 		findViewById();
@@ -162,7 +160,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void initView() {
-		setTitle(brandName);
 		iv_to_top.setOnClickListener(this);
 		if (pageCode == PAGE_ROOT_CODE_1) {
 			// 设置头部跟随ListView滑动
@@ -196,6 +193,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private void setHeadView() {
 		if (brandEn != null) {
+			setTitle(brandEn.getName());
 			selectEn = brandEn.getSelectEn();
 			endTime = brandEn.getEndTime();
 			if (endTime > 0) {

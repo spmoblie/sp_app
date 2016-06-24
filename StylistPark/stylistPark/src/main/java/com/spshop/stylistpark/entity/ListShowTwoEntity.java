@@ -6,8 +6,7 @@ public class ListShowTwoEntity implements Serializable{
 	
 	private static final long serialVersionUID = 2980439304361030908L;
 	
-	private ProductListEntity leftEn;
-	private ProductListEntity rightEn;
+	private BaseEntity leftEn, rightEn;
 	
 	
 	public ListShowTwoEntity() {
@@ -15,22 +14,22 @@ public class ListShowTwoEntity implements Serializable{
 	}
 
 
-	public ProductListEntity getLeftEn() {
+	public BaseEntity getLeftEn() {
 		return leftEn;
 	}
 
 
-	public void setLeftEn(ProductListEntity leftEn) {
+	public void setLeftEn(BaseEntity leftEn) {
 		this.leftEn = leftEn;
 	}
 
 
-	public ProductListEntity getRightEn() {
+	public BaseEntity getRightEn() {
 		return rightEn;
 	}
 
 
-	public void setRightEn(ProductListEntity rightEn) {
+	public void setRightEn(BaseEntity rightEn) {
 		this.rightEn = rightEn;
 	}
 	

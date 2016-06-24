@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <com.spshop.stylistpark.widgets.WebViewLoadingBar
         android:id="@+id/my_webview_loading_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <FrameLayout
+        android:id="@+id/my_webview_fl_video_main"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:background="@color/ui_bg_color_black"
+        android:visibility="gone">
+
+        <com.spshop.stylistpark.widgets.video.UniversalVideoView
+            android:id="@+id/my_webview_uvv"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            app:uvv_autoRotation="true"
+            app:uvv_fitXY="false" />
+
+        <com.spshop.stylistpark.widgets.video.UniversalMediaController
+            android:id="@+id/my_webview_umc"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            app:uvv_scalable="true" />
+
+    </FrameLayout>
+
     <WebView
         android:id="@+id/my_webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scrollbars="none" />
 
 </LinearLayout>

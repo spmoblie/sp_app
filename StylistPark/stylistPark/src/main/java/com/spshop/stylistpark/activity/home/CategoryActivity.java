@@ -178,7 +178,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 			public void onIndexDisplayItemClick(IndexDisplay indexDisplay) {
 				if (indexDisplay != null) {
 					BrandEntity brand = (BrandEntity) indexDisplay;
-					startShowListHeadActivity(StringUtil.getInteger(brand.getBrandId()), brand.getName());
+					startShowListHeadActivity(StringUtil.getInteger(brand.getBrandId()));
 				}
 			}
 
@@ -245,7 +245,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 			public void setOnClick(Object entity, int position, int type) {
 				if (entity != null) {
 					CategoryListEntity itemEn = (CategoryListEntity) entity;
-					startShowListHeadActivity(itemEn.getTypeId(), itemEn.getName());
+					startShowListHeadActivity(itemEn.getTypeId());
 				}
 			}
 		});
@@ -260,7 +260,6 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 				if (data != null) {
 					Intent intent = new Intent(mContext, ProductListActivity.class);
 					intent.putExtra("typeId", data.getTypeId());
-					intent.putExtra("typeName", data.getName());
 					startActivity(intent);
 				}
 			}
@@ -268,11 +267,10 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 		gv_right.setAdapter(gv_Adapter);
 	}
 
-	private void startShowListHeadActivity(int brandId, String brandName) {
+	private void startShowListHeadActivity(int brandId) {
 		Intent intent = new Intent(mContext, ShowListHeadActivity.class);
 		intent.putExtra("pageCode", ShowListHeadActivity.PAGE_ROOT_CODE_1);
 		intent.putExtra("brandId", brandId);
-		intent.putExtra("brandName", brandName);
 		startActivity(intent);
 	}
 
@@ -295,18 +293,14 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	
 	private void changeTitleStatus(int index){
 		switch (index) {
-		case 0:
-			tv_title_1.setTextColor(getResources().getColor(R.color.text_color_white));
-			tv_title_1.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_4));
-			tv_title_2.setTextColor(getResources().getColor(R.color.text_color_app_bar));
-			tv_title_2.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_hollow_4));
-			break;
-		case 1:
-			tv_title_1.setTextColor(getResources().getColor(R.color.text_color_app_bar));
-			tv_title_1.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_hollow_4));
-			tv_title_2.setTextColor(getResources().getColor(R.color.text_color_white));
-			tv_title_2.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_4));
-			break;
+			case 0:
+				tv_title_1.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+				tv_title_2.setTextColor(getResources().getColor(R.color.text_color_assist));
+				break;
+			case 1:
+				tv_title_1.setTextColor(getResources().getColor(R.color.text_color_assist));
+				tv_title_2.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+				break;
 		}
 	}
 	

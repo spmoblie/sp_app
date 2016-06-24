@@ -19,6 +19,7 @@ import com.spshop.stylistpark.entity.PaymentEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.service.JsonParser;
@@ -64,6 +65,30 @@ public class MainServiceImpl implements MainService {
 		String jsonStr = version;
 		LogUtil.i("JsonParser", jsonStr);
 		return JsonParser.checkVersionUpdate(jsonStr);
+	}
+
+	@Override
+	public ThemeEntity getHomeHeadDatas() throws Exception {
+		String uri = AppConfig.URL_COMMON_INDEX_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("app", "home"));
+		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
+		String jsonStr = HttpUtil.getString(entity);
+		LogUtil.i("JsonParser", jsonStr);
+		return JsonParser.getHomeHeadDatas(jsonStr);
+	}
+
+	@Override
+	public ThemeEntity getSpecialListDatas(int page, int count) throws Exception {
+		String uri = AppConfig.URL_COMMON_INDEX_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("app", "home"));
+		params.add(new MyNameValuePair("page", String.valueOf(page)));
+		params.add(new MyNameValuePair("size", String.valueOf(count)));
+		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
+		String jsonStr = HttpUtil.getString(entity);
+		LogUtil.i("JsonParser", jsonStr);
+		return JsonParser.getSpecialListDatas(jsonStr);
 	}
 
 	@Override
