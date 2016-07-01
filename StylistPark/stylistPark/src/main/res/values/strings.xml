@@ -106,8 +106,8 @@
     <string name="title_category">Category</string>
     <string name="title_screen">Screen</string>
     <string name="title_qr_code_scan">QR Code Scan</string>
+    <string name="title_fragment_three">Special Events</string>
     <string name="title_fragment_four">My Cart</string>
-    <string name="title_fragment_five">My StylistPark</string>
     <string name="title_product_detail">Product Detail</string>
     <string name="title_login">User Login</string>
     <string name="title_register">Email Register</string>
@@ -147,7 +147,7 @@
     <string name="product_cash_delivery">Cash Pay</string>
     <string name="product_brand_go">Go Brand</string>
     <string name="product_play_video">Video</string>
-    <string name="product_collection">Collection</string>
+    <string name="product_collection">Watchlist</string>
     <string name="product_cart">Cart</string>
     <string name="product_call">Call</string>
     <string name="product_add_cart">Add Cart</string>
@@ -163,6 +163,14 @@
     <string name="cart_goods_num">Total %1$d piece</string>
     <string name="cart_buy_now">Buy now</string>
     <string name="cart_error_data_null">Data synchronization exception! Please pull down to refresh the shopping cart data!</string>
+
+    <!-- Events -->
+    <string name="events_top_tab_1">@string/all</string>
+    <string name="events_top_tab_2">Video</string>
+    <string name="events_top_tab_3">Special</string>
+    <string name="events_no_data">No found, \n Maybe topics error!</string>
+    <string name="events_comment_ok">Comment posted</string>
+    <string name="events_comment_input">Input your comment</string>
     
     <!-- Member page -->
     <string name="member_top_tab_1">Latest</string>
@@ -343,7 +351,7 @@
     <string name="share_msg_error">Error</string>
     <string name="share_msg_cancel">Cancel</string>
     <string name="share_msg_copy_link_ok">Link has been copied</string>
-    <string name="share_msg_entity_error">Share parameter error, please re open the product page.</string>
+    <string name="share_msg_entity_error">Share parameter error, please re open page.</string>
     
     <!-- Address -->
     <string name="address_default">Default address</string>
@@ -376,7 +384,7 @@
     <string name="profile_gender_female">Female</string>
     <string name="profile_gender_confidential">Confidential</string>
     <string name="profile_birthday">Birthday</string>
-    <string name="profile_collection">Collection Goods</string>
+    <string name="profile_collection">My Watchlist</string>
     <string name="profile_history">Browse History</string>
     <string name="profile_my_order">My Order</string>
     <string name="profile_check_all_order">Check All Order</string>
@@ -387,7 +395,7 @@
     <string name="profile_wait_receive">Receive</string>
     <string name="profile_repair_return">Return</string>
     <string name="profile_my_address">My Address</string>
-    <string name="profile_account_money">Account Balance</string>
+    <string name="profile_account_money">My wallet</string>
     <string name="profile_bonus">My Coupon</string>
     <string name="profile_my_member">My Member</string>
     <string name="profile_check_my_member">Check My Member</string>

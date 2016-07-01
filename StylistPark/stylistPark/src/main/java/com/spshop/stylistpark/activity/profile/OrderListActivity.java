@@ -306,6 +306,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		defaultBtn.setChecked(true);
 		if (isFrist) {
 			onClick(defaultBtn);
+			isFrist = false;
 		}
 	}
 
@@ -361,7 +362,6 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private void requestProductLists() {
 		if (!isLoadOk) return; //加载频率控制
 		isLoadOk = false;
-		isFrist = false;
 		new Handler().postDelayed(new Runnable() {
 			
 			@Override
@@ -612,6 +612,9 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isUpdateAllData = true;
 					updateAllData();
+					if (ChildFragmentFive.instance != null) {
+						ChildFragmentFive.instance.isUpdate = true;
+					}
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
 				}else {

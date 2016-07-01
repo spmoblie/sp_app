@@ -81,7 +81,7 @@ public class CartProductListAdapter extends BaseAdapter{
 	static class ViewHolder{
 		RelativeLayout rl_select, rl_minus, rl_add;
 		ImageView iv_select, iv_img, iv_minus, iv_add, iv_delete;
-		TextView tv_name, tv_attr, tv_price, tv_number;
+		TextView tv_brand, tv_name, tv_attr, tv_price, tv_number;
 	}
 	
 	/**代表了ListView中的一个item对象*/
@@ -102,6 +102,7 @@ public class CartProductListAdapter extends BaseAdapter{
 			holder.iv_minus = (ImageView) convertView.findViewById(R.id.item_list_cart_product_iv_num_minus);
 			holder.iv_add = (ImageView) convertView.findViewById(R.id.item_list_cart_product_iv_num_add);
 			holder.iv_delete = (ImageView) convertView.findViewById(R.id.item_list_cart_product_iv_delete);
+			holder.tv_brand = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_brand);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_name);
 			holder.tv_attr = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_attr);
 			holder.tv_price = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_price);
@@ -119,6 +120,7 @@ public class CartProductListAdapter extends BaseAdapter{
 		}else {
 			holder.iv_img.setImageResource(R.drawable.bg_img_white);
 		}
+		holder.tv_brand.setText(data.getBrandName());
 		holder.tv_name.setText(data.getName());
 		holder.tv_price.setText(data.getSellPrice());
 		holder.tv_number.setText(String.valueOf(data.getCartNum()));

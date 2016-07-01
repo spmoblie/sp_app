@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/ui_bg_color_gray"
-    android:paddingTop="10dp" >
+    android:paddingTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:background="@color/ui_bg_color_white"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/item_list_cart_product_rl_select"
@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
-            android:visibility="gone" >
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/item_list_cart_product_iv_select"
@@ -33,12 +33,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:paddingLeft="15dp" >
+            android:padding="10dp" >
 
             <ImageView
                 android:id="@+id/item_list_cart_product_iv_img"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:contentDescription="@string/desc"
                 android:scaleType="fitXY"
                 android:src="@drawable/bg_img_white" />
@@ -47,74 +47,76 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp" >
+            android:paddingRight="10dp"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
-                android:orientation="horizontal" >
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_list_cart_product_tv_brand"
+                    style="@style/cart_product_text_assist"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="50dp"
+                    android:textColor="@color/text_color_content" />
 
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_name"
-                    android:layout_width="0dp"
+                    style="@style/cart_product_text_assist"
+                    android:layout_below="@id/item_list_cart_product_tv_brand"
+                    android:layout_marginRight="50dp"
+                    android:textColor="@color/text_color_content" />
+
+                <RelativeLayout
+                    android:id="@+id/item_list_cart_product_rl_delete"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:ellipsize="end"
-                    android:lines="2"
-                    android:maxLines="2"
-                    android:text=""
-                    android:textColor="@color/text_color_content"
-                    android:textSize="@dimen/text_size_12" />
+                    android:layout_alignParentRight="true">
+
+                    <ImageView
+                        android:id="@+id/item_list_cart_product_iv_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/icon_delete"
+                        android:contentDescription="@string/desc" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_price"
                     style="@style/common_text_price"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:textSize="@dimen/text_size_14"
                     android:textStyle="bold" />
-            </LinearLayout>
 
-            <TextView
-                android:id="@+id/item_list_cart_product_tv_attr"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:lines="1"
-                android:maxLines="1"
-                android:text=""
-                android:textColor="@color/text_color_assist"
-                android:textSize="@dimen/text_size_12" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_marginTop="3dp"
-                android:baselineAligned="false"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                <TextView
+                    android:id="@+id/item_list_cart_product_tv_attr"
+                    style="@style/cart_product_text_assist"
+                    android:layout_marginRight="100dp"
+                    android:layout_below="@id/item_list_cart_product_tv_price" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:background="@drawable/shape_frame_white_gray_4"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <RelativeLayout
                         android:id="@+id/item_list_cart_product_rl_num_minus"
-                        android:layout_width="0dp"
+                        android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center" >
+                        android:gravity="center">
 
                         <ImageView
                             android:id="@+id/item_list_cart_product_iv_num_minus"
@@ -130,9 +132,8 @@
 
                     <TextView
                         android:id="@+id/item_list_cart_product_tv_number"
-                        android:layout_width="0dp"
+                        android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/number_0"
                         android:textColor="@color/text_color_title"
@@ -144,10 +145,9 @@
 
                     <RelativeLayout
                         android:id="@+id/item_list_cart_product_rl_num_add"
-                        android:layout_width="0dp"
+                        android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center" >
+                        android:gravity="center">
 
                         <ImageView
                             android:id="@+id/item_list_cart_product_iv_num_add"
@@ -157,23 +157,7 @@
                             android:contentDescription="@string/desc" />
                     </RelativeLayout>
                 </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/item_list_cart_product_rl_delete"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical" >
-
-                    <ImageView
-                        android:id="@+id/item_list_cart_product_iv_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/icon_delete"
-                        android:contentDescription="@string/desc" />
-                </RelativeLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

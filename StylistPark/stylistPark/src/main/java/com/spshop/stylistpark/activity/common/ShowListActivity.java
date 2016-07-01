@@ -15,7 +15,7 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
-import com.spshop.stylistpark.adapter.ShowList2ItemAdapter;
+import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -50,7 +50,7 @@ public class ShowListActivity extends BaseActivity {
 	private PullToRefreshListView refresh_lv;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
-	private ShowList2ItemAdapter lv_two_adapter;
+	private ProductList2ItemAdapter lv_two_adapter;
 	
 	private int pageCode = PAGE_ROOT_CODE_1;
 	private String pageName = "";
@@ -145,7 +145,7 @@ public class ShowListActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		};
-		lv_two_adapter = new ShowList2ItemAdapter(mContext, lv_show_two, lv_callback);
+		lv_two_adapter = new ProductList2ItemAdapter(mContext, lv_show_two, lv_callback);
 		mListView.setAdapter(lv_two_adapter);
 		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}

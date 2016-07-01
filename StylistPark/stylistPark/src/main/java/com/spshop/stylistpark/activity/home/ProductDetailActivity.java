@@ -35,8 +35,6 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.sina.weibo.sdk.api.share.BaseResponse;
-import com.sina.weibo.sdk.api.share.IWeiboHandler;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
@@ -57,10 +55,9 @@ import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
 import com.spshop.stylistpark.image.AsyncImageLoader.AsyncImageLoaderCallback;
-import com.spshop.stylistpark.share.ShareView;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
-import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
@@ -69,9 +66,6 @@ import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.ObservableScrollView;
 import com.spshop.stylistpark.widgets.ObservableScrollView.ScrollViewListener;
 import com.spshop.stylistpark.widgets.ScrollViewListView;
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.stat.StatService;
 
 import java.io.File;
@@ -82,8 +76,7 @@ import java.util.List;
  * "商品详情"Activity
  */
 @SuppressLint({ "UseSparseArrays", "NewApi" })
-public class ProductDetailActivity extends BaseActivity implements
-		OnDataListener, OnClickListener, ScrollViewListener,IWeiboHandler.Response, IWXAPIEventHandler {
+public class ProductDetailActivity extends BaseActivity implements OnDataListener, OnClickListener, ScrollViewListener {
 
 	private static final String TAG = "ProductDetailActivity";
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
@@ -91,7 +84,7 @@ public class ProductDetailActivity extends BaseActivity implements
 	public boolean isUpdate = false;
 
 	@SuppressWarnings("unused")
-	private LinearLayout ll_other, ll_bottom, ll_head, ll_promotion, ll_show, ll_bottom_bar;
+	private LinearLayout ll_other, ll_bottom, ll_head, ll_promotion, ll_show, ll_bottom_bar, ll_radio_main;
 	private RelativeLayout rl_screen, rl_num_minus, rl_num_add;
 	private FrameLayout fl_main;
 	private ImageView iv_left, iv_goods_img, iv_video, iv_brang_logo, iv_num_minus, iv_num_add, iv_to_top;
@@ -112,7 +105,6 @@ public class ProductDetailActivity extends BaseActivity implements
 	private Runnable mPagerAction;
 	private WebView webview;
 	private ProgressBar progressBar;
-	private ShareView mShareView;
 	private AsyncImageLoader asyncImageLoader;
 
 	private ProductDetailEntity mainEn;
@@ -123,9 +115,9 @@ public class ProductDetailActivity extends BaseActivity implements
 	private boolean isShow = false;
 	private boolean isNext = false;
 	private boolean isColl = false;
-	private boolean rotation = true;
+	private boolean vprStop = true;
+	private int idsSize, idsPosition, vprPosition;
 	private int goodsId = 0;
-	private int mCurrentItem, position;
 	private int cartNumTotal = 0;
 	private int buyNumber = 1;
 	private int skuNum = 1;
@@ -138,6 +130,7 @@ public class ProductDetailActivity extends BaseActivity implements
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		isInitShare = true;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product_detail);
 
@@ -151,14 +144,6 @@ public class ProductDetailActivity extends BaseActivity implements
 		
 		findViewById();
 		initView();
-		
-		try { //初始化ShareView
-			View view = getLayoutInflater().inflate(R.layout.popup_share_view, (ViewGroup) findViewById(R.id.product_detail_fl_main));
-			mShareView = new ShareView(savedInstanceState, mContext, this, view, null);
-			mShareView.showShareLayer(mContext, false);
-		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
-		}
 	}
 
 	private void findViewById() {
@@ -188,6 +173,7 @@ public class ProductDetailActivity extends BaseActivity implements
 		tv_brand_country = (TextView) findViewById(R.id.product_detail_tv_brand_country);
 		tv_brand_go = (TextView) findViewById(R.id.product_detail_tv_brand_go);
 		iv_to_top = (ImageView) findViewById(R.id.product_detail_iv_to_top);
+		ll_radio_main = (LinearLayout) findViewById(R.id.topbar_radio_ll_main);
 		btn_1 = (RadioButton) findViewById(R.id.topbar_radio_rb_1);
 		btn_2 = (RadioButton) findViewById(R.id.topbar_radio_rb_2);
 		btn_3 = (RadioButton) findViewById(R.id.topbar_radio_rb_3);
@@ -205,7 +191,7 @@ public class ProductDetailActivity extends BaseActivity implements
 
 	private void initView() {
 		setHeadVisibility(View.GONE);
-		tv_title.setText(getString(R.string.title_product_detail));
+		//tv_title.setText(getString(R.string.title_product_detail));
 		btn_share.setBackground(getResources().getDrawable(R.drawable.topbar_icon_share));
 		mScrollView.setScrollViewListener(this);
 		btn_share.setOnClickListener(this);
@@ -227,6 +213,7 @@ public class ProductDetailActivity extends BaseActivity implements
 
 	private void setView() {
 		if (mainEn != null) {
+			tv_title.setText(mainEn.getName());
 			if (mainEn.getImgLists() != null && viewLists.size() == 0) {
 				initViewPager();
 			}
@@ -234,7 +221,7 @@ public class ProductDetailActivity extends BaseActivity implements
 			attrNameStr = getSelectShowStr(attrEn);
 			price = mainEn.getComputePrice();
 			mathPrice = mainEn.getComputePrice();
-			tv_name.setText(mainEn.getName());
+			tv_name.setText(mainEn.getBrandName() + mainEn.getName());
 			tv_price_sell.setText(currStr + mainEn.getSellPrice()); //商品卖价
 			
 			String full_price = mainEn.getFullPrice(); //商品原价
@@ -276,23 +263,23 @@ public class ProductDetailActivity extends BaseActivity implements
 			switch (propertyNum) {
 			case 2:
 				tv_property_1.setVisibility(View.VISIBLE); //正品保证
-				tv_property_2.setVisibility(View.GONE); //货到付款
-				tv_property_3.setVisibility(View.GONE);
+				tv_property_2.setVisibility(View.GONE);
 				if (StringUtil.isNull(mainEn.getMailCountry()) || mainEn.getMailCountry().equals("0")) {
-					tv_property_2.setText(getString(R.string.product_cash_delivery));
+					tv_property_2.setText(getString(R.string.product_cash_delivery)); //货到付款
 				}else {
-					tv_property_2.setText(mainEn.getMailCountry() + getString(R.string.product_mail));
+					tv_property_2.setText(mainEn.getMailCountry() + getString(R.string.product_mail)); //香港直邮
 				}
+				tv_property_3.setVisibility(View.GONE);
 				break;
 			case 3:
 				tv_property_1.setVisibility(View.VISIBLE); //正品保证
-				tv_property_2.setVisibility(View.VISIBLE); //无忧退换
-				tv_property_3.setVisibility(View.GONE); //货到付款
-				tv_property_2.setText(getString(R.string.product_carefree_return));
+				tv_property_2.setVisibility(View.VISIBLE);
+				tv_property_2.setText(getString(R.string.product_carefree_return)); //无忧退换
+				tv_property_3.setVisibility(View.GONE);
 				if (StringUtil.isNull(mainEn.getMailCountry()) || mainEn.getMailCountry().equals("0")) {
-					tv_property_3.setText(getString(R.string.product_cash_delivery));
+					tv_property_3.setText(getString(R.string.product_cash_delivery)); //货到付款
 				}else {
-					tv_property_3.setText(mainEn.getMailCountry() + getString(R.string.product_mail));
+					tv_property_3.setText(mainEn.getMailCountry() + getString(R.string.product_mail)); //香港直邮
 				}
 				break;
 			}
@@ -347,17 +334,20 @@ public class ProductDetailActivity extends BaseActivity implements
 		urlLists.clear();
 		imgEns.clear();
 		imgEns.addAll(mainEn.getImgLists());
-		
+		idsSize = imgEns.size();
+		if (idsSize == 2 || idsSize == 3) {
+			imgEns.addAll(mainEn.getImgLists());
+		}
 		tv_page.setVisibility(View.VISIBLE);
-		tv_page.setText(getString(R.string.viewpager_indicator, 1, imgEns.size()));
+		tv_page.setText(getString(R.string.viewpager_indicator, 1, idsSize));
 		for (int i = 0; i < imgEns.size(); i++) {
 			if (i == 0) {
 				fristGoodsImgUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMinUrl();
 			}
-			
-			String imgMaxUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMaxUrl();
-			urlLists.add(imgMaxUrl);
-			
+			if (i < idsSize) {
+				String imgMaxUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMaxUrl();
+				urlLists.add(imgMaxUrl);
+			}
 			String imgMinUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMinUrl();
 			ImageView imageView = new ImageView(mContext);
 			ImageLoader.getInstance().displayImage(imgMinUrl, imageView, options);
@@ -367,13 +357,13 @@ public class ProductDetailActivity extends BaseActivity implements
 				public void onClick(View v) {
 					Intent intent = new Intent(mContext, ViewPagerActivity.class);
 				    intent.putExtra(ViewPagerActivity.EXTRA_IMAGE_URLS, urlLists);
-				    intent.putExtra(ViewPagerActivity.EXTRA_IMAGE_INDEX, mCurrentItem);
+				    intent.putExtra(ViewPagerActivity.EXTRA_IMAGE_INDEX, idsPosition);
 				    startActivity(intent);
 				}
 			});
 			viewLists.add(imageView);
 		}
-		loadFristGoodsImg();
+		loadShareImg();
 		final boolean loop = viewLists.size() > 3 ? true:false;
 		viewPager.setAdapter(new PagerAdapter()
 		{
@@ -387,7 +377,9 @@ public class ProductDetailActivity extends BaseActivity implements
 				}else {
 					layout = viewLists.get(position);
 				}
-				viewPager.addView(layout);
+				if (layout != null) {
+					viewPager.addView(layout);
+				}
 				return layout;
 			}
 			
@@ -401,7 +393,9 @@ public class ProductDetailActivity extends BaseActivity implements
 				}else {
 					layout = viewLists.get(position);
 				}
-				viewPager.removeView(layout);
+				if (layout != null) {
+					viewPager.removeView(layout);
+				}
 			}
 			
 			@Override
@@ -427,16 +421,20 @@ public class ProductDetailActivity extends BaseActivity implements
 			@Override
 			public void onPageSelected(final int arg0){
 				if (loop) {
-					position = arg0;
-					mCurrentItem = arg0 % viewLists.size();
-					if (mCurrentItem == viewLists.size()) {
-						mCurrentItem = 0;
-						viewPager.setCurrentItem(mCurrentItem);
+					vprPosition = arg0;
+					idsPosition = arg0 % viewLists.size();
+					if (idsPosition == viewLists.size()) {
+						idsPosition = 0;
+						viewPager.setCurrentItem(0);
 					}
 				}else {
-					mCurrentItem = arg0;
+					idsPosition = arg0;
 				}
-				tv_page.setText(getString(R.string.viewpager_indicator, mCurrentItem+1, viewLists.size()));
+				// 变更指示器
+				if ((idsSize == 2 || idsSize == 3) && idsPosition >= idsSize) {
+					idsPosition = idsPosition - idsSize;
+				}
+				tv_page.setText(getString(R.string.viewpager_indicator, idsPosition + 1, idsSize));
 			}
 			
 			@Override
@@ -447,7 +445,7 @@ public class ProductDetailActivity extends BaseActivity implements
 			@Override
 			public void onPageScrollStateChanged(int arg0){
 				if (arg0 == 1) {
-					rotation = false;
+					vprStop = true;
 				}
 			}
 		});
@@ -456,11 +454,11 @@ public class ProductDetailActivity extends BaseActivity implements
 				
 				@Override
 				public void run(){
-					if (rotation) {
-						position++;
-						viewPager.setCurrentItem(position);
+					if (!vprStop) {
+						vprPosition++;
+						viewPager.setCurrentItem(vprPosition);
 					}
-					rotation = true;
+					vprStop = false;
 					viewPager.postDelayed(mPagerAction, 3000);
 				}
 			};
@@ -468,7 +466,7 @@ public class ProductDetailActivity extends BaseActivity implements
 		}
 	}
 
-	private void loadFristGoodsImg() {
+	private void loadShareImg() {
 		if (!StringUtil.isNull(fristGoodsImgUrl)) {
 			asyncImageLoader = AsyncImageLoader.getInstance(mContext, new AsyncImageLoaderCallback() {
 				
@@ -484,6 +482,7 @@ public class ProductDetailActivity extends BaseActivity implements
 	}
 
 	private void initRaidoGroup() {
+		ll_radio_main.setVisibility(View.GONE);
 		btn_1.setText(getString(R.string.product_detail_tab_1));
 		btn_1.setChecked(true);
 		btn_1.setOnClickListener(this);
@@ -675,24 +674,6 @@ public class ProductDetailActivity extends BaseActivity implements
 		}, 500);
 	}
 
-	private void showShareView() {
-		if (mShareView != null && mainEn != null) {
-			String genuine = getString(R.string.product_genuine_safeguard);
-			int uid = StringUtil.getInteger(UserManager.getInstance().getUserId());
-			ShareEntity shareEn = new ShareEntity();
-			shareEn.setTitle(mainEn.getName());
-			shareEn.setText(mainEn.getBrandCountry() + " " + mainEn.getBrandName() 
-					+ genuine + " " + mainEn.getName() + " " + fristPromotionName);
-			shareEn.setUrl("http://spshop.com/goods.php?id=" + mainEn.getId() + "?uid=" + uid);
-			shareEn.setImageUrl(fristGoodsImgUrl);
-			shareEn.setImagePath(fristGoodsImgPath);
-			mShareView.setShareEntity(shareEn);
-			mShareView.showShareLayer(mContext, true);
-		}else {
-			CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_entity_error), 1000);
-		}
-	}
-
 	/**
 	 * 从远程服务器加载数据
 	 */
@@ -729,13 +710,16 @@ public class ProductDetailActivity extends BaseActivity implements
 			initVideoPopup();
 			break;
 		case R.id.topbar_radio_rb_1:
-			webview.loadUrl("http://192.168.11.155/app_goods.php?id=" + goodsId + AppApplication.getHttpUrlLangCurValueStr());
+			String loadingUrl = "http://192.168.11.155/app_goods.php?id=" + goodsId + AppApplication.getHttpUrlLangCurValueStr();
+			// 同步Cookies
+			HttpUtil.synCookies(mContext, loadingUrl);
+			webview.loadUrl(loadingUrl);
 			break;
 		case R.id.topbar_radio_rb_2:
-			webview.loadUrl("https://www.baidu.com/");
+
 			break;
 		case R.id.topbar_radio_rb_3:
-			webview.loadUrl("http://www.bejson.com/");
+
 			break;
 		case R.id.product_detail_tv_brand_go:
 			if (mainEn != null) {
@@ -810,14 +794,33 @@ public class ProductDetailActivity extends BaseActivity implements
 		}
 	}
 
+	private void showShareView() {
+		if (mShareView != null && mainEn != null) {
+			if (mShareView.isShowing()) {
+				mShareView.showShareLayer(mContext, false);
+				return;
+			}
+			String genuine = getString(R.string.product_genuine_safeguard);
+			int uid = StringUtil.getInteger(UserManager.getInstance().getUserId());
+			ShareEntity shareEn = new ShareEntity();
+			shareEn.setTitle(mainEn.getName());
+			shareEn.setText(mainEn.getBrandCountry() + " " + mainEn.getBrandName()
+					+ genuine + " " + mainEn.getName() + " " + fristPromotionName);
+			shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "goods.php?id=" + mainEn.getId() + "&uid=" + uid);
+			shareEn.setImageUrl(fristGoodsImgUrl);
+			shareEn.setImagePath(fristGoodsImgPath);
+			mShareView.setShareEntity(shareEn);
+			mShareView.showShareLayer(mContext, true);
+		}else {
+			showShareError();
+		}
+	}
+
 	@Override
 	protected void onResume() {
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		StatService.onResume(this);
-		if (mShareView != null) {
-			mShareView.onResume();
-		}
 		if (isUpdate) {
 			isUpdate = false;
 			getSVDatas();
@@ -832,9 +835,6 @@ public class ProductDetailActivity extends BaseActivity implements
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
 		StatService.onPause(this);
-		if (mShareView != null) {
-			mShareView.onResume();
-		}
 		// 销毁对象
         if (asyncImageLoader != null) {
         	asyncImageLoader.clearInstance();
@@ -849,18 +849,7 @@ public class ProductDetailActivity extends BaseActivity implements
 		if (mcdt != null) {
 			mcdt.cancel();
 		}
-		if (mShareView != null) {
-			mShareView.onDestroy();
-		}
 		super.onDestroy();
-	}
-	
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		if (mShareView != null) {
-			mShareView.onSaveInstanceState(outState);
-		}
-		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -1011,37 +1000,6 @@ public class ProductDetailActivity extends BaseActivity implements
 			tv_cart_total.setVisibility(View.GONE);
 			tv_cart_total.setText(getString(R.string.number_0));
 		}
-	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (mShareView != null) {
-			mShareView.onActivityResult(requestCode, resultCode, data);
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-	
-	@Override
-	protected void onNewIntent(Intent intent) {
-		if (mShareView != null) {
-			mShareView.onNewIntent(intent, this, this);
-		}
-		super.onNewIntent(intent);
-	}
-
-	@Override
-	public void onReq(BaseReq arg0) {
-		
-	}
-
-	@Override
-	public void onResp(BaseResp arg0) {
-		
-	}
-
-	@Override
-	public void onResponse(BaseResponse arg0) {
-		
 	}
 
 }

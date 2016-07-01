@@ -11,8 +11,10 @@ public class AppConfig {
 	
 	// 是否正式发布
 	public static final boolean IS_PUBLISH = false;
-	// 网络传输协议
+	// 网络传输协议https
 	public final static String APP_HTTP = "http://"; 
+	// 网络传输协议https
+	public final static String APP_HTTPS = "https://";
 	// 域名1
 	public final static String ENVIRONMENT_TEST_APP_1 = "192.168.11.155/";
 	// 域名2
@@ -23,17 +25,23 @@ public class AppConfig {
 	public final static String ENVIRONMENT_PRESENT_URL_APP = APP_HTTP + ENVIRONMENT_TEST_APP_3;
 	// 加载图片使用的域名
 	public final static String ENVIRONMENT_PRESENT_IMG_APP = APP_HTTP + ENVIRONMENT_TEST_APP_1;
-	
+	// 分享URL使用的域名
+	public final static String ENVIRONMENT_PRESENT_SHARE_URL = APP_HTTP + ENVIRONMENT_TEST_APP_1;
+
 	// 商品拉取URL
 	public static final String URL_COMMON_PRODUCT_URL = ENVIRONMENT_PRESENT_URL_APP + "product.php";
 	// 购物相关URL
-	public static final String URL_COMMON_FLOW_URL = "http://192.168.11.155/flow.php";
+	public static final String URL_COMMON_FLOW_URL = ENVIRONMENT_PRESENT_IMG_APP + "flow.php";
 	// 用户提交URL
-	public static final String URL_COMMON_USER_URL = "http://192.168.11.155/user.php";
+	public static final String URL_COMMON_USER_URL = ENVIRONMENT_PRESENT_IMG_APP + "user.php";
 	// 广告详情URL
-	public static final String URL_COMMON_TOPIC_URL = "http://192.168.11.155/topic-app.php";
+	public static final String URL_COMMON_TOPIC_URL = ENVIRONMENT_PRESENT_IMG_APP + "topic-app.php";
 	// 专题详情URL
-	public static final String URL_COMMON_ARTICLE_URL = "http://192.168.11.155/article-app.php";
+	public static final String URL_COMMON_ARTICLE_URL = ENVIRONMENT_PRESENT_IMG_APP + "article-app.php";
+	// 专题分享URL
+	public static final String URL_COMMON_ARTICLE_SHARE_URL = ENVIRONMENT_PRESENT_IMG_APP + "article.php";
+	// 专题评论URL
+	public static final String URL_COMMON_COMMENT_URL = ENVIRONMENT_PRESENT_IMG_APP + "comment.php";
 	// 用户拉取URL
 	public static final String URL_COMMON_MY_URL = ENVIRONMENT_PRESENT_URL_APP + "my.php";
 	// 其它通用URL
@@ -44,7 +52,6 @@ public class AppConfig {
 	public static final String API_GET_PRODUCT_LIST = ENVIRONMENT_PRESENT_URL_APP + "getProductList2.php";
 	public static final String API_GET_BRAND_LIST = ENVIRONMENT_PRESENT_URL_APP + "getBrandList.php";
 	public static final String API_SUBMIT_LOOKBOOK = ENVIRONMENT_PRESENT_URL_APP + "submitLookBook.php";
-	//public static final String API_UPDATE_PROFILE = ENVIRONMENT_PRESENT_URL_APP + "updateUserProfilePicture.php";
 	public static final String API_UPDATE_PROFILE = "http://192.168.11.155/user.php?act=act_edit_profile";
 	public static final String URL_DECOR_DB = "http://download.cherrypicks.com/StylishPark/SP/DecorationElement.zip";
 	public static final String URL_TEMPLATE_JSON = "http://download.cherrypicks.com/StylishPark/SP/TemplateJsonSample.json";
@@ -174,6 +181,8 @@ public class AppConfig {
 
 	// 加载专题列表请求
 	public static final int REQUEST_SV_GET_SPECIAL_LIST_CODE = 0X3001;
+	// 提交专题评论请求
+	public static final int REQUEST_SV_POST_COMMENT_CODE = 0X3020;
 
 	// 加载购物车商品列表
 	public static final int REQUEST_SV_GET_CART_LIST_CODE = 0X4010;

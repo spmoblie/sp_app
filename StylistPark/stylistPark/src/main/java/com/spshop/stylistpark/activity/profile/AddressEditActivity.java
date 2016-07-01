@@ -1,15 +1,5 @@
 package com.spshop.stylistpark.activity.profile;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -43,6 +33,16 @@ import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.tencent.stat.StatService;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 @SuppressLint("UseSparseArrays")
 public class AddressEditActivity extends BaseActivity implements

@@ -8,8 +8,7 @@
         android:background="@color/ui_bg_color_app"
         android:orientation="vertical" >
 
-        <include
-            layout="@layout/layout_top_two_title" />
+        <include layout="@layout/layout_top_two_title" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/fragment_two_viewpager"

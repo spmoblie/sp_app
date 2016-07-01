@@ -9,20 +9,22 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
 import com.spshop.stylistpark.widgets.listener.OnLoadMoreListener;
-import com.spshop.stylistpark.widgets.listener.OnMyScrollListener;
+import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 
 public class StikkyHeaderListView extends StikkyHeader {
 
 
+    private PullToRefreshListView mRefreshListView;
     private final ListView mListView;
     private final OnLoadMoreListener mLoadMore;
-    private final OnMyScrollListener mScroll;
+    private AbsListView.OnScrollListener mScroll;
     private AbsListView.OnScrollListener mDelegateOnScrollListener;
 
-    StikkyHeaderListView(final Context context, final ListView listView, final View header, 
-    		final OnLoadMoreListener mLoadMore, final OnMyScrollListener mScroll, final int mMinHeightHeader, final HeaderAnimator headerAnimator) {
+    StikkyHeaderListView(final Context context, final PullToRefreshListView refreshListView, final ListView listView, final View header,
+                         final OnLoadMoreListener mLoadMore, final AbsListView.OnScrollListener mScroll, final int mMinHeightHeader, final HeaderAnimator headerAnimator) {
 
         this.mContext = context;
+        this.mRefreshListView = refreshListView;
         this.mListView = listView;
         this.mHeader = header;
         this.mLoadMore = mLoadMore;
@@ -55,7 +57,11 @@ public class StikkyHeaderListView extends StikkyHeader {
     private void setStickyOnScrollListener() {
 
         StickyOnScrollListener mStickyOnScrollListener = new StickyOnScrollListener();
-        mListView.setOnScrollListener(mStickyOnScrollListener);
+        if (mRefreshListView != null) {
+            mRefreshListView.setOnScrollListener(mStickyOnScrollListener);
+        } else {
+            mListView.setOnScrollListener(mStickyOnScrollListener);
+        }
 
     }
 
@@ -68,10 +74,15 @@ public class StikkyHeaderListView extends StikkyHeader {
             if (mDelegateOnScrollListener != null) {
                 mDelegateOnScrollListener.onScrollStateChanged(view, scrollState);
             }
+            if (mScroll != null) {
+                mScroll.onScrollStateChanged(view, scrollState);
+            }
             switch (scrollState) {
 			case OnScrollListener.SCROLL_STATE_IDLE:
 				if (mListView.getLastVisiblePosition() == mListView.getCount() - 1) {
-					mLoadMore.onLoadMore(null);
+                    if (mLoadMore != null) {
+                        mLoadMore.onLoadMore(null);
+                    }
 				}
 				break;
 			}
@@ -88,8 +99,10 @@ public class StikkyHeaderListView extends StikkyHeader {
             if (mDelegateOnScrollListener != null) {
                 mDelegateOnScrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
-            
-            mScroll.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+
+            if (mScroll != null) {
+                mScroll.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+            }
         }
 
         private int calculateScrollYList() {

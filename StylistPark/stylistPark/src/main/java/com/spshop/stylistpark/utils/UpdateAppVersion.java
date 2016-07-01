@@ -17,17 +17,37 @@ import com.spshop.stylistpark.service.ServiceContext;
 
 public class UpdateAppVersion {
 
+	private static UpdateAppVersion instance;
 	private SharedPreferences shared;
 	private Context mContext;
 	private String curVersionName;
 	private int curVersionCode;
 	private boolean isNewVersion = false;
 	private boolean isHomeIndex = false;
+
+	public static UpdateAppVersion getInstance(Context context, boolean isHomeIndex) {
+		if (instance == null) {
+			instance = new UpdateAppVersion(context, isHomeIndex);
+		}
+		return instance;
+	}
 	
-	public UpdateAppVersion(Context context, boolean isHomeIndex) {
+	private UpdateAppVersion(Context context, boolean isHomeIndex) {
 		mContext = context;
 		this.isHomeIndex = isHomeIndex;
 		shared = AppApplication.getSharedPreferences();
+		startCheckAppVersion();
+	}
+
+	public boolean isNewVersion() {
+		return isNewVersion;
+	}
+
+	public static void onDestroy() {
+		instance = null;
+	}
+
+	private void startCheckAppVersion() {
 		getAppVersionInfo();
 		// 检测网络状态
 		boolean isNewworkAvailabel = NetworkUtil.networkStateTips(mContext);
@@ -37,12 +57,9 @@ public class UpdateAppVersion {
 			}
 			new HttpTask().execute(); //异步检查版本信息
 		} else {
-			CommonTools.showToast(context, mContext.getString(R.string.network_fault), 1000);
+			CommonTools.showToast(mContext, mContext.getString(R.string.network_fault), 1000);
+			onDestroy();
 		}
-	}
-
-	public boolean isNewVersion() {
-		return isNewVersion;
 	}
 
 	/**
@@ -57,6 +74,7 @@ public class UpdateAppVersion {
 			AppApplication.version_name = curVersionName;
 		} catch (NameNotFoundException e) {
 			ExceptionUtil.handle(mContext, e);
+			onDestroy();
 		}
 	}
 
@@ -71,6 +89,7 @@ public class UpdateAppVersion {
 				versionEn = ServiceContext.getServiceContext().checkVersionUpdate(0, curVersionName);
 			} catch (Exception e) {
 				ExceptionUtil.handle(mContext, e);
+				onDestroy();
 			}
 			return versionEn;
 		}
@@ -110,14 +129,16 @@ public class UpdateAppVersion {
 							}
 						}
 					} else if (!isNewVersion) {
-						if (!isHomeIndex){
+						if (!isHomeIndex) {
 							appDialog.isNewVersion(); //提示已是最新版本
 						}
 					}
-				}else {
+				} else {
 					CommonTools.showToast(mContext, mContext.getString(R.string.toast_server_busy), 1000);
 				}
+			} else {
 			}
+			onDestroy();
 		}
 	}
 

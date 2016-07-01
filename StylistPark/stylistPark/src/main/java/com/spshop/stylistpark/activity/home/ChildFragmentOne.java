@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -36,7 +37,7 @@ import com.spshop.stylistpark.activity.common.MipcaActivityCapture;
 import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
-import com.spshop.stylistpark.adapter.ShowList2ItemAdapter;
+import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
 import com.spshop.stylistpark.dialog.LoadDialog;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
@@ -50,6 +51,8 @@ import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
+import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
+import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
@@ -66,9 +69,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	private static final int Page_Count = 40;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页
-	private int mCurrentItem, position;
-	private boolean loadMore = false;
-	private boolean rotation = true;
 	private String currStr;
 	private Context mContext;
 	private NetworkInfo netInfo;
@@ -76,16 +76,17 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private ConnectivityManager cm;
 	private AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
-	
 	private RelativeLayout rl_category, rl_search, rl_zxing;
-	private LinearLayout ll_head_main, ll_indicator, ll_goods_main, ll_peida_main, ll_sale_main, ll_foot_main;
+	private LinearLayout ll_head_main, ll_indicator, ll_goods_main, ll_peida_main, ll_sale_main;
+
 	private View sv_goods_main, vw_goods_title, sv_peida_main, vw_peida_title, vw_sale_title;
 	private TextView tv_goods_title, tv_peida_title, tv_sale_title;
 	private ViewPager viewPager;
 	private ImageView iv_to_top;
+	private PullToRefreshListView refresh_lv;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
-	private ShowList2ItemAdapter lv_two_adapter;
+	private ProductList2ItemAdapter lv_two_adapter;
 	private Runnable mPagerAction;
 	private LayoutInflater mInflater;
 	private DisplayImageOptions options;
@@ -93,10 +94,11 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private ThemeEntity themeEn;
 	private ProductListEntity mainEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
-	private List<ProductListEntity> lv_lists_show = new ArrayList<ProductListEntity>();
-	private List<ProductListEntity> lv_lists_all_1 = new ArrayList<ProductListEntity>();
+	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
+	private List<ProductListEntity> lv_all = new ArrayList<ProductListEntity>();
 	private HashMap<Integer, Boolean> hm_all = new HashMap<Integer, Boolean>();
-	private int indexSize;
+	private boolean vprStop = false;
+	private int idsSize, idsPosition, vprPosition;
 	private ImageView[] indicators = null;
 	private ArrayList<View> viewLists = new ArrayList<View>();
 	private ArrayList<ThemeEntity> imgEns = new ArrayList<ThemeEntity>();
@@ -120,12 +122,12 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		atm = AsyncTaskManager.getInstance(mContext);
 		mInflater = LayoutInflater.from(mContext);
 		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
-		
+
 		// 动态注册广播
 		IntentFilter mFilter = new IntentFilter();
 		mFilter.addAction(AppConfig.RECEIVER_ACTION_MAIN_DATA);
 		mContext.registerReceiver(myBroadcastReceiver, mFilter);
-		
+
 		View view = null;
 		try {
 			view = inflater.inflate(R.layout.fragment_layout_one, null);
@@ -141,10 +143,9 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		rl_category = (RelativeLayout) view.findViewById(R.id.fragment_one_topbar_rl_category);
 		rl_search = (RelativeLayout) view.findViewById(R.id.fragment_one_topbar_rl_search);
 		rl_zxing = (RelativeLayout) view.findViewById(R.id.fragment_one_topbar_rl_zxing);
-		mListView = (ListView) view.findViewById(R.id.fragment_one_listview);
+		refresh_lv = (PullToRefreshListView) view.findViewById(R.id.fragment_one_listview);
 		iv_to_top = (ImageView) view.findViewById(R.id.fragment_one_iv_to_top);
-		ll_foot_main = (LinearLayout) view.findViewById(R.id.loading_anim_samll_ll_main);
-		
+
 		ll_head_main = (LinearLayout) FrameLayout.inflate(mContext, R.layout.layout_list_head_home, null);
 	}
 
@@ -153,9 +154,39 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		rl_search.setOnClickListener(this);
 		rl_zxing.setOnClickListener(this);
 		iv_to_top.setOnClickListener(this);
-		
+
+		initListView();
 		initListViewHead();
 		setAdapter();
+	}
+
+	private void initListView() {
+		refresh_lv.setPullRefreshEnabled(false);
+		refresh_lv.setPullLoadEnabled(false);
+		refresh_lv.setScrollLoadEnabled(true);
+		refresh_lv.setOnScrollListener(new OnMyScrollListener());
+		refresh_lv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+				// 下拉刷新
+				new Handler().postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						refresh_lv.onPullDownRefreshComplete();
+					}
+				}, 1000);
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+				// 加载更多
+				loadSVDatas();
+			}
+		});
+		mListView = refresh_lv.getRefreshableView();
+		mListView.setDivider(null);
+		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
 
 	private void initListViewHead() {
@@ -191,12 +222,10 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			viewLists.clear();
 			imgEns.clear();
 			imgEns.addAll(adEn.getMainLists());
-			imgEns.add(adEn.getMainLists().get(0));
-			indexSize = imgEns.size();
-			indicators = new ImageView[indexSize]; // 定义指示器数组大小
-			if (indexSize == 2 || indexSize == 3) {
+			idsSize = imgEns.size();
+			indicators = new ImageView[idsSize]; // 定义指示器数组大小
+			if (idsSize == 2 || idsSize == 3) {
 				imgEns.addAll(adEn.getMainLists());
-				imgEns.add(adEn.getMainLists().get(0));
 			}
 			for (int i = 0; i < imgEns.size(); i++) {
 				final ThemeEntity items = imgEns.get(i);
@@ -210,12 +239,13 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					public void onClick(View v) {
 						Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
 						intent.putExtra("title", items.getTitle());
-						intent.putExtra("url", AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + items.getId());
+						intent.putExtra("lodUrl", AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + items.getId());
+						intent.putExtra("vdoUrl", "");
 						startActivity(intent);
 					}
 				});
 				viewLists.add(imageView);
-				if (i < indexSize) {
+				if (i < idsSize) {
 					// 循环加入指示器
 					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 					params.setMargins(10, 0, 10, 0);
@@ -281,23 +311,22 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				@Override
 				public void onPageSelected(final int arg0){
 					if (loop) {
-						position = arg0;
-						mCurrentItem = arg0 % viewLists.size();
-						if (mCurrentItem == viewLists.size()) {
-							mCurrentItem = 0;
-							viewPager.setCurrentItem(mCurrentItem);
+						vprPosition = arg0;
+						idsPosition = arg0 % viewLists.size();
+						if (idsPosition == viewLists.size()) {
+							idsPosition = 0;
+							viewPager.setCurrentItem(0);
 						}
 					}else {
-						mCurrentItem = arg0;
+						idsPosition = arg0;
 					}
 					// 更改指示器图片
-					int pos = mCurrentItem;
-					if ((indexSize == 2 || indexSize == 3) && pos >= indexSize) {
-						pos = pos - indexSize;
+					if ((idsSize == 2 || idsSize == 3) && idsPosition >= idsSize) {
+						idsPosition = idsPosition - idsSize;
 					}
-					for (int i = 0; i < indexSize; i++) {
+					for (int i = 0; i < idsSize; i++) {
 						ImageView imageView = indicators[i];
-						if (i == pos)
+						if (i == idsPosition)
 							imageView.setImageResource(R.drawable.indicators_now);
 						else
 							imageView.setImageResource(R.drawable.indicators_default);
@@ -312,7 +341,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				@Override
 				public void onPageScrollStateChanged(int arg0){
 					if (arg0 == 1) {
-						rotation = false;
+						vprStop = true;
 					}
 				}
 			});
@@ -321,11 +350,11 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 					@Override
 					public void run(){
-						if (rotation) {
-							position++;
-							viewPager.setCurrentItem(position);
+						if (!vprStop) {
+							vprPosition++;
+							viewPager.setCurrentItem(vprPosition);
 						}
-						rotation = true;
+						vprStop = false;
 						viewPager.postDelayed(mPagerAction, 3000);
 					}
 				};
@@ -414,7 +443,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 						public void onClick(View v) {
 							Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
 							intent.putExtra("title", items.getTitle());
-							intent.putExtra("url", AppConfig.URL_COMMON_ARTICLE_URL + "?id=" + items.getId());
+							intent.putExtra("lodUrl", AppConfig.URL_COMMON_ARTICLE_URL + "?id=" + items.getId());
+							intent.putExtra("vdoUrl", "");
 							startActivity(intent);
 						}
 					});
@@ -486,10 +516,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				startActivity(intent);
 			}
 		};
-		lv_two_adapter = new ShowList2ItemAdapter(mContext, lv_show_two, lv_callback);
+		lv_two_adapter = new ProductList2ItemAdapter(mContext, lv_show_two, lv_callback);
 		mListView.setAdapter(lv_two_adapter);
-		mListView.setOnScrollListener(new MyScrollListener());
-		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
 
 	/**
@@ -497,9 +525,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	 */
 	private void getSVDatas() {
 		current_Page = 1;
-		lv_lists_all_1.clear();
+		lv_all.clear();
 		hm_all.clear();
-		ll_foot_main.setVisibility(View.GONE);
 		startAnimation();
 		requestHeadDatas();
 		requestListDatas();
@@ -509,7 +536,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	 * 加载翻页数据
 	 */
 	private void loadSVDatas() {
-		ll_foot_main.setVisibility(View.VISIBLE);
 		requestListDatas();
 	}
 
@@ -583,15 +609,11 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
         }
 	}
 
-	class MyScrollListener implements OnScrollListener {
+	class OnMyScrollListener implements OnScrollListener {
 
 		@Override
 		public void onScrollStateChanged(AbsListView view, int scrollState) {
-			if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
-				if (loadMore) {
-					loadSVDatas();
-				}
-			}
+
 		}
 
 		@Override
@@ -600,11 +622,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				iv_to_top.setVisibility(View.VISIBLE);
 			} else {
 				iv_to_top.setVisibility(View.GONE);
-			}
-			if (firstVisibleItem + visibleItemCount == totalItemCount) {
-				loadMore = true;
-			}else {
-				loadMore = false;
 			}
 		}
 	}
@@ -639,7 +656,9 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			if (mainEn != null) {
 				List<ProductListEntity> lists = mainEn.getMainLists();
 				if (lists != null && lists.size() > 0) {
-					addEntity(lv_lists_all_1, lists, hm_all);
+					lv_all.addAll(lists);
+					addAllShow(lv_all);
+					//addEntity(lv_all, lists, hm_all);
 					current_Page++;
 					myUpdateAdapter();
 				}else {
@@ -660,7 +679,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	}
 
 	private void loadFailHandle() {
-		addAllShow(lv_lists_all_1);
+		addAllShow(lv_all);
 		myUpdateAdapter();
 	}
 	
@@ -683,8 +702,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	}
 
 	private void addAllShow(List<ProductListEntity> showLists) {
-		lv_lists_show.clear();
-		lv_lists_show.addAll(showLists);
+		lv_show.clear();
+		lv_show.addAll(showLists);
 	}
 	
 	private void myUpdateAdapter() {
@@ -693,13 +712,13 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		}
 		lv_show_two.clear();
 		ListShowTwoEntity lstEn = null;
-		for (int i = 0; i < lv_lists_show.size(); i++) {
-			ProductListEntity en = lv_lists_show.get(i);
+		for (int i = 0; i < lv_show.size(); i++) {
+			ProductListEntity en = lv_show.get(i);
 			if (i%2 == 0) {
 				lstEn = new ListShowTwoEntity();
 				lstEn.setLeftEn(en);
-				if (i+1 < lv_lists_show.size()) {
-					lstEn.setRightEn(lv_lists_show.get(i+1));
+				if (i+1 < lv_show.size()) {
+					lstEn.setRightEn(lv_show.get(i+1));
 				}
 				lv_show_two.add(lstEn);
 			}
@@ -727,7 +746,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	 */
 	private void stopAnimation() {
 		LoadDialog.hidden(mContext);
-		ll_foot_main.setVisibility(View.GONE);
+		refresh_lv.onPullUpRefreshComplete();
 	}
 
 	// 广播接收器

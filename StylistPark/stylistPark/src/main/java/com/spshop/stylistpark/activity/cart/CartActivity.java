@@ -18,7 +18,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.home.CategoryActivity;
+import com.spshop.stylistpark.activity.category.CategoryActivity;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.CartProductListAdapter;
@@ -137,7 +137,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                
+				// 加载更多(GridView无效)
             }
         });
 		ptrsv_sv = ptrsv.getRefreshableView();
@@ -241,7 +241,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void updatePriceTotal() {
 		lv_Adapter.updateAdapter(lv_datas, cartHashMap);
-		tv_total.setText(curStr + amountStr);
+		tv_total.setText(getString(R.string.order_total_name) + curStr + amountStr);
 	}
 
 	/**

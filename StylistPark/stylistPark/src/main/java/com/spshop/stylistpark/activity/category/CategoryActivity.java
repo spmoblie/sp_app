@@ -1,4 +1,4 @@
-package com.spshop.stylistpark.activity.home;
+package com.spshop.stylistpark.activity.category;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -23,6 +23,7 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.collage.IndexDisplayFragment;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
+import com.spshop.stylistpark.activity.home.ProductListActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.BrandIndexDisplayAdapter;
 import com.spshop.stylistpark.adapter.CategoryGridAdapter;
@@ -61,8 +62,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	private CategoryGridAdapter gv_Adapter;
 	private CategoryListEntity mainEn, brandsEn;
 	private CategoryDBService dbs;
-	private IndexDisplayFragment indexDisplayFragment;
-	
+
 	private int index = 0;
 	private int dataType = 0; //区分父级、子级分类的标记(0表示父级/1表示子级)
 	private int mCurrentItem;
@@ -171,27 +171,29 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	}
 
 	public void initIndexDisplayFragment() {
-		BrandIndexDisplayAdapter adapter = new BrandIndexDisplayAdapter(mContext);
-		adapter.setOnIndexDisplayItemClick(new OnIndexDisplayItemClick() {
-
-			@Override
-			public void onIndexDisplayItemClick(IndexDisplay indexDisplay) {
-				if (indexDisplay != null) {
-					BrandEntity brand = (BrandEntity) indexDisplay;
-					startShowListHeadActivity(StringUtil.getInteger(brand.getBrandId()));
-				}
-			}
-
-		});
-		indexDisplayFragment = IndexDisplayFragment.newInstance();
-		indexDisplayFragment.setDataList(IndexDisplayTool.buildIndexListChineseAndEng(this, brandList, hm_index));
-		indexDisplayFragment.setAdapter(adapter);
-		indexDisplayFragment.setIndexHashMap(hm_index);
-
 		FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-		ft.add(R.id.category_brand_rl, indexDisplayFragment);
-		ft.commit();
+		IndexDisplayFragment idf = (IndexDisplayFragment) fm.findFragmentById(R.id.category_brand_fl);
+		if (idf == null || idf.isRemoving()) {
+			BrandIndexDisplayAdapter adapter = new BrandIndexDisplayAdapter(mContext);
+			adapter.setOnIndexDisplayItemClick(new OnIndexDisplayItemClick() {
+
+				@Override
+				public void onIndexDisplayItemClick(IndexDisplay indexDisplay) {
+					if (indexDisplay != null) {
+						BrandEntity brand = (BrandEntity) indexDisplay;
+						startShowListHeadActivity(StringUtil.getInteger(brand.getBrandId()));
+					}
+				}
+
+			});
+			idf = IndexDisplayFragment.newInstance();
+			idf.setDataList(IndexDisplayTool.buildIndexListChineseAndEng(this, brandList, hm_index));
+			idf.setAdapter(adapter);
+			idf.setIndexHashMap(hm_index);
+
+			FragmentTransaction ft = fm.beginTransaction();
+			ft.add(R.id.category_brand_fl, idf).commit();
+		}
 	}
 
 	/**

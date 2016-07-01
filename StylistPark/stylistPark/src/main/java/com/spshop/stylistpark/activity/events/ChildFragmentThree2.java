@@ -1,25 +1,28 @@
 package com.spshop.stylistpark.activity.events;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
+import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.SpecialAdapter;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
+import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
@@ -27,6 +30,8 @@ import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.StringUtil;
+import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.tencent.stat.StatService;
@@ -35,36 +40,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ChildFragmentThree2 extends Fragment implements OnDataListener {
+public class ChildFragmentThree2 extends Fragment implements OnClickListener, OnDataListener {
 
 	private static final String TAG = "ChildFragmentThree2";
 	public static ChildFragmentThree2 instance = null;
+	public static final int TYPE_1 = 3;  //全部
+	public static final int TYPE_2 = 5;  //视频
+	public static final int TYPE_3 = 7;  //专题
 
 	private Context mContext;
-	private SharedPreferences shared;
 	private AsyncTaskManager atm;
 	protected ServiceContext sc = ServiceContext.getServiceContext();
 	private static final int Page_Count = 20;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页
 	private int page_type_1 = 1;  //默认列表加载页
+	private int page_type_2 = 1;  //视频列表加载页
+	private int page_type_3 = 1;  //专题列表加载页
+	private int topType = TYPE_1; //Top标记
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
+	private int countTotal = 0; //数集总数量
 	private boolean isLoadOk = true; //加载数据控制符
 
-	private RelativeLayout rl_top_screen, rl_loading;
+	private RelativeLayout rl_loading;
 	private FrameLayout rl_no_data;
-	private ImageView iv_to_top;
-	private TextView tv_no_data;
+	private ImageView iv_top_left, iv_to_top;
+	private TextView tv_title_1, tv_title_2, tv_title_3;
+	private TextView tv_title, tv_no_data;
 	private PullToRefreshListView refresh_lv;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
 	private SpecialAdapter lv_adapter;
 
-	private int countTotal = 0; //数集总数量
 	private ThemeEntity mainEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ThemeEntity> lv_show = new ArrayList<ThemeEntity>();
-	private List<ThemeEntity> lv_all = new ArrayList<ThemeEntity>();
-	private HashMap<Integer, Boolean> hm_all = new HashMap<Integer, Boolean>();
+	private List<ThemeEntity> lv_all_1 = new ArrayList<ThemeEntity>();
+	private List<ThemeEntity> lv_all_2 = new ArrayList<ThemeEntity>();
+	private List<ThemeEntity> lv_all_3 = new ArrayList<ThemeEntity>();
+	private HashMap<Integer, Boolean> hm_all_1 = new HashMap<Integer, Boolean>();
+	private HashMap<Integer, Boolean> hm_all_2 = new HashMap<Integer, Boolean>();
+	private HashMap<Integer, Boolean> hm_all_3 = new HashMap<Integer, Boolean>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,9 +97,7 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 		instance = this;
 		mContext = getActivity();
 		atm = AsyncTaskManager.getInstance(mContext);
-		// 初始化偏好设置
-		shared = AppApplication.getSharedPreferences();
-		
+
 		View view = null;
 		try {
 			view = inflater.inflate(R.layout.fragment_layout_three_2, null);
@@ -97,6 +110,10 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 	}
 
 	private void findViewById(View view) {
+		iv_top_left = (ImageView) view.findViewById(R.id.top_three_title_iv_left);
+		tv_title_1 = (TextView) view.findViewById(R.id.top_three_title_tv_title_1);
+		tv_title_2 = (TextView) view.findViewById(R.id.top_three_title_tv_title_2);
+		tv_title_3 = (TextView) view.findViewById(R.id.top_three_title_tv_title_3);
 		refresh_lv = (PullToRefreshListView) view.findViewById(R.id.fragment_three_2_refresh_lv);
 		rl_loading = (RelativeLayout) view.findViewById(R.id.loading_anim_large_ll_main);
 		rl_no_data = (FrameLayout) view.findViewById(R.id.loading_no_data_fl_main);
@@ -105,6 +122,15 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 	}
 
 	private void initView() {
+		iv_top_left.setVisibility(View.GONE);
+		iv_to_top.setOnClickListener(this);
+		tv_title_1.setText(R.string.events_top_tab_1);
+		tv_title_2.setText(R.string.events_top_tab_2);
+		tv_title_3.setText(R.string.events_top_tab_3);
+		tv_title_1.setOnClickListener(this);
+		tv_title_2.setOnClickListener(this);
+		tv_title_3.setOnClickListener(this);
+		initListView();
 		setAdapter();
 		getSVDatas();
 	}
@@ -112,17 +138,12 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 	private void initListView() {
 		refresh_lv.setPullLoadEnabled(false);
 		refresh_lv.setScrollLoadEnabled(true);
+		refresh_lv.setOnScrollListener(new MyRefreshScrollListener());
 		refresh_lv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 下拉刷新
-				new Handler().postDelayed(new Runnable() {
-
-					@Override
-					public void run() {
-						refresh_lv.onPullDownRefreshComplete();
-					}
-				}, 1000);
+				refreshSVDatas();
 			}
 
 			@Override
@@ -136,13 +157,14 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 						@Override
 						public void run() {
 							refresh_lv.onPullUpRefreshComplete();
-							refresh_lv.setHasMoreData(false);
+							refresh_lv.setHasMoreData(false); //设置不允许加载更多
 						}
 					}, 1000);
 				}
 			}
 		});
 		mListView = refresh_lv.getRefreshableView();
+		mListView.setDivider(null);
 	}
 
 	/**
@@ -153,7 +175,39 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 
 			@Override
 			public void setOnClick(Object entity, int position, int type) {
-
+				if (entity == null) return;
+				ThemeEntity selectEn = (ThemeEntity) entity;
+				// 创建分享数据
+				int uid = StringUtil.getInteger(UserManager.getInstance().getUserId());
+				ShareEntity shareEn = new ShareEntity();
+				shareEn.setTitle(selectEn.getTitle());
+				shareEn.setText(selectEn.getTitle());
+				shareEn.setUrl(AppConfig.URL_COMMON_ARTICLE_SHARE_URL + "?id=" + selectEn.getId() + "&uid=" + uid);
+				shareEn.setImageUrl(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + selectEn.getImgUrl());
+				// 跳转至WebView
+				Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
+				intent.putExtra("shareEn", shareEn);
+				intent.putExtra("postId", selectEn.getId());
+				intent.putExtra("title", selectEn.getTitle());
+				intent.putExtra("lodUrl", AppConfig.URL_COMMON_ARTICLE_URL + "?id=" + selectEn.getId());
+				intent.putExtra("vdoUrl", selectEn.getVdoUrl());
+				startActivity(intent);
+				// 刷新阅读数
+				int newNum = selectEn.getClickNum() + 1;
+				switch (type) {
+					case SpecialAdapter.TYPE_SELECT_LEFT:
+						((ThemeEntity) lv_show_two.get(position).getLeftEn()).setClickNum(newNum);
+						break;
+					case SpecialAdapter.TYPE_SELECT_RIGHT:
+						((ThemeEntity) lv_show_two.get(position).getRightEn()).setClickNum(newNum);
+						break;
+				}
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						lv_adapter.updateAdapter(lv_show_two);
+					}
+				}, 1000);
 			}
 		};
 		lv_adapter = new SpecialAdapter(mContext, lv_show_two, lv_callback);
@@ -176,12 +230,22 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 	 */
 	private void loadSVDatas() {
 		loadType = 1;
-		current_Page = page_type_1;
+		switch (topType) {
+			case TYPE_1: //全部
+				current_Page = page_type_1;
+				break;
+			case TYPE_2: //视频
+				current_Page = page_type_2;
+				break;
+			case TYPE_3: //专题
+				current_Page = page_type_3;
+				break;
+		}
 		requestProductLists();
 	}
 
 	/**
-	 * 加载下拉刷新数据
+	 * 下拉刷新数据
 	 */
 	private void refreshSVDatas() {
 		if (!isLoadOk) return; //加载频率控制
@@ -206,6 +270,80 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 	}
 
 	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.top_three_title_tv_title_1: //全部
+				if (topType == TYPE_1) return;
+				changeTitleStatus(0);
+				topType = TYPE_1;
+				if (lv_all_1 != null && lv_all_1.size() > 0) {
+					addOldListDatas(lv_all_1, page_type_1);
+				}else {
+					page_type_1 = 1;
+					getSVDatas();
+				}
+				break;
+			case R.id.top_three_title_tv_title_2: //视频
+				if (topType == TYPE_2) return;
+				changeTitleStatus(1);
+				topType = TYPE_2;
+				if (lv_all_2 != null && lv_all_2.size() > 0) {
+					addOldListDatas(lv_all_2, page_type_2);
+				}else {
+					page_type_2 = 1;
+					getSVDatas();
+				}
+				break;
+			case R.id.top_three_title_tv_title_3: //专题
+				if (topType == TYPE_3) return;
+				changeTitleStatus(2);
+				topType = TYPE_3;
+				if (lv_all_3 != null && lv_all_3.size() > 0) {
+					addOldListDatas(lv_all_3, page_type_3);
+				}else {
+					page_type_3 = 1;
+					getSVDatas();
+				}
+				break;
+			case R.id.fragment_three_2_iv_to_top: //回顶
+				toTop();
+				break;
+		}
+	}
+
+	private void changeTitleStatus(int index){
+		switch (index) {
+			case 0:
+				tv_title_1.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+				tv_title_2.setTextColor(getResources().getColor(R.color.text_color_assist));
+				tv_title_3.setTextColor(getResources().getColor(R.color.text_color_assist));
+				break;
+			case 1:
+				tv_title_1.setTextColor(getResources().getColor(R.color.text_color_assist));
+				tv_title_2.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+				tv_title_3.setTextColor(getResources().getColor(R.color.text_color_assist));
+				break;
+			case 2:
+				tv_title_1.setTextColor(getResources().getColor(R.color.text_color_assist));
+				tv_title_2.setTextColor(getResources().getColor(R.color.text_color_assist));
+				tv_title_3.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+				break;
+		}
+	}
+
+	/**
+	 * 展示已缓存的数据并至顶
+	 */
+	private void addOldListDatas(List<ThemeEntity> oldLists, int oldPage) {
+		addAllShow(oldLists);
+		current_Page = oldPage;
+		myUpdateAdapter();
+		if (current_Page != 1) {
+			toTop();
+		}
+	}
+
+	@Override
 	public void onResume() {
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
@@ -227,12 +365,29 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 		LogUtil.i(TAG, "onDestroy");
 	}
 
+	class MyRefreshScrollListener implements AbsListView.OnScrollListener {
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			if (firstVisibleItem > 5) {
+				iv_to_top.setVisibility(View.VISIBLE);
+			} else {
+				iv_to_top.setVisibility(View.GONE);
+			}
+		}
+	}
+
 	@Override
 	public Object doInBackground(int requestCode) throws Exception{
 		switch (requestCode) {
 			case AppConfig.REQUEST_SV_GET_SPECIAL_LIST_CODE:
 				mainEn = null;
-				mainEn = sc.getSpecialListDatas(current_Page, Page_Count);
+				mainEn = sc.getSpecialListDatas(topType, current_Page, Page_Count);
 				return mainEn;
 		}
 		return null;
@@ -248,15 +403,34 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 						int total = mainEn.getCountTotal();
 						List<ThemeEntity> lists = mainEn.getMainLists();
 						if (lists != null && lists.size() > 0) {
-							addEntity(lv_all, lists, hm_all);
-							current_Page++;
-							myUpdateAdapter();
-							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all, hm_all);
-								//page_type_1 = 1;
-							}else {
-								addEntity(lv_all, lists, hm_all);
-								page_type_1++;
+							switch (topType) {
+								case TYPE_1:
+									if (loadType == 0) { //下拉
+										updEntity(total, countTotal, lists, lv_all_1, hm_all_1);
+										//page_type_1 = 1;
+									}else {
+										addEntity(lv_all_1, lists, hm_all_1);
+										page_type_1++;
+									}
+									break;
+								case TYPE_2:
+									if (loadType == 0) { //下拉
+										updEntity(total, countTotal, lists, lv_all_2, hm_all_2);
+										//page_type_2 = 1;
+									}else {
+										addEntity(lv_all_2, lists, hm_all_2);
+										page_type_2++;
+									}
+									break;
+								case TYPE_3:
+									if (loadType == 0) { //下拉
+										updEntity(total, countTotal, lists, lv_all_3, hm_all_3);
+										//page_type_3 = 1;
+									}else {
+										addEntity(lv_all_3, lists, hm_all_3);
+										page_type_3++;
+									}
+									break;
 							}
 							countTotal = total;
 							myUpdateAdapter();
@@ -268,7 +442,7 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 					}
 				}else {
 					loadFailHandle();
-					//showServerBusy();
+					CommonTools.showToast(mContext, getString(R.string.toast_server_busy), 1000);
 				}
 				break;
 		}
@@ -282,7 +456,17 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 	}
 
 	private void loadFailHandle() {
-		addAllShow(lv_all);
+		switch (topType) {
+			case TYPE_1:
+				addAllShow(lv_all_1);
+				break;
+			case TYPE_2:
+				addAllShow(lv_all_2);
+				break;
+			case TYPE_3:
+				addAllShow(lv_all_3);
+				break;
+		}
 		myUpdateAdapter();
 	}
 
@@ -303,6 +487,7 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 			}
 			oldDatas.addAll(datas);
 			addAllShow(oldDatas);
+			refresh_lv.setHasMoreData(true); //设置允许加载更多
 		}
 		/*oldDatas.clear();
 		oldMap.clear();
@@ -317,6 +502,9 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
 			if (entity != null && !hashMap.containsKey(entity.getId())) {
+				oldDatas.add(entity);
+				oldDatas.add(entity);
+				oldDatas.add(entity);
 				oldDatas.add(entity);
 			}
 		}
@@ -355,6 +543,7 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 	 */
 	private void toTop() {
 		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 
 	/**
@@ -370,10 +559,17 @@ public class ChildFragmentThree2 extends Fragment implements OnDataListener {
 	 */
 	private void stopAnimation() {
 		isLoadOk = true;
-		refresh_lv.onPullUpRefreshComplete();
 		rl_loading.setVisibility(View.GONE);
+		switch (loadType) {
+			case 0: //下拉刷新
+				refresh_lv.onPullDownRefreshComplete();
+				break;
+			case 1: //加载更多
+				refresh_lv.onPullUpRefreshComplete();
+				break;
+		}
 		if (lv_show.size() == 0) {
-			tv_no_data.setText(getString(R.string.member_no_member));
+			tv_no_data.setText(getString(R.string.events_no_data));
 			rl_no_data.setVisibility(View.VISIBLE);
 			refresh_lv.setVisibility(View.GONE);
 		}else {

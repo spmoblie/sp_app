@@ -79,16 +79,34 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public ThemeEntity getSpecialListDatas(int page, int count) throws Exception {
+	public ThemeEntity getSpecialListDatas(int topType, int page, int count) throws Exception {
 		String uri = AppConfig.URL_COMMON_INDEX_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		params.add(new MyNameValuePair("app", "home"));
+		params.add(new MyNameValuePair("app", "articles"));
+		params.add(new MyNameValuePair("cat_id", String.valueOf(topType)));
 		params.add(new MyNameValuePair("page", String.valueOf(page)));
 		params.add(new MyNameValuePair("size", String.valueOf(count)));
 		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);
 		return JsonParser.getSpecialListDatas(jsonStr);
+	}
+
+	@Override
+	public BaseEntity postComment(int postId, String commentStr) throws Exception {
+		String uri = AppConfig.URL_COMMON_COMMENT_URL;
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("id", String.valueOf(postId));
+		jsonObject.put("type", "1");
+		jsonObject.put("content", commentStr);
+		String jsonStrValue = jsonObject.toString();
+
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("cmt", jsonStrValue));
+		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_POST);
+		String jsonStr = HttpUtil.getString(entity);
+		LogUtil.i("JsonParser", jsonStr);
+		return JsonParser.getCommonResult(jsonStr);
 	}
 
 	@Override

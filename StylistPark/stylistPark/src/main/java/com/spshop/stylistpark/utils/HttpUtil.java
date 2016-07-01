@@ -209,7 +209,7 @@ public class HttpUtil {
 		CookieSyncManager.createInstance(context);
 		CookieManager cookieManager = CookieManager.getInstance();
 		cookieManager.setAcceptCookie(true);
-		cookieManager.removeSessionCookie();
+		//cookieManager.removeSessionCookie(); //在初始化FBSDK的时候会导致Webview延迟加载
         cookieManager.removeAllCookie(); //移除所有Cookie
         Context appCtx = AppApplication.spApp.getApplicationContext();
         String cookies = FileManager.readFileSaveString(appCtx, AppConfig.cookiesFileName, true);

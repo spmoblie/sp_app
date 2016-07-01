@@ -320,17 +320,17 @@
      
     <!-- Text字体常用颜色值 -->
     <color name="text_color_app_bar">#f383b6</color><!-- AppTV状态色 -->
-    <color name="text_color_app_top">#333333</color><!-- AppTop颜色值 -->
-    <!--<color name="text_color_red_0">#ff0000</color>&lt;!&ndash; 红色 &ndash;&gt;-->
-    <!--<color name="text_color_red_1">#E6697D</color>&lt;!&ndash; 淡红色 &ndash;&gt;-->
-    <color name="text_color_red_0">@color/text_color_app_bar</color>
-    <color name="text_color_red_1">@color/text_color_app_bar</color>
+    <color name="text_color_app_top">#333333</color><!-- AppTopTV颜色值 -->
+    <!--<color name="text_color_red_0">#ff0000</color>--><!-- 小红点色值 -->
+    <!--<color name="text_color_red_1">#E6697D</color>--><!-- 货币颜色值 -->
+    <color name="text_color_red_0">@color/text_color_app_bar</color><!-- 小红点色值 -->
+    <color name="text_color_red_1">@color/text_color_app_bar</color><!-- 货币颜色值 -->
     <color name="text_color_white">#ffffff</color><!-- 白色 -->
     <color name="text_color_black">#000000</color><!-- 黑色 -->
     <color name="text_color_title">#333333</color><!-- 标题颜色值:黑色 -->
     <color name="text_color_content">#666666</color><!-- 正文颜色值:深灰 -->
-    <color name="text_color_grey">#797979</color><!-- 辅助颜色值:灰色 -->
     <color name="text_color_assist">#999999</color><!-- 辅助颜色值:淡灰色 -->
+    <color name="text_color_grey">#797979</color><!-- 辅助颜色值:灰色 -->
     <color name="text_color_thin">#cccccc</color><!-- 输入框提示语:浅灰色 -->
     
     

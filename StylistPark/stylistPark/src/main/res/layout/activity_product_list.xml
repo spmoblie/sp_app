@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/product_ll_anim_top"
         android:layout_width="match_parent"
-        android:layout_height="86dp"
+        android:layout_height="@dimen/product_top_anim_height"
         android:orientation="vertical" >
 
         <include layout="@layout/layout_top_search_et" />
@@ -15,7 +15,7 @@
         <LinearLayout
             android:id="@+id/product_ll_search_hot_words"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
+            android:layout_height="@dimen/topbar_group_height"
             android:background="@color/ui_bg_color_gray"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -64,16 +64,15 @@
         <LinearLayout
             android:id="@+id/product_ll_anim_bottom"
             android:layout_width="match_parent"
-            android:layout_height="86dp"
+            android:layout_height="@dimen/product_top_anim_height"
             android:orientation="vertical" >
         </LinearLayout>
 
-        <com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshGridView
-            android:id="@+id/product_refresh_gv"
+        <com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView
+            android:id="@+id/product_refresh_lv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/ui_bg_color_gray" />
+            android:layout_weight="1" />
         
         <TextView 
             android:id="@+id/product_tv_footer_loading"
@@ -93,7 +92,7 @@
         android:id="@+id/product_ll_search_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="@dimen/product_top_anim_height"
         android:background="@color/ui_bg_color_white"
         android:orientation="vertical"
         android:visibility="visible" >

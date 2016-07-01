@@ -17,7 +17,7 @@
     </ListView>
 
     <FrameLayout
-        android:id="@+id/category_brand_rl"
+        android:id="@+id/category_brand_fl"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </FrameLayout>

@@ -204,6 +204,7 @@ public class UiLifecycleHelper {
      * To be called from an Activity or Fragment's onDestroy method.
      */
     public void onDestroy() {
+
     }
 
     /**

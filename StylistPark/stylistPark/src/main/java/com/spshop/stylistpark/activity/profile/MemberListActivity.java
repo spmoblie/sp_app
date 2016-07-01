@@ -48,8 +48,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private int page_type_2 = 1;  //活跃排名加载页
 	private int page_type_3 = 1;  //订单排名加载页
 	private int page_type_4 = 1;  //收入排名加载页
-	private int countTotal = 0; //数集总数量
 	private int topType = TYPE_1; //Top标记
+	private int countTotal = 0; //数集总数量
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean isFrist = true; //识别是否第一次打开页面
 	private boolean isLogined, isSuccess;
@@ -65,11 +65,11 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private MemberListAdapter lv_adapter;
 	
 	private MemberEntity mainEn;
-	private List<MemberEntity> lv_lists_show = new ArrayList<MemberEntity>();
-	private List<MemberEntity> lv_lists_all_1 = new ArrayList<MemberEntity>();
-	private List<MemberEntity> lv_lists_all_2 = new ArrayList<MemberEntity>();
-	private List<MemberEntity> lv_lists_all_3 = new ArrayList<MemberEntity>();
-	private List<MemberEntity> lv_lists_all_4 = new ArrayList<MemberEntity>();
+	private List<MemberEntity> lv_show = new ArrayList<MemberEntity>();
+	private List<MemberEntity> lv_all_1 = new ArrayList<MemberEntity>();
+	private List<MemberEntity> lv_all_2 = new ArrayList<MemberEntity>();
+	private List<MemberEntity> lv_all_3 = new ArrayList<MemberEntity>();
+	private List<MemberEntity> lv_all_4 = new ArrayList<MemberEntity>();
 	private HashMap<String, Boolean> hm_all_1 = new HashMap<String, Boolean>();
 	private HashMap<String, Boolean> hm_all_2 = new HashMap<String, Boolean>();
 	private HashMap<String, Boolean> hm_all_3 = new HashMap<String, Boolean>();
@@ -171,7 +171,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 				
 			}
 		};
-		lv_adapter = new MemberListAdapter(mContext, lv_lists_show, lv_callback);
+		lv_adapter = new MemberListAdapter(mContext, lv_show, lv_callback);
 		mListView.setAdapter(lv_adapter);
 		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
@@ -201,6 +201,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		defaultBtn.setChecked(true);
 		if (isFrist) {
 			onClick(defaultBtn);
+			isFrist = false;
 		}
 	}
 
@@ -241,7 +242,6 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private void requestProductLists() {
 		if (!isLoadOk) return; //加载频率控制
 		isLoadOk = false;
-		isFrist = false;
 		new Handler().postDelayed(new Runnable() {
 			
 			@Override
@@ -261,8 +261,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_1: //最新客户
 			if (!isFrist && topType == TYPE_1) return;
 			topType = TYPE_1;
-			if (lv_lists_all_1 != null && lv_lists_all_1.size() > 0) {
-				addOldListDatas(lv_lists_all_1, page_type_1);
+			if (lv_all_1 != null && lv_all_1.size() > 0) {
+				addOldListDatas(lv_all_1, page_type_1);
 			}else {
 				page_type_1 = 1;
 				getSVDatas();
@@ -271,8 +271,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_2: //活跃排名
 			if (!isFrist && topType == TYPE_2) return;
 			topType = TYPE_2;
-			if (lv_lists_all_2 != null && lv_lists_all_2.size() > 0) {
-				addOldListDatas(lv_lists_all_2, page_type_2);
+			if (lv_all_2 != null && lv_all_2.size() > 0) {
+				addOldListDatas(lv_all_2, page_type_2);
 			}else {
 				page_type_2 = 1;
 				getSVDatas();
@@ -281,8 +281,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_3: //订单排名
 			if (!isFrist && topType == TYPE_3) return;
 			topType = TYPE_3;
-			if (lv_lists_all_3 != null && lv_lists_all_3.size() > 0) {
-				addOldListDatas(lv_lists_all_3, page_type_3);
+			if (lv_all_3 != null && lv_all_3.size() > 0) {
+				addOldListDatas(lv_all_3, page_type_3);
 			}else {
 				page_type_3 = 1;
 				getSVDatas();
@@ -291,15 +291,14 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_4: //收入排名
 			if (!isFrist && topType == TYPE_4) return;
 			topType = TYPE_4;
-			if (lv_lists_all_4 != null && lv_lists_all_4.size() > 0) {
-				addOldListDatas(lv_lists_all_4, page_type_4);
+			if (lv_all_4 != null && lv_all_4.size() > 0) {
+				addOldListDatas(lv_all_4, page_type_4);
 			}else {
 				page_type_4 = 1;
 				getSVDatas();
 			}
 			break;
 		case R.id.show_list_iv_to_top: //回顶
-			iv_to_top.setVisibility(View.GONE);
 			toTop();
 			break;
 		}
@@ -342,11 +341,11 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private void updateAllData() {
 		if (isUpdateAllData) {
 			isUpdateAllData = false;
-			lv_lists_show.clear();
-			lv_lists_all_1.clear();
-			lv_lists_all_2.clear();
-			lv_lists_all_3.clear();
-			lv_lists_all_4.clear();
+			lv_show.clear();
+			lv_all_1.clear();
+			lv_all_2.clear();
+			lv_all_3.clear();
+			lv_all_4.clear();
 			hm_all_1.clear();
 			hm_all_2.clear();
 			hm_all_3.clear();
@@ -393,19 +392,19 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 					if (lists != null && lists.size() > 0) {
 						switch (topType) {
 						case TYPE_1:
-							addEntity(lv_lists_all_1, lists, hm_all_1);
+							addEntity(lv_all_1, lists, hm_all_1);
 							page_type_1++;
 							break;
 						case TYPE_2:
-							addEntity(lv_lists_all_2, lists, hm_all_2);
+							addEntity(lv_all_2, lists, hm_all_2);
 							page_type_2++;
 							break;
 						case TYPE_3:
-							addEntity(lv_lists_all_3, lists, hm_all_3);
+							addEntity(lv_all_3, lists, hm_all_3);
 							page_type_3++;
 							break;
 						case TYPE_4:
-							addEntity(lv_lists_all_4, lists, hm_all_4);
+							addEntity(lv_all_4, lists, hm_all_4);
 							page_type_4++;
 							break;
 						}
@@ -433,16 +432,16 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private void loadFailHandle() {
 		switch (topType) {
 		case TYPE_1: 
-			addAllShow(lv_lists_all_1);
+			addAllShow(lv_all_1);
 			break;
 		case TYPE_2: 
-			addAllShow(lv_lists_all_2);
+			addAllShow(lv_all_2);
 			break;
 		case TYPE_3: 
-			addAllShow(lv_lists_all_3);
+			addAllShow(lv_all_3);
 			break;
 		case TYPE_4: 
-			addAllShow(lv_lists_all_4);
+			addAllShow(lv_all_4);
 			break;
 		}
 		myUpdateAdapter();
@@ -467,15 +466,15 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void addAllShow(List<MemberEntity> showLists) {
-		lv_lists_show.clear();
-		lv_lists_show.addAll(showLists);
+		lv_show.clear();
+		lv_show.addAll(showLists);
 	}
 	
 	private void myUpdateAdapter() {
 		if (current_Page == 1) {
 			toTop();
 		}
-		lv_adapter.updateAdapter(lv_lists_show);
+		lv_adapter.updateAdapter(lv_show);
 		stopAnimation();
 	}
 
@@ -484,6 +483,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void toTop() {
 		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 	
 	@Override
@@ -497,7 +497,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		isLoadOk = true;
 		refresh_lv.onPullUpRefreshComplete();
 		rl_loading.setVisibility(View.GONE);
-		if (lv_lists_show.size() == 0) {
+		if (lv_show.size() == 0) {
 			tv_no_data.setText(getString(R.string.member_no_member));
 			rl_no_data.setVisibility(View.VISIBLE);
 			refresh_lv.setVisibility(View.GONE);
@@ -511,7 +511,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	 * 数量小于一页时停止加载翻页数据
 	 */
 	private boolean isStop(){
-		return lv_lists_show.size() < Page_Count || lv_lists_show.size() == countTotal;
+		return lv_show.size() < Page_Count || lv_show.size() == countTotal;
 	}
 	
 }

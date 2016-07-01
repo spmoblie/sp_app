@@ -77,7 +77,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			mFilter.addAction(AppConfig.RECEIVER_ACTION_HOME_DATA);
 			registerReceiver(myBroadcastReceiver, mFilter);
 			// 检测App版本信息
-			new UpdateAppVersion(instance, true);
+			UpdateAppVersion.getInstance(instance, true);
 
 			findViewById();
 		} catch (Exception e) {
@@ -401,16 +401,16 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 					if (isNewFour) {
 						FragmentTransaction ft = fm.beginTransaction();
 						// 移除旧的fragment
-					ft.remove(fragment);
-					// 换成新的fragment
-					fragment = new ChildFragmentFour();
-					// 添加新fragment时必须用前面获得的tag，这点很重要
-					ft.add(container.getId(), fragment, fragmentTag);
-					ft.attach(fragment);
-					ft.commit();
-				}else {
-					isNewFour = true;
-				}
+						ft.remove(fragment);
+						// 换成新的fragment
+						fragment = new ChildFragmentFour();
+						// 添加新fragment时必须用前面获得的tag，这点很重要
+						ft.add(container.getId(), fragment, fragmentTag);
+						ft.attach(fragment);
+						ft.commit();
+					} else {
+						isNewFour = true;
+					}
 				break;
 			}
 			return fragment;

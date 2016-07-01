@@ -15,8 +15,7 @@
             android:id="@+id/list_radio_common_refresh_lv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/ui_bg_color_gray" />
+            android:layout_weight="1" />
     </LinearLayout>
     
     <include layout="@layout/layout_loading_anim_large" />

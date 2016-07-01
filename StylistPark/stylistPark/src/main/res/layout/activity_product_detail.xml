@@ -140,7 +140,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone"></LinearLayout>
+                        android:visibility="gone" >
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -148,7 +149,8 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
                         android:baselineAligned="false"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone" >
 
                         <RelativeLayout
                             android:layout_width="0dp"
@@ -209,7 +211,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/ui_bg_color_gray"></RelativeLayout>
+                    android:background="@color/ui_bg_color_gray" >
+                </RelativeLayout>
 
                 <ImageView
                     style="@style/set_line_horizontal_bg"
@@ -220,13 +223,11 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp">
+                    android:padding="10dp" >
 
                     <RelativeLayout
                         android:layout_width="52dp"
                         android:layout_height="52dp"
-                        android:layout_marginLeft="10dp"
                         android:background="@drawable/shape_frame_white_gray_4" >
 
                         <ImageView
@@ -252,7 +253,8 @@
                             android:ellipsize="end"
                             android:singleLine="true"
                             android:textColor="@color/text_color_title"
-                            android:textSize="@dimen/text_size_14" />
+                            android:textSize="@dimen/text_size_14"
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:id="@+id/product_detail_tv_brand_country"
@@ -268,12 +270,12 @@
                         android:id="@+id/product_detail_tv_brand_go"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/shape_frame_white_gray_4"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/shape_frame_bg_app_hollow_4"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="@string/product_brand_go"
-                        android:textColor="@color/text_color_content"
+                        android:textColor="@color/text_color_app_bar"
                         android:textSize="@dimen/text_size_14" />
                 </LinearLayout>
 

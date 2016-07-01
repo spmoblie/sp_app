@@ -1,10 +1,5 @@
 package com.spshop.stylistpark.activity.collage;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Arrays;
-import java.util.List;
-
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.ObjectAnimator;
@@ -50,6 +45,11 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.utils.UserTracker;
 import com.spshop.stylistpark.widgets.EditTextBackEvent;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Arrays;
+import java.util.List;
 
 public class GeneratorPhotoEditActivity extends BaseActivity {
 
@@ -415,7 +415,8 @@ public class GeneratorPhotoEditActivity extends BaseActivity {
 				Intent intent = new Intent();
 				intent.setClass(GeneratorPhotoEditActivity.this, MyWebViewActivity.class); //Xu
 				intent.putExtra("title", "搭配测试");
-				intent.putExtra("url", url);
+				intent.putExtra("lodUrl", url);
+				intent.putExtra("vdoUrl", "");
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 	            startActivity(intent);
 			} else if (msg.what == SUMBIT_FAIL) {

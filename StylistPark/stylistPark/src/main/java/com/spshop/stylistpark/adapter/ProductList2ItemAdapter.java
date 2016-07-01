@@ -22,7 +22,7 @@ import com.spshop.stylistpark.utils.StringUtil;
 
 import java.util.List;
 
-public class ShowList2ItemAdapter extends BaseAdapter{
+public class ProductList2ItemAdapter extends BaseAdapter{
 	
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	
@@ -32,7 +32,7 @@ public class ShowList2ItemAdapter extends BaseAdapter{
     private DisplayImageOptions options;
 	private String currStr;
 	
-	public ShowList2ItemAdapter(Context context, List<ListShowTwoEntity> datas, AdapterCallback callback) {
+	public ProductList2ItemAdapter(Context context, List<ListShowTwoEntity> datas, AdapterCallback callback) {
 		this.context = context;
 		this.datas = datas;
 		this.apCallback = callback;
@@ -115,7 +115,7 @@ public class ShowList2ItemAdapter extends BaseAdapter{
 			} else {
 				holder.left_img.setImageResource(R.drawable.bg_img_white);
 			}
-			holder.left_name.setText(leftEn.getName()); //商品名称
+			holder.left_name.setText(leftEn.getBrand() + " " + leftEn.getName()); //商品名称
 			holder.left_sell_price.setText(currStr + leftEn.getSellPrice()); //商品卖价
 			
 			String full_price = leftEn.getFullPrice(); //商品原价
@@ -152,7 +152,7 @@ public class ShowList2ItemAdapter extends BaseAdapter{
 			} else {
 				holder.right_img.setImageResource(R.drawable.bg_img_white);
 			}
-			holder.right_name.setText(rightEn.getName()); //商品名称
+			holder.right_name.setText(leftEn.getBrand() + " " + rightEn.getName()); //商品名称
 			holder.right_sell_price.setText(currStr + rightEn.getSellPrice()); //商品卖价
 			
 			String full_price = rightEn.getFullPrice(); //商品原价
@@ -179,7 +179,7 @@ public class ShowList2ItemAdapter extends BaseAdapter{
 				}
 			});
 		}else {
-			holder.right_main.setVisibility(View.GONE);
+			holder.right_main.setVisibility(View.INVISIBLE);
 		}
 		return convertView;
 	}

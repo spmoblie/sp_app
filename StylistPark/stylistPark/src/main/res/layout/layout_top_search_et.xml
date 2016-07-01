@@ -8,7 +8,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="49.5dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:baselineAligned="false"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
@@ -16,16 +17,18 @@
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:layout_weight="2" >
 
             <ImageView
                 android:id="@+id/search_iv_back"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/desc"
-                android:paddingLeft="15dp"
+                android:paddingLeft="@dimen/title_left_paddingLeft"
                 android:src="@drawable/btn_pressed_back" />
 
             <TextView
@@ -36,7 +39,7 @@
                 android:ellipsize="end"
                 android:text=""
                 android:textColor="@color/text_color_app_top"
-                android:textSize="@dimen/text_size_20"
+                android:textSize="@dimen/title_text_size"
                 android:visibility="gone" />
         </RelativeLayout>
 
@@ -49,7 +52,7 @@
             <EditText
                 android:id="@+id/search_et_search"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="33dp"
                 android:background="@drawable/shape_frame_white_gray_4"
                 android:hint="@string/product_search_et_hint"
                 android:imeOptions="actionSearch"
@@ -83,8 +86,10 @@
         <RelativeLayout
             android:id="@+id/search_rl_search_txt"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:paddingRight="15dp" >
 
             <TextView
@@ -95,7 +100,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/product_search"
                 android:textColor="@color/text_color_app_top"
-                android:textSize="@dimen/text_size_18" />
+                android:textSize="@dimen/title_text_size_right" />
         </RelativeLayout>
     </LinearLayout>
 

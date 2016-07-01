@@ -12,6 +12,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="5dp"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -22,28 +25,64 @@
 
             <ImageView
                 android:id="@+id/list_special_two_left_iv_img"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/desc"
                 android:scaleType="fitXY" />
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/list_special_two_left_tv_name"
+            android:id="@+id/list_special_two_left_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:lines="1"
             android:textColor="@color/text_color_title"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" >
+
+            <ImageView
+                android:id="@+id/list_special_two_left_iv_head"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/desc" />
+
+            <TextView
+                android:id="@+id/list_special_two_left_tv_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/list_special_two_left_iv_head"
+                android:layout_marginLeft="2dp"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/text_size_12"
+                android:textColor="@color/text_color_assist" />
+
+            <TextView
+                android:id="@+id/list_special_two_left_tv_click"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/icon_read"
+                android:drawablePadding="2dp"
+                android:textSize="@dimen/text_size_12"
+                android:textColor="@color/text_color_assist" />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
         android:layout_weight="1"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -60,21 +99,56 @@
 
                 <ImageView
                     android:id="@+id/list_special_two_right_iv_img"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/desc"
                     android:scaleType="fitXY" />
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/list_special_two_right_tv_name"
+                android:id="@+id/list_special_two_right_tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:lines="1"
                 android:textColor="@color/text_color_title"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" >
+
+                <ImageView
+                    android:id="@+id/list_special_two_right_iv_head"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/desc" />
+
+                <TextView
+                    android:id="@+id/list_special_two_right_tv_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/list_special_two_right_iv_head"
+                    android:layout_marginLeft="2dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/text_size_12"
+                    android:textColor="@color/text_color_assist" />
+
+                <TextView
+                    android:id="@+id/list_special_two_right_tv_click"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:drawableLeft="@drawable/icon_read"
+                    android:drawablePadding="2dp"
+                    android:textSize="@dimen/text_size_12"
+                    android:textColor="@color/text_color_assist" />
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

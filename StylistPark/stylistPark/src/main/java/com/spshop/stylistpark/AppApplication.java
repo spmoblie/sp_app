@@ -58,7 +58,7 @@ public class AppApplication extends Application implements OnDataListener{
 	public static HashMap<String, DragImageView> imgHashMap = new HashMap<String, DragImageView>();
 	public static HashMap<String, ProgressBar> barHashMap = new HashMap<String, ProgressBar>();
 	public static HashMap<String, Bitmap> btmHashMap = new HashMap<String, Bitmap>();
-	
+
 	private RequestQueue mRequestQueue;
 	private static AppApplication mInstance;
 	private static SharedPreferences shared;

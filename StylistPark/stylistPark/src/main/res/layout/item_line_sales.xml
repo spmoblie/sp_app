@@ -9,8 +9,8 @@
     <ImageView
         android:id="@+id/home_line_sales_item_iv_logo"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="fitXY"/>
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

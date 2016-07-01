@@ -105,8 +105,8 @@
     <string name="title_category">分類</string>
     <string name="title_screen">篩選</string>
     <string name="title_qr_code_scan">二維碼掃描</string>
+    <string name="title_fragment_three">專題活動</string>
     <string name="title_fragment_four">我的購物車</string>
-    <string name="title_fragment_five">我的名尚</string>
     <string name="title_product_detail">商品詳情</string>
     <string name="title_login">用戶登入</string>
     <string name="title_register">郵箱注冊</string>
@@ -146,7 +146,7 @@
     <string name="product_cash_delivery">貨到付款</string>
     <string name="product_brand_go">進入品牌</string>
     <string name="product_play_video">视频</string>
-    <string name="product_collection">收藏</string>
+    <string name="product_collection">關注</string>
     <string name="product_cart">購物車</string>
     <string name="product_call">客服</string>
     <string name="product_add_cart">加入購物車</string>
@@ -162,6 +162,14 @@
     <string name="cart_goods_num">共%1$d件商品</string>
     <string name="cart_buy_now">立即購買</string>
     <string name="cart_error_data_null">數據同步出現異常！請下拉刷新購物車商品！</string>
+
+    <!-- Events -->
+    <string name="events_top_tab_1">全部</string>
+    <string name="events_top_tab_2">視頻</string>
+    <string name="events_top_tab_3">專題</string>
+    <string name="events_no_data">暫無發現，\n可能是專題欄目出錯啦！</string>
+    <string name="events_comment_ok">評論已發布</string>
+    <string name="events_comment_input">請輸入評論內容</string>
     
     <!-- Member page -->
     <string name="member_top_tab_1">最新客戶</string>
@@ -342,7 +350,7 @@
 	<string name="share_msg_error">分享出錯</string>
 	<string name="share_msg_cancel">分享取消</string>
 	<string name="share_msg_copy_link_ok">鏈接已復制</string>
-	<string name="share_msg_entity_error">分享參數出錯，請重新打開商品頁面。</string>
+	<string name="share_msg_entity_error">分享參數出錯，請重新加載頁面。</string>
 	
 	<!-- Address -->
     <string name="address_default">設爲默認地址</string>
@@ -375,7 +383,7 @@
    	<string name="profile_gender_female">女</string>
    	<string name="profile_gender_confidential">保密</string>
    	<string name="profile_birthday">生日</string>
-    <string name="profile_collection">收藏商品</string>
+    <string name="profile_collection">我的關注</string>
     <string name="profile_history">浏覽記錄</string>
     <string name="profile_my_order">我的訂單</string>
     <string name="profile_check_all_order">查看全部訂單</string>
@@ -386,7 +394,7 @@
     <string name="profile_wait_receive">待收貨</string>
     <string name="profile_repair_return">退換貨</string>
     <string name="profile_my_address">收貨地址</string>
-    <string name="profile_account_money">賬戶余額</string>
+    <string name="profile_account_money">我的錢包</string>
     <string name="profile_bonus">我的紅包</string>
     <string name="profile_my_member">我的會員</string>
     <string name="profile_check_my_member">查看我的會員</string>

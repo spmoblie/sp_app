@@ -2,6 +2,7 @@ package com.spshop.stylistpark.activity.common;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,23 +26,27 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
-import com.spshop.stylistpark.adapter.ShowList2ItemAdapter;
+import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
 import com.spshop.stylistpark.entity.BrandEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.entity.ShareEntity;
+import com.spshop.stylistpark.image.AsyncImageLoader;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.spshop.stylistpark.widgets.listener.OnLoadMoreListener;
-import com.spshop.stylistpark.widgets.listener.OnMyScrollListener;
+import com.spshop.stylistpark.utils.UserManager;
+import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
+import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.spshop.stylistpark.widgets.stikkyheader.AnimatorBuilder;
 import com.spshop.stylistpark.widgets.stikkyheader.HeaderStikkyAnimator;
 import com.spshop.stylistpark.widgets.stikkyheader.StikkyHeader;
 import com.spshop.stylistpark.widgets.stikkyheader.StikkyHeaderBuilder;
 import com.tencent.stat.StatService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,9 +55,10 @@ import java.util.List;
  * "有头部跟随滑动的商品展示列表"
  */
 @SuppressLint("UseSparseArrays")
-public class ShowListHeadActivity extends BaseActivity implements OnClickListener{
+public class ShowListHeadActivity extends BaseActivity implements OnClickListener {
 	
 	private static final String TAG = "ShowListHeadActivity";
+	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	public static ShowListHeadActivity instance = null;
 	public boolean isUpdate = false;
 	public static final int PAGE_ROOT_CODE_1 = 1001; //CategoryActivity 或 ProductDetailActivity 或 ChildFragmentOne
@@ -72,31 +78,35 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private boolean isLoadOk = true;
 	private boolean isFrist = true; //识别是否第一次打开页面
 	
-	private LinearLayout ll_stikky_main, ll_favourable_time, ll_foot_main;
+	private LinearLayout ll_stikky_main, ll_favourable_time;
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
 	private Button btn_screen;
 	private ImageView iv_to_top, iv_brand_img, iv_brand_logo;
-	private TextView tv_brand_name, tv_brand_desc, tv_unfold, tv_radio_other, tv_footer, tv_page_num;
+	private TextView tv_brand_name, tv_brand_desc, tv_unfold, tv_radio_other, tv_page_num;
 	private TextView tv_favourable_title, tv_time_day, tv_time_hour, tv_time_minute, tv_time_second;
 	private Drawable rank_up, rank_down, rank_normal, select_yes, select_no;
 	private MyCountDownTimer mcdt;
 	private StikkyHeader lv_header;
+	private PullToRefreshListView refresh_lv;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
-	private ShowList2ItemAdapter lv_two_adapter;
+	private ProductList2ItemAdapter lv_two_adapter;
 	private DisplayImageOptions options;
-	
+	private AsyncImageLoader asyncImageLoader;
+
 	private int pageCode = PAGE_ROOT_CODE_1;
 	private int brandId = 0;
 	private int selectId = 0;
-	private int logo_height, other_height, desc_max_height, desc_min_height, desc_lines;
+	private int logo_height, time_height, group_height, spaceHeight;
+	private int other_height, desc_max_height, desc_min_height, desc_lines;
 	private boolean isGone = true;
 	private String selectName = "";
+	private String logoImgUrl, logoImgPath;
 	private BrandEntity brandEn;
 	private SelectListEntity selectEn;
 	private ProductListEntity product_MainEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
-	private List<ProductListEntity> lv_lists_show = new ArrayList<ProductListEntity>();
+	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_lists_all_1 = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_lists_all_3_DESC = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_lists_all_3_ASC = new ArrayList<ProductListEntity>();
@@ -106,6 +116,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		isInitShare = true;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_list);
 		
@@ -116,6 +127,9 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		pageCode = getIntent().getIntExtra("pageCode", PAGE_ROOT_CODE_1);
 		brandId = getIntent().getIntExtra("brandId", 0);
 
+		time_height = getResources().getDimensionPixelSize(R.dimen.favourable_time_height);
+		group_height = getResources().getDimensionPixelSize(R.dimen.topbar_group_height);
+		spaceHeight = CommonTools.dip2px(mContext, 15);
 		options = AppApplication.getImageOptions(0, 0);
 		
 		findViewById();
@@ -123,7 +137,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	}
 	
 	private void findViewById() {
-		mListView = (ListView) findViewById(R.id.show_list_listView);
+		refresh_lv = (PullToRefreshListView) findViewById(R.id.show_list_listView);
 		ll_stikky_main = (LinearLayout) findViewById(R.id.show_list_ll_stikky_main);
 		ll_favourable_time = (LinearLayout) findViewById(R.id.show_list_ll_favourable_time);
 		btn_1 = (RadioButton) findViewById(R.id.topbar_radio_rb_1);
@@ -144,9 +158,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		tv_time_second = (TextView) findViewById(R.id.show_list_tv_time_second);
 		tv_radio_other = (TextView) findViewById(R.id.topbar_radio_tv_other);
 		tv_page_num = (TextView) findViewById(R.id.show_list_tv_page_num);
-		tv_footer = (TextView) findViewById(R.id.loading_anim_samll_tv_show);
-		ll_foot_main = (LinearLayout) findViewById(R.id.loading_anim_samll_ll_main);
-		
+
 		rank_up = getResources().getDrawable(R.drawable.icon_rank_up);
 		rank_up.setBounds(0, 0, rank_up.getMinimumWidth(), rank_up.getMinimumHeight());
 		rank_down = getResources().getDrawable(R.drawable.icon_rank_down);
@@ -161,19 +173,80 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private void initView() {
 		iv_to_top.setOnClickListener(this);
-		if (pageCode == PAGE_ROOT_CODE_1) {
-			// 设置头部跟随ListView滑动
-			lv_header = StikkyHeaderBuilder.stickTo(mListView)
-					.setHeader(ll_stikky_main)
-					.minHeightHeaderPixel(CommonTools.dip2px(mContext, 36))
-					.animator(new ParallaxStikkyAnimator())
-					.setOnLoadListener(new MyOnLoadListener())
-					.setOnMyScrollListener(new MyScrollListener()).build();
-		}
 		// 初始化组件
+		initListView();
 		initRaidoGroup();
 		setAdapter();
 		setDefaultRadioButton();
+	}
+
+	private void initListView() {
+		refresh_lv.setPullRefreshEnabled(false);
+		refresh_lv.setPullLoadEnabled(false);
+		refresh_lv.setScrollLoadEnabled(true);
+		refresh_lv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+				// 下拉刷新
+				new Handler().postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						refresh_lv.onPullDownRefreshComplete();
+					}
+				}, 1000);
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+				// 加载更多
+				tv_page_num.setVisibility(View.VISIBLE);
+				int page_num = lv_show.size()/Page_Count;
+				if (lv_show.size()%Page_Count > 0) {
+					page_num++;
+				}
+				int page_total = goodsTotal/Page_Count;
+				if (goodsTotal%Page_Count > 0) {
+					page_total++;
+				}
+				tv_page_num.setText(page_num + "/" + page_total);
+				new Handler().postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						tv_page_num.setVisibility(View.GONE);
+					}
+				}, 2000);
+
+				if (!isStop()) {
+					loadSVDatas();
+				}else {
+					new Handler().postDelayed(new Runnable() {
+
+						@Override
+						public void run() {
+							refresh_lv.onPullUpRefreshComplete();
+							refresh_lv.setHasMoreData(false); //设置不允许加载更多
+						}
+					}, 1000);
+				}
+			}
+		});
+		mListView = refresh_lv.getRefreshableView();
+		mListView.setDivider(null);
+		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
+
+		if (pageCode == PAGE_ROOT_CODE_1) {
+			// 设置头部跟随ListView滑动
+			lv_header = StikkyHeaderBuilder.stickTo(refresh_lv, mListView)
+					.setHeader(ll_stikky_main)
+					.minHeightHeaderPixel(group_height)
+					.animator(new ParallaxStikkyAnimator())
+					//.setOnLoadListener(new MyOnLoadListener())
+					.setOnMyScrollListener(new OnMyScrollListener()).build();
+		} else {
+			refresh_lv.setOnScrollListener(new OnMyScrollListener());
+		}
 	}
 
 	private void initRaidoGroup() {
@@ -193,7 +266,9 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private void setHeadView() {
 		if (brandEn != null) {
-			setTitle(brandEn.getName());
+			//setTitle(brandEn.getName());
+			setTitleLogo(options, IMAGE_URL_HTTP + brandEn.getLogoUrl());
+			setBtnRight(R.drawable.topbar_icon_share);
 			selectEn = brandEn.getSelectEn();
 			endTime = brandEn.getEndTime();
 			if (endTime > 0) {
@@ -207,9 +282,11 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 				});
 				mcdt.start(); //开始倒计时
 			}
-			ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + brandEn.getDefineUrl(), iv_brand_img, options);
-			ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + brandEn.getLogoUrl(), iv_brand_logo, options);
-			tv_brand_name.setText(brandEn.getName());
+			logoImgUrl = IMAGE_URL_HTTP + brandEn.getDefineUrl();
+			ImageLoader.getInstance().displayImage(logoImgUrl, iv_brand_img, options);
+			loadShareImg();
+			//ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + brandEn.getLogoUrl(), iv_brand_logo, options);
+			//tv_brand_name.setText(brandEn.getName());
 			tv_brand_desc.setText(brandEn.getDesc());
 		}
 		new Handler().postDelayed(new Runnable() {
@@ -217,13 +294,12 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			public void run() {
 				logo_height = iv_brand_img.getHeight();
 				if (endTime > 0) {
-					ll_favourable_time.setVisibility(View.VISIBLE); //height = 64
-					other_height = CommonTools.dip2px(mContext, 100);
+					ll_favourable_time.setVisibility(View.VISIBLE); //height = 64dp
+					other_height = time_height + group_height;
 				}else {
 					ll_favourable_time.setVisibility(View.GONE);
-					other_height = CommonTools.dip2px(mContext, 36);
+					other_height = group_height;
 				}
-				int spaceHeight = CommonTools.dip2px(mContext, 15);
 				desc_lines = tv_brand_desc.getLineCount();
 				desc_min_height = 0;
 				if (brandEn == null || StringUtil.isNull(brandEn.getDesc())) {
@@ -258,6 +334,21 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			}
 
 		});
+	}
+
+	private void loadShareImg() {
+		if (!StringUtil.isNull(logoImgUrl)) {
+			asyncImageLoader = AsyncImageLoader.getInstance(mContext, new AsyncImageLoader.AsyncImageLoaderCallback() {
+
+				@Override
+				public void imageLoaded(String path, File saveFile, Bitmap bm) {
+					if (saveFile != null) {
+						logoImgPath = saveFile.getPath();
+					}
+				}
+			});
+			asyncImageLoader.loadImage(false, logoImgUrl, 0);
+		}
 	}
 
 	private void showOrGoneDesc() {
@@ -299,9 +390,8 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 				startActivity(intent);
 			}
 		};
-		lv_two_adapter = new ShowList2ItemAdapter(mContext, lv_show_two, lv_callback);
+		lv_two_adapter = new ProductList2ItemAdapter(mContext, lv_show_two, lv_callback);
 		mListView.setAdapter(lv_two_adapter);
-		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
 
 	/**
@@ -323,6 +413,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		defaultBtn.setChecked(true);
 		if (isFrist) {
 			onClick(defaultBtn);
+			isFrist = false;
 		}
 	}
 
@@ -332,7 +423,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private void getSVDatas() {
 		loadType = -1;
 		current_Page = 1;
-		ll_foot_main.setVisibility(View.GONE);
 		startAnimation();
 		sendRequestCode();
 	}
@@ -342,7 +432,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	 */
 	private void loadSVDatas() {
 		loadType = 1;
-		ll_foot_main.setVisibility(View.VISIBLE);
 		switch (topType) {
 		case 1: //默认
 			current_Page = default_Page;
@@ -378,7 +467,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private void requestProductLists() {
 		if (!isLoadOk) return; //加载频率控制
 		isLoadOk = false;
-		isFrist = false;
 		if (current_Page == 1) {
 			new Handler().postDelayed(new Runnable() {
 				
@@ -433,6 +521,32 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void OnListenerRight() {
+		super.OnListenerRight();
+		showShareView();
+	}
+
+	private void showShareView() {
+		if (mShareView != null && brandEn != null) {
+			if (mShareView.isShowing()) {
+				mShareView.showShareLayer(mContext, false);
+				return;
+			}
+			int uid = StringUtil.getInteger(UserManager.getInstance().getUserId());
+			ShareEntity shareEn = new ShareEntity();
+			shareEn.setTitle(brandEn.getName());
+			shareEn.setText(brandEn.getDesc());
+			shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "brand.php?id=" + brandEn.getBrandId() + "&uid=" + uid);
+			shareEn.setImageUrl(logoImgUrl);
+			shareEn.setImagePath(logoImgPath);
+			mShareView.setShareEntity(shareEn);
+			mShareView.showShareLayer(mContext, true);
+		}else {
+			showShareError();
+		}
 	}
 
 	@Override
@@ -502,8 +616,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			}
 			break;
 		case R.id.show_list_iv_to_top: //回顶
-			iv_to_top.setVisibility(View.GONE);
-			toGridViewTop();
+			toTop();
 			break;
 		}
 	}
@@ -516,7 +629,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		current_Page = oldPage;
 		myUpdateAdapter();
 		if (current_Page != 1) {
-			toGridViewTop();
+			toTop();
 		}
 	}
 	
@@ -562,6 +675,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
         StatService.onPause(this);
+		// 销毁对象
+		if (asyncImageLoader != null) {
+			asyncImageLoader.clearInstance();
+		}
 	}
 
 	@Override
@@ -573,39 +690,13 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			mcdt.cancel();
 		}
 	}
-	
-	class MyOnLoadListener implements OnLoadMoreListener{
+
+	class OnMyScrollListener implements AbsListView.OnScrollListener {
 
 		@Override
-		public void onLoadMore(View mFooterView_TV) {
-			tv_page_num.setVisibility(View.VISIBLE);
-        	int page_num = lv_lists_show.size()/Page_Count;
-        	if (lv_lists_show.size()%Page_Count > 0) {
-				page_num++;
-			}
-        	int page_total = goodsTotal/Page_Count;
-        	if (goodsTotal%Page_Count > 0) {
-        		page_total++;
-			}
-        	tv_page_num.setText(page_num + "/" + page_total);
-        	new Handler().postDelayed(new Runnable() {
-				
-				@Override
-				public void run() {
-					tv_page_num.setVisibility(View.GONE);
-				}
-			}, 2000);
-        	
-        	if (isStop()) {
-        		tv_footer.setText(getString(R.string.loading_no_more));
-			}else {
-				tv_footer.setText(getString(R.string.loading_strive_loading));
-				loadSVDatas();
-			}
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+
 		}
-	}
-	
-	class MyScrollListener implements OnMyScrollListener {
 
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -748,23 +839,23 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void addAllShow(List<ProductListEntity> showLists) {
-		lv_lists_show.clear();
-		lv_lists_show.addAll(showLists);
+		lv_show.clear();
+		lv_show.addAll(showLists);
 	}
 	
 	private void myUpdateAdapter() {
 		if (current_Page == 1) {
-			toGridViewTop();
+			toTop();
 		}
 		lv_show_two.clear();
 		ListShowTwoEntity lstEn = null;
-		for (int i = 0; i < lv_lists_show.size(); i++) {
-			ProductListEntity en = lv_lists_show.get(i);
+		for (int i = 0; i < lv_show.size(); i++) {
+			ProductListEntity en = lv_show.get(i);
 			if (i%2 == 0) {
 				lstEn = new ListShowTwoEntity();
 				lstEn.setLeftEn(en);
-				if (i+1 < lv_lists_show.size()) {
-					lstEn.setRightEn(lv_lists_show.get(i+1));
+				if (i+1 < lv_show.size()) {
+					lstEn.setRightEn(lv_show.get(i+1));
 				}
 				lv_show_two.add(lstEn);
 			}
@@ -776,23 +867,23 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	/**
 	 * 滚动到GridView顶部
 	 */
-	private void toGridViewTop() {
+	private void toTop() {
 		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 	
 	@Override
 	protected void stopAnimation() {
 		super.stopAnimation();
 		isLoadOk = true;
-		ll_foot_main.setVisibility(View.GONE);
+		refresh_lv.onPullUpRefreshComplete();
 	}
 	
 	/**
 	 * 商品数小于一页时停止加载翻页数据
 	 */
 	private boolean isStop(){
-		LogUtil.i(TAG, "current_Page = " + current_Page + " show size = " + lv_lists_show.size() + " goodsTotal = " + goodsTotal);
-		return lv_lists_show.size() < Page_Count || lv_lists_show.size() == goodsTotal;
+		return lv_show.size() < Page_Count || lv_show.size() == goodsTotal;
 	}
 	
 }

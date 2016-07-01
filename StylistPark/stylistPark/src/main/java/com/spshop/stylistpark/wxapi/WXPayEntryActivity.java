@@ -21,7 +21,7 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.cart.PostOrderActivity;
-import com.spshop.stylistpark.activity.home.CategoryActivity;
+import com.spshop.stylistpark.activity.category.CategoryActivity;
 import com.spshop.stylistpark.activity.profile.ChildFragmentFive;
 import com.spshop.stylistpark.activity.profile.OrderDetailActivity;
 import com.spshop.stylistpark.activity.profile.OrderListActivity;

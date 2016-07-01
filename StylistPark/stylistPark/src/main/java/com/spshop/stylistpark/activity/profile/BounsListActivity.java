@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -128,13 +126,6 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initRaidoGroup() {
-		RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		params.setMargins(40, 0, 40, 0);
-		btn_1.setLayoutParams(params);
-		btn_2.setLayoutParams(params);
-		btn_3.setLayoutParams(params);
-		btn_4.setLayoutParams(params);
-		
 		btn_1.setText(getString(R.string.bouns_top_tab_1));
 		btn_1.setOnClickListener(this);
 		btn_2.setText(getString(R.string.bouns_top_tab_2));
@@ -240,6 +231,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		defaultBtn.setChecked(true);
 		if (isFrist) {
 			onClick(defaultBtn);
+			isFrist = false;
 		}
 	}
 
@@ -279,7 +271,6 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	private void requestProductLists() {
 		if (!isLoadOk) return; //加载频率控制
 		isLoadOk = false;
-		isFrist = false;
 		new Handler().postDelayed(new Runnable() {
 			
 			@Override

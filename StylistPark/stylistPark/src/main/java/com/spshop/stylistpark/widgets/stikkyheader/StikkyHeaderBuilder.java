@@ -5,11 +5,12 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.spshop.stylistpark.widgets.listener.OnLoadMoreListener;
-import com.spshop.stylistpark.widgets.listener.OnMyScrollListener;
+import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 
 public abstract class StikkyHeaderBuilder {
 
@@ -19,15 +20,15 @@ public abstract class StikkyHeaderBuilder {
     protected int mMinHeight;
     protected HeaderAnimator mAnimator;
     protected OnLoadMoreListener mLoadMore;
-    protected OnMyScrollListener mScroll;
+    protected AbsListView.OnScrollListener mScroll;
 
     protected StikkyHeaderBuilder(final Context context) {
         mContext = context;
         mMinHeight = 0;
     }
 
-    public static ListViewBuilder stickTo(final ListView listView) {
-        return new ListViewBuilder(listView);
+    public static ListViewBuilder stickTo(final PullToRefreshListView refreshListView, final ListView listView) {
+        return new ListViewBuilder(refreshListView, listView);
     }
 
     public static RecyclerViewBuilder stickTo(final RecyclerView recyclerView) {
@@ -53,7 +54,7 @@ public abstract class StikkyHeaderBuilder {
     	return this;
     }
     
-    public StikkyHeaderBuilder setOnMyScrollListener(final OnMyScrollListener myScroll) {
+    public StikkyHeaderBuilder setOnMyScrollListener(final AbsListView.OnScrollListener myScroll) {
     	mScroll = myScroll;
     	return this;
     }
@@ -77,10 +78,12 @@ public abstract class StikkyHeaderBuilder {
 
     public static class ListViewBuilder extends StikkyHeaderBuilder {
 
+        private PullToRefreshListView mRefreshListView;
         private final ListView mListView;
 
-        protected ListViewBuilder(final ListView listView) {
+        protected ListViewBuilder(final PullToRefreshListView refreshListView, final ListView listView) {
             super(listView.getContext());
+            mRefreshListView = refreshListView;
             mListView = listView;
         }
         
@@ -96,7 +99,7 @@ public abstract class StikkyHeaderBuilder {
                 mAnimator = new HeaderStikkyAnimator();
             }
 
-            return new StikkyHeaderListView(mContext, mListView, mHeader, mLoadMore, mScroll, mMinHeight, mAnimator);
+            return new StikkyHeaderListView(mContext, mRefreshListView, mListView, mHeader, mLoadMore, mScroll, mMinHeight, mAnimator);
         }
     }
 

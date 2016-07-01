@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/topbar_radio_ll_main"
     android:layout_width="match_parent"
-    android:layout_height="36dp"
+    android:layout_height="@dimen/topbar_group_height"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35.5dp"
+        android:layout_height="@dimen/topbar_group_height_child"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 

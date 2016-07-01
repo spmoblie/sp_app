@@ -9,6 +9,8 @@
         android:id="@+id/item_list_balance_tv_title"
         style="@style/setting_lay_text_title"
         android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lines="1"
         android:layout_centerVertical="false" />
 
     <TextView 

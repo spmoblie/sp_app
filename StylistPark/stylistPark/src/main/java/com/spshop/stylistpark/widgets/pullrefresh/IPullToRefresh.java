@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.widgets.pullrefresh;
 
-import android.content.Context;
-import android.util.AttributeSet;
 import android.view.View;
 
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;

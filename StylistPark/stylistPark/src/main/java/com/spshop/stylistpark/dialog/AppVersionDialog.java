@@ -1,11 +1,5 @@
 package com.spshop.stylistpark.dialog;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,6 +26,12 @@ import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.FileManager;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.StringUtil;
+
+import org.apache.http.HttpEntity;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AppVersionDialog {

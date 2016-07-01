@@ -7,16 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -32,8 +29,9 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.common.SelectListActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
-import com.spshop.stylistpark.adapter.ProductGridAdapter;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
+import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
+import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.utils.CommonTools;
@@ -41,8 +39,7 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.ScrollViewListView;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
-import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
-import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshGridView;
+import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
@@ -74,7 +71,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private String attrStr = ""; //筛选的其它类型Value字符串
 	private boolean btn_3_flag = true; //价格排序控制符(true:价格升序/false:价格降序)
 	private boolean isLoadOk = true;
-	private boolean isFooter = false;
 	private boolean isFrist = true; //识别是否第一次打开页面
 	
 	private RelativeLayout rl_search_et, rl_search_txt, rl_search_line;
@@ -85,17 +81,17 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private Button btn_screen, btn_words_clear;
 	private EditText et_search;
 	private ImageView iv_top_back, iv_search_clear, iv_to_top;
-	private TextView tv_footer, tv_page_num, tv_title, tv_words_title;
+	private TextView tv_page_num, tv_title, tv_words_title;
 	private TextView tv_words_1, tv_words_2, tv_words_3, tv_words_4;
 	private Drawable rank_up, rank_down, rank_normal;
 	private ScrollView sv_words_history;
 	private ScrollViewListView lv_words_history;
 	private SelectListAdapter lv_words_adapter;
 	private AdapterCallback apCallback;
-	private PullToRefreshGridView refresh_gv;
-	private GridView mGridView;
-	private AdapterCallback gv_callback;
-	private ProductGridAdapter gv_adapter;
+	private PullToRefreshListView refresh_lv;
+	private ListView mListView;
+	private AdapterCallback lv_callback;
+	private ProductList2ItemAdapter lv_two_adapter;
 	
 	private int mFirstVisibleItem = 0;
 	private int typeId = 0; //0:搜索页面  非0:商品列表
@@ -104,7 +100,8 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private String wordsHistoryStr = "";
 	private SelectListEntity screen_MainEn;
 	private ProductListEntity product_MainEn;
-	private List<ProductListEntity> lv_lists_show = new ArrayList<ProductListEntity>();
+	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
+	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_lists_all_1 = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_lists_all_3_DESC = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_lists_all_3_ASC = new ArrayList<ProductListEntity>();
@@ -135,8 +132,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		btn_4 = (RadioButton) findViewById(R.id.topbar_radio_rb_4);
 		btn_screen = (Button) findViewById(R.id.topbar_radio_btn_screen);
 		btn_words_clear = (Button) findViewById(R.id.button_confirm_btn_one);
-		refresh_gv = (PullToRefreshGridView) findViewById(R.id.product_refresh_gv);
-		tv_footer = (TextView) findViewById(R.id.product_tv_footer_loading);
+		refresh_lv = (PullToRefreshListView) findViewById(R.id.product_refresh_lv);
 		sv_words_history = (ScrollView) findViewById(R.id.scroll_list_btn_sv);
 		lv_words_history = (ScrollViewListView) findViewById(R.id.scroll_list_btn_lv);
 		iv_top_back = (ImageView) findViewById(R.id.search_iv_back);
@@ -208,7 +204,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		}
 		
 		initRaidoGroup();
-		initGridView();
+		initListView();
 		setAdapter();
 	}
 
@@ -317,150 +313,73 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		btn_screen.setText(getString(R.string.product_top_tab_4));
 	}
 
-	private void initGridView() {
-		refresh_gv.setOnRefreshListener(new OnRefreshListener<GridView>() {
+	private void initListView() {
+		refresh_lv.setPullLoadEnabled(false);
+		refresh_lv.setScrollLoadEnabled(true);
+		refresh_lv.setOnScrollListener(new OnMyScrollListener());
+		refresh_lv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
 			@Override
-			public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 下拉刷新
 				refreshSVDatas();
 			}
 
 			@Override
-			public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
-				// 加载更多(GridView无效)
-			}
-		});
-		mGridView = refresh_gv.getRefreshableView();
-		mGridView.setNumColumns(2);
-		mGridView.setHorizontalSpacing(10);
-		mGridView.setVerticalSpacing(10);
-		mGridView.setGravity(Gravity.CENTER_HORIZONTAL);
-		mGridView.setOnScrollListener(new OnScrollListener() {
+			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+				// 加载更多
+				tv_page_num.setVisibility(View.VISIBLE);
+				int page_num = lv_show.size() / Page_Count;
+				if (lv_show.size() % Page_Count > 0) {
+					page_num++;
+				}
+				int page_total = goodsTotal / Page_Count;
+				if (goodsTotal % Page_Count > 0) {
+					page_total++;
+				}
+				tv_page_num.setText(page_num + "/" + page_total);
+				new Handler().postDelayed(new Runnable() {
 
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				if (isFooter && scrollState == SCROLL_STATE_IDLE) {
-					// 加载更多
-					tv_page_num.setVisibility(View.VISIBLE);
-					int page_num = lv_lists_show.size() / Page_Count;
-					if (lv_lists_show.size() % Page_Count > 0) {
-						page_num++;
+					@Override
+					public void run() {
+						tv_page_num.setVisibility(View.GONE);
 					}
-					int page_total = goodsTotal / Page_Count;
-					if (goodsTotal % Page_Count > 0) {
-						page_total++;
-					}
-					tv_page_num.setText(page_num + "/" + page_total);
+				}, 2000);
+
+				if (!isStop()) {
+					loadSVDatas();
+				}else {
 					new Handler().postDelayed(new Runnable() {
 
 						@Override
 						public void run() {
-							tv_page_num.setVisibility(View.GONE);
+							refresh_lv.onPullUpRefreshComplete();
+							refresh_lv.setHasMoreData(false); //设置不允许加载更多
 						}
-					}, 2000);
-
-					tv_footer.setVisibility(View.VISIBLE);
-					if (isStop()) {
-						tv_footer.setText(getString(R.string.loading_no_more));
-						new Handler().postDelayed(new Runnable() {
-
-							@Override
-							public void run() {
-								tv_footer.setVisibility(View.GONE);
-							}
-						}, 1000);
-					} else {
-						tv_footer.setText(getString(R.string.loading_strive_loading));
-						loadSVDatas();
-					}
+					}, 1000);
 				}
 			}
-
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-				if (firstVisibleItem + visibleItemCount == totalItemCount) {
-					isFooter = true;
-				} else {
-					isFooter = false;
-					if (mFirstVisibleItem > firstVisibleItem) { //上滑
-						if (mFirstVisibleItem > firstVisibleItem + 10) {
-							mFirstVisibleItem = firstVisibleItem;
-							upMove(firstVisibleItem);
-						} else {
-							mFirstVisibleItem++;
-						}
-					} else if (mFirstVisibleItem < firstVisibleItem) { //下滑
-						if (mFirstVisibleItem < firstVisibleItem - 10) {
-							mFirstVisibleItem = firstVisibleItem;
-							downMove(firstVisibleItem);
-						} else {
-							mFirstVisibleItem--;
-						}
-					}
-				}
-			}
-			
 		});
-	}
-	
-	/**
-	 * 向上滑动效果
-	 */
-	private void upMove(int firstVisibleItem) {
-		if (headStatus && firstVisibleItem < goodsTotal - Page_Count / 2) {
-			createAnimation(ll_top, ll_bottom, ll_other);
-			ll_top.clearAnimation();
-			ll_top.startAnimation(headVISIBLE);
-			ll_other.clearAnimation();
-			ll_other.startAnimation(headVISIBLE);
-			headStatus = false;
-		}
-		if (firstVisibleItem > 10) {
-			iv_to_top.setVisibility(View.VISIBLE);
-		} else {
-			iv_to_top.setVisibility(View.GONE);
-		}
-	}
-
-	/**
-	 * 向下滑动效果
-	 */
-	private void downMove(int firstVisibleItem) {
-		if (goodsTotal > Page_Count && !headStatus && firstVisibleItem > 6 
-				&& firstVisibleItem < goodsTotal - Page_Count / 2) {
-			createAnimation(ll_top, ll_bottom, ll_other);
-			ll_top.clearAnimation();
-			ll_top.startAnimation(headGONE);
-			ll_other.clearAnimation();
-			ll_other.startAnimation(headGONE);
-			headStatus = true;
-		}
-		if (firstVisibleItem > 10) {
-			iv_to_top.setVisibility(View.VISIBLE);
-		} else {
-			iv_to_top.setVisibility(View.GONE);
-		}
+		mListView = refresh_lv.getRefreshableView();
+		mListView.setDivider(null);
+		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
 
 	/**
 	 * 设置适配器
 	 */
 	private void setAdapter() {
-		gv_callback = new AdapterCallback() {
+		lv_callback = new AdapterCallback() {
 
 			@Override
 			public void setOnClick(Object entity, int position, int type) {
 				ProductListEntity data = (ProductListEntity) entity;
-				if (data != null) {
-					Intent intent = new Intent(mContext, ProductDetailActivity.class);
-					intent.putExtra("goodsId", data.getId());
-					startActivity(intent);
-				}
+				Intent intent = new Intent(mContext, ProductDetailActivity.class);
+				intent.putExtra("goodsId", data.getId());
+				startActivity(intent);
 			}
 		};
-		gv_adapter = new ProductGridAdapter(mContext, lv_lists_show, gv_callback);
-		mGridView.setAdapter(gv_adapter);
-		mGridView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
+		lv_two_adapter = new ProductList2ItemAdapter(mContext, lv_show_two, lv_callback);
+		mListView.setAdapter(lv_two_adapter);
 	}
 
 	/**
@@ -482,6 +401,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		defaultBtn.setChecked(true);
 		if (isFrist) {
 			onClick(defaultBtn);
+			isFrist = false;
 		}
 	}
 
@@ -766,6 +686,72 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
 	}
+
+	class OnMyScrollListener implements AbsListView.OnScrollListener {
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			if (firstVisibleItem == 0 || mFirstVisibleItem > firstVisibleItem) { //上滑
+				if (firstVisibleItem == 0 || mFirstVisibleItem > firstVisibleItem + 10) {
+					mFirstVisibleItem = firstVisibleItem;
+					upMove(firstVisibleItem);
+				} else {
+					mFirstVisibleItem++;
+				}
+			} else if (firstVisibleItem == totalItemCount - visibleItemCount || mFirstVisibleItem < firstVisibleItem) { //下滑
+				if (firstVisibleItem == totalItemCount - visibleItemCount || mFirstVisibleItem < firstVisibleItem - 80) {
+					mFirstVisibleItem = firstVisibleItem;
+					downMove(firstVisibleItem);
+				} else {
+					mFirstVisibleItem--;
+				}
+			}
+		}
+	}
+
+	/**
+	 * 向上滑动效果
+	 */
+	private void upMove(int firstVisibleItem) {
+		if (headStatus && firstVisibleItem < goodsTotal - Page_Count / 2) {
+			createAnimation(ll_top, ll_bottom, ll_other);
+			ll_top.clearAnimation();
+			ll_top.startAnimation(headVISIBLE);
+			ll_other.clearAnimation();
+			ll_other.startAnimation(headVISIBLE);
+			headStatus = false;
+		}
+		if (firstVisibleItem > 5) {
+			iv_to_top.setVisibility(View.VISIBLE);
+		} else {
+			iv_to_top.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * 向下滑动效果
+	 */
+	private void downMove(int firstVisibleItem) {
+		if (goodsTotal > Page_Count && !headStatus && firstVisibleItem > 3
+				&& firstVisibleItem < goodsTotal - Page_Count / 2) {
+			createAnimation(ll_top, ll_bottom, ll_other);
+			ll_top.clearAnimation();
+			ll_top.startAnimation(headGONE);
+			ll_other.clearAnimation();
+			ll_other.startAnimation(headGONE);
+			headStatus = true;
+		}
+		if (firstVisibleItem > 5) {
+			iv_to_top.setVisibility(View.VISIBLE);
+		} else {
+			iv_to_top.setVisibility(View.GONE);
+		}
+	}
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
@@ -878,7 +864,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			ll_hot_words.setVisibility(View.VISIBLE);
 			ll_radio_group.setVisibility(View.GONE);
 		}
-		if (lv_lists_show.size() == 0) {
+		if (lv_show.size() == 0) {
 			ll_other.setVisibility(View.GONE);
 			ll_search_history.setVisibility(View.VISIBLE);
 			ll_words_history.setVisibility(View.GONE);
@@ -929,15 +915,28 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	}
 
 	private void addAllShow(List<ProductListEntity> showLists) {
-		lv_lists_show.clear();
-		lv_lists_show.addAll(showLists);
+		lv_show.clear();
+		lv_show.addAll(showLists);
 	}
 	
 	private void myUpdateAdapter() {
 		if (current_Page == 1) {
 			toTop();
 		}
-		gv_adapter.updateAdapter(lv_lists_show);
+		lv_show_two.clear();
+		ListShowTwoEntity lstEn = null;
+		for (int i = 0; i < lv_show.size(); i++) {
+			ProductListEntity en = lv_show.get(i);
+			if (i%2 == 0) {
+				lstEn = new ListShowTwoEntity();
+				lstEn.setLeftEn(en);
+				if (i+1 < lv_show.size()) {
+					lstEn.setRightEn(lv_show.get(i+1));
+				}
+				lv_show_two.add(lstEn);
+			}
+		}
+		lv_two_adapter.updateAdapter(lv_show_two);
 		stopAnimation();
 	}
 
@@ -954,16 +953,16 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		isLoadOk = true;
 		switch (loadType) {
 		case 0: //下拉刷新
-			refresh_gv.onPullDownRefreshComplete();
+			refresh_lv.onPullDownRefreshComplete();
 			break;
 		case 1: //加载更多
-			tv_footer.setVisibility(View.GONE);
+			refresh_lv.onPullUpRefreshComplete();
 			break;
 		}
-		if (lv_lists_show.size() > 0) {
-			refresh_gv.setVisibility(View.VISIBLE);
+		if (lv_show.size() > 0) {
+			refresh_lv.setVisibility(View.VISIBLE);
 		}else {
-			refresh_gv.setVisibility(View.GONE);
+			refresh_lv.setVisibility(View.GONE);
 		}
 	}
 	
@@ -971,7 +970,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 * 商品数小于一页时停止加载翻页数据
 	 */
 	private boolean isStop(){
-		return lv_lists_show.size() < Page_Count || lv_lists_show.size() == goodsTotal;
+		return lv_show.size() < Page_Count || lv_show.size() == goodsTotal;
 	}
 	
 	/**
@@ -1025,7 +1024,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 * 清除所有记录的搜索结果
 	 */
 	private void clearAllData() {
-		lv_lists_show.clear();
+		lv_show.clear();
 		lv_lists_all_1.clear();
 		lv_lists_all_3_DESC.clear();
 		lv_lists_all_3_ASC.clear();

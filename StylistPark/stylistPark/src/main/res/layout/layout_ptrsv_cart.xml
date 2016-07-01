@@ -28,7 +28,7 @@
             android:layout_centerInParent="true"
             android:text="@string/loading_no_more"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/text_color_title"
+            android:textColor="@color/text_color_assist"
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 

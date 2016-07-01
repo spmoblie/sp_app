@@ -34,7 +34,7 @@ public class MemberListAdapter extends BaseAdapter {
 	private List<MemberEntity> datas;
 	private AdapterCallback adapterCallback;
 	private DisplayImageOptions options;
-	private Drawable rank_0, rank_1, rank_2, rank_3, rank_4;
+	private Drawable rank_1, rank_2, rank_3;
 
 	public MemberListAdapter(Context context, List<MemberEntity> datas, AdapterCallback adapterCallback) {
 		this.context = context;
@@ -42,16 +42,12 @@ public class MemberListAdapter extends BaseAdapter {
 		this.adapterCallback = adapterCallback;
 		options = AppApplication.getImageOptions(90, R.drawable.head_portrait);
 		
-		rank_0 = context.getResources().getDrawable(R.drawable.icon_rank_0);
 		rank_1 = context.getResources().getDrawable(R.drawable.icon_rank_1);
 		rank_2 = context.getResources().getDrawable(R.drawable.icon_rank_2);
 		rank_3 = context.getResources().getDrawable(R.drawable.icon_rank_3);
-		rank_4 = context.getResources().getDrawable(R.drawable.icon_rank_4);
-		rank_0.setBounds(0, 0, rank_0.getMinimumWidth(), rank_0.getMinimumHeight());
 		rank_1.setBounds(0, 0, rank_1.getMinimumWidth(), rank_1.getMinimumHeight());
 		rank_2.setBounds(0, 0, rank_2.getMinimumWidth(), rank_2.getMinimumHeight());
 		rank_3.setBounds(0, 0, rank_3.getMinimumWidth(), rank_3.getMinimumHeight());
-		rank_4.setBounds(0, 0, rank_4.getMinimumWidth(), rank_4.getMinimumHeight());
 	}
 
 	public void updateAdapter(List<MemberEntity> datas) {
@@ -114,28 +110,23 @@ public class MemberListAdapter extends BaseAdapter {
 		holder.tv_name.setText(data.getUserName());
 		switch (data.getMemberRank()) {
 		case 0:
-			holder.tv_name.setCompoundDrawables(null, null, rank_0, null);
-			break;
-		case 1:
 			holder.tv_name.setCompoundDrawables(null, null, rank_1, null);
 			break;
-		case 2:
+		case 1:
 			holder.tv_name.setCompoundDrawables(null, null, rank_2, null);
 			break;
-		case 3:
+		case 2:
 			holder.tv_name.setCompoundDrawables(null, null, rank_3, null);
 			break;
-		case 4:
-			holder.tv_name.setCompoundDrawables(null, null, rank_4, null);
-			break;
 		default:
-			holder.tv_name.setCompoundDrawables(null, null, rank_0, null);
+			holder.tv_name.setCompoundDrawables(null, null, rank_1, null);
 			break;
 		}
 		holder.tv_last_login.setText(data.getLastLogin());
 		holder.tv_order_count.setText(data.getOrderCount());
 		holder.tv_order_money.setText(data.getOrderMoney());
 
+		holder.iv_head.setImageResource(R.drawable.head_portrait);
 		ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + data.getHeadImg(), holder.iv_head, options);
 		holder.iv_head.setOnClickListener(new OnClickListener() {
 			

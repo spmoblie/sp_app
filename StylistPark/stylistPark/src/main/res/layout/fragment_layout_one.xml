@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/layout_full" >
+    style="@style/layout_full"
+    android:background="@color/ui_bg_color_app">
 
     <LinearLayout
         style="@style/layout_full"
-        android:background="@color/ui_bg_color_gray"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/ui_bg_color_app"
             android:baselineAligned="false"
             android:orientation="horizontal"
             android:paddingBottom="8dp"
@@ -78,20 +77,10 @@
             style="@style/set_line_horizontal_bg"
             android:contentDescription="@string/desc" />
 
-        <LinearLayout
+        <com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView
+            android:id="@+id/fragment_one_listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <ListView
-                android:id="@+id/fragment_one_listview"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:divider="@null" />
-
-            <include layout="@layout/layout_loading_anim_samll" />
-        </LinearLayout>
+            android:layout_height="match_parent" />
     </LinearLayout>
     
     <ImageView

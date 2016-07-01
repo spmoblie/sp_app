@@ -33,7 +33,9 @@ public interface MainService {
 	
 	ThemeEntity getHomeHeadDatas() throws Exception;
 
-	ThemeEntity getSpecialListDatas(int page, int count) throws Exception;
+	ThemeEntity getSpecialListDatas(int topType, int page, int count) throws Exception;
+
+	BaseEntity postComment(int postId, String commentStr) throws Exception;
 
 	CategoryListEntity getCategoryListDatas() throws Exception;
 

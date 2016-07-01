@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
-import com.spshop.stylistpark.activity.home.CategoryActivity;
+import com.spshop.stylistpark.activity.category.CategoryActivity;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
@@ -160,7 +160,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                
+				// 加载更多(GridView无效)
             }
         });
 		ptrsv_sv = ptrsv.getRefreshableView();
@@ -264,7 +264,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	 */
 	private void updatePriceTotal() {
 		lv_Adapter.updateAdapter(lv_datas, cartHashMap);
-		tv_total.setText(curStr + amountStr);
+		tv_total.setText(getString(R.string.order_total_name) + curStr + amountStr);
 	}
 
 	/**

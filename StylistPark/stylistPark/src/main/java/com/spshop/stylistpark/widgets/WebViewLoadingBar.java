@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.widgets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +9,9 @@ import android.widget.ImageView;
 
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WebViewLoadingBar extends ImageView{
 	

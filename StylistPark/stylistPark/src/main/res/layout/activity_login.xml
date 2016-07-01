@@ -43,10 +43,11 @@
             <EditText
                 android:id="@+id/login_et_users"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@null"
+                android:lines="1"
                 android:hint="@string/login_user_name"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/text_color_title"
@@ -66,7 +67,7 @@
         <ImageView
             style="@style/set_line_horizontal_bg"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:contentDescription="@string/desc" />
 
         <LinearLayout
@@ -86,10 +87,11 @@
             <EditText
                 android:id="@+id/login_et_passwords"
                 android:layout_width="0dp"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@null"
+                android:lines="1"
                 android:hint="@string/login_password"
                 android:inputType="textPassword"
                 android:textColor="@color/text_color_title"
@@ -108,7 +110,7 @@
         <ImageView
             style="@style/set_line_horizontal_bg"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:contentDescription="@string/desc" />
     </LinearLayout>
 

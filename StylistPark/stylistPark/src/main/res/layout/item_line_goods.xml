@@ -42,7 +42,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@color/text_color_title"
-                android:textSize="10sp" />
+                android:textSize="@dimen/text_size_12" />
 
             <LinearLayout
                 android:id="@+id/home_line_goods_item_ll_price_brand"

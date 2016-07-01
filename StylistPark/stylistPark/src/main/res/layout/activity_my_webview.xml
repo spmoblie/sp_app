@@ -1,43 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/tools"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/my_webview_fl_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.spshop.stylistpark.widgets.WebViewLoadingBar
-        android:id="@+id/my_webview_loading_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <FrameLayout
-        android:id="@+id/my_webview_fl_video_main"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:background="@color/ui_bg_color_black"
-        android:visibility="gone">
-
-        <com.spshop.stylistpark.widgets.video.UniversalVideoView
-            android:id="@+id/my_webview_uvv"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            app:uvv_autoRotation="true"
-            app:uvv_fitXY="false" />
-
-        <com.spshop.stylistpark.widgets.video.UniversalMediaController
-            android:id="@+id/my_webview_umc"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            app:uvv_scalable="true" />
-
-    </FrameLayout>
-
-    <WebView
-        android:id="@+id/my_webview"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none" />
+        android:background="@color/ui_bg_color_app"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <com.spshop.stylistpark.widgets.WebViewLoadingBar
+            android:id="@+id/my_webview_loading_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:id="@+id/my_webview_fl_video_main"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:background="@color/ui_bg_color_black"
+            android:visibility="gone">
+
+            <com.spshop.stylistpark.widgets.video.UniversalVideoView
+                android:id="@+id/my_webview_uvv"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                app:uvv_autoRotation="true"
+                app:uvv_fitXY="false" />
+
+            <com.spshop.stylistpark.widgets.video.UniversalMediaController
+                android:id="@+id/my_webview_umc"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                app:uvv_scalable="true" />
+
+        </FrameLayout>
+
+        <com.spshop.stylistpark.widgets.ObservableWebView
+            android:id="@+id/my_webview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layerType="software"
+            android:scrollbars="none" />
+
+        <LinearLayout
+            android:id="@+id/my_webview_ll_comment_main"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="10dp"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/my_webview_et_comment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_frame_white_gray_4"
+                android:hint="参与评论"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/text_color_content"
+                android:textColorHint="@color/text_color_assist"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/my_webview_tv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:paddingLeft="10dp"
+                android:text="评论"
+                android:textSize="@dimen/text_size_18"
+                android:textColor="@color/text_color_assist"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

@@ -476,7 +476,8 @@ public class CollageInfoActivity extends BaseActivity {
 				Intent intent = new Intent();
 				intent.setClass(CollageInfoActivity.this, MyWebViewActivity.class); //Xu
 				intent.putExtra("title", "搭配测试");
-				intent.putExtra("url", url);
+				intent.putExtra("lodUrl", url);
+				intent.putExtra("vdoUrl", "");
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 	            startActivity(intent);
 			} else if (msg.what == SUMBIT_FAIL) {

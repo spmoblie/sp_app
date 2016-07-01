@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -25,17 +26,24 @@ import java.util.List;
 public class SpecialAdapter extends BaseAdapter {
 
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
+	public static final int TYPE_SELECT_LEFT = 1;
+	public static final int TYPE_SELECT_RIGHT = 2;
 
 	private Context context;
 	private List<ListShowTwoEntity> datas;
 	private AdapterCallback adapterCallback;
-	private DisplayImageOptions options;
+	private DisplayImageOptions options, headOptions;
+	private RelativeLayout.LayoutParams lp;
 
 	public SpecialAdapter(Context context, List<ListShowTwoEntity> datas, AdapterCallback adapterCallback) {
 		this.context = context;
 		this.datas = datas;
 		this.adapterCallback = adapterCallback;
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120);
+		headOptions = AppApplication.getImageOptions(90, R.drawable.head_portrait);
+		lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.width = (AppApplication.screenWidth - 30) / 2;
+		lp.height = (AppApplication.screenWidth - 30) / 2;
 	}
 
 	public void updateAdapter(List<ListShowTwoEntity> datas) {
@@ -66,8 +74,8 @@ public class SpecialAdapter extends BaseAdapter {
 	static class ViewHolder {
 
 		LinearLayout left_main, right_main;
-		ImageView left_logo, right_logo;
-		TextView left_name, right_name;
+		ImageView left_logo, left_head, right_logo, right_head;
+		TextView left_title, left_nick, left_click, right_title, right_nick, right_click;
 
 	}
 
@@ -80,11 +88,17 @@ public class SpecialAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.left_main = (LinearLayout) convertView.findViewById(R.id.list_special_two_left_ll_main);
 			holder.left_logo = (ImageView) convertView.findViewById(R.id.list_special_two_left_iv_img);
-			holder.left_name = (TextView) convertView.findViewById(R.id.home_line_sales_item_tv_name);
+			holder.left_head = (ImageView) convertView.findViewById(R.id.list_special_two_left_iv_head);
+			holder.left_title = (TextView) convertView.findViewById(R.id.list_special_two_left_tv_title);
+			holder.left_nick = (TextView) convertView.findViewById(R.id.list_special_two_left_tv_nick);
+			holder.left_click = (TextView) convertView.findViewById(R.id.list_special_two_left_tv_click);
 
-			holder.right_main = (LinearLayout) convertView.findViewById(R.id.list_special_two_left_ll_main);
-			holder.right_logo = (ImageView) convertView.findViewById(R.id.list_special_two_left_iv_img);
-			holder.right_name = (TextView) convertView.findViewById(R.id.home_line_sales_item_tv_name);
+			holder.right_main = (LinearLayout) convertView.findViewById(R.id.list_special_two_right_ll_main);
+			holder.right_logo = (ImageView) convertView.findViewById(R.id.list_special_two_right_iv_img);
+			holder.right_head = (ImageView) convertView.findViewById(R.id.list_special_two_right_iv_head);
+			holder.right_title = (TextView) convertView.findViewById(R.id.list_special_two_right_tv_title);
+			holder.right_nick = (TextView) convertView.findViewById(R.id.list_special_two_right_tv_nick);
+			holder.right_click = (TextView) convertView.findViewById(R.id.list_special_two_right_tv_click);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -93,29 +107,38 @@ public class SpecialAdapter extends BaseAdapter {
 
 		final ThemeEntity leftEn = (ThemeEntity) data.getLeftEn();
 		if (leftEn != null) {
+			holder.left_logo.setLayoutParams(lp);
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + leftEn.getImgUrl(), holder.left_logo, options);
-			holder.left_name.setText(leftEn.getTitle());
-
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + leftEn.getMebUrl(), holder.left_head, headOptions);
+			holder.left_title.setText(leftEn.getTitle());
+			holder.left_nick.setText(leftEn.getMebName());
+			holder.left_click.setText(String.valueOf(leftEn.getClickNum()));
 			holder.left_main.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					adapterCallback.setOnClick(leftEn, position, 1);
+					adapterCallback.setOnClick(leftEn, position, TYPE_SELECT_LEFT);
 				}
 			});
 		}
 		final ThemeEntity rightEn = (ThemeEntity) data.getRightEn();
-		if (leftEn != null) {
+		if (rightEn != null) {
+			holder.right_main.setVisibility(View.VISIBLE);
+			holder.right_logo.setLayoutParams(lp);
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getImgUrl(), holder.right_logo, options);
-			holder.right_name.setText(rightEn.getTitle());
-
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getMebUrl(), holder.right_head, headOptions);
+			holder.right_title.setText(rightEn.getTitle());
+			holder.right_nick.setText(rightEn.getMebName());
+			holder.right_click.setText(String.valueOf(rightEn.getClickNum()));
 			holder.right_main.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					adapterCallback.setOnClick(rightEn, position, 2);
+					adapterCallback.setOnClick(rightEn, position, TYPE_SELECT_RIGHT);
 				}
 			});
+		} else {
+			holder.right_main.setVisibility(View.INVISIBLE);
 		}
 		return convertView;
 	}

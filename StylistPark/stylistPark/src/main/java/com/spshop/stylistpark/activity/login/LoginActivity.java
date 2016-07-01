@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.login;
 
-import java.util.Arrays;
-
-import org.json.JSONException;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,6 +58,10 @@ import com.tencent.stat.StatService;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+
+import org.json.JSONException;
+
+import java.util.Arrays;
 
 public class LoginActivity extends BaseActivity implements OnClickListener{
 	

@@ -113,7 +113,7 @@
         <activity android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.home.CategoryActivity"
+        <activity android:name=".activity.category.CategoryActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         
@@ -163,6 +163,7 @@
         
         <activity android:name=".activity.common.MyWebViewActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         
         <activity android:name=".activity.login.LoginActivity"

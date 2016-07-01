@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +37,10 @@ import android.widget.ViewFlipper;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RetryPolicy;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.sina.weibo.sdk.api.share.BaseResponse;
+import com.sina.weibo.sdk.api.share.IWeiboHandler;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
@@ -46,11 +49,17 @@ import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.dialog.LoadDialog;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.service.ServiceContext;
+import com.spshop.stylistpark.share.ShareView;
 import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
+import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.StringUtil;
+import com.tencent.mm.sdk.modelbase.BaseReq;
+import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.util.Arrays;
@@ -60,7 +69,8 @@ import java.util.List;
  * 所有Activity的父类
  */
 @SuppressLint("HandlerLeak")
-public  class BaseActivity extends FragmentActivity implements OnDataListener {
+public  class BaseActivity extends FragmentActivity implements OnDataListener,
+		IWeiboHandler.Response, IWXAPIEventHandler {
 
 	public static final String TAG = BaseActivity.class.getSimpleName();
 	
@@ -70,10 +80,12 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener {
 	protected SharedPreferences shared;
 	protected Editor editor;
 	protected AlertDialog myDialog;
-	public IWXAPI api;
-	
+	protected IWXAPI api;
+	protected Boolean isInitShare = false;
+	protected ShareView mShareView;
+
 	private RelativeLayout rl_head;
-	private ImageView iv_left;
+	private ImageView iv_left, iv_title_logo;
 	private TextView tv_title;
 	private Button btn_right;
 	private ViewFlipper mLayoutBase;
@@ -115,11 +127,22 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener {
 		
 		findViewById();
 		initView();
+
+		if (isInitShare) {
+			try { //初始化ShareView
+				View view = getLayoutInflater().inflate(R.layout.popup_share_view, (ViewGroup) findViewById(R.id.base_fl_main));
+				mShareView = new ShareView(savedInstanceState, mContext, this, view, null);
+				mShareView.showShareLayer(mContext, false);
+			} catch (Exception e) {
+				ExceptionUtil.handle(mContext, e);
+			}
+		}
 	}
 	
 	private void findViewById() {
 		rl_head = (RelativeLayout) findViewById(R.id.top_bar_head_rl);
 		iv_left = (ImageView) findViewById(R.id.top_bar_left);
+		iv_title_logo = (ImageView) findViewById(R.id.top_bar_title_logo);
 		tv_title = (TextView) findViewById(R.id.top_bar_title);
 		btn_right = (Button) findViewById(R.id.top_bar_right);
 		mLayoutBase = (ViewFlipper) super.findViewById(R.id.base_ll_container);
@@ -199,19 +222,39 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener {
 	 * 设置标题（文本资源Id）
 	 */
 	public void setTitle(int titleId) {
-		tv_title.setText(getString(titleId));
+		setTitle(getString(titleId));
 	}
-	
+
 	/**
-	 * 标题右边添加图片资源（资源Id）
+	 * 设置标题（文本对象）
 	 */
-	public void setTitleDrawableRight(int drawableRight){
-		Resources res = getResources();
-		Drawable rightDrawable = res.getDrawable(drawableRight);
-		rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());
-		tv_title.setCompoundDrawables(null, null, rightDrawable, null);
+	public void setTitle(String title) {
+		tv_title.setText(title);
 	}
-	
+
+	/**
+	 * 设置标题Logo(资源Id)
+	 */
+	public void setTitleLogo(int drawableId){
+		Drawable drawable = getResources().getDrawable(drawableId);
+		/*rightDrawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+		tv_title.setCompoundDrawables(null, null, drawable, null);*/
+		tv_title.setVisibility(View.GONE);
+		iv_title_logo.setVisibility(View.VISIBLE);
+		iv_title_logo.setImageDrawable(drawable);
+	}
+
+	/**
+	 * 设置标题Logo(资源路径)
+	 */
+	public void setTitleLogo(DisplayImageOptions options, String path){
+		if (options != null && !StringUtil.isNull(path)) {
+			tv_title.setVisibility(View.GONE);
+			iv_title_logo.setVisibility(View.VISIBLE);
+			ImageLoader.getInstance().displayImage(path, iv_title_logo, options);
+		}
+	}
+
 	/**
 	 * 设置右边按钮背景图片资源对象
 	 */
@@ -236,19 +279,25 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener {
 		setBtnRightGone(View.VISIBLE);
 		btn_right.setText(text);
 	}
-	
-	/**
-	 * 设置标题（文本对象）
-	 */
-	public void setTitle(String title) {
-		tv_title.setText(title);
+
+	@Override
+	public void onBackPressed() {
+		if (mShareView != null && mShareView.isShowing()) {
+			mShareView.showShareLayer(mContext, false);
+		} else {
+			super.onBackPressed();
+		}
 	}
-	
+
 	/**
 	 * 左键键监听执行方法，让子类重写该方法
 	 */
 	public void OnListenerLeft(){
+		if (mShareView != null && mShareView.isShowing()) {
+			mShareView.showShareLayer(mContext, false);
+		} else {
 			finish();
+		}
 	}
 
 	/**
@@ -339,22 +388,69 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener {
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (mShareView != null) {
+			mShareView.onActivityResult(requestCode, resultCode, data);
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (mShareView != null) {
+			mShareView.onNewIntent(intent, this, this);
+		}
+		super.onNewIntent(intent);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		if (mShareView != null) {
+			mShareView.onSaveInstanceState(outState);
+		}
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public void onReq(BaseReq arg0) {
+
+	}
+
+	@Override
+	public void onResp(BaseResp arg0) {
+
+	}
+
+	@Override
+	public void onResponse(BaseResponse arg0) {
+
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
 		LogUtil.i(TAG, "onResume()");
+		if (mShareView != null) {
+			mShareView.onResume();
+		}
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
 		LogUtil.i(TAG, "onPause()");
+		if (mShareView != null) {
+			mShareView.onResume();
+		}
 	}
 	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy()");
-		
+		if (mShareView != null) {
+			mShareView.onDestroy();
+		}
 		headGONE = null;
 		headVISIBLE = null;
 		dissmissMyDialog();
@@ -408,6 +504,13 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener {
 				openLoginActivity(rootPage);
 			}
 		});
+	}
+
+	/**
+	 * 分享参数出错提示
+	 */
+	protected void showShareError() {
+		CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_entity_error), 1000);
 	}
 	
 	/**

@@ -72,15 +72,17 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
      * @param hasMoreData true表示还有更多的数据，false表示没有更多数据了
      */
     public void setHasMoreData(boolean hasMoreData) {
+        State state = State.NONE;
         if (!hasMoreData) {
-            if (null != mLoadMoreFooterLayout) {
-                mLoadMoreFooterLayout.setState(State.NO_MORE_DATA);
-            }
-            
-            LoadingLayout footerLoadingLayout = getFooterLoadingLayout();
-            if (null != footerLoadingLayout) {
-                footerLoadingLayout.setState(State.NO_MORE_DATA);
-            }
+            state = State.NO_MORE_DATA;
+        }
+        if (null != mLoadMoreFooterLayout) {
+            mLoadMoreFooterLayout.setState(state);
+        }
+
+        LoadingLayout footerLoadingLayout = getFooterLoadingLayout();
+        if (null != footerLoadingLayout) {
+            footerLoadingLayout.setState(state);
         }
     }
 

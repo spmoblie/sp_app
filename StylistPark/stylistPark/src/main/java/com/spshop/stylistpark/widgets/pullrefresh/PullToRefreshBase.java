@@ -43,6 +43,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
          * @param refreshView 刷新的View
          */
         void onPullUpToRefresh(final PullToRefreshBase<V> refreshView);
+
     }
     
     /**回滚的时间*/

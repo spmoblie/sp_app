@@ -115,17 +115,13 @@ public class ShareView{
 		mWXApi.registerApp(WX_APP_ID);
 		// FB
 		uiHelper = new UiLifecycleHelper(mActivity, new Session.StatusCallback() {
-			
 			@Override
 			public void call(Session session, SessionState state, Exception exception) {
-				if(session.isOpened()) {
-					facebookShare();
-				}
+				facebookShare();
 			}
-			
 		});
 		uiHelper.onCreate(savedInstanceState);
-		
+
 		initView();
 	}
 	
@@ -202,6 +198,7 @@ public class ShareView{
 	}
 	
 	private void initView(){
+		if (rootView == null) return;
 		viewDim = rootView.findViewById(R.id.share_view_dismiss);
 		viewDim.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -216,7 +213,7 @@ public class ShareView{
 		ll_mainLayout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				
+
 			}
 		});
 		tv_Share_QQ = rootView.findViewById(R.id.share_view_tv_share_QQ);
@@ -496,7 +493,7 @@ public class ShareView{
 	private void facebookShare() {
 		// 先判断设备上是否已经安装了Facebook客户端，如果没有则提示用户安装客户端后才能进行分享。
 		if (FacebookDialog.canPresentShareDialog(mContext, FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
-			if (mShareEn != null) {
+			if (uiHelper != null && mShareEn != null) {
 				showShareLayer(mContext, false);
 				FacebookDialog.ShareDialogBuilder mBuilder = new FacebookDialog.ShareDialogBuilder(mActivity);
 				mBuilder.setCaption(mContext.getString(R.string.app_name));
@@ -656,8 +653,7 @@ public class ShareView{
 	 * 在Activity中的onResume调用此方法
 	 */
 	public void onResume(){
-		Session session = Session.getActiveSession();
-		if(uiHelper != null && session != null && session.isOpened()){
+		if (uiHelper != null) {
 			uiHelper.onResume();
 		}
 	}
@@ -700,5 +696,5 @@ public class ShareView{
 		public void onClick_Share_Line();
 		public void onClick_Share_Copy();
 	}
-	
+
 }

@@ -66,7 +66,7 @@ public class JsonParser {
 			mainEn.setErrCode(Integer.parseInt(jsonObj.getString("error")));
 		}
 		// 解析广告
-		if (jsonObj.has("ad")) {
+		if (jsonObj.has("ad") && jsonObj.get("ad") != null) {
 			ThemeEntity adEn = new ThemeEntity();
 			List<ThemeEntity> adLists = new ArrayList<ThemeEntity>();
 			ThemeEntity childEn = null;
@@ -85,7 +85,7 @@ public class JsonParser {
 			mainEn.setAdEn(adEn);
 		}
 		// 解析热销商品
-		if (jsonObj.has("best")) {
+		if (jsonObj.has("best") && jsonObj.get("best") != null) {
 			ProductListEntity goodsEn = new ProductListEntity();
 			goodsEn.setMainLists(getProductListsFormJson(jsonObj, "best"));
 			mainEn.setGoodsEn(goodsEn);
@@ -110,7 +110,7 @@ public class JsonParser {
 			mainEn.setPeidaEn(peidaEn);
 		}*/
 		// 限时活动
-		if (jsonObj.has("activity")) {
+		if (jsonObj.has("activity") && jsonObj.get("activity") != null) {
 			ThemeEntity saleEn = new ThemeEntity();
 			List<ThemeEntity> saleLists = new ArrayList<ThemeEntity>();
 			ThemeEntity childEn = null;
@@ -138,30 +138,35 @@ public class JsonParser {
 	 */
 	public static ThemeEntity getSpecialListDatas(String jsonStr) throws JSONException {
 		JSONObject jsonObj = new JSONObject(jsonStr);
-		ThemeEntity mainEn = new ThemeEntity();
+		ThemeEntity eventEn = new ThemeEntity();
 		if (jsonObj.has("error")) {
-			mainEn.setErrCode(Integer.parseInt(jsonObj.getString("error")));
+			eventEn.setErrCode(Integer.parseInt(jsonObj.getString("error")));
 		}
-		// 解析今日专题
-		if (jsonObj.has("paida")) {
-			ThemeEntity peidaEn = new ThemeEntity();
+		if (jsonObj.has("count")) {
+			eventEn.setCountTotal(StringUtil.getInteger(jsonObj.getString("count")));
+		}
+		if (jsonObj.has("data")) {
 			List<ThemeEntity> peidaLists = new ArrayList<ThemeEntity>();
 			ThemeEntity childEn = null;
-			JSONArray datas = jsonObj.getJSONArray("paida");
+			JSONArray datas = jsonObj.getJSONArray("data");
 			if (datas != null) {
 				for (int j = 0; j < datas.length(); j++) {
 					JSONObject item = datas.getJSONObject(j);
 					childEn = new ThemeEntity();
-					childEn.setId(StringUtil.getInteger(item.getString("id")));
+					childEn.setId(StringUtil.getInteger(item.getString("article_id")));
+					childEn.setType(StringUtil.getInteger(item.getString("open_type")));
+					childEn.setClickNum(StringUtil.getInteger(item.getString("click_count")));
 					childEn.setTitle(item.getString("title"));
+					childEn.setMebName(item.getString("nickname"));
+					childEn.setMebUrl(item.getString("avatar"));
 					childEn.setImgUrl(item.getString("file_url"));
+					childEn.setVdoUrl(item.getString("keywords"));
 					peidaLists.add(childEn);
 				}
-				peidaEn.setMainLists(peidaLists);
+				eventEn.setMainLists(peidaLists);
 			}
-			mainEn.setPeidaEn(peidaEn);
 		}
-		return mainEn;
+		return eventEn;
 	}
 
 	/**

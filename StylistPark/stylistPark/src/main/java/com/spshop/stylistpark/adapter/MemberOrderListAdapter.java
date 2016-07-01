@@ -102,22 +102,16 @@ public class MemberOrderListAdapter extends BaseAdapter {
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + infoEn.getHeadImg(), holder.iv_head, head_options);
 			switch (infoEn.getUserRankType()) {
 			case 0:
-				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_0));
-				break;
-			case 1:
 				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_1));
 				break;
-			case 2:
+			case 1:
 				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_2));
 				break;
-			case 3:
+			case 2:
 				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_3));
 				break;
-			case 4:
-				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_4));
-				break;
 			default:
-				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_0));
+				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_1));
 				break;
 			}
 			holder.tv_user_name.setText(infoEn.getUserName());

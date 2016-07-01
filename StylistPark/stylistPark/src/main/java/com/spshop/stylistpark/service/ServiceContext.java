@@ -70,8 +70,15 @@ public class ServiceContext {
 	/**
 	 * 获取专题列表数据
 	 */
-	public ThemeEntity getSpecialListDatas(int page, int count) throws Exception {
-		return ms.getSpecialListDatas(page, count);
+	public ThemeEntity getSpecialListDatas(int topType, int page, int count) throws Exception {
+		return ms.getSpecialListDatas(topType, page, count);
+	}
+
+	/**
+	 * 提交专题评论数据
+	 */
+	public BaseEntity postComment(int postId, String commentStr) throws Exception {
+		return ms.postComment(postId, commentStr);
 	}
 
 	/**
