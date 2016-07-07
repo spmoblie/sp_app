@@ -59,14 +59,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/shape_frame_white_gray_4"
-                android:hint="参与评论"
+                android:background="@drawable/shape_frame_white_dfdfdf_4"
+                android:hint="@string/events_comment_participate"
                 android:imeOptions="actionSearch"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textColor="@color/text_color_content"
+                android:textColor="@color/text_color_title"
                 android:textColorHint="@color/text_color_assist"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_14" />
 
             <TextView
                 android:id="@+id/my_webview_tv_comment"
@@ -74,8 +74,8 @@
                 android:layout_height="match_parent"
                 android:gravity="right|center_vertical"
                 android:paddingLeft="10dp"
-                android:text="评论"
-                android:textSize="@dimen/text_size_18"
+                android:text="@string/events_comment"
+                android:textSize="@dimen/text_size_16"
                 android:textColor="@color/text_color_assist"/>
 
         </LinearLayout>

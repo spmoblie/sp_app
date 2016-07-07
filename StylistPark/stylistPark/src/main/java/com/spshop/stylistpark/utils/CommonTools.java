@@ -1,16 +1,5 @@
 package com.spshop.stylistpark.utils;
 
-import java.io.File;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import jp.co.cyberagent.android.gpuimage.GPUImage;
-import jp.co.cyberagent.android.gpuimage.GPUImageGaussianBlurFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageGrayscaleFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageSobelEdgeDetection;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -42,6 +31,18 @@ import android.widget.Toast;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.RowObject;
+
+import java.io.File;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import jp.co.cyberagent.android.gpuimage.GPUImage;
+import jp.co.cyberagent.android.gpuimage.GPUImageGaussianBlurFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageGrayscaleFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageSobelEdgeDetection;
 
 /**
  * 系统通用工具类
@@ -81,7 +82,31 @@ public class CommonTools {
     	mHandler.postDelayed(r, time); //延迟隐藏toast
     	toast.show();
     }
-    
+
+    /**
+     * 显示翻页数量
+     *
+     * @param context 上下文对象
+     * @param message 页数
+     * @param time 显示的时长
+     */
+    public static void showPageNum(Context context, String message, long time) {
+    	LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    	View view = inflater.inflate(R.layout.layout_toast_page_num, null);
+    	TextView text = (TextView) view.findViewById(R.id.toast_message);
+    	text.setText(message);
+
+    	mHandler.removeCallbacks(r);
+    	if (toast == null){ //只有mToast==null时才重新创建，否则只需更改提示文字
+    		toast = new Toast(context);
+    		toast.setDuration(Toast.LENGTH_SHORT);
+    		toast.setGravity(Gravity.BOTTOM, 0, AppApplication.screenHeight / 12);
+    		toast.setView(view);
+    	}
+    	mHandler.postDelayed(r, time); //延迟隐藏toast
+    	toast.show();
+    }
+
 	/**
 	 * 根据手机分辨率从dp转成px
 	 * 

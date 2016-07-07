@@ -308,6 +308,7 @@
     <color name="ui_bg_color_bar">#f383b6</color><!-- AppUI状态色 -->
     <color name="ui_bg_color_white">#FFFFFF</color><!-- 白色 -->
     <color name="ui_bg_color_black">#000000</color><!-- 黑色 -->
+    <color name="ui_bg_color_purple">#C769C6</color><!-- 紫色 -->
     <color name="ui_bg_color_gray">#F4F4F4</color><!-- 灰色 -->
     <color name="ui_bg_color_gray_light_1">#DFDFDF</color><!-- 亮灰色1 -->
     <color name="ui_bg_color_gray_light_2">#C1C1C1</color><!-- 亮灰色2 -->

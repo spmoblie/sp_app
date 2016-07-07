@@ -214,13 +214,13 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		isLogined = UserManager.getInstance().checkIsLogined();
 		LogUtil.i("isLogined", isLogined);
 		if (isLogined) {
-			rl_top_login.setBackground(getResources().getDrawable(R.drawable.bg_profile_top_login_yes));
+			//rl_top_login.setBackground(getResources().getDrawable(R.drawable.bg_profile_top_login_yes));
 			if (isUpdate || !isSuccess) {
 				requestGetUserInfo();
 				isUpdate = false;
 			}
 		}else {
-			rl_top_login.setBackground(getResources().getDrawable(R.drawable.bg_profile_top_login_no));
+			//rl_top_login.setBackground(getResources().getDrawable(R.drawable.bg_profile_top_login_no));
 			infoEn = null;
 			setView();
 		}

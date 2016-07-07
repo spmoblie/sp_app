@@ -21,7 +21,7 @@
         android:gravity="center"
         android:text="@string/address_error_data_null"
         android:textColor="@color/text_color_assist"
-        android:textSize="@dimen/text_size_16"
+        android:textSize="@dimen/text_size_14"
         android:visibility="gone" />
 
 </LinearLayout>

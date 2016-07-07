@@ -101,6 +101,9 @@
     <string name="home_tab_text_three">Find</string>
     <string name="home_tab_text_four">Cart</string>
     <string name="home_tab_text_five">Profile</string>
+    <string name="home_txt_hot_goods">Hot goods</string>
+    <string name="home_txt_today_topics">Today topics</string>
+    <string name="home_txt_limit_events">Limit events</string>
     
     <!-- title -->
     <string name="title_category">Category</string>
@@ -147,7 +150,7 @@
     <string name="product_cash_delivery">Cash Pay</string>
     <string name="product_brand_go">Go Brand</string>
     <string name="product_play_video">Video</string>
-    <string name="product_collection">Watchlist</string>
+    <string name="product_collection">Concerns</string>
     <string name="product_cart">Cart</string>
     <string name="product_call">Call</string>
     <string name="product_add_cart">Add Cart</string>
@@ -169,6 +172,8 @@
     <string name="events_top_tab_2">Video</string>
     <string name="events_top_tab_3">Special</string>
     <string name="events_no_data">No found, \n Maybe topics error!</string>
+    <string name="events_comment">Comment</string>
+    <string name="events_comment_participate">Participate comment</string>
     <string name="events_comment_ok">Comment posted</string>
     <string name="events_comment_input">Input your comment</string>
     
@@ -186,6 +191,7 @@
     <string name="bouns_top_tab_2">Unused</string>
     <string name="bouns_top_tab_3">Expired</string>
     <string name="bouns_top_tab_4">Used</string>
+    <string name="bouns_usable">Usable</string>
     <string name="bouns_used_sum">Used %1$s</string>
     <string name="bouns_add_ok">Add OK</string>
     <string name="bouns_input_hint">Coupon sequence No.</string>
@@ -384,8 +390,10 @@
     <string name="profile_gender_female">Female</string>
     <string name="profile_gender_confidential">Confidential</string>
     <string name="profile_birthday">Birthday</string>
-    <string name="profile_collection">My Watchlist</string>
+    <string name="profile_collection">My Concerns</string>
+    <string name="profile_concerns_goods">Concerns goods</string>
     <string name="profile_history">Browse History</string>
+    <string name="profile_history_no_data">Browse History</string>
     <string name="profile_my_order">My Order</string>
     <string name="profile_check_all_order">Check All Order</string>
     <string name="profile_done">Done</string>
@@ -406,10 +414,10 @@
     <string name="profile_my_collages">My Collage</string>
     <string name="profile_my_favorite">My Favorite</string>
     <string name="profile_submit_audit">Submit Audit</string>
-    <string name="profile_change_nick">Change Nickname</string>
+    <string name="profile_change_nick">Nickname</string>
     <string name="profile_input_nick">Please input nickname</string>
-    <string name="profile_change_sex">Change Gender</string>
-    <string name="profile_change_email">Change Email</string>
+    <string name="profile_change_sex">Gender</string>
+    <string name="profile_change_email">Email</string>
     <string name="profile_email_verify">Email verification</string>
     <string name="profile_send_email_ok">Send mail success</string>
     <string name="profile_send_email_hint">Confirmation send a email to %1$s? Change your E-mail after verification. If you have any questions please contact the official customer.</string>
@@ -430,7 +438,7 @@
     <string name="money_withdrawals_success">Apply success</string>
     <string name="money_input_card_hint">Input the bank card number in your own</string>
     <string name="money_input_amount_hint">Input the withdrawals amount</string>
-    <string name="money_max_amount_hint">The max amount of withdrawals: %1$s</string>
+    <string name="money_max_amount_hint">Max of withdrawals: %1$s</string>
     <string name="money_withdrawals_reminder">Reminder: \n1.Confirm withdrawals after, We will present the amount of play money to input your bank card in seven days;\n2.Input the bank card the cardholder name and the name must be consistent with the real name authentication, If you have any questions please contact the official customer;</string>
     
     <!-- Collage -->
@@ -586,7 +594,12 @@
         <item>@string/confirm</item>
         <item>@string/collage_start_new_create</item>
     </string-array>
-    
+
+    <string-array name="array_photo_choose">
+        <item>@string/photo_shoot_upload</item>
+        <item>@string/photo_choose_upload</item>
+    </string-array>
+
     <string-array name="array_wechat">
         <item>Share to contact</item>
         <item>Publish to the circle of friends</item>

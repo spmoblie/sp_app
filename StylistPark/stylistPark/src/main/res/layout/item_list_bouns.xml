@@ -44,7 +44,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/item_list_bouns_tv_currency"
                     android:textColor="@color/text_color_red_1"
-                    android:textSize="36sp"
+                    android:textSize="@dimen/text_size_30"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -61,7 +61,7 @@
                     android:ellipsize="end"
                     android:lines="1"
                     android:textColor="@color/text_color_content"
-                    android:textSize="@dimen/text_size_14" />
+                    android:textSize="@dimen/text_size_12" />
 
                 <TextView
                     android:id="@+id/item_list_bouns_tv_limit"
@@ -72,7 +72,7 @@
                     android:ellipsize="end"
                     android:lines="1"
                     android:textColor="@color/text_color_content"
-                    android:textSize="@dimen/text_size_14" />
+                    android:textSize="@dimen/text_size_12" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -90,8 +90,9 @@
                 android:id="@+id/item_list_bouns_tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
                 android:textColor="@color/text_color_content"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_12" />
             
             <ImageView 
                 android:id="@+id/item_list_bouns_iv_select"
@@ -108,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:textColor="@color/text_color_content"
-                android:textSize="@dimen/text_size_14" />
+                android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
     </LinearLayout>
 

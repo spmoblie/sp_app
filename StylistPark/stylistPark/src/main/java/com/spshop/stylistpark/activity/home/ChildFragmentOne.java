@@ -38,7 +38,6 @@ import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
-import com.spshop.stylistpark.dialog.LoadDialog;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
@@ -81,8 +80,9 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 	private View sv_goods_main, vw_goods_title, sv_peida_main, vw_peida_title, vw_sale_title;
 	private TextView tv_goods_title, tv_peida_title, tv_sale_title;
+	private RelativeLayout rl_loading;
 	private ViewPager viewPager;
-	private ImageView iv_to_top;
+	private ImageView iv_head_null, iv_to_top;
 	private PullToRefreshListView refresh_lv;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
@@ -144,12 +144,14 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		rl_search = (RelativeLayout) view.findViewById(R.id.fragment_one_topbar_rl_search);
 		rl_zxing = (RelativeLayout) view.findViewById(R.id.fragment_one_topbar_rl_zxing);
 		refresh_lv = (PullToRefreshListView) view.findViewById(R.id.fragment_one_listview);
+		rl_loading = (RelativeLayout) view.findViewById(R.id.loading_anim_large_ll_main);
 		iv_to_top = (ImageView) view.findViewById(R.id.fragment_one_iv_to_top);
 
 		ll_head_main = (LinearLayout) FrameLayout.inflate(mContext, R.layout.layout_list_head_home, null);
 	}
 
 	private void initView() {
+		rl_loading.setVisibility(View.GONE);
 		rl_category.setOnClickListener(this);
 		rl_search.setOnClickListener(this);
 		rl_zxing.setOnClickListener(this);
@@ -192,6 +194,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private void initListViewHead() {
 		viewPager = (ViewPager) ll_head_main.findViewById(R.id.home_list_head_viewPager);
 		ll_indicator = (LinearLayout) ll_head_main.findViewById(R.id.home_list_head_indicator);
+		iv_head_null = (ImageView) ll_head_main.findViewById(R.id.home_list_head_iv_null);
 		sv_goods_main = ll_head_main.findViewById(R.id.home_list_head_sv_goods_main);
 		vw_goods_title = ll_head_main.findViewById(R.id.home_list_head_ll_goods_title);
 		tv_goods_title = (TextView) vw_goods_title.findViewById(R.id.text_two_line_tv_title);
@@ -219,6 +222,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 	private void initViewPager(ThemeEntity adEn) {
 		if (adEn != null && adEn.getMainLists() != null) {
+			iv_head_null.setVisibility(View.GONE);
 			viewLists.clear();
 			imgEns.clear();
 			imgEns.addAll(adEn.getMainLists());
@@ -248,7 +252,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				if (i < idsSize) {
 					// 循环加入指示器
 					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-					params.setMargins(10, 0, 10, 0);
+					params.setMargins(8, 0, 8, 0);
 					indicators[i] = new ImageView(mContext);
 					indicators[i].setLayoutParams(params);
 					indicators[i].setImageResource(R.drawable.indicators_default);
@@ -366,7 +370,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private void initGoodsView(ProductListEntity goodsEn) {
 		if (goodsEn != null && goodsEn.getMainLists() != null) {
 			vw_goods_title.setVisibility(View.VISIBLE);
-			tv_goods_title.setText("热销商品");
+			tv_goods_title.setText(R.string.home_txt_hot_goods);
 			sv_goods_main.setVisibility(View.VISIBLE);
 			List<ProductListEntity> datas = goodsEn.getMainLists();
 			ll_goods_main.removeAllViews();
@@ -383,10 +387,12 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					TextView tv_name = (TextView) view.findViewById(R.id.home_line_goods_item_tv_name);
 					tv_name.setText(items.getName());
 
+					TextView item_curr = (TextView) view.findViewById(R.id.home_line_goods_item_tv_curr);
 					TextView item_sell_price = (TextView) view.findViewById(R.id.home_line_goods_item_tv_sell_price);
 					TextView item_full_price = (TextView) view.findViewById(R.id.home_line_goods_item_tv_full_price);
 					TextView item_discount = (TextView) view.findViewById(R.id.home_line_goods_item_tv_discount);
-					item_sell_price.setText(currStr + items.getSellPrice()); //商品卖价
+					item_curr.setText(currStr);
+					item_sell_price.setText(items.getSellPrice()); //商品卖价
 					String full_price = items.getFullPrice(); //商品原价
 					if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {
 						item_full_price.getPaint().setFlags(0);
@@ -424,7 +430,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private void initPeidaView(ThemeEntity peidaEn) {
 		if (peidaEn != null && peidaEn.getMainLists() != null) {
 			vw_peida_title.setVisibility(View.VISIBLE);
-			tv_peida_title.setText("今日专题");
+			tv_peida_title.setText(R.string.home_txt_today_topics);
 			sv_peida_main.setVisibility(View.VISIBLE);
 			List<ThemeEntity> datas = peidaEn.getMainLists();
 			ll_peida_main.removeAllViews();
@@ -460,7 +466,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private void initSaleView(ThemeEntity saleEn) {
 		if (saleEn != null && saleEn.getMainLists() != null) {
 			vw_sale_title.setVisibility(View.VISIBLE);
-			tv_sale_title.setText("限时活动");
+			tv_sale_title.setText(R.string.home_txt_limit_events);
 			List<ThemeEntity> datas = saleEn.getMainLists();
 			ll_sale_main.removeAllViews();
 			for (int i = 0; i < datas.size(); i++) {
@@ -567,8 +573,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			break;
 		case R.id.fragment_one_iv_to_top: //回顶
-			iv_to_top.setVisibility(View.GONE);
-			toListViewTop();
+			toTop();
 			break;
 		}
 		if (intent != null) {
@@ -646,11 +651,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		if (getActivity() == null) return;
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
-			if (themeEn != null) {
-				setHeadView();
-			}else {
-
-			}
+			setHeadView();
 			break;
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
 			if (mainEn != null) {
@@ -708,7 +709,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	
 	private void myUpdateAdapter() {
 		if (current_Page == 1) {
-			toListViewTop();
+			toTop();
 		}
 		lv_show_two.clear();
 		ListShowTwoEntity lstEn = null;
@@ -728,24 +729,25 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	}
 
 	/**
-	 * 滚动到ListView顶部
+	 * 滚动到顶部
 	 */
-	private void toListViewTop() {
+	private void toTop() {
 		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 	
 	/**
 	 * 显示缓冲动画
 	 */
 	private void startAnimation() {
-		LoadDialog.show(mContext);
+		rl_loading.setVisibility(View.VISIBLE);
 	}
 	
 	/**
 	 * 停止缓冲动画
 	 */
 	private void stopAnimation() {
-		LoadDialog.hidden(mContext);
+		rl_loading.setVisibility(View.GONE);
 		refresh_lv.onPullUpRefreshComplete();
 	}
 

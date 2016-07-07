@@ -20,10 +20,17 @@
             android:id="@+id/home_list_head_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             android:layout_gravity="center_horizontal|bottom"
             android:orientation="horizontal" >
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/home_list_head_iv_null"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/bg_profile_top_login_no"
+            android:scaleType="fitXY" />
     </FrameLayout>
 
     <include

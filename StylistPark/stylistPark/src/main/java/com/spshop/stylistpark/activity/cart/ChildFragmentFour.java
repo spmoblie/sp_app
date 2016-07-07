@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +21,13 @@ import android.widget.TextView;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
+import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.category.CategoryActivity;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.CartProductListAdapter;
 import com.spshop.stylistpark.dialog.DialogManager;
-import com.spshop.stylistpark.dialog.DialogManager.DialogManagerCallback;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.service.ServiceContext;
@@ -78,6 +79,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	private ProductDetailEntity changeData;
 	private List<ProductDetailEntity> lv_datas = new ArrayList<ProductDetailEntity>();
 	private HashMap<Integer, ProductDetailEntity> cartHashMap = new HashMap<Integer, ProductDetailEntity>();
+	protected DialogManager dm;
 	private AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
 
@@ -96,6 +98,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 		LogUtil.i(TAG, "onCreate");
 		instance = this;
 		mContext = getActivity();
+		dm = DialogManager.getInstance(mContext);
 		atm = AsyncTaskManager.getInstance(mContext);
 
 		View view = null;
@@ -224,17 +227,20 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 						}
 						break;
 					case CartProductListAdapter.TYPE_DELETE: //删除
-						new DialogManager(mContext).showTwoBtnDialog(new DialogManagerCallback() {
-							
-							@Override
-							public void setOnClick(int type) {
-								if (type == 1) {
-									requestDeleteGoods();
-								}
-							}
-						}, getString(R.string.prompt), getString(R.string.delete_confirm),
-						   getString(R.string.delete_think), getString(R.string.delete_pain),
-						   AppApplication.screenWidth * 2/3, true);
+						dm.showTwoBtnDialog(null, getString(R.string.delete_confirm),
+								getString(R.string.delete_pain), getString(R.string.delete_think),
+								AppApplication.screenWidth * 2/3, true, true, new Handler() {
+									@Override
+									public void handleMessage(Message msg) {
+										switch (msg.what) {
+											case BaseActivity.DIALOG_CANCEL_CLICK:
+												requestDeleteGoods();
+												break;
+											case BaseActivity.DIALOG_CONFIRM_CLICK:
+												break;
+										}
+									}
+								});
 						break;
 					}
 				}
@@ -355,6 +361,9 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
 		StatService.onPause(mContext);
+		if (dm != null) {
+			dm.clearInstance();
+		}
 	}
 
 	@Override

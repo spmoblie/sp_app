@@ -7,14 +7,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/topbar_group_height_child"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
         <RadioGroup
             android:id="@+id/topbar_radio_rg_top"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center"
             android:orientation="horizontal" >
@@ -61,7 +62,7 @@
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:textColor="@color/text_color_assist"
-                android:textSize="@dimen/text_size_16" >
+                android:textSize="@dimen/text_size_14" >
             </Button>
             
             <TextView 
@@ -71,7 +72,7 @@
                 android:gravity="center"
                 android:drawablePadding="5dp"
                 android:textColor="@color/text_color_assist"
-                android:textSize="@dimen/text_size_16"
+                android:textSize="@dimen/text_size_14"
                 android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>

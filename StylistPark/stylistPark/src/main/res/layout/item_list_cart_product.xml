@@ -15,7 +15,7 @@
         <RelativeLayout
             android:id="@+id/item_list_cart_product_rl_select"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:visibility="gone">
@@ -31,7 +31,7 @@
         <RelativeLayout
             android:id="@+id/item_list_cart_product_rl_img"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp" >
 
@@ -39,7 +39,6 @@
                 android:id="@+id/item_list_cart_product_iv_img"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:contentDescription="@string/desc"
                 android:scaleType="fitXY"
                 android:src="@drawable/bg_img_white" />
         </RelativeLayout>
@@ -59,17 +58,15 @@
 
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_brand"
-                    style="@style/cart_product_text_assist"
+                    style="@style/cart_product_text_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginRight="50dp"
-                    android:textColor="@color/text_color_content" />
+                    android:layout_marginRight="50dp" />
 
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_name"
-                    style="@style/cart_product_text_assist"
+                    style="@style/cart_product_text_content"
                     android:layout_below="@id/item_list_cart_product_tv_brand"
-                    android:layout_marginRight="50dp"
-                    android:textColor="@color/text_color_content" />
+                    android:layout_marginRight="50dp" />
 
                 <RelativeLayout
                     android:id="@+id/item_list_cart_product_rl_delete"
@@ -109,7 +106,7 @@
                     android:layout_height="20dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/shape_frame_white_gray_4"
+                    android:background="@drawable/shape_frame_white_dfdfdf_4"
                     android:orientation="horizontal">
 
                     <RelativeLayout

@@ -38,7 +38,7 @@
             android:id="@+id/withdrawals_btn_confirm"
             style="@style/Register_Button"
             android:text="@string/money_withdrawals_confirm"
-            android:textSize="@dimen/text_size_18" />
+            android:textSize="@dimen/text_size_16" />
     </LinearLayout>
 
     <TextView

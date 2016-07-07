@@ -89,7 +89,7 @@ public class ViewPagerActivity extends BaseActivity {
 					}
 				}
 			};
-			showErrorDialog(null, mHandler);
+			showErrorDialog(null, false, mHandler);
 			return;
 		}
 		setPageNum(urlLists.size());
@@ -97,7 +97,7 @@ public class ViewPagerActivity extends BaseActivity {
 		state_height = DeviceUtil.getStatusBarHeight(this);
 		// 获取默认显示图片
 		defaultImg = BitmapFactory.decodeResource(getResources(), R.drawable.bg_img_white);
-		defaultImg = BitmapUtil.resizeImageByWidth(defaultImg, AppApplication.screenWidth);
+		defaultImg = BitmapUtil.resizeImageByWidth(defaultImg, width);
 		// 创建网络图片加载器
 		AsyncImageLoaderCallback callback = new AsyncImageLoaderCallback() {
 
@@ -132,8 +132,8 @@ public class ViewPagerActivity extends BaseActivity {
 			imageView = new DragImageView(this);
 			imageView.setLayoutParams(lp);
 			imageView.setmActivity(this);
-			imageView.setScreen_H(AppApplication.screenHeight - state_height);
-			imageView.setScreen_W(AppApplication.screenWidth);
+			imageView.setScreen_H(height - state_height);
+			imageView.setScreen_W(width);
 			//imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 			// 加载图片对象
 			Bitmap bm = asyncImageLoader.loadImage(true, imgUrl, 0);

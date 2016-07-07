@@ -100,6 +100,9 @@
     <string name="home_tab_text_three">發現</string>
     <string name="home_tab_text_four">購物車</string>
     <string name="home_tab_text_five">我的</string>
+    <string name="home_txt_hot_goods">熱銷商品</string>
+    <string name="home_txt_today_topics">今日專題</string>
+    <string name="home_txt_limit_events">限時活動</string>
     
     <!-- title -->
     <string name="title_category">分類</string>
@@ -168,6 +171,8 @@
     <string name="events_top_tab_2">視頻</string>
     <string name="events_top_tab_3">專題</string>
     <string name="events_no_data">暫無發現，\n可能是專題欄目出錯啦！</string>
+    <string name="events_comment">評論</string>
+    <string name="events_comment_participate">參與評論</string>
     <string name="events_comment_ok">評論已發布</string>
     <string name="events_comment_input">請輸入評論內容</string>
     
@@ -185,6 +190,7 @@
     <string name="bouns_top_tab_2">未使用</string>
     <string name="bouns_top_tab_3">已過期</string>
     <string name="bouns_top_tab_4">已使用</string>
+    <string name="bouns_usable">可使用的</string>
     <string name="bouns_used_sum">已抵用%1$s</string>
     <string name="bouns_add_ok">添加成功</string>
     <string name="bouns_input_hint">紅包序列號</string>
@@ -251,7 +257,7 @@
     <string name="pay_cancel">支付取消</string>
     <string name="pay_wait_notice">等待支付通知</string>
     <string name="pay_result_abnormal">獲取支付結果異常，請與商家確認是否已支付成功！</string>
-    <string name="pay_info_error">未獲取支付信息，請與商家確認是否已支付?</string>
+    <string name="pay_info_error">獲取不到支付信息，請與商家確認是否已支付此訂單?</string>
     <string name="pay_order_error">支付訂單數據出現錯誤！請刷新訂單信息！</string>
     
     <!-- Photo page -->
@@ -384,7 +390,9 @@
    	<string name="profile_gender_confidential">保密</string>
    	<string name="profile_birthday">生日</string>
     <string name="profile_collection">我的關注</string>
+    <string name="profile_concerns_goods">關注的商品</string>
     <string name="profile_history">浏覽記錄</string>
+    <string name="profile_history_no_data">浏覽商品的記錄</string>
     <string name="profile_my_order">我的訂單</string>
     <string name="profile_check_all_order">查看全部訂單</string>
     <string name="profile_done">已完成</string>

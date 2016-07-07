@@ -444,7 +444,7 @@ public class JsonParser {
 	/**
 	 * 解析指定品牌相关信息
 	 */
-	public static BrandEntity getBrandProfile(String jsonStr) throws JSONException {
+	public static BrandEntity getBrandProfile(String jsonStr, String allStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		JSONObject data = jsonObject.getJSONObject("data");
 		BrandEntity brandEn = new BrandEntity();
@@ -463,6 +463,7 @@ public class JsonParser {
 			// 获取筛选分类
 			selectEn = new SelectListEntity();
 			childLists = new ArrayList<SelectListEntity>();
+			childLists.add(new SelectListEntity(0, allStr, ""));
 			for (int i = 0; i < cats.length(); i++) {
 				JSONObject item = cats.getJSONObject(i);
 				childEn = new SelectListEntity();
@@ -475,6 +476,19 @@ public class JsonParser {
 			brandEn.setSelectEn(selectEn);
 		}
 		return brandEn;
+	}
+
+	/**
+	 * 解析指定品牌商品列表数据
+	 */
+	public static ProductListEntity getBrandProductLists(String jsonStr) throws JSONException{
+		JSONObject jsonObject = new JSONObject(jsonStr);
+		ProductListEntity mainEn = new ProductListEntity(1, "");
+		if (jsonObject.has("total")) {
+			mainEn.setTotal(StringUtil.getInteger(jsonObject.getString("total")));
+		}
+		mainEn.setMainLists(getProductListsFormJson(jsonObject, "goods"));
+		return mainEn;
 	}
 
 	/**

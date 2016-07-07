@@ -1,13 +1,5 @@
 package com.spshop.stylistpark.activity.collage;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +32,14 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserTracker;
 import com.spshop.stylistpark.widgets.SquareImageView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeneratorTemplateChooseActivity extends BaseActivity {
     public static final String TAG = "GeneratorTemplateChooseActivity";
@@ -147,27 +147,27 @@ public class GeneratorTemplateChooseActivity extends BaseActivity {
         
         int length = getResources().getStringArray(R.array.array_continue_last_create).length;
         LogUtil.i(TAG, "onLoadDraft length: " + length);
-        
-        showConfirmDialog(R.string.collage_continue_last_create, getResources().getStringArray(R.array.array_continue_last_create), 
-        new Handler(){
 
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what) {
-                case 0:
-                    UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_TEMPLATE_DRAFT, null);
-                    UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_VIEW_TEMPLATE_COLLAGE_GENERATOR, null);
-                    Intent i = new Intent(mContext, GeneratorTemplateActivity.class);
-                    startActivityForResult(i, BACK_MENU_REQUEST);
-                    break;
-                case 1:
-                    UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_TEMPLATE_NEW, null);
-                    break;
-                }
-            }
-            
-        });
+        showListDialog(R.string.collage_continue_last_create,
+                getResources().getStringArray(R.array.array_continue_last_create), true, new Handler() {
+
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        switch (msg.what) {
+                            case 0:
+                                UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_TEMPLATE_DRAFT, null);
+                                UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_VIEW_TEMPLATE_COLLAGE_GENERATOR, null);
+                                Intent i = new Intent(mContext, GeneratorTemplateActivity.class);
+                                startActivityForResult(i, BACK_MENU_REQUEST);
+                                break;
+                            case 1:
+                                UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_TEMPLATE_NEW, null);
+                                break;
+                        }
+                    }
+
+                });
     }
 
     public void convertJson()

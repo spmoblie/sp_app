@@ -1,10 +1,7 @@
 package com.spshop.stylistpark.activity;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -14,7 +11,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,14 +20,9 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -46,6 +37,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.login.LoginActivity;
+import com.spshop.stylistpark.dialog.DialogManager;
 import com.spshop.stylistpark.dialog.LoadDialog;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.service.ServiceContext;
@@ -62,9 +54,6 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * 所有Activity的父类
  */
@@ -79,12 +68,12 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected int width, height;
 	protected SharedPreferences shared;
 	protected Editor editor;
-	protected AlertDialog myDialog;
+	protected DialogManager dm;
 	protected IWXAPI api;
 	protected Boolean isInitShare = false;
 	protected ShareView mShareView;
 
-	private RelativeLayout rl_head;
+	private LinearLayout ll_head;
 	private ImageView iv_left, iv_title_logo;
 	private TextView tv_title;
 	private Button btn_right;
@@ -102,8 +91,8 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected static final int MAX_PRODUCT = 10; //搭配货品上限
 	protected static final int GEN_OUTPUT_SIDE = 450;
 	protected static final int GEN_OUTPUT_MOBILE_SIDE = 300;
-	protected static final int DIALOG_CONFIRM_CLICK = 456; //全局对话框“确定”
-	protected static final int DIALOG_CANCEL_CLICK = 887; //全局对话框“取消”
+	public static final int DIALOG_CONFIRM_CLICK = 456; //全局对话框“确定”
+	public static final int DIALOG_CANCEL_CLICK = 887; //全局对话框“取消”
 	
 	protected RetryPolicy retryPolicy60s = new DefaultRetryPolicy(60000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 	
@@ -116,6 +105,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		mContext = this;
 		shared = AppApplication.getSharedPreferences();
 		editor = shared.edit();
+		dm = DialogManager.getInstance(mContext);
 		atm = AsyncTaskManager.getInstance(mContext);
 		AppManager.getInstance().addActivity(this);
 		api = WXAPIFactory.createWXAPI(this, AppConfig.WX_APP_ID);
@@ -124,6 +114,9 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		// 获取屏幕配置
 		width = AppApplication.screenWidth;
 		height = AppApplication.screenHeight;
+
+		// 设置App字体不随系统字体变化
+		AppApplication.initDisplayMetrics();
 		
 		findViewById();
 		initView();
@@ -140,7 +133,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	}
 	
 	private void findViewById() {
-		rl_head = (RelativeLayout) findViewById(R.id.top_bar_head_rl);
+		ll_head = (LinearLayout) findViewById(R.id.top_bar_head_ll_main);
 		iv_left = (ImageView) findViewById(R.id.top_bar_left);
 		iv_title_logo = (ImageView) findViewById(R.id.top_bar_title_logo);
 		tv_title = (TextView) findViewById(R.id.top_bar_title);
@@ -175,33 +168,33 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	public void setHeadVisibility(int visibility) {
 		switch (visibility) {
 		case View.VISIBLE:
-			if (rl_head.getVisibility() == View.GONE) {
-				rl_head.clearAnimation();
-				rl_head.startAnimation(inAnim);
+			if (ll_head.getVisibility() == View.GONE) {
+				ll_head.clearAnimation();
+				ll_head.startAnimation(inAnim);
 			}
 			break;
 		case View.GONE:
-			if (rl_head.getVisibility() == View.VISIBLE) {
-				rl_head.clearAnimation();
-				rl_head.startAnimation(outAnim);
+			if (ll_head.getVisibility() == View.VISIBLE) {
+				ll_head.clearAnimation();
+				ll_head.startAnimation(outAnim);
 			}
 			break;
 		}
-		rl_head.setVisibility(visibility);
+		ll_head.setVisibility(visibility);
 	}
 	
 	/**
 	 * 设置头部View背景色
 	 */
 	public void setHeadBackground(int color){
-		rl_head.setBackgroundColor(color);
+		ll_head.setBackgroundColor(color);
 	}
 	
 	/**
 	 * 获取头部View的高度
 	 */
 	public int getHeadHeight(){
-		return rl_head.getHeight();
+		return ll_head.getHeight();
 	}
 
 	/**
@@ -433,12 +426,17 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		if (mShareView != null) {
 			mShareView.onResume();
 		}
+		// 设置App字体不随系统字体变化
+		AppApplication.initDisplayMetrics();
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
 		LogUtil.i(TAG, "onPause()");
+		if (dm != null) {
+			dm.clearInstance();
+		}
 		if (mShareView != null) {
 			mShareView.onResume();
 		}
@@ -453,7 +451,6 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		}
 		headGONE = null;
 		headVISIBLE = null;
-		dissmissMyDialog();
 	}
 
 	@Override
@@ -498,7 +495,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 */
 	protected void showTimeOutDialog(final String rootPage) {
 		AppApplication.AppLogout(true);
-		showErrorDialog(getString(R.string.login_timeout), new Handler(){
+		showErrorDialog(getString(R.string.login_timeout), true, new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
 				openLoginActivity(rootPage);
@@ -514,7 +511,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	}
 	
 	/**
-	 * 加载数据出错，提示服务器繁忙
+	 * 加载数据出错提示
 	 */
 	protected void showServerBusy() {
 		showErrorDialog(R.string.toast_server_busy);
@@ -525,130 +522,54 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	}
 
 	protected void showErrorDialog(String content) {
-		showErrorDialog(content, null);
+		showErrorDialog(content, true, null);
 	}
 	
-	protected void showErrorDialog(String content, final Handler handler) {
-		try {
-			dissmissMyDialog(); //销毁旧对话框
-			content = (TextUtils.isEmpty(content)) ? getString(R.string.dialog_error_msg) : content;
-			Builder dialog = new AlertDialog.Builder(this)
-			.setMessage(content)
-			.setCancelable(false)
-			.setNeutralButton(R.string.confirm, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialogInterface, int i) {
-					if (handler != null) {
-						handler.sendEmptyMessage(DIALOG_CONFIRM_CLICK);
-					}
-				}
-			});
-			myDialog = dialog.show();
-			TextView messageText = (TextView) myDialog.findViewById(android.R.id.message);
-			messageText.setGravity(Gravity.CENTER);
-		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
-		}
+	protected void showErrorDialog(String content, boolean isVanish, final Handler handler) {
+		content = (TextUtils.isEmpty(content)) ? getString(R.string.dialog_error_msg) : content;
+		dm.showOneBtnDialog(content, width * 2/3, true, isVanish, handler, null);
 	}
 	
-    protected void showConfirmDialog(int contentResId, String positiveBtnStr,
-			String negativeBtnStr, final Handler handler) {
-		showConfirmDialog(getString(contentResId), positiveBtnStr, negativeBtnStr, handler);
+    protected void showConfirmDialog(int contentResId, String positiveBtnStr, String negativeBtnStr,
+					boolean isCenter, boolean isVanish, final Handler handler) {
+		showConfirmDialog(getString(contentResId), positiveBtnStr, negativeBtnStr, isCenter, isVanish, handler);
 	}
 
-	protected void showConfirmDialog(String content, String positiveBtnStr,
-			String negativeBtnStr, final Handler handler) {
-		showConfirmDialog(null, content, positiveBtnStr, negativeBtnStr, handler);
+	protected void showConfirmDialog(String content, String positiveBtnStr, String negativeBtnStr,
+					boolean isCenter, boolean isVanish, final Handler handler) {
+		showConfirmDialog(null, content, positiveBtnStr, negativeBtnStr, isCenter, isVanish, handler);
 	}
 
-	protected void showConfirmDialog(String title, String content, String positiveBtnStr, String negativeBtnStr, final Handler handler) {
-		try {
-			dissmissMyDialog(); //销毁旧对话框
-			positiveBtnStr = (positiveBtnStr == null) ? getString(R.string.confirm) : positiveBtnStr;
-			negativeBtnStr = (negativeBtnStr == null) ? getString(R.string.cancel) : negativeBtnStr;
-			Builder dialog = new AlertDialog.Builder(this)
-			.setMessage(content)
-			.setCancelable(false)
-			.setPositiveButton(positiveBtnStr,
-					new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialogInterface, int i) {
-					if (handler != null) {
-						handler.sendEmptyMessage(DIALOG_CONFIRM_CLICK);
-					}
-				}
-			})
-			.setNegativeButton(negativeBtnStr,
-					new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialogInterface, int i) {
-					if (handler != null) {
-						handler.sendEmptyMessage(DIALOG_CANCEL_CLICK);
-					}
-				}
-			});
-			if (!TextUtils.isEmpty(title)) {
-				dialog.setTitle(title);
-			}
-			myDialog = dialog.show();
-			TextView messageText = (TextView) myDialog.findViewById(android.R.id.message);
-			messageText.setGravity(Gravity.CENTER);
-		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
-		}
+	protected void showConfirmDialog(String title, String content, String positiveBtnStr, String negativeBtnStr,
+					boolean isCenter, boolean isVanish, final Handler handler) {
+		positiveBtnStr = (positiveBtnStr == null) ? getString(R.string.confirm) : positiveBtnStr;
+		negativeBtnStr = (negativeBtnStr == null) ? getString(R.string.cancel) : negativeBtnStr;
+		showConfirmDialog(null, content, positiveBtnStr, negativeBtnStr, width * 2/3, isCenter, isVanish, handler);
 	}
 
-	protected void showConfirmDialog(int contentResId, CharSequence[] items, final Handler handler) {
-		showConfirmDialog(getString(contentResId), items, handler);
+	protected void showConfirmDialog(String title, String content, String positiveBtnStr, String negativeBtnStr,
+					int width, boolean isCenter, boolean isVanish, final Handler handler) {
+		positiveBtnStr = (positiveBtnStr == null) ? getString(R.string.confirm) : positiveBtnStr;
+		negativeBtnStr = (negativeBtnStr == null) ? getString(R.string.cancel) : negativeBtnStr;
+		dm.showTwoBtnDialog(null, content, positiveBtnStr, negativeBtnStr, width, isCenter, isVanish, handler);
 	}
 
-	protected void showConfirmDialog(String content, CharSequence[] items, final Handler handler) {
-		try {
-			dissmissMyDialog(); //销毁旧对话框
-			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View v = inflater.inflate(R.layout.dialog_list_1, null, false);
-			ListView lv = (ListView) v.findViewById(R.id.lv);
-			List<CharSequence> itemList = Arrays.asList(items);
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			ArrayAdapter adapter = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, itemList) {
-
-				@Override
-				public View getView(int position, View convertView, ViewGroup parent) {
-					View v = super.getView(position, convertView, parent);
-					TextView tv = (TextView) v.findViewById(android.R.id.text1);
-					tv.setTextColor(mContext.getResources().getColor(R.color.text_color_white));
-					tv.setGravity(Gravity.CENTER);
-					return v;
-				}
-
-			};
-			lv.setAdapter(adapter);
-			AlertDialog.Builder dialog = new AlertDialog.Builder(this).setMessage(content).setCancelable(false).setView(v);
-
-			myDialog = dialog.show();
-			lv.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					LogUtil.i(TAG, "onItemClick rayrayray: " + position);
-					handler.sendEmptyMessage(position);
-					myDialog.dismiss();
-				}
-			});
-			TextView messageText = (TextView) myDialog.findViewById(android.R.id.message);
-			messageText.setGravity(Gravity.CENTER);
-		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
-		}
+	protected void showListDialog(int contentResId, CharSequence[] items, boolean isCenter, final Handler handler) {
+		showListDialog(contentResId, items, width * 2/3, isCenter, handler);
 	}
-	
-	private void dissmissMyDialog(){
-		if (myDialog != null) {
-			myDialog.dismiss();
-			myDialog = null;
-		}
+
+	protected void showListDialog(int contentResId, CharSequence[] items, int width, boolean isCenter, final Handler handler) {
+		showListDialog(getString(contentResId), items, width, isCenter, handler);
 	}
-	
+
+	protected void showListDialog(String content, CharSequence[] items, boolean isCenter, final Handler handler) {
+		showListDialog(content, items, width * 2/3, isCenter, handler);
+	}
+
+	protected void showListDialog(String content, CharSequence[] items, int width, boolean isCenter, final Handler handler) {
+		dm.showListItemDialog(content, items, width, isCenter, handler);
+	}
+
 	/**
 	 * 创建向上缩进、向下拉出的动画效果
 	 * 

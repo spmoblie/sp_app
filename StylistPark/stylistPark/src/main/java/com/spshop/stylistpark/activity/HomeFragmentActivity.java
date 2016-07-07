@@ -78,6 +78,8 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			registerReceiver(myBroadcastReceiver, mFilter);
 			// 检测App版本信息
 			UpdateAppVersion.getInstance(instance, true);
+			// 设置App字体不随系统字体变化
+			AppApplication.initDisplayMetrics();
 
 			findViewById();
 		} catch (Exception e) {
@@ -178,6 +180,8 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		StatService.onResume(this);
+		// 设置App字体不随系统字体变化
+		AppApplication.initDisplayMetrics();
 		
 		exit = Boolean.FALSE;
 		initView();

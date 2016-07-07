@@ -82,13 +82,12 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	public static ProductDetailActivity instance = null;
 	public boolean isUpdate = false;
-
 	@SuppressWarnings("unused")
 	private LinearLayout ll_other, ll_bottom, ll_head, ll_promotion, ll_show, ll_bottom_bar, ll_radio_main;
 	private RelativeLayout rl_screen, rl_num_minus, rl_num_add;
 	private FrameLayout fl_main;
 	private ImageView iv_left, iv_goods_img, iv_video, iv_brang_logo, iv_num_minus, iv_num_add, iv_to_top;
-	private TextView tv_title, tv_timer, tv_page, tv_name, tv_price_sell, tv_price_full, tv_discount;
+	private TextView tv_title, tv_timer, tv_page, tv_name, tv_curr, tv_price_sell, tv_price_full, tv_discount;
 	private TextView tv_property_1, tv_property_2, tv_property_3, tv_brand_name, tv_brand_country, tv_brand_go;
 	private TextView tv_collection, tv_cart, tv_cart_total, tv_add_cart, tv_call, tv_home;
 	private TextView tv_popup_name, tv_popup_price, tv_popup_prompt, tv_popup_select, tv_popup_number, tv_popup_confirm;
@@ -162,6 +161,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		tv_timer = (TextView) findViewById(R.id.product_detail_tv_timer);
 		tv_page = (TextView) findViewById(R.id.product_detail_tv_page);
 		tv_name = (TextView) findViewById(R.id.product_detail_tv_product_name);
+		tv_curr = (TextView) findViewById(R.id.product_detail_tv_curr);
 		tv_price_sell = (TextView) findViewById(R.id.product_detail_tv_product_price_sell);
 		tv_price_full = (TextView) findViewById(R.id.product_detail_tv_product_price_full);
 		tv_discount = (TextView) findViewById(R.id.product_detail_tv_product_discount);
@@ -222,8 +222,9 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			price = mainEn.getComputePrice();
 			mathPrice = mainEn.getComputePrice();
 			tv_name.setText(mainEn.getBrandName() + mainEn.getName());
-			tv_price_sell.setText(currStr + mainEn.getSellPrice()); //商品卖价
-			
+			tv_curr.setText(currStr);
+			tv_price_sell.setText(mainEn.getSellPrice()); //商品卖价
+
 			String full_price = mainEn.getFullPrice(); //商品原价
 			if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {
 				tv_price_full.setVisibility(View.GONE);
@@ -330,6 +331,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	}
 
 	private void initViewPager() {
+		viewPager.removeAllViews();
 		viewLists.clear();
 		urlLists.clear();
 		imgEns.clear();
@@ -854,7 +856,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 	@Override
 	public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-		if (y > AppApplication.screenHeight*2) {
+		if (y > height * 2) {
 			if (!isShow) {
 				isShow = true;
 				iv_to_top.setVisibility(View.VISIBLE);
@@ -925,7 +927,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				}
 				CommonTools.showToast(mContext, ((BaseEntity) result).getErrInfo(), 1000);
 			}else {
-				CommonTools.showToast(mContext, getString(R.string.toast_server_busy), 1000);
+				showServerBusy();
 			}
 			break;
 		}

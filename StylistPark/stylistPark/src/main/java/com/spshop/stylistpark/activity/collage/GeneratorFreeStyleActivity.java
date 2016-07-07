@@ -297,24 +297,24 @@ public class GeneratorFreeStyleActivity extends BaseActivity implements
     }
     
     private void ask4Leave() {
-        Handler handler = new Handler(){
+        showListDialog(R.string.collage_msg_leave_create,
+                getResources().getStringArray(R.array.array_save_draft), true, new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                case 0: // save
-                    UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_FREE_COLLAGE_SAVE_DRAFT, null);
-                    saveDraft(false);
-                    finish();
-                    break;
-                case 1: // discard 
-                    finish();
-                    break;
-                case 2: // cancel
-                    break;
+                    case 0: // save
+                        UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_FREE_COLLAGE_SAVE_DRAFT, null);
+                        saveDraft(false);
+                        finish();
+                        break;
+                    case 1: // discard
+                        finish();
+                        break;
+                    case 2: // cancel
+                        break;
                 }
             }
-        };
-        showConfirmDialog(R.string.collage_msg_leave_create, getResources().getStringArray(R.array.array_save_draft), handler);
+        });
     }
     
     private Rect calculateScaledRect(int width, int height, int minSide, int maxSide)
@@ -667,27 +667,27 @@ public class GeneratorFreeStyleActivity extends BaseActivity implements
         
         int length = getResources().getStringArray(R.array.array_continue_last_create).length;
         LogUtil.i(TAG, "onLoadDraft length: " + length);
-        
-        showConfirmDialog(R.string.collage_continue_last_create, getResources().getStringArray(R.array.array_continue_last_create), 
-                new Handler(){
 
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what) {
-                case 0:
-                    UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_FREE_COLLAGE_DRAFT, null);
-                    isLoadDraft = true;
-                    startDownloadDecorDB();
-                    break;
-                case 1:
-                    UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_FREE_COLLAGE_NEW, null);
-                    startDownloadDecorDB();
-                    break;
-                }
-            }
-            
-        });
+        showListDialog(R.string.collage_continue_last_create,
+                getResources().getStringArray(R.array.array_continue_last_create), true, new Handler() {
+
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        switch (msg.what) {
+                            case 0:
+                                UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_FREE_COLLAGE_DRAFT, null);
+                                isLoadDraft = true;
+                                startDownloadDecorDB();
+                                break;
+                            case 1:
+                                UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_FREE_COLLAGE_NEW, null);
+                                startDownloadDecorDB();
+                                break;
+                        }
+                    }
+
+                });
     }
     
     private void save()

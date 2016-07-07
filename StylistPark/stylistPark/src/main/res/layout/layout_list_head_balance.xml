@@ -32,7 +32,7 @@
             android:gravity="center"
             android:text="@string/number_0"
             android:textColor="@color/text_color_white"
-            android:textSize="@dimen/text_size_24"
+            android:textSize="@dimen/text_size_22"
             android:textStyle="bold" />
     </LinearLayout>
     
@@ -49,6 +49,8 @@
             android:id="@+id/balance_list_head_tv_withdrawals_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
             android:text="@string/money_auth_hint"
             android:textSize="@dimen/text_size_12"
             android:textColor="@color/text_color_assist" />
@@ -59,6 +61,8 @@
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/common_go_right"
             android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:lines="1"
             android:text="@string/money_auth_go"
             android:textSize="@dimen/text_size_12"
             android:textColor="@color/text_color_red_1" />

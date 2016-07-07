@@ -278,20 +278,19 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	/**
 	 * 确认取消订单
 	 */
-	@SuppressLint("HandlerLeak")
 	private void confirmCacelOrder() {
-		Handler handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.what) {
-				case DIALOG_CONFIRM_CLICK:
-					postCacelOrder();
-					break;
-				}
-			}
+		showConfirmDialog(R.string.order_cacel_confirm, getString(R.string.confirm),
+				getString(R.string.being_not), true, true, new Handler() {
+					@Override
+					public void handleMessage(Message msg) {
+						switch (msg.what) {
+							case DIALOG_CANCEL_CLICK:
+								postCacelOrder();
+								break;
+						}
+					}
 
-		};
-		showConfirmDialog(R.string.order_cacel_confirm, getString(R.string.confirm), getString(R.string.being_not), handler);
+				});
 	}
 
 	private void postCacelOrder() {
@@ -466,7 +465,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 				}
 			}
 		};
-		showErrorDialog(getString(R.string.toast_server_busy), mHandler);
+		showErrorDialog(getString(R.string.toast_server_busy), false, mHandler);
 	}
 	
 }

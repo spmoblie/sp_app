@@ -52,7 +52,7 @@
                     android:gravity="center"
                     android:text="@string/select_all"
                     android:textColor="@color/text_color_assist"
-                    android:textSize="@dimen/text_size_13" />
+                    android:textSize="@dimen/text_size_12" />
             </LinearLayout>
 
             <LinearLayout

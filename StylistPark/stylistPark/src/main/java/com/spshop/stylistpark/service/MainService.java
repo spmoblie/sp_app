@@ -48,7 +48,9 @@ public interface MainService {
 
 	ProductDetailEntity getProductDetailDatas(int goodsId) throws Exception;
 	
-	BrandEntity getBrandProfile(int brandId) throws Exception;
+	BrandEntity getBrandProfile(int brandId, String allStr) throws Exception;
+
+	ProductListEntity getBrandProductLists(int brandId, int dataType, int selectId, int count, int page) throws Exception;
 
 	GoodsCartEntity postCartProductData(int quick, int goodsId, int id1, int id2, int buyNumber, int parent) throws Exception;
 

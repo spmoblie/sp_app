@@ -1,18 +1,5 @@
 package com.spshop.stylistpark.activity.collage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -64,6 +51,19 @@ import com.spshop.stylistpark.utils.LimitedHashMap;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UserTracker;
 import com.spshop.stylistpark.widgets.listener.VolleyImageResponseListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @SuppressLint("NewApi")
 public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoListener, ErrorListener, 
@@ -286,37 +286,37 @@ public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoL
     
     private void ask4Leave(final boolean isBack2Menu)
     {
-        Handler handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg)
-            {
-                switch (msg.what) {
-                case 0: // save
-                    UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_TEMPLATE_SAVE_DRAFT, null);
-                    saveDraft(false);
-                    if(isBack2Menu)
+        showListDialog(R.string.collage_msg_leave_create,
+                getResources().getStringArray(R.array.array_save_draft), true, new Handler(){
+                    @Override
+                    public void handleMessage(Message msg)
                     {
-                        Intent i = getIntent();
-                        setResult(RESULT_OK, i);
+                        switch (msg.what) {
+                            case 0: // save
+                                UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_TEMPLATE_SAVE_DRAFT, null);
+                                saveDraft(false);
+                                if(isBack2Menu)
+                                {
+                                    Intent i = getIntent();
+                                    setResult(RESULT_OK, i);
+                                }
+                                finish();
+                                break;
+                            case 1: // discard
+                                if(isBack2Menu)
+                                {
+                                    Intent i = getIntent();
+                                    setResult(RESULT_OK, i);
+                                }
+                                finish();
+                                break;
+                            case 2: // cancel
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                    finish();
-                    break;
-                case 1: // discard
-                    if(isBack2Menu)
-                    {
-                        Intent i = getIntent();
-                        setResult(RESULT_OK, i);
-                    }
-                    finish();
-                    break;
-                case 2: // cancel
-                    break;
-                default:
-                    break;
-                }
-            }
-        };
-        showConfirmDialog(R.string.collage_msg_leave_create, getResources().getStringArray(R.array.array_save_draft), handler);
+                });
     }
     
     public void clickBackward(View v)

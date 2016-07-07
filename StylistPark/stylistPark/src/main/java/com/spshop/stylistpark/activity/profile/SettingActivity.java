@@ -2,6 +2,8 @@ package com.spshop.stylistpark.activity.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
@@ -14,8 +16,6 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.HomeFragmentActivity;
 import com.spshop.stylistpark.activity.common.MyWebViewActivity;
-import com.spshop.stylistpark.dialog.DialogManager;
-import com.spshop.stylistpark.dialog.DialogManager.DialogManagerCallback;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LangCurrTools.Currency;
@@ -40,8 +40,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	private boolean isLogined = false;
 	private boolean update_fragment = false;
-	private DialogManager dm;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,8 +50,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		LogUtil.i(TAG, "onCreate");
 		
 		instance = this;
-		dm = new DialogManager(mContext);
-		
+
 		findViewById();
 		initView();
 	}
@@ -169,17 +167,19 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.setting_rl_logout:
 			if (isLogined) {
-				dm.showTwoBtnDialog(new DialogManagerCallback() {
-					
-					@Override
-					public void setOnClick(int type) {
-						if (type == 1) {
-							postLogouRequest();
-						}
-					}
-				}, getString(R.string.prompt), getString(R.string.setting_logout_confirm),
-				   getString(R.string.cancel), getString(R.string.confirm), 
-				   AppApplication.screenWidth * 2/3, true);
+				showConfirmDialog(getString(R.string.setting_logout_confirm), getString(R.string.cancel),
+						getString(R.string.confirm), true, true, new Handler() {
+							@Override
+							public void handleMessage(Message msg) {
+								switch (msg.what) {
+									case BaseActivity.DIALOG_CANCEL_CLICK:
+										break;
+									case BaseActivity.DIALOG_CONFIRM_CLICK:
+										postLogouRequest();
+										break;
+								}
+							}
+						});
 			}else {
 				openLoginActivity(TAG);
 			}

@@ -74,7 +74,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/ui_bg_color_bar"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_14"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -135,6 +135,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
             </LinearLayout>
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:layout_marginLeft="15dp"
+                android:contentDescription="@string/desc" />
 
             <RelativeLayout
                 style="@style/common_vertical_item_layout"
@@ -265,13 +270,13 @@
             android:id="@+id/order_detail_tv_pay_now"
             style="@style/common_text_bg_frame"
             android:text="@string/order_pay_now"
-            android:textSize="@dimen/text_size_16" />
+            android:textSize="@dimen/text_size_14" />
 
         <TextView
             android:id="@+id/order_detail_tv_cacel_order"
             style="@style/common_text_bg_frame"
             android:text="@string/order_cacel"
-            android:textSize="@dimen/text_size_16" />
+            android:textSize="@dimen/text_size_14" />
     </LinearLayout>
 
 </LinearLayout>

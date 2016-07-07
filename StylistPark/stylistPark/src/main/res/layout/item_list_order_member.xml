@@ -55,7 +55,7 @@
             android:layout_marginLeft="0dp"
             android:layout_toRightOf="@id/item_list_order_member_rl_head"
             android:textColor="@color/text_color_assist"
-            android:textSize="@dimen/text_size_11" />
+            android:textSize="@dimen/text_size_10" />
 
         <TextView
             android:id="@+id/item_list_order_member_tv_order_status"

@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="7" >
+        android:layout_weight="1" >
 
         <ImageView
             android:id="@+id/logistics_iv_node"
@@ -23,8 +23,8 @@
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="75dp"
-        android:layout_weight="43" >
+        android:layout_height="70dp"
+        android:layout_weight="6" >
 
         <TextView
             android:id="@+id/logistics_tv_content"
@@ -36,7 +36,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:textColor="@color/text_color_assist"
-            android:textSize="@dimen/text_size_14" />
+            android:textSize="@dimen/text_size_12" />
 
         <TextView
             android:id="@+id/logistics_tv_time"

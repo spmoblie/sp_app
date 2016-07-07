@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,33 +34,35 @@ import java.util.List;
  * "通用商品展示列表"
  */
 @SuppressLint("UseSparseArrays")
-public class ShowListActivity extends BaseActivity {
-	
+public class ShowListActivity extends BaseActivity implements OnClickListener {
+
 	private static final String TAG = "ShowListActivity";
-	public static ShowListActivity instance = null;
 	public static final int PAGE_ROOT_CODE_1 = 1001; //ChildFragmentFive：收藏商品
 	public static final int PAGE_ROOT_CODE_2 = 1002; //ChildFragmentFive：浏览记录
+	public static ShowListActivity instance = null;
 	public boolean isUpdate = false;
 	
 	private static final int Page_Count = 20;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页
 	private int countTotal = 0; //商品总数量
 	private boolean isLoadOk = true;
+
+	private int pageCode = PAGE_ROOT_CODE_1;
+	private String pageName = "";
 	
 	private FrameLayout rl_no_data;
 	private TextView tv_no_data;
+	private ImageView iv_to_top;
 	private PullToRefreshListView refresh_lv;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
 	private ProductList2ItemAdapter lv_two_adapter;
 	
-	private int pageCode = PAGE_ROOT_CODE_1;
-	private String pageName = "";
 	private ProductListEntity product_MainEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
-	private List<ProductListEntity> lv_lists_show = new ArrayList<ProductListEntity>();
-	private List<ProductListEntity> lv_lists_all = new ArrayList<ProductListEntity>();
-	private HashMap<Integer, Boolean> hm_all = new HashMap<Integer, Boolean>();
+	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
+	private List<ProductListEntity> lv_all_1 = new ArrayList<ProductListEntity>();
+	private HashMap<Integer, Boolean> hm_all_1 = new HashMap<Integer, Boolean>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +84,12 @@ public class ShowListActivity extends BaseActivity {
 		refresh_lv = (PullToRefreshListView) findViewById(R.id.list_head_common_refresh_lv);
 		rl_no_data = (FrameLayout) findViewById(R.id.loading_no_data_fl_main);
 		tv_no_data = (TextView) findViewById(R.id.loading_no_data_tv_show);
+		iv_to_top = (ImageView) findViewById(R.id.list_head_common_iv_to_top);
 	}
 
 	private void initView() {
 		setTitle(pageName);
+		iv_to_top.setOnClickListener(this);
 		initListView();
 		setAdapter();
 	}
@@ -95,7 +101,7 @@ public class ShowListActivity extends BaseActivity {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 下拉刷新
-            	if (lv_lists_show.size() == 0) {
+            	if (lv_show.size() == 0) {
             		getSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -186,6 +192,15 @@ public class ShowListActivity extends BaseActivity {
 			}
 		}, 1000);
 	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.show_list_iv_to_top: //回顶
+				toTop();
+				break;
+		}
+	}
 	
 	@Override
 	protected void onResume() {
@@ -197,9 +212,9 @@ public class ShowListActivity extends BaseActivity {
         if (pageCode == PAGE_ROOT_CODE_1 && isUpdate) {
         	isUpdate = false;
         	lv_show_two.clear();
-        	lv_lists_show.clear();
-        	lv_lists_all.clear();
-        	hm_all.clear();
+			lv_show.clear();
+			lv_all_1.clear();
+			hm_all_1.clear();
         	refresh_lv.doPullRefreshing(true, 500);
 		}
 	}
@@ -243,7 +258,7 @@ public class ShowListActivity extends BaseActivity {
 			countTotal = product_MainEn.getTotal();
 			List<ProductListEntity> lists = product_MainEn.getMainLists();
 			if (lists.size() > 0) {
-				addEntity(lv_lists_all, lists, hm_all);
+				addEntity(lv_all_1, lists, hm_all_1);
 				current_Page++;
 				myUpdateAdapter();
 			}else {
@@ -284,26 +299,34 @@ public class ShowListActivity extends BaseActivity {
 	}
 
 	private void addAllShow(List<ProductListEntity> showLists) {
-		lv_lists_show.clear();
-		lv_lists_show.addAll(showLists);
+		lv_show.clear();
+		lv_show.addAll(showLists);
 	}
 	
 	private void myUpdateAdapter() {
 		lv_show_two.clear();
 		ListShowTwoEntity lstEn = null;
-		for (int i = 0; i < lv_lists_show.size(); i++) {
-			ProductListEntity en = lv_lists_show.get(i);
+		for (int i = 0; i < lv_show.size(); i++) {
+			ProductListEntity en = lv_show.get(i);
 			if (i%2 == 0) {
 				lstEn = new ListShowTwoEntity();
 				lstEn.setLeftEn(en);
-				if (i+1 < lv_lists_show.size()) {
-					lstEn.setRightEn(lv_lists_show.get(i+1));
+				if (i+1 < lv_show.size()) {
+					lstEn.setRightEn(lv_show.get(i+1));
 				}
 				lv_show_two.add(lstEn);
 			}
 		}
 		lv_two_adapter.updateAdapter(lv_show_two);
 		stopAnimation();
+	}
+
+	/**
+	 * 滚动到顶部
+	 */
+	private void toTop() {
+		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 	
 	@Override
@@ -312,8 +335,15 @@ public class ShowListActivity extends BaseActivity {
 		isLoadOk = true;
 		refresh_lv.onPullDownRefreshComplete();
 		refresh_lv.onPullUpRefreshComplete();
-		if (lv_lists_show.size() == 0) {
-			tv_no_data.setText(getString(R.string.loading_no_data, pageName));
+		if (lv_show.size() == 0) {
+			switch (pageCode) {
+				case PAGE_ROOT_CODE_1: //收藏商品
+					tv_no_data.setText(getString(R.string.loading_no_data, getString(R.string.profile_concerns_goods)));
+					break;
+				case PAGE_ROOT_CODE_2: //浏览记录
+					tv_no_data.setText(getString(R.string.loading_no_data, getString(R.string.profile_history_no_data)));
+					break;
+			}
 			rl_no_data.setVisibility(View.VISIBLE);
 			refresh_lv.setVisibility(View.GONE);
 		}else {
@@ -323,10 +353,10 @@ public class ShowListActivity extends BaseActivity {
 	}
 	
 	/**
-	 * 商品数小于一页时停止加载翻页数据
+	 * 判定是否停止加载翻页数据
 	 */
 	private boolean isStop(){
-		return lv_lists_show.size() < Page_Count || lv_lists_show.size() == countTotal;
+		return lv_show.size() > 0 && lv_show.size() == countTotal;
 	}
 	
 }

@@ -23,7 +23,7 @@
             android:paddingRight="15dp"
             android:textColor="@color/text_color_title"
             android:textColorHint="@color/text_color_assist"
-            android:textSize="@dimen/text_size_16" />
+            android:textSize="@dimen/text_size_14" />
 
         <ImageView
             android:id="@+id/edit_info_iv_clear"

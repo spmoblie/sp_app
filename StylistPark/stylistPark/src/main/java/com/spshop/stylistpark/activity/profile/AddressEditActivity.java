@@ -175,6 +175,7 @@ public class AddressEditActivity extends BaseActivity implements
 
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+					changeTextViewStyle(view);
 					selectCountryData(position);
 				}
 
@@ -207,6 +208,7 @@ public class AddressEditActivity extends BaseActivity implements
 
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+					changeTextViewStyle(view);
 					selectProvinceData(position);
 				}
 
@@ -241,6 +243,7 @@ public class AddressEditActivity extends BaseActivity implements
 
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+					changeTextViewStyle(view);
 					selectCityData(position);
 				}
 
@@ -275,6 +278,7 @@ public class AddressEditActivity extends BaseActivity implements
 				
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+					changeTextViewStyle(view);
 					selectDistrictData(position);
 				}
 				
@@ -295,6 +299,11 @@ public class AddressEditActivity extends BaseActivity implements
 			ll_district_main.setVisibility(View.GONE);
 			districtId = 0;
 		}
+	}
+
+	private void changeTextViewStyle(View view) {
+		TextView tv_show = (TextView) view;
+		tv_show.setTextSize(14);
 	}
 
 	private void selectCountryData(int position) {

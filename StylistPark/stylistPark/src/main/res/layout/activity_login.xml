@@ -52,7 +52,7 @@
                 android:inputType="textEmailAddress"
                 android:textColor="@color/text_color_title"
                 android:textColorHint="@color/text_color_assist"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_14" />
 
             <ImageView
                 android:id="@+id/login_iv_clear_user"
@@ -96,7 +96,7 @@
                 android:inputType="textPassword"
                 android:textColor="@color/text_color_title"
                 android:textColorHint="@color/text_color_assist"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_14" />
 
             <ImageView
                 android:id="@+id/login_iv_password_check"
@@ -141,8 +141,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/login_new_register"
-                android:textColor="@color/text_color_black"
-                android:textSize="@dimen/text_size_14" />
+                android:textColor="@color/text_color_content"
+                android:textSize="@dimen/text_size_12" />
 
             <ImageView
                 style="@style/set_line_vertical_bg"
@@ -156,8 +156,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/login_forget_password"
-                android:textColor="@color/text_color_black"
-                android:textSize="@dimen/text_size_14" />
+                android:textColor="@color/text_color_content"
+                android:textSize="@dimen/text_size_12" />
         </LinearLayout>
     </LinearLayout>
 
@@ -187,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login_quick"
                 android:textColor="@color/text_color_assist"
-                android:textSize="@dimen/text_size_14" />
+                android:textSize="@dimen/text_size_12" />
 
             <ImageView
                 style="@style/set_line_horizontal_bg"

@@ -24,7 +24,7 @@
         android:layout_width="80dp"
         android:layout_height="25dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/shape_frame_empty_black_0" >
+        android:background="@drawable/shape_frame_empty_000000_0" >
 
         <TextView
             android:id="@+id/create_menu_tv_make"

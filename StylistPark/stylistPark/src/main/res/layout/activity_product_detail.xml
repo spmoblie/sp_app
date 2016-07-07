@@ -71,12 +71,11 @@
 
                     <ImageView
                         android:id="@+id/product_detail_iv_video"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="bottom|right"
                         android:layout_marginBottom="15dp"
                         android:layout_marginRight="15dp"
-                        android:contentDescription="@string/desc"
                         android:src="@drawable/icon_video"
                         android:visibility="gone" />
                 </FrameLayout>
@@ -94,45 +93,41 @@
                         android:id="@+id/product_detail_tv_product_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
                         android:text=""
-                        android:textColor="@color/text_color_title"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textColor="@color/text_color_content"
+                        android:textSize="@dimen/text_size_14" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/product_detail_tv_curr"
+                            style="@style/common_text_price" />
+
+                        <TextView
                             android:id="@+id/product_detail_tv_product_price_sell"
                             style="@style/common_text_price"
-                            android:textSize="@dimen/text_size_20"
+                            android:textSize="@dimen/text_size_18"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/product_detail_tv_product_price_full"
                             style="@style/common_text_price"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginLeft="2dp"
                             android:textColor="@color/text_color_assist"
                             android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/product_detail_tv_product_discount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:background="@drawable/shape_frame_bg_app_buttom_0"
-                            android:gravity="center"
-                            android:padding="2dp"
-                            android:text=""
-                            android:textColor="@color/text_color_white"
-                            android:textSize="@dimen/text_size_08"
-                            android:visibility="gone" />
+                            style="@style/common_text_discount"
+                            android:textSize="@dimen/text_size_10" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -146,7 +141,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:baselineAligned="false"
                         android:orientation="horizontal"
@@ -160,7 +155,7 @@
 
                             <TextView
                                 android:id="@+id/product_detail_tv_property_1"
-                                style="@style/product_property_text_assist_1"
+                                style="@style/product_property_text_assist"
                                 android:text="@string/product_genuine_safeguard"
                                 android:visibility="gone" />
                         </RelativeLayout>
@@ -173,7 +168,7 @@
 
                             <TextView
                                 android:id="@+id/product_detail_tv_property_2"
-                                style="@style/product_property_text_assist_1"
+                                style="@style/product_property_text_assist"
                                 android:visibility="gone" />
                         </RelativeLayout>
 
@@ -185,7 +180,7 @@
 
                             <TextView
                                 android:id="@+id/product_detail_tv_property_3"
-                                style="@style/product_property_text_assist_1"
+                                style="@style/product_property_text_assist"
                                 android:visibility="gone" />
                         </RelativeLayout>
 
@@ -197,7 +192,7 @@
 
                             <TextView
                                 android:id="@+id/product_detail_tv_property_4"
-                                style="@style/product_property_text_assist_1"
+                                style="@style/product_property_text_assist"
                                 android:visibility="gone" />
                         </RelativeLayout>
                     </LinearLayout>
@@ -228,7 +223,7 @@
                     <RelativeLayout
                         android:layout_width="52dp"
                         android:layout_height="52dp"
-                        android:background="@drawable/shape_frame_white_gray_4" >
+                        android:background="@drawable/shape_frame_white_dfdfdf_4" >
 
                         <ImageView
                             android:id="@+id/product_detail_iv_brand_logo"
@@ -252,7 +247,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:textColor="@color/text_color_title"
+                            android:textColor="@color/text_color_content"
                             android:textSize="@dimen/text_size_14"
                             android:textStyle="bold"/>
 
@@ -270,13 +265,12 @@
                         android:id="@+id/product_detail_tv_brand_go"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
                         android:background="@drawable/shape_frame_bg_app_hollow_4"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="@string/product_brand_go"
                         android:textColor="@color/text_color_app_bar"
-                        android:textSize="@dimen/text_size_14" />
+                        android:textSize="@dimen/text_size_12" />
                 </LinearLayout>
 
                 <ImageView

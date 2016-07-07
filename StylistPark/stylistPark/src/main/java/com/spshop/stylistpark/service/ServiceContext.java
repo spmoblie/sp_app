@@ -120,8 +120,16 @@ public class ServiceContext {
 	/**
 	 * 获取指定品牌相关信息
 	 */
-	public BrandEntity getBrandProfile(int brandId) throws Exception {
-		return ms.getBrandProfile(brandId);
+	public BrandEntity getBrandProfile(int brandId, String allStr) throws Exception {
+		return ms.getBrandProfile(brandId, allStr);
+	}
+
+	/**
+	 * 获取指定品牌商品列表数据
+	 */
+	public ProductListEntity getBrandProductLists(
+			int brandId, int dataType, int selectId, int count, int page) throws Exception {
+		return ms.getBrandProductLists(brandId, dataType, selectId, count, page);
 	}
 
 	/**

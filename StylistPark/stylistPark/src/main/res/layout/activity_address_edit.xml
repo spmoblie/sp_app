@@ -76,10 +76,7 @@
 
                 <Spinner
                     android:id="@+id/new_address_sp_country"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp" />
+                    style="@style/Address_Spinner" />
             </LinearLayout>
 
             <ImageView
@@ -102,10 +99,7 @@
 
                 <Spinner
                     android:id="@+id/new_address_sp_province"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp" />
+                    style="@style/Address_Spinner" />
             </LinearLayout>
 
             <ImageView
@@ -128,10 +122,7 @@
 
                 <Spinner
                     android:id="@+id/new_address_sp_city"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp" />
+                    style="@style/Address_Spinner" />
             </LinearLayout>
 
             <ImageView
@@ -154,10 +145,7 @@
 
                 <Spinner
                     android:id="@+id/new_address_sp_district"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp" />
+                    style="@style/Address_Spinner" />
             </LinearLayout>
 
             <ImageView
@@ -275,7 +263,7 @@
             android:gravity="center"
             android:text="@string/confirm"
             android:textColor="@color/text_color_white"
-            android:textSize="@dimen/text_size_16" />
+            android:textSize="@dimen/text_size_14" />
     </LinearLayout>
 
 </FrameLayout>

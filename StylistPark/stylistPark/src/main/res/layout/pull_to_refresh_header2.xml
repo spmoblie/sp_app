@@ -32,7 +32,7 @@
                 android:layout_alignParentTop="true"
                 android:text="@string/loading_pull_refresh"
                 android:textColor="@color/text_color_assist"
-                android:textSize="@dimen/text_size_14" />
+                android:textSize="@dimen/text_size_12" />
 
             <TextView
                 android:id="@+id/pull_to_refresh_last_update_time_text"

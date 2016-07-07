@@ -54,10 +54,11 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	private int page_type_2 = 1;  //未使用加载页
 	private int page_type_3 = 1;  //已过期加载页
 	private int page_type_4 = 1;  //已使用加载页
-	private int countTotal = 0; //数集总数量
 	private int topType = TYPE_1; //Top标记
-	private boolean isFrist = true; //识别是否第一次打开页面
+	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
+	private int countTotal = 0; //数集总数量
 	private boolean isLoadOk = true; //加载数据控制符
+	private boolean isFrist = true; //识别是否第一次打开页面
 	private boolean isLogined, isSuccess;
 	private String rootStr, bounsId, bounsStr, noDataShowStr;
 	
@@ -73,11 +74,11 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	private BounsListAdapter lv_adapter;
 	
 	private BounsEntity mainEn;
-	private List<BounsEntity> lv_lists_show = new ArrayList<BounsEntity>();
-	private List<BounsEntity> lv_lists_all_1 = new ArrayList<BounsEntity>();
-	private List<BounsEntity> lv_lists_all_2 = new ArrayList<BounsEntity>();
-	private List<BounsEntity> lv_lists_all_3 = new ArrayList<BounsEntity>();
-	private List<BounsEntity> lv_lists_all_4 = new ArrayList<BounsEntity>();
+	private List<BounsEntity> lv_show = new ArrayList<BounsEntity>();
+	private List<BounsEntity> lv_all_1 = new ArrayList<BounsEntity>();
+	private List<BounsEntity> lv_all_2 = new ArrayList<BounsEntity>();
+	private List<BounsEntity> lv_all_3 = new ArrayList<BounsEntity>();
+	private List<BounsEntity> lv_all_4 = new ArrayList<BounsEntity>();
 	private HashMap<String, Boolean> hm_all_1 = new HashMap<String, Boolean>();
 	private HashMap<String, Boolean> hm_all_2 = new HashMap<String, Boolean>();
 	private HashMap<String, Boolean> hm_all_3 = new HashMap<String, Boolean>();
@@ -145,13 +146,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 下拉刷新
-            	new Handler().postDelayed(new Runnable() {
-					
-					@Override
-					public void run() {
-						refresh_lv.onPullDownRefreshComplete();
-					}
-				}, 1000);
+				refreshSVDatas();
             }
 
             @Override
@@ -189,7 +184,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			}
 			
 		};
-		lv_adapter = new BounsListAdapter(mContext, lv_lists_show, bounsId, lv_callback);
+		lv_adapter = new BounsListAdapter(mContext, lv_show, bounsId, lv_callback);
 		mListView.setAdapter(lv_adapter);
 		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
@@ -239,6 +234,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	 * 从远程服务器加载数据
 	 */
 	private void getSVDatas() {
+		loadType = 1;
 		current_Page = 1;
 		startAnimation();
 		requestProductLists();
@@ -248,6 +244,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	 * 加载翻页数据
 	 */
 	private void loadSVDatas() {
+		loadType = 1;
 		switch (topType) {
 		case TYPE_1:
 			current_Page = page_type_1;
@@ -266,10 +263,29 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	/**
+	 * 加载下拉刷新数据
+	 */
+	private void refreshSVDatas() {
+		loadType = 0;
+		current_Page = 1;
+		requestProductLists();
+	}
+
+	/**
 	 * 发起加载数据的请求
 	 */
 	private void requestProductLists() {
-		if (!isLoadOk) return; //加载频率控制
+		if (!isLoadOk) { //加载频率控制
+			if (loadType == 0) {
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						refresh_lv.onPullDownRefreshComplete();
+					}
+				}, 1000);
+			}
+			return;
+		}
 		isLoadOk = false;
 		new Handler().postDelayed(new Runnable() {
 			
@@ -297,8 +313,8 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			if (!isFrist && topType == TYPE_1) return;
 			topType = TYPE_1;
 			noDataShowStr = bounsStr;
-			if (lv_lists_all_1 != null && lv_lists_all_1.size() > 0) {
-				addOldListDatas(lv_lists_all_1, page_type_1);
+			if (lv_all_1 != null && lv_all_1.size() > 0) {
+				addOldListDatas(lv_all_1, page_type_1);
 			}else {
 				page_type_1 = 1;
 				getSVDatas();
@@ -307,9 +323,9 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_2:
 			if (!isFrist && topType == TYPE_2) return;
 			topType = TYPE_2;
-			noDataShowStr = getString(R.string.bouns_top_tab_2) + bounsStr;
-			if (lv_lists_all_2 != null && lv_lists_all_2.size() > 0) {
-				addOldListDatas(lv_lists_all_2, page_type_2);
+			noDataShowStr = getString(R.string.bouns_usable) + bounsStr;
+			if (lv_all_2 != null && lv_all_2.size() > 0) {
+				addOldListDatas(lv_all_2, page_type_2);
 			}else {
 				page_type_2 = 1;
 				getSVDatas();
@@ -319,8 +335,8 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			if (!isFrist && topType == TYPE_3) return;
 			topType = TYPE_3;
 			noDataShowStr = getString(R.string.bouns_top_tab_3) + bounsStr;
-			if (lv_lists_all_3 != null && lv_lists_all_3.size() > 0) {
-				addOldListDatas(lv_lists_all_3, page_type_3);
+			if (lv_all_3 != null && lv_all_3.size() > 0) {
+				addOldListDatas(lv_all_3, page_type_3);
 			}else {
 				page_type_3 = 1;
 				getSVDatas();
@@ -330,15 +346,14 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			if (!isFrist && topType == TYPE_4) return;
 			topType = TYPE_4;
 			noDataShowStr = getString(R.string.bouns_top_tab_4) + bounsStr;
-			if (lv_lists_all_4 != null && lv_lists_all_4.size() > 0) {
-				addOldListDatas(lv_lists_all_4, page_type_4);
+			if (lv_all_4 != null && lv_all_4.size() > 0) {
+				addOldListDatas(lv_all_4, page_type_4);
 			}else {
 				page_type_4 = 1;
 				getSVDatas();
 			}
 			break;
 		case R.id.show_list_iv_to_top: //回顶
-			iv_to_top.setVisibility(View.GONE);
 			toTop();
 			break;
 		}
@@ -381,11 +396,11 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	private void updateAllData() {
 		if (isUpdateAllData) {
 			isUpdateAllData = false;
-			lv_lists_show.clear();
-			lv_lists_all_1.clear();
-			lv_lists_all_2.clear();
-			lv_lists_all_3.clear();
-			lv_lists_all_4.clear();
+			lv_show.clear();
+			lv_all_1.clear();
+			lv_all_2.clear();
+			lv_all_3.clear();
+			lv_all_4.clear();
 			hm_all_1.clear();
 			hm_all_2.clear();
 			hm_all_3.clear();
@@ -429,27 +444,48 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			if (mainEn != null) {
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
-					countTotal = mainEn.getCountTotal();
+					int total = mainEn.getCountTotal();
 					List<BounsEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {
 						switch (topType) {
-						case TYPE_1: 
-							addEntity(lv_lists_all_1, lists, hm_all_1);
-							page_type_1++;
+						case TYPE_1:
+							if (loadType == 0) {
+								updEntity(total, countTotal, lists, lv_all_1, hm_all_1);
+								page_type_1 = 2;
+							} else {
+								addEntity(lv_all_1, lists, hm_all_1);
+								page_type_1++;
+							}
 							break;
-						case TYPE_2: 
-							addEntity(lv_lists_all_2, lists, hm_all_2);
-							page_type_2++;
+						case TYPE_2:
+							if (loadType == 0) {
+								updEntity(total, countTotal, lists, lv_all_2, hm_all_2);
+								page_type_2 = 2;
+							} else {
+								addEntity(lv_all_2, lists, hm_all_2);
+								page_type_2++;
+							}
 							break;
-						case TYPE_3: 
-							addEntity(lv_lists_all_3, lists, hm_all_3);
-							page_type_3++;
+						case TYPE_3:
+							if (loadType == 0) {
+								updEntity(total, countTotal, lists, lv_all_3, hm_all_3);
+								page_type_3 = 2;
+							} else {
+								addEntity(lv_all_3, lists, hm_all_3);
+								page_type_3++;
+							}
 							break;
-						case TYPE_4: 
-							addEntity(lv_lists_all_4, lists, hm_all_4);
-							page_type_4++;
+						case TYPE_4:
+							if (loadType == 0) {
+								updEntity(total, countTotal, lists, lv_all_4, hm_all_4);
+								page_type_4 = 2;
+							} else {
+								addEntity(lv_all_4, lists, hm_all_4);
+								page_type_4++;
+							}
 							break;
 						}
+						countTotal = total;
 						myUpdateAdapter();
 					}else {
 						loadFailHandle();
@@ -496,19 +532,44 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	private void loadFailHandle() {
 		switch (topType) {
 		case TYPE_1: 
-			addAllShow(lv_lists_all_1);
+			addAllShow(lv_all_1);
 			break;
 		case TYPE_2: 
-			addAllShow(lv_lists_all_2);
+			addAllShow(lv_all_2);
 			break;
 		case TYPE_3: 
-			addAllShow(lv_lists_all_3);
+			addAllShow(lv_all_3);
 			break;
 		case TYPE_4: 
-			addAllShow(lv_lists_all_4);
+			addAllShow(lv_all_4);
 			break;
 		}
 		myUpdateAdapter();
+	}
+
+	/**
+	 * 刷新数集
+	 */
+	private void updEntity(int newTotal, int oldTotal, List<BounsEntity> newDatas,
+						   List<BounsEntity> oldDatas, HashMap<String, Boolean> oldMap) {
+		/*if (oldTotal < newTotal) {
+			List<OrderEntity> datas = new ArrayList<OrderEntity>();
+			datas.addAll(oldDatas);
+			oldDatas.clear();
+			for (int i = 0; i < (newTotal - oldTotal); i++) {
+				if (!oldMap.containsKey(newDatas.get(i).getOrderId())) {
+					oldDatas.add(newDatas.get(i));
+					datas.remove(datas.size()-1);
+				}
+			}
+			oldDatas.addAll(datas);
+			addAllShow(oldDatas);
+			refresh_lv.setHasMoreData(true); //设置允许加载更多
+		}*/
+		oldDatas.clear();
+		oldMap.clear();
+		addEntity(oldDatas, newDatas, oldMap);
+		refresh_lv.setHasMoreData(true); //设置允许加载更多
 	}
 	
 	/**
@@ -530,15 +591,15 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void addAllShow(List<BounsEntity> showLists) {
-		lv_lists_show.clear();
-		lv_lists_show.addAll(showLists);
+		lv_show.clear();
+		lv_show.addAll(showLists);
 	}
 	
 	private void myUpdateAdapter() {
 		if (current_Page == 1) {
 			toTop();
 		}
-		lv_adapter.updateAdapter(lv_lists_show, bounsId);
+		lv_adapter.updateAdapter(lv_show, bounsId);
 		stopAnimation();
 	}
 
@@ -547,6 +608,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void toTop() {
 		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 	
 	@Override
@@ -558,9 +620,16 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void stopAnimation() {
 		isLoadOk = true;
-		refresh_lv.onPullUpRefreshComplete();
 		rl_loading.setVisibility(View.GONE);
-		if (lv_lists_show.size() == 0) {
+		switch (loadType) {
+			case 0: //下拉刷新
+				refresh_lv.onPullDownRefreshComplete();
+				break;
+			case 1: //加载更多
+				refresh_lv.onPullUpRefreshComplete();
+				break;
+		}
+		if (lv_show.size() == 0) {
 			tv_no_data.setText(getString(R.string.loading_no_data, noDataShowStr));
 			rl_no_data.setVisibility(View.VISIBLE);
 			refresh_lv.setVisibility(View.GONE);
@@ -571,10 +640,10 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 数量小于一页时停止加载翻页数据
+	 * 判定是否停止加载翻页数据
 	 */
 	private boolean isStop(){
-		return lv_lists_show.size() < Page_Count || lv_lists_show.size() == countTotal;
+		return lv_show.size() > 0 && lv_show.size() == countTotal;
 	}
 	
 }

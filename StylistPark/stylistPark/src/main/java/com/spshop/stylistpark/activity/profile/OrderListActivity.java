@@ -1,6 +1,5 @@
 package com.spshop.stylistpark.activity.profile;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,13 +44,13 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "OrderListActivity";
 	public static OrderListActivity instance = null;
+	public boolean isUpdateAllData = false;
 	public static final int TYPE_1 = 0;  //全部
 	public static final int TYPE_2 = 1;  //待付款或已完成
 	public static final int TYPE_3 = 2;  //待发货或待分成
 	public static final int TYPE_4 = 3;  //待收货
 	public static final int TYPE_5 = 4;  //退换货
-	public boolean isUpdateAllData = false;
-	
+
 	private static final int Page_Count = 20;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页
 	private int page_type_1 = 1;  //全部列表加载页
@@ -59,13 +58,14 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private int page_type_3 = 1;  //待发货或待分成列表加载页
 	private int page_type_4 = 1;  //待收货列表加载页
 	private int page_type_5 = 1;  //退换货列表加载页
-	private int countTotal = 0; //订单总数量
-	private int rootType = 0; //页面来源标记
-	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int topType = TYPE_1; //Top标记
-	private boolean isFrist = true;
-	private boolean isLoadOk = true;
+	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
+	private int countTotal = 0; //数集总数量
+	private boolean isLoadOk = true; //加载数据控制符
+	private boolean isFrist = true; //识别是否第一次打开页面
 	private boolean isLogined, isSuccess;
+
+	private int rootCode = 0; //页面来源标记
 	private String orderId, orderStr, noDataShowStr;
 	
 	private RadioButton btn_1, btn_2, btn_3, btn_4, btn_5;
@@ -80,12 +80,12 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private MemberOrderListAdapter lv_adapter_member;
 	
 	private OrderEntity mainEn;
-	private List<OrderEntity> lv_lists_show = new ArrayList<OrderEntity>();
-	private List<OrderEntity> lv_lists_all_1 = new ArrayList<OrderEntity>();
-	private List<OrderEntity> lv_lists_all_2 = new ArrayList<OrderEntity>();
-	private List<OrderEntity> lv_lists_all_3 = new ArrayList<OrderEntity>();
-	private List<OrderEntity> lv_lists_all_4 = new ArrayList<OrderEntity>();
-	private List<OrderEntity> lv_lists_all_5 = new ArrayList<OrderEntity>();
+	private List<OrderEntity> lv_show = new ArrayList<OrderEntity>();
+	private List<OrderEntity> lv_all_1 = new ArrayList<OrderEntity>();
+	private List<OrderEntity> lv_all_2 = new ArrayList<OrderEntity>();
+	private List<OrderEntity> lv_all_3 = new ArrayList<OrderEntity>();
+	private List<OrderEntity> lv_all_4 = new ArrayList<OrderEntity>();
+	private List<OrderEntity> lv_all_5 = new ArrayList<OrderEntity>();
 	private HashMap<String, Boolean> hm_all_1 = new HashMap<String, Boolean>();
 	private HashMap<String, Boolean> hm_all_2 = new HashMap<String, Boolean>();
 	private HashMap<String, Boolean> hm_all_3 = new HashMap<String, Boolean>();
@@ -100,7 +100,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 		instance = this;
-		rootType = getIntent().getExtras().getInt("rootType", 0);
+		rootCode = getIntent().getExtras().getInt("rootType", 0);
 		topType = getIntent().getExtras().getInt("topType", TYPE_1);
 		
 		findViewById();
@@ -123,7 +123,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 
 	private void initView() {
 		orderStr = getString(R.string.order_order);
-		if (rootType == 0) {
+		if (rootCode == 0) {
 			setTitle(R.string.profile_my_order);
 		}else { //会员订单
 			setTitle(R.string.profile_member_order);
@@ -137,7 +137,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initRaidoGroup() {
-		if (rootType == 0) {
+		if (rootCode == 0) {
 			btn_1.setText(getString(R.string.order_top_tab_1));
 			btn_2.setText(getString(R.string.order_top_tab_2));
 			btn_3.setText(getString(R.string.order_top_tab_3));
@@ -194,7 +194,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	 * 设置适配器
 	 */
 	private void setAdapter() {
-		if (rootType == 0) {
+		if (rootCode == 0) {
 			lv_callback = new AdapterCallback() {
 				
 				@Override
@@ -218,7 +218,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 				}
 
 			};
-			lv_adapter = new OrderListAdapter(mContext, lv_lists_show, lv_callback);
+			lv_adapter = new OrderListAdapter(mContext, lv_show, lv_callback);
 			mListView.setAdapter(lv_adapter);
 			mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 		}else { //会员订单
@@ -229,7 +229,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 					
 				}
 			};
-			lv_adapter_member = new MemberOrderListAdapter(mContext, lv_lists_show, lv_callback_member);
+			lv_adapter_member = new MemberOrderListAdapter(mContext, lv_show, lv_callback_member);
 			mListView.setAdapter(lv_adapter_member);
 			mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 		}
@@ -254,20 +254,18 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	/**
 	 * 确认取消订单
 	 */
-	@SuppressLint("HandlerLeak")
 	private void confirmCacelOrder(final OrderEntity data) {
-		Handler handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.what) {
-				case DIALOG_CONFIRM_CLICK:
-					postCacelOrder(data);
-					break;
-				}
-			}
-
-		};
-		showConfirmDialog(R.string.order_cacel_confirm, getString(R.string.confirm), getString(R.string.being_not), handler);
+		showConfirmDialog(R.string.order_cacel_confirm, getString(R.string.confirm),
+				getString(R.string.being_not), true, true, new Handler() {
+					@Override
+					public void handleMessage(Message msg) {
+						switch (msg.what) {
+							case DIALOG_CANCEL_CLICK:
+								postCacelOrder(data);
+								break;
+						}
+					}
+				});
 	}
 
 	private void postCacelOrder(OrderEntity data) {
@@ -320,17 +318,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		startAnimation();
 		requestProductLists();
 	}
-	
-	/**
-	 * 加载下拉刷新数据
-	 */
-	private void refreshSVDatas() {
-		if (!isLoadOk) return; //加载频率控制
-		loadType = 0;
-		current_Page = 1;
-		requestProductLists();
-	}
-	
+
 	/**
 	 * 加载翻页数据
 	 */
@@ -357,10 +345,29 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	/**
+	 * 加载下拉刷新数据
+	 */
+	private void refreshSVDatas() {
+		loadType = 0;
+		current_Page = 1;
+		requestProductLists();
+	}
+
+	/**
 	 * 发起加载数据的请求
 	 */
 	private void requestProductLists() {
-		if (!isLoadOk) return; //加载频率控制
+		if (!isLoadOk) { //加载频率控制
+			if (loadType == 0) {
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						refresh_lv.onPullDownRefreshComplete();
+					}
+				}, 1000);
+			}
+			return;
+		}
 		isLoadOk = false;
 		new Handler().postDelayed(new Runnable() {
 			
@@ -382,8 +389,8 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			if (!isFrist && topType == TYPE_1) return;
 			topType = TYPE_1;
 			noDataShowStr = orderStr;
-			if (lv_lists_all_1 != null && lv_lists_all_1.size() > 0) {
-				addOldListDatas(lv_lists_all_1, page_type_1);
+			if (lv_all_1 != null && lv_all_1.size() > 0) {
+				addOldListDatas(lv_all_1, page_type_1);
 			}else {
 				page_type_1 = 1;
 				getSVDatas();
@@ -392,13 +399,13 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_2: //待付款或已完成
 			if (!isFrist && topType == TYPE_2) return;
 			topType = TYPE_2;
-			if (rootType == 0) {
+			if (rootCode == 0) {
 				noDataShowStr = getString(R.string.profile_wait_pay) + orderStr;
 			}else { //会员订单
 				noDataShowStr = getString(R.string.profile_done) + orderStr;
 			}
-			if (lv_lists_all_2 != null && lv_lists_all_2.size() > 0) {
-				addOldListDatas(lv_lists_all_2, page_type_2);
+			if (lv_all_2 != null && lv_all_2.size() > 0) {
+				addOldListDatas(lv_all_2, page_type_2);
 			}else {
 				page_type_2 = 1;
 				getSVDatas();
@@ -407,13 +414,13 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_3: //待发货或待分成
 			if (!isFrist && topType == TYPE_3) return;
 			topType = TYPE_3;
-			if (rootType == 0) {
+			if (rootCode == 0) {
 				noDataShowStr = getString(R.string.profile_wait_delivery) + orderStr;
 			}else { //会员订单
 				noDataShowStr = getString(R.string.profile_wait_commission) + orderStr;
 			}
-			if (lv_lists_all_3 != null && lv_lists_all_3.size() > 0) {
-				addOldListDatas(lv_lists_all_3, page_type_3);
+			if (lv_all_3 != null && lv_all_3.size() > 0) {
+				addOldListDatas(lv_all_3, page_type_3);
 			}else {
 				page_type_3 = 1;
 				getSVDatas();
@@ -423,8 +430,8 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			if (!isFrist && topType == TYPE_4) return;
 			topType = TYPE_4;
 			noDataShowStr = getString(R.string.profile_wait_receive) + orderStr;
-			if (lv_lists_all_4 != null && lv_lists_all_4.size() > 0) {
-				addOldListDatas(lv_lists_all_4, page_type_4);
+			if (lv_all_4 != null && lv_all_4.size() > 0) {
+				addOldListDatas(lv_all_4, page_type_4);
 			}else {
 				page_type_4 = 1;
 				getSVDatas();
@@ -434,15 +441,14 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			if (!isFrist && topType == TYPE_5) return;
 			topType = TYPE_5;
 			noDataShowStr = getString(R.string.profile_repair_return) + orderStr;
-			if (lv_lists_all_5 != null && lv_lists_all_5.size() > 0) {
-				addOldListDatas(lv_lists_all_5, page_type_5);
+			if (lv_all_5 != null && lv_all_5.size() > 0) {
+				addOldListDatas(lv_all_5, page_type_5);
 			}else {
 				page_type_5 = 1;
 				getSVDatas();
 			}
 			break;
 		case R.id.show_list_iv_to_top: //回顶
-			iv_to_top.setVisibility(View.GONE);
 			toTop();
 			break;
 		}
@@ -477,8 +483,8 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 				isUpdateAllData = true;
 			}
 			updateAllData();
-			if (rootType == 0 && lv_adapter != null) {
-	        	lv_adapter.updateAdapter(lv_lists_show);
+			if (rootCode == 0 && lv_adapter != null) {
+	        	lv_adapter.updateAdapter(lv_show);
 			}
 		}else {
 			showTimeOutDialog(TAG);
@@ -488,12 +494,12 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private void updateAllData() {
 		if (isUpdateAllData) {
 			isUpdateAllData = false;
-			lv_lists_show.clear();
-			lv_lists_all_1.clear();
-			lv_lists_all_2.clear();
-			lv_lists_all_3.clear();
-			lv_lists_all_4.clear();
-			lv_lists_all_5.clear();
+			lv_show.clear();
+			lv_all_1.clear();
+			lv_all_2.clear();
+			lv_all_3.clear();
+			lv_all_4.clear();
+			lv_all_5.clear();
 			hm_all_1.clear();
 			hm_all_2.clear();
 			hm_all_3.clear();
@@ -522,7 +528,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ORDER_LIST_CODE:
 			mainEn = null;
-			if (rootType == 0) {
+			if (rootCode == 0) {
 				mainEn = sc.getOrderLists(topType, Page_Count, current_Page);
 			}else { //会员订单
 				mainEn = sc.getMemberOrderLists(topType, Page_Count, current_Page);
@@ -548,46 +554,46 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 						switch (topType) {
 						case TYPE_1: 
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_lists_all_1, hm_all_1);
-								page_type_1 = 1;
+								updEntity(total, countTotal, lists, lv_all_1, hm_all_1);
+								page_type_1 = 2;
 							}else {
-								addEntity(lv_lists_all_1, lists, hm_all_1);
+								addEntity(lv_all_1, lists, hm_all_1);
 								page_type_1++;
 							}
 							break;
 						case TYPE_2: 
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_lists_all_2, hm_all_2);
-								page_type_2 = 1;
+								updEntity(total, countTotal, lists, lv_all_2, hm_all_2);
+								page_type_2 = 2;
 							}else {
-								addEntity(lv_lists_all_2, lists, hm_all_2);
+								addEntity(lv_all_2, lists, hm_all_2);
 								page_type_2++;
 							}
 							break;
 						case TYPE_3: 
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_lists_all_3, hm_all_3);
-								page_type_3 = 1;
+								updEntity(total, countTotal, lists, lv_all_3, hm_all_3);
+								page_type_3 = 2;
 							}else {
-								addEntity(lv_lists_all_3, lists, hm_all_3);
+								addEntity(lv_all_3, lists, hm_all_3);
 								page_type_3++;
 							}
 							break;
 						case TYPE_4: 
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_lists_all_4, hm_all_4);
-								page_type_4 = 1;
+								updEntity(total, countTotal, lists, lv_all_4, hm_all_4);
+								page_type_4 = 2;
 							}else {
-								addEntity(lv_lists_all_4, lists, hm_all_4);
+								addEntity(lv_all_4, lists, hm_all_4);
 								page_type_4++;
 							}
 							break;
 						case TYPE_5: 
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_lists_all_5, hm_all_5);
-								page_type_5 = 1;
+								updEntity(total, countTotal, lists, lv_all_5, hm_all_5);
+								page_type_5 = 2;
 							}else {
-								addEntity(lv_lists_all_5, lists, hm_all_5);
+								addEntity(lv_all_5, lists, hm_all_5);
 								page_type_5++;
 							}
 							break;
@@ -640,19 +646,19 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private void loadFailHandle() {
 		switch (topType) {
 		case TYPE_1: 
-			addAllShow(lv_lists_all_1);
+			addAllShow(lv_all_1);
 			break;
 		case TYPE_2: 
-			addAllShow(lv_lists_all_2);
+			addAllShow(lv_all_2);
 			break;
 		case TYPE_3: 
-			addAllShow(lv_lists_all_3);
+			addAllShow(lv_all_3);
 			break;
 		case TYPE_4: 
-			addAllShow(lv_lists_all_4);
+			addAllShow(lv_all_4);
 			break;
 		case TYPE_5: 
-			addAllShow(lv_lists_all_5);
+			addAllShow(lv_all_5);
 			break;
 		}
 		myUpdateAdapter();
@@ -663,22 +669,24 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void updEntity(int newTotal, int oldTotal, List<OrderEntity> newDatas, 
 			List<OrderEntity> oldDatas, HashMap<String, Boolean> oldMap) {
-//		if (oldTotal < newTotal) {
-//			List<OrderEntity> datas = new ArrayList<OrderEntity>();
-//			datas.addAll(oldDatas);
-//			oldDatas.clear();
-//			for (int i = 0; i < (newTotal - oldTotal); i++) {
-//				if (!oldMap.containsKey(newDatas.get(i).getOrderId())) {
-//					oldDatas.add(newDatas.get(i));
-//					datas.remove(datas.size()-1);
-//				}
-//			}
-//			oldDatas.addAll(datas);
-//			addAllShow(oldDatas);
-//		}
+		/*if (oldTotal < newTotal) {
+			List<OrderEntity> datas = new ArrayList<OrderEntity>();
+			datas.addAll(oldDatas);
+			oldDatas.clear();
+			for (int i = 0; i < (newTotal - oldTotal); i++) {
+				if (!oldMap.containsKey(newDatas.get(i).getOrderId())) {
+					oldDatas.add(newDatas.get(i));
+					datas.remove(datas.size()-1);
+				}
+			}
+			oldDatas.addAll(datas);
+			addAllShow(oldDatas);
+			refresh_lv.setHasMoreData(true); //设置允许加载更多
+		}*/
 		oldDatas.clear();
 		oldMap.clear();
 		addEntity(oldDatas, newDatas, oldMap);
+		refresh_lv.setHasMoreData(true); //设置允许加载更多
 	}
 	
 	/**
@@ -700,18 +708,18 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void addAllShow(List<OrderEntity> showLists) {
-		lv_lists_show.clear();
-		lv_lists_show.addAll(showLists);
+		lv_show.clear();
+		lv_show.addAll(showLists);
 	}
 	
 	private void myUpdateAdapter() {
 		if (current_Page == 1) {
 			toTop();
 		}
-		if (rootType == 0) {
-			lv_adapter.updateAdapter(lv_lists_show);
+		if (rootCode == 0) {
+			lv_adapter.updateAdapter(lv_show);
 		}else { //会员订单
-			lv_adapter_member.updateAdapter(lv_lists_show);
+			lv_adapter_member.updateAdapter(lv_show);
 		}
 		stopAnimation();
 	}
@@ -721,6 +729,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void toTop() {
 		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 	
 	@Override
@@ -741,8 +750,8 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			refresh_lv.onPullUpRefreshComplete();
 			break;
 		}
-		if (lv_lists_show.size() == 0) {
-			if (rootType == 0) {
+		if (lv_show.size() == 0) {
+			if (rootCode == 0) {
 				tv_no_data.setText(getString(R.string.loading_no_data, noDataShowStr));
 			}else { //会员订单
 				tv_no_data.setText(getString(R.string.member_no_order, noDataShowStr));
@@ -756,10 +765,10 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 数量小于一页时停止加载翻页数据
+	 * 判定是否停止加载翻页数据
 	 */
 	private boolean isStop(){
-		return lv_lists_show.size() < Page_Count || lv_lists_show.size() == countTotal;
+		return lv_show.size() > 0 && lv_show.size() == countTotal;
 	}
 	
 }

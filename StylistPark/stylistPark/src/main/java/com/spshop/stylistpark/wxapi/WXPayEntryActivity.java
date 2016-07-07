@@ -28,7 +28,6 @@ import com.spshop.stylistpark.activity.profile.OrderListActivity;
 import com.spshop.stylistpark.entity.PayResult;
 import com.spshop.stylistpark.entity.PaymentEntity;
 import com.spshop.stylistpark.service.ServiceContext;
-import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
@@ -250,25 +249,22 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		}
 	}
 
-	@SuppressLint("HandlerLeak")
 	private void ask4Leave() {
-		Handler handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.what) {
-				case DIALOG_CONFIRM_CLICK:
-					if (!"OrderDetailActivity".equals(rootPage)) {
-						startOrderListActivity(0, OrderListActivity.TYPE_2);
-					}else {
-						finish();
+		showConfirmDialog(R.string.abandon_confirm, getString(R.string.leave_confirm),
+				getString(R.string.pay_continue), true, true, new Handler() {
+					@Override
+					public void handleMessage(Message msg) {
+						switch (msg.what) {
+							case DIALOG_CANCEL_CLICK:
+								if (!"OrderDetailActivity".equals(rootPage)) {
+									startOrderListActivity(0, OrderListActivity.TYPE_2);
+								}else {
+									finish();
+								}
+								break;
+						}
 					}
-					break;
-				default:
-					break;
-				}
-			}
-		};
-		showConfirmDialog(R.string.abandon_confirm, getString(R.string.leave_confirm), getString(R.string.pay_continue), handler);
+				});
 	}
 	
 	@Override
@@ -342,8 +338,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 					break;
 				}
 			}else {
-				stopAnimation();
-				CommonTools.showToast(mContext, getString(R.string.pay_info_error), 1000);
+				getPayDataFail();
 			}
 			break;
 		case AppConfig.REQUEST_SV_GET_PAY_RESULT_CODE:
@@ -387,6 +382,13 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	 * 发送微信支付请求
 	 */
 	private void sendWeiXiPayReq(PaymentEntity payEntity) {
+		if (payEntity == null || StringUtil.isNull(payEntity.getPrepayid())
+				|| StringUtil.isNull(payEntity.getNoncestr())
+				|| StringUtil.isNull(payEntity.getSign())
+				|| StringUtil.isNull(payEntity.getSign())) {
+			getPayDataFail();
+			return;
+		}
 		PayReq req = new PayReq();
 		req.appId = AppConfig.WX_APP_ID;
 		req.partnerId = AppConfig.WX_MCH_ID;
@@ -398,13 +400,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		
 		api.registerApp(AppConfig.WX_API_KEY);
 		api.sendReq(req);
-		new Handler().postDelayed(new Runnable() {
 
-			@Override
-			public void run() {
-				stopAnimation();
-			}
-		}, 1000);
+		getPayDataSuccess();
 	}
 
 	/**
@@ -414,7 +411,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		// 获取订单数据
 		final String payInfo = payEntity.getAlipay();
 		if (StringUtil.isNull(payInfo)) {
-			CommonTools.showToast(mContext, getString(R.string.pay_info_error), 1000);
+			getPayDataFail();
 			return;
 		}
 		// 创建异步任务
@@ -436,7 +433,32 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		// 必须异步调用
 		Thread payThread = new Thread(payRunnable);
 		payThread.start();
-		
+
+		getPayDataSuccess();
+	}
+
+	/**
+	 * 发送银联支付请求
+	 */
+	private void sendUnionPayReq(PaymentEntity payEntity) {
+		// 获取银联支付订单号
+		String payInfo = "201604051210026523228";
+		if (!StringUtil.isNumeric(payInfo)) {
+			getPayDataFail();
+			return;
+		}
+		// 调用支付SDK
+		UPPayAssistEx.startPay(this, null, null, payInfo, mMode);
+
+		getPayDataSuccess();
+	}
+
+	private void getPayDataFail() {
+		stopAnimation();
+		showErrorDialog(R.string.pay_info_error);
+	}
+
+	private void getPayDataSuccess() {
 		new Handler().postDelayed(new Runnable() {
 
 			@Override
@@ -444,22 +466,6 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 				stopAnimation();
 			}
 		}, 1000);
-	}
-	
-	/**
-	 * 发送银联支付请求
-	 */
-	private void sendUnionPayReq(PaymentEntity payEntity) {
-		stopAnimation();
-		// 获取银联支付订单号
-		//String payInfo = "201604051523222282578";
-		String payInfo = "201604051210026523228";
-		if (!StringUtil.isNumeric(payInfo)) {
-			CommonTools.showToast(mContext, getString(R.string.pay_info_error), 1000);
-			return;
-		}
-		// 调用支付SDK
-		UPPayAssistEx.startPay(this, null, null, payInfo, mMode);
 	}
 
     @Override

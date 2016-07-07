@@ -183,7 +183,7 @@ public class ColorActivity extends BaseActivity {
 		tmp = new FilterColor();
 		tmp.setName(getResources().getString(R.string.txt_color_white));
 		tmp.setDisplayName(getResources().getString(R.string.txt_color_white_zh));
-		tmp.setDrawableId(R.drawable.shape_frame_white_gray_2, R.drawable.shape_frame_white_gray_2);
+		tmp.setDrawableId(R.drawable.shape_frame_white_dfdfdf_2, R.drawable.shape_frame_white_dfdfdf_2);
 		colorList.add(tmp);
 
 		tmp = new FilterColor();

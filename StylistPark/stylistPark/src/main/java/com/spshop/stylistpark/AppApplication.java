@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.DisplayMetrics;
 import android.widget.ProgressBar;
 
 import com.android.volley.RequestQueue;
@@ -81,7 +82,7 @@ public class AppApplication extends Application implements OnDataListener{
 		screenHeight = DeviceUtil.getDeviceHeight(spApp);
 		model = DeviceUtil.getModel();
 		LogUtil.i("device", "手机型号："+ model + "宽："+screenWidth + " / 高："+screenHeight);
-		
+
 		// 设置每天第一次启动App时清除与日期关联的缓存标志
 		long newDay = calendar.get(Calendar.DAY_OF_MONTH);
 		long oldDay = shared.getLong(AppConfig.KEY_LOAD_SV_DATA_DAY, 00);
@@ -89,6 +90,9 @@ public class AppApplication extends Application implements OnDataListener{
 			clearSharedLoadSVData();
 			shared.edit().putLong(AppConfig.KEY_LOAD_SV_DATA_DAY, newDay).commit();
 		}
+
+		// 设置App字体不随系统字体变化
+		initDisplayMetrics();
 		
 		// 初始化异步加载图片的第三jar配置
 		initImageLoader(spApp);
@@ -116,6 +120,14 @@ public class AppApplication extends Application implements OnDataListener{
 		.tasksProcessingOrder(QueueProcessingType.LIFO)
 		.writeDebugLogs().build();
 		ImageLoader.getInstance().init(config);
+	}
+
+	/**
+	 * 设置App字体不随系统字体变化
+	 */
+	public static void initDisplayMetrics() {
+		DisplayMetrics displayMetrics = spApp.getResources().getDisplayMetrics();
+		displayMetrics.scaledDensity = displayMetrics.density;
 	}
 	
 	/**

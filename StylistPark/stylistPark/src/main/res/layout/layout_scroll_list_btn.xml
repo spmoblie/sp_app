@@ -31,7 +31,7 @@
                     android:layout_marginLeft="20dp"
                     android:text=""
                     android:textColor="@color/text_color_title"
-                    android:textSize="@dimen/text_size_18" />
+                    android:textSize="@dimen/text_size_14" />
                 
                 <ImageView 
                     style="@style/set_line_horizontal_bg"
@@ -50,11 +50,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
+                android:gravity="center"
                 android:background="@color/ui_bg_color_gray" >
                 
                 <include 
-                    layout="@layout/layout_bottom_button_one"
-                    android:layout_centerInParent="true" />
+                    layout="@layout/layout_bottom_button_one" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

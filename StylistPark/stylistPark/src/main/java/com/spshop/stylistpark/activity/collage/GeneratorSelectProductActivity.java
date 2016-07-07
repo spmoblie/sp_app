@@ -1,6 +1,5 @@
 package com.spshop.stylistpark.activity.collage;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -172,21 +171,20 @@ public class GeneratorSelectProductActivity extends BaseActivity implements
 		}
     }
     
-    @SuppressLint("HandlerLeak")
 	private void ask4Leave() {
-        Handler handler = new Handler(){
-        	
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                case DIALOG_CONFIRM_CLICK:
-                    finish();
-                    break;
-                }
-            }
-            
-        };
-        showConfirmDialog(R.string.collage_msg_leave_confirm, getString(R.string.confirm), getString(R.string.cancel), handler); 
+        showConfirmDialog(R.string.collage_msg_leave_confirm, getString(R.string.confirm),
+                getString(R.string.cancel), true, true, new Handler(){
+
+                    @Override
+                    public void handleMessage(Message msg) {
+                        switch (msg.what) {
+                            case DIALOG_CANCEL_CLICK:
+                                finish();
+                                break;
+                        }
+                    }
+
+                });
     }
 
     @Override

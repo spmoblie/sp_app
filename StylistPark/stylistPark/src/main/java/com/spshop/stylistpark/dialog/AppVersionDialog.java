@@ -1,6 +1,5 @@
 package com.spshop.stylistpark.dialog;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnKeyListener;
@@ -8,18 +7,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.WindowManager.LayoutParams;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
+import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
@@ -39,105 +35,68 @@ public class AppVersionDialog {
 	private static final String APK_PATH = AppConfig.SAVE_APK_PATH_LONG + "/stylistpark.apk"; 
 	private static final int DIALOG_WIDTH = AppApplication.screenWidth * 2/3;
 	private Context mContext;
+	private DialogManager dm;
 	
-	public AppVersionDialog(Context context) {
+	public AppVersionDialog(Context context, DialogManager dialogManager) {
 		this.mContext = context;
+		this.dm = dialogManager;
 	}
 
 	/**
-	 * 提示已是最新版本
+	 * 更新状态提示
 	 */
-	public void isNewVersion(){
-		final Dialog customDialog =  new Dialog(mContext, R.style.MyDialog);
-		customDialog.setContentView(R.layout.dialog_btn_one);
-		LayoutParams lp = customDialog.getWindow().getAttributes();
-        lp.width = DIALOG_WIDTH;
-        customDialog.getWindow().setAttributes(lp);
-		final TextView title = (TextView)customDialog.findViewById(R.id.dialog_title);
-		title.setText(R.string.setting_version);
-		final TextView content = (TextView)customDialog.findViewById(R.id.dialog_content);
-		content.setText(R.string.dialog_version_new);
-		final Button ok = (Button)customDialog.findViewById(R.id.dialog_button_ok);
-		ok.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				customDialog.dismiss();
-			}
-		});
-		customDialog.show();
+	public void showStatus(String msgStr){
+		dm.showOneBtnDialog(msgStr, DIALOG_WIDTH, true, true, null, null);
 	}
 	
 	/**
 	 * 提示有新版本可以更新
 	 * 
 	 * @param address Apk下载地址
-	 * @param isHomeIndex 是否首页
 	 * @param description 更新描述
 	 */
-	public void foundNewVersion(final String address, final boolean isHomeIndex, String description){
-		final Dialog customDialog =  new Dialog(mContext, R.style.MyDialog);
-		customDialog.setContentView(R.layout.dialog_btn_two);
-		LayoutParams lp = customDialog.getWindow().getAttributes();
-        lp.width = DIALOG_WIDTH;
-        customDialog.getWindow().setAttributes(lp);
-		final TextView title = (TextView)customDialog.findViewById(R.id.dialog_title);
-		title.setText(R.string.setting_version);
-		final TextView content = (TextView)customDialog.findViewById(R.id.dialog_contents);
+	public void foundNewVersion(final String address, String description){
 		if (StringUtil.isNull(description)) {
-			content.setText(R.string.dialog_version_update);
-		}else{
-			content.setText(Html.fromHtml(description));
-			content.setGravity(0);
+			description = mContext.getString(R.string.dialog_version_update);
+		} else {
+			description = Html.fromHtml(description).toString();
 		}
-		final Button ok = (Button)customDialog.findViewById(R.id.dialog_button_ok);
-		ok.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				 startLoadApk(address);
-			}
-		});
-		final Button cancel = (Button)customDialog.findViewById(R.id.dialog_button_cancel);
-		cancel.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				customDialog.dismiss();
-			}
-		});
-		customDialog.show();
+		dm.showTwoBtnDialog(null, description, mContext.getString(R.string.cancel),
+				mContext.getString(R.string.confirm), DIALOG_WIDTH, true, true, new Handler() {
+					@Override
+					public void handleMessage(Message msg) {
+						switch (msg.what) {
+							case BaseActivity.DIALOG_CONFIRM_CLICK:
+								startLoadApk(address);
+								break;
+						}
+					}
+				});
 	}
 	
 	/**
 	 * 提示有新版本需要强制更新
 	 * 
 	 * @param address Apk下载地址
-	 * @param isHomeIndex 是否首页
 	 * @param description 更新描述
 	 */
-	public void forceUpdateVersion(final String address, final boolean isHomeIndex, String description) {
-		final Dialog customDialog = new Dialog(mContext, R.style.MyDialog);
-		customDialog.setContentView(R.layout.dialog_btn_one);
-		customDialog.setCanceledOnTouchOutside(false); //点区域外不销毁
-		customDialog.setOnKeyListener(keylistener); //添加返回键监听器
-		LayoutParams lp = customDialog.getWindow().getAttributes();
-        lp.width = DIALOG_WIDTH;
-        customDialog.getWindow().setAttributes(lp);
-		final TextView title = (TextView)customDialog.findViewById(R.id.dialog_title);
-		title.setText(R.string.setting_version);
-		final TextView content = (TextView) customDialog.findViewById(R.id.dialog_content);
-		if (description.equals("")) {
-			content.setText(R.string.dialog_version_update_force);
+	public void forceUpdateVersion(final String address, String description) {
+		if (StringUtil.isNull(description)) {
+			description = mContext.getString(R.string.dialog_version_update_force);
 		} else {
-			content.setText(Html.fromHtml(description));
-			content.setGravity(0);
+			description = Html.fromHtml(description).toString();
 		}
-		final Button ok = (Button) customDialog.findViewById(R.id.dialog_button_ok);
-		ok.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startLoadApk(address);
-			}
-		});
-		customDialog.show();
+		dm.showOneBtnDialog(description,
+				DIALOG_WIDTH, true, false, new Handler() {
+					@Override
+					public void handleMessage(Message msg) {
+						switch (msg.what) {
+							case BaseActivity.DIALOG_CONFIRM_CLICK:
+								startLoadApk(address);
+								break;
+						}
+					}
+				}, keylistener);
 	}
 
 	/**
@@ -206,7 +165,7 @@ public class AppVersionDialog {
 			if (result != null) {
 				startInstallApk(mContext);
 			} else {
-				CommonTools.showToast(mContext, mContext.getString(R.string.toast_server_busy), 1000);
+				showStatus(mContext.getString(R.string.toast_server_busy));
 			}
 		}
 

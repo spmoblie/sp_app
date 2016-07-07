@@ -28,7 +28,7 @@
                 android:layout_weight="2"
                 android:text="@string/product_search_hot"
                 android:textColor="@color/text_color_title"
-                android:textSize="@dimen/text_size_14" />
+                android:textSize="@dimen/text_size_13" />
 
             <TextView
                 android:id="@+id/product_tv_hot_words_1"
@@ -73,19 +73,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
-        
-        <TextView 
-            android:id="@+id/product_tv_footer_loading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:background="@color/ui_bg_color_gray"
-            android:text="@string/loading_strive_loading"
-            android:textColor="@color/text_color_assist"
-            android:textSize="@dimen/text_size_14"
-            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -116,6 +103,7 @@
             android:id="@+id/product_ll_search_no_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="15dp"
             android:background="@color/ui_bg_color_gray"
             android:visibility="gone" >
 
@@ -123,26 +111,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:gravity="center"
                 android:text="@string/product_search_no_data"
                 android:textColor="@color/text_color_assist"
-                android:textSize="@dimen/text_size_18" />
+                android:textSize="@dimen/text_size_14" />
         </RelativeLayout>
 
         <include layout="@layout/layout_scroll_list_btn" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/product_tv_page_num"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/bg_toast"
-        android:gravity="center"
-        android:text=""
-        android:textColor="@color/text_color_white"
-        android:textSize="@dimen/text_size_12"
-        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/product_iv_to_top"

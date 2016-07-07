@@ -64,21 +64,20 @@ public class VideoActivity extends BaseActivity {
 			return;
 		}
 		if (!NetworkUtil.isWifi(mContext)) {
-			Handler mHandler = new Handler(){
-				@Override
-				public void handleMessage(Message msg) {
-					switch (msg.what) {
-					case DIALOG_CONFIRM_CLICK:
-						finish();
-						break;
-					case DIALOG_CANCEL_CLICK:
-						startPaly();
-						break;
-					}
-				}
-			};
-			showConfirmDialog(getString(R.string.network_no_wifi), 
-					getString(R.string.cancel), getString(R.string.proceed), mHandler);
+			showConfirmDialog(getString(R.string.network_no_wifi), getString(R.string.cancel),
+					getString(R.string.proceed), true, true, new Handler(){
+						@Override
+						public void handleMessage(Message msg) {
+							switch (msg.what) {
+								case DIALOG_CANCEL_CLICK:
+									finish();
+									break;
+								case DIALOG_CONFIRM_CLICK:
+									startPaly();
+									break;
+							}
+						}
+					});
 			return;
 		}
 		startPaly();
@@ -155,7 +154,7 @@ public class VideoActivity extends BaseActivity {
 				}
 			}
 		};
-		showErrorDialog(content, mHandler);
+		showErrorDialog(content, false, mHandler);
 	}
 
 	@Override

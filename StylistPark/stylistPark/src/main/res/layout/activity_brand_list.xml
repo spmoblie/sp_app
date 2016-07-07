@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="4dp"
-                    android:src="@drawable/generator_search_icon"
+                    android:src="@drawable/btn_icon_search_small"
                     android:contentDescription="@string/desc" />
 
                 <EditText
@@ -65,7 +65,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:paddingLeft="4dp"
-                    android:src="@drawable/generator_search_del"
+                    android:src="@drawable/topbar_icon_clear"
                     android:contentDescription="@string/desc"
                     android:visibility="gone" />
             </RelativeLayout>

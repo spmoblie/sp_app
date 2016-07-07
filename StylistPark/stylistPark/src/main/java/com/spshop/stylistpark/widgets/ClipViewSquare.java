@@ -18,10 +18,18 @@ import com.spshop.stylistpark.activity.common.ClipImageSquareActivity;
 public class ClipViewSquare extends View {
 
 	/**
+	 * 屏幕宽
+	 */
+	public static final int WIDTH = AppApplication.screenWidth;
+	/**
+	 * 屏幕高
+	 */
+	public static final int HEIGHT = AppApplication.screenHeight;
+	/**
 	 * 方形宽高
 	 */
-	public static final int WIDTH_HEIGHT = AppApplication.screenWidth * 2 / 3;
-	
+	public static final int WIDTH_HEIGHT = WIDTH * 2 / 3;
+
 	private Paint mPaint;
 
 	public ClipViewSquare(Context context) {
@@ -47,8 +55,8 @@ public class ClipViewSquare extends View {
 		if (ClipImageSquareActivity.instance != null) {
 			otherTopHeight = ClipImageSquareActivity.instance.getStatusBarHeight();
 		}
-		int left = (AppApplication.screenWidth - WIDTH_HEIGHT) / 2; //左
-		int top = (AppApplication.screenHeight - otherTopHeight - WIDTH_HEIGHT) / 2; //上
+		int left = (WIDTH - WIDTH_HEIGHT) / 2; //左
+		int top = (HEIGHT - otherTopHeight - WIDTH_HEIGHT) / 2; //上
 		int right = left + WIDTH_HEIGHT; //右
 		int bottom = top + WIDTH_HEIGHT; //下
 		
@@ -56,10 +64,10 @@ public class ClipViewSquare extends View {
 		mPaint.setColor(0xaa000000);
 		mPaint.setStrokeWidth(height);
 		mPaint.setStyle(Paint.Style.FILL); //实心矩形
-		canvas.drawRect(new RectF(0, 0, left, AppApplication.screenHeight), mPaint); //绘制边框左方
+		canvas.drawRect(new RectF(0, 0, left, HEIGHT), mPaint); //绘制边框左方
 		canvas.drawRect(new RectF(left, 0, right, top), mPaint); //绘制边框上方
-		canvas.drawRect(new RectF(right, 0, AppApplication.screenWidth, AppApplication.screenHeight), mPaint); //绘制边框右方
-		canvas.drawRect(new RectF(left, bottom, right, AppApplication.screenHeight), mPaint); //绘制边框下方
+		canvas.drawRect(new RectF(right, 0, WIDTH, HEIGHT), mPaint); //绘制边框右方
+		canvas.drawRect(new RectF(left, bottom, right, HEIGHT), mPaint); //绘制边框下方
 		
 		// 绘制白色边框线
 		mPaint.setColor(Color.WHITE);

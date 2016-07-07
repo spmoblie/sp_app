@@ -13,14 +13,14 @@
         style="@style/layout_weight_style"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2" >
+        android:layout_weight="3" >
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/popup_add_cart_ll_show"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:background="@color/ui_bg_color_white"
         android:orientation="vertical" >
 
@@ -68,14 +68,14 @@
                         android:maxLines="2"
                         android:text=""
                         android:textColor="@color/text_color_content"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="@dimen/text_size_14"
                         android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/popup_add_cart_tv_price"
                         style="@style/common_text_price"
                         android:layout_marginTop="10dp"
-                        android:textSize="@dimen/text_size_30"
+                        android:textSize="@dimen/text_size_26"
                         android:textStyle="bold" />
 
                     <TextView
@@ -86,7 +86,7 @@
                         android:layout_marginBottom="10dp"
                         android:text="@string/item_select_no"
                         android:textColor="@color/text_color_assist"
-                        android:textSize="@dimen/text_size_14" />
+                        android:textSize="@dimen/text_size_12" />
 
                     <TextView
                         android:id="@+id/popup_add_cart_tv_select"
@@ -99,7 +99,7 @@
                         android:maxLines="2"
                         android:text=""
                         android:textColor="@color/text_color_assist"
-                        android:textSize="@dimen/text_size_14" />
+                        android:textSize="@dimen/text_size_12" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/product_buy_number"
                         android:textColor="@color/text_color_assist"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_12" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -179,7 +179,7 @@
                             android:gravity="center"
                             android:text="@string/number_0"
                             android:textColor="@color/text_color_title"
-                            android:textSize="@dimen/text_size_16" />
+                            android:textSize="@dimen/text_size_12" />
 
                         <ImageView
                             style="@style/set_line_vertical_bg"
@@ -214,7 +214,7 @@
             android:gravity="center"
             android:text="@string/confirm"
             android:textColor="@color/text_color_white"
-            android:textSize="@dimen/text_size_18" />
+            android:textSize="@dimen/text_size_16" />
     </LinearLayout>
 
 </LinearLayout>

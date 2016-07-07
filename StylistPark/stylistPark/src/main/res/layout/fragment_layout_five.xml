@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/layout_full" >
+    style="@style/layout_full"
+    android:background="@color/ui_bg_color_app" >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,8 +15,8 @@
             <RelativeLayout
                 android:id="@+id/fragment_five_rl_top_login"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@drawable/bg_profile_top_login_no" >
+                android:layout_height="200dp"
+                android:background="@drawable/shape_frame_bg_app_gradient" >
 
                 <ImageView
                     android:id="@+id/fragment_five_iv_info"
@@ -27,7 +28,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentBottom="true"
                     android:baselineAligned="false"
                     android:orientation="horizontal" >
@@ -308,7 +309,7 @@
                                 android:gravity="center"
                                 android:text="@string/number_0"
                                 android:textColor="@color/text_color_content"
-                                android:textSize="@dimen/text_size_16" />
+                                android:textSize="@dimen/text_size_12" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -319,7 +320,7 @@
                                 android:singleLine="true"
                                 android:text="@string/profile_member_order"
                                 android:textColor="@color/text_color_content"
-                                android:textSize="@dimen/text_size_12" />
+                                android:textSize="@dimen/text_size_11" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -337,7 +338,7 @@
                                 android:gravity="center"
                                 android:text="@string/number_0"
                                 android:textColor="@color/text_color_content"
-                                android:textSize="@dimen/text_size_16"
+                                android:textSize="@dimen/text_size_12"
                                 android:visibility="gone" />
 
                             <TextView
@@ -347,7 +348,7 @@
                                 android:gravity="center"
                                 android:text="@string/profile_member_list"
                                 android:textColor="@color/text_color_content"
-                                android:textSize="@dimen/text_size_12"
+                                android:textSize="@dimen/text_size_11"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </LinearLayout>

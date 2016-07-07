@@ -26,6 +26,6 @@
         android:gravity="center_vertical"
         android:text="@string/title_qr_code_scan"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_18" />
+        android:textSize="@dimen/title_text_size" />
 
 </RelativeLayout>

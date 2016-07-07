@@ -2,6 +2,7 @@
 <resources>
 
     <!-- 字体大小设置 -->
+    <dimen name="text_size_07">07sp</dimen>
     <dimen name="text_size_08">08sp</dimen>
     <dimen name="text_size_09">09sp</dimen>
     <dimen name="text_size_10">10sp</dimen>
@@ -30,12 +31,11 @@
     <!-- 标题配置 -->
 	<dimen name="title_height">50dp</dimen>
 	<dimen name="title_left_paddingLeft">12dp</dimen>
-	<dimen name="title_text_size">20sp</dimen>
-	<dimen name="title_text_size_right">18sp</dimen>
+	<dimen name="title_text_size">17sp</dimen>
+	<dimen name="title_text_size_right">15sp</dimen>
 
     <!-- 导航栏配置 -->
 	<dimen name="topbar_group_height">35dp</dimen>
-	<dimen name="topbar_group_height_child">34.5dp</dimen>
 
     <!-- 其它配置 -->
     <dimen name="favourable_time_height">64dp</dimen>

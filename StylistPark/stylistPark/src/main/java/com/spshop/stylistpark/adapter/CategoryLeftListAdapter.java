@@ -86,9 +86,9 @@ public class CategoryLeftListAdapter extends BaseAdapter{
 		final CategoryListEntity data = datas.get(position);
 		
 		if (lang == Language.En) {
-			holder.tv_name.setTextSize(12);
+			holder.tv_name.setTextSize(10);
 		}else {
-			holder.tv_name.setTextSize(14);
+			holder.tv_name.setTextSize(12);
 		}
 		holder.tv_name.setText(data.getName());
 		

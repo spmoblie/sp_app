@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.spshop.stylistpark.AppApplication;
@@ -61,8 +62,9 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	protected ServiceContext sc = ServiceContext.getServiceContext();
 
 	private ViewPager mViewPager;
-	private ImageView iv_top_left;
-	private TextView tv_title_1, tv_title_2;
+	private RelativeLayout rl_top_left;
+	private ImageView iv_lines_3;
+	private TextView tv_title_1, tv_title_2, tv_title_3;
 	private ListView lv_left;
 	private GridView gv_right;
 	private CategoryLeftListAdapter lv_left_Adapter;
@@ -113,17 +115,21 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 
 	private void findViewById(View view) {
 		mViewPager = (ViewPager) view.findViewById(R.id.fragment_two_viewpager);
-		iv_top_left = (ImageView) view.findViewById(R.id.top_two_title_iv_left);
-		tv_title_1 = (TextView) view.findViewById(R.id.top_two_title_tv_title_1);
-		tv_title_2 = (TextView) view.findViewById(R.id.top_two_title_tv_title_2);
+		rl_top_left = (RelativeLayout) view.findViewById(R.id.top_three_title_rl_left);
+		tv_title_1 = (TextView) view.findViewById(R.id.top_three_title_tv_title_1);
+		tv_title_2 = (TextView) view.findViewById(R.id.top_three_title_tv_title_2);
+		tv_title_3 = (TextView) view.findViewById(R.id.top_three_title_tv_title_3);
+		iv_lines_3 = (ImageView) view.findViewById(R.id.top_three_title_iv_lines_3);
 	}
 
 	private void initView() {
-		iv_top_left.setVisibility(View.GONE);
+		rl_top_left.setVisibility(View.GONE);
 		tv_title_1.setText(R.string.title_category);
-		tv_title_2.setText(R.string.product_top_tab_4);
 		tv_title_1.setOnClickListener(this);
+		tv_title_2.setText(R.string.product_top_tab_4);
 		tv_title_2.setOnClickListener(this);
+		tv_title_3.setVisibility(View.GONE);
+		iv_lines_3.setVisibility(View.GONE);
 
 		initViewPager();
 		setAdapter();
@@ -288,11 +294,11 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.top_two_title_tv_title_1:
+			case R.id.top_three_title_tv_title_1:
 				changeTitleStatus(0);
 				mViewPager.setCurrentItem(0);
 				break;
-			case R.id.top_two_title_tv_title_2:
+			case R.id.top_three_title_tv_title_2:
 				changeTitleStatus(1);
 				mViewPager.setCurrentItem(1);
 				break;

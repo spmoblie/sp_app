@@ -248,7 +248,6 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	 * 下拉刷新数据
 	 */
 	private void refreshSVDatas() {
-		if (!isLoadOk) return; //加载频率控制
 		loadType = 0;
 		current_Page = 1;
 		requestProductLists();
@@ -258,7 +257,17 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	 * 发起加载数据的请求
 	 */
 	private void requestProductLists() {
-		if (!isLoadOk) return; //加载频率控制
+		if (!isLoadOk) { //加载频率控制
+			if (loadType == 0) {
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						refresh_lv.onPullDownRefreshComplete();
+					}
+				}, 1000);
+			}
+			return;
+		}
 		isLoadOk = false;
 		new Handler().postDelayed(new Runnable() {
 
@@ -407,7 +416,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 								case TYPE_1:
 									if (loadType == 0) { //下拉
 										updEntity(total, countTotal, lists, lv_all_1, hm_all_1);
-										//page_type_1 = 1;
+										//page_type_1 = 2;
 									}else {
 										addEntity(lv_all_1, lists, hm_all_1);
 										page_type_1++;
@@ -416,7 +425,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 								case TYPE_2:
 									if (loadType == 0) { //下拉
 										updEntity(total, countTotal, lists, lv_all_2, hm_all_2);
-										//page_type_2 = 1;
+										//page_type_2 = 2;
 									}else {
 										addEntity(lv_all_2, lists, hm_all_2);
 										page_type_2++;
@@ -425,7 +434,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 								case TYPE_3:
 									if (loadType == 0) { //下拉
 										updEntity(total, countTotal, lists, lv_all_3, hm_all_3);
-										//page_type_3 = 1;
+										//page_type_3 = 2;
 									}else {
 										addEntity(lv_all_3, lists, hm_all_3);
 										page_type_3++;
@@ -503,9 +512,6 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 			entity = newDatas.get(i);
 			if (entity != null && !hashMap.containsKey(entity.getId())) {
 				oldDatas.add(entity);
-				oldDatas.add(entity);
-				oldDatas.add(entity);
-				oldDatas.add(entity);
 			}
 		}
 		addAllShow(oldDatas);
@@ -579,10 +585,10 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	}
 
 	/**
-	 * 数量小于一页时停止加载翻页数据
+	 * 判定是否停止加载翻页数据
 	 */
 	private boolean isStop(){
-		return lv_show.size() < Page_Count || lv_show.size() == countTotal;
+		return lv_show.size() > 0 && lv_show.size() == countTotal;
 	}
 
 	@Override

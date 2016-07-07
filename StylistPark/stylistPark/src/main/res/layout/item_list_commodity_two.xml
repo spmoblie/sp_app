@@ -46,30 +46,33 @@
                 android:id="@+id/list_commodity_two_left_tv_brand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textColor="@color/text_color_title"
-                android:textSize="12sp"
-                android:visibility="gone" />
+                android:textColor="@color/text_color_content"
+                android:textSize="@dimen/text_size_11" />
 
             <TextView
                 android:id="@+id/list_commodity_two_left_tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
                 android:gravity="center_horizontal"
-                android:lines="2"
-                android:maxLines="2"
-                android:minLines="2"
-                android:textColor="@color/text_color_title"
-                android:textSize="12sp" />
+                android:ellipsize="end"
+                android:lines="1"
+                android:textColor="@color/text_color_content"
+                android:textSize="@dimen/text_size_11" />
 
             <LinearLayout
                 android:id="@+id/list_commodity_two_left_ll_price_brand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/list_commodity_two_left_tv_curr"
+                    style="@style/common_text_price"
+                    android:textSize="@dimen/text_size_09"/>
 
                 <TextView
                     android:id="@+id/list_commodity_two_left_tv_sell_price"
@@ -79,21 +82,12 @@
                     android:id="@+id/list_commodity_two_left_tv_full_price"
                     style="@style/common_text_price"
                     android:layout_marginLeft="2dp"
-                    android:textColor="@color/text_color_content" />
+                    android:textColor="@color/text_color_assist"
+                    android:textSize="@dimen/text_size_09"/>
 
                 <TextView
                     android:id="@+id/list_commodity_two_left_tv_discount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:background="@drawable/shape_frame_bg_app_buttom_0"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:padding="2dp"
-                    android:singleLine="true"
-                    android:textColor="@color/text_color_white"
-                    android:textSize="@dimen/text_size_08"
-                    android:visibility="gone" />
+                    style="@style/common_text_discount" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -142,30 +136,33 @@
                     android:id="@+id/list_commodity_two_right_tv_brand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:textColor="@color/text_color_title"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
+                    android:textColor="@color/text_color_content"
+                    android:textSize="@dimen/text_size_11" />
 
                 <TextView
                     android:id="@+id/list_commodity_two_right_tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
                     android:gravity="center_horizontal"
-                    android:lines="2"
-                    android:maxLines="2"
-                    android:minLines="2"
-                    android:textColor="@color/text_color_title"
-                    android:textSize="12sp" />
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:textColor="@color/text_color_content"
+                    android:textSize="@dimen/text_size_11" />
 
                 <LinearLayout
                     android:id="@+id/list_commodity_two_right_ll_price_brand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/list_commodity_two_right_tv_curr"
+                        style="@style/common_text_price"
+                        android:textSize="@dimen/text_size_09"/>
 
                     <TextView
                         android:id="@+id/list_commodity_two_right_tv_sell_price"
@@ -175,21 +172,12 @@
                         android:id="@+id/list_commodity_two_right_tv_full_price"
                         style="@style/common_text_price"
                         android:layout_marginLeft="2dp"
-                        android:textColor="@color/text_color_content" />
+                        android:textColor="@color/text_color_assist"
+                        android:textSize="@dimen/text_size_09"/>
 
                     <TextView
                         android:id="@+id/list_commodity_two_right_tv_discount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:background="@drawable/shape_frame_bg_app_buttom_0"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:singleLine="true"
-                        android:textColor="@color/text_color_white"
-                        android:textSize="@dimen/text_size_08"
-                        android:visibility="gone" />
+                        style="@style/common_text_discount" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

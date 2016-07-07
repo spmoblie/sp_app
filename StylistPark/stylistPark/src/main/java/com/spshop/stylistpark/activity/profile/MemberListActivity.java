@@ -49,6 +49,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private int page_type_3 = 1;  //订单排名加载页
 	private int page_type_4 = 1;  //收入排名加载页
 	private int topType = TYPE_1; //Top标记
+	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int countTotal = 0; //数集总数量
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean isFrist = true; //识别是否第一次打开页面
@@ -131,13 +132,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 下拉刷新
-            	new Handler().postDelayed(new Runnable() {
-					
-					@Override
-					public void run() {
-						refresh_lv.onPullDownRefreshComplete();
-					}
-				}, 1000);
+            	refreshSVDatas();
             }
 
             @Override
@@ -210,6 +205,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void getSVDatas() {
 		isSuccess = false;
+		loadType = 1;
 		current_Page = 1;
 		startAnimation();
 		requestProductLists();
@@ -219,6 +215,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	 * 加载翻页数据
 	 */
 	private void loadSVDatas() {
+		loadType = 1;
 		switch (topType) {
 		case TYPE_1: //最新客户
 			current_Page = page_type_1;
@@ -237,10 +234,29 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	/**
+	 * 下拉刷新数据
+	 */
+	private void refreshSVDatas() {
+		loadType = 0;
+		current_Page = 1;
+		requestProductLists();
+	}
+
+	/**
 	 * 发起加载数据的请求
 	 */
 	private void requestProductLists() {
-		if (!isLoadOk) return; //加载频率控制
+		if (!isLoadOk) { //加载频率控制
+			if (loadType == 0) {
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						refresh_lv.onPullDownRefreshComplete();
+					}
+				}, 1000);
+			}
+			return;
+		}
 		isLoadOk = false;
 		new Handler().postDelayed(new Runnable() {
 			
@@ -387,27 +403,44 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			if (mainEn != null) {
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
-					countTotal = mainEn.getCountTotal();
+					int total = mainEn.getCountTotal();
 					List<MemberEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {
 						switch (topType) {
 						case TYPE_1:
-							addEntity(lv_all_1, lists, hm_all_1);
-							page_type_1++;
+							if (loadType == 0) { //下拉
+								updEntity(total, countTotal, lists, lv_all_1, hm_all_1);
+							}else {
+								addEntity(lv_all_1, lists, hm_all_1);
+								page_type_1++;
+							}
 							break;
 						case TYPE_2:
-							addEntity(lv_all_2, lists, hm_all_2);
-							page_type_2++;
+							if (loadType == 0) { //下拉
+								updEntity(total, countTotal, lists, lv_all_2, hm_all_2);
+							}else {
+								addEntity(lv_all_2, lists, hm_all_2);
+								page_type_2++;
+							}
 							break;
 						case TYPE_3:
-							addEntity(lv_all_3, lists, hm_all_3);
-							page_type_3++;
+							if (loadType == 0) { //下拉
+								updEntity(total, countTotal, lists, lv_all_3, hm_all_3);
+							}else {
+								addEntity(lv_all_3, lists, hm_all_3);
+								page_type_3++;
+							}
 							break;
 						case TYPE_4:
-							addEntity(lv_all_4, lists, hm_all_4);
-							page_type_4++;
+							if (loadType == 0) { //下拉
+								updEntity(total, countTotal, lists, lv_all_4, hm_all_4);
+							}else {
+								addEntity(lv_all_4, lists, hm_all_4);
+								page_type_4++;
+							}
 							break;
 						}
+						countTotal = total;
 						myUpdateAdapter();
 					}else {
 						loadFailHandle();
@@ -445,6 +478,27 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			break;
 		}
 		myUpdateAdapter();
+	}
+
+	/**
+	 * 刷新数集
+	 */
+	private void updEntity(int newTotal, int oldTotal, List<MemberEntity> newDatas,
+						   List<MemberEntity> oldDatas, HashMap<String, Boolean> oldMap) {
+		if (oldTotal < newTotal) {
+			List<MemberEntity> datas = new ArrayList<MemberEntity>();
+			datas.addAll(oldDatas);
+			oldDatas.clear();
+			for (int i = 0; i < (newTotal - oldTotal); i++) {
+				if (!oldMap.containsKey(newDatas.get(i).getUserId())) {
+					oldDatas.add(newDatas.get(i));
+					datas.remove(datas.size()-1);
+				}
+			}
+			oldDatas.addAll(datas);
+			addAllShow(oldDatas);
+			refresh_lv.setHasMoreData(true); //设置允许加载更多
+		}
 	}
 	
 	/**
@@ -495,8 +549,15 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void stopAnimation() {
 		isLoadOk = true;
-		refresh_lv.onPullUpRefreshComplete();
 		rl_loading.setVisibility(View.GONE);
+		switch (loadType) {
+			case 0: //下拉刷新
+				refresh_lv.onPullDownRefreshComplete();
+				break;
+			case 1: //加载更多
+				refresh_lv.onPullUpRefreshComplete();
+				break;
+		}
 		if (lv_show.size() == 0) {
 			tv_no_data.setText(getString(R.string.member_no_member));
 			rl_no_data.setVisibility(View.VISIBLE);
@@ -508,10 +569,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 数量小于一页时停止加载翻页数据
+	 * 判定是否停止加载翻页数据
 	 */
 	private boolean isStop(){
-		return lv_show.size() < Page_Count || lv_show.size() == countTotal;
+		return lv_show.size() > 0 && lv_show.size() == countTotal;
 	}
 	
 }

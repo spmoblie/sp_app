@@ -2,19 +2,18 @@ package com.spshop.stylistpark.activity.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.cart.PostOrderActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.AddressListAdapter;
-import com.spshop.stylistpark.dialog.DialogManager;
-import com.spshop.stylistpark.dialog.DialogManager.DialogManagerCallback;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.utils.CommonTools;
@@ -32,14 +31,16 @@ public class MyAddressActivity extends BaseActivity {
 	private static final String TAG = "MyAddressActivity";
 	public static MyAddressActivity instance = null;
 	public boolean isChange = false;
-	
+
+	private boolean isLogined, isSuccess;
+
 	private TextView tv_no_data;
 	private ListView mListView;
 	private AdapterCallback ap_callback;
 	private AddressListAdapter lv_adapter;
-	private boolean isLogined, isSuccess;
+
 	private AddressEntity mainEn, data;
-	private List<AddressEntity> addrLists = new ArrayList<AddressEntity>();
+	private List<AddressEntity> lv_show = new ArrayList<AddressEntity>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,23 +83,25 @@ public class MyAddressActivity extends BaseActivity {
 						startActivity(intent);
 						break;
 					case AddressListAdapter.TYPE_DELETE:
-						new DialogManager(mContext).showTwoBtnDialog(new DialogManagerCallback() {
-							
-							@Override
-							public void setOnClick(int type) {
-								if (type == 1) {
-									requestDeleteAddress();
-								}
-							}
-						}, getString(R.string.prompt), getString(R.string.delete_confirm),
-						   getString(R.string.cancel), getString(R.string.confirm), 
-						   AppApplication.screenWidth * 2/3, true);
+						showConfirmDialog(getString(R.string.delete_confirm), getString(R.string.cancel),
+								getString(R.string.confirm), true, true, new Handler() {
+									@Override
+									public void handleMessage(Message msg) {
+										switch (msg.what) {
+											case BaseActivity.DIALOG_CANCEL_CLICK:
+												break;
+											case BaseActivity.DIALOG_CONFIRM_CLICK:
+												requestDeleteAddress();
+												break;
+										}
+									}
+								});
 						break;
 					}
 				}
 			}
 		};
-		lv_adapter = new AddressListAdapter(mContext, addrLists, ap_callback);
+		lv_adapter = new AddressListAdapter(mContext, lv_show, ap_callback);
 		mListView.setAdapter(lv_adapter);
 		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
@@ -191,8 +194,8 @@ public class MyAddressActivity extends BaseActivity {
 			if (mainEn != null) {
 				if (mainEn.getMainLists() != null) {
 					isSuccess = true;
-					addrLists.clear();
-					addrLists.addAll(mainEn.getMainLists());
+					lv_show.clear();
+					lv_show.addAll(mainEn.getMainLists());
 				}
 				updateListView();
 			}else {
@@ -239,10 +242,10 @@ public class MyAddressActivity extends BaseActivity {
 	}
 
 	private void updateListView() {
-		if (addrLists.size() > 0) {
+		if (lv_show.size() > 0) {
 			mListView.setVisibility(View.VISIBLE);
 			tv_no_data.setVisibility(View.GONE);
-			lv_adapter.updateAdapter(addrLists);
+			lv_adapter.updateAdapter(lv_show);
 		}else {
 			mListView.setVisibility(View.GONE);
 			tv_no_data.setVisibility(View.VISIBLE);

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/login_bound_reminder"
         android:textColor="@color/text_color_assist"
-        android:textSize="@dimen/text_size_14" />
+        android:textSize="@dimen/text_size_12" />
 
     <EditText
         android:id="@+id/register_oauth_et_account"
@@ -28,13 +28,13 @@
         android:id="@+id/register_oauth_btn_oath"
         style="@style/Register_Button"
         android:text="@string/login_immediately_bound"
-        android:textSize="@dimen/text_size_18" />
+        android:textSize="@dimen/text_size_16" />
 
     <Button
         android:id="@+id/register_oauth_btn_register"
         style="@style/Register_Button"
         android:layout_marginTop="15dp"
         android:text="@string/login_no_account"
-        android:textSize="@dimen/text_size_18" />
+        android:textSize="@dimen/text_size_16" />
 
 </LinearLayout>

@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.SystemClock;
@@ -20,6 +18,8 @@ import com.spshop.stylistpark.entity.Product;
 import com.spshop.stylistpark.entity.RowObject;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
+
+import java.util.List;
 
 /**
  * “搭配货品”商品列表适配器

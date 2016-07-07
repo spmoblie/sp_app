@@ -68,8 +68,8 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 	static class ViewHolder{
 		LinearLayout item_main, left_main, right_main;
 		ImageView left_img, right_img;
-		TextView left_name, left_brand, left_sell_price, left_full_price, left_discount;
-		TextView right_name, right_brand, right_sell_price, right_full_price, right_discount;
+		TextView left_name, left_brand, left_curr, left_sell_price, left_full_price, left_discount;
+		TextView right_name, right_brand, right_curr, right_sell_price, right_full_price, right_discount;
 	}
 	
 	/**代表了ListView中的一个item对象*/
@@ -83,15 +83,17 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder.item_main = (LinearLayout) convertView.findViewById(R.id.list_commodity_two_ll_main);
 			holder.left_main = (LinearLayout) convertView.findViewById(R.id.list_commodity_two_left_ll_main);
 			holder.left_img = (ImageView) convertView.findViewById(R.id.list_commodity_two_left_iv_img);
-			holder.left_name = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_name);
 			holder.left_brand = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_brand);
+			holder.left_name = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_name);
+			holder.left_curr = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_curr);
 			holder.left_sell_price = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_sell_price);
 			holder.left_full_price = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_full_price);
 			holder.left_discount = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_discount);
 			holder.right_main = (LinearLayout) convertView.findViewById(R.id.list_commodity_two_right_ll_main);
 			holder.right_img = (ImageView) convertView.findViewById(R.id.list_commodity_two_right_iv_img);
-			holder.right_name = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_name);
 			holder.right_brand = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_brand);
+			holder.right_name = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_name);
+			holder.right_curr = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_curr);
 			holder.right_sell_price = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_sell_price);
 			holder.right_full_price = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_full_price);
 			holder.right_discount = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_discount);
@@ -115,17 +117,17 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			} else {
 				holder.left_img.setImageResource(R.drawable.bg_img_white);
 			}
-			holder.left_name.setText(leftEn.getBrand() + " " + leftEn.getName()); //商品名称
-			holder.left_sell_price.setText(currStr + leftEn.getSellPrice()); //商品卖价
-			
+			holder.left_brand.setText(leftEn.getBrand()); //商品品牌
+			holder.left_name.setText(leftEn.getName()); //商品名称
+			holder.left_curr.setText(currStr);
+			holder.left_sell_price.setText(leftEn.getSellPrice()); //商品卖价
+
 			String full_price = leftEn.getFullPrice(); //商品原价
 			if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {
-				holder.left_sell_price.setTextColor(context.getResources().getColor(R.color.text_color_content));
 				holder.left_full_price.getPaint().setFlags(0);
 				holder.left_full_price.setVisibility(View.GONE);
 				holder.left_discount.setVisibility(View.GONE);
 			} else {
-				holder.left_sell_price.setTextColor(context.getResources().getColor(R.color.text_color_app_bar));
 				holder.left_full_price.setText(full_price);
 				holder.left_full_price.setVisibility(View.VISIBLE);
 				holder.left_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -152,17 +154,17 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			} else {
 				holder.right_img.setImageResource(R.drawable.bg_img_white);
 			}
-			holder.right_name.setText(leftEn.getBrand() + " " + rightEn.getName()); //商品名称
-			holder.right_sell_price.setText(currStr + rightEn.getSellPrice()); //商品卖价
+			holder.right_brand.setText(leftEn.getBrand()); //商品品牌
+			holder.right_name.setText(rightEn.getName()); //商品名称
+			holder.right_curr.setText(currStr);
+			holder.right_sell_price.setText(rightEn.getSellPrice()); //商品卖价
 			
 			String full_price = rightEn.getFullPrice(); //商品原价
 			if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {
-				holder.right_sell_price.setTextColor(context.getResources().getColor(R.color.text_color_content));
 				holder.right_full_price.getPaint().setFlags(0);
 				holder.right_full_price.setVisibility(View.GONE);
 				holder.right_discount.setVisibility(View.GONE);
 			} else {
-				holder.right_sell_price.setTextColor(context.getResources().getColor(R.color.text_color_app_bar));
 				holder.right_full_price.setText(full_price);
 				holder.right_full_price.setVisibility(View.VISIBLE);
 				holder.right_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);

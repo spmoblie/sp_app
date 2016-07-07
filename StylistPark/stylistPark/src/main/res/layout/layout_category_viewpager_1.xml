@@ -24,23 +24,6 @@
         android:background="@color/ui_bg_color_gray"
         android:orientation="vertical" >
 
-        <RelativeLayout
-            android:id="@+id/category_rl_all"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_margin="5dp"
-            android:background="@color/ui_bg_color_line_wide"
-            android:visibility="gone" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/all"
-                android:textColor="@color/text_color_content"
-                android:textSize="@dimen/text_size_18" />
-        </RelativeLayout>
-
         <GridView
             android:id="@+id/category_right_gv"
             android:layout_width="match_parent"

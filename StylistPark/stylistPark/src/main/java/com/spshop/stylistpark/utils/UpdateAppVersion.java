@@ -11,6 +11,7 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.dialog.AppVersionDialog;
+import com.spshop.stylistpark.dialog.DialogManager;
 import com.spshop.stylistpark.dialog.LoadDialog;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
 import com.spshop.stylistpark.service.ServiceContext;
@@ -20,6 +21,7 @@ public class UpdateAppVersion {
 	private static UpdateAppVersion instance;
 	private SharedPreferences shared;
 	private Context mContext;
+	private DialogManager dm;
 	private String curVersionName;
 	private int curVersionCode;
 	private boolean isNewVersion = false;
@@ -34,6 +36,7 @@ public class UpdateAppVersion {
 	
 	private UpdateAppVersion(Context context, boolean isHomeIndex) {
 		mContext = context;
+		dm = DialogManager.getInstance(mContext);
 		this.isHomeIndex = isHomeIndex;
 		shared = AppApplication.getSharedPreferences();
 		startCheckAppVersion();
@@ -43,8 +46,11 @@ public class UpdateAppVersion {
 		return isNewVersion;
 	}
 
-	public static void onDestroy() {
+	public void clearInstance() {
 		instance = null;
+		if (dm != null) {
+			dm.clearInstance();
+		}
 	}
 
 	private void startCheckAppVersion() {
@@ -58,7 +64,7 @@ public class UpdateAppVersion {
 			new HttpTask().execute(); //异步检查版本信息
 		} else {
 			CommonTools.showToast(mContext, mContext.getString(R.string.network_fault), 1000);
-			onDestroy();
+			clearInstance();
 		}
 	}
 
@@ -74,7 +80,7 @@ public class UpdateAppVersion {
 			AppApplication.version_name = curVersionName;
 		} catch (NameNotFoundException e) {
 			ExceptionUtil.handle(mContext, e);
-			onDestroy();
+			clearInstance();
 		}
 	}
 
@@ -89,14 +95,14 @@ public class UpdateAppVersion {
 				versionEn = ServiceContext.getServiceContext().checkVersionUpdate(0, curVersionName);
 			} catch (Exception e) {
 				ExceptionUtil.handle(mContext, e);
-				onDestroy();
+				clearInstance();
 			}
 			return versionEn;
 		}
 
 		protected void onPostExecute(Object result) {
 			if (result != null) {
-				AppVersionDialog appDialog = new AppVersionDialog(mContext);
+				AppVersionDialog appDialog = new AppVersionDialog(mContext, dm);
 				if (!isHomeIndex) {
 					LoadDialog.hidden(mContext);
 				}
@@ -113,32 +119,32 @@ public class UpdateAppVersion {
 						lessThanMin = compareVersionCode(version);
 					}
 					if (force) { //是否需要强制更新
-						appDialog.forceUpdateVersion(address, isHomeIndex, description);
+						appDialog.forceUpdateVersion(address, description);
 						isNewVersion = true;
 					} else if (!isNewVersion && lessThanMin) { //检测到新版本
 						long newTime = System.currentTimeMillis();
 						long oldTime = shared.getLong(AppConfig.KEY_UPDATE_VERSION_LAST_TIME, 0);
 						if (newTime - oldTime > 86400000) { //设置首页检测版本的频率为一天
-							appDialog.foundNewVersion(address, isHomeIndex, description);
+							appDialog.foundNewVersion(address, description);
 							shared.edit().putLong(AppConfig.KEY_UPDATE_VERSION_LAST_TIME, newTime).commit();
 							isNewVersion = true;
 						} else {
 							if (!isHomeIndex) {
-								appDialog.foundNewVersion(address, isHomeIndex, description);
+								appDialog.foundNewVersion(address, description);
 								isNewVersion = true;
 							}
 						}
 					} else if (!isNewVersion) {
 						if (!isHomeIndex) {
-							appDialog.isNewVersion(); //提示已是最新版本
+							appDialog.showStatus(mContext.getString(R.string.dialog_version_new)); //提示已是最新版本
 						}
 					}
 				} else {
-					CommonTools.showToast(mContext, mContext.getString(R.string.toast_server_busy), 1000);
+					appDialog.showStatus(mContext.getString(R.string.toast_server_busy));
 				}
 			} else {
 			}
-			onDestroy();
+			clearInstance();
 		}
 	}
 

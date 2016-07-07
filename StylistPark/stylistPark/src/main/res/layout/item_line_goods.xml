@@ -31,6 +31,8 @@
             android:id="@+id/home_line_goods_item_ll_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:gravity="center"
             android:orientation="vertical" >
 
@@ -41,15 +43,20 @@
                 android:gravity="center"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="@color/text_color_title"
-                android:textSize="@dimen/text_size_12" />
+                android:textColor="@color/text_color_content"
+                android:textSize="@dimen/text_size_10" />
 
             <LinearLayout
                 android:id="@+id/home_line_goods_item_ll_price_brand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/home_line_goods_item_tv_curr"
+                    style="@style/common_text_price"
+                    android:textSize="@dimen/text_size_08"/>
 
                 <TextView
                     android:id="@+id/home_line_goods_item_tv_sell_price"
@@ -65,17 +72,8 @@
 
                 <TextView
                     android:id="@+id/home_line_goods_item_tv_discount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:background="@drawable/shape_frame_bg_app_buttom_0"
-                    android:gravity="center"
-                    android:padding="2dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textColor="@color/text_color_white"
-                    android:textSize="@dimen/text_size_08"
-                    android:visibility="gone" />
+                    style="@style/common_text_discount"
+                    android:textSize="@dimen/text_size_07" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

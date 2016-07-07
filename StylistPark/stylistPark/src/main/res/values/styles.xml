@@ -73,6 +73,50 @@
         <item name="android:textColor">@color/selector_text_home_bottom</item>
     </style>
 
+    <!-- Top父布局样式 -->
+    <style name="top_main_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/title_height</item>
+        <item name="android:background">@color/ui_bg_color_app</item>
+    </style>
+
+    <!-- Top左边返回样式 -->
+    <style name="top_left_back">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingLeft">@dimen/title_left_paddingLeft</item>
+        <item name="android:src">@drawable/btn_pressed_back</item>
+    </style>
+
+    <!-- Top居中标题样式 -->
+    <style name="top_center_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/text_color_app_top</item>
+        <item name="android:textSize">@dimen/title_text_size</item>
+    </style>
+
+    <!-- Top右边文字按钮样式 -->
+    <style name="top_right_btn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:background">@drawable/btn_top_text_btn_short</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/text_color_app_top</item>
+        <item name="android:textSize">@dimen/title_text_size_right</item>
+    </style>
+
     <!-- 设置页面布局样式 -->
     <style name="setting_lay_item">
         <item name="android:layout_width">match_parent</item>
@@ -104,7 +148,7 @@
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
         <item name="android:textColor">@color/text_color_title</item>
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
     </style>
 
     <!-- 设置页面简介文本样式 -->
@@ -120,7 +164,7 @@
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
         <item name="android:textColor">@color/text_color_assist</item>
-        <item name="android:textSize">@dimen/text_size_13</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
     
     <!-- 设置页面左边ImageView样式 -->
@@ -149,21 +193,23 @@
         <item name="android:padding">3dp</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/shape_frame_white_gray_4</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:background">@drawable/shape_frame_white_dfdfdf_4</item>
         <item name="android:textColor">@color/text_color_assist</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
     </style>
     
     <!-- Top RadioGroup样式 -->
     <style name="RadioGroup_RadioButton">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/btn_checked_bg_line</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/selector_text_home_bottom</item>
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
     </style>
 
     <!-- 通用价格文本样式 -->
@@ -173,7 +219,35 @@
         <item name="android:textColor">@color/text_color_app_bar</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
-        
+
+    <!-- 通用折扣文本样式 -->
+    <style name="common_text_discount">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:background">@drawable/shape_frame_bg_app_buttom_0</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">1dp</item>
+        <item name="android:paddingRight">1dp</item>
+        <item name="android:textColor">@color/text_color_white</item>
+        <item name="android:textSize">@dimen/text_size_08</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!-- 购物车商品名称文本样式 -->
+    <style name="cart_product_text_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
+        <item name="android:textColor">@color/text_color_content</item>
+    </style>
+
     <!-- 购物车商品属性文本样式:灰色 -->
     <style name="cart_product_text_assist">
         <item name="android:layout_width">wrap_content</item>
@@ -181,12 +255,12 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
         <item name="android:textColor">@color/text_color_assist</item>
     </style>
-    
-    <!-- 商品属性文本样式1:灰色 -->
-    <style name="product_property_text_assist_1">
+
+    <!-- 商品详情属性文本样式:灰色 -->
+    <style name="product_property_text_assist">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:drawableLeft">@drawable/icon_support</item>
@@ -206,7 +280,7 @@
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
         <item name="android:textColor">@color/text_color_content</item>
     </style>
     
@@ -215,7 +289,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_color_title</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
     
     <!-- 注册页面EditText样式 -->
@@ -227,7 +301,7 @@
         <item name="android:inputType">textEmailAddress</item>
         <item name="android:background">@drawable/shape_frame_bg_app_hollow_4</item>
         <item name="android:textColorHint">@color/text_color_assist</item>
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColor">@color/text_color_title</item>
     </style>
     
@@ -238,7 +312,7 @@
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:background">@drawable/shape_frame_bg_app_buttom_4</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:textColor">@color/text_color_white</item>
     </style>
     
@@ -247,7 +321,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_color_title</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
     
     <!-- 收货地址TextView标题样式 -->
@@ -269,10 +343,19 @@
         <item name="android:paddingBottom">15dp</item>
         <item name="android:background">@color/ui_bg_color_white</item>
         <item name="android:textColorHint">@color/text_color_thin</item>
-        <item name="android:textColor">@color/text_color_content</item>
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textColor">@color/text_color_title</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
     </style>
-    
+
+    <!-- 收货地址Spinner样式 -->
+    <style name="Address_Spinner">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
     <!-- 收货地址TextView+ellipsize样式 -->
     <style name="address_text_ellipsize">
         <item name="android:layout_width">0dp</item>
@@ -280,7 +363,7 @@
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
         <item name="android:textColor">@color/text_color_title</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
     
     <!-- 收货地址Drawable+TextView样式 -->
@@ -293,7 +376,7 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/text_color_assist</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
         
     <!-- 通用垂直Item布局样式 -->
@@ -328,7 +411,7 @@
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:src">@drawable/indicator_icon_red</item>
+        <item name="android:background">@drawable/shape_frame_bg_red_90</item>
         <item name="android:visibility">gone</item>
     </style>
     
@@ -354,7 +437,7 @@
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
         <item name="android:textColor">@color/text_color_assist</item>
     </style>
     
@@ -375,7 +458,7 @@
         <item name="android:background">@drawable/shape_frame_bg_app_buttom_4</item>
         <item name="android:text">@string/confirm</item>
         <item name="android:textColor">@color/text_color_white</item>
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
     </style>
     
     <!-- 通用回顶箭头按钮 -->

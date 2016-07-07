@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.spshop.stylistpark.AppApplication;
@@ -53,8 +54,9 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	public static CategoryActivity instance = null;
 	
 	private ViewPager mViewPager;
-	private ImageView iv_top_left;
-	private TextView tv_title_1, tv_title_2;
+	private RelativeLayout rl_top_left, rl_top_right;
+	private ImageView iv_lines_3;
+	private TextView tv_title_1, tv_title_2, tv_title_3;
 	private ListView lv_left, lv_brand;
 	private GridView gv_right;
 	private CategoryLeftListAdapter lv_left_Adapter;
@@ -89,19 +91,26 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	
 	private void findViewById() {
 		mViewPager = (ViewPager) findViewById(R.id.category_viewpager);
-		iv_top_left = (ImageView) findViewById(R.id.top_two_title_iv_left);
-		tv_title_1 = (TextView) findViewById(R.id.top_two_title_tv_title_1);
-		tv_title_2 = (TextView) findViewById(R.id.top_two_title_tv_title_2);
+		rl_top_left = (RelativeLayout) findViewById(R.id.top_three_title_rl_left);
+		rl_top_right = (RelativeLayout) findViewById(R.id.top_three_title_rl_right);
+		tv_title_1 = (TextView) findViewById(R.id.top_three_title_tv_title_1);
+		tv_title_2 = (TextView) findViewById(R.id.top_three_title_tv_title_2);
+		tv_title_3 = (TextView) findViewById(R.id.top_three_title_tv_title_3);
+		iv_lines_3 = (ImageView) findViewById(R.id.top_three_title_iv_lines_3);
 	}
 
 	private void initView() {
 		setHeadVisibility(View.GONE);
+		rl_top_left.setVisibility(View.VISIBLE);
+		rl_top_left.setOnClickListener(this);
+		rl_top_right.setVisibility(View.VISIBLE);
 		tv_title_1.setText(R.string.title_category);
-		tv_title_2.setText(R.string.product_top_tab_4);
 		tv_title_1.setOnClickListener(this);
+		tv_title_2.setText(R.string.product_top_tab_4);
 		tv_title_2.setOnClickListener(this);
-		iv_top_left.setOnClickListener(this);
-		
+		tv_title_3.setVisibility(View.GONE);
+		iv_lines_3.setVisibility(View.GONE);
+
 		initViewPager();
 		setAdapter();
 		getSVDatas();
@@ -279,14 +288,14 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.top_two_title_iv_left:
+		case R.id.top_three_title_rl_left:
 			finish();
 			break;
-		case R.id.top_two_title_tv_title_1:
+		case R.id.top_three_title_tv_title_1:
 			changeTitleStatus(0);
 			mViewPager.setCurrentItem(0);
 			break;
-		case R.id.top_two_title_tv_title_2:
+		case R.id.top_three_title_tv_title_2:
 			changeTitleStatus(1);
 			mViewPager.setCurrentItem(1);
 			break;

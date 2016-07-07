@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,14 +28,11 @@ import com.spshop.stylistpark.activity.common.ClipImageCircularActivity;
 import com.spshop.stylistpark.activity.common.ClipPhotoGridActivity;
 import com.spshop.stylistpark.activity.common.SelectListActivity;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
-import com.spshop.stylistpark.dialog.DialogManager;
-import com.spshop.stylistpark.dialog.DialogManager.DialogManagerCallback;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.image.AsyncImageUpload;
 import com.spshop.stylistpark.image.AsyncImageUpload.AsyncImageUploadCallback;
-import com.spshop.stylistpark.utils.APIResult;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -69,7 +67,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	
 	private UserInfoEntity infoEn;
 	private UserManager userManager;
-	private DialogManager dm;
 	private DisplayImageOptions options;
 	private AsyncImageUpload asyncImageUpload;
 	
@@ -84,7 +81,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		instance = this;
 		infoEn = (UserInfoEntity) getIntent().getExtras().get("data");
 		userManager = UserManager.getInstance();
-		dm = new DialogManager(mContext);
 		options = AppApplication.getNotCacheImageOptions(90, R.drawable.head_portrait);
 		
 		findViewById();
@@ -316,38 +312,41 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	
 	private void changeHeadImg() {
 		AppApplication.clip_photo_type = 1; //设定裁剪相片的类型为圆形
-		dm.showListDialog(new DialogManagerCallback() {
-			
-			@Override
-			public void setOnClick(int type) {
-				switch (type) {
-				case 1: //拍照
-					String status = Environment.getExternalStorageState();
-					if (status.equals(Environment.MEDIA_MOUNTED)) { //先验证手机是否有sdcard
-						try {
-							File dir = new File(Environment.getExternalStorageDirectory(), LOCAL_TEMP_IMG_DIR);
-							if (!dir.exists()) dir.mkdirs();
-							Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-							localTempImgFileName = "microMsg." + System.currentTimeMillis() + ".jpg";
-							File f = new File(dir, localTempImgFileName);
-							Uri u = Uri.fromFile(f);
-							intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
-							intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-							startActivityForResult(intent,AppConfig.ACTIVITY_GET_IMAGE_VIA_CAMERA);
-						} catch (ActivityNotFoundException e) {
-							ExceptionUtil.handle(mContext, e);
-							CommonTools.showToast(mContext, getString(R.string.photo_save_directory_error), 1000);
+		showListDialog(R.string.photo_change_head, getResources().getStringArray(R.array.array_photo_choose),
+				width * 1/2, false, new Handler(){
+
+					@Override
+					public void handleMessage(Message msg) {
+						super.handleMessage(msg);
+						switch (msg.what) {
+							case 0: //拍照
+								String status = Environment.getExternalStorageState();
+								if (status.equals(Environment.MEDIA_MOUNTED)) { //先验证手机是否有sdcard
+									try {
+										File dir = new File(Environment.getExternalStorageDirectory(), LOCAL_TEMP_IMG_DIR);
+										if (!dir.exists()) dir.mkdirs();
+										Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+										localTempImgFileName = "microMsg." + System.currentTimeMillis() + ".jpg";
+										File f = new File(dir, localTempImgFileName);
+										Uri u = Uri.fromFile(f);
+										intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+										intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+										startActivityForResult(intent,AppConfig.ACTIVITY_GET_IMAGE_VIA_CAMERA);
+									} catch (ActivityNotFoundException e) {
+										ExceptionUtil.handle(mContext, e);
+										CommonTools.showToast(mContext, getString(R.string.photo_save_directory_error), 1000);
+									}
+								}else{
+									CommonTools.showToast(mContext, getString(R.string.photo_save_sd_error), 1000);
+								}
+								break;
+							case 1: //本地
+								startActivity(new Intent(mContext, ClipPhotoGridActivity.class));
+								break;
 						}
-					}else{ 
-						CommonTools.showToast(mContext, getString(R.string.photo_save_sd_error), 1000);
-					} 
-					break;
-				case 2: //本地
-					startActivity(new Intent(mContext, ClipPhotoGridActivity.class));
-					break;
-				}
-			}
-		}, getString(R.string.photo_change_head), getString(R.string.photo_shoot_upload), getString(R.string.photo_choose_upload));
+					}
+
+				});
 	}
 
 	/**
@@ -401,16 +400,20 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	 * 弹出对话框发送邮件确认修改
 	 */
 	private void showSendEmailDialog() {
-		dm.showTwoBtnDialog(new DialogManagerCallback() {
-			
-			@Override
-			public void setOnClick(int type) {
-				if (type == 1) {
-					sendEmailToUser();
-				}
-			}
-		}, getString(R.string.profile_email_verify), getString(R.string.profile_send_email_hint, emailStr),
-		   getString(R.string.cancel), getString(R.string.send_confirm), AppApplication.screenWidth * 5/6, false);
+		showConfirmDialog(null, getString(R.string.profile_send_email_hint, emailStr),
+				getString(R.string.cancel), getString(R.string.send_confirm),
+				width * 5/6, false, false, new Handler() {
+					@Override
+					public void handleMessage(Message msg) {
+						switch (msg.what) {
+							case DIALOG_CANCEL_CLICK:
+								break;
+							case DIALOG_CONFIRM_CLICK:
+								sendEmailToUser();
+								break;
+						}
+					}
+				});
 	}
 
 	@Override

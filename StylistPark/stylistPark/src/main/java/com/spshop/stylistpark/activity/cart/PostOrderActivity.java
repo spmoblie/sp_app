@@ -135,7 +135,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			orderAmount = orderEn.getOrderAmount();
 			pricePay = orderEn.getPricePay();
 			tv_pay.setText(pricePay);
-			tv_pay_total.setText(pricePay);
+			tv_pay_total.setText(getString(R.string.order_pay_name) + pricePay);
 			// 商品列表
 			addGoodsLists();
 			// 物流信息
@@ -159,8 +159,8 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				tv_address.setVisibility(View.GONE);
 				tv_address_hint.setVisibility(View.VISIBLE);
 				addressOk = false;
-				tv_pay_now.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_hollow_4));
-				tv_pay_now.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+				tv_pay_now.setBackground(getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
+				tv_pay_now.setTextColor(getResources().getColor(R.color.ui_bg_color_gray_light_1));
 			}
 			// 付款方式
 			payType = orderEn.getPayId();
@@ -286,7 +286,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			startActivity(new Intent(mContext, MyAddressActivity.class));
 			break;
 		case R.id.post_order_rl_pay_type:
-			if (!isCashPay) return;
+			if (!isSuccess || !isCashPay) return;
 			SelectListEntity selectEn = getPayTypeListEntity();
 			intent = new Intent(mContext, SelectListActivity.class);
 			intent.putExtra("data", selectEn);
@@ -294,6 +294,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			startActivityForResult(intent,AppConfig.ACTIVITY_CHOOSE_PAY_TYPE);
 			break;
 		case R.id.post_order_rl_bouns_main:
+			if (!isSuccess) return;
 			intent = new Intent(mContext, BounsListActivity.class);
 			intent.putExtra("topType", BounsListActivity.TYPE_2);
 			intent.putExtra("root", TAG);
@@ -444,21 +445,20 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 
-	@SuppressLint("HandlerLeak")
 	private void ask4Leave() {
-		Handler handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.what) {
-				case DIALOG_CONFIRM_CLICK:
-					finish();
-					break;
-				default:
-					break;
-				}
-			}
-		};
-		showConfirmDialog(R.string.abandon_confirm, getString(R.string.leave_confirm), getString(R.string.delete_think), handler);
+		showConfirmDialog(R.string.abandon_confirm, getString(R.string.leave_confirm),
+				getString(R.string.delete_think), true, true, new Handler() {
+					@Override
+					public void handleMessage(Message msg) {
+						switch (msg.what) {
+							case DIALOG_CANCEL_CLICK:
+								finish();
+								break;
+							default:
+								break;
+						}
+					}
+				});
 	}
 	
 	@Override
@@ -548,21 +548,22 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		super.onFailure(requestCode, state, result);
 	}
 
-	@SuppressLint("HandlerLeak")
 	private void showErrorDialog() {
-		Handler mHandler = new Handler(){
+		tv_pay_now.setBackground(getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
+		tv_pay_now.setTextColor(getResources().getColor(R.color.ui_bg_color_gray_light_1));
+
+		showErrorDialog(getString(R.string.toast_server_busy), false, new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
-				case DIALOG_CONFIRM_CLICK:
-					finish();
-					break;
-				default:
-					break;
+					case DIALOG_CONFIRM_CLICK:
+						finish();
+						break;
+					default:
+						break;
 				}
 			}
-		};
-		showErrorDialog(getString(R.string.toast_server_busy), mHandler);
+		});
 	}
 	
 }

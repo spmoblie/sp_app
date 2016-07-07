@@ -20,7 +20,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@id/item_list_balance_tv_title"
         android:textColor="@color/text_color_assist"
-        android:textSize="@dimen/text_size_14" />
+        android:textSize="@dimen/text_size_13" />
     
     <TextView 
         android:id="@+id/item_list_balance_tv_money"

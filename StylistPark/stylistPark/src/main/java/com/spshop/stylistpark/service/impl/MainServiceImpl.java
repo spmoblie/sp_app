@@ -176,7 +176,7 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public BrandEntity getBrandProfile(int brandId) throws Exception {
+	public BrandEntity getBrandProfile(int brandId, String allStr) throws Exception {
 		String uri = AppConfig.URL_COMMON_PRODUCT_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		params.add(new MyNameValuePair("app", "brand"));
@@ -184,7 +184,23 @@ public class MainServiceImpl implements MainService {
 		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);
-		return JsonParser.getBrandProfile(jsonStr);
+		return JsonParser.getBrandProfile(jsonStr, allStr);
+	}
+
+	@Override
+	public ProductListEntity getBrandProductLists(int brandId, int dataType, int selectId, int count, int page) throws Exception {
+		String uri = AppConfig.URL_COMMON_PRODUCT_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("app", "brand_goods"));
+		params.add(new MyNameValuePair("id", String.valueOf(brandId)));
+		params.add(new MyNameValuePair("order", String.valueOf(dataType)));
+		params.add(new MyNameValuePair("cat_id", String.valueOf(selectId)));
+		params.add(new MyNameValuePair("size", String.valueOf(count)));
+		params.add(new MyNameValuePair("page", String.valueOf(page)));
+		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
+		String jsonStr = HttpUtil.getString(entity);
+		LogUtil.i("JsonParser", jsonStr);
+		return JsonParser.getBrandProductLists(jsonStr);
 	}
 
 	@Override

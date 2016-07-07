@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.activity.common;
 
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +22,8 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
 
 /**
  * 相片查看器

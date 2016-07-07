@@ -10,5 +10,10 @@
         android:layout_height="match_parent" />
     
     <include layout="@layout/layout_loading_no_data" />
+
+    <ImageView
+        android:id="@+id/list_head_common_iv_to_top"
+        style="@style/common_to_top"
+        android:contentDescription="@string/desc" />
     
 </FrameLayout>

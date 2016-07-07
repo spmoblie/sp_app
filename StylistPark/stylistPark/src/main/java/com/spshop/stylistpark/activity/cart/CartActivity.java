@@ -4,16 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
@@ -22,8 +23,6 @@ import com.spshop.stylistpark.activity.category.CategoryActivity;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.CartProductListAdapter;
-import com.spshop.stylistpark.dialog.DialogManager;
-import com.spshop.stylistpark.dialog.DialogManager.DialogManagerCallback;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.utils.CommonTools;
@@ -56,8 +55,8 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	private ScrollListView scroll_lv;
 	private AdapterCallback apCallback;
 	private CartProductListAdapter lv_Adapter;
-	private LinearLayout ll_no_data, ll_billing, ll_select_all;
-	private RelativeLayout rl_top, rl_no_more, rl_loading, rl_load_fail;
+	private LinearLayout ll_top, ll_no_data, ll_billing, ll_select_all;
+	private RelativeLayout rl_no_more, rl_loading, rl_load_fail;
 	private TextView tv_shopping, tv_load_again;
 	private TextView tv_total, tv_buy_now;
 	
@@ -88,7 +87,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void findViewById() {
-		rl_top = (RelativeLayout) findViewById(R.id.top_commom_ll_main);
+		ll_top = (LinearLayout) findViewById(R.id.top_commom_ll_main);
 		tv_total = (TextView) findViewById(R.id.fragment_four_tv_total);
 		tv_buy_now = (TextView) findViewById(R.id.fragment_four_tv_buy_now);
 		ptrsv = (PullToRefreshScrollView) findViewById(R.id.fragment_four_ptrsv);
@@ -107,13 +106,17 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 
 	private void initView() {
 		setTitle(R.string.title_fragment_four);
-		rl_top.setVisibility(View.GONE);
+		ll_top.setVisibility(View.GONE);
 		rl_loading.setVisibility(View.GONE);
 		tv_buy_now.setOnClickListener(this);
 		tv_shopping.setOnClickListener(this);
 		tv_load_again.setOnClickListener(this);
 		ll_select_all.setOnClickListener(this);
-		
+
+		// 重新分配布局权重
+		ptrsv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 0, 9));
+		ll_billing.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
+
 		initScrollView();
 		setAdapter();
 		startAnimation();
@@ -151,8 +154,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 			rl_no_more.setVisibility(View.VISIBLE);
 			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_gray));
 		}else {
-			CommonTools.setLayoutParams(ll_no_data, AppApplication.screenWidth,
-					AppApplication.screenHeight - DeviceUtil.getStatusBarHeight(this) - 300);
+			CommonTools.setLayoutParams(ll_no_data, width, height - DeviceUtil.getStatusBarHeight(this) - 300);
 			ll_no_data.setVisibility(View.VISIBLE);
 			ll_billing.setVisibility(View.GONE);
 			rl_no_more.setVisibility(View.GONE);
@@ -201,17 +203,19 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 						}
 						break;
 					case CartProductListAdapter.TYPE_DELETE: //删除
-						new DialogManager(mContext).showTwoBtnDialog(new DialogManagerCallback() {
-							
-							@Override
-							public void setOnClick(int type) {
-								if (type == 1) {
-									requestDeleteGoods();
-								}
-							}
-						}, getString(R.string.prompt), getString(R.string.delete_confirm),
-						   getString(R.string.delete_think), getString(R.string.delete_pain),
-						   AppApplication.screenWidth * 2/3, true);
+						showConfirmDialog(getString(R.string.delete_confirm), getString(R.string.delete_pain),
+								getString(R.string.delete_think), true, true, new Handler() {
+									@Override
+									public void handleMessage(Message msg) {
+										switch (msg.what) {
+											case DIALOG_CANCEL_CLICK:
+												requestDeleteGoods();
+												break;
+											case DIALOG_CONFIRM_CLICK:
+												break;
+										}
+									}
+								});
 						break;
 					}
 				}

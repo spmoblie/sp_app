@@ -37,10 +37,10 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	
 	private static final int Page_Count = 20;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页
-	private int countTotal = 0; //数据总条数
+	private int countTotal = 0; //数集总数量
 	private int amountTotal = 0; //账号余额
 	private boolean isLogined, isSuccess;
-	
+
 	private PullToRefreshListView refresh_lv;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
@@ -48,8 +48,9 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	private Button btn_withdrawals;
 	private LinearLayout ll_auth;
 	private TextView tv_amount_title, tv_amount, tv_hint, tv_auth, tv_no_data;
+
 	private BalanceDetailEntity mainEn;
-	private List<BalanceDetailEntity> lv_lists_show = new ArrayList<BalanceDetailEntity>();
+	private List<BalanceDetailEntity> lv_show = new ArrayList<BalanceDetailEntity>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +135,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 下拉刷新
-            	if (lv_lists_show.size() == 0) {
+            	if (lv_show.size() == 0) {
             		getSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -182,7 +183,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 				}
 			}
 		};
-		lv_adapter = new BalanceListAdapter(mContext, lv_lists_show, lv_callback);
+		lv_adapter = new BalanceListAdapter(mContext, lv_show, lv_callback);
 		mListView.setAdapter(lv_adapter);
 		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
@@ -192,7 +193,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	 */
 	private void getSVDatas() {
 		current_Page = 1;
-		lv_lists_show.clear();
+		lv_show.clear();
 		requestProductLists();
 	}
 	
@@ -309,7 +310,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 					countTotal = mainEn.getCountTotal();
 					List<BalanceDetailEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {
-						lv_lists_show.addAll(lists);
+						lv_show.addAll(lists);
 						current_Page++;
 					}
 				}else if (mainEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
@@ -337,18 +338,18 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	}
 
 	private void myUpdateAdapter() {
-		if (lv_lists_show.size() == 0) {
+		if (lv_show.size() == 0) {
 			tv_no_data.setVisibility(View.VISIBLE);
 			tv_no_data.setText(R.string.money_no_detail);
 		}
-		lv_adapter.updateAdapter(lv_lists_show);
+		lv_adapter.updateAdapter(lv_show);
 	}
 	
 	/**
-	 * 数量小于一页或没有更多数据时停止加载翻页数据
+	 * 判定是否停止加载翻页数据
 	 */
 	private boolean isStop(){
-		return lv_lists_show.size() > 0 && lv_lists_show.size() == countTotal;
+		return lv_show.size() > 0 && lv_show.size() == countTotal;
 	}
 	
 }

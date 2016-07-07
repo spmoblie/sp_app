@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
@@ -23,6 +21,8 @@ import com.spshop.stylistpark.image.AsyncImageLruCache.AsyncImageLruCacheCallbac
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LangCurrTools.Language;
+
+import java.util.List;
 
 
 /**
@@ -120,9 +120,9 @@ public class CategoryGridAdapter extends BaseAdapter{
 		final CategoryListEntity data = datas.get(position);
 		
 		if (lang == Language.En) {
-			holder.tv_name.setTextSize(12);
+			holder.tv_name.setTextSize(10);
 		}else {
-			holder.tv_name.setTextSize(14);
+			holder.tv_name.setTextSize(12);
 		}
 		holder.tv_name.setText(data.getName());
 		

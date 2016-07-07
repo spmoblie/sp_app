@@ -161,7 +161,7 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="@string/order_invoice_hint"
-                    android:textSize="@dimen/text_size_14"
+                    android:textSize="@dimen/text_size_12"
                     android:textColor="@color/text_color_title" />
                 
                 <ImageView 
@@ -188,7 +188,7 @@
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
                     android:hint="@string/order_buyer_hint"
-                    android:textSize="@dimen/text_size_14"
+                    android:textSize="@dimen/text_size_12"
                     android:textColor="@color/text_color_title" />
             </LinearLayout>
             
@@ -313,17 +313,17 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:textStyle="bold"
-            android:textSize="@dimen/text_size_28" />
+            android:textSize="@dimen/text_size_16" />
         
         <TextView 
             android:id="@+id/post_order_tv_pay_now"
             style="@style/common_text_bg_frame"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/shape_frame_bg_app_hollow_4"
+            android:background="@drawable/shape_frame_white_dfdfdf_4"
             android:text="@string/order_pay_now"
-            android:textSize="@dimen/text_size_16"
-            android:textColor="@color/ui_bg_color_bar" />
+            android:textSize="@dimen/text_size_14"
+            android:textColor="@color/ui_bg_color_gray_light_1" />
     </RelativeLayout>
 
 </LinearLayout>
