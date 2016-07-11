@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.activity.common;
 
-import java.io.File;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,6 +12,8 @@ import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.widgets.ClipImageView;
+
+import java.io.File;
 
 public class ClipImageSquareActivity extends BaseActivity{
 	

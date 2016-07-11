@@ -40,7 +40,6 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -171,16 +170,13 @@
             android:launchMode="singleTask" />
         
         <activity android:name=".activity.login.RegisterActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:screenOrientation="portrait" />
         
         <activity android:name=".activity.login.RegisterOauthActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:screenOrientation="portrait" />
         
         <activity android:name=".activity.login.ResetPasswordActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:screenOrientation="portrait" />
         
         <activity android:name=".activity.cart.CartActivity"
             android:screenOrientation="portrait"
@@ -256,12 +252,10 @@
             android:launchMode="singleTask" />
         
         <activity android:name=".activity.profile.OrderDetailActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.LogisticsActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.AccountBalanceActivity"
             android:screenOrientation="portrait" />
@@ -280,8 +274,7 @@
             android:launchMode="singleTask" />
         
         <activity android:name=".activity.profile.LanguageCurrencyActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.FeedBackActivity"
             android:screenOrientation="portrait" />

@@ -62,13 +62,21 @@ public class DragImageView extends ImageView {
 
 	private boolean isControl_H = false;// 水平监控
 
+	private boolean isChange = true;// 是否切换图片
+
+	private boolean isReset = false;// 是否需要还原
+
+	private boolean isToLeftMove = false;// 是否向左滑动
+
 	@SuppressWarnings("unused")
 	private ScaleAnimation scaleAnimation;// 缩放动画
 
 	private boolean isScaleAnim = false;// 缩放动画
 	
+	private int cX = 0;
+
 	private int mX = 0;
-	
+
 	private int mY = 0;
 	
 	private long mTime = 0;
@@ -99,6 +107,21 @@ public class DragImageView extends ImageView {
 	/** 可见屏幕高度 **/
 	public void setScreen_H(int screen_H) {
 		this.screen_H = screen_H;
+	}
+
+	/** 切换图片标记 **/
+	public boolean isChange() {
+		return isChange;
+	}
+
+	/** 恢复图片初始状态 **/
+	public void setReset() {
+		if (isReset) {
+			this.setFrame(0, 0, screen_W, screen_H);
+			isControl_H = false;
+			isControl_V = false;
+			isReset = false;
+		}
 	}
 
 	public DragImageView(Context context, AttributeSet attrs) {
@@ -147,8 +170,8 @@ public class DragImageView extends ImageView {
 			isMultiTouch = false;
 			isOnClick = true;
 			isOnLongClick = true;
-			mX = (int) event.getX();
-			mY = (int) event.getY();
+			mX = (int) event.getRawX();
+			mY = (int) event.getRawY();
 			mTime = System.currentTimeMillis();
 			break;
 		// 多点触摸
@@ -158,8 +181,13 @@ public class DragImageView extends ImageView {
 			break;
 
 		case MotionEvent.ACTION_MOVE:
-			if (Math.abs(mX - event.getX()) > 8 || Math.abs(mY - event.getY()) > 8) {
-				LogUtil.i("DragImageView", "ACTION_MOVE");
+			if (Math.abs(mX - event.getRawX()) > 8 || Math.abs(mY - event.getRawY()) > 8) {
+				isToLeftMove = false;
+				cX = (int) event.getRawX();
+				if (cX > mX) {
+					isToLeftMove = true;
+				}
+				LogUtil.i("DragImageView", "ACTION_MOVE, cX=" + cX + ", mX=" + mX + ", isToLeft=" + isToLeftMove);
 				onTouchMove(event);
 				isOnClick = false;
 				isOnLongClick = false;
@@ -203,7 +231,6 @@ public class DragImageView extends ImageView {
 
 		start_x = (int) event.getX();
 		start_y = current_y - this.getTop();
-
 	}
 
 	/** 两个手指 只能放大缩小 **/
@@ -226,22 +253,33 @@ public class DragImageView extends ImageView {
 			left = current_x - start_x;
 			right = current_x + this.getWidth() - start_x;
 			top = current_y - start_y;
-			bottom = current_y - start_y + this.getHeight();
+			bottom = current_y + this.getHeight() - start_y;
+
+			LogUtil.i("DragImageView", "left=" + left + ", top=" + top + ", right=" + right + ", bottom=" + bottom);
 
 			/** 水平进行判断 **/
 			if (isControl_H) {
+				isChange = false;
 				if (left >= 0) {
 					left = 0;
 					right = this.getWidth();
+					if (isToLeftMove) {
+						isChange = true;
+					}
 				}
 				if (right <= screen_W) {
 					left = screen_W - this.getWidth();
 					right = screen_W;
+					if (!isToLeftMove) {
+						isChange = true;
+					}
 				}
 			} else {
 				left = this.getLeft();
 				right = this.getRight();
+				isChange = true;
 			}
+
 			/** 垂直判断 **/
 			if (isControl_V) {
 				if (top >= 0) {
@@ -264,6 +302,8 @@ public class DragImageView extends ImageView {
 			current_x = (int) event.getRawX();
 			current_y = (int) event.getRawY();
 
+			LogUtil.i("DragImageView", "left=" + left + ", top=" + top + ", right=" + right + ", bottom=" + bottom);
+			LogUtil.i("DragImageView", "isControl_H=" + isControl_H + ", isChange=" + isChange);
 		}
 		/** 处理缩放 **/
 		else if (mode == MODE.ZOOM) {
@@ -280,10 +320,6 @@ public class DragImageView extends ImageView {
 				beforeLenght = afterLenght;
 			}
 		}
-//		LogUtil.i("DragImageView", "current_x=" + current_x + " start_x=" + start_x 
-//				+ " current_y=" + current_y + " start_y=" + start_y 
-//				+ " isControl_H=" + isControl_H + " isControl_V=" + isControl_V);
-
 	}
 
 	/** 获取两点的距离 **/
@@ -328,7 +364,7 @@ public class DragImageView extends ImageView {
 			} else {
 				isControl_H = false;
 			}
-
+			isReset = true;
 		}
 		// 缩小
 		else if (scale < 1 && this.getWidth() >= MIN_W) {
@@ -376,26 +412,21 @@ public class DragImageView extends ImageView {
 					isControl_H = false;// 关闭
 				}
 			}
+			isReset = true;
 
 			if (isControl_H || isControl_V) {
-				this.setFrame(current_Left, current_Top, current_Right,
-						current_Bottom);
+				this.setFrame(current_Left, current_Top, current_Right, current_Bottom);
 			} else {
-				this.setFrame(current_Left, current_Top, current_Right,
-						current_Bottom);
+				this.setFrame(current_Left, current_Top, current_Right, current_Bottom);
 				isScaleAnim = true;// 开启缩放动画
 			}
-
 		}
-//		LogUtil.i("DragImageView", "isControl_H=" + isControl_H + " isControl_V=" + isControl_V 
-//				+ " screen_W=" + screen_W + " screen_H=" + screen_H 
-//				+ " current_Right=" + current_Right + " current_Bottom=" + current_Bottom);
 	}
 
 	/***
 	 * 缩放动画处理
 	 */
-	public void doScaleAnim() {
+	void doScaleAnim() {
 		myAsyncTask = new MyAsyncTask(screen_W, this.getWidth(), this.getHeight());
 		myAsyncTask.setLTRB(this.getLeft(), this.getTop(), this.getRight(), this.getBottom());
 		myAsyncTask.execute();
@@ -451,7 +482,7 @@ public class DragImageView extends ImageView {
 				top = Math.max(top, start_Top);
 				right = Math.min(right, start_Right);
 				bottom = Math.min(bottom, start_Bottom);
-                LogUtil.i("jj", "top="+top+",bottom="+bottom+",left="+left+",right="+right);
+                LogUtil.i("DragImageView", "top="+top+", bottom="+bottom+", left="+left+", right="+right);
 				onProgressUpdate(new Integer[] { left, top, right, bottom });
 				try {
 					Thread.sleep(10);
@@ -470,6 +501,7 @@ public class DragImageView extends ImageView {
 				@Override
 				public void run() {
 					setFrame(values[0], values[1], values[2], values[3]);
+					isReset = false;
 				}
 			});
 		}

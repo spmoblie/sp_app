@@ -65,7 +65,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	
 	protected Context mContext;
 	protected AsyncTaskManager atm;
-	protected int width, height;
+	protected int width, height, statusHeight;
 	protected SharedPreferences shared;
 	protected Editor editor;
 	protected DialogManager dm;
@@ -114,6 +114,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		// 获取屏幕配置
 		width = AppApplication.screenWidth;
 		height = AppApplication.screenHeight;
+		statusHeight = AppApplication.statusHeight;
 
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();

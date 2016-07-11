@@ -208,9 +208,7 @@ public class MyAddressActivity extends BaseActivity {
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					updateListView();
-					if (PostOrderActivity.instance != null) {
-						PostOrderActivity.instance.isUpdate = true;
-					}
+					updateOtherView();
 					finish();
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
@@ -228,6 +226,7 @@ public class MyAddressActivity extends BaseActivity {
 		case AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE:
 			if (result != null && ((BaseEntity) result).getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 				getSVDatas();
+				updateOtherView();
 			}else {
 				stopAnimation();
 				showServerBusy();
@@ -249,6 +248,12 @@ public class MyAddressActivity extends BaseActivity {
 		}else {
 			mListView.setVisibility(View.GONE);
 			tv_no_data.setVisibility(View.VISIBLE);
+		}
+	}
+
+	private void updateOtherView() {
+		if (PostOrderActivity.instance != null) {
+			PostOrderActivity.instance.isUpdate = true;
 		}
 	}
 

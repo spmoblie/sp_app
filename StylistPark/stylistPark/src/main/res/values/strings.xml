@@ -90,8 +90,8 @@
     <string name="loading_update_time">Last update time </string>
     <string name="loading_load_more">Load more</string>
     <string name="loading_strive_loading">Strive loading&#8230;</string>
-    <string name="loading_no_more">No more Oh ~</string>
-    <string name="loading_no_data">You have not %1$s Oh!</string>
+    <string name="loading_no_more">No more ~</string>
+    <string name="loading_no_data">You have not %1$s !</string>
     <string name="loading_click_load">Click load</string>
     <string name="loading_submit_fail">Upload failed</string>
     
@@ -182,7 +182,7 @@
     <string name="member_top_tab_2">Active</string>
     <string name="member_top_tab_3">Orders</string>
     <string name="member_top_tab_4">Revenue</string>
-    <string name="member_no_order">Your members is no %1$s Oh ~</string>
+    <string name="member_no_order">Your members is no %1$s ~</string>
     <string name="member_no_member">You have no members, \nInvite your friend to be your member.</string>
         
     <!-- Bouns page -->
@@ -299,7 +299,7 @@
     <string name="setting_logout">Log Out</string>
     <string name="setting_logout_confirm">&#160;Confirm logout?</string>
     <string name="setting_input_hint_feedback">Write down your comments or advice</string>
-    <string name="setting_input_error_feedback">Comments or advice can not be empty Oh ~</string>
+    <string name="setting_input_error_feedback">Comments or advice can not be empty ~</string>
     
     <!-- language currency -->
     <string name="currency_rmb_sign">¥</string>
@@ -377,7 +377,7 @@
 	<string name="address_error_address_empty">Input detailed address</string>
 	<string name="address_error_load_area">Error of loading area lists！Please close the page and try again！</string>
 	<string name="address_error_no_select">Please fill shipping address</string>
-	<string name="address_error_data_null">No delivery address Oh, go to add address.</string>
+	<string name="address_error_data_null">No delivery address, go to add address.</string>
 
     <!-- Profile Page -->
     <string name="profile_page">My Profile</string>

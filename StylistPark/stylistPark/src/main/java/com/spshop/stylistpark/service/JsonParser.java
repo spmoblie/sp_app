@@ -569,15 +569,17 @@ public class JsonParser {
 		OrderEntity orderEn = new OrderEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
 			orderEn.setGoodsLists(getConfirmGoodsFormJson(jsonObject, "cart"));
-			
-			AddressEntity addressEn = new AddressEntity();
+
 			JSONObject addObj = jsonObject.getJSONObject("address");
-			addressEn.setAddressId(StringUtil.getInteger(addObj.getString("address_id")));
-			addressEn.setName(addObj.getString("consignee"));
-			addressEn.setPhone(addObj.getString("mobile"));
-			addressEn.setAddress(addObj.getString("address"));
-			orderEn.setAddressEn(addressEn);
-			
+			if (addObj != null && !addObj.equals("")) {
+;				AddressEntity addressEn = new AddressEntity();
+				addressEn.setAddressId(StringUtil.getInteger(addObj.getString("address_id")));
+				addressEn.setName(addObj.getString("consignee"));
+				addressEn.setPhone(addObj.getString("mobile"));
+				addressEn.setAddress(addObj.getString("address"));
+				orderEn.setAddressEn(addressEn);
+			}
+
 			JSONObject data = jsonObject.getJSONObject("total");
 			orderEn.setPayId(StringUtil.getInteger(data.getString("pay_id")));
 			orderEn.setPayTypeCode(StringUtil.getInteger(data.getString("shipping_id")));

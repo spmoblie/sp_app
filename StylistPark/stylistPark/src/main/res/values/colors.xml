@@ -379,7 +379,6 @@
 
     <!-- video -->
     <color name="uvv_gray">#969696</color>
-    <!--<color name="uvv_black">#ff000000</color>-->
     <color name="uvv_black">@color/ui_bg_color_percent_100</color>
     <color name="uvv_light_gray">#ffF0F0F0</color>
     <color name="uvv_titlebar_bg">#7f000000</color>

@@ -19,6 +19,7 @@ import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.MemberListAdapter;
 import com.spshop.stylistpark.entity.MemberEntity;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
@@ -51,6 +52,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private int topType = TYPE_1; //Top标记
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int countTotal = 0; //数集总数量
+	private int total_1, total_2, total_3, total_4;
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean isFrist = true; //识别是否第一次打开页面
 	private boolean isLogined, isSuccess;
@@ -207,7 +209,9 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		isSuccess = false;
 		loadType = 1;
 		current_Page = 1;
+		countTotal = 0;
 		startAnimation();
+		setLoadMoreDate();
 		requestProductLists();
 	}
 	
@@ -278,9 +282,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			if (!isFrist && topType == TYPE_1) return;
 			topType = TYPE_1;
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
-				addOldListDatas(lv_all_1, page_type_1);
+				addOldListDatas(lv_all_1, page_type_1, total_1);
 			}else {
 				page_type_1 = 1;
+				total_1 = 0;
 				getSVDatas();
 			}
 			break;
@@ -288,9 +293,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			if (!isFrist && topType == TYPE_2) return;
 			topType = TYPE_2;
 			if (lv_all_2 != null && lv_all_2.size() > 0) {
-				addOldListDatas(lv_all_2, page_type_2);
+				addOldListDatas(lv_all_2, page_type_2, total_2);
 			}else {
 				page_type_2 = 1;
+				total_2 = 0;
 				getSVDatas();
 			}
 			break;
@@ -298,9 +304,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			if (!isFrist && topType == TYPE_3) return;
 			topType = TYPE_3;
 			if (lv_all_3 != null && lv_all_3.size() > 0) {
-				addOldListDatas(lv_all_3, page_type_3);
+				addOldListDatas(lv_all_3, page_type_3, total_3);
 			}else {
 				page_type_3 = 1;
+				total_3 = 0;
 				getSVDatas();
 			}
 			break;
@@ -308,9 +315,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			if (!isFrist && topType == TYPE_4) return;
 			topType = TYPE_4;
 			if (lv_all_4 != null && lv_all_4.size() > 0) {
-				addOldListDatas(lv_all_4, page_type_4);
+				addOldListDatas(lv_all_4, page_type_4, total_4);
 			}else {
 				page_type_4 = 1;
+				total_4 = 0;
 				getSVDatas();
 			}
 			break;
@@ -323,13 +331,15 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	/**
 	 * 展示已缓存的数据并至顶
 	 */
-	private void addOldListDatas(List<MemberEntity> oldLists, int oldPage) {
+	private void addOldListDatas(List<MemberEntity> oldLists, int oldPage, int oldTotal) {
 		addAllShow(oldLists);
 		current_Page = oldPage;
+		countTotal = oldTotal;
 		myUpdateAdapter();
 		if (current_Page != 1) {
 			toTop();
 		}
+		setLoadMoreDate();
 	}
 	
 	@Override
@@ -409,35 +419,39 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 						switch (topType) {
 						case TYPE_1:
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all_1, hm_all_1);
+								updEntity(total, total_1, lists, lv_all_1, hm_all_1);
 							}else {
 								addEntity(lv_all_1, lists, hm_all_1);
 								page_type_1++;
 							}
+							total_1 = total;
 							break;
 						case TYPE_2:
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all_2, hm_all_2);
+								updEntity(total, total_2, lists, lv_all_2, hm_all_2);
 							}else {
 								addEntity(lv_all_2, lists, hm_all_2);
 								page_type_2++;
 							}
+							total_2 = total;
 							break;
 						case TYPE_3:
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all_3, hm_all_3);
+								updEntity(total, total_3, lists, lv_all_3, hm_all_3);
 							}else {
 								addEntity(lv_all_3, lists, hm_all_3);
 								page_type_3++;
 							}
+							total_3 = total;
 							break;
 						case TYPE_4:
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all_4, hm_all_4);
+								updEntity(total, total_4, lists, lv_all_4, hm_all_4);
 							}else {
 								addEntity(lv_all_4, lists, hm_all_4);
 								page_type_4++;
 							}
+							total_4 = total;
 							break;
 						}
 						countTotal = total;
@@ -489,15 +503,28 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			List<MemberEntity> datas = new ArrayList<MemberEntity>();
 			datas.addAll(oldDatas);
 			oldDatas.clear();
+
+			MemberEntity newEn, oldEn;
+			String dataId = "";
 			for (int i = 0; i < (newTotal - oldTotal); i++) {
-				if (!oldMap.containsKey(newDatas.get(i).getUserId())) {
-					oldDatas.add(newDatas.get(i));
-					datas.remove(datas.size()-1);
+				newEn = newDatas.get(i);
+				if (newEn != null) {
+					dataId = newEn.getUserId();
+					if (!StringUtil.isNull(dataId) && !oldMap.containsKey(dataId)) {
+						// 添加至顶层
+						oldDatas.add(newEn);
+						oldMap.put(dataId, true);
+						// 移除最底层
+						oldEn = datas.remove(datas.size()-1);
+						if (oldEn != null && oldMap.containsKey(oldEn.getUserId())) {
+							oldMap.remove(oldEn.getUserId());
+						}
+					}
 				}
 			}
 			oldDatas.addAll(datas);
 			addAllShow(oldDatas);
-			refresh_lv.setHasMoreData(true); //设置允许加载更多
+			setLoadMoreDate();
 		}
 	}
 	
@@ -506,17 +533,18 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void addEntity(List<MemberEntity> oldDatas, List<MemberEntity> newDatas, HashMap<String, Boolean> hashMap) {
 		MemberEntity entity = null;
+		String dataId = "";
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
-			if (entity != null && !hashMap.containsKey(entity.getUserId())) {
-				oldDatas.add(entity);
+			if (entity != null) {
+				dataId = entity.getUserId();
+				if (!StringUtil.isNull(dataId) && !hashMap.containsKey(dataId)) {
+					oldDatas.add(entity);
+					hashMap.put(dataId, true);
+				}
 			}
 		}
 		addAllShow(oldDatas);
-		hashMap.clear();
-		for (int i = 0; i < oldDatas.size(); i++) {
-			hashMap.put(oldDatas.get(i).getUserId(), true);
-		}
 	}
 
 	private void addAllShow(List<MemberEntity> showLists) {
@@ -573,6 +601,13 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	 */
 	private boolean isStop(){
 		return lv_show.size() > 0 && lv_show.size() == countTotal;
+	}
+
+	/**
+	 * 设置允许加载更多
+	 */
+	private void setLoadMoreDate() {
+		refresh_lv.setHasMoreData(true);
 	}
 	
 }

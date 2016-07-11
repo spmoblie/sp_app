@@ -689,17 +689,18 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	 */
 	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, HashMap<Integer, Boolean> hashMap) {
 		ProductListEntity entity = null;
+		int dataId = 0;
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
-			if (entity != null && !hashMap.containsKey(entity.getId())) {
-				oldDatas.add(entity);
+			if (entity != null) {
+				dataId = entity.getId();
+				if (dataId != 0 && !hashMap.containsKey(dataId)) {
+					oldDatas.add(entity);
+					hashMap.put(dataId, true);
+				}
 			}
 		}
 		addAllShow(oldDatas);
-		hashMap.clear();
-		for (int i = 0; i < oldDatas.size(); i++) {
-			hashMap.put(oldDatas.get(i).getId(), true);
-		}
 	}
 
 	private void addAllShow(List<ProductListEntity> showLists) {

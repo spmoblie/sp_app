@@ -10,6 +10,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -109,6 +110,7 @@ public class SplashActivity extends BaseActivity {
 
 			@Override
 			public void run() {
+				AppApplication.statusHeight = DeviceUtil.getStatusBarHeight(SplashActivity.this);
 				goHomeActivity();
 			}
 		}, 1000);

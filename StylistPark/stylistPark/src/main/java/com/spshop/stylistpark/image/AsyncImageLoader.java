@@ -75,8 +75,8 @@ public class AsyncImageLoader {
 							// 缓存到集合
 							caches.addCacheBitmap(task.bitmap, task.newPath);
 							// 缓存到内存
-							task.saveFile = BitmapUtil.createPath(task.newPath, false);
-							BitmapUtil.save(task.bitmap, task.saveFile, 100);
+							/*task.saveFile = BitmapUtil.createPath(task.newPath, false);
+							BitmapUtil.save(task.bitmap, task.saveFile, 100);*/
 						} catch (Exception e) {
 							ExceptionUtil.handle(context, e);
 						}
@@ -141,14 +141,13 @@ public class AsyncImageLoader {
                     return bm;
                 }
 				// 判定SD卡中是否存在图片,如果存在则直接返回
-				File file = BitmapUtil.createPath(newPath, false);
-				if (file == null) {
-                    return bm;
-                }
-				bm = BitmapUtil.getBitmap(file.getAbsolutePath());
-				if (bm != null) {
-                    return bm;
-                }
+				/*File file = BitmapUtil.createPath(newPath, false);
+				if (file != null) {
+					bm = BitmapUtil.getBitmap(file.getAbsolutePath());
+					if (bm != null) {
+						return bm;
+					}
+				}*/
 			} catch (Exception e) {
 				ExceptionUtil.handle(context, e);
 				return  null;

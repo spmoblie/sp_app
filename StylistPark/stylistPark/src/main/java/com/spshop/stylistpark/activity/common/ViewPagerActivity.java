@@ -10,10 +10,12 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,7 +26,6 @@ import com.spshop.stylistpark.image.AsyncImageLoader;
 import com.spshop.stylistpark.image.AsyncImageLoader.AsyncImageLoaderCallback;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
-import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.widgets.DragImageView;
 import com.spshop.stylistpark.widgets.DragImageView.ImgOnClickListener;
 import com.spshop.stylistpark.widgets.DragImageView.ImgOnLongClickListener;
@@ -46,13 +47,13 @@ public class ViewPagerActivity extends BaseActivity {
 	
 	private ArrayList<String> urlLists;
 	private ArrayList<View> viewLists = new ArrayList<View>();
-	private int state_height;// 状态栏的高度
+	private ArrayList<DragImageView> imagLists = new ArrayList<DragImageView>();
 	private int mCurrentItem;
 	private TextView tv_save, tv_page;
 	private Bitmap defaultImg, showBitmap;
 	private FrameLayout frameLayout;
 	private ProgressBar progress;
-	private DragImageView imageView;
+	private DragImageView imageView, showView;
 	private ViewPager viewPager;
 	private AsyncImageLoader asyncImageLoader;
 
@@ -93,8 +94,6 @@ public class ViewPagerActivity extends BaseActivity {
 			return;
 		}
 		setPageNum(urlLists.size());
-		// 获取屏幕状态栏高度
-		state_height = DeviceUtil.getStatusBarHeight(this);
 		// 获取默认显示图片
 		defaultImg = BitmapFactory.decodeResource(getResources(), R.drawable.bg_img_white);
 		defaultImg = BitmapUtil.resizeImageByWidth(defaultImg, width);
@@ -117,24 +116,27 @@ public class ViewPagerActivity extends BaseActivity {
 		};
 		asyncImageLoader = AsyncImageLoader.getInstance(this, callback);
 		// 设置布局参数
-		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		lp.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
+		FrameLayout.LayoutParams lp_w = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp_w.gravity = Gravity.CENTER;
+		FrameLayout.LayoutParams lp_m = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+		lp_m.gravity = Gravity.CENTER;
 		// 循环添加View
 		for (int i = 0; i < urlLists.size(); i++) {
 			String imgUrl = urlLists.get(i);
 			// 创建父布局
 			frameLayout = new FrameLayout(this);
+			frameLayout.setLayoutParams(lp_m);
 			// 创建子布局-加载动画
 			progress = new ProgressBar(this);
 			progress.setVisibility(View.GONE);
-			progress.setLayoutParams(lp);
+			progress.setLayoutParams(lp_w);
 			// 创建子布局-显示图片
 			imageView = new DragImageView(this);
-			imageView.setLayoutParams(lp);
+			imageView.setLayoutParams(lp_m);
 			imageView.setmActivity(this);
-			imageView.setScreen_H(height - state_height);
+			imageView.setScreen_H(height - statusHeight);
 			imageView.setScreen_W(width);
-			//imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 			// 加载图片对象
 			Bitmap bm = asyncImageLoader.loadImage(true, imgUrl, 0);
 			if (bm != null) {
@@ -171,6 +173,7 @@ public class ViewPagerActivity extends BaseActivity {
 			frameLayout.addView(imageView);
 			frameLayout.addView(progress);
 			viewLists.add(frameLayout);
+			imagLists.add(imageView);
 		}
 		viewPager.setAdapter(new PagerAdapter()
         {
@@ -180,7 +183,7 @@ public class ViewPagerActivity extends BaseActivity {
             {
                 View layout = viewLists.get(position % viewLists.size());
                 viewPager.addView(layout);
-                return layout;
+				return layout;
             }
             
             // 销毁
@@ -208,22 +211,38 @@ public class ViewPagerActivity extends BaseActivity {
 		viewPager.setOnPageChangeListener(new OnPageChangeListener(){
             
             @Override
-            public void onPageSelected(final int arg0){
+            public void onPageSelected(final int position){
             	tv_save.setVisibility(View.GONE);
-            	mCurrentItem = arg0 % viewLists.size();
-            	setPageNum(viewLists.size());
+            	mCurrentItem = position % viewLists.size();
+				if (mCurrentItem >= 0 && mCurrentItem < imagLists.size()) {
+					if (showView != null) {
+						showView.setReset();
+					}
+					showView = imagLists.get(mCurrentItem);
+				}
+				setPageNum(viewLists.size());
             }
             
             @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2){
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){
             	
             }
             
             @Override
-            public void onPageScrollStateChanged(int arg0){
+            public void onPageScrollStateChanged(int position){
             	
             }
         });
+		viewPager.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (showView != null && !showView.isChange()) {
+					showView.onTouchEvent(event);
+					return true; //不切换图片则拦截事件
+				}
+				return false;
+			}
+		});
 		viewPager.setCurrentItem(mCurrentItem);
 		
 		tv_save.setOnClickListener(new OnClickListener() {
@@ -254,9 +273,6 @@ public class ViewPagerActivity extends BaseActivity {
 		AppApplication.imgHashMap.clear();
 		AppApplication.barHashMap.clear();
 		AppApplication.btmHashMap.clear();
-		if (asyncImageLoader != null) {
-			asyncImageLoader.quit();
-		}
 	}
 
 	@Override

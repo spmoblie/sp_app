@@ -75,6 +75,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int isStock = 0; //有货标记(0:默认/1:有货)
 	private int countTotal = 0; //数集总数量
+	private int total_1, total_3_ASC, total_3_DSC;
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean isFrist = true; //识别是否第一次打开页面
 	private boolean flag_type_3 = true; //价格排序控制符(true:价格升序/false:价格降序)
@@ -418,7 +419,9 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private void getSVDatas() {
 		loadType = -1;
 		current_Page = 1;
+		countTotal = 0;
 		startAnimation();
+		setLoadMoreDate();
 		sendRequestCode();
 	}
 	
@@ -557,9 +560,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			flag_type_3 = true;
 			sortType = 0;
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
-				addOldListDatas(lv_all_1, page_type_1);
+				addOldListDatas(lv_all_1, page_type_1, total_1);
 			}else {
 				page_type_1 = 1;
+				total_1 = 0;
 				getSVDatas();
 			}
 			break;
@@ -571,9 +575,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 				btn_3.setCompoundDrawables(null, null, rank_up, null);
 				sortType = 2;
 				if (lv_all_3_ASC != null && lv_all_3_ASC.size() > 0) {
-					addOldListDatas(lv_all_3_ASC, page_type_3_ASC);
+					addOldListDatas(lv_all_3_ASC, page_type_3_ASC, total_3_ASC);
 				}else {
 					page_type_3_ASC = 1;
+					total_3_ASC = 0;
 					getSVDatas();
 				}
 			} else //价格降序
@@ -582,9 +587,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 				btn_3.setCompoundDrawables(null, null, rank_down, null);
 				sortType = 1;
 				if (lv_all_3_DSC != null && lv_all_3_DSC.size() > 0) {
-					addOldListDatas(lv_all_3_DSC, page_type_3_DSC);
+					addOldListDatas(lv_all_3_DSC, page_type_3_DSC, total_3_DSC);
 				} else {
 					page_type_3_DSC = 1;
+					total_3_DSC = 0;
 					getSVDatas();
 				}
 			}
@@ -619,29 +625,29 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	/**
 	 * 展示已缓存的数据并至顶
 	 */
-	private void addOldListDatas(List<ProductListEntity> oldLists, int oldPage) {
+	private void addOldListDatas(List<ProductListEntity> oldLists, int oldPage, int oldTotal) {
 		addAllShow(oldLists);
 		current_Page = oldPage;
+		countTotal = oldTotal;
 		myUpdateAdapter();
 		if (current_Page != 1) {
 			toTop();
 		}
+		setLoadMoreDate();
 	}
 	
 	/**
 	 * 刷新所有已缓存的数据
 	 */
 	private void updateAllDatas() {
+		lv_show.clear();
+		lv_show_two.clear();
 		lv_all_1.clear();
 		lv_all_3_DSC.clear();
 		lv_all_3_ASC.clear();
 		hm_all_1.clear();
 		hm_all_3_asc.clear();
 		hm_all_3_dsc.clear();
-		current_Page = 1;
-		page_type_1 = 1;
-		page_type_3_ASC = 1;
-		page_type_3_DSC = 1;
 		getSVDatas();
 	}
 
@@ -743,16 +749,19 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 					case TYPE_1: //默认
 						addEntity(lv_all_1, lists, hm_all_1);
 						page_type_1++;
+						total_1 = total;
 						break;
 					case TYPE_3: //价格
 						switch (sortType) {
 						case 1: //降序
 							addEntity(lv_all_3_DSC, lists, hm_all_3_dsc);
 							page_type_3_DSC++;
+							total_3_DSC = total;
 							break;
 						case 2: //升序
 							addEntity(lv_all_3_ASC, lists, hm_all_3_asc);
 							page_type_3_ASC++;
+							total_3_ASC = total;
 							break;
 						}
 						break;
@@ -798,42 +807,22 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	}
 
 	/**
-	 * 刷新数集
-	 */
-	private void updEntity(int newTotal, int oldTotal, List<ProductListEntity> newDatas,
-						   List<ProductListEntity> oldDatas, HashMap<Integer, Boolean> oldMap) {
-		if (oldTotal < newTotal) {
-			List<ProductListEntity> datas = new ArrayList<ProductListEntity>();
-			datas.addAll(oldDatas);
-			oldDatas.clear();
-			for (int i = 0; i < (newTotal - oldTotal); i++) {
-				if (!oldMap.containsKey(newDatas.get(i).getId())) {
-					oldDatas.add(newDatas.get(i));
-					datas.remove(datas.size()-1);
-				}
-			}
-			oldDatas.addAll(datas);
-			addAllShow(oldDatas);
-			refresh_lv.setHasMoreData(true); //设置允许加载更多
-		}
-	}
-	
-	/**
 	 * 数据去重函数
 	 */
 	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, HashMap<Integer, Boolean> hashMap) {
 		ProductListEntity entity = null;
+		int dataId = 0;
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
-			if (entity != null && !hashMap.containsKey(entity.getId())) {
-				oldDatas.add(entity);
+			if (entity != null) {
+				dataId = entity.getId();
+				if (dataId != 0 && !hashMap.containsKey(dataId)) {
+					oldDatas.add(entity);
+					hashMap.put(dataId, true);
+				}
 			}
 		}
 		addAllShow(oldDatas);
-		hashMap.clear();
-		for (int i = 0; i < oldDatas.size(); i++) {
-			hashMap.put(oldDatas.get(i).getId(), true);
-		}
 	}
 
 	private void addAllShow(List<ProductListEntity> showLists) {
@@ -902,6 +891,13 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	 */
 	private boolean isStop(){
 		return lv_show.size() > 0 && lv_show.size() == countTotal;
+	}
+
+	/**
+	 * 设置允许加载更多
+	 */
+	private void setLoadMoreDate() {
+		refresh_lv.setHasMoreData(true);
 	}
 	
 }

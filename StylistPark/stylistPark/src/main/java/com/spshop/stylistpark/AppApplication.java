@@ -45,8 +45,9 @@ public class AppApplication extends Application implements OnDataListener{
 	public static String model = ""; //手机型号
 	public static String version_name = ""; //当前版本号
 	public static String clip_photo_path; //裁剪后相片的路径
-	public static int screenWidth ; //手机屏幕的宽
+	public static int screenWidth; //手机屏幕的宽
 	public static int screenHeight; //手机屏幕的高
+	public static int statusHeight; //手机状态栏高
 	public static int clip_photo_type = 1; //记录裁剪相片的类型(1:圆形/2:方形)
 	public static int network_current_state = 0; //记录当前网络的状态
 	

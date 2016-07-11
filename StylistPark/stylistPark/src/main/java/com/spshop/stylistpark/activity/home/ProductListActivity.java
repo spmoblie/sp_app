@@ -67,6 +67,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private int sortType = 0; //排序标记(0:默认排序/1:价格降序/2:价格升序)
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int countTotal = 0; //数集总数量
+	private int total_1, total_3_ASC, total_3_DSC;
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean isFrist = true; //识别是否第一次打开页面
 	private boolean flag_type_3 = true; //价格排序控制符(true:价格升序/false:价格降序)
@@ -418,7 +419,9 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private void getSVDatas() {
 		loadType = 1;
 		current_Page = 1;
+		countTotal = 0;
 		startAnimation();
+		setLoadMoreDate();
 		requestProductLists();
 	}
 
@@ -528,9 +531,10 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			flag_type_3 = true;
 			sortType = 0;
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
-				addOldListDatas(lv_all_1, page_type_1);
+				addOldListDatas(lv_all_1, page_type_1, total_1);
 			}else {
 				page_type_1 = 1;
+				total_1 = 0;
 				getSVDatas();
 			}
 			break;
@@ -542,9 +546,10 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				btn_3.setCompoundDrawables(null, null, rank_up, null);
 				sortType = 2;
 				if (lv_all_3_ASC != null && lv_all_3_ASC.size() > 0) {
-					addOldListDatas(lv_all_3_ASC, page_type_3_ASC);
+					addOldListDatas(lv_all_3_ASC, page_type_3_ASC, total_3_ASC);
 				}else {
 					page_type_3_ASC = 1;
+					total_3_ASC = 0;
 					getSVDatas();
 				}
 			} else //价格降序
@@ -553,9 +558,10 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				btn_3.setCompoundDrawables(null, null, rank_down, null);
 				sortType = 1;
 				if (lv_all_3_DSC != null && lv_all_3_DSC.size() > 0) {
-					addOldListDatas(lv_all_3_DSC, page_type_3_DSC);
+					addOldListDatas(lv_all_3_DSC, page_type_3_DSC, total_3_DSC);
 				} else {
 					page_type_3_DSC = 1;
+					total_3_DSC = 0;
 					getSVDatas();
 				}
 			}
@@ -615,13 +621,15 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	/**
 	 * 展示已缓存的数据并至顶
 	 */
-	private void addOldListDatas(List<ProductListEntity> oldLists, int oldPage) {
+	private void addOldListDatas(List<ProductListEntity> oldLists, int oldPage, int oldTotal) {
 		addAllShow(oldLists);
 		current_Page = oldPage;
+		countTotal = oldTotal;
 		myUpdateAdapter();
 		if (current_Page != 1) {
 			toTop();
 		}
+		setLoadMoreDate();
 	}
 	
 	private void updateSearchWords(TextView tv_words) {
@@ -790,6 +798,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 							addEntity(lv_all_1, lists, hm_all_1);
 							page_type_1++;
 						}
+						total_1 = total;
 						break;
 					case TYPE_3: //价格
 						switch (sortType) {
@@ -800,6 +809,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 								addEntity(lv_all_3_DSC, lists, hm_all_3_dsc);
 								page_type_3_DSC++;
 							}
+							total_3_DSC = total;
 							break;
 						case 2: //升序
 							if (loadType == 0) { //下拉
@@ -808,6 +818,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 								addEntity(lv_all_3_ASC, lists, hm_all_3_asc);
 								page_type_3_ASC++;
 							}
+							total_3_ASC = total;
 							break;
 						}
 						break;
@@ -858,15 +869,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			ll_hot_words.setVisibility(View.VISIBLE);
 			ll_radio_group.setVisibility(View.GONE);
 		}
-		if (lv_show.size() == 0) {
-			ll_other.setVisibility(View.GONE);
-			ll_search_history.setVisibility(View.VISIBLE);
-			rl_search_no_data.setVisibility(View.VISIBLE);
-			ll_words_history.setVisibility(View.GONE);
-		}else {
-			ll_other.setVisibility(View.VISIBLE);
-			ll_search_history.setVisibility(View.GONE);
-		}
 		myUpdateAdapter();
 	}
 
@@ -879,15 +881,28 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			List<ProductListEntity> datas = new ArrayList<ProductListEntity>();
 			datas.addAll(oldDatas);
 			oldDatas.clear();
+
+			ProductListEntity newEn, oldEn;
+			int dataId = 0;
 			for (int i = 0; i < (newTotal - oldTotal); i++) {
-				if (!oldMap.containsKey(newDatas.get(i).getId())) {
-					oldDatas.add(newDatas.get(i));
-					datas.remove(datas.size()-1);
+				newEn = newDatas.get(i);
+				if (newEn != null) {
+					dataId = newEn.getId();
+					if (dataId != 0 && !oldMap.containsKey(dataId)) {
+						// 添加至顶层
+						oldDatas.add(newEn);
+						oldMap.put(dataId, true);
+						// 移除最底层
+						oldEn = datas.remove(datas.size()-1);
+						if (oldEn != null && oldMap.containsKey(oldEn.getId())) {
+							oldMap.remove(oldEn.getId());
+						}
+					}
 				}
 			}
 			oldDatas.addAll(datas);
 			addAllShow(oldDatas);
-			refresh_lv.setHasMoreData(true); //设置允许加载更多
+			setLoadMoreDate();
 		}
 	}
 	
@@ -896,17 +911,18 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 */
 	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, HashMap<Integer, Boolean> hashMap) {
 		ProductListEntity entity = null;
+		int dataId = 0;
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
-			if (entity != null && !hashMap.containsKey(entity.getId())) {
-				oldDatas.add(entity);
+			if (entity != null) {
+				dataId = entity.getId();
+				if (dataId != 0 && !hashMap.containsKey(dataId)) {
+					oldDatas.add(entity);
+					hashMap.put(dataId, true);
+				}
 			}
 		}
 		addAllShow(oldDatas);
-		hashMap.clear();
-		for (int i = 0; i < oldDatas.size(); i++) {
-			hashMap.put(oldDatas.get(i).getId(), true);
-		}
 	}
 
 	private void addAllShow(List<ProductListEntity> showLists) {
@@ -957,8 +973,14 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		}
 		if (lv_show.size() == 0) {
 			refresh_lv.setVisibility(View.GONE);
+			ll_other.setVisibility(View.GONE);
+			ll_search_history.setVisibility(View.VISIBLE);
+			rl_search_no_data.setVisibility(View.VISIBLE);
+			ll_words_history.setVisibility(View.GONE);
 		}else {
 			refresh_lv.setVisibility(View.VISIBLE);
+			ll_other.setVisibility(View.VISIBLE);
+			ll_search_history.setVisibility(View.GONE);
 		}
 	}
 	
@@ -967,6 +989,13 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 */
 	private boolean isStop(){
 		return lv_show.size() > 0 && lv_show.size() == countTotal;
+	}
+
+	/**
+	 * 设置允许加载更多
+	 */
+	private void setLoadMoreDate() {
+		refresh_lv.setHasMoreData(true);
 	}
 	
 	/**
@@ -1021,16 +1050,13 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 */
 	private void clearAllData() {
 		lv_show.clear();
+		lv_show_two.clear();
 		lv_all_1.clear();
 		lv_all_3_DSC.clear();
 		lv_all_3_ASC.clear();
 		hm_all_1.clear();
 		hm_all_3_asc.clear();
 		hm_all_3_dsc.clear();
-		current_Page = 1;
-		page_type_1 = 1;
-		page_type_3_ASC = 1;
-		page_type_3_DSC = 1;
 	}
 	
 }

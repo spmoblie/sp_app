@@ -26,7 +26,6 @@ import com.spshop.stylistpark.adapter.CartProductListAdapter;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.utils.CommonTools;
-import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
@@ -154,7 +153,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 			rl_no_more.setVisibility(View.VISIBLE);
 			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_gray));
 		}else {
-			CommonTools.setLayoutParams(ll_no_data, width, height - DeviceUtil.getStatusBarHeight(this) - 300);
+			CommonTools.setLayoutParams(ll_no_data, width, height - statusHeight - 300);
 			ll_no_data.setVisibility(View.VISIBLE);
 			ll_billing.setVisibility(View.GONE);
 			rl_no_more.setVisibility(View.GONE);

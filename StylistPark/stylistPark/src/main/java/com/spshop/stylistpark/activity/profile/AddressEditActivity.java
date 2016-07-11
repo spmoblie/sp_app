@@ -26,6 +26,7 @@ import com.district.selector.wheel.widget.WheelView;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
+import com.spshop.stylistpark.activity.cart.PostOrderActivity;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.utils.CommonTools;
@@ -522,6 +523,9 @@ public class AddressEditActivity extends BaseActivity implements
 					CommonTools.showToast(this, getString(R.string.save_ok), 1000);
 					if (MyAddressActivity.instance != null) {
 						MyAddressActivity.instance.isChange = true;
+					}
+					if (PostOrderActivity.instance != null) {
+						PostOrderActivity.instance.isUpdate = true;
 					}
 					finish();
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {

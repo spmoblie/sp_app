@@ -34,7 +34,6 @@ import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
-import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -178,7 +177,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_gray));
 		}else {
 			CommonTools.setLayoutParams(ll_no_data, AppApplication.screenWidth,
-					AppApplication.screenHeight - DeviceUtil.getStatusBarHeight(getActivity()) - 300);
+					AppApplication.screenHeight - AppApplication.statusHeight - 300);
 			ll_no_data.setVisibility(View.VISIBLE);
 			ll_billing.setVisibility(View.GONE);
 			rl_no_more.setVisibility(View.GONE);

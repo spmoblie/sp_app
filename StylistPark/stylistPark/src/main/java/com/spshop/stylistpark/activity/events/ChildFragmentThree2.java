@@ -59,6 +59,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	private int topType = TYPE_1; //Top标记
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int countTotal = 0; //数集总数量
+	private int total_1, total_2, total_3;
 	private boolean isLoadOk = true; //加载数据控制符
 
 	private RelativeLayout rl_loading;
@@ -222,6 +223,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 		loadType = 1;
 		current_Page = 1;
 		startAnimation();
+		setLoadMoreDate();
 		requestProductLists();
 	}
 
@@ -286,9 +288,10 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 				changeTitleStatus(0);
 				topType = TYPE_1;
 				if (lv_all_1 != null && lv_all_1.size() > 0) {
-					addOldListDatas(lv_all_1, page_type_1);
+					addOldListDatas(lv_all_1, page_type_1, total_1);
 				}else {
 					page_type_1 = 1;
+					total_1 = 0;
 					getSVDatas();
 				}
 				break;
@@ -297,9 +300,10 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 				changeTitleStatus(1);
 				topType = TYPE_2;
 				if (lv_all_2 != null && lv_all_2.size() > 0) {
-					addOldListDatas(lv_all_2, page_type_2);
+					addOldListDatas(lv_all_2, page_type_2, total_2);
 				}else {
 					page_type_2 = 1;
+					total_2 = 0;
 					getSVDatas();
 				}
 				break;
@@ -308,9 +312,10 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 				changeTitleStatus(2);
 				topType = TYPE_3;
 				if (lv_all_3 != null && lv_all_3.size() > 0) {
-					addOldListDatas(lv_all_3, page_type_3);
+					addOldListDatas(lv_all_3, page_type_3, total_3);
 				}else {
 					page_type_3 = 1;
+					total_3 = 0;
 					getSVDatas();
 				}
 				break;
@@ -343,13 +348,15 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	/**
 	 * 展示已缓存的数据并至顶
 	 */
-	private void addOldListDatas(List<ThemeEntity> oldLists, int oldPage) {
+	private void addOldListDatas(List<ThemeEntity> oldLists, int oldPage, int oldTotal) {
 		addAllShow(oldLists);
 		current_Page = oldPage;
+		countTotal = oldTotal;
 		myUpdateAdapter();
 		if (current_Page != 1) {
 			toTop();
 		}
+		setLoadMoreDate();
 	}
 
 	@Override
@@ -415,30 +422,33 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 							switch (topType) {
 								case TYPE_1:
 									if (loadType == 0) { //下拉
-										updEntity(total, countTotal, lists, lv_all_1, hm_all_1);
+										updEntity(total, total_1, lists, lv_all_1, hm_all_1);
 										//page_type_1 = 2;
 									}else {
 										addEntity(lv_all_1, lists, hm_all_1);
 										page_type_1++;
 									}
+									total_1 = total;
 									break;
 								case TYPE_2:
 									if (loadType == 0) { //下拉
-										updEntity(total, countTotal, lists, lv_all_2, hm_all_2);
+										updEntity(total, total_2, lists, lv_all_2, hm_all_2);
 										//page_type_2 = 2;
 									}else {
 										addEntity(lv_all_2, lists, hm_all_2);
 										page_type_2++;
 									}
+									total_2 = total;
 									break;
 								case TYPE_3:
 									if (loadType == 0) { //下拉
-										updEntity(total, countTotal, lists, lv_all_3, hm_all_3);
+										updEntity(total, total_3, lists, lv_all_3, hm_all_3);
 										//page_type_3 = 2;
 									}else {
 										addEntity(lv_all_3, lists, hm_all_3);
 										page_type_3++;
 									}
+									total_3 = total;
 									break;
 							}
 							countTotal = total;
@@ -488,19 +498,33 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 			List<ThemeEntity> datas = new ArrayList<ThemeEntity>();
 			datas.addAll(oldDatas);
 			oldDatas.clear();
+
+			ThemeEntity newEn, oldEn;
+			int dataId = 0;
 			for (int i = 0; i < (newTotal - oldTotal); i++) {
-				if (!oldMap.containsKey(newDatas.get(i).getId())) {
-					oldDatas.add(newDatas.get(i));
-					datas.remove(datas.size()-1);
+				newEn = newDatas.get(i);
+				if (newEn != null) {
+					dataId = newEn.getId();
+					if (dataId != 0 && !oldMap.containsKey(dataId)) {
+						// 添加至顶层
+						oldDatas.add(newEn);
+						oldMap.put(dataId, true);
+						// 移除最底层
+						oldEn = datas.remove(datas.size()-1);
+						if (oldEn != null && oldMap.containsKey(oldEn.getId())) {
+							oldMap.remove(oldEn.getId());
+						}
+					}
 				}
 			}
 			oldDatas.addAll(datas);
 			addAllShow(oldDatas);
-			refresh_lv.setHasMoreData(true); //设置允许加载更多
+			setLoadMoreDate();
 		}
 		/*oldDatas.clear();
 		oldMap.clear();
-		addEntity(oldDatas, newDatas, oldMap);*/
+		addEntity(oldDatas, newDatas, oldMap);
+		setLoadMoreDate();*/
 	}
 
 	/**
@@ -508,17 +532,18 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	 */
 	private void addEntity(List<ThemeEntity> oldDatas, List<ThemeEntity> newDatas, HashMap<Integer, Boolean> hashMap) {
 		ThemeEntity entity = null;
+		int dataId = 0;
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
-			if (entity != null && !hashMap.containsKey(entity.getId())) {
-				oldDatas.add(entity);
+			if (entity != null) {
+				dataId = entity.getId();
+				if (dataId != 0 && !hashMap.containsKey(dataId)) {
+					oldDatas.add(entity);
+					hashMap.put(dataId, true);
+				}
 			}
 		}
 		addAllShow(oldDatas);
-		hashMap.clear();
-		for (int i = 0; i < oldDatas.size(); i++) {
-			hashMap.put(oldDatas.get(i).getId(), true);
-		}
 	}
 
 	private void addAllShow(List<ThemeEntity> showLists) {
@@ -589,6 +614,13 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	 */
 	private boolean isStop(){
 		return lv_show.size() > 0 && lv_show.size() == countTotal;
+	}
+
+	/**
+	 * 设置允许加载更多
+	 */
+	private void setLoadMoreDate() {
+		refresh_lv.setHasMoreData(true);
 	}
 
 	@Override
