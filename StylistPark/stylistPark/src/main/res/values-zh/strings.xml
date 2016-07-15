@@ -249,6 +249,8 @@
     <string name="pay_alipay_hint">支付寶便捷支付</string>
     <string name="pay_union">銀聯支付</string>
     <string name="pay_union_hint">銀聯在線支付</string>
+    <string name="pay_pal">PayPal</string>
+    <string name="pay_pal_hint">PayPal全球支付</string>
     <string name="pay_abandon">確定放棄支付麽?</string>
     <string name="pay_select_null">請選擇壹種支付方式</string>
     <string name="pay_continue">繼續支付</string>

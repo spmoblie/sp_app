@@ -65,7 +65,7 @@ public class CollageProductListAdapter extends AppBaseAdapter<RowObject> {
 	public CollageProductListAdapter(Context mContext) {
 		super(mContext);
 		displayMode = DisplayMode.Product;
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+		options = AppApplication.getDefaultImageOptions();
 		dollorSign = LangCurrTools.getCurrencyValue(mContext) + " ";
 	}
 

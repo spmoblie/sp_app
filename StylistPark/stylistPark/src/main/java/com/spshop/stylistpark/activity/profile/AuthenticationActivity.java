@@ -66,7 +66,7 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 		LogUtil.i(TAG, "onCreate");
 		
 		instance = this;
-		options = AppApplication.getImageOptions(0, R.drawable.icon_authentication);
+		options = AppApplication.getImageOptions(0, R.drawable.icon_authentication, true);
 		
 		findViewById();
 		initView();
@@ -164,7 +164,7 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 				
 				@Override
 				public void run() {
-					asyncImageUpload = AsyncImageUpload.getInstance(mContext, new AsyncImageUploadCallback() {
+					asyncImageUpload = AsyncImageUpload.getInstance(new AsyncImageUploadCallback() {
 						
 						@Override
 						public void uploadImageUrls(BaseEntity baseEn) {

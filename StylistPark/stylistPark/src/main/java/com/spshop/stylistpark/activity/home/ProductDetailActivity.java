@@ -123,7 +123,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private int propertyNum = 3;
 	private int selectId_1, selectId_2, attrNum, price, mathPrice;
 	private String currStr, attrNameStr, fristGoodsImgUrl, fristGoodsImgPath, fristPromotionName;
-	private ArrayList<View> viewLists = new ArrayList<View>();
+	private ArrayList<ImageView> viewLists = new ArrayList<ImageView>();
 	private ArrayList<String> urlLists = new ArrayList<String>();
 	private ArrayList<ProductDetailEntity> imgEns = new ArrayList<ProductDetailEntity>();
 	
@@ -138,7 +138,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 		instance = this;
 		goodsId = getIntent().getIntExtra("goodsId", 0);
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+		options = AppApplication.getDefaultImageOptions();
 		currStr = LangCurrTools.getCurrencyValue(mContext);
 		
 		findViewById();
@@ -404,7 +404,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			public boolean isViewFromObject(View arg0, Object arg1)
 			{
 				return arg0 == arg1;
-				
 			}
 			
 			@Override
@@ -458,19 +457,25 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				public void run(){
 					if (!vprStop) {
 						vprPosition++;
-						viewPager.setCurrentItem(vprPosition);
+						if (viewPager != null) {
+							viewPager.setCurrentItem(vprPosition);
+						}
 					}
 					vprStop = false;
-					viewPager.postDelayed(mPagerAction, 3000);
+					if (viewPager != null) {
+						viewPager.postDelayed(mPagerAction, 3000);
+					}
 				}
 			};
-			viewPager.postDelayed(mPagerAction, 3000);
+			if (viewPager != null) {
+				viewPager.postDelayed(mPagerAction, 3000);
+			}
 		}
 	}
 
 	private void loadShareImg() {
 		if (!StringUtil.isNull(fristGoodsImgUrl)) {
-			asyncImageLoader = AsyncImageLoader.getInstance(mContext, new AsyncImageLoaderCallback() {
+			asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoaderCallback() {
 				
 				@Override
 				public void imageLoaded(String path, File saveFile, Bitmap bm) {
@@ -850,6 +855,18 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		// 取消倒计时
 		if (mcdt != null) {
 			mcdt.cancel();
+		}
+		// 遍历创建的View，销毁以释放内存
+		for (int i = 0; i < viewLists.size(); i++) {
+			ImageView iv = viewLists.get(i);
+			if (iv != null) {
+				iv.setImageBitmap(null);
+				iv = null;
+			}
+		}
+		if (viewPager != null) {
+			viewPager.removeAllViews();
+			viewPager = null;
 		}
 		super.onDestroy();
 	}

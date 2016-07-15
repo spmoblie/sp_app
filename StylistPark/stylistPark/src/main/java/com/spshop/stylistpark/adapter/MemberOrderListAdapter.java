@@ -38,8 +38,8 @@ public class MemberOrderListAdapter extends BaseAdapter {
 		this.datas = datas;
 		//this.adapterCallback = adapterCallback;
 		this.mInflater = LayoutInflater.from(context);
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
-		head_options = AppApplication.getImageOptions(90, R.drawable.head_portrait);
+		options = AppApplication.getDefaultImageOptions();
+		head_options = AppApplication.getHeadImageOptions();
 	}
 
 	public void updateAdapter(List<OrderEntity> datas) {

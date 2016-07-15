@@ -2,7 +2,9 @@ package com.spshop.stylistpark.wxapi;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +18,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalItem;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalPaymentDetails;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
@@ -28,6 +37,8 @@ import com.spshop.stylistpark.activity.profile.OrderListActivity;
 import com.spshop.stylistpark.entity.PayResult;
 import com.spshop.stylistpark.entity.PaymentEntity;
 import com.spshop.stylistpark.service.ServiceContext;
+import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
@@ -39,22 +50,40 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.stat.StatService;
 import com.unionpay.UPPayAssistEx;
 
+import org.json.JSONException;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler, OnClickListener{
 	
 	private static final String TAG = "WXPayEntryActivity";
-	private static final int SDK_ZFB_PAY_FLAG = 1;
-	public static final int PAY_ZFB = 2;
-	public static final int PAY_WEIXI = 3;
-	public static final int PAY_UNION = 4;
-	// mMode参数解释： "00" - 启动银联正式环境 "01" - 连接银联测试环境
-	//private final String mMode = AppConfig.IS_PUBLISH ? "00":"01";
-	private final String mMode = "00";
+	public static final int PAY_ZFB = 1;
+	public static final int PAY_WEIXI = 2;
+	public static final int PAY_UNION = 3;
+	public static final int PAY_PAL = 4;
+
+	// 银联  mMode参数解释： "00" - 启动银联正式环境 "01" - 连接银联测试环境
+	private final String mMode = AppConfig.IS_PUBLISH ? "00":"01";
+	// 支付宝
+	private static final int SDK_ZFB_PAY_FLAG = 101;
+	// PayPal
+	private List<PayPalItem> productsInCart = new ArrayList<PayPalItem>();
+	private String PAYPAL_CURRENCY = "USD";
+	private static final int REQUEST_CODE_PAYMENT = 1;
+	private static final String PAYPAL_CLIENT_ID = AppConfig.PAYPAL_CLIENT_ID;
+	private static PayPalConfiguration paypalConfig = new PayPalConfiguration()
+			.environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK).clientId(PAYPAL_CLIENT_ID)
+			.merchantName("Example Merchant")
+			.merchantPrivacyPolicyUri(Uri.parse("https://www.example.com/privacy"))
+			.merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"));
 
 	private TextView tv_pay_result, tv_pay_amount;
 	private ImageView iv_select_zfb, iv_select_weixi, iv_select_union;
 	private RelativeLayout rl_select_zfb, rl_select_weixi, rl_select_union;
 	private Button btn_confirm, btn_done_left, btn_done_right;
-	private LinearLayout ll_pay_confirm, ll_pay_done;
+	private LinearLayout ll_pay_type_1, ll_pay_type_2, ll_pay_confirm, ll_pay_done;
 	
 	private boolean isPayOk = false;
 	private int payType = PAY_ZFB; //支付类型
@@ -106,6 +135,11 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		orderSn = getIntent().getExtras().getString("orderSn");
 		orderTotal = getIntent().getExtras().getString("orderTotal");
 		rootPage = getIntent().getExtras().getString("root");
+
+		// 启动paypal的服务
+		Intent intent = new Intent(this, PayPalService.class);
+		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
+		startService(intent);
 		
 		findViewById();
 		initView();
@@ -120,6 +154,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		rl_select_zfb = (RelativeLayout) findViewById(R.id.payment_rl_select_zfb);
 		rl_select_weixi = (RelativeLayout) findViewById(R.id.payment_rl_select_weixi);
 		rl_select_union = (RelativeLayout) findViewById(R.id.payment_rl_select_union);
+		ll_pay_type_1 = (LinearLayout) findViewById(R.id.payment_ll_pay_type_1);
+		ll_pay_type_2 = (LinearLayout) findViewById(R.id.payment_ll_pay_type_2);
 		ll_pay_confirm = (LinearLayout) findViewById(R.id.payment_ll_pay_confirm);
 		ll_pay_done = (LinearLayout) findViewById(R.id.payment_ll_pay_done);
 		btn_confirm = (Button) findViewById(R.id.button_confirm_btn_one);
@@ -139,6 +175,18 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		btn_done_left.setOnClickListener(this);
 		btn_done_right.setText(getString(R.string.cart_go_shopping));
 		btn_done_right.setOnClickListener(this);
+
+		PAYPAL_CURRENCY = LangCurrTools.getCurrencyHttpUrlValueStr(this);
+		if (LangCurrTools.getCurrency(this) == LangCurrTools.Currency.HKD
+				|| LangCurrTools.getCurrency(this) == LangCurrTools.Currency.USD) {
+			payType = PAY_PAL;
+			ll_pay_type_1.setVisibility(View.GONE);
+			ll_pay_type_2.setVisibility(View.VISIBLE);
+		} else {
+			payType = PAY_ZFB;
+			ll_pay_type_1.setVisibility(View.VISIBLE);
+			ll_pay_type_2.setVisibility(View.GONE);
+		}
 	}
 	
 	/**
@@ -227,6 +275,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
 	@Override
 	protected void onDestroy() {
+		stopService(new Intent(this, PayPalService.class));
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
 	}
@@ -336,6 +385,9 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 				case PAY_UNION: //银联支付
 					sendUnionPayReq(payEntity);
 					break;
+				case PAY_PAL: //PayPal支付
+					sendPALPayReq(payEntity);
+					break;
 				}
 			}else {
 				getPayDataFail();
@@ -351,7 +403,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 					break;
 				case PAY_WEIXI: //微信支付
 					if (payResultEntity.getTrade_state().equals("SUCCESS")) {
-						tv_pay_result.setText(getString(R.string.pay_success));
+						tv_pay_result.setText(R.string.pay_success);
 						updateViewStatus();
 					}else {
 						tv_pay_result.setText(payResultEntity.getTrade_state_desc());
@@ -359,7 +411,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 					break;
 				}
 			}else {
-				tv_pay_result.setText(getString(R.string.pay_result_abnormal));
+				tv_pay_result.setText(R.string.pay_result_abnormal);
 			}
 			break;
 		}
@@ -401,6 +453,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		api.registerApp(AppConfig.WX_API_KEY);
 		api.sendReq(req);
 
+		// 结束加载动画
 		getPayDataSuccess();
 	}
 
@@ -433,7 +486,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		// 必须异步调用
 		Thread payThread = new Thread(payRunnable);
 		payThread.start();
-
+		// 结束加载动画
 		getPayDataSuccess();
 	}
 
@@ -449,8 +502,59 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		}
 		// 调用支付SDK
 		UPPayAssistEx.startPay(this, null, null, payInfo, mMode);
-
+		// 结束加载动画
 		getPayDataSuccess();
+	}
+
+	/**
+	 * 发送PayPal支付请求
+	 */
+	private void sendPALPayReq(PaymentEntity payEntity) {
+		// 获取支付订单号
+		String payInfo = "201604051210026523228";
+		if (!StringUtil.isNumeric(payInfo)) {
+			getPayDataFail();
+			return;
+		}
+		// 构建支付信息
+		addToCart(payEntity);
+		PayPalPayment thingsToBuy = prepareFinalCart();
+		// 调用支付SDK
+		Intent intent = new Intent(WXPayEntryActivity.this, PaymentActivity.class);
+		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
+		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingsToBuy);
+		startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+		// 结束加载动画
+		getPayDataSuccess();
+	}
+
+	public void addToCart(PaymentEntity payEn) {
+		productsInCart.clear();
+		PayPalItem item = new PayPalItem("sample item #1", 2, new BigDecimal("0.01"), PAYPAL_CURRENCY, "sku-12345678");
+		productsInCart.add(item);
+	}
+
+	private PayPalPayment prepareFinalCart() {
+		PayPalItem[] items = new PayPalItem[productsInCart.size()];
+		items = productsInCart.toArray(items);
+
+		// Total amount
+		BigDecimal subtotal = PayPalItem.getItemTotal(items);
+		// If you have shipping cost, add it here
+		BigDecimal shipping = new BigDecimal("0.0");
+		// If you have tax, add it here
+		BigDecimal tax = new BigDecimal("0.0");
+		PayPalPaymentDetails paymentDetails = new PayPalPaymentDetails(shipping, subtotal, tax);
+		BigDecimal amount = subtotal.add(shipping).add(tax);
+
+		PayPalPayment payment = new PayPalPayment(
+				amount, PAYPAL_CURRENCY,
+				"Description about transaction. This will be displayed to the user.",
+				PayPalPayment.PAYMENT_INTENT_SALE);
+		payment.items(items).paymentDetails(paymentDetails);
+		payment.custom("This is text that will be associated with the payment that the app can use.");
+
+		return payment;
 	}
 
 	private void getPayDataFail() {
@@ -470,21 +574,46 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // 处理银联手机支付控件返回的支付结果
-        if (data == null) {
-            return;
-        }
-        // 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
-        String msg = "";
-        String str = data.getExtras().getString("pay_result");
-        if (str.equalsIgnoreCase("success")) {
-            msg = getString(R.string.pay_success);
-        } else if (str.equalsIgnoreCase("fail")) {
-            msg = getString(R.string.pay_fail);
-        } else if (str.equalsIgnoreCase("cancel")) {
-            msg = getString(R.string.pay_cancel);
-        }
-        tv_pay_result.setText(msg);
+		if (data == null) {
+			return;
+		}
+		String msg = "";
+		if (requestCode == REQUEST_CODE_PAYMENT) {
+			// PayPal
+			if (resultCode == Activity.RESULT_OK) {
+				msg = getString(R.string.pay_success);
+				PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+				if (confirm != null) {
+					try {
+						String paymentId = confirm.toJSONObject().getJSONObject("response").getString("id");
+						String payment_client = confirm.getPayment().toJSONObject().toString();
+						LogUtil.i(TAG, "paymentId: " + paymentId + ", payment_json: " + payment_client);
+						// 发送支付ID到你的服务器进行验证
+						updateViewStatus();
+					} catch (JSONException e) {
+						ExceptionUtil.handle(this, e);
+					}
+				}
+			}
+			else if (resultCode == Activity.RESULT_CANCELED) {
+				msg = getString(R.string.pay_cancel);
+			}
+			else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+				msg = getString(R.string.pay_fail);
+			}
+		} else {
+			// 银联手机支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
+			String str = data.getExtras().getString("pay_result");
+			if (str.equalsIgnoreCase("success")) {
+				msg = getString(R.string.pay_success);
+				updateViewStatus();
+			} else if (str.equalsIgnoreCase("fail")) {
+				msg = getString(R.string.pay_fail);
+			} else if (str.equalsIgnoreCase("cancel")) {
+				msg = getString(R.string.pay_cancel);
+			}
+		}
+		tv_pay_result.setText(msg);
     }
 	
 }

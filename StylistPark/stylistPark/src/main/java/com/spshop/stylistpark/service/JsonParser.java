@@ -805,9 +805,9 @@ public class JsonParser {
 		}
 		OrderEntity mainEn = new OrderEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			mainEn.setOrderTotal(StringUtil.getInteger(jsonObject.getString("total")));
+			mainEn.setOrderTotal(StringUtil.getInteger(jsonObject.getString("count")));
 			List<OrderEntity> mainLists = new ArrayList<OrderEntity>();
-			JSONArray data = jsonObject.getJSONArray("data");
+			JSONArray data = jsonObject.getJSONArray("orders");
 			if (data != null && !data.equals("")) {
 				OrderEntity en = null;
 				for (int i = 0; i < data.length(); i++) {
@@ -815,15 +815,15 @@ public class JsonParser {
 					en = new OrderEntity();
 					en.setOrderId(item.getString("order_id"));
 					en.setOrderNo(item.getString("order_sn"));
-					en.setStatus(StringUtil.getInteger(item.getString("status")));
+					//en.setStatus(StringUtil.getInteger(item.getString("status")));
 					en.setStatusName(item.getString("handler"));
-					en.setPriceTotal(item.getString("goods_amount"));
-					en.setGoodsTotal(StringUtil.getInteger(item.getString("count")));
+					en.setPriceTotal(item.getString("total_fee"));
+					en.setGoodsTotalStr(item.getString("count"));
 					
-					long createTime = StringUtil.getLong(item.getString("add_time"))*1000;
+					/*long createTime = StringUtil.getLong(item.getString("add_time"))*1000;
 					en.setCreateTime(createTime);
-					en.setValidTime(createTime + 1800000); //有效时间30分钟
-					en.setGoodsLists(getProductListsFormJson2(item, "goods_list"));
+					en.setValidTime(createTime + 1800000); //有效时间30分钟*/
+					en.setGoodsLists(getProductListsFormJson2(item, "goods"));
 					mainLists.add(en);
 				}
 				mainEn.setMainLists(mainLists);
@@ -852,7 +852,7 @@ public class JsonParser {
 				orderEn.setStatusName(data.getString("handler"));
 				orderEn.setLogisticsName(data.getString("shipping_name"));
 				orderEn.setLogisticsNo(data.getString("invoice_no"));
-				orderEn.setGoodsTotal(StringUtil.getInteger(data.getString("count")));
+				orderEn.setGoodsTotalStr(data.getString("count"));
 				orderEn.setCurrency(data.getString("currencys"));
 				orderEn.setPriceTotalName(data.getString("goods_amount_name"));
 				orderEn.setPriceTotal(data.getString("goods_amount"));
@@ -868,9 +868,9 @@ public class JsonParser {
 				orderEn.setPricePay(data.getString("order_amount"));
 				orderEn.setPayId(StringUtil.getInteger(data.getString("pay_id")));
 				orderEn.setPayType(data.getString("pay_name"));
-				orderEn.setInvoiceName(data.getString("inv_name"));
-				orderEn.setInvoiceType(data.getString("inv_type"));
-				orderEn.setInvoicePayee(data.getString("inv_payee"));
+				//orderEn.setInvoiceName(data.getString("inv_name"));
+				//orderEn.setInvoiceType(data.getString("inv_type"));
+				//orderEn.setInvoicePayee(data.getString("inv_payee"));
 				orderEn.setBuyerName(data.getString("postscript_name"));
 				orderEn.setBuyer(data.getString("postscript"));
 				
@@ -941,6 +941,9 @@ public class JsonParser {
 //				payEn.setSign(data.getString("sign"));
 				break;
 			case WXPayEntryActivity.PAY_UNION: //银联支付
+				payEn.setAlipay(jsonObject.getString("content"));
+				break;
+			case WXPayEntryActivity.PAY_PAL: //PayPal支付
 				payEn.setAlipay(jsonObject.getString("content"));
 				break;
 			}

@@ -169,7 +169,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 
 	private void loadShareImg() {
 		if (!StringUtil.isNull(shareEn.getImageUrl())) {
-			asyncImageLoader = AsyncImageLoader.getInstance(mContext, new AsyncImageLoader.AsyncImageLoaderCallback() {
+			asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoader.AsyncImageLoaderCallback() {
 
 				@Override
 				public void imageLoaded(String path, File saveFile, Bitmap bm) {

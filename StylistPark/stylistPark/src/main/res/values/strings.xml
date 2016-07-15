@@ -250,6 +250,8 @@
     <string name="pay_alipay_hint">Alipay easy payment</string>
     <string name="pay_union">Union Pay</string>
     <string name="pay_union_hint">UnionPay online payment</string>
+    <string name="pay_pal">PayPal</string>
+    <string name="pay_pal_hint">PayPal global payment</string>
     <string name="pay_abandon">Determined to abandon payment?</string>
     <string name="pay_select_null">Please select a payment method</string>
     <string name="pay_continue">Continue</string>

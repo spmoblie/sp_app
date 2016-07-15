@@ -1,8 +1,6 @@
 package com.spshop.stylistpark.activity.common;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -50,7 +48,7 @@ public class ViewPagerActivity extends BaseActivity {
 	private ArrayList<DragImageView> imagLists = new ArrayList<DragImageView>();
 	private int mCurrentItem;
 	private TextView tv_save, tv_page;
-	private Bitmap defaultImg, showBitmap;
+	private Bitmap showBitmap;
 	private FrameLayout frameLayout;
 	private ProgressBar progress;
 	private DragImageView imageView, showView;
@@ -64,7 +62,7 @@ public class ViewPagerActivity extends BaseActivity {
 
 		mCurrentItem = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
 		urlLists = getIntent().getStringArrayListExtra(EXTRA_IMAGE_URLS);
-		
+
 		findViewById();
 		initViewPager();
 	}
@@ -76,45 +74,39 @@ public class ViewPagerActivity extends BaseActivity {
 		tv_page = (TextView) findViewById(R.id.my_viewpager_tv_page);
 	}
 	
-	@SuppressLint("HandlerLeak")
 	private void initViewPager() {
 		setHeadVisibility(View.GONE);
 		if (urlLists == null) {
-			Handler mHandler = new Handler() {
+			showErrorDialog(null, false, new Handler() {
 				@Override
 				public void handleMessage(Message msg) {
 					switch (msg.what) {
-					case DIALOG_CONFIRM_CLICK:
-						finish();
-						break;
+						case DIALOG_CONFIRM_CLICK:
+							finish();
+							break;
 					}
 				}
-			};
-			showErrorDialog(null, false, mHandler);
+			});
 			return;
 		}
 		setPageNum(urlLists.size());
-		// 获取默认显示图片
-		defaultImg = BitmapFactory.decodeResource(getResources(), R.drawable.bg_img_white);
-		defaultImg = BitmapUtil.resizeImageByWidth(defaultImg, width);
 		// 创建网络图片加载器
-		AsyncImageLoaderCallback callback = new AsyncImageLoaderCallback() {
+		asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoaderCallback() {
 
 			@Override
 			public void imageLoaded(String path, File saveFile, Bitmap bm) {
-				DragImageView imgView = AppApplication.imgHashMap.get(HASHMAP_KEY_IMG + path);
+				DragImageView imgView = hm_img.get(HASHMAP_KEY_IMG + path);
 				if (imgView != null && bm != null) {
 					showBitmap = bm;
-					AppApplication.btmHashMap.put(HASHMAP_KEY_BTM + path, bm); //记录图片
+					hm_btm.put(HASHMAP_KEY_BTM + path, bm); //记录图片
 					imgView.setImageBitmap(bm);
 				}
-				ProgressBar progress = AppApplication.barHashMap.get(HASHMAP_KEY_BAR + path);
+				ProgressBar progress = hm_bar.get(HASHMAP_KEY_BAR + path);
 				if (progress != null) {
 					progress.setVisibility(View.GONE);
 				}
 			}
-		};
-		asyncImageLoader = AsyncImageLoader.getInstance(this, callback);
+		});
 		// 设置布局参数
 		FrameLayout.LayoutParams lp_w = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp_w.gravity = Gravity.CENTER;
@@ -124,14 +116,14 @@ public class ViewPagerActivity extends BaseActivity {
 		for (int i = 0; i < urlLists.size(); i++) {
 			String imgUrl = urlLists.get(i);
 			// 创建父布局
-			frameLayout = new FrameLayout(this);
+			frameLayout = new FrameLayout(getApplicationContext());
 			frameLayout.setLayoutParams(lp_m);
 			// 创建子布局-加载动画
-			progress = new ProgressBar(this);
+			progress = new ProgressBar(getApplicationContext());
 			progress.setVisibility(View.GONE);
 			progress.setLayoutParams(lp_w);
 			// 创建子布局-显示图片
-			imageView = new DragImageView(this);
+			imageView = new DragImageView(getApplicationContext());
 			imageView.setLayoutParams(lp_m);
 			imageView.setmActivity(this);
 			imageView.setScreen_H(height - statusHeight);
@@ -141,14 +133,14 @@ public class ViewPagerActivity extends BaseActivity {
 			Bitmap bm = asyncImageLoader.loadImage(true, imgUrl, 0);
 			if (bm != null) {
 				showBitmap = bm;
-				AppApplication.btmHashMap.put(HASHMAP_KEY_BTM + imgUrl, bm); //记录图片
+				imageView.setImageBitmap(bm);
+				hm_btm.put(HASHMAP_KEY_BTM + imgUrl, bm); //记录图片
 			}else {
-				showBitmap = defaultImg;
+				imageView.setImageResource(R.drawable.bg_img_white);
 				progress.setVisibility(View.VISIBLE);
-				AppApplication.barHashMap.put(HASHMAP_KEY_BAR + imgUrl, progress); //记录加载动画
-				AppApplication.imgHashMap.put(HASHMAP_KEY_IMG + imgUrl, imageView); //记录View
+				hm_bar.put(HASHMAP_KEY_BAR + imgUrl, progress); //记录加载动画
+				hm_img.put(HASHMAP_KEY_IMG + imgUrl, imageView); //记录View
 			}
-			imageView.setImageBitmap(showBitmap);
 			imageView.setImgOnLongClickListener(new ImgOnLongClickListener() {
 				
 				@Override
@@ -249,7 +241,7 @@ public class ViewPagerActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View v) {
-				Bitmap bm = AppApplication.btmHashMap.get(HASHMAP_KEY_BTM + urlLists.get(mCurrentItem));
+				Bitmap bm = hm_btm.get(HASHMAP_KEY_BTM + urlLists.get(mCurrentItem));
 				File file = BitmapUtil.createPath(BitmapUtil.filterPath(urlLists.get(mCurrentItem)), true);
 				if (file == null) {
 	            	showErrorDialog(R.string.photo_show_save_fail);
@@ -270,9 +262,9 @@ public class ViewPagerActivity extends BaseActivity {
 	@Override
 	public void finish() {
 		super.finish();
-		AppApplication.imgHashMap.clear();
-		AppApplication.barHashMap.clear();
-		AppApplication.btmHashMap.clear();
+		hm_img.clear();
+		hm_bar.clear();
+		hm_btm.clear();
 	}
 
 	@Override
@@ -293,4 +285,8 @@ public class ViewPagerActivity extends BaseActivity {
 		}
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
 }

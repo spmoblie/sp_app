@@ -45,7 +45,7 @@ public class OrderListAdapter extends BaseAdapter {
 		this.adapterCallback = adapterCallback;
 		this.mInflater = LayoutInflater.from(context);
 		currencyStr = LangCurrTools.getCurrencyValue(context);
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120);
+		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120, true);
 	}
 
 	public void updateAdapter(List<OrderEntity> datas) {
@@ -106,7 +106,8 @@ public class OrderListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		final OrderEntity data = datas.get(position);
-		holder.tv_order_sn.setText(context.getString(R.string.order_sn, data.getOrderNo()));
+		//holder.tv_order_sn.setText(context.getString(R.string.order_sn, data.getOrderNo()));
+		holder.tv_order_sn.setText(data.getOrderNo());
 		holder.tv_order_status.setText(data.getStatusName());
 		
 		List<ProductListEntity> goodsLists = data.getGoodsLists();
@@ -121,7 +122,7 @@ public class OrderListAdapter extends BaseAdapter {
 				TextView tv_brand = (TextView) view.findViewById(R.id.item_goods_vertical_tv_brand);
 				tv_brand.setText(goodsLists.get(i).getBrand());
 				TextView tv_price = (TextView) view.findViewById(R.id.item_goods_vertical_tv_price);
-				tv_price.setText(currencyStr + goodsLists.get(i).getSellPrice());
+				tv_price.setText(goodsLists.get(i).getSellPrice());
 				TextView tv_name = (TextView) view.findViewById(R.id.item_goods_vertical_tv_name);
 				tv_name.setText(goodsLists.get(i).getName());
 				TextView tv_number = (TextView) view.findViewById(R.id.item_goods_vertical_tv_number);
@@ -145,9 +146,11 @@ public class OrderListAdapter extends BaseAdapter {
 				holder.ll_goods_lists.addView(view);
 			}
 		}
-		holder.tv_total_num.setText(context.getString(R.string.cart_goods_num, data.getGoodsTotal()));
-		holder.tv_total_price.setText(context.getString(R.string.order_pay, currencyStr + data.getPriceTotal()));
-		
+		/*holder.tv_total_num.setText(context.getString(R.string.cart_goods_num, data.getGoodsTotal()));
+		holder.tv_total_price.setText(context.getString(R.string.order_pay, currencyStr + data.getPriceTotal()));*/
+		holder.tv_total_num.setText(data.getGoodsTotalStr());
+		holder.tv_total_price.setText(data.getPriceTotal());
+
 		if (position == datas.size()-1) {
 			holder.ll_main.setPadding(0, 0, 0, 20);
 		}

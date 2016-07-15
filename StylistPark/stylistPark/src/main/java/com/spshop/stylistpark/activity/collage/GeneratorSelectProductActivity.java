@@ -64,7 +64,7 @@ public class GeneratorSelectProductActivity extends BaseActivity implements
         setContentView(R.layout.activity_generator_product);
         
         imgUri = getIntent().getParcelableExtra(AppConfig.ACTIVITY_KEY_COLLAGE_URI);
-        options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+        options = AppApplication.getDefaultImageOptions();
         
         findViewById();
 		initView();

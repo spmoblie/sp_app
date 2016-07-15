@@ -49,7 +49,7 @@ public class CartProductListAdapter extends BaseAdapter{
 		//this.cartHashMap = cartHashMap;
 		this.apCallback = callback;
         
-        options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+        options = AppApplication.getDefaultImageOptions();
 	}
 	
 	public void updateAdapter(List<ProductDetailEntity> datas, HashMap<Integer, ProductDetailEntity> cartHashMap){

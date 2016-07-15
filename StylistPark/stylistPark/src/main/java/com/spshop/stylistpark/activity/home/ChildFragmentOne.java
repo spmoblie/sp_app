@@ -100,7 +100,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private boolean vprStop = false;
 	private int idsSize, idsPosition, vprPosition;
 	private ImageView[] indicators = null;
-	private ArrayList<View> viewLists = new ArrayList<View>();
+	private ArrayList<ImageView> viewLists = new ArrayList<ImageView>();
 	private ArrayList<ThemeEntity> imgEns = new ArrayList<ThemeEntity>();
 
 	@Override
@@ -121,7 +121,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		currStr = LangCurrTools.getCurrencyValue(mContext);
 		atm = AsyncTaskManager.getInstance(mContext);
 		mInflater = LayoutInflater.from(mContext);
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+		options = AppApplication.getDefaultImageOptions();
 
 		// 动态注册广播
 		IntentFilter mFilter = new IntentFilter();
@@ -356,13 +356,19 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					public void run(){
 						if (!vprStop) {
 							vprPosition++;
-							viewPager.setCurrentItem(vprPosition);
+							if (viewPager != null) {
+								viewPager.setCurrentItem(vprPosition);
+							}
 						}
 						vprStop = false;
-						viewPager.postDelayed(mPagerAction, 3000);
+						if (viewPager != null) {
+							viewPager.postDelayed(mPagerAction, 3000);
+						}
 					}
 				};
-				viewPager.postDelayed(mPagerAction, 3000);
+				if (viewPager != null) {
+					viewPager.postDelayed(mPagerAction, 3000);
+				}
 			}
 		}
 	}
@@ -608,6 +614,18 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		// 取消倒计时
 		if (mcdt != null) {
 			mcdt.cancel();
+		}
+		// 遍历创建的View，销毁以释放内存
+		for (int i = 0; i < viewLists.size(); i++) {
+			ImageView iv = viewLists.get(i);
+			if (iv != null) {
+				iv.setImageBitmap(null);
+				iv = null;
+			}
+		}
+		if (viewPager != null) {
+			viewPager.removeAllViews();
+			viewPager = null;
 		}
 		if(myBroadcastReceiver != null){
 			mContext.unregisterReceiver(myBroadcastReceiver); 

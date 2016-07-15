@@ -61,7 +61,7 @@ public class GeneratorTemplateChooseActivity extends BaseActivity {
         setContentView(R.layout.activity_generator_choose);
         
         setTitle(R.string.collage_select_template);
-        options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120);
+        options = AppApplication.getDefaultImageOptions();
         
         jsonArr = new JSONArray();
         convertJson();

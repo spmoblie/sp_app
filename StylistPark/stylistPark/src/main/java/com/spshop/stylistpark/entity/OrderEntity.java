@@ -167,7 +167,12 @@ public class OrderEntity extends BaseEntity {
 	 * 订单商品总数量
 	 */
 	private int goodsTotal;
-	
+
+	/**
+	 * 订单商品总数量(String)
+	 */
+	private String goodsTotalStr;
+
 	/**
 	 * 订单总数量
 	 */
@@ -533,6 +538,13 @@ public class OrderEntity extends BaseEntity {
 		this.goodsTotal = goodsTotal;
 	}
 
+	public String getGoodsTotalStr() {
+		return goodsTotalStr;
+	}
+
+	public void setGoodsTotalStr(String goodsTotalStr) {
+		this.goodsTotalStr = goodsTotalStr;
+	}
 
 	public int getOrderTotal() {
 		return orderTotal;

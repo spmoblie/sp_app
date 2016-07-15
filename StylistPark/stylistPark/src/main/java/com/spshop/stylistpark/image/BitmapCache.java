@@ -1,10 +1,10 @@
 package com.spshop.stylistpark.image;
 
+import android.graphics.Bitmap;
+
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.util.Hashtable;
-
-import android.graphics.Bitmap;
 
 /**
  * 缓存及释放图片，防止内存溢出

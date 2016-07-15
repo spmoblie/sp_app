@@ -54,12 +54,12 @@ public class CategoryGridAdapter extends BaseAdapter{
 		this.apCallback = callback;
 		lang = LangCurrTools.getLanguage(context);
 		
-		//options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+		//options = AppApplication.getDefaultImageOptions();
 		
 		mGridView = gridView;
         mGridView.setOnScrollListener(new ScrollListenerImpl());
 		
-        ailc = new AsyncImageLruCache(context, new AsyncImageLruCacheCallback() {
+        ailc = new AsyncImageLruCache(new AsyncImageLruCacheCallback() {
 			
 			@Override
 			public void imageLoaded(String imageUrl, Bitmap bitmap) {

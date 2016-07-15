@@ -120,7 +120,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		http = new HttpUtil();
 		um = UserManager.getInstance();
 		userStr = um.getLoginName();
-		options = AppApplication.getImageOptions(90, R.drawable.ic_launcher);
+		options = AppApplication.getHeadImageOptions();
 		// QQ
 		mTencent = Tencent.createInstance(QQ_APP_ID, mContext);
 		// FB

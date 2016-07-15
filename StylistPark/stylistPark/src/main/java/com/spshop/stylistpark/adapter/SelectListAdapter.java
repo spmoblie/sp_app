@@ -55,7 +55,7 @@ public class SelectListAdapter extends BaseAdapter{
 		this.datas = datas;
 		this.apCallback = callback;
 		this.dataType = dataType;
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120);
+		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120, true);
 	}
 	
 	public void updateAdapter(List<SelectListEntity> datas, int dataType){

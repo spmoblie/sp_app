@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.image;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashSet;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,7 +7,12 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.util.LruCache;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashSet;
 
 /**
  * LruCache图片缓存工具类
@@ -26,8 +27,8 @@ public class AsyncImageLruCache {
 	// 记录所有正在下载或等待下载的任务
 	private HashSet<DownloadBitmapAsyncTask> dbatHashSet;
 
-	public AsyncImageLruCache(Context context, AsyncImageLruCacheCallback callback) {
-		this.mContext = context;
+	public AsyncImageLruCache(AsyncImageLruCacheCallback callback) {
+		this.mContext = AppApplication.spApp.getApplicationContext();
 		this.mCallback = callback;
 
 		dbatHashSet = new HashSet<DownloadBitmapAsyncTask>();

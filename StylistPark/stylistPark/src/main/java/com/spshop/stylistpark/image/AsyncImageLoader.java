@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
@@ -32,11 +33,11 @@ public class AsyncImageLoader {
 	/**
 	 * 创建此对象请记得在Activity的onPause()中调用clearInstance()销毁对象
 	 */
-	public static AsyncImageLoader getInstance(final Context context, final AsyncImageLoaderCallback callback) {
+	public static AsyncImageLoader getInstance(final AsyncImageLoaderCallback callback) {
 		if (instance == null) {
 			synchronized (AsyncImageLoader.class) {
 				if (instance == null) {
-					instance = new AsyncImageLoader(context, callback);
+					instance = new AsyncImageLoader(AppApplication.spApp.getApplicationContext(), callback);
 				}
 			}
 		}
@@ -79,10 +80,11 @@ public class AsyncImageLoader {
 							BitmapUtil.save(task.bitmap, task.saveFile, 100);*/
 						} catch (Exception e) {
 							ExceptionUtil.handle(context, e);
+						} finally {
+							Message msg = Message.obtain();
+							msg.obj = task;
+							handler.sendMessage(msg);
 						}
-						Message msg = Message.obtain();
-						msg.obj = task;
-						handler.sendMessage(msg);
 					}
 					if (!isLoop) {
 						break;
@@ -112,6 +114,7 @@ public class AsyncImageLoader {
 	}
 	
 	public void clearInstance(){
+		quit();
 		instance = null;
 	}
 

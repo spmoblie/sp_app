@@ -135,15 +135,17 @@ public class DragImageView extends ImageView {
 	@Override
 	public void setImageBitmap(Bitmap bm) {
 		super.setImageBitmap(bm);
-		/** 获取图片宽高 **/
-		bitmap_W = bm.getWidth();
-		bitmap_H = bm.getHeight();
+		if (bm != null) {
+			/** 获取图片宽高 **/
+			bitmap_W = bm.getWidth();
+			bitmap_H = bm.getHeight();
 
-		MAX_W = bitmap_W * 3;
-		MAX_H = bitmap_H * 3;
+			MAX_W = bitmap_W * 3;
+			MAX_H = bitmap_H * 3;
 
-		MIN_W = bitmap_W / 2;
-		MIN_H = bitmap_H / 2;
+			MIN_W = bitmap_W / 2;
+			MIN_H = bitmap_H / 2;
+		}
 	}
 
 	@Override

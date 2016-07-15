@@ -81,7 +81,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		instance = this;
 		infoEn = (UserInfoEntity) getIntent().getExtras().get("data");
 		userManager = UserManager.getInstance();
-		options = AppApplication.getNotCacheImageOptions(90, R.drawable.head_portrait);
+		options = AppApplication.getHeadImageOptions();
 		
 		findViewById();
 		initView();
@@ -174,7 +174,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 				
 				@Override
 				public void run() {
-					asyncImageUpload = AsyncImageUpload.getInstance(mContext, new AsyncImageUploadCallback() {
+					asyncImageUpload = AsyncImageUpload.getInstance(new AsyncImageUploadCallback() {
 						
 						@Override
 						public void uploadImageUrls(BaseEntity baseEn) {
@@ -182,7 +182,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 								isUpload = baseEn.getErrCode() == 1 ? false : true;
 								if (!isUpload) {
 									update_fragment = true;
-									asyncImageUpload.quit();
 									CommonTools.showToast(mContext, getString(R.string.photo_upload_img_ok, getString(R.string.profile_head)), 1000);
 								} else {
 									CommonTools.showToast(mContext, getString(R.string.photo_upload_head_fail), 2000);

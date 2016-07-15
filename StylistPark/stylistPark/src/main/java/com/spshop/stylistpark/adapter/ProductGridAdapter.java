@@ -39,7 +39,7 @@ public class ProductGridAdapter extends BaseAdapter{
 		this.datas = datas;
 		this.apCallback = callback;
 		currStr = LangCurrTools.getCurrencyValue(context);
-        options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+        options = AppApplication.getDefaultImageOptions();
 	}
 	
 	public void updateAdapter(List<ProductListEntity> datas){

@@ -40,7 +40,7 @@ public class MemberListAdapter extends BaseAdapter {
 		this.context = context;
 		this.datas = datas;
 		this.adapterCallback = adapterCallback;
-		options = AppApplication.getImageOptions(90, R.drawable.head_portrait);
+		options = AppApplication.getHeadImageOptions();
 		
 		rank_1 = context.getResources().getDrawable(R.drawable.icon_rank_1);
 		rank_2 = context.getResources().getDrawable(R.drawable.icon_rank_2);

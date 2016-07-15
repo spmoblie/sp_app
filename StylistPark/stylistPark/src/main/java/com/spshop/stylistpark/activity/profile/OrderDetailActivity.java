@@ -66,7 +66,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		
 		instance = this;
 		orderId = getIntent().getExtras().getString("orderId");
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120);
+		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120, true);
 		
 		findViewById();
 		initView();
@@ -120,7 +120,8 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			tv_order_status.setText(orderEn.getStatusName());
 			tv_logistics_name.setText(getString(R.string.order_logistics_name, orderEn.getLogisticsName()));
 			tv_logistics_no.setText(getString(R.string.order_logistics_no, orderEn.getLogisticsNo()));
-			tv_goods_total.setText(getString(R.string.num_total, orderEn.getGoodsTotal()));
+			//tv_goods_total.setText(getString(R.string.num_total, orderEn.getGoodsTotal()));
+			tv_goods_total.setText(orderEn.getGoodsTotalStr());
 			tv_buyer.setText(orderEn.getBuyerName() + signStr + orderEn.getBuyer());
 			tv_invoice.setText(orderEn.getInvoiceName() + signStr + orderEn.getInvoiceType());
 			tv_pay_type.setText(getString(R.string.order_pay_type, orderEn.getPayType()));
@@ -202,7 +203,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 				TextView tv_brand = (TextView) view.findViewById(R.id.item_goods_vertical_tv_brand);
 				tv_brand.setText(itemEn.getBrand());
 				TextView tv_price = (TextView) view.findViewById(R.id.item_goods_vertical_tv_price);
-				tv_price.setText(currStr + itemEn.getSellPrice());
+				tv_price.setText(itemEn.getSellPrice());
 				TextView tv_name = (TextView) view.findViewById(R.id.item_goods_vertical_tv_name);
 				tv_name.setText(itemEn.getName());
 				TextView tv_number = (TextView) view.findViewById(R.id.item_goods_vertical_tv_number);

@@ -1,11 +1,5 @@
 package com.spshop.stylistpark.image;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.util.EntityUtils;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,6 +11,12 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.util.EntityUtils;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * 下载并保存图片到本地
@@ -35,11 +35,11 @@ public class LoaderAndSaveImage {
 	/**
 	 * 创建此对象请记得在Activity的onPause()中调用clearInstance()销毁对象
 	 */
-	public static LoaderAndSaveImage getInstance(final Context context, final LoaderAndSaveImageCallback callback){
+	public static LoaderAndSaveImage getInstance(final LoaderAndSaveImageCallback callback){
 		if (instance == null) {
 			synchronized (LoaderAndSaveImage.class) {
 				if (instance == null) {
-					instance = new LoaderAndSaveImage(context, callback);
+					instance = new LoaderAndSaveImage(AppApplication.spApp.getApplicationContext(), callback);
 				}
 			}
 		}

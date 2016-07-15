@@ -80,7 +80,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		LogUtil.i(TAG, "onCreate");
 		
 		instance = this;
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120);
+		options = AppApplication.getDefaultImageOptions();
 		
 		findViewById();
 		initView();

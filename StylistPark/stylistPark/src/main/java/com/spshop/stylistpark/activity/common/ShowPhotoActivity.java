@@ -45,7 +45,7 @@ public class ShowPhotoActivity extends FragmentActivity {
 
 		pathLists = (ArrayList<String>) getIntent().getExtras().getStringArrayList(AppConfig.ACTIVITY_SHOW_PHOTO_LIST);
 		position = getIntent().getExtras().getInt("position", 0);
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+		options = AppApplication.getDefaultImageOptions();
 
 		setupView();
 

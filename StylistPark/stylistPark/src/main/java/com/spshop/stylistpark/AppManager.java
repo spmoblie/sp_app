@@ -1,7 +1,5 @@
 package com.spshop.stylistpark;
 
-import java.util.Stack;
-
 import android.app.Activity;
 import android.content.Context;
 import android.webkit.CookieManager;
@@ -10,6 +8,8 @@ import android.webkit.CookieSyncManager;
 import com.spshop.stylistpark.utils.CleanDataManager;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.UserManager;
+
+import java.util.Stack;
 
 /**
  * 负责记录Activity的启动情况并控制Activity的退出

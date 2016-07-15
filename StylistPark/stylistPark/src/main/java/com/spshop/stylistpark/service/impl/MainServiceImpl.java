@@ -571,10 +571,11 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public OrderEntity getOrderDetails(String orderId) throws Exception {
-		String uri = AppConfig.URL_COMMON_MY_URL + "?app=order_detail";
+		String uri = AppConfig.URL_COMMON_MY_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("app", "order_detail"));
 		params.add(new MyNameValuePair("order_id", orderId));
-		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_POST);
+		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);
 		return JsonParser.getOrderDetails(jsonStr);

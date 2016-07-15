@@ -71,7 +71,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		instance = this;
 		mContext = getActivity();
 		atm = AsyncTaskManager.getInstance(mContext);
-		options = AppApplication.getNotCacheImageOptions(90, R.drawable.head_portrait);
+		options = AppApplication.getHeadImageOptions();
 		
 		View view = null;
 		try {

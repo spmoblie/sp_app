@@ -47,29 +47,8 @@ public class BitmapUtil {
 	public static Bitmap getBitmap(Bitmap bitmap, int width, int height) {
 		Bitmap bm = null;
 		if (bitmap != null) {
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			bitmap.compress(CompressFormat.JPEG, 100, output);
-			byte[] data = output.toByteArray();
-			// 创建图片加载选项设置对象
-			Options opts = new Options();
-			// 设置仅加载图片的边界信息
-			opts.inJustDecodeBounds = true;
-			// 设置图片大小可变
-			opts.inMutable = true;
-			// 设置重用Bitmap内存从而改进性能，避免重新分配内存
-			opts.inBitmap = BitmapFactory.decodeByteArray(data, 0, data.length, opts);
-			// 设置图片缩放比例
-			int xScale = Math.round((float) opts.outWidth / (float) width);
-			int yScale = Math.round((float) opts.outHeight / (float) height);
-			opts.inSampleSize = xScale > yScale ? xScale : yScale;
-			// 取消仅加载边界的设置
-			opts.inJustDecodeBounds = false;
-    		// 设置系统回收时释放内存
-			opts.inPurgeable = true; 
-    		// 与inPurgeable配合使用
-			opts.inInputShareable = true;
-			// 按选项设置加载图片
-			bm = BitmapFactory.decodeByteArray(data, 0, data.length, opts);
+			byte[] data = bmpToByteArray(bitmap, false);
+			bm = getBitmap(data, width, height);
 		}
 		return bm;
 	}
@@ -342,9 +321,9 @@ public class BitmapUtil {
 	/**
 	 * 将图片转换为数组格式
 	 */
-	public static byte[] bmpToByteArray(Context context, final Bitmap bmp, final boolean needRecycle) {
+	public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		bmp.compress(CompressFormat.JPEG, 60, output);
+		bmp.compress(CompressFormat.JPEG, 100, output);
 		if (needRecycle) {
 			bmp.recycle();
 		}
@@ -352,7 +331,7 @@ public class BitmapUtil {
 		try {
 			output.close();
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			e.printStackTrace();
 		}
 		return result;
 	}

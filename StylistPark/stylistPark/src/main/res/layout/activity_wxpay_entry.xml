@@ -64,34 +64,35 @@
         style="@style/set_line_horizontal_bg"
         android:contentDescription="@string/desc" />
 
+    <ImageView
+        style="@style/set_line_horizontal_bg"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/desc" />
+
+    <RelativeLayout style="@style/common_vertical_item_layout" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pay_type"
+            android:textColor="@color/text_color_assist"
+            android:textSize="@dimen/text_size_14" />
+    </RelativeLayout>
+
     <LinearLayout
+        android:id="@+id/payment_ll_pay_type_1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
         android:layout_weight="5"
         android:background="@color/ui_bg_color_white"
         android:orientation="vertical" >
 
         <ImageView
             style="@style/set_line_horizontal_bg"
-            android:contentDescription="@string/desc" />
-
-        <RelativeLayout style="@style/common_vertical_item_layout" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/pay_type"
-                android:textColor="@color/text_color_assist"
-                android:textSize="@dimen/text_size_14" />
-        </RelativeLayout>
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
             android:layout_marginLeft="15dp"
             android:contentDescription="@string/desc" />
 
-        <RelativeLayout 
+        <RelativeLayout
             android:id="@+id/payment_rl_select_zfb"
             style="@style/common_vertical_item_layout" >
 
@@ -218,6 +219,65 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/btn_select_single_normal"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/payment_ll_pay_type_2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:background="@color/ui_bg_color_white"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_marginLeft="15dp"
+            android:contentDescription="@string/desc" />
+
+        <RelativeLayout
+            android:id="@+id/payment_rl_select_pal"
+            style="@style/common_vertical_item_layout" >
+
+            <ImageView
+                android:id="@+id/payment_iv_pay_pal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/payment_pay" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/payment_iv_pay_pal"
+                android:text="@string/pay_pal"
+                android:textColor="@color/text_color_title"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/payment_iv_pay_pal"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/payment_iv_pay_pal"
+                android:text="@string/pay_pal_hint"
+                android:textColor="@color/text_color_assist"
+                android:textSize="@dimen/text_size_12" />
+
+            <ImageView
+                android:id="@+id/payment_iv_select_pal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/btn_select_single_focused"
                 android:contentDescription="@string/desc" />
         </RelativeLayout>
 

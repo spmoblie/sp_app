@@ -134,7 +134,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		time_height = getResources().getDimensionPixelSize(R.dimen.favourable_time_height);
 		group_height = getResources().getDimensionPixelSize(R.dimen.topbar_group_height);
 		spaceHeight = CommonTools.dip2px(mContext, 15);
-		options = AppApplication.getImageOptions(0, 0);
+		options = AppApplication.getImageOptions(0, 0, true);
 		
 		findViewById();
 		initView();
@@ -334,7 +334,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private void loadShareImg() {
 		if (!StringUtil.isNull(logoImgUrl)) {
-			asyncImageLoader = AsyncImageLoader.getInstance(mContext, new AsyncImageLoader.AsyncImageLoaderCallback() {
+			asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoader.AsyncImageLoaderCallback() {
 
 				@Override
 				public void imageLoaded(String path, File saveFile, Bitmap bm) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.service.JsonParser;
@@ -33,11 +34,11 @@ public class AsyncImageUpload {
 	/**
 	 * 创建此对象请记得在Activity的onPause()中调用clearInstance()销毁对象
 	 */
-	public static AsyncImageUpload getInstance(final Context context, final AsyncImageUploadCallback callback) {
+	public static AsyncImageUpload getInstance(final AsyncImageUploadCallback callback) {
 		if (instance == null) {
 			synchronized (AsyncImageUpload.class) {
 				if (instance == null) {
-					instance = new AsyncImageUpload(context, callback);
+					instance = new AsyncImageUpload(AppApplication.spApp.getApplicationContext(), callback);
 				}
 			}
 		}
@@ -159,6 +160,7 @@ public class AsyncImageUpload {
 	}
 
 	public void clearInstance(){
+		quit();
 		instance = null;
 	}
 

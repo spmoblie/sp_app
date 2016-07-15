@@ -108,7 +108,7 @@ public class MultiAngleMainActivity extends BaseActivity implements OnClickListe
 		setTitle(R.string.collage_create_multiangle);
 		setBtnRight(getString(R.string.save));
 
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+		options = AppApplication.getDefaultImageOptions();
 
 		multiangle_InfoLayout = (ViewGroup) findViewById(R.id.multiangle_InfoLayout);
 		multiangle_selectedInfoLayout = (ViewGroup) findViewById(R.id.multiangle_selectedInfoLayout);

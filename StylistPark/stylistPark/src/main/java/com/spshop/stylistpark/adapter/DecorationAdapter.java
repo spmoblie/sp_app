@@ -33,7 +33,7 @@ public class DecorationAdapter extends AppBaseAdapter<RowObject>{
 
 	public DecorationAdapter(Context mContext) {
 		super(mContext);
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+		options = AppApplication.getDefaultImageOptions();
 	}
 	
 

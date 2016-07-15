@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.DisplayMetrics;
-import android.widget.ProgressBar;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -30,12 +29,10 @@ import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
-import com.spshop.stylistpark.widgets.DragImageView;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.HashMap;
 
 @SuppressLint({ "NewApi", "UseSparseArrays" })
 public class AppApplication extends Application implements OnDataListener{
@@ -56,15 +53,11 @@ public class AppApplication extends Application implements OnDataListener{
 	public static boolean initCookies = true; //重新登录时初始化cookies
 	public static boolean isWXShare = false; //记录是否微信分享
 	public static boolean isStartHome = true; //记录是否允许重新启动HomeFragmentActivity
-	
-	public static HashMap<String, DragImageView> imgHashMap = new HashMap<String, DragImageView>();
-	public static HashMap<String, ProgressBar> barHashMap = new HashMap<String, ProgressBar>();
-	public static HashMap<String, Bitmap> btmHashMap = new HashMap<String, Bitmap>();
 
 	private RequestQueue mRequestQueue;
-	private static AppApplication mInstance;
 	private static SharedPreferences shared;
 	private static AsyncTaskManager atm;
+	private static DisplayImageOptions defaultOptions, headOptions;
 	private ServiceContext sc = ServiceContext.getServiceContext();
 	private Calendar calendar = Calendar.getInstance();
 
@@ -74,11 +67,10 @@ public class AppApplication extends Application implements OnDataListener{
 	public void onCreate() {
 		super.onCreate();
 		spApp = this;
-		mInstance = this;
 		shared = getSharedPreferences();
 		atm = AsyncTaskManager.getInstance(spApp);
-		
-		// 获取手机型号及屏幕的宽高
+
+	    // 获取手机型号及屏幕的宽高
 		screenWidth = DeviceUtil.getDeviceWidth(spApp);
 		screenHeight = DeviceUtil.getDeviceHeight(spApp);
 		model = DeviceUtil.getModel();
@@ -107,7 +99,7 @@ public class AppApplication extends Application implements OnDataListener{
 	}
 	
     public static synchronized AppApplication getInstance() {
-        return mInstance;
+        return spApp;
     }
 	
 	/**
@@ -132,64 +124,57 @@ public class AppApplication extends Application implements OnDataListener{
 	}
 	
 	/**
-	 * 获取图片加载器对象
+	 * 创建图片加载器对象
 	 * 
 	 * @param circular 加载圆形效果的数值
 	 * @param drawableId 默认图片Id
 	 */
-	public static DisplayImageOptions getImageOptions(int circular, int drawableId){
-		DisplayImageOptions imageOptions = null;
-		if (circular == 0) {
-			imageOptions = new DisplayImageOptions.Builder()
-			.showImageForEmptyUri(drawableId)
-			.showImageOnFail(drawableId)
-			.cacheInMemory(true) // 内存缓存
-			.cacheOnDisc(true) // sdcard缓存
-			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-			.bitmapConfig(Bitmap.Config.RGB_565).build();
-		}else {
-			imageOptions = new DisplayImageOptions.Builder()
-			.displayer(new RoundedBitmapDisplayer(circular))
-			.showImageForEmptyUri(drawableId)
-			.showImageOnFail(drawableId)
-			.cacheInMemory(true) // 内存缓存
-			.cacheOnDisc(true) // sdcard缓存
-			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-			.bitmapConfig(Bitmap.Config.RGB_565).build();
-		}
-		return imageOptions;
+	public static DisplayImageOptions getImageOptions(int circular, int drawableId, boolean isCache) {
+		return new DisplayImageOptions.Builder()
+				.displayer(new RoundedBitmapDisplayer(circular))
+				.showImageForEmptyUri(drawableId)
+				.showImageOnFail(drawableId)
+				.cacheInMemory(isCache) // 内存缓存
+				.cacheOnDisc(isCache) // sdcard缓存
+				.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+				.bitmapConfig(Bitmap.Config.ARGB_8888).build();
 	}
 
 	/**
-	 * 获取不缓存图片的加载器对象
-	 *
-	 * @param circular 加载圆形效果的数值
-	 * @param drawableId 默认图片Id
+	 * 获取默认图片加载器对象
 	 */
-	public static DisplayImageOptions getNotCacheImageOptions(int circular, int drawableId){
-		DisplayImageOptions imageOptions = null;
-		if (circular == 0) {
-			imageOptions = new DisplayImageOptions.Builder()
-			.showImageForEmptyUri(drawableId)
-			.showImageOnFail(drawableId)
-			.cacheInMemory(false) // 内存缓存
-			.cacheOnDisc(false) // sdcard缓存
-			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-			.bitmapConfig(Bitmap.Config.RGB_565).build();
-		}else {
-			imageOptions = new DisplayImageOptions.Builder()
-			.displayer(new RoundedBitmapDisplayer(circular))
-			.showImageForEmptyUri(drawableId)
-			.showImageOnFail(drawableId)
-			.cacheInMemory(false) // 内存缓存
-			.cacheOnDisc(false) // sdcard缓存
-			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-			.bitmapConfig(Bitmap.Config.RGB_565).build();
+	public static DisplayImageOptions getDefaultImageOptions() {
+		if (defaultOptions == null) {
+			defaultOptions = new DisplayImageOptions.Builder()
+					//.displayer(new FadeInBitmapDisplayer(300)) // 图片加载好后渐入的动画时间
+					.showImageForEmptyUri(R.drawable.bg_img_white)
+					.showImageOnFail(R.drawable.bg_img_white)
+					.cacheInMemory(true) // 内存缓存
+					.cacheOnDisc(true) // sdcard缓存
+					.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+					.bitmapConfig(Bitmap.Config.ARGB_8888).build();
 		}
-		return imageOptions;
+		return defaultOptions;
 	}
 
-	public static SharedPreferences getSharedPreferences(){
+	/**
+	 * 获取头像图片加载器对象
+	 */
+	public static DisplayImageOptions getHeadImageOptions() {
+		if (headOptions == null) {
+			headOptions = new DisplayImageOptions.Builder()
+					.displayer(new RoundedBitmapDisplayer(90))
+					.showImageForEmptyUri(R.drawable.head_portrait)
+					.showImageOnFail(R.drawable.head_portrait)
+					.cacheInMemory(false) // 内存缓存
+					.cacheOnDisc(false) // sdcard缓存
+					.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+					.bitmapConfig(Bitmap.Config.ARGB_8888).build();
+		}
+		return headOptions;
+	}
+
+	public static SharedPreferences getSharedPreferences() {
 		if (shared == null) {
 			shared = new SharedConfig(spApp).GetConfig();
 		}
@@ -274,7 +259,7 @@ public class AppApplication extends Application implements OnDataListener{
 	public void onFailure(int requestCode, int state, Object result) {
 		CommonTools.showToast(spApp, String.valueOf(result), 1000);
 	}
-	
+
 }
 
 

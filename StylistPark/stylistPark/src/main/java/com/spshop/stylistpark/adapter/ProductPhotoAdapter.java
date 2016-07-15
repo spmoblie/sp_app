@@ -23,7 +23,7 @@ public class ProductPhotoAdapter extends AppBaseAdapter<List<String>> {
 
 	public ProductPhotoAdapter(Context mContext) {
 		super(mContext);
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white);
+		options = AppApplication.getDefaultImageOptions();
 	}
 
 	@SuppressWarnings("unchecked")
