@@ -70,11 +70,11 @@ public class GeneratorTemplateChooseActivity extends BaseActivity {
             try
             {
                 JSONObject json = (JSONObject) jsonArr.getJSONObject(i);
-                Bitmap bitmap = FileManager.getBitmapFromAssets(mContext, json.getString("localThumbName"));
+                Bitmap bitmap = FileManager.getBitmapFromAssets(json.getString("localThumbName"));
                 drawableList.add(new BitmapDrawable(getResources(), bitmap));
             } catch (Exception e)
             {
-                ExceptionUtil.handle(mContext, e);
+                ExceptionUtil.handle(e);
             }
         }
         if(jsonArr.length() != drawableList.size())
@@ -97,7 +97,7 @@ public class GeneratorTemplateChooseActivity extends BaseActivity {
                 try {
                     json = (JSONObject) jsonArr.getJSONObject(position);
                 } catch (JSONException e) {
-                    ExceptionUtil.handle(mContext, e);
+                    ExceptionUtil.handle(e);
                 }
                 i.putExtra(TEMPLATE_JSON, json.toString());
                 startActivityForResult(i, BACK_MENU_REQUEST);
@@ -173,7 +173,7 @@ public class GeneratorTemplateChooseActivity extends BaseActivity {
     public void convertJson()
     {
         LogUtil.i(TAG, "convertJson");
-        String str = FileManager.loadJSONFromAsset(this, "template_sample.json");
+        String str = FileManager.loadJSONFromAsset("template_sample.json");
         try
         {
         	if (!StringUtil.isNull(str)) {
@@ -181,7 +181,7 @@ public class GeneratorTemplateChooseActivity extends BaseActivity {
 			}
         } catch (Exception e)
         {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         }
 
     }
@@ -203,7 +203,7 @@ public class GeneratorTemplateChooseActivity extends BaseActivity {
 			try {
 				return jsonArr.getJSONObject(position);
 			} catch (JSONException e) {
-				ExceptionUtil.handle(mContext, e);
+                ExceptionUtil.handle(e);
 				return null;
 			}
         }
@@ -227,7 +227,7 @@ public class GeneratorTemplateChooseActivity extends BaseActivity {
            try {
                 imgUrl = jsonObj.getString("thumbUrl");
            } catch (JSONException e) {
-               ExceptionUtil.handle(mContext, e);
+               ExceptionUtil.handle(e);
            }
            LogUtil.i(TAG, "getView imgUrl: " + position +", " + imgUrl);
            // it was SquareNetworkImageView
@@ -267,7 +267,7 @@ public class GeneratorTemplateChooseActivity extends BaseActivity {
                 	msg.what = FAIL;
 				}
             } catch (Exception e) {
-                ExceptionUtil.handle(mCtx, e);
+                ExceptionUtil.handle(e);
             }
             if (!interrupted()) {
                 mTHander.sendMessage(msg);

@@ -31,7 +31,7 @@ public class CategoryLeftListAdapter extends BaseAdapter{
 		this.context = context;
 		this.datas = datas;
 		this.callback = callback;
-		lang = LangCurrTools.getLanguage(context);
+		lang = LangCurrTools.getLanguage();
 	}
 	
 	public void updateAdapter(List<CategoryListEntity> datas, int index){

@@ -26,7 +26,6 @@ import com.spshop.stylistpark.utils.LogUtil;
 public class DragImageView extends ImageView {
 
 	private Activity mActivity;
-	private Context context;
 
 	private int screen_W, screen_H;// 可见屏幕的宽高度
 
@@ -92,7 +91,6 @@ public class DragImageView extends ImageView {
 	/** 构造方法 **/
 	public DragImageView(Context context) {
 		super(context);
-		this.context = context;
 	}
 
 	public void setmActivity(Activity mActivity) {
@@ -126,7 +124,6 @@ public class DragImageView extends ImageView {
 
 	public DragImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.context = context;
 	}
 
 	/***
@@ -306,6 +303,10 @@ public class DragImageView extends ImageView {
 
 			LogUtil.i("DragImageView", "left=" + left + ", top=" + top + ", right=" + right + ", bottom=" + bottom);
 			LogUtil.i("DragImageView", "isControl_H=" + isControl_H + ", isChange=" + isChange);
+
+			if (mOnMoveListener != null) {
+				mOnMoveListener.onMove(isToLeftMove, isChange);
+			}
 		}
 		/** 处理缩放 **/
 		else if (mode == MODE.ZOOM) {
@@ -489,7 +490,7 @@ public class DragImageView extends ImageView {
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
-					ExceptionUtil.handle(context, e);
+					ExceptionUtil.handle(e);
 				}
 			}
 
@@ -509,27 +510,38 @@ public class DragImageView extends ImageView {
 		}
 	}
 	
+	private ImgOnMoveListener mOnMoveListener;
 	private ImgOnClickListener mOnClickListener;
 	private ImgOnLongClickListener mOnLongClickListener;
 	
-	public interface ImgOnClickListener{
+	public interface ImgOnMoveListener{
 		
-		public void onClick();
+		public void onMove(boolean isToLeft, boolean isChange);
 		
 	}
-	
+
+	public interface ImgOnClickListener{
+
+		public void onClick();
+
+	}
+
 	public interface ImgOnLongClickListener{
 		
 		public void onLongClick();
 		
 	}
 	
+	public void setImgOnMoveListener(ImgOnMoveListener onMoveListener){
+		mOnMoveListener = onMoveListener;
+	}
+
 	public void setImgOnClickListener(ImgOnClickListener onClickListener){
 		mOnClickListener = onClickListener;
 	}
-	
+
 	public void setImgOnLongClickListener(ImgOnLongClickListener onLongClickListener){
 		mOnLongClickListener = onLongClickListener;
 	}
-	
+
 }

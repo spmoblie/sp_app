@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.collage;
 
-import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -35,6 +31,10 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.InterceptTouchListView;
 import com.spshop.stylistpark.widgets.InterceptTouchListView.OnInterceptTouchListener;
+
+import java.net.ConnectException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductListFragment extends BaseFragment {
 
@@ -423,11 +423,11 @@ public class ProductListFragment extends BaseFragment {
 					msg.what = GET_PRODUCT_LIST_FAIL;
 				}
 			} catch (ConnectException e) {
-				ExceptionUtil.handle(mContext, e);
+				ExceptionUtil.handle(e);
 				msg.what = GET_PRODUCT_LIST_FAIL_NO_CONNECTION;
 				productList = null;
 			} catch (Exception e) {
-				ExceptionUtil.handle(mContext, e);
+				ExceptionUtil.handle(e);
 				msg.what = GET_PRODUCT_LIST_FAIL;
 				productList = null;
 			}

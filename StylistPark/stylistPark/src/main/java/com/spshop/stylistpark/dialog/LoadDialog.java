@@ -62,7 +62,7 @@ public class LoadDialog extends Dialog {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (canNotCancel) {
-				CommonTools.showToast(getContext(), tipMsg, 1000);
+				CommonTools.showToast(tipMsg, 1000);
 				return true;
 			}
 		}
@@ -128,7 +128,7 @@ public class LoadDialog extends Dialog {
 				loadDialog = null;
 			}
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 		}
 	}
 }

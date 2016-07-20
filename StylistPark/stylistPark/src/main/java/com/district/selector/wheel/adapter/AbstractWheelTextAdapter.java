@@ -232,7 +232,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
             }
         } catch (ClassCastException e) {
             LogUtil.i("AbstractWheelAdapter", "You must supply a resource ID for a TextView");
-            ExceptionUtil.handle(context, e);
+            ExceptionUtil.handle(e);
             throw new IllegalStateException("AbstractWheelAdapter requires the resource ID to be a TextView", e);
         }
         

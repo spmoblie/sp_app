@@ -177,10 +177,10 @@
     <string name="events_comment_input">请输入评论内容</string>
 
     <!-- Member page -->
-    <string name="member_top_tab_1">最新客户</string>
-    <string name="member_top_tab_2">活跃排名</string>
-    <string name="member_top_tab_3">订单排名</string>
-    <string name="member_top_tab_4">收入排名</string>
+    <string name="member_top_tab_1">@string/all</string>
+    <string name="member_top_tab_2">收入榜</string>
+    <string name="member_top_tab_3">订单榜</string>
+    <string name="member_top_tab_4">活跃榜</string>
     <string name="member_no_order">您的会员还没有%1$s~</string>
     <string name="member_no_member">您还没有会员，\n去邀请好友成为您的会员吧。</string>
     

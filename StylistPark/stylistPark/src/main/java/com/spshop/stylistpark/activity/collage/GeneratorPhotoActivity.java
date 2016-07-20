@@ -1,9 +1,5 @@
 package com.spshop.stylistpark.activity.collage;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +32,10 @@ import com.spshop.stylistpark.utils.FileManager;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.widgets.SquareCameraPreview;
 import com.tencent.stat.StatService;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 @SuppressLint("NewApi")
 public class GeneratorPhotoActivity extends BaseActivity implements
@@ -165,7 +165,7 @@ public class GeneratorPhotoActivity extends BaseActivity implements
             mCamera.setPreviewDisplay(mSurfaceHolder);
             mCamera.startPreview();
         } catch (Exception e){
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         }
     }
 
@@ -343,8 +343,8 @@ public class GeneratorPhotoActivity extends BaseActivity implements
             mPreviewView.setCamera(mCamera);
         } catch (Exception e) {
         	// 没有摄像头权限
-            CommonTools.showToast(mContext, getString(R.string.photo_camera_authority), 3000);
-            ExceptionUtil.handle(mContext, e);
+            CommonTools.showToast(getString(R.string.photo_camera_authority), 3000);
+            ExceptionUtil.handle(e);
             finish();
         }
     }
@@ -377,7 +377,7 @@ public class GeneratorPhotoActivity extends BaseActivity implements
     }
     
     public Uri saveImage(byte[] data, Camera camera, int rotation){ //保存照片
-        Bitmap bitmap = BitmapUtil.getBitmapFromByte(mContext, data);
+        Bitmap bitmap = BitmapUtil.getBitmapFromByte(data);
         if (rotation != 0){
             Bitmap oldBitmap = bitmap;
             Matrix matrix = new Matrix();
@@ -407,7 +407,7 @@ public class GeneratorPhotoActivity extends BaseActivity implements
         	startCameraPreview();
 		}else {
 			// 没有摄像头权限
-            CommonTools.showToast(mContext, getString(R.string.photo_camera_authority), 3000);
+            CommonTools.showToast(getString(R.string.photo_camera_authority), 3000);
             finish();
 		}
     }

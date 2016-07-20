@@ -41,7 +41,7 @@ public class NetStateChangedReceiver extends BroadcastReceiver {
 				}
 			}
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 		}
 	}
 

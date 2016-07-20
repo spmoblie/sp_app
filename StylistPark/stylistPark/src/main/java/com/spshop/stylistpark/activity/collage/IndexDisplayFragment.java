@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.util.ArrayMap;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,6 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.widgets.SectionIndexerView;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class IndexDisplayFragment extends BaseFragment {
@@ -39,7 +39,7 @@ public class IndexDisplayFragment extends BaseFragment {
 	IndexDisplayAdapter indexAdapter;
 	OnItemClickListener onItemClickListener;
 	List<Pair<String, List<? extends IndexDisplay>>> dataList;
-	HashMap<String, Integer> indexHm;
+	ArrayMap<String, Integer> indexHm;
 	TextView indexTextView;
 	Handler mHandler;
 	boolean mReady;
@@ -81,8 +81,8 @@ public class IndexDisplayFragment extends BaseFragment {
 		}
 	}
 
-	public void setIndexHashMap(HashMap<String, Integer> indexHm) {
-		this.indexHm = indexHm;
+	public void setIndexHashMap(ArrayMap<String, Integer> am_index) {
+		this.indexHm = am_index;
 		isShowRight = true;
 	}
 

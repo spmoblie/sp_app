@@ -1,12 +1,12 @@
 package com.spshop.stylistpark.utils;
 
-import java.util.Random;
-
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
+import java.util.Random;
   
 /**
  * 随机验证码生成器

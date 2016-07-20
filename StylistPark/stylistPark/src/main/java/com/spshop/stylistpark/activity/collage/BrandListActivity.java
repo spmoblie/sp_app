@@ -222,7 +222,7 @@ public class BrandListActivity extends BaseActivity {
 					brandList.clear();
 				brandList = null;
 				msg.what = GET_BRAND_LIST_FAIL;
-				ExceptionUtil.handle(mContext, e);
+				ExceptionUtil.handle(e);
 			}
 			if (!interrupted()) {
 				mHandler.sendMessage(msg);

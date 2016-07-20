@@ -39,7 +39,7 @@ public class SpecialAdapter extends BaseAdapter {
 		this.context = context;
 		this.datas = datas;
 		this.adapterCallback = adapterCallback;
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120, true);
+		options = AppApplication.getDefaultImageOptions();
 		headOptions = AppApplication.getHeadImageOptions();
 		lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp.width = (AppApplication.screenWidth - 30) / 2;

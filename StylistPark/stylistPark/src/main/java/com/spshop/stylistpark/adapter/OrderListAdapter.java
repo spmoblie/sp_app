@@ -44,8 +44,8 @@ public class OrderListAdapter extends BaseAdapter {
 		this.datas = datas;
 		this.adapterCallback = adapterCallback;
 		this.mInflater = LayoutInflater.from(context);
-		currencyStr = LangCurrTools.getCurrencyValue(context);
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120, true);
+		currencyStr = LangCurrTools.getCurrencyValue();
+		options = AppApplication.getDefaultImageOptions();
 	}
 
 	public void updateAdapter(List<OrderEntity> datas) {
@@ -168,7 +168,7 @@ public class OrderListAdapter extends BaseAdapter {
 		
 //		holder.rl_valid_time.removeAllViews();
 //		if (data.getStatus() == 1) { //待付款
-//			String timeStr = TimeUtil.getTextTimeMinuteSecond(context, (data.getValidTime()-System.currentTimeMillis())/1000);
+//			String timeStr = TimeUtil.getTextTimeMinuteSecond((data.getValidTime()-System.currentTimeMillis())/1000);
 //			if (!StringUtil.isNull(timeStr)) { //启动倒计时
 //				final TextView timeView = new TextView(context);
 //				timeView.setText(context.getString(R.string.order_time_close, timeStr));
@@ -180,7 +180,7 @@ public class OrderListAdapter extends BaseAdapter {
 //					
 //					@Override
 //					public void onTick(long millisUntilFinished) {
-//						String timeStr = TimeUtil.getTextTimeMinuteSecond(context, millisUntilFinished/1000);
+//						String timeStr = TimeUtil.getTextTimeMinuteSecond(millisUntilFinished/1000);
 //						timeView.setText(context.getString(R.string.order_time_close, timeStr));
 //					}
 //					

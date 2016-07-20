@@ -59,7 +59,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	private void initView() {
 		setTitle(R.string.money_withdrawals_confirm);
 		btn_confirm.setOnClickListener(this);
-		et_amount.setHint(getString(R.string.money_max_amount_hint, LangCurrTools.getCurrencyValue(mContext) + amountTotal));
+		et_amount.setHint(getString(R.string.money_max_amount_hint, LangCurrTools.getCurrencyValue() + amountTotal));
 		et_amount.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -98,13 +98,13 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		cardStr = et_card.getText().toString();
 		// 卡号非空
 		if (cardStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.money_input_card_hint), 1000);
+			CommonTools.showToast(getString(R.string.money_input_card_hint), 1000);
 			return;
 		}
 		// 金额校验
 		inputAmount = StringUtil.getInteger(et_amount.getText().toString());
 		if (inputAmount <= 0 || inputAmount > amountTotal) {
-			CommonTools.showToast(mContext, getString(R.string.money_input_amount_hint), 1000);
+			CommonTools.showToast(getString(R.string.money_input_amount_hint), 1000);
 			return;
 		}
 		postWithdrawalsData();
@@ -159,7 +159,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 			UserInfoEntity userEn = (UserInfoEntity) result;
 			if (userEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS){ //确认提现OK
 				AccountBalanceActivity.isUpdate = true;
-				CommonTools.showToast(mContext, getString(R.string.money_withdrawals_success), 2000);
+				CommonTools.showToast(getString(R.string.money_withdrawals_success), 2000);
 				finish();
 			}else if (userEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 				// 登入超时，交BaseActivity处理
@@ -167,7 +167,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 				if (StringUtil.isNull(userEn.getErrInfo())) {
 					showServerBusy();
 				}else {
-					CommonTools.showToast(mContext, userEn.getErrInfo(), 2000);
+					CommonTools.showToast(userEn.getErrInfo(), 2000);
 				}
 			}
 		}else {

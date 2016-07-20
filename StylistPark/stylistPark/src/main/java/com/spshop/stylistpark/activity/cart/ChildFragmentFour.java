@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,7 +46,6 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @SuppressLint("UseSparseArrays")
@@ -77,7 +77,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	private GoodsCartEntity mainEn;
 	private ProductDetailEntity changeData;
 	private List<ProductDetailEntity> lv_datas = new ArrayList<ProductDetailEntity>();
-	private HashMap<Integer, ProductDetailEntity> cartHashMap = new HashMap<Integer, ProductDetailEntity>();
+	private SparseArray<ProductDetailEntity> sa_cart = new SparseArray<ProductDetailEntity>();
 	protected DialogManager dm;
 	private AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
@@ -106,7 +106,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 			findViewById(view);
 			initView();
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 		}
 		return view;
 	}
@@ -197,10 +197,10 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 				if (changeData != null) {
 					switch (type) {
 					case CartProductListAdapter.TYPE_SELECT: //选择或取消
-						if (cartHashMap.containsKey(changeData.getRecId())) {
-							cartHashMap.remove(changeData.getRecId());
+						if (sa_cart.indexOfKey(changeData.getRecId()) > 0) {
+							sa_cart.remove(changeData.getRecId());
 						}else {
-							cartHashMap.put(changeData.getRecId(), changeData);
+							sa_cart.put(changeData.getRecId(), changeData);
 						}
 						updateSelectAllView();
 						break;
@@ -245,7 +245,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 				}
 			}
 		};
-		lv_Adapter = new CartProductListAdapter(mContext, lv_datas, cartHashMap, apCallback);
+		lv_Adapter = new CartProductListAdapter(mContext, lv_datas, sa_cart, apCallback);
 		scroll_lv.setAdapter(lv_Adapter);
 		scroll_lv.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
@@ -268,7 +268,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	 * 更新购物车商品总价格
 	 */
 	private void updatePriceTotal() {
-		lv_Adapter.updateAdapter(lv_datas, cartHashMap);
+		lv_Adapter.updateAdapter(lv_datas, sa_cart);
 		tv_total.setText(getString(R.string.order_total_name) + curStr + amountStr);
 	}
 
@@ -324,15 +324,15 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 			break;
 		case R.id.fragment_four_ll_select_all:
 			if (selectAll) {
-				cartHashMap.clear();
+				sa_cart.clear();
 			}else {
-				cartHashMap.clear();
+				sa_cart.clear();
 				for (int i = 0; i < lv_datas.size(); i++) {
-					cartHashMap.put(lv_datas.get(i).getRecId(), lv_datas.get(i));
+					sa_cart.put(lv_datas.get(i).getRecId(), lv_datas.get(i));
 				}
 			}
 			updateSelectAllView();
-			lv_Adapter.updateAdapter(lv_datas, cartHashMap);
+			lv_Adapter.updateAdapter(lv_datas, sa_cart);
 			break;
 		}
 	}
@@ -399,9 +399,9 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 				else if (mainEn.getChildLists() != null) 
 				{
 					rl_load_fail.setVisibility(View.GONE);
-					if (pullUpdate) {
-						cartHashMap.clear();
-					}
+					/*if (pullUpdate) {
+						sa_cart.clear();
+					}*/
 					lv_datas.addAll(mainEn.getChildLists());
 					curStr = mainEn.getCurrency();
 					loadSuccessHandle(mainEn);
@@ -418,8 +418,8 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 			if (result != null) {
 				GoodsCartEntity deleteEn = (GoodsCartEntity) result;
 				if (deleteEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					if (cartHashMap.containsKey(changeData.getRecId())) {
-						cartHashMap.remove(changeData.getRecId());
+					if (sa_cart.indexOfKey(changeData.getRecId()) > 0) {
+						sa_cart.remove(changeData.getRecId());
 					}
 					lv_datas.remove(changeData);
 					loadSuccessHandle(deleteEn);
@@ -470,7 +470,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 			break;
 		}
 		stopAnimation();
-		CommonTools.showToast(mContext, String.valueOf(result), 1000);
+		CommonTools.showToast(String.valueOf(result), 1000);
 	}
 
 	private void loadSuccessHandle(GoodsCartEntity resultEn) {
@@ -523,7 +523,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	 */
 	private void changeFailUpdateCartData(String msg) {
 		checkLogin();
-		CommonTools.showToast(mContext, msg, 3000);
+		CommonTools.showToast(msg, 3000);
 	}
 
 	/**
@@ -541,9 +541,9 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 		if (newSkuNum > 0) {
 			lv_datas.get(mPosition).setStockNum(newSkuNum);
 		}
-		if (changeData != null && cartHashMap.containsKey(changeData.getRecId())) {
-			cartHashMap.put(changeData.getRecId(), lv_datas.get(mPosition));
-		}
+		/*if (changeData != null && sa_cart.indexOfKey(changeData.getRecId()) > 0) {
+			sa_cart.put(changeData.getRecId(), lv_datas.get(mPosition));
+		}*/
 		updatePriceTotal();
 	}
 

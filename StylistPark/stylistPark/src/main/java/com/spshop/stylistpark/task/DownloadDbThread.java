@@ -1,13 +1,5 @@
 package com.spshop.stylistpark.task;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +9,14 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.db.DecorationDBManager;
 import com.spshop.stylistpark.utils.Decompress;
 import com.spshop.stylistpark.utils.FileManager;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class DownloadDbThread extends Thread
 {
@@ -37,7 +37,7 @@ public class DownloadDbThread extends Thread
     public void run()
     {
         Message msg = new Message();
-        int dlResult = FileManager.downloadFile(ctx, AppConfig.URL_DECOR_DB, AppConfig.NAME_DECOR_ZIP);
+        int dlResult = FileManager.downloadFile(AppConfig.URL_DECOR_DB, AppConfig.NAME_DECOR_ZIP);
         if(dlResult != FileManager.SUCCESS)
         {
             msg.what = FAIL;

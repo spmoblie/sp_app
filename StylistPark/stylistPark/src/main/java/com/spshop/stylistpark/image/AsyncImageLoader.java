@@ -27,7 +27,6 @@ public class AsyncImageLoader {
 	private Handler handler;
 	private boolean isLoop;
 	private BitmapCache caches;
-	private Context context;
 	private static AsyncImageLoader instance;
 
 	/**
@@ -37,7 +36,7 @@ public class AsyncImageLoader {
 		if (instance == null) {
 			synchronized (AsyncImageLoader.class) {
 				if (instance == null) {
-					instance = new AsyncImageLoader(AppApplication.spApp.getApplicationContext(), callback);
+					instance = new AsyncImageLoader(AppApplication.getInstance().getApplicationContext(), callback);
 				}
 			}
 		}
@@ -46,7 +45,6 @@ public class AsyncImageLoader {
 
 	@SuppressLint("HandlerLeak")
 	private AsyncImageLoader(final Context context, final AsyncImageLoaderCallback callback) {
-		this.context = context;
 		this.isLoop = true;
 		this.caches = BitmapCache.getInstance();
 		this.tasks = new ArrayList<ImageLoadTask>();
@@ -79,7 +77,7 @@ public class AsyncImageLoader {
 							/*task.saveFile = BitmapUtil.createPath(task.newPath, false);
 							BitmapUtil.save(task.bitmap, task.saveFile, 100);*/
 						} catch (Exception e) {
-							ExceptionUtil.handle(context, e);
+							ExceptionUtil.handle(e);
 						} finally {
 							Message msg = Message.obtain();
 							msg.obj = task;
@@ -93,7 +91,7 @@ public class AsyncImageLoader {
 						try {
 							workThread.wait();
 						} catch (InterruptedException e) {
-							ExceptionUtil.handle(context, e);
+							ExceptionUtil.handle(e);
 						}
 					}
 				}
@@ -108,7 +106,7 @@ public class AsyncImageLoader {
 			try {
 				workThread.notify();
 			} catch (Exception e) {
-				ExceptionUtil.handle(context, e);
+				ExceptionUtil.handle(e);
 			}
 		}
 	}
@@ -152,7 +150,7 @@ public class AsyncImageLoader {
 					}
 				}*/
 			} catch (Exception e) {
-				ExceptionUtil.handle(context, e);
+				ExceptionUtil.handle(e);
 				return  null;
 			}
 		}
@@ -165,7 +163,7 @@ public class AsyncImageLoader {
 					// 唤醒工作线程
 					workThread.notify();
 				} catch (Exception e) {
-					ExceptionUtil.handle(context, e);
+					ExceptionUtil.handle(e);
 				}
 			}
 		}

@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.db;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.spshop.stylistpark.entity.Decoration;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DecorationDBManager {
 
@@ -23,10 +23,10 @@ public class DecorationDBManager {
 	private List<Decoration> decorationList = null;
 	private AppSQLiteOpenHelper dmHelper, dTempMHelper;
 
-	public synchronized static DecorationDBManager getInstance(Context appContext) {
+	public synchronized static DecorationDBManager getInstance(Context context) {
 		if (instance == null) {
-			mContext = appContext;
-			instance = new DecorationDBManager(appContext);
+			mContext = context;
+			instance = new DecorationDBManager(context);
 		}
 		return instance;
 	}
@@ -57,7 +57,7 @@ public class DecorationDBManager {
 				} while (c.moveToNext());
 			}
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 			result = null;
 		} finally {
 			if (c != null)
@@ -93,7 +93,7 @@ public class DecorationDBManager {
 				} while (c.moveToNext());
 			}
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 			result = null;
 		} finally {
 			if (c != null)
@@ -141,7 +141,7 @@ public class DecorationDBManager {
 				} while (c.moveToNext());
 			}
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 			result = null;
 		} finally {
 			if (c != null)

@@ -1,6 +1,5 @@
 package com.spshop.stylistpark.utils;
 
-import android.content.Context;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
@@ -71,16 +70,15 @@ public class HttpUtil {
 	 */
 	public static HttpEntity getEntity(String uri, List<MyNameValuePair> params, int method) throws Exception {
 		HttpEntity entity = null;
-		Context ctx = AppApplication.spApp.getApplicationContext();
 		/** 设置连接、读取数据超时时间 */
 		HttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, 10000);
 		HttpConnectionParams.setSoTimeout(httpParams, 10000);
 		HttpClient client = new DefaultHttpClient(httpParams);
 		
-		String langStr = LangCurrTools.getLanguageHttpUrlValueStr(ctx);
-		String curStr = LangCurrTools.getCurrencyHttpUrlValueStr(ctx);
-		String cookie = FileManager.readFileSaveString(ctx, AppConfig.cookiesFileName, true);
+		String langStr = LangCurrTools.getLanguageHttpUrlValueStr();
+		String curStr = LangCurrTools.getCurrencyHttpUrlValueStr();
+		String cookie = FileManager.readFileSaveString(AppConfig.cookiesFileName, true);
 		LogUtil.i("JsonParser", "read cookie = " + cookie);
 		
 		HttpUriRequest request = null;
@@ -130,14 +128,14 @@ public class HttpUtil {
 					}
 					if (!StringUtil.isNull(cookieValue)) {
 						LogUtil.i("JsonParser", "write cookie = " + cookie);
-						FileManager.writeFileSaveString(ctx, AppConfig.cookiesFileName, cookieValue, true);
+						FileManager.writeFileSaveString(AppConfig.cookiesFileName, cookieValue, true);
 						cookieValue = "";
 					}
 				}
 				entity = response.getEntity();
 			}
 		} catch (ConnectTimeoutException e) { // 超时时报此异常
-			ExceptionUtil.handle(ctx, e);
+			ExceptionUtil.handle(e);
 		}
 
 		return entity;
@@ -173,7 +171,7 @@ public class HttpUtil {
 		return in;
 	}
 
-	public String HttpGet(Context context, String httpUrl) {
+	public String HttpGet(String httpUrl) {
 		// HttpGet连接对象
 		HttpGet httpRequest = new HttpGet(httpUrl);
 		// 取得HttpClient对象
@@ -205,14 +203,13 @@ public class HttpUtil {
 	/**
 	 * 同步一下cookie
 	 */
-	public static void synCookies(Context context, String url) {
-		CookieSyncManager.createInstance(context);
+	public static void synCookies(String url) {
+		CookieSyncManager.createInstance(AppApplication.getInstance().getApplicationContext());
 		CookieManager cookieManager = CookieManager.getInstance();
 		cookieManager.setAcceptCookie(true);
 		//cookieManager.removeSessionCookie(); //在初始化FBSDK的时候会导致Webview延迟加载
         cookieManager.removeAllCookie(); //移除所有Cookie
-        Context appCtx = AppApplication.spApp.getApplicationContext();
-        String cookies = FileManager.readFileSaveString(appCtx, AppConfig.cookiesFileName, true);
+        String cookies = FileManager.readFileSaveString(AppConfig.cookiesFileName, true);
         if (!StringUtil.isNull(cookies)) {
         	String[] cks = cookies.split(";");
         	for (int i = 0; i < cks.length; i++) {

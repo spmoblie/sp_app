@@ -4,11 +4,10 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -25,8 +24,8 @@ import com.spshop.stylistpark.image.AsyncImageLoader.AsyncImageLoaderCallback;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.widgets.DragImageView;
-import com.spshop.stylistpark.widgets.DragImageView.ImgOnClickListener;
 import com.spshop.stylistpark.widgets.DragImageView.ImgOnLongClickListener;
+import com.spshop.stylistpark.widgets.IViewPager;
 import com.tencent.stat.StatService;
 
 import java.io.File;
@@ -46,13 +45,16 @@ public class ViewPagerActivity extends BaseActivity {
 	private ArrayList<String> urlLists;
 	private ArrayList<View> viewLists = new ArrayList<View>();
 	private ArrayList<DragImageView> imagLists = new ArrayList<DragImageView>();
+	private ArrayMap<String, DragImageView> am_img = new ArrayMap<String, DragImageView>();
+	private ArrayMap<String, ProgressBar> am_bar = new ArrayMap<String, ProgressBar>();
+	private ArrayMap<String, Bitmap> am_btm = new ArrayMap<String, Bitmap>();
 	private int mCurrentItem;
 	private TextView tv_save, tv_page;
 	private Bitmap showBitmap;
 	private FrameLayout frameLayout;
 	private ProgressBar progress;
 	private DragImageView imageView, showView;
-	private ViewPager viewPager;
+	private IViewPager viewPager;
 	private AsyncImageLoader asyncImageLoader;
 
 	@Override
@@ -69,7 +71,7 @@ public class ViewPagerActivity extends BaseActivity {
 
 
 	private void findViewById() {
-		viewPager = (ViewPager) findViewById(R.id.my_viewpager);
+		viewPager = (IViewPager) findViewById(R.id.my_viewpager);
 		tv_save = (TextView) findViewById(R.id.my_image_save);
 		tv_page = (TextView) findViewById(R.id.my_viewpager_tv_page);
 	}
@@ -95,13 +97,13 @@ public class ViewPagerActivity extends BaseActivity {
 
 			@Override
 			public void imageLoaded(String path, File saveFile, Bitmap bm) {
-				DragImageView imgView = hm_img.get(HASHMAP_KEY_IMG + path);
+				DragImageView imgView = am_img.get(HASHMAP_KEY_IMG + path);
 				if (imgView != null && bm != null) {
 					showBitmap = bm;
-					hm_btm.put(HASHMAP_KEY_BTM + path, bm); //记录图片
+					am_btm.put(HASHMAP_KEY_BTM + path, bm); //记录图片
 					imgView.setImageBitmap(bm);
 				}
-				ProgressBar progress = hm_bar.get(HASHMAP_KEY_BAR + path);
+				ProgressBar progress = am_bar.get(HASHMAP_KEY_BAR + path);
 				if (progress != null) {
 					progress.setVisibility(View.GONE);
 				}
@@ -134,25 +136,20 @@ public class ViewPagerActivity extends BaseActivity {
 			if (bm != null) {
 				showBitmap = bm;
 				imageView.setImageBitmap(bm);
-				hm_btm.put(HASHMAP_KEY_BTM + imgUrl, bm); //记录图片
+				am_btm.put(HASHMAP_KEY_BTM + imgUrl, bm); //记录图片
 			}else {
 				imageView.setImageResource(R.drawable.bg_img_white);
 				progress.setVisibility(View.VISIBLE);
-				hm_bar.put(HASHMAP_KEY_BAR + imgUrl, progress); //记录加载动画
-				hm_img.put(HASHMAP_KEY_IMG + imgUrl, imageView); //记录View
+				am_bar.put(HASHMAP_KEY_BAR + imgUrl, progress); //记录加载动画
+				am_img.put(HASHMAP_KEY_IMG + imgUrl, imageView); //记录View
 			}
-			imageView.setImgOnLongClickListener(new ImgOnLongClickListener() {
-				
+			imageView.setImgOnMoveListener(new DragImageView.ImgOnMoveListener() {
 				@Override
-				public void onLongClick() {
-					if (tv_save.getVisibility() == View.GONE) {
-						tv_save.setVisibility(View.VISIBLE);
-					}
+				public void onMove(boolean isToLeft, boolean isChange) {
+					viewPager.setScanScroll(isChange);
 				}
 			});
-			
-			imageView.setImgOnClickListener(new ImgOnClickListener() {
-				
+			imageView.setImgOnClickListener(new DragImageView.ImgOnClickListener() {
 				@Override
 				public void onClick() {
 					if (tv_save.getVisibility() == View.VISIBLE) {
@@ -162,11 +159,20 @@ public class ViewPagerActivity extends BaseActivity {
 					}
 				}
 			});
+			imageView.setImgOnLongClickListener(new ImgOnLongClickListener() {
+				@Override
+				public void onLongClick() {
+					if (tv_save.getVisibility() == View.GONE) {
+						tv_save.setVisibility(View.VISIBLE);
+					}
+				}
+			});
 			frameLayout.addView(imageView);
 			frameLayout.addView(progress);
 			viewLists.add(frameLayout);
 			imagLists.add(imageView);
 		}
+		initShowView();
 		viewPager.setAdapter(new PagerAdapter()
         {
             // 创建
@@ -206,12 +212,7 @@ public class ViewPagerActivity extends BaseActivity {
             public void onPageSelected(final int position){
             	tv_save.setVisibility(View.GONE);
             	mCurrentItem = position % viewLists.size();
-				if (mCurrentItem >= 0 && mCurrentItem < imagLists.size()) {
-					if (showView != null) {
-						showView.setReset();
-					}
-					showView = imagLists.get(mCurrentItem);
-				}
+				initShowView();
 				setPageNum(viewLists.size());
             }
             
@@ -225,46 +226,36 @@ public class ViewPagerActivity extends BaseActivity {
             	
             }
         });
-		viewPager.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (showView != null && !showView.isChange()) {
-					showView.onTouchEvent(event);
-					return true; //不切换图片则拦截事件
-				}
-				return false;
-			}
-		});
 		viewPager.setCurrentItem(mCurrentItem);
-		
+
 		tv_save.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Bitmap bm = hm_btm.get(HASHMAP_KEY_BTM + urlLists.get(mCurrentItem));
+				Bitmap bm = am_btm.get(HASHMAP_KEY_BTM + urlLists.get(mCurrentItem));
 				File file = BitmapUtil.createPath(BitmapUtil.filterPath(urlLists.get(mCurrentItem)), true);
 				if (file == null) {
 	            	showErrorDialog(R.string.photo_show_save_fail);
 	    			return;
 				}
 				AppApplication.saveBitmapFile(bm, file, 100);
-				CommonTools.showToast(ViewPagerActivity.this, getString(R.string.photo_show_save_ok), 1000);
+				CommonTools.showToast(getString(R.string.photo_show_save_ok), 1000);
 				tv_save.setVisibility(View.GONE);
 			}
 		});
 	}
 
+	private void initShowView() {
+		if (mCurrentItem >= 0 && mCurrentItem < imagLists.size()) {
+            if (showView != null) {
+                showView.setReset();
+            }
+            showView = imagLists.get(mCurrentItem);
+        }
+	}
 
 	private void setPageNum(int totalNum) {
 		tv_page.setText(getString(R.string.viewpager_indicator, mCurrentItem + 1, totalNum));
-	}
-	
-	@Override
-	public void finish() {
-		super.finish();
-		hm_img.clear();
-		hm_bar.clear();
-		hm_btm.clear();
 	}
 
 	@Override
@@ -287,6 +278,10 @@ public class ViewPagerActivity extends BaseActivity {
 
 	@Override
 	protected void onDestroy() {
+		am_img.clear();
+		am_bar.clear();
+		am_btm.clear();
 		super.onDestroy();
 	}
+
 }

@@ -2,11 +2,11 @@ package com.spshop.stylistpark.activity.category;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -48,7 +48,6 @@ import com.spshop.stylistpark.utils.StringUtil;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDataListener {
@@ -57,7 +56,6 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	public static ChildFragmentTwo instance = null;
 	
 	private Context mContext;
-	private SharedPreferences shared;
 	private AsyncTaskManager atm;
 	protected ServiceContext sc = ServiceContext.getServiceContext();
 
@@ -80,7 +78,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	private List<CategoryListEntity> lv_lists = new ArrayList<CategoryListEntity>();
 	private List<CategoryListEntity> gv_lists = new ArrayList<CategoryListEntity>();
 	private List<BrandEntity> brandList = new ArrayList<BrandEntity>();
-	private HashMap<String, Integer> hm_index = new HashMap<String, Integer>();
+	private ArrayMap<String, Integer> am_index = new ArrayMap<String, Integer>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -99,16 +97,14 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 		mContext = getActivity();
 		atm = AsyncTaskManager.getInstance(mContext);
 		dbs = CategoryDBService.getInstance(mContext);
-		// 初始化偏好设置
-		shared = AppApplication.getSharedPreferences();
-		
+
 		View view = null;
 		try {
 			view = inflater.inflate(R.layout.fragment_layout_two, null);
 			findViewById(view);
 			initView();
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 		}
 		return view;
 	}
@@ -215,9 +211,9 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 
 			});
 			idf = IndexDisplayFragment.newInstance();
-			idf.setDataList(IndexDisplayTool.buildIndexListChineseAndEng(mContext, brandList, hm_index));
+			idf.setDataList(IndexDisplayTool.buildIndexListChineseAndEng(mContext, brandList, am_index));
 			idf.setAdapter(adapter);
-			idf.setIndexHashMap(hm_index);
+			idf.setIndexHashMap(am_index);
 
 			FragmentTransaction ft = fm.beginTransaction();
 			ft.add(R.id.category_brand_fl, idf).commit();
@@ -405,7 +401,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 					dataType = lv_lists.get(index).getTypeId();
 				}else {
 					AppApplication.loadSVData_category = true;
-					CommonTools.showToast(mContext, getString(R.string.toast_server_busy), 1000);
+					CommonTools.showToast(getString(R.string.toast_server_busy), 1000);
 				}
 				stopAnimation();
 				break;
@@ -423,7 +419,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	public void onFailure(int requestCode, int state, Object result) {
 		if (getActivity() == null) return;
 		stopAnimation();
-		CommonTools.showToast(mContext, String.valueOf(result), 1000);
+		CommonTools.showToast(String.valueOf(result), 1000);
 	}
 	
 	/**

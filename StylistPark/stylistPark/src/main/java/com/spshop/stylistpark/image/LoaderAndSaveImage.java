@@ -29,7 +29,6 @@ public class LoaderAndSaveImage {
 	private boolean isLoop;
 	private int pathCount;
 	private ArrayList<File> imageUrls;
-	private Context context;
 	private static LoaderAndSaveImage instance;
 	
 	/**
@@ -39,7 +38,7 @@ public class LoaderAndSaveImage {
 		if (instance == null) {
 			synchronized (LoaderAndSaveImage.class) {
 				if (instance == null) {
-					instance = new LoaderAndSaveImage(AppApplication.spApp.getApplicationContext(), callback);
+					instance = new LoaderAndSaveImage(AppApplication.getInstance().getApplicationContext(), callback);
 				}
 			}
 		}
@@ -48,7 +47,6 @@ public class LoaderAndSaveImage {
 	
 	@SuppressLint("HandlerLeak")
 	private LoaderAndSaveImage(final Context context, final LoaderAndSaveImageCallback callback){
-		this.context = context;
 		this.isLoop = true;
 		this.tasks = new ArrayList<ImageLoadTask>();
 		imageUrls = new ArrayList<File>();
@@ -146,10 +144,10 @@ public class LoaderAndSaveImage {
 	}
 
 	private void exceptionHandle(Exception e) {
-		ExceptionUtil.handle(context, e);
 		Message msg = Message.obtain();
-	    msg.obj = null;
-	    handler.sendMessage(msg);
+		msg.obj = null;
+		handler.sendMessage(msg);
+		ExceptionUtil.handle(e);
 	}
 	
 	private class ImageLoadTask{

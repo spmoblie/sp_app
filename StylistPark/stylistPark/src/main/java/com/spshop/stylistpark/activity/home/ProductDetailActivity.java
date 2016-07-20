@@ -139,7 +139,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		instance = this;
 		goodsId = getIntent().getIntExtra("goodsId", 0);
 		options = AppApplication.getDefaultImageOptions();
-		currStr = LangCurrTools.getCurrencyValue(mContext);
+		currStr = LangCurrTools.getCurrencyValue();
 		
 		findViewById();
 		initView();
@@ -248,8 +248,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			// 判定商品折价倒计时
 			if (mainEn.getPromoteTime() > 0) {
 				tv_timer.setVisibility(View.VISIBLE);
-				mcdt = new MyCountDownTimer(mContext, tv_timer, 0,
-						mainEn.getPromoteTime(), 1000, new MyCountDownTimer.MyTimerCallback() {
+				mcdt = new MyCountDownTimer(tv_timer, 0, mainEn.getPromoteTime(), 1000,
+						new MyCountDownTimer.MyTimerCallback() {
 					@Override
 					public void onFinish() {
 						getSVDatas();
@@ -719,7 +719,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		case R.id.topbar_radio_rb_1:
 			String loadingUrl = "http://192.168.11.155/app_goods.php?id=" + goodsId + AppApplication.getHttpUrlLangCurValueStr();
 			// 同步Cookies
-			HttpUtil.synCookies(mContext, loadingUrl);
+			HttpUtil.synCookies(loadingUrl);
 			webview.loadUrl(loadingUrl);
 			break;
 		case R.id.topbar_radio_rb_2:
@@ -928,7 +928,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 					if (StringUtil.isNull(cartEn.getErrInfo())) {
 						showServerBusy();
 					}else {
-						CommonTools.showToast(mContext, cartEn.getErrInfo(), 2000);
+						CommonTools.showToast(cartEn.getErrInfo(), 2000);
 					}
 				}
 			}else {
@@ -942,7 +942,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				if (ShowListActivity.instance != null) { //收藏打开时刷新数据
 					ShowListActivity.instance.isUpdate = true;
 				}
-				CommonTools.showToast(mContext, ((BaseEntity) result).getErrInfo(), 1000);
+				CommonTools.showToast(((BaseEntity) result).getErrInfo(), 1000);
 			}else {
 				showServerBusy();
 			}

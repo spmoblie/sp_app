@@ -50,7 +50,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener{
 		cotentStr = et_feed_cotent.getText().toString();
 		// 输入非空
 		if (cotentStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.setting_input_error_feedback), 1000);
+			CommonTools.showToast(getString(R.string.setting_input_error_feedback), 1000);
 			return;
 		}
 		postResetData();
@@ -109,7 +109,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener{
 				if (StringUtil.isNull(baseEn.getErrInfo())) {
 					showServerBusy();
 				}else {
-					CommonTools.showToast(mContext, baseEn.getErrInfo(), 2000);
+					CommonTools.showToast(baseEn.getErrInfo(), 2000);
 				}
 			}
 		}else {

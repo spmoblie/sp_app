@@ -11,6 +11,8 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.spshop.stylistpark.AppApplication;
+
 import java.util.Locale;
 
 /**
@@ -118,7 +120,7 @@ public class DeviceUtil {
 		}
 		catch (NameNotFoundException e)
 		{
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 		}
 		return null;
 
@@ -148,18 +150,17 @@ public class DeviceUtil {
 		return false;
 	}
 	
-	public static boolean isLocationServiceAllowed(Context context)
+	public static boolean isLocationServiceAllowed()
 	{
-		if(context != null)
+		LocationManager locationManager = (LocationManager) AppApplication.getInstance()
+				.getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+
+		if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+				|| locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
 		{
-			LocationManager locationManager = (LocationManager) context.getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-			
-			if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
-			{
-				return true;
-			}			
+			return true;
 		}
-		
+
 		return false;
 	}
 	

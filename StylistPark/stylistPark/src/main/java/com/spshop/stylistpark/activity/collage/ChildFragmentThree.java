@@ -59,7 +59,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 
 		LogUtil.i(TAG, "onCreate");
 		instance = this;
-		mContext = getActivity().getApplicationContext();
+		mContext = getActivity();
 
 		View view = null;
 		try {
@@ -67,7 +67,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 			findViewById(view);
 			initView();
 		} catch (Exception e) {
-			ExceptionUtil.handle(getActivity(), e);
+			ExceptionUtil.handle(e);
 		}
 		return view;
 	}
@@ -334,7 +334,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 	public void onFailure(int requestCode, int state, Object result) {
 		if (getActivity() == null) return;
 		stopAnimation();
-		CommonTools.showToast(mContext, String.valueOf(result), 1000);
+		CommonTools.showToast(String.valueOf(result), 1000);
 	}
 
 	/**

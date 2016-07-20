@@ -33,7 +33,7 @@ public class SplashActivity extends BaseActivity {
 		instance = this;
 		setContentView(R.layout.activity_splash);
 		
-		LangCurrTools.setLanguage(this, LangCurrTools.getLanguage(this)); //更新设置的系统语言
+		LangCurrTools.setLanguage(this, LangCurrTools.getLanguage()); //更新设置的系统语言
 		setHeadVisibility(View.GONE); //隐藏父类组件
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		editor.putInt(AppConfig.KEY_HOME_CURRENT_INDEX, 0).commit(); //设置首页初始化默认页
@@ -51,7 +51,7 @@ public class SplashActivity extends BaseActivity {
 			StatService.startStatService(this, appkey, com.tencent.stat.common.StatConstants.VERSION);
 		} catch (Exception e) {
 			// MTA初始化失败
-			ExceptionUtil.handle(this, e);
+			ExceptionUtil.handle(e);
 		}
 
 	}

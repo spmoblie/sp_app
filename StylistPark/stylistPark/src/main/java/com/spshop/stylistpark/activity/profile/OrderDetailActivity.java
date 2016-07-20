@@ -66,7 +66,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		
 		instance = this;
 		orderId = getIntent().getExtras().getString("orderId");
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120, true);
+		options = AppApplication.getDefaultImageOptions();
 		
 		findViewById();
 		initView();
@@ -172,7 +172,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			// 设置付款倒计时
 //			tv_valid_time.setVisibility(View.GONE);
 //			if (orderEn.getStatus() == 1) { //待付款
-//				String timeStr = TimeUtil.getTextTimeMinuteSecond(mContext, (orderEn.getValidTime()-System.currentTimeMillis())/1000);
+//				String timeStr = TimeUtil.getTextTimeMinuteSecond((orderEn.getValidTime()-System.currentTimeMillis())/1000);
 //				if (!StringUtil.isNull(timeStr)) {
 //					tv_valid_time.setVisibility(View.VISIBLE);
 //					tv_valid_time.setText(getString(R.string.order_valid_time, timeStr));
@@ -311,7 +311,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}else {
-			CommonTools.showToast(mContext, getString(R.string.pay_order_error), 1000);
+			CommonTools.showToast(getString(R.string.pay_order_error), 1000);
 		}
 	}
 	
@@ -324,7 +324,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 
 		@Override
 		public void onTick(long millisUntilFinished) {
-			String timeStr = TimeUtil.getTextTimeMinuteSecond(mContext, millisUntilFinished/1000);
+			String timeStr = TimeUtil.getTextTimeMinuteSecond(millisUntilFinished/1000);
 			tv_valid_time.setText(getString(R.string.order_valid_time, timeStr));
 		}
 

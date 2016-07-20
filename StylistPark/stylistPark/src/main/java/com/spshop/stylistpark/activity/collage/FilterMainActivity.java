@@ -71,7 +71,7 @@ public class FilterMainActivity extends BaseActivity {
 		setContentView(R.layout.activity_filter_main);
 
 		setTitle(R.string.filter);
-		dollarSign = LangCurrTools.getCurrencyValue(mContext);
+		dollarSign = LangCurrTools.getCurrencyValue();
 
 		// create RangeSeekBar as Integer range between 20 and 75
 		// RangeSeekBar<Integer> seekBar = new RangeSeekBar<Integer>(0, 100,

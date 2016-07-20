@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.text.TextUtils;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.R;
 
 import java.util.Locale;
@@ -15,25 +16,26 @@ import java.util.Locale;
  * 国际化工具类
  */
 public class LangCurrTools {
-	
-	public static enum Language {
-		En, Zh, Cn, Unknown
-	}
 
 	private static String langConfig = "Language";
 	private static String langKey = "Lang";
 	private static Language curLanguage = null;
 	private static Configuration config = null;
 
-	public static Language getLanguage(Context ctx) {
+	public static enum Language {
+		En, Zh, Cn, Unknown
+	}
+
+	public static Language getLanguage() {
 		if (curLanguage == null) {
-			loadLanguage(ctx);
+			loadLanguage();
 		}
 		return curLanguage;
 	}
 
-	private static void loadLanguage(Context ctx) {
-		SharedPreferences sp = ctx.getSharedPreferences(langConfig, 0);
+	private static void loadLanguage() {
+		SharedPreferences sp = AppApplication.getInstance()
+				.getApplicationContext().getSharedPreferences(langConfig, 0);
 		String res = sp.getString(langKey, Locale.getDefault().toString());
 		if (res.equals("En") || res.contains(Locale.ENGLISH.toString())) {
 			curLanguage = Language.En;
@@ -46,9 +48,25 @@ public class LangCurrTools {
 		}
 	}
 
+	private static void saveLanguage(Language data) {
+		SharedPreferences sp = AppApplication.getInstance()
+				.getApplicationContext().getSharedPreferences(langConfig, 0);
+		SharedPreferences.Editor editor = sp.edit();
+		if (data == Language.En) {
+			editor.putString(langKey, "En");
+		} else if (data == Language.Zh) {
+			editor.putString(langKey, "Zh");
+		} else if (data == Language.Cn) {
+			editor.putString(langKey, "Cn");
+		} else {
+			editor.putString(langKey, "Cn");
+		}
+		editor.commit();
+	}
+
 	public static void setLanguage(Activity ctx, Language data) {
 		config = ctx.getBaseContext().getResources().getConfiguration();
-		saveLanguage(ctx.getApplicationContext(), data);
+		saveLanguage(data);
 		if (data == Language.En) {
 			Locale.setDefault(Locale.ENGLISH);
 			config.locale = Locale.ENGLISH;
@@ -67,24 +85,9 @@ public class LangCurrTools {
 		config = null;
 	}
 
-	private static void saveLanguage(Context ctx, Language data) {
-		SharedPreferences sp = ctx.getSharedPreferences(langConfig, 0);
-		SharedPreferences.Editor editor = sp.edit();
-		if (data == Language.En) {
-			editor.putString(langKey, "En");
-		} else if (data == Language.Zh) {
-			editor.putString(langKey, "Zh");
-		} else if (data == Language.Cn) {
-			editor.putString(langKey, "Cn");
-		} else {
-			editor.putString(langKey, "Cn");
-		}
-		editor.commit();
-	}
-	
-	public static String getLanguageHttpUrlValueStr(Context ctx){
+	public static String getLanguageHttpUrlValueStr(){
 		String langStr = "";
-		switch (getLanguage(ctx)) {
+		switch (getLanguage()) {
 		case En:
 			langStr = "en_us";
 			break;
@@ -101,22 +104,25 @@ public class LangCurrTools {
 		return langStr;
 	}
 	
-	public static enum Currency {
-		HKD, RMB, USD
-	}
+
 	private static String currencyConfig = "Currency";
 	private static String currencyKey = "curr";
 	private static Currency curCurrency = null;
+
+	public static enum Currency {
+		HKD, RMB, USD
+	}
 	
-	public static Currency getCurrency(Context ctx) {
+	public static Currency getCurrency() {
 		if (curCurrency == null) {
-			loadCurrency(ctx);
+			loadCurrency();
 		}
 		return curCurrency;
 	}
 	
-	private static void loadCurrency(Context ctx) {
-		SharedPreferences sp = ctx.getSharedPreferences(currencyConfig, 0);
+	private static void loadCurrency() {
+		SharedPreferences sp = AppApplication.getInstance()
+				.getApplicationContext().getSharedPreferences(currencyConfig, 0);
 		String res = sp.getString(currencyKey, "");
 		
 		if (res.equals("HKD")) {
@@ -130,17 +136,13 @@ public class LangCurrTools {
 		}
 		
 		if(TextUtils.isEmpty(res)){
-			saveCurrency(ctx, curCurrency);
+			saveCurrency(curCurrency);
 		}
 	}
 
-	public static void setCurrency(Context ctx, Currency data) {
-		saveCurrency(ctx.getApplicationContext(), data);
-		curCurrency = data;
-	}
-	
-	private static void saveCurrency(Context ctx, Currency data) {
-		SharedPreferences sp = ctx.getSharedPreferences(currencyConfig, 0);
+	private static void saveCurrency(Currency data) {
+		SharedPreferences sp = AppApplication.getInstance()
+				.getApplicationContext().getSharedPreferences(currencyConfig, 0);
 		SharedPreferences.Editor editor = sp.edit();
 		if (data == Currency.HKD) {
 			editor.putString(currencyKey, "HKD");
@@ -153,11 +155,16 @@ public class LangCurrTools {
 		}
 		editor.commit();
 	}
-	
-	public static String getCurrencyValue(Context ctx){
+
+	public static void setCurrency(Currency data) {
+		saveCurrency(data);
+		curCurrency = data;
+	}
+
+	public static String getCurrencyValue(){
+		Context ctx = AppApplication.getInstance().getApplicationContext();
 		String currencyValue = "";
-		Currency currency = getCurrency(ctx);
-		switch (currency) {
+		switch (getCurrency()) {
 		case HKD:
 			currencyValue = ctx.getString(R.string.currency_hkd_sign);
 			break;
@@ -171,12 +178,12 @@ public class LangCurrTools {
 			currencyValue = ctx.getString(R.string.currency_rmb_sign);
 			break;
 		}
-		return currencyValue + " ";
+		return currencyValue;
 	}
-	
-	public static String getCurrencyHttpUrlValueStr(Context ctx){
+
+	public static String getCurrencyHttpUrlValueStr(){
 		String curStr = "";
-		switch (getCurrency(ctx)) {
+		switch (getCurrency()) {
 		case USD:
 			curStr = "USD";
 			break;

@@ -112,11 +112,11 @@ public class EditUserInfoActivity extends BaseActivity {
 		super.OnListenerRight();
 		showStr = et_content.getText().toString();
 		if (showStr.isEmpty()) {
-			CommonTools.showToast(mContext, hintStr, 1000);
+			CommonTools.showToast(hintStr, 1000);
 			return;
 		}
 		if ("email".equals(changeTypeKey) && !StringUtil.isEmail(showStr)) {
-			CommonTools.showToast(mContext, getString(R.string.login_email_format_error), 1000);
+			CommonTools.showToast(getString(R.string.login_email_format_error), 1000);
 			return;
 		}
 		postChangeCotent();

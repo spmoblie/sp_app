@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.activity.home;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +20,9 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.widgets.ScrollViewListView;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * "商品筛选"Activity
@@ -81,7 +81,7 @@ public class ScreenListActivity extends BaseActivity {
 				}
 			});
 		}else {
-			CommonTools.showToast(mContext, getString(R.string.toast_error_data_null), 1000);
+			CommonTools.showToast(getString(R.string.toast_error_data_null), 1000);
 		}
 		
 		rl_top_title.setVisibility(View.GONE);
@@ -118,7 +118,7 @@ public class ScreenListActivity extends BaseActivity {
 					intent.putExtra("dataType", SelectListAdapter.DATA_TYPE_2);
 					startActivity(intent);
 				}else {
-					CommonTools.showToast(mContext, getString(R.string.toast_error_data_null), 1000);
+					CommonTools.showToast(getString(R.string.toast_error_data_null), 1000);
 				}
 			}
 		};

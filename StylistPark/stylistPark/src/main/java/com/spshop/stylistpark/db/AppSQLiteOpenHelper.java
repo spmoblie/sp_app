@@ -1,19 +1,19 @@
 package com.spshop.stylistpark.db;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import com.spshop.stylistpark.utils.ExceptionUtil;
-import com.spshop.stylistpark.utils.LogUtil;
-
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.LogUtil;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class AppSQLiteOpenHelper extends SQLiteOpenHelper {
 
@@ -66,20 +66,20 @@ public class AppSQLiteOpenHelper extends SQLiteOpenHelper {
 			copyFile(in, out);
 		} catch (IOException e) {
 			Log.e("tag", "Failed to copy asset file: " + dbFullPath, e);
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 		} finally {
 			if (in != null) {
 				try {
 					in.close();
 				} catch (IOException e) {
-					ExceptionUtil.handle(mContext, e);
+					ExceptionUtil.handle(e);
 				}
 			}
 			if (out != null) {
 				try {
 					out.close();
 				} catch (IOException e) {
-					ExceptionUtil.handle(mContext, e);
+					ExceptionUtil.handle(e);
 				}
 			}
 		}

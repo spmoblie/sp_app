@@ -1,7 +1,6 @@
 package com.spshop.stylistpark.wxapi;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ public class WXEntryActivity extends Activity {
 	private static final String APP_ID = AppConfig.WX_APP_ID;
 	private static final String SECRET = AppConfig.WX_APP_SECRET;
 	
-	private Context mContext;
 	private HttpUtil http;
 
 	@Override
@@ -37,7 +35,6 @@ public class WXEntryActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wx_loading);
 		
-		mContext = this;
 		http = new HttpUtil();
 		
 		handleIntent(getIntent());
@@ -59,7 +56,7 @@ public class WXEntryActivity extends Activity {
 			if (AppApplication.isWXShare) {
 				showWechatResult(getString(R.string.share_msg_success));
 			}else {
-				if (NetworkUtil.isNetworkAvailable(mContext)) {
+				if (NetworkUtil.isNetworkAvailable()) {
 					new HttpAccess_token_Task().execute("https://api.weixin.qq.com/sns/oauth2/access_token?"
 							+ "appid=" + APP_ID + "&secret=" + SECRET + "&code=" + resp.code + "&grant_type=authorization_code");
 				} else {
@@ -89,7 +86,7 @@ public class WXEntryActivity extends Activity {
 	 * 显示微信回调结果
 	 */
 	private void showWechatResult(String showStr) {
-		CommonTools.showToast(mContext, showStr, 1000);
+		CommonTools.showToast(showStr, 1000);
 		finish();
 	}
 
@@ -100,7 +97,7 @@ public class WXEntryActivity extends Activity {
 
 		@Override
 		protected String doInBackground(String... params) {
-			return http.HttpGet(mContext, params[0]);
+			return http.HttpGet(params[0]);
 		}
 
 		@Override
@@ -111,7 +108,7 @@ public class WXEntryActivity extends Activity {
 				try {
 					wxEn = LoginJsonParser.getWexiAccessToken(result);
 				} catch (JSONException e) {
-					ExceptionUtil.handle(mContext, e);
+					ExceptionUtil.handle(e);
 				}
 				if (wxEn != null) {
 					UserManager.getInstance().saveWechatUserInfo(wxEn);

@@ -10,49 +10,30 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
-import com.spshop.stylistpark.AppConfig;
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.R;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.ConnectException;
-import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.net.UnknownHostException;
-import java.nio.charset.Charset;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class NetworkUtil {
 
-	private final static String TAG = "NetworkUtil";
+/*	private final static String TAG = "NetworkUtil";
 	public final static int SUCCESS = 999999;
 	public final static int FAIL = -999999;
 
-	public static JSONObject getJSONFromURL(Context ctx, String path)throws Exception{
-		return getJSONFromURL(ctx, path, null, null);
+	public static JSONObject getJSONFromURL(String path)throws Exception{
+		return getJSONFromURL(path, null, null);
 	}
 
-	public static JSONObject getJSONFromURL(Context ctx, String path, Map<String, String> postData) throws Exception{
-		return getJSONFromURL(ctx, path, postData, null);
+	public static JSONObject getJSONFromURL(String path, Map<String, String> postData) throws Exception{
+		return getJSONFromURL(path, postData, null);
 	}
 
-	public static JSONObject getJSONFromURL(Context ctx, String path, Map<String, String> postData, String fileToUpload)
+	public static JSONObject getJSONFromURL(String path, Map<String, String> postData, String fileToUpload)
 			throws Exception{
 		try {
-			String jsonText =  getJSONStringFromURL(ctx, path, (postData != null && !postData.isEmpty()), postData, fileToUpload);
+			String jsonText =  getJSONStringFromURL(path, (postData != null && !postData.isEmpty()), postData, fileToUpload);
 			return new JSONObject(jsonText);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,10 +41,10 @@ public class NetworkUtil {
 		}
 	}
 
-	public static JSONArray getJSONArrayFromURL(Context ctx, String path, Map<String, String> postData)
+	public static JSONArray getJSONArrayFromURL(String path, Map<String, String> postData)
 			throws Exception{
 		try {
-			String jsonText =  getJSONStringFromURL(ctx, path, (postData != null), postData, null);
+			String jsonText =  getJSONStringFromURL(path, (postData != null), postData, null);
 			return new JSONArray(jsonText);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,12 +52,12 @@ public class NetworkUtil {
 		}
 	}
 
-	public static String getJSONStringFromURL(Context ctx, String path, boolean usePost, Map<String, String> postData, String fileToUpload)
+	public static String getJSONStringFromURL(String path, boolean usePost, Map<String, String> postData, String fileToUpload)
 			throws Exception{
 		try{
 			InputStream jsonInStream;
 
-			jsonInStream = getInputStream(ctx, path, usePost, postData, fileToUpload);
+			jsonInStream = getInputStream(path, usePost, postData, fileToUpload);
 
 			BufferedReader rd = new BufferedReader(new InputStreamReader(jsonInStream, Charset.forName("UTF-8")));
 			StringBuilder sb = new StringBuilder();
@@ -93,18 +74,18 @@ public class NetworkUtil {
 		}
 	}
 
-	private static InputStream getInputStream(Context ctx, String path, boolean usePost, Map<String, String> postData, String fileToUpload ) throws Exception{
+	private static InputStream getInputStream(String path, boolean usePost, Map<String, String> postData, String fileToUpload ) throws Exception{
 		URL url;
 		HttpURLConnection conn = null;
 		try {
 			url = new URL(path);
 			conn = (HttpURLConnection)url.openConnection();
-			String cookie = FileManager.readFileSaveString(ctx, AppConfig.cookiesFileName, true);
+			String cookie = FileManager.readFileSaveString(AppConfig.cookiesFileName, true);
 			LogUtil.i("JsonParser", "read cookie = " + cookie);
 			if(usePost){
 				if(fileToUpload == null || fileToUpload.isEmpty()){
-					conn.setReadTimeout(12000 /* milliseconds */);
-					conn.setConnectTimeout(20000 /* milliseconds */);
+					conn.setReadTimeout(12000 *//* milliseconds *//*);
+					conn.setConnectTimeout(20000 *//* milliseconds *//*);
 					conn.setUseCaches(false);
 					conn.setDoInput(true);
 					conn.setDoOutput(true);
@@ -222,7 +203,7 @@ public class NetworkUtil {
 			throw e;
 		}
 		return null;
-	}
+	}*/
 
 	/**
 	 * 检查网络状态并弹出对话框提醒
@@ -233,7 +214,7 @@ public class NetworkUtil {
 			ConnectivityManager manager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 			NetworkInfo networkInfo=manager.getActiveNetworkInfo();
 			if(networkInfo == null){
-				AlertDialog.Builder dialog=new Builder(context);
+				AlertDialog.Builder dialog = new Builder(context);
 				dialog.setTitle(R.string.network);
 				dialog.setMessage(R.string.network_closed);
 				dialog.setPositiveButton(R.string.setting, new OnClickListener() {
@@ -242,10 +223,10 @@ public class NetworkUtil {
 					public void onClick(DialogInterface dialog, int which) {
 						try {
 							//打开系统的网络设置界面
-							Intent intent=new Intent(android.provider.Settings.ACTION_SETTINGS);
+							Intent intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
 							context.startActivity(intent);
 						} catch (Exception e) {
-							ExceptionUtil.handle(context, e);
+							ExceptionUtil.handle(e);
 						}
 					}
 				});
@@ -259,7 +240,7 @@ public class NetworkUtil {
 				dialog.show();
 			}
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 		}
 	}
 	
@@ -267,9 +248,9 @@ public class NetworkUtil {
 	 * 网络是否可用
 	 * @return
 	 */
-	public static boolean isNetworkAvailable(Context context) {
-		ConnectivityManager connectivity = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+	public static boolean isNetworkAvailable() {
+		ConnectivityManager connectivity = (ConnectivityManager) AppApplication.getInstance()
+				.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivity == null) {
 		} else {
 			NetworkInfo[] info = connectivity.getAllNetworkInfo();
@@ -286,23 +267,17 @@ public class NetworkUtil {
 
 	/**
 	 * 网络连接提示
-	 * 
-	 * @param context
-	 * @return
 	 */
-	public static boolean networkStateTips(Context context) {
-		return isNetworkAvailable(context);
+	public static boolean networkStateTips() {
+		return isNetworkAvailable();
 	}
 
 	/**
 	 * Gps是否打开
-	 * 
-	 * @param context
-	 * @return
 	 */
-	public static boolean isGpsEnabled(Context context) {
-		LocationManager locationManager = ((LocationManager) context
-				.getSystemService(Context.LOCATION_SERVICE));
+	public static boolean isGpsEnabled() {
+		LocationManager locationManager = ((LocationManager) AppApplication.getInstance()
+				.getApplicationContext().getSystemService(Context.LOCATION_SERVICE));
 		List<String> accessibleProviders = locationManager.getProviders(true);
 		return accessibleProviders != null && accessibleProviders.size() > 0;
 	}
@@ -310,10 +285,11 @@ public class NetworkUtil {
 	/**
 	 * wifi是否打开
 	 */
-	public static boolean isWifiEnabled(Context context) {
-		ConnectivityManager mgrConn = (ConnectivityManager) context
+	public static boolean isWifiEnabled() {
+		Context ctx = AppApplication.getInstance().getApplicationContext();
+		ConnectivityManager mgrConn = (ConnectivityManager) ctx
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		TelephonyManager mgrTel = (TelephonyManager) context
+		TelephonyManager mgrTel = (TelephonyManager) ctx
 				.getSystemService(Context.TELEPHONY_SERVICE);
 		return ((mgrConn.getActiveNetworkInfo() != null && mgrConn
 				.getActiveNetworkInfo().getState() == NetworkInfo.State.CONNECTED) || mgrTel
@@ -323,13 +299,10 @@ public class NetworkUtil {
 	/**
 	 * 判断当前网络是否是wifi网络
 	 * if(activeNetInfo.getType()==ConnectivityManager.TYPE_MOBILE) { //判断3G网
-	 * 
-	 * @param context
-	 * @return boolean
 	 */
-	public static boolean isWifi(Context context) {
-		ConnectivityManager connectivityManager = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+	public static boolean isWifi() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) AppApplication.getInstance()
+				.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
 		if (activeNetInfo != null
 				&& activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) {
@@ -340,13 +313,10 @@ public class NetworkUtil {
 
 	/**
 	 * 判断当前网络是否3G网络
-	 * 
-	 * @param context
-	 * @return boolean
 	 */
-	public static boolean is3G(Context context) {
-		ConnectivityManager connectivityManager = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+	public static boolean is3G() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) AppApplication.getInstance()
+				.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
 		if (activeNetInfo != null
 				&& activeNetInfo.getType() == ConnectivityManager.TYPE_MOBILE) {

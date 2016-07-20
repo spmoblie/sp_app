@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +23,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -50,14 +48,11 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.spshop.stylistpark.widgets.DragImageView;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-
-import java.util.HashMap;
 
 /**
  * 所有Activity的父类
@@ -99,9 +94,6 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	public static final int DIALOG_CONFIRM_CLICK = 456; //全局对话框“确定”
 	public static final int DIALOG_CANCEL_CLICK = 887; //全局对话框“取消”
 
-	protected HashMap<String, DragImageView> hm_img = new HashMap<String, DragImageView>();
-	protected HashMap<String, ProgressBar> hm_bar = new HashMap<String, ProgressBar>();
-	protected HashMap<String, Bitmap> hm_btm = new HashMap<String, Bitmap>();
 	protected RetryPolicy retryPolicy60s = new DefaultRetryPolicy(60000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
 	@Override
@@ -137,7 +129,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 				mShareView = new ShareView(savedInstanceState, mContext, this, view, null);
 				mShareView.showShareLayer(mContext, false);
 			} catch (Exception e) {
-				ExceptionUtil.handle(mContext, e);
+				ExceptionUtil.handle(e);
 			}
 		}
 	}
@@ -517,7 +509,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 * 分享参数出错提示
 	 */
 	protected void showShareError() {
-		CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_entity_error), 1000);
+		CommonTools.showToast(getString(R.string.share_msg_entity_error), 1000);
 	}
 	
 	/**

@@ -1,5 +1,21 @@
 package com.spshop.stylistpark.utils;
 
+import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore.Images.ImageColumns;
+import android.text.TextUtils;
+
+import com.spshop.stylistpark.AppApplication;
+import com.spshop.stylistpark.AppConfig;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.util.EncodingUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,21 +31,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.util.EncodingUtils;
-
-import android.annotation.SuppressLint;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore.Images.ImageColumns;
-import android.text.TextUtils;
-
-import com.spshop.stylistpark.AppConfig;
-
 public class FileManager {
 	
 	public final static int SUCCESS = 999999;
@@ -38,12 +39,11 @@ public class FileManager {
 	/**
 	 * 写入数据（String）
 	 * 
-	 * @param context 上下文对象
 	 * @param fileName 文件名
 	 * @param writeStr 写入文本对象
 	 * @param longSave 是否长久保存
 	 */
-	public static void writeFileSaveString(Context context, String fileName, String writeStr, boolean longSave) {
+	public static void writeFileSaveString(String fileName, String writeStr, boolean longSave) {
 		FileOutputStream fout = null;
 		try {
 			String path = "";
@@ -52,19 +52,19 @@ public class FileManager {
 			}else {
 				path = AppConfig.SAVE_TXT_PATH_TEMPORARY + fileName;
 			}
-			checkFilePath(context, path);
+			checkFilePath(path);
 			fout = new FileOutputStream(path);
 			byte[] bytes = writeStr.getBytes();
 			fout.write(bytes);
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 		} finally {
         	try {
         		if (fout != null) {
         			fout.close();
 				}
 			} catch (Exception e) {
-				 ExceptionUtil.handle(context, e);
+				ExceptionUtil.handle(e);
 			}
         }
 	}
@@ -72,11 +72,10 @@ public class FileManager {
 	/**
 	 * 读取数据（String）
 	 * 
-	 * @param context 上下文对象
 	 * @param fileName 文件名
 	 * @param longSave 是否长久保存
 	 */
-	public static String readFileSaveString(Context context, String fileName, boolean longSave) {
+	public static String readFileSaveString(String fileName, boolean longSave) {
 		FileInputStream fin = null;
 		String path = "";
 		String resu = "";
@@ -95,14 +94,14 @@ public class FileManager {
 				resu = EncodingUtils.getString(buffer, "UTF-8");
 			}
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 		} finally {
         	try {
         		if (fin != null) {
         			fin.close();
 				}
 			} catch (Exception e) {
-				 ExceptionUtil.handle(context, e);
+				ExceptionUtil.handle(e);
 			}
         }
 		return resu;
@@ -111,12 +110,11 @@ public class FileManager {
 	/**
 	 * 写入数据（Object）
 	 * 
-	 * @param context 上下文对象
 	 * @param fileName 文件名
 	 * @param obj 写入对象
 	 * @param longSave 是否长久保存
 	 */
-    public static void writeFileSaveObject(Context context, String fileName, Object obj, boolean longSave) {
+    public static void writeFileSaveObject(String fileName, Object obj, boolean longSave) {
     	ObjectOutputStream objOut = null;
     	FileOutputStream fos = null;
         try {
@@ -126,14 +124,14 @@ public class FileManager {
 			}else {
 				path = AppConfig.SAVE_TXT_PATH_TEMPORARY + fileName;
 			}
-			checkFilePath(context, path);
+			checkFilePath(path);
 			File file = new File(path);
 			fos = new FileOutputStream(file);
 			objOut = new ObjectOutputStream(fos);
             objOut.writeObject(obj);
             objOut.flush();
         } catch (IOException e) {
-            ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
         }finally{
         	try {
         		if (fos != null) {
@@ -143,7 +141,7 @@ public class FileManager {
         			objOut.close();
 				}
 			} catch (IOException e) {
-				ExceptionUtil.handle(context, e);
+				ExceptionUtil.handle(e);
 			}
         }
     }
@@ -151,11 +149,10 @@ public class FileManager {
     /**
 	 * 读取数据（Object）
 	 * 
-	 * @param context 上下文对象
 	 * @param fileName 文件名
 	 * @param longSave 是否长久保存
 	 */
-    public static Object readFileSaveObject(Context context, String fileName, boolean longSave) {
+    public static Object readFileSaveObject(String fileName, boolean longSave) {
         Object temp = null;
         FileInputStream in = null;
         ObjectInputStream objIn = null;
@@ -173,7 +170,7 @@ public class FileManager {
 				temp = objIn.readObject();
 			}
         } catch (Exception e) {
-            ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
         }finally{
         	try {
         		if (in != null) {
@@ -183,7 +180,7 @@ public class FileManager {
         			objIn.close();
 				}
 			} catch (Exception e) {
-				 ExceptionUtil.handle(context, e);
+				ExceptionUtil.handle(e);
 			}
         }
         return temp;
@@ -192,16 +189,15 @@ public class FileManager {
 	/**
 	 * 写入数据（网络流对象）
 	 * 
-	 * @param context 上下文对象
 	 * @param path 保存路径
 	 * @param entity 网络流对象
 	 */
-    public static String writeFileSaveHttpEntity(Context context, String path, HttpEntity entity) {
+    public static String writeFileSaveHttpEntity(String path, HttpEntity entity) {
     	InputStream is = null;
 		FileOutputStream fos = null;
 		String resu = "ok";
         try {
-			checkFilePath(context, path);
+			checkFilePath(path);
 			is = entity.getContent();
 			if (is != null) {
 				File file = new File(path);
@@ -214,7 +210,7 @@ public class FileManager {
 				fos.flush();
 			}
         } catch (IOException e) {
-            ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
             resu = null;
         } finally {
         	try {
@@ -225,7 +221,7 @@ public class FileManager {
 					fos.close();
 				}
 			} catch (IOException e) {
-				ExceptionUtil.handle(context, e);
+				ExceptionUtil.handle(e);
 			}
         }
         return resu;
@@ -234,7 +230,7 @@ public class FileManager {
 	/**
 	 * 校验文件路径
 	 */
-	public static void checkFilePath(Context context, String path) throws IOException {
+	public static void checkFilePath(String path) throws IOException {
 		File file = new File(path);
 		//判定文件所在的目录是否存在，不存在则创建
 		File parentFile = file.getParentFile();
@@ -270,7 +266,6 @@ public class FileManager {
 	/**
 	 * 删除指定目录下文件及目录
 	 * @param deleteThisPath
-	 * @param filepath
 	 */
 	public static void deleteFolderFile(String filePath, boolean deleteThisPath)
 			throws IOException {
@@ -298,11 +293,10 @@ public class FileManager {
 	/**
 	 * 从给定的Uri返回文件的绝对路径
 	 *
-	 * @param context
 	 * @param uri
 	 * @return the file path or null
 	 */
-	public static String getRealFilePath( final Context context, final Uri uri ) {
+	public static String getRealFilePath(final Uri uri ) {
 	    if ( null == uri ) return null;
 	    final String scheme = uri.getScheme();
 	    String data = null;
@@ -311,7 +305,8 @@ public class FileManager {
 	    else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
 	        data = uri.getPath();
 	    } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
-	        Cursor cursor = context.getContentResolver().query( uri, new String[] { ImageColumns.DATA }, null, null, null );
+	        Cursor cursor = AppApplication.getInstance().getApplicationContext()
+					.getContentResolver().query( uri, new String[] { ImageColumns.DATA }, null, null, null );
 	        if ( null != cursor ) {
 	            if ( cursor.moveToFirst() ) {
 	                int index = cursor.getColumnIndex( ImageColumns.DATA );
@@ -339,7 +334,7 @@ public class FileManager {
 	/**
 	 * 读取指定文件中的内容
 	 */
-	public static String getStringFromFile (File file) throws Exception {
+	public static String getStringFromFile(File file) throws Exception {
 	    FileInputStream fis = new FileInputStream(file);
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
 	    StringBuilder sb = new StringBuilder();
@@ -355,17 +350,18 @@ public class FileManager {
 	/**
 	 * 读取Asset中的文件内容
 	 */
-	public static String loadJSONFromAsset(Context context, String filename) {
+	public static String loadJSONFromAsset(String filename) {
 		String json = null;
 		try {
-			InputStream is = context.getAssets().open(filename);
+			InputStream is = AppApplication.getInstance()
+					.getApplicationContext().getAssets().open(filename);
 			int size = is.available();
 			byte[] buffer = new byte[size];
 			is.read(buffer);
 			is.close();
 			json = new String(buffer, "UTF-8");
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 			return null;
 		}
 		return json;
@@ -374,14 +370,15 @@ public class FileManager {
 	/**
 	 * 读取Asset中的图片
 	 */
-	public static Bitmap getBitmapFromAssets(Context context, String filename){
+	public static Bitmap getBitmapFromAssets(String filename){
 		try {
-			InputStream is = context.getAssets().open(filename + ".png");
+			InputStream is = AppApplication.getInstance()
+					.getApplicationContext().getAssets().open(filename + ".png");
 			Bitmap bitmap = BitmapFactory.decodeStream(is);   
 			is.close();
 			return bitmap;
 		} catch (IOException e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 			return null;
 		}
 	}
@@ -389,7 +386,8 @@ public class FileManager {
 	/**
 	 * 下载指定Url的文件保存至指定路径
 	 */
-	public static int downloadFile(Context ctx, String urlStr, String fileName) {
+	public static int downloadFile(String urlStr, String fileName) {
+		Context ctx = AppApplication.getInstance().getApplicationContext();
 		InputStream input = null;
 		OutputStream output = null;
 		HttpURLConnection connection = null;
@@ -411,7 +409,7 @@ public class FileManager {
 			}
 			result = SUCCESS;
 		} catch (Exception e) {
-			ExceptionUtil.handle(ctx, e);
+			ExceptionUtil.handle(e);
 		} finally {
 			try {
 				if (output != null)
@@ -419,7 +417,7 @@ public class FileManager {
 				if (input != null)
 					input.close();
 			} catch (Exception e) {
-				ExceptionUtil.handle(ctx, e);
+				ExceptionUtil.handle(e);
 			}
 			if (connection != null)
 				connection.disconnect();

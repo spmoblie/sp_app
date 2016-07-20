@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.service;
 
-import android.content.Context;
-
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
@@ -138,7 +136,7 @@ public interface MainService {
 	
 	JSONArray getCollageTemplateList() throws Exception;
 	
-	APIResult submitLookBook(Context ctx, String userId, String sessionKey, String lookBookType, String title, 
+	APIResult submitLookBook(String userId, String sessionKey, String lookBookType, String title,
 			String descripton, String filePath, String[] productIdList, String html, String mobileHtml) throws Exception;
 	
 }

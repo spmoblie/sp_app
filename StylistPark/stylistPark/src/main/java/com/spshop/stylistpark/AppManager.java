@@ -103,7 +103,7 @@ public class AppManager {
 //			activityMgr.restartPackage(context.getPackageName());
 			System.exit(0);
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 		}
 	}
 	

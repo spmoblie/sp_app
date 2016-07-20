@@ -1,13 +1,13 @@
 package com.spshop.stylistpark.utils;
 
+import android.text.TextUtils;
+import android.util.Log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import android.text.TextUtils;
-import android.util.Log;
 
 /** 
  * from https://github.com/AWCNTT/ArticleTranslateProject/blob/master/sources/Issue%2322/Unzipping%20Files%20with%20Android%20(Programmatically).md

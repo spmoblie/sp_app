@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,7 +38,6 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ChildFragmentThree2 extends Fragment implements OnClickListener, OnDataListener {
@@ -78,9 +78,9 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	private List<ThemeEntity> lv_all_1 = new ArrayList<ThemeEntity>();
 	private List<ThemeEntity> lv_all_2 = new ArrayList<ThemeEntity>();
 	private List<ThemeEntity> lv_all_3 = new ArrayList<ThemeEntity>();
-	private HashMap<Integer, Boolean> hm_all_1 = new HashMap<Integer, Boolean>();
-	private HashMap<Integer, Boolean> hm_all_2 = new HashMap<Integer, Boolean>();
-	private HashMap<Integer, Boolean> hm_all_3 = new HashMap<Integer, Boolean>();
+	private SparseBooleanArray sa_all_1 = new SparseBooleanArray();
+	private SparseBooleanArray sa_all_2 = new SparseBooleanArray();
+	private SparseBooleanArray sa_all_3 = new SparseBooleanArray();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -105,7 +105,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 			findViewById(view);
 			initView();
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 		}
 		return view;
 	}
@@ -422,30 +422,30 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 							switch (topType) {
 								case TYPE_1:
 									if (loadType == 0) { //下拉
-										updEntity(total, total_1, lists, lv_all_1, hm_all_1);
+										updEntity(total, total_1, lists, lv_all_1, sa_all_1);
 										//page_type_1 = 2;
 									}else {
-										addEntity(lv_all_1, lists, hm_all_1);
+										addEntity(lv_all_1, lists, sa_all_1);
 										page_type_1++;
 									}
 									total_1 = total;
 									break;
 								case TYPE_2:
 									if (loadType == 0) { //下拉
-										updEntity(total, total_2, lists, lv_all_2, hm_all_2);
+										updEntity(total, total_2, lists, lv_all_2, sa_all_2);
 										//page_type_2 = 2;
 									}else {
-										addEntity(lv_all_2, lists, hm_all_2);
+										addEntity(lv_all_2, lists, sa_all_2);
 										page_type_2++;
 									}
 									total_2 = total;
 									break;
 								case TYPE_3:
 									if (loadType == 0) { //下拉
-										updEntity(total, total_3, lists, lv_all_3, hm_all_3);
+										updEntity(total, total_3, lists, lv_all_3, sa_all_3);
 										//page_type_3 = 2;
 									}else {
-										addEntity(lv_all_3, lists, hm_all_3);
+										addEntity(lv_all_3, lists, sa_all_3);
 										page_type_3++;
 									}
 									total_3 = total;
@@ -461,7 +461,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 					}
 				}else {
 					loadFailHandle();
-					CommonTools.showToast(mContext, getString(R.string.toast_server_busy), 1000);
+					CommonTools.showToast(getString(R.string.toast_server_busy), 1000);
 				}
 				break;
 		}
@@ -471,7 +471,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	public void onFailure(int requestCode, int state, Object result) {
 		if (getActivity() == null) return;
 		loadFailHandle();
-		CommonTools.showToast(mContext, String.valueOf(result), 1000);
+		CommonTools.showToast(String.valueOf(result), 1000);
 	}
 
 	private void loadFailHandle() {
@@ -493,7 +493,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	 * 刷新数集
 	 */
 	private void updEntity(int newTotal, int oldTotal, List<ThemeEntity> newDatas,
-						   List<ThemeEntity> oldDatas, HashMap<Integer, Boolean> oldMap) {
+						   List<ThemeEntity> oldDatas, SparseBooleanArray oldMap) {
 		if (oldTotal < newTotal) {
 			List<ThemeEntity> datas = new ArrayList<ThemeEntity>();
 			datas.addAll(oldDatas);
@@ -505,14 +505,14 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 				newEn = newDatas.get(i);
 				if (newEn != null) {
 					dataId = newEn.getId();
-					if (dataId != 0 && !oldMap.containsKey(dataId)) {
+					if (dataId != 0 && oldMap.indexOfKey(dataId) < 0) {
 						// 添加至顶层
 						oldDatas.add(newEn);
 						oldMap.put(dataId, true);
 						// 移除最底层
 						oldEn = datas.remove(datas.size()-1);
-						if (oldEn != null && oldMap.containsKey(oldEn.getId())) {
-							oldMap.remove(oldEn.getId());
+						if (oldEn != null) {
+							oldMap.delete(oldEn.getId());
 						}
 					}
 				}
@@ -530,16 +530,16 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 	/**
 	 * 数据去重函数
 	 */
-	private void addEntity(List<ThemeEntity> oldDatas, List<ThemeEntity> newDatas, HashMap<Integer, Boolean> hashMap) {
+	private void addEntity(List<ThemeEntity> oldDatas, List<ThemeEntity> newDatas, SparseBooleanArray oldMap) {
 		ThemeEntity entity = null;
 		int dataId = 0;
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
 			if (entity != null) {
 				dataId = entity.getId();
-				if (dataId != 0 && !hashMap.containsKey(dataId)) {
+				if (dataId != 0 && oldMap.indexOfKey(dataId) < 0) {
 					oldDatas.add(entity);
-					hashMap.put(dataId, true);
+					oldMap.put(dataId, true);
 				}
 			}
 		}

@@ -216,7 +216,7 @@ public class MyAddressActivity extends BaseActivity {
 					if (StringUtil.isNull(baseEn.getErrInfo())) {
 						showServerBusy();
 					}else {
-						CommonTools.showToast(mContext, baseEn.getErrInfo(), 2000);
+						CommonTools.showToast(baseEn.getErrInfo(), 2000);
 					}
 				}
 			}else {

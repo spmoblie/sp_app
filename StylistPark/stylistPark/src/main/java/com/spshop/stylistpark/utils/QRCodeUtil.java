@@ -1,11 +1,5 @@
 package com.spshop.stylistpark.utils;
 
-import java.io.FileOutputStream;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
-
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -16,6 +10,12 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.spshop.stylistpark.AppApplication;
+
+import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * 二维码图片生成工具
@@ -84,7 +84,7 @@ public class QRCodeUtil{
 	 * @param filePath  用于存储二维码图片的文件路径
 	 * @return 生成二维码及保存文件是否成功
 	 */ 
-	public static boolean createQRImage(Context context, String content, 
+	public static boolean createQRImage(String content,
 			int widthPix, int heightPix, Bitmap logoBm, String filePath) { 
 		try { 
 			if (content == null || "".equals(content)) { 
@@ -117,20 +117,20 @@ public class QRCodeUtil{
 			Bitmap bitmap = Bitmap.createBitmap(widthPix, heightPix, Bitmap.Config.ARGB_8888); 
 			bitmap.setPixels(pixels, 0, widthPix, 0, 0, widthPix, heightPix); 
 			// 添加Logo边框
-			Bitmap logoFrame = BitmapFactory.decodeResource(
-					context.getResources(), com.spshop.stylistpark.R.drawable.bg_img_white);
+			Bitmap logoFrame = BitmapFactory.decodeResource(AppApplication.getInstance()
+					.getApplicationContext().getResources(), com.spshop.stylistpark.R.drawable.bg_img_white);
 			if (logoFrame != null) {
-				bitmap = addLogoFrame(context, bitmap, logoFrame); 
+				bitmap = addLogoFrame(bitmap, logoFrame);
 			}
 			// 添加Logo
 			if (logoBm != null) { 
-				bitmap = addLogo(context, bitmap, logoBm); 
+				bitmap = addLogo(bitmap, logoBm);
 			} 
-			FileManager.checkFilePath(context, filePath);
+			FileManager.checkFilePath(filePath);
 			//必须使用compress方法将bitmap保存到文件中再进行读取。直接返回的bitmap是没有任何压缩的，内存消耗巨大！ 
 			return bitmap != null && bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(filePath)); 
-		} catch (Exception e) { 
-			ExceptionUtil.handle(context, e);
+		} catch (Exception e) {
+			ExceptionUtil.handle(e);
 		} 
 		
 		return false; 
@@ -139,7 +139,7 @@ public class QRCodeUtil{
 	/**
 	 * 在二维码中间添加Logo图案
 	 */ 
-	private static Bitmap addLogo(Context context, Bitmap src, Bitmap logo) { 
+	private static Bitmap addLogo(Bitmap src, Bitmap logo) {
 		if (src == null) { 
 			return null; 
 		} 
@@ -175,8 +175,8 @@ public class QRCodeUtil{
 		    canvas1.save(Canvas.ALL_SAVE_FLAG); 
 		    canvas1.restore(); 
 		} catch (Exception e) { 
-			bitmap = null; 
-			ExceptionUtil.handle(context, e);
+			bitmap = null;
+			ExceptionUtil.handle(e);
 		} 
 		
 		return bitmap; 
@@ -185,7 +185,7 @@ public class QRCodeUtil{
 	/**
 	 * 为二维码的Logo添加边框
 	 */ 
-	private static Bitmap addLogoFrame(Context context, Bitmap src, Bitmap frame) { 
+	private static Bitmap addLogoFrame(Bitmap src, Bitmap frame) {
 		if (src == null) { 
 			return null; 
 		} 
@@ -220,8 +220,8 @@ public class QRCodeUtil{
 			canvas1.save(Canvas.ALL_SAVE_FLAG); 
 			canvas1.restore(); 
 		} catch (Exception e) { 
-			bitmap = null; 
-			ExceptionUtil.handle(context, e);
+			bitmap = null;
+			ExceptionUtil.handle(e);
 		} 
 		
 		return bitmap; 

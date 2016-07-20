@@ -66,68 +66,62 @@ public class JsonParser {
 			mainEn.setErrCode(Integer.parseInt(jsonObj.getString("error")));
 		}
 		// 解析广告
-		if (jsonObj.has("ad") && jsonObj.get("ad") != null) {
-			ThemeEntity adEn = new ThemeEntity();
-			List<ThemeEntity> adLists = new ArrayList<ThemeEntity>();
-			ThemeEntity childEn = null;
+		if (!StringUtil.isNull(jsonObj, "ad")) {
 			JSONArray datas = jsonObj.getJSONArray("ad");
-			if (datas != null) {
-				for (int j = 0; j < datas.length(); j++) {
-					JSONObject item = datas.getJSONObject(j);
-					childEn = new ThemeEntity();
-					childEn.setId(StringUtil.getInteger(item.getString("topic_id")));
-					childEn.setTitle(item.getString("title"));
-					childEn.setImgUrl(item.getString("title_pic"));
-					adLists.add(childEn);
-				}
-				adEn.setMainLists(adLists);
+			ThemeEntity adEn = new ThemeEntity();
+			ThemeEntity childEn = null;
+			List<ThemeEntity> adLists = new ArrayList<ThemeEntity>();
+			for (int j = 0; j < datas.length(); j++) {
+				JSONObject item = datas.getJSONObject(j);
+				childEn = new ThemeEntity();
+				childEn.setId(StringUtil.getInteger(item.getString("topic_id")));
+				childEn.setTitle(item.getString("title"));
+				childEn.setImgUrl(item.getString("title_pic"));
+				adLists.add(childEn);
 			}
+			adEn.setMainLists(adLists);
 			mainEn.setAdEn(adEn);
 		}
 		// 解析热销商品
-		if (jsonObj.has("best") && jsonObj.get("best") != null) {
+		if (!StringUtil.isNull(jsonObj, "best")) {
 			ProductListEntity goodsEn = new ProductListEntity();
 			goodsEn.setMainLists(getProductListsFormJson(jsonObj, "best"));
 			mainEn.setGoodsEn(goodsEn);
 		}
 		// 解析今日专题
-		/*if (jsonObj.has("paida")) {
-			ThemeEntity peidaEn = new ThemeEntity();
-			List<ThemeEntity> peidaLists = new ArrayList<ThemeEntity>();
-			ThemeEntity childEn = null;
+		/*if (!StringUtil.isNull(jsonObj, "paida")) {
 			JSONArray datas = jsonObj.getJSONArray("paida");
-			if (datas != null) {
-				for (int j = 0; j < datas.length(); j++) {
-					JSONObject item = datas.getJSONObject(j);
-					childEn = new ThemeEntity();
-					childEn.setId(StringUtil.getInteger(item.getString("id")));
-					childEn.setTitle(item.getString("title"));
-					childEn.setImgUrl(item.getString("file_url"));
-					peidaLists.add(childEn);
-				}
-				peidaEn.setMainLists(peidaLists);
+			ThemeEntity peidaEn = new ThemeEntity();
+			ThemeEntity childEn = null;
+			List<ThemeEntity> peidaLists = new ArrayList<ThemeEntity>();
+			for (int j = 0; j < datas.length(); j++) {
+				JSONObject item = datas.getJSONObject(j);
+				childEn = new ThemeEntity();
+				childEn.setId(StringUtil.getInteger(item.getString("id")));
+				childEn.setTitle(item.getString("title"));
+				childEn.setImgUrl(item.getString("file_url"));
+				peidaLists.add(childEn);
 			}
+			peidaEn.setMainLists(peidaLists);
 			mainEn.setPeidaEn(peidaEn);
 		}*/
 		// 限时活动
-		if (jsonObj.has("activity") && jsonObj.get("activity") != null) {
-			ThemeEntity saleEn = new ThemeEntity();
-			List<ThemeEntity> saleLists = new ArrayList<ThemeEntity>();
-			ThemeEntity childEn = null;
+		if (!StringUtil.isNull(jsonObj, "activity")) {
 			JSONArray datas = jsonObj.getJSONArray("activity");
-			if (datas != null) {
-				for (int j = 0; j < datas.length(); j++) {
-					JSONObject item = datas.getJSONObject(j);
-					childEn = new ThemeEntity();
-					childEn.setId(StringUtil.getInteger(item.getString("id")));
-					childEn.setTitle(item.getString("name"));
-					childEn.setImgUrl(item.getString("logo"));
-					childEn.setType(StringUtil.getInteger(item.getString("act_range")));
-					childEn.setEndTime(StringUtil.getLong(item.getString("end_time")));
-					saleLists.add(childEn);
-				}
-				saleEn.setMainLists(saleLists);
+			ThemeEntity saleEn = new ThemeEntity();
+			ThemeEntity childEn = null;
+			List<ThemeEntity> saleLists = new ArrayList<ThemeEntity>();
+			for (int j = 0; j < datas.length(); j++) {
+				JSONObject item = datas.getJSONObject(j);
+				childEn = new ThemeEntity();
+				childEn.setId(StringUtil.getInteger(item.getString("id")));
+				childEn.setTitle(item.getString("name"));
+				childEn.setImgUrl(item.getString("logo"));
+				childEn.setType(StringUtil.getInteger(item.getString("act_range")));
+				childEn.setEndTime(StringUtil.getLong(item.getString("end_time")));
+				saleLists.add(childEn);
 			}
+			saleEn.setMainLists(saleLists);
 			mainEn.setSaleEn(saleEn);
 		}
 		return mainEn;
@@ -145,26 +139,24 @@ public class JsonParser {
 		if (jsonObj.has("count")) {
 			eventEn.setCountTotal(StringUtil.getInteger(jsonObj.getString("count")));
 		}
-		if (jsonObj.has("data")) {
-			List<ThemeEntity> peidaLists = new ArrayList<ThemeEntity>();
-			ThemeEntity childEn = null;
+		if (!StringUtil.isNull(jsonObj, "data")) {
 			JSONArray datas = jsonObj.getJSONArray("data");
-			if (datas != null) {
-				for (int j = 0; j < datas.length(); j++) {
-					JSONObject item = datas.getJSONObject(j);
-					childEn = new ThemeEntity();
-					childEn.setId(StringUtil.getInteger(item.getString("article_id")));
-					childEn.setType(StringUtil.getInteger(item.getString("open_type")));
-					childEn.setClickNum(StringUtil.getInteger(item.getString("click_count")));
-					childEn.setTitle(item.getString("title"));
-					childEn.setMebName(item.getString("nickname"));
-					childEn.setMebUrl(item.getString("avatar"));
-					childEn.setImgUrl(item.getString("file_url"));
-					childEn.setVdoUrl(item.getString("keywords"));
-					peidaLists.add(childEn);
-				}
-				eventEn.setMainLists(peidaLists);
+			ThemeEntity childEn = null;
+			List<ThemeEntity> peidaLists = new ArrayList<ThemeEntity>();
+			for (int j = 0; j < datas.length(); j++) {
+				JSONObject item = datas.getJSONObject(j);
+				childEn = new ThemeEntity();
+				childEn.setId(StringUtil.getInteger(item.getString("article_id")));
+				childEn.setType(StringUtil.getInteger(item.getString("open_type")));
+				childEn.setClickNum(StringUtil.getInteger(item.getString("click_count")));
+				childEn.setTitle(item.getString("title"));
+				childEn.setMebName(item.getString("nickname"));
+				childEn.setMebUrl(item.getString("avatar"));
+				childEn.setImgUrl(item.getString("file_url"));
+				childEn.setVdoUrl(item.getString("keywords"));
+				peidaLists.add(childEn);
 			}
+			eventEn.setMainLists(peidaLists);
 		}
 		return eventEn;
 	}
@@ -182,51 +174,53 @@ public class JsonParser {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		// 解析父分类
 		mainLists = new ArrayList<CategoryListEntity>();
-		JSONArray datas = jsonObject.getJSONArray("data");
-		for (int i = 0; i < datas.length(); i++) {
-			JSONObject item = datas.getJSONObject(i);
-			en = new CategoryListEntity();
-			en.setTypeId(StringUtil.getInteger((item.getString("id"))));
-			en.setImageUrl(item.getString("ico"));
-			en.setName(item.getString("name"));
-			// 解析第一子分类
-			childLists1 = new ArrayList<CategoryListEntity>();
-			JSONArray data1 = item.getJSONArray("list");
-			if (data1 != null) {
-				int show = 0;
-				for (int j = 0; j < data1.length(); j++) {
-					JSONObject item1 = data1.getJSONObject(j);
-					child1 = new CategoryListEntity();
-					child1.setTypeId(StringUtil.getInteger((item1.getString("id"))));
-					child1.setImageUrl(item1.getString("cat_ico"));
-					child1.setName(item1.getString("name"));
-					show = StringUtil.getInteger(item1.getString("show_in_nav"));
-					if (show == 1) {
-						childLists1.add(child1);
-					}
-					// 解析第二子分类
-					//childLists2 = new ArrayList<CategoryListEntity>();
-					JSONArray data2 = item1.getJSONArray("list");
-					if (data2 != null) {
-						for (int k = 0; k < data2.length(); k++) {
-							JSONObject item2 = data2.getJSONObject(k);
-							child2 = new CategoryListEntity();
-							child2.setTypeId(StringUtil.getInteger((item2.getString("id"))));
-							child2.setImageUrl(item2.getString("cat_ico"));
-							child2.setName(item2.getString("name"));
-							//childLists2.add(child2);
-							show = StringUtil.getInteger(item2.getString("show_in_nav"));
-							if (show == 1) {
-								childLists1.add(child2);
+		if (!StringUtil.isNull(jsonObject, "data")) {
+			JSONArray datas = jsonObject.getJSONArray("data");
+			for (int i = 0; i < datas.length(); i++) {
+				JSONObject item = datas.getJSONObject(i);
+				en = new CategoryListEntity();
+				en.setTypeId(StringUtil.getInteger((item.getString("id"))));
+				en.setImageUrl(item.getString("ico"));
+				en.setName(item.getString("name"));
+				// 解析第一子分类
+				childLists1 = new ArrayList<CategoryListEntity>();
+				if (!StringUtil.isNull(item, "list")) {
+					JSONArray data1 = item.getJSONArray("list");
+					int show = 0;
+					for (int j = 0; j < data1.length(); j++) {
+						JSONObject item1 = data1.getJSONObject(j);
+						child1 = new CategoryListEntity();
+						child1.setTypeId(StringUtil.getInteger((item1.getString("id"))));
+						child1.setImageUrl(item1.getString("cat_ico"));
+						child1.setName(item1.getString("name"));
+						show = StringUtil.getInteger(item1.getString("show_in_nav"));
+						if (show == 1) {
+							childLists1.add(child1);
+						}
+						// 解析第二子分类
+						//childLists2 = new ArrayList<CategoryListEntity>();
+						if (!StringUtil.isNull(item1, "list")) {
+							JSONArray data2 = item1.getJSONArray("list");
+							for (int k = 0; k < data2.length(); k++) {
+								JSONObject item2 = data2.getJSONObject(k);
+								child2 = new CategoryListEntity();
+								child2.setTypeId(StringUtil.getInteger((item2.getString("id"))));
+								child2.setImageUrl(item2.getString("cat_ico"));
+								child2.setName(item2.getString("name"));
+								//childLists2.add(child2);
+								show = StringUtil.getInteger(item2.getString("show_in_nav"));
+								if (show == 1) {
+									childLists1.add(child2);
+								}
 							}
 						}
+						//child1.setChildLists(childLists2);
+						//childLists1.add(child1);
 					}
-					//child1.setChildLists(childLists2);
-					//childLists1.add(child1);
 				}
+				en.setChildLists(childLists1);
+				mainLists.add(en);
 			}
-			en.setChildLists(childLists1);
-			mainLists.add(en);
 		}
 		mainEn = new CategoryListEntity(0, "su", mainLists);
 		return mainEn;
@@ -246,8 +240,8 @@ public class JsonParser {
 		mainEn.setName(brand.getString("title"));
 		// 解析子分类
 		brandLists = new ArrayList<BrandEntity>();
-		JSONArray datas = brand.getJSONArray("list");
-		if (datas != null) {
+		if (!StringUtil.isNull(brand, "list")) {
+			JSONArray datas = brand.getJSONArray("list");
 			for (int j = 0; j < datas.length(); j++) {
 				JSONObject item = datas.getJSONObject(j);
 				brandEn = new BrandEntity();
@@ -296,48 +290,52 @@ public class JsonParser {
 		List<SelectListEntity> childLists = null;
 		List<SelectListEntity> mainLists = null;
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		mainLists = new ArrayList<SelectListEntity>();
 		// 获取品牌分类
 		brandEn = new SelectListEntity();
 		brandEn.setTypeName(jsonObject.getString("title"));
-		
+
+		mainLists = new ArrayList<SelectListEntity>();
 		childLists = new ArrayList<SelectListEntity>();
 		childLists.add(new SelectListEntity(0, allStr, ""));
-		JSONArray brandLists = jsonObject.getJSONArray("list");
-		for (int i = 0; i < brandLists.length(); i++) {
-			JSONObject item = brandLists.getJSONObject(i);
-			childEn = new SelectListEntity();
-			childEn.setChildId(StringUtil.getInteger(item.getString("brand_id")));
-			childEn.setChildShowName(item.getString("brand_name"));
-			childEn.setChildLogoUrl(item.getString("brand_logo"));
-			childLists.add(childEn);
+		if (!StringUtil.isNull(jsonObject, "list")) {
+			JSONArray brandLists = jsonObject.getJSONArray("list");
+			for (int i = 0; i < brandLists.length(); i++) {
+				JSONObject item = brandLists.getJSONObject(i);
+				childEn = new SelectListEntity();
+				childEn.setChildId(StringUtil.getInteger(item.getString("brand_id")));
+				childEn.setChildShowName(item.getString("brand_name"));
+				childEn.setChildLogoUrl(item.getString("brand_logo"));
+				childLists.add(childEn);
+			}
 		}
 		brandEn.setChildLists(childLists);
 		mainLists.add(brandEn);
 		// 获取其它分类
-//		childEn = null;
-//		childLists = null;
-//		JSONArray otherDatas = jsonObject.getJSONArray("attr_list");
-//		for (int i = 0; i < otherDatas.length(); i++) {
-//			JSONObject items = otherDatas.getJSONObject(i);
-//			otherEn = new SelectListEntity();
-//			otherEn.setTypeId(StringUtil.getInteger(items.getString("attr_id")));
-//			otherEn.setTypeName(items.getString("attr_name"));
-//			
-//			childLists = new ArrayList<SelectListEntity>();
-//			childLists.add(new SelectListEntity(0, allStr, ""));
-//			JSONArray childDatas = items.getJSONArray("list");
-//			for (int j = 0; j < childDatas.length(); j++) {
-//				JSONObject item = childDatas.getJSONObject(j);
-//				childEn = new SelectListEntity();
-//				childEn.setChildId(StringUtil.getInteger(item.getString("goods_attr_id")));
-//				childEn.setChildParamName(item.getString("value"));
-//				childEn.setChildShowName(item.getString("attr_value"));
-//				childLists.add(childEn);
-//			}
-//			otherEn.setChildLists(childLists);
-//			mainLists.add(otherEn);
-//		}
+		/*childEn = null;
+		childLists = null;
+		if (!StringUtil.isNull(jsonObject, "attr_list")) {
+			JSONArray otherDatas = jsonObject.getJSONArray("attr_list");
+			for (int i = 0; i < otherDatas.length(); i++) {
+				JSONObject items = otherDatas.getJSONObject(i);
+				otherEn = new SelectListEntity();
+				otherEn.setTypeId(StringUtil.getInteger(items.getString("attr_id")));
+				otherEn.setTypeName(items.getString("attr_name"));
+
+				childLists = new ArrayList<SelectListEntity>();
+				childLists.add(new SelectListEntity(0, allStr, ""));
+				JSONArray childDatas = items.getJSONArray("list");
+				for (int j = 0; j < childDatas.length(); j++) {
+					JSONObject item = childDatas.getJSONObject(j);
+					childEn = new SelectListEntity();
+					childEn.setChildId(StringUtil.getInteger(item.getString("goods_attr_id")));
+					childEn.setChildParamName(item.getString("value"));
+					childEn.setChildShowName(item.getString("attr_value"));
+					childLists.add(childEn);
+				}
+				otherEn.setChildLists(childLists);
+				mainLists.add(otherEn);
+			}
+		}*/
 		mainEn = new SelectListEntity(0, "su", mainLists);
 		return mainEn;
 	}
@@ -375,32 +373,36 @@ public class JsonParser {
 		mainEn.setBrandCountry(brands.getString("country"));
 		
 		promotionLists = new ArrayList<ProductDetailEntity>();
-		JSONArray pros = jsonObject.getJSONArray("promotion");
-		for (int i = 0; i < pros.length(); i++) {
-			JSONObject ps = pros.getJSONObject(i);
-			en = new ProductDetailEntity();
-			en.setPromotionType(ps.getString("type"));
-			en.setPromotionName(ps.getString("act_name"));
-			promotionLists.add(en);
+		if (!StringUtil.isNull(jsonObject, "promotion")) {
+			JSONArray pros = jsonObject.getJSONArray("promotion");
+			for (int i = 0; i < pros.length(); i++) {
+				JSONObject ps = pros.getJSONObject(i);
+				en = new ProductDetailEntity();
+				en.setPromotionType(ps.getString("type"));
+				en.setPromotionName(ps.getString("act_name"));
+				promotionLists.add(en);
+			}
 		}
 		mainEn.setPromotionLists(promotionLists);
 		
 		imgLists = new ArrayList<ProductDetailEntity>();
-		JSONArray datas = jsonObject.getJSONArray("image");
-		for (int i = 0; i < datas.length(); i++) {
-			JSONObject item = datas.getJSONObject(i);
-			en = new ProductDetailEntity();
-			en.setImgId(item.getString("img_id"));
-			en.setImgMinUrl(item.getString("thumb_url"));
-			en.setImgMaxUrl(item.getString("img_url"));
-			imgLists.add(en);
+		if (!StringUtil.isNull(jsonObject, "image")) {
+			JSONArray datas = jsonObject.getJSONArray("image");
+			for (int i = 0; i < datas.length(); i++) {
+				JSONObject item = datas.getJSONObject(i);
+				en = new ProductDetailEntity();
+				en.setImgId(item.getString("img_id"));
+				en.setImgMinUrl(item.getString("thumb_url"));
+				en.setImgMaxUrl(item.getString("img_url"));
+				imgLists.add(en);
+			}
 		}
 		mainEn.setImgLists(imgLists);
 		// 解析商品attr
 		ArrayList<ProductAttrEntity> attrLists = new ArrayList<ProductAttrEntity>();
-		ProductAttrEntity listEn = null;
-		JSONArray attr = jsonObject.getJSONArray("type");
-		if (attr != null && !attr.equals("")) {
+		if (!StringUtil.isNull(jsonObject, "type")) {
+			JSONArray attr = jsonObject.getJSONArray("type");
+			ProductAttrEntity listEn = null;
 			for (int i = 0; i < attr.length(); i++) {
 				JSONObject as = attr.getJSONObject(i);
 				listEn = new ProductAttrEntity();
@@ -427,14 +429,16 @@ public class JsonParser {
 		attrEn.setAttrLists(attrLists);
 		// 解析商品sku
 		ArrayList<ProductAttrEntity> skuLists = new ArrayList<ProductAttrEntity>();
-		ProductAttrEntity skuEn = null;
-		JSONArray sku = jsonObject.getJSONArray("sku");
-		for (int i = 0; i < sku.length(); i++) {
-			JSONObject ks = sku.getJSONObject(i);
-			skuEn = new ProductAttrEntity();
-			skuEn.setSku_key(ks.getString("goods_attr"));
-			skuEn.setSku_value(StringUtil.getInteger(ks.getString("product_number")));
-			skuLists.add(skuEn);
+		if (!StringUtil.isNull(jsonObject, "sku")) {
+			JSONArray sku = jsonObject.getJSONArray("sku");
+			ProductAttrEntity skuEn = null;
+			for (int i = 0; i < sku.length(); i++) {
+				JSONObject ks = sku.getJSONObject(i);
+				skuEn = new ProductAttrEntity();
+				skuEn.setSku_key(ks.getString("goods_attr"));
+				skuEn.setSku_value(StringUtil.getInteger(ks.getString("product_number")));
+				skuLists.add(skuEn);
+			}
 		}
 		attrEn.setSkuLists(skuLists);
 		mainEn.setAttrEn(attrEn);
@@ -456,13 +460,12 @@ public class JsonParser {
 		brandEn.setFavourable(data.getString("favourable"));
 		brandEn.setEndTime(StringUtil.getLong(data.getString("time")));
 
-		JSONArray cats = jsonObject.getJSONArray("cat");
-		if (cats != null && !cats.equals("")) {
-			SelectListEntity selectEn, childEn;
-			List<SelectListEntity> childLists = null;
+		if (!StringUtil.isNull(jsonObject, "cat")) {
+			JSONArray cats = jsonObject.getJSONArray("cat");
+			SelectListEntity selectEn = new SelectListEntity();
+			SelectListEntity childEn;
+			List<SelectListEntity> childLists = new ArrayList<SelectListEntity>();
 			// 获取筛选分类
-			selectEn = new SelectListEntity();
-			childLists = new ArrayList<SelectListEntity>();
 			childLists.add(new SelectListEntity(0, allStr, ""));
 			for (int i = 0; i < cats.length(); i++) {
 				JSONObject item = cats.getJSONObject(i);
@@ -570,9 +573,9 @@ public class JsonParser {
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
 			orderEn.setGoodsLists(getConfirmGoodsFormJson(jsonObject, "cart"));
 
-			JSONObject addObj = jsonObject.getJSONObject("address");
-			if (addObj != null && !addObj.equals("")) {
-;				AddressEntity addressEn = new AddressEntity();
+			if (!StringUtil.isNull(jsonObject, "address")) {
+				JSONObject addObj = jsonObject.getJSONObject("address");
+				AddressEntity addressEn = new AddressEntity();
 				addressEn.setAddressId(StringUtil.getInteger(addObj.getString("address_id")));
 				addressEn.setName(addObj.getString("consignee"));
 				addressEn.setPhone(addObj.getString("mobile"));
@@ -626,10 +629,10 @@ public class JsonParser {
 		}
 		AddressEntity mainEn = new AddressEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			JSONArray data = jsonObject.getJSONArray("data");
-			if (data != null && !data.equals("")) {
-				List<AddressEntity> mainLists = new ArrayList<AddressEntity>();
+			if (!StringUtil.isNull(jsonObject, "data")) {
+				JSONArray data = jsonObject.getJSONArray("data");
 				AddressEntity addrEn = null;
+				List<AddressEntity> mainLists = new ArrayList<AddressEntity>();
 				for (int i = 0; i < data.length(); i++) {
 					JSONObject item = data.getJSONObject(i);
 					addrEn = new AddressEntity();
@@ -663,10 +666,10 @@ public class JsonParser {
 		}
 		AddressEntity mainEn = new AddressEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			JSONArray data = jsonObject.getJSONArray("regions");
-			if (data != null && !data.equals("")) {
-				List<AddressEntity> mainLists = new ArrayList<AddressEntity>();
+			if (!StringUtil.isNull(jsonObject, "regions")) {
+				JSONArray data = jsonObject.getJSONArray("regions");
 				AddressEntity addrEn = null;
+				List<AddressEntity> mainLists = new ArrayList<AddressEntity>();
 				for (int i = 0; i < data.length(); i++) {
 					JSONObject item = data.getJSONObject(i);
 					addrEn = new AddressEntity();
@@ -691,8 +694,8 @@ public class JsonParser {
 		}
 		UserInfoEntity infoEn = new UserInfoEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			JSONObject data = jsonObject.getJSONObject("data");
-			if (data != null && !data.equals("")) {
+			if (!StringUtil.isNull(jsonObject, "data")) {
+				JSONObject data = jsonObject.getJSONObject("data");
 				infoEn.setUserId(data.getString("user_id"));
 				infoEn.setUserName(data.getString("user_name"));
 				infoEn.setUserNick(data.getString("nickname"));
@@ -731,18 +734,19 @@ public class JsonParser {
 		MemberEntity mainEn = new MemberEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
 			mainEn.setCountTotal(StringUtil.getInteger(jsonObject.getString("count")));
-			List<MemberEntity> mainLists = new ArrayList<MemberEntity>();
-			JSONArray data = jsonObject.getJSONArray("data");
-			if (data != null && !data.equals("")) {
+			if (!StringUtil.isNull(jsonObject, "data")) {
+				JSONArray data = jsonObject.getJSONArray("data");
 				MemberEntity en = null;
+				List<MemberEntity> mainLists = new ArrayList<MemberEntity>();
 				for (int i = 0; i < data.length(); i++) {
 					JSONObject item = data.getJSONObject(i);
 					en = new MemberEntity();
 					en.setUserId(item.getString("user_id"));
 					en.setUserName(item.getString("nickname"));
+					en.setUserSex(item.getString("sex"));
 					en.setHeadImg(item.getString("avatar"));
-					en.setMemberRank(StringUtil.getInteger(item.getString("user_rank")));
-					en.setOrderCount(item.getString("affiliate_count"));
+					//en.setMemberRank(StringUtil.getInteger(item.getString("user_rank")));
+					//en.setOrderCount(item.getString("affiliate_count"));
 					en.setOrderMoney(item.getString("affiliate_money"));
 					en.setLastLogin(item.getString("last_login"));
 					mainLists.add(en);
@@ -765,11 +769,11 @@ public class JsonParser {
 		OrderEntity mainEn = new OrderEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
 			mainEn.setOrderTotal(StringUtil.getInteger(jsonObject.getString("count")));
-			List<OrderEntity> mainLists = new ArrayList<OrderEntity>();
-			JSONArray data = jsonObject.getJSONArray("data");
-			if (data != null && !data.equals("")) {
+			if (!StringUtil.isNull(jsonObject, "data")) {
+				JSONArray data = jsonObject.getJSONArray("data");
 				OrderEntity en = null;
 				UserInfoEntity infoEn = null;
+				List<OrderEntity> mainLists = new ArrayList<OrderEntity>();
 				for (int i = 0; i < data.length(); i++) {
 					JSONObject item = data.getJSONObject(i);
 					en = new OrderEntity();
@@ -806,10 +810,10 @@ public class JsonParser {
 		OrderEntity mainEn = new OrderEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
 			mainEn.setOrderTotal(StringUtil.getInteger(jsonObject.getString("count")));
-			List<OrderEntity> mainLists = new ArrayList<OrderEntity>();
-			JSONArray data = jsonObject.getJSONArray("orders");
-			if (data != null && !data.equals("")) {
+			if (!StringUtil.isNull(jsonObject, "orders")) {
+				JSONArray data = jsonObject.getJSONArray("orders");
 				OrderEntity en = null;
+				List<OrderEntity> mainLists = new ArrayList<OrderEntity>();
 				for (int i = 0; i < data.length(); i++) {
 					JSONObject item = data.getJSONObject(i);
 					en = new OrderEntity();
@@ -819,7 +823,7 @@ public class JsonParser {
 					en.setStatusName(item.getString("handler"));
 					en.setPriceTotal(item.getString("total_fee"));
 					en.setGoodsTotalStr(item.getString("count"));
-					
+
 					/*long createTime = StringUtil.getLong(item.getString("add_time"))*1000;
 					en.setCreateTime(createTime);
 					en.setValidTime(createTime + 1800000); //有效时间30分钟*/
@@ -843,8 +847,8 @@ public class JsonParser {
 		}
 		OrderEntity orderEn = new OrderEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			JSONArray datas = jsonObject.getJSONArray("data");
-			if (datas != null && !datas.equals("")) {
+			if (!StringUtil.isNull(jsonObject, "data")) {
+				JSONArray datas = jsonObject.getJSONArray("data");
 				JSONObject data = datas.getJSONObject(0);
 				orderEn.setOrderId(data.getString("order_id"));
 				orderEn.setOrderNo(data.getString("order_sn"));
@@ -871,8 +875,8 @@ public class JsonParser {
 				//orderEn.setInvoiceName(data.getString("inv_name"));
 				//orderEn.setInvoiceType(data.getString("inv_type"));
 				//orderEn.setInvoicePayee(data.getString("inv_payee"));
-				orderEn.setBuyerName(data.getString("postscript_name"));
-				orderEn.setBuyer(data.getString("postscript"));
+				//orderEn.setBuyerName(data.getString("postscript_name"));
+				//orderEn.setBuyer(data.getString("postscript"));
 				
 				long createTime = StringUtil.getLong(data.getString("add_time"))*1000;
 				orderEn.setCreateTime(createTime);
@@ -901,10 +905,10 @@ public class JsonParser {
 		}
 		LogisticsEntity mainEn = new LogisticsEntity(errorCode, "");
 		if (errorCode == 200) {
-			JSONArray datas = jsonObject.getJSONArray("data");
-			if (datas != null && !datas.equals("")) {
-				ArrayList<LogisticsEntity> mainLists = new ArrayList<LogisticsEntity>();
+			if (!StringUtil.isNull(jsonObject, "data")) {
+				JSONArray datas = jsonObject.getJSONArray("data");
 				LogisticsEntity en = null;
+				ArrayList<LogisticsEntity> mainLists = new ArrayList<LogisticsEntity>();
 				for (int i = 0; i < datas.length(); i++) {
 					JSONObject item = datas.getJSONObject(i);
 					en = new LogisticsEntity();
@@ -981,10 +985,10 @@ public class JsonParser {
 			mainEn.setAmount(StringUtil.getInteger(jsonObject.getString("amount")));
 			mainEn.setStatus(StringUtil.getInteger(jsonObject.getString("content")));
 			mainEn.setStatusHint(jsonObject.getString("message"));
-			List<BalanceDetailEntity> mainLists = new ArrayList<BalanceDetailEntity>();
-			JSONArray data = jsonObject.getJSONArray("account");
-			if (data != null && !data.equals("")) {
+			if (!StringUtil.isNull(jsonObject, "account")) {
+				JSONArray data = jsonObject.getJSONArray("account");
 				BalanceDetailEntity en = null;
+				List<BalanceDetailEntity> mainLists = new ArrayList<BalanceDetailEntity>();
 				for (int i = 0; i < data.length(); i++) {
 					JSONObject item = data.getJSONObject(i);
 					en = new BalanceDetailEntity();
@@ -1014,10 +1018,10 @@ public class JsonParser {
 			if (jsonObject.has("count")) {
 				mainEn.setCountTotal(StringUtil.getInteger(jsonObject.getString("count")));
 			}
-			List<BounsEntity> mainLists = new ArrayList<BounsEntity>();
-			JSONArray data = jsonObject.getJSONArray("data");
-			if (data != null && !data.equals("")) {
+			if (!StringUtil.isNull(jsonObject, "data")) {
+				JSONArray data = jsonObject.getJSONArray("data");
 				BounsEntity en = null;
+				List<BounsEntity> mainLists = new ArrayList<BounsEntity>();
 				for (int i = 0; i < data.length(); i++) {
 					JSONObject item = data.getJSONObject(i);
 					en = new BounsEntity();
@@ -1045,8 +1049,8 @@ public class JsonParser {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		String newEndKey = jsonObject.getString("endKey");
 		List<Product> productList = new ArrayList<Product>();
-		JSONArray data = jsonObject.getJSONArray("productList");
-		if (data != null && !data.equals("")) {
+		if (!StringUtil.isNull(jsonObject, "productList")) {
+			JSONArray data = jsonObject.getJSONArray("productList");
 			JSONObject tmpJsonObj;
 			for (int i = 0; i < data.length(); i++) {
 				tmpJsonObj = data.getJSONObject(i);
@@ -1079,22 +1083,20 @@ public class JsonParser {
 	 */
 	private static ArrayList<ProductListEntity> getProductListsFormJson(JSONObject jsonObj, String key) throws JSONException {
 		ArrayList<ProductListEntity> mainLists = new ArrayList<ProductListEntity>();
-		if (jsonObj.has(key)) {
+		if (!StringUtil.isNull(jsonObj, key)) {
 			JSONArray datas = jsonObj.getJSONArray(key);
-			if (datas != null && !datas.equals("")) {
-				ProductListEntity en = null;
-				for (int i = 0; i < datas.length(); i++) {
-					JSONObject item = datas.getJSONObject(i);
-					en = new ProductListEntity();
-					en.setId(StringUtil.getInteger((item.getString("goods_id"))));
-					en.setImageUrl(item.getString("goods_thumb"));
-					en.setBrand(item.getString("brand_name"));
-					en.setName(item.getString("goods_name"));
-					en.setFullPrice(item.getString("prices"));
-					en.setSellPrice(item.getString("price"));
-					en.setDiscount(item.getString("sale"));
-					mainLists.add(en);
-				}
+			ProductListEntity en = null;
+			for (int i = 0; i < datas.length(); i++) {
+				JSONObject item = datas.getJSONObject(i);
+				en = new ProductListEntity();
+				en.setId(StringUtil.getInteger((item.getString("goods_id"))));
+				en.setImageUrl(item.getString("goods_thumb"));
+				en.setBrand(item.getString("brand_name"));
+				en.setName(item.getString("goods_name"));
+				en.setFullPrice(item.getString("prices"));
+				en.setSellPrice(item.getString("price"));
+				en.setDiscount(item.getString("sale"));
+				mainLists.add(en);
 			}
 		}
 		return mainLists;
@@ -1105,22 +1107,20 @@ public class JsonParser {
 	 */
 	private static ArrayList<ProductListEntity> getProductListsFormJson2(JSONObject jsonObj, String key) throws JSONException {
 		ArrayList<ProductListEntity> mainLists = new ArrayList<ProductListEntity>();
-		if (jsonObj.has(key)) {
+		if (!StringUtil.isNull(jsonObj, key)) {
 			JSONArray datas = jsonObj.getJSONArray(key);
-			if (datas != null && !datas.equals("")) {
-				ProductListEntity en = null;
-				for (int i = 0; i < datas.length(); i++) {
-					JSONObject item = datas.getJSONObject(i);
-					en = new ProductListEntity();
-					en.setId(StringUtil.getInteger((item.getString("id"))));
-					en.setImageUrl(item.getString("thumb"));
-					en.setName(item.getString("name"));
-					en.setBrand(item.getString("brand"));
-					en.setSellPrice(item.getString("price"));
-					en.setTotal(StringUtil.getInteger(item.getString("number")));
-					en.setAttr(item.getString("attr"));
-					mainLists.add(en);
-				}
+			ProductListEntity en = null;
+			for (int i = 0; i < datas.length(); i++) {
+				JSONObject item = datas.getJSONObject(i);
+				en = new ProductListEntity();
+				en.setId(StringUtil.getInteger((item.getString("id"))));
+				en.setImageUrl(item.getString("thumb"));
+				en.setName(item.getString("name"));
+				en.setBrand(item.getString("brand"));
+				en.setSellPrice(item.getString("price"));
+				en.setTotal(StringUtil.getInteger(item.getString("number")));
+				en.setAttr(item.getString("attr"));
+				mainLists.add(en);
 			}
 		}
 		return mainLists;
@@ -1131,22 +1131,20 @@ public class JsonParser {
 	 */
 	private static ArrayList<ProductListEntity> getConfirmGoodsFormJson(JSONObject jsonObj, String key) throws JSONException {
 		ArrayList<ProductListEntity> mainLists = new ArrayList<ProductListEntity>();
-		if (jsonObj.has(key)) {
+		if (!StringUtil.isNull(jsonObj, key)) {
 			JSONArray datas = jsonObj.getJSONArray(key);
-			if (datas != null && !datas.equals("")) {
-				ProductListEntity en = null;
-				for (int i = 0; i < datas.length(); i++) {
-					JSONObject item = datas.getJSONObject(i);
-					en = new ProductListEntity();
-					en.setId(StringUtil.getInteger((item.getString("goods_id"))));
-					en.setImageUrl(item.getString("thumb"));
-					en.setName(item.getString("goods_name"));
-					en.setBrand(item.getString("brand"));
-					en.setSellPrice(item.getString("price"));
-					en.setTotal(StringUtil.getInteger(item.getString("goods_number")));
-					en.setAttr(item.getString("attr"));
-					mainLists.add(en);
-				}
+			ProductListEntity en = null;
+			for (int i = 0; i < datas.length(); i++) {
+				JSONObject item = datas.getJSONObject(i);
+				en = new ProductListEntity();
+				en.setId(StringUtil.getInteger((item.getString("goods_id"))));
+				en.setImageUrl(item.getString("thumb"));
+				en.setName(item.getString("goods_name"));
+				en.setBrand(item.getString("brand"));
+				en.setSellPrice(item.getString("price"));
+				en.setTotal(StringUtil.getInteger(item.getString("goods_number")));
+				en.setAttr(item.getString("attr"));
+				mainLists.add(en);
 			}
 		}
 		return mainLists;

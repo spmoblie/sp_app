@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.service;
 
-import android.content.Context;
-
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
@@ -428,9 +426,9 @@ public class ServiceContext {
 	/**
 	 * 提交创建的搭配数据
 	 */
-	public APIResult submitLookBook(Context ctx, String userId, String sessionKey, String lookBookType, String title, 
+	public APIResult submitLookBook(String userId, String sessionKey, String lookBookType, String title,
 			String descripton, String filePath, String[] productIdList, String html, String mobileHtml) throws Exception {
-		return ms.submitLookBook(ctx, userId, sessionKey, lookBookType, title, descripton, filePath, productIdList, html, mobileHtml);
+		return ms.submitLookBook(userId, sessionKey, lookBookType, title, descripton, filePath, productIdList, html, mobileHtml);
 	}
 
 }

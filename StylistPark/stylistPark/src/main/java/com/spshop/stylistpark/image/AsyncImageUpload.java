@@ -1,11 +1,9 @@
 package com.spshop.stylistpark.image;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.service.JsonParser;
@@ -28,7 +26,6 @@ public class AsyncImageUpload {
 	private Thread workThread;
 	private Handler handler;
 	private boolean isLoop;
-	private Context context;
 	private static AsyncImageUpload instance;
 
 	/**
@@ -38,7 +35,7 @@ public class AsyncImageUpload {
 		if (instance == null) {
 			synchronized (AsyncImageUpload.class) {
 				if (instance == null) {
-					instance = new AsyncImageUpload(AppApplication.spApp.getApplicationContext(), callback);
+					instance = new AsyncImageUpload(callback);
 				}
 			}
 		}
@@ -46,8 +43,7 @@ public class AsyncImageUpload {
 	}
 
 	@SuppressLint("HandlerLeak")
-	private AsyncImageUpload(final Context context, final AsyncImageUploadCallback callback) {
-		this.context = context;
+	private AsyncImageUpload(final AsyncImageUploadCallback callback) {
 		this.isLoop = true;
 		this.tasks = new ArrayList<ImageLoadTask>();
 
@@ -71,7 +67,7 @@ public class AsyncImageUpload {
 						try {
 							URL url = new URL(task.url);
 							HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-							String cookie = FileManager.readFileSaveString(context, AppConfig.cookiesFileName, true);
+							String cookie = FileManager.readFileSaveString(AppConfig.cookiesFileName, true);
 							LogUtil.i("JsonParser", "read cookie = " + cookie);
 
 							String end = "\r\n";
@@ -213,10 +209,10 @@ public class AsyncImageUpload {
 	}
 
 	private void exceptionHandle(Exception e) {
-		ExceptionUtil.handle(context, e);
 		Message msg = new Message();
 		msg.obj = null;
 		handler.sendMessage(msg);
+		ExceptionUtil.handle(e);
 	}
 
 	public interface AsyncImageUploadCallback {

@@ -418,7 +418,7 @@ public class MultiAngleMainActivity extends BaseActivity implements OnClickListe
 					ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + selectedProduct.getThumbUrl(), multiangle_photoImageView, options);
 					multiangle_brandTextView.setText(selectedProduct.getBrand());
 					multiangle_nameTextView.setText(selectedProduct.getName());
-					multiangle_priceTextView.setText(LangCurrTools.getCurrencyValue(mContext) + selectedProduct.getPrice());
+					multiangle_priceTextView.setText(LangCurrTools.getCurrencyValue() + selectedProduct.getPrice());
 				}
 				multiangle_selectedInfoLayout.setVisibility(View.VISIBLE);
 				multiAngle_changeProductBtn.setVisibility(View.VISIBLE);
@@ -467,7 +467,7 @@ public class MultiAngleMainActivity extends BaseActivity implements OnClickListe
 
 					@Override
 					public void onErrorResponse(final VolleyError error) {
-						ExceptionUtil.handle(mContext, error);
+						ExceptionUtil.handle(error);
 						showErrorDialog(R.string.dialog_error_msg);
 						stopAnimation();
 					}
@@ -560,14 +560,14 @@ public class MultiAngleMainActivity extends BaseActivity implements OnClickListe
 				fos.flush();
 				fos.close();
 			} catch (FileNotFoundException e) {
-				ExceptionUtil.handle(mContext, e);
+				ExceptionUtil.handle(e);
 			} catch (IOException e) {
-				ExceptionUtil.handle(mContext, e);
+				ExceptionUtil.handle(e);
 			}
 			BitmapUtil.scaleDownImageFile(file, 450, 450, CompressFormat.PNG, 100);
 
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 			if (result != null) {
 				result.recycle();
 				result = null;
@@ -657,7 +657,7 @@ public class MultiAngleMainActivity extends BaseActivity implements OnClickListe
 			try {
 				result = CommonTools.keyEffects(weakActivity.get().getApplicationContext(), arg[0]);
 			} catch (Exception e) {
-				ExceptionUtil.handle(weakActivity.get(), e);
+				ExceptionUtil.handle(e);
 				result = null;
 			}
 			return result;

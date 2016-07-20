@@ -1,14 +1,14 @@
 package com.spshop.stylistpark.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 
 import com.flurry.android.FlurryAgent;
 import com.spshop.stylistpark.AppConfig;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserTracker {
 	private static final String TAG = "UserTracker";

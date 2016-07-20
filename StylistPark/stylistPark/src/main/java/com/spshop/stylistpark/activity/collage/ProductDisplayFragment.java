@@ -172,7 +172,7 @@ public class ProductDisplayFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dollarSign = LangCurrTools.getCurrencyValue(getActivity());
+		dollarSign = LangCurrTools.getCurrencyValue();
 	}
 
 	@Override
@@ -383,7 +383,7 @@ public class ProductDisplayFragment extends BaseFragment {
 				mLastClickTime = SystemClock.elapsedRealtime();
 				UserTracker.getInstance().trackUserAction(UserTracker.Action.EVENT_CLICK_PRODUCT_LIST_ITEM, null);
 
-				if (!NetworkUtil.isNetworkAvailable(mContext)) {
+				if (!NetworkUtil.isNetworkAvailable()) {
 					if (showErrDialogListener != null) {
 						showErrDialogListener.showErrDialog(getActivity().getResources().getString(R.string.network_fault));
 					}
@@ -844,7 +844,7 @@ public class ProductDisplayFragment extends BaseFragment {
 
 		} else {
 			// productDisplay_topBarLayout.setVisibility(View.VISIBLE);
-			if (!NetworkUtil.isNetworkAvailable(mContext)) {
+			if (!NetworkUtil.isNetworkAvailable()) {
 				clearHistory();
 			}
 			if (productListFragment != null)

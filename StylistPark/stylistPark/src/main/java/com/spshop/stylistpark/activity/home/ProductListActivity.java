@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +30,8 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.common.SelectListActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
-import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
+import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
@@ -43,7 +44,6 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -110,9 +110,9 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private List<ProductListEntity> lv_all_1 = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all_3_DSC = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all_3_ASC = new ArrayList<ProductListEntity>();
-	private HashMap<Integer, Boolean> hm_all_1 = new HashMap<Integer, Boolean>();
-	private HashMap<Integer, Boolean> hm_all_3_asc = new HashMap<Integer, Boolean>();
-	private HashMap<Integer, Boolean> hm_all_3_dsc = new HashMap<Integer, Boolean>();
+	private SparseBooleanArray sa_all_1 = new SparseBooleanArray();
+	private SparseBooleanArray sa_all_3_asc = new SparseBooleanArray();
+	private SparseBooleanArray sa_all_3_dsc = new SparseBooleanArray();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -329,7 +329,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				if (countTotal % Page_Count > 0) {
 					page_total++;
 				}
-				CommonTools.showPageNum(mContext, page_num + "/" + page_total, 1000);
+				CommonTools.showPageNum(page_num + "/" + page_total, 1000);
 
 				if (!isStop()) {
 					loadSVDatas();
@@ -403,7 +403,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 */
 	private void requestSearchDatas() {
 		if (StringUtil.isNull(searchStr)) {
-			CommonTools.showToast(mContext, getString(R.string.product_search_et_hint), 1000);
+			CommonTools.showToast(getString(R.string.product_search_et_hint), 1000);
 			return;
 		}
 		clearAllData();
@@ -578,10 +578,10 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 					intent.putExtra("dataType", SelectListAdapter.DATA_TYPE_4);
 					startActivity(intent);
 				}else {
-					CommonTools.showToast(mContext, getString(R.string.toast_error_data_null), 1000);
+					CommonTools.showToast(getString(R.string.toast_error_data_null), 1000);
 				}
 			}else {
-				CommonTools.showToast(mContext, getString(R.string.toast_error_data_null), 1000);
+				CommonTools.showToast(getString(R.string.toast_error_data_null), 1000);
 			}
 			break;
 		case R.id.search_iv_back: //返回
@@ -793,9 +793,9 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 					switch (topType) {
 					case TYPE_1: //默认
 						if (loadType == 0) { //下拉
-							updEntity(total, countTotal, lists, lv_all_1, hm_all_1);
+							updEntity(total, countTotal, lists, lv_all_1, sa_all_1);
 						}else {
-							addEntity(lv_all_1, lists, hm_all_1);
+							addEntity(lv_all_1, lists, sa_all_1);
 							page_type_1++;
 						}
 						total_1 = total;
@@ -804,18 +804,18 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 						switch (sortType) {
 						case 1: //降序
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all_3_DSC, hm_all_3_dsc);
+								updEntity(total, countTotal, lists, lv_all_3_DSC, sa_all_3_dsc);
 							}else {
-								addEntity(lv_all_3_DSC, lists, hm_all_3_dsc);
+								addEntity(lv_all_3_DSC, lists, sa_all_3_dsc);
 								page_type_3_DSC++;
 							}
 							total_3_DSC = total;
 							break;
 						case 2: //升序
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all_3_ASC, hm_all_3_asc);
+								updEntity(total, countTotal, lists, lv_all_3_ASC, sa_all_3_asc);
 							}else {
-								addEntity(lv_all_3_ASC, lists, hm_all_3_asc);
+								addEntity(lv_all_3_ASC, lists, sa_all_3_asc);
 								page_type_3_ASC++;
 							}
 							total_3_ASC = total;
@@ -876,7 +876,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 * 刷新数集
 	 */
 	private void updEntity(int newTotal, int oldTotal, List<ProductListEntity> newDatas, 
-			List<ProductListEntity> oldDatas, HashMap<Integer, Boolean> oldMap) {
+			List<ProductListEntity> oldDatas, SparseBooleanArray sa_old) {
 		if (oldTotal < newTotal) {
 			List<ProductListEntity> datas = new ArrayList<ProductListEntity>();
 			datas.addAll(oldDatas);
@@ -888,14 +888,14 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				newEn = newDatas.get(i);
 				if (newEn != null) {
 					dataId = newEn.getId();
-					if (dataId != 0 && !oldMap.containsKey(dataId)) {
+					if (dataId != 0 && sa_old.indexOfKey(dataId) < 0) {
 						// 添加至顶层
 						oldDatas.add(newEn);
-						oldMap.put(dataId, true);
+						sa_old.put(dataId, true);
 						// 移除最底层
 						oldEn = datas.remove(datas.size()-1);
-						if (oldEn != null && oldMap.containsKey(oldEn.getId())) {
-							oldMap.remove(oldEn.getId());
+						if (oldEn != null) {
+							sa_old.delete(oldEn.getId());
 						}
 					}
 				}
@@ -909,16 +909,16 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	/**
 	 * 数据去重函数
 	 */
-	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, HashMap<Integer, Boolean> hashMap) {
+	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, SparseBooleanArray sa_old) {
 		ProductListEntity entity = null;
 		int dataId = 0;
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
 			if (entity != null) {
 				dataId = entity.getId();
-				if (dataId != 0 && !hashMap.containsKey(dataId)) {
+				if (dataId != 0 && sa_old.indexOfKey(dataId) < 0) {
 					oldDatas.add(entity);
-					hashMap.put(dataId, true);
+					sa_old.put(dataId, true);
 				}
 			}
 		}
@@ -1054,9 +1054,9 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		lv_all_1.clear();
 		lv_all_3_DSC.clear();
 		lv_all_3_ASC.clear();
-		hm_all_1.clear();
-		hm_all_3_asc.clear();
-		hm_all_3_dsc.clear();
+		sa_all_1.clear();
+		sa_all_3_asc.clear();
+		sa_all_3_dsc.clear();
 	}
 	
 }

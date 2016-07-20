@@ -108,10 +108,7 @@
             android:screenOrientation="nosensor"
             android:launchMode="singleTask"
             android:theme="@style/MyTheme_1" />
-        
-        <activity android:name=".activity.MainActivity"
-            android:screenOrientation="portrait" />
-        
+
         <activity android:name=".activity.category.CategoryActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />

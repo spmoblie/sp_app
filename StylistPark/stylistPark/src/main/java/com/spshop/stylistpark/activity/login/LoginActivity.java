@@ -21,7 +21,6 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
@@ -82,7 +81,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	
 	private HttpUtil http;
 	private UserManager um;
-	private DisplayImageOptions options;
 	private UserInfoEntity infoEn, fbOauthEn;
 	private boolean isStop = false;
 	private String rootPage, loginType, postUid, userStr, passWordStr;
@@ -120,7 +118,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		http = new HttpUtil();
 		um = UserManager.getInstance();
 		userStr = um.getLoginName();
-		options = AppApplication.getHeadImageOptions();
+
 		// QQ
 		mTencent = Tencent.createInstance(QQ_APP_ID, mContext);
 		// FB
@@ -159,8 +157,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		tv_weibo.setOnClickListener(this);
 		tv_alipay.setOnClickListener(this);
 		tv_facebook.setOnClickListener(this);
-		
-		ImageLoader.getInstance().displayImage("", iv_head, options);
+
+		ImageLoader.getInstance().displayImage("", iv_head, AppApplication.getHeadImageOptions());
 		initEditText();
 	}
 	
@@ -208,12 +206,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	private void login() {
 		userStr = et_user.getText().toString();
 		if (userStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.login_input_user_name), 1000);
+			CommonTools.showToast(getString(R.string.login_input_user_name), 1000);
 			return;
 		}
 		passWordStr = et_password.getText().toString();
 		if (passWordStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.login_input_password), 1000);
+			CommonTools.showToast(getString(R.string.login_input_password), 1000);
 			return;
 		}
 		requestAccountLogin();
@@ -278,7 +276,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void loginWechat() {
 		if(!api.isWXAppInstalled()){ //检测是否安装微信客户端
-			CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_no_wechat), 1000);
+			CommonTools.showToast(mContext.getString(R.string.share_msg_no_wechat), 1000);
 			return;
 		}
 //		access_token = um.getWXAccessToken();
@@ -306,7 +304,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	class HttpWechatAuthTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			return http.HttpGet(instance, params[0]);
+			return http.HttpGet(params[0]);
 		}
 		
 		@Override
@@ -320,7 +318,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 							+ "appid=" + WX_APP_ID + "&grant_type=refresh_token&refresh_token=" + refresh_token);
 				}
 			} catch (JSONException e) {
-				ExceptionUtil.handle(instance, e);
+				ExceptionUtil.handle(e);
 				showLoginError();
 			}
 		}
@@ -332,7 +330,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	class HttpWechatRefreshTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			return http.HttpGet(instance, params[0]);
+			return http.HttpGet(params[0]);
 		}
 		
 		@Override
@@ -347,7 +345,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					showLoginError();
 				}
 			} catch (JSONException e) {
-				ExceptionUtil.handle(instance, e);
+				ExceptionUtil.handle(e);
 				showLoginError();
 			}
 		}
@@ -377,7 +375,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	class HttpWechatUserTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			return http.HttpGet(instance, params[0]);
+			return http.HttpGet(params[0]);
 		}
 
 		@Override
@@ -396,7 +394,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					showLoginError();
 				}
 			} catch (JSONException e) {
-				ExceptionUtil.handle(instance, e);
+				ExceptionUtil.handle(e);
 				showLoginError();
 			}
 		}
@@ -451,7 +449,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					}
 				}
 			} catch (Exception e) {
-				ExceptionUtil.handle(mContext, e);
+				ExceptionUtil.handle(e);
 				showLoginError();
 			}
 		}
@@ -521,7 +519,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 				
 				@Override
 				public void onWeiboException(WeiboException e) {
-					ExceptionUtil.handle(mContext, e);
+					ExceptionUtil.handle(e);
 					showLoginError();
 				}
 			});
@@ -578,7 +576,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
 		@Override
         public void onWeiboException(WeiboException e) {
-        	ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
         	showLoginError();
         }
     };
@@ -655,7 +653,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void showLoginCancel() {
 		stopAnimation();
-		CommonTools.showToast(mContext, getString(R.string.login_oauth_cancel), 1000);
+		CommonTools.showToast(getString(R.string.login_oauth_cancel), 1000);
 	}
 	
 	/**
@@ -663,7 +661,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void showLoginError() {
 		stopAnimation();
-		CommonTools.showToast(mContext, getString(R.string.login_error_oauth), 1000); 
+		CommonTools.showToast(getString(R.string.login_error_oauth), 1000);
 	}
 
 	/**
@@ -820,7 +818,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					if (StringUtil.isNull(infoEn.getErrInfo())) {
 						showServerBusy();
 					}else {
-						CommonTools.showToast(this, infoEn.getErrInfo(), 2000);
+						CommonTools.showToast(infoEn.getErrInfo(), 2000);
 					}
 				}
 			}
@@ -830,7 +828,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 				if (StringUtil.isNull(infoEn.getErrInfo())) {
 					showServerBusy();
 				}else {
-					CommonTools.showToast(this, infoEn.getErrInfo(), 2000);
+					CommonTools.showToast(infoEn.getErrInfo(), 2000);
 				}
 			}
 		}else {

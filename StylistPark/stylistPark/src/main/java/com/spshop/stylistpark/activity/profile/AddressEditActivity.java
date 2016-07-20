@@ -364,27 +364,27 @@ public class AddressEditActivity extends BaseActivity implements
 		// 判定姓名
 		nameStr = et_name.getText().toString();
 		if (nameStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.address_error_name_empty), 1000);
+			CommonTools.showToast(getString(R.string.address_error_name_empty), 1000);
 			return;
 		} 
 		// 判定手机号
 		phoneStr = et_phone.getText().toString();
 		if (phoneStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.address_error_phone_empty), 1000);
+			CommonTools.showToast(getString(R.string.address_error_phone_empty), 1000);
 			return;
 		} 
 //		// 判定邮箱
 //		emailStr = et_email.getText().toString();
 //		if (emailStr.isEmpty()) {
-//			CommonTools.showToast(mContext, getString(R.string.login_input_email), 1000);
+//			CommonTools.showToast(getString(R.string.login_input_email), 1000);
 //			return;
 //		} else if (!StringUtil.isEmail(emailStr)) {
-//			CommonTools.showToast(mContext, getString(R.string.login_email_format_error), 1000);
+//			CommonTools.showToast(getString(R.string.login_email_format_error), 1000);
 //			return;
 //		}
 		// 判定区域信息
 		if (countryId == 0) {
-			CommonTools.showToast(mContext, getString(R.string.address_error_load_area), 1000);
+			CommonTools.showToast(getString(R.string.address_error_load_area), 1000);
 			return;
 		}
 //		// 判定国家及省、市、区
@@ -393,14 +393,14 @@ public class AddressEditActivity extends BaseActivity implements
 //			mCityName = tv_city.getText().toString();
 //			mDistrictName = tv_district.getText().toString();
 //			if (mProviceName.isEmpty() || mCityName.isEmpty() || mDistrictName.isEmpty()) {
-//				CommonTools.showToast(mContext, getString(R.string.address_error_area_empty), 1000);
+//				CommonTools.showToast(getString(R.string.address_error_area_empty), 1000);
 //				return;
 //			} 
 //		}
 		// 判定详细地址
 		addressStr = et_address.getText().toString();
 		if (addressStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.address_error_address_empty), 1000);
+			CommonTools.showToast(getString(R.string.address_error_address_empty), 1000);
 			return;
 		}
 		requestEditAddress();
@@ -512,7 +512,7 @@ public class AddressEditActivity extends BaseActivity implements
 				}, 1000);
 			}else {
 				stopAnimation();
-				CommonTools.showToast(this, getString(R.string.address_error_load_area), 3000);
+				CommonTools.showToast(getString(R.string.address_error_load_area), 3000);
 			}
 			break;
 		case AppConfig.REQUEST_SV_POST_EDIT_ADDRESS_CODE:
@@ -520,7 +520,7 @@ public class AddressEditActivity extends BaseActivity implements
 			if (result != null) {
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					CommonTools.showToast(this, getString(R.string.save_ok), 1000);
+					CommonTools.showToast(getString(R.string.save_ok), 1000);
 					if (MyAddressActivity.instance != null) {
 						MyAddressActivity.instance.isChange = true;
 					}
@@ -534,7 +534,7 @@ public class AddressEditActivity extends BaseActivity implements
 					if (StringUtil.isNull(baseEn.getErrInfo())) {
 						showServerBusy();
 					}else {
-						CommonTools.showToast(mContext, baseEn.getErrInfo(), 2000);
+						CommonTools.showToast(baseEn.getErrInfo(), 2000);
 					}
 				}
 			}else {
@@ -706,13 +706,13 @@ public class AddressEditActivity extends BaseActivity implements
 				mCitisDatasMap.put(provinceList.get(i).getName(), cityNames);
 			}
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 		} finally {
 			if (input != null) {
 				try {
 					input.close();
 				} catch (IOException e) {
-					ExceptionUtil.handle(mContext, e);
+					ExceptionUtil.handle(e);
 				}
 			}
 		}

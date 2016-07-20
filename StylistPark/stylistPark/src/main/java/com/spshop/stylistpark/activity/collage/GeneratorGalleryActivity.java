@@ -173,9 +173,9 @@ public class GeneratorGalleryActivity extends BaseActivity {
             }
             return returnedBitmap;
         } catch (FileNotFoundException e) {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         } catch (IOException e) {
-        	ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         }
         return null;
     }
@@ -196,7 +196,7 @@ public class GeneratorGalleryActivity extends BaseActivity {
             try {
                 mFileTemp.createNewFile();
             } catch (IOException e) {
-                ExceptionUtil.handle(mContext, e);
+                ExceptionUtil.handle(e);
             }
         }
     }
@@ -249,7 +249,7 @@ public class GeneratorGalleryActivity extends BaseActivity {
                     showImage(); //获取并显示图片
                 } catch (Exception e) {
                     errored();
-                    ExceptionUtil.handle(mContext, e);
+                    ExceptionUtil.handle(e);
                 }
             } else {
                 errored();

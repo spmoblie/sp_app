@@ -251,7 +251,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	}
 
 	private void myLoadUrl(String url) {
-		HttpUtil.synCookies(MyWebViewActivity.this, url); //同步Cookies
+		HttpUtil.synCookies(url); //同步Cookies
 		webview.loadUrl(url);
 	}
 
@@ -400,7 +400,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		}
 		commentStr = et_comment.getText().toString();
 		if (StringUtil.isNull(commentStr)) {
-			CommonTools.showToast(mContext, getString(R.string.events_comment_input), 1000);
+			CommonTools.showToast(getString(R.string.events_comment_input), 1000);
 			return;
 		}
 		//new JsToJava().sendComment(commentStr);
@@ -480,7 +480,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 				intent.putExtra("goodsId", StringUtil.getInteger(goodsId));
 				startActivity(intent);
 			} else {
-				CommonTools.showToast(mContext, "GoodsId is null", 1000);
+				CommonTools.showToast("GoodsId is null", 1000);
 			}
 		}
 
@@ -517,9 +517,9 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 						isScroll = true;
 						myLoadUrl(lodUrl);
 						if (StringUtil.isNull(baseEn.getErrInfo())) {
-							CommonTools.showToast(mContext, getString(R.string.events_comment_ok), 2000);
+							CommonTools.showToast(getString(R.string.events_comment_ok), 2000);
 						}else {
-							CommonTools.showToast(mContext, baseEn.getErrInfo(), 2000);
+							CommonTools.showToast(baseEn.getErrInfo(), 2000);
 						}
 					}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 						// 登入超时，交BaseActivity处理
@@ -527,7 +527,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 						if (StringUtil.isNull(baseEn.getErrInfo())) {
 							showServerBusy();
 						}else {
-							CommonTools.showToast(mContext, baseEn.getErrInfo(), 3000);
+							CommonTools.showToast(baseEn.getErrInfo(), 3000);
 						}
 					}
 				}else {

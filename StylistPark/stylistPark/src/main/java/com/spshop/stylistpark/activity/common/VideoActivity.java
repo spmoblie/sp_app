@@ -59,11 +59,11 @@ public class VideoActivity extends BaseActivity {
 				finish();
 			}
 		});
-		if (!NetworkUtil.isNetworkAvailable(mContext)) {
+		if (!NetworkUtil.isNetworkAvailable()) {
 			showMyErrorDialog(getString(R.string.network_fault));
 			return;
 		}
-		if (!NetworkUtil.isWifi(mContext)) {
+		if (!NetworkUtil.isWifi()) {
 			showConfirmDialog(getString(R.string.network_no_wifi), getString(R.string.cancel),
 					getString(R.string.proceed), true, true, new Handler(){
 						@Override

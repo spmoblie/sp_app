@@ -1,5 +1,8 @@
 package com.spshop.stylistpark.utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,6 +10,10 @@ public class StringUtil {
 
 	public static boolean isNull(String str) {
 		return str == null || str.length() == 0 || "".equals(str) || "null".equals(str);
+	}
+
+	public static boolean isNull(JSONObject jsonObj, String key) throws JSONException{
+		return !jsonObj.has(key) || jsonObj.isNull(key) || jsonObj.get(key).equals("");
 	}
 
 	public static int getInteger(String str) {

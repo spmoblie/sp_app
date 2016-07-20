@@ -72,13 +72,13 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 		accountStr = et_account.getText().toString();
 		// 账号非空
 		if (accountStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.login_input_user_name), 1000);
+			CommonTools.showToast(getString(R.string.login_input_user_name), 1000);
 			return;
 		}
 		// 密码非空
 		passwordStr = et_password.getText().toString();
 		if (passwordStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.login_input_password), 1000);
+			CommonTools.showToast(getString(R.string.login_input_password), 1000);
 			return;
 		}
 		postAccountOauthData();
@@ -89,7 +89,7 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 			startAnimation();
 			request(AppConfig.REQUEST_SV_POST_REGISTER_OAUTH_CODE);
 		}else {
-			CommonTools.showToast(mContext, getString(R.string.share_msg_error_oauth), 1000);
+			CommonTools.showToast(getString(R.string.share_msg_error_oauth), 1000);
 		}
 	}
 
@@ -156,7 +156,7 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 				if (StringUtil.isNull(userEn.getErrInfo())) {
 					showServerBusy();
 				}else {
-					CommonTools.showToast(this, userEn.getErrInfo(), 2000);
+					CommonTools.showToast(userEn.getErrInfo(), 2000);
 				}
 			}
 		}else {

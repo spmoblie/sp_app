@@ -254,7 +254,7 @@ public class GeneratorSelectProductActivity extends BaseActivity implements
         
         public ProductAdapter(Context context, List<Product> productList) {
             this.datas = productList;
-            dollarSign = LangCurrTools.getCurrencyValue(mContext) + "";
+            dollarSign = LangCurrTools.getCurrencyValue() + "";
         }
         
         @Override

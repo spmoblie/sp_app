@@ -1,16 +1,17 @@
 package com.spshop.stylistpark.utils;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+
+import com.spshop.stylistpark.AppApplication;
+import com.spshop.stylistpark.R;
+
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-
-import com.spshop.stylistpark.R;
 
 @SuppressLint({ "SimpleDateFormat", "DefaultLocale" })
 public class TimeUtil {
@@ -31,7 +32,9 @@ public class TimeUtil {
 	/**
 	 * 将秒格式的时间换成自定义的字串格式：1天1时1分1秒
 	 */
-	public static String getTextTime(Context context, long time){
+	public static String getTextTime(long time){
+		Context ctx = AppApplication.getInstance().getApplicationContext();
+
 		int day = (int) (time / 86400);
 		long dayTime = time % 86400;
 		int hour = (int) (dayTime / 3600);
@@ -39,14 +42,14 @@ public class TimeUtil {
 		int minute = (int) (hourTime / 60);
 		long minuteTime = hourTime % 60;
 		
-		return day + context.getString(R.string.day) + hour + context.getString(R.string.hour)
-				+ minute + context.getString(R.string.minute) + minuteTime + context.getString(R.string.second);
+		return day + ctx.getString(R.string.day) + hour + ctx.getString(R.string.hour)
+				+ minute + ctx.getString(R.string.minute) + minuteTime + ctx.getString(R.string.second);
 	}
 	
 	/**
 	 * 将秒格式的时间换成自定义的格式：[1,23,59,59]
 	 */
-	public static Integer[] getArrayIntegerTime(Context context, long time){
+	public static Integer[] getArrayIntegerTime(long time){
 		Integer[] times = new Integer[4];
 		int day = (int) (time / 86400);
 		long dayTime = time % 86400;
@@ -65,7 +68,9 @@ public class TimeUtil {
 	/**
 	 * 将秒格式的时间换成自定义的字串格式：1分1秒（30分钟有效期）
 	 */
-	public static String getTextTimeMinuteSecond(Context context, long time){
+	public static String getTextTimeMinuteSecond(long time){
+		Context ctx = AppApplication.getInstance().getApplicationContext();
+
 		int day = (int) (time / 86400);
 		long dayTime = time % 86400;
 		int hour = (int) (dayTime / 3600);
@@ -76,7 +81,7 @@ public class TimeUtil {
 		}
 		long minuteTime = hourTime % 60;
 		
-		return minute + context.getString(R.string.minute) + minuteTime + context.getString(R.string.second);
+		return minute + ctx.getString(R.string.minute) + minuteTime + ctx.getString(R.string.second);
 	}
 	
 	/**
@@ -181,7 +186,6 @@ public class TimeUtil {
 	  * 将短时间格式时间转换为字符串 yyyy-MM-dd
 	  * 
 	  * @param dateDate
-	  * @param k
 	  * @return
 	  */
 	public static String dateToStr(java.util.Date dateDate) {

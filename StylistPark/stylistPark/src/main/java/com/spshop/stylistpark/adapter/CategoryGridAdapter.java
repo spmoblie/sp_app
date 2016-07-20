@@ -32,7 +32,7 @@ public class CategoryGridAdapter extends BaseAdapter{
 	
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	
-	private Context context;
+	private Context mContext;
 	private List<CategoryListEntity> datas;
 	private AdapterCallback apCallback;
 	private GridView mGridView;
@@ -49,10 +49,10 @@ public class CategoryGridAdapter extends BaseAdapter{
 	
 	public CategoryGridAdapter(Context context, List<CategoryListEntity> datas,
 			AdapterCallback callback, GridView gridView) {
-		this.context = context;
+		this.mContext = context;
 		this.datas = datas;
 		this.apCallback = callback;
-		lang = LangCurrTools.getLanguage(context);
+		lang = LangCurrTools.getLanguage();
 		
 		//options = AppApplication.getDefaultImageOptions();
 		
@@ -105,7 +105,7 @@ public class CategoryGridAdapter extends BaseAdapter{
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
 		if(convertView == null){
-			convertView = View.inflate(context, R.layout.item_grid_category, null);
+			convertView = View.inflate(mContext, R.layout.item_grid_category, null);
 			
 			holder = new ViewHolder();
 			holder.rl_item = (RelativeLayout) convertView.findViewById(R.id.grid_item_category_rl);
@@ -233,7 +233,7 @@ public class CategoryGridAdapter extends BaseAdapter{
                  }
              }
          } catch (Exception e) {
-             ExceptionUtil.handle(context, e);
+			 ExceptionUtil.handle(e);
          }
      }
     

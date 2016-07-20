@@ -69,13 +69,13 @@ public class LanguageCurrencyActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				if (dataType == 1) {
-					Language lang = LangCurrTools.getLanguage(mContext);
+					Language lang = LangCurrTools.getLanguage();
 					if (lang == Language.Zh) return;
 					LangCurrTools.setLanguage(LanguageCurrencyActivity.this, Language.Zh);
 				}else {
-					Currency cur = LangCurrTools.getCurrency(mContext);
+					Currency cur = LangCurrTools.getCurrency();
 					if (cur == Currency.HKD) return;
-					LangCurrTools.setCurrency(getApplicationContext(), Currency.HKD);
+					LangCurrTools.setCurrency(Currency.HKD);
 				}
 				updateSettingData();
 				startThread();
@@ -87,13 +87,13 @@ public class LanguageCurrencyActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				if (dataType == 1) {
-					Language lang = LangCurrTools.getLanguage(LanguageCurrencyActivity.this);
+					Language lang = LangCurrTools.getLanguage();
 					if (lang == Language.Cn) return;
 					LangCurrTools.setLanguage(LanguageCurrencyActivity.this, Language.Cn);
 				}else {
-					Currency cur = LangCurrTools.getCurrency(mContext);
+					Currency cur = LangCurrTools.getCurrency();
 					if (cur == Currency.RMB) return;
-					LangCurrTools.setCurrency(getApplicationContext(), Currency.RMB);
+					LangCurrTools.setCurrency(Currency.RMB);
 				}
 				updateSettingData();
 				startThread();
@@ -104,13 +104,13 @@ public class LanguageCurrencyActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				if (dataType == 1) {
-					Language lang = LangCurrTools.getLanguage(LanguageCurrencyActivity.this);
+					Language lang = LangCurrTools.getLanguage();
 					if (lang == Language.En) return;
 					LangCurrTools.setLanguage(LanguageCurrencyActivity.this, Language.En);
 				}else {
-					Currency cur = LangCurrTools.getCurrency(mContext);
+					Currency cur = LangCurrTools.getCurrency();
 					if (cur == Currency.USD) return;
-					LangCurrTools.setCurrency(getApplicationContext(), Currency.USD);
+					LangCurrTools.setCurrency(Currency.USD);
 				}
 				updateSettingData();
 				startThread();
@@ -140,7 +140,7 @@ public class LanguageCurrencyActivity extends BaseActivity {
         iv_EN.setVisibility(View.GONE);
         switch (dataType) {
 		case 1: //语言
-			Language lang = LangCurrTools.getLanguage(this);
+			Language lang = LangCurrTools.getLanguage();
 			switch (lang) {
 			case En:
 				iv_EN.setVisibility(View.VISIBLE);
@@ -156,7 +156,7 @@ public class LanguageCurrencyActivity extends BaseActivity {
 			}
 			break;
 		case 2: //货币
-			Currency currency = LangCurrTools.getCurrency(this);
+			Currency currency = LangCurrTools.getCurrency();
 	        switch (currency) {
 	        case USD:
 	        	iv_EN.setVisibility(View.VISIBLE);

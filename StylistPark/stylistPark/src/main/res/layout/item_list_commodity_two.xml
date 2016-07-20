@@ -28,7 +28,7 @@
                 android:layout_height="190dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/desc"
-                android:scaleType="fitXY" />
+                android:scaleType="fitCenter" />
         </RelativeLayout>
 
         <LinearLayout
@@ -118,7 +118,7 @@
                     android:layout_height="190dp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/desc"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitCenter" />
             </RelativeLayout>
 
             <LinearLayout

@@ -177,10 +177,10 @@
     <string name="events_comment_input">請輸入評論內容</string>
     
     <!-- Member page -->
-    <string name="member_top_tab_1">最新客戶</string>
-    <string name="member_top_tab_2">活躍排名</string>
-    <string name="member_top_tab_3">訂單排名</string>
-    <string name="member_top_tab_4">收入排名</string>
+    <string name="member_top_tab_1">@string/all</string>
+    <string name="member_top_tab_2">收入榜</string>
+    <string name="member_top_tab_3">訂單榜</string>
+    <string name="member_top_tab_4">活躍榜</string>
     <string name="member_no_order">您的會員還沒有%1$s~</string>
     <string name="member_no_member">您還沒有會員，\n去邀請好友成爲您的會員吧。</string>
         

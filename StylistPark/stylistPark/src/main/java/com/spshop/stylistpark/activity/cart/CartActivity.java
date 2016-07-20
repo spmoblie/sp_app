@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,7 +37,6 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -69,8 +69,8 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	private GoodsCartEntity mainEn;
 	private ProductDetailEntity changeData;
 	private List<ProductDetailEntity> lv_datas = new ArrayList<ProductDetailEntity>();
-	private HashMap<Integer, ProductDetailEntity> cartHashMap = new HashMap<Integer, ProductDetailEntity>();
-	
+	private SparseArray<ProductDetailEntity> sa_cart = new SparseArray<ProductDetailEntity>();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -173,10 +173,10 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 				if (changeData != null) {
 					switch (type) {
 					case CartProductListAdapter.TYPE_SELECT: //选择或取消
-						if (cartHashMap.containsKey(changeData.getRecId())) {
-							cartHashMap.remove(changeData.getRecId());
+						if (sa_cart.indexOfKey(changeData.getRecId()) > 0) {
+							sa_cart.remove(changeData.getRecId());
 						}else {
-							cartHashMap.put(changeData.getRecId(), changeData);
+							sa_cart.put(changeData.getRecId(), changeData);
 						}
 						updateSelectAllView();
 						break;
@@ -220,7 +220,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 				}
 			}
 		};
-		lv_Adapter = new CartProductListAdapter(mContext, lv_datas, cartHashMap, apCallback);
+		lv_Adapter = new CartProductListAdapter(mContext, lv_datas, sa_cart, apCallback);
 		scroll_lv.setAdapter(lv_Adapter);
 		scroll_lv.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
@@ -243,7 +243,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	 * 更新购物车商品总价格
 	 */
 	private void updatePriceTotal() {
-		lv_Adapter.updateAdapter(lv_datas, cartHashMap);
+		lv_Adapter.updateAdapter(lv_datas, sa_cart);
 		tv_total.setText(getString(R.string.order_total_name) + curStr + amountStr);
 	}
 
@@ -299,15 +299,15 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.fragment_four_ll_select_all:
 			if (selectAll) {
-				cartHashMap.clear();
+				sa_cart.clear();
 			}else {
-				cartHashMap.clear();
+				sa_cart.clear();
 				for (int i = 0; i < lv_datas.size(); i++) {
-					cartHashMap.put(lv_datas.get(i).getRecId(), lv_datas.get(i));
+					sa_cart.put(lv_datas.get(i).getRecId(), lv_datas.get(i));
 				}
 			}
 			updateSelectAllView();
-			lv_Adapter.updateAdapter(lv_datas, cartHashMap);
+			lv_Adapter.updateAdapter(lv_datas, sa_cart);
 			break;
 		}
 	}
@@ -372,9 +372,9 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 				else if (mainEn.getChildLists() != null) 
 				{
 					rl_load_fail.setVisibility(View.GONE);
-					if (pullUpdate) {
-						cartHashMap.clear();
-					}
+					/*if (pullUpdate) {
+						sa_cart.clear();
+					}*/
 					lv_datas.addAll(mainEn.getChildLists());
 					curStr = mainEn.getCurrency();
 					loadSuccessHandle(mainEn);
@@ -391,9 +391,9 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 			if (result != null) {
 				GoodsCartEntity deleteEn = (GoodsCartEntity) result;
 				if (deleteEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					if (cartHashMap.containsKey(changeData.getRecId())) {
-						cartHashMap.remove(changeData.getRecId());
-					}
+					/*if (sa_cart.indexOfKey(changeData.getRecId()) > 0) {
+						sa_cart.remove(changeData.getRecId());
+					}*/
 					lv_datas.remove(changeData);
 					loadSuccessHandle(deleteEn);
 				}else if (deleteEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
@@ -483,7 +483,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void changeFailUpdateCartData(String msg) {
 		checkLogin();
-		CommonTools.showToast(mContext, msg, 3000);
+		CommonTools.showToast(msg, 3000);
 	}
 
 	/**
@@ -501,9 +501,9 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 		if (newSkuNum > 0) {
 			lv_datas.get(mPosition).setStockNum(newSkuNum);
 		}
-		if (changeData != null && cartHashMap.containsKey(changeData.getRecId())) {
-			cartHashMap.put(changeData.getRecId(), lv_datas.get(mPosition));
-		}
+		/*if (changeData != null && sa_cart.indexOfKey(changeData.getRecId()) > 0) {
+			sa_cart.put(changeData.getRecId(), lv_datas.get(mPosition));
+		}*/
 		updatePriceTotal();
 	}
 	

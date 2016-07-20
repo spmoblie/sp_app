@@ -118,11 +118,11 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 					intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
 					startActivityForResult(intent,AppConfig.ACTIVITY_GET_IMAGE_VIA_CAMERA);
 				} catch (ActivityNotFoundException e) {
-					ExceptionUtil.handle(mContext, e);
-					CommonTools.showToast(mContext, getString(R.string.photo_save_directory_error), 1000);
+					ExceptionUtil.handle(e);
+					CommonTools.showToast(getString(R.string.photo_save_directory_error), 1000);
 				}
 			}else{ 
-				CommonTools.showToast(mContext, getString(R.string.photo_save_sd_error), 1000);
+				CommonTools.showToast(getString(R.string.photo_save_sd_error), 1000);
 			} 
 			break;
 		case R.id.authentication_iv_select: //选择相片
@@ -137,11 +137,11 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 	private void postAuditData() {
 		nameStr = et_auth_name.getText().toString();
 		if (nameStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.money_auth_input_name_hint), 1000);
+			CommonTools.showToast(getString(R.string.money_auth_input_name_hint), 1000);
 			return;
 		}
 		if (!isUpload) {
-			CommonTools.showToast(mContext, getString(R.string.photo_ID_photo_null), 1000);
+			CommonTools.showToast(getString(R.string.photo_ID_photo_null), 1000);
 			return;
 		}
 		if (!uploadOk) { //身份证照片未上传
@@ -153,13 +153,13 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 	}
 
 	private void uploadImage() {
-		if (!NetworkUtil.networkStateTips(mContext)) { //检测网络状态
-			CommonTools.showToast(mContext, getString((R.string.network_fault)), 1000);
+		if (!NetworkUtil.networkStateTips()) { //检测网络状态
+			CommonTools.showToast(getString((R.string.network_fault)), 1000);
 			return;
 		}
 		if (!StringUtil.isNull(clipPhotoPath)) {
 			startAnimation();
-			CommonTools.showToast(mContext, getString(R.string.photo_upload_img, getString(R.string.photo_ID_photo)), 1000);
+			CommonTools.showToast(getString(R.string.photo_upload_img, getString(R.string.photo_ID_photo)), 1000);
 			new Handler().postDelayed(new Runnable() {
 				
 				@Override
@@ -173,13 +173,13 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 								if (uploadOk) {
 									asyncImageUpload.quit();
 									postAuthName();
-									//CommonTools.showToast(mContext, getString(R.string.photo_upload_img_ok, getString(R.string.photo_ID_photo)), 1000);
+									//CommonTools.showToast(getString(R.string.photo_upload_img_ok, getString(R.string.photo_ID_photo)), 1000);
 								} else {
-									CommonTools.showToast(mContext, getString(R.string.photo_upload_ID_fail), 2000);
+									CommonTools.showToast(getString(R.string.photo_upload_ID_fail), 2000);
 									stopAnimation();
 								}
 							}else {
-								CommonTools.showToast(mContext, getString(R.string.photo_upload_ID_fail), 2000);
+								CommonTools.showToast(getString(R.string.photo_upload_ID_fail), 2000);
 								stopAnimation();
 							}
 						}
@@ -192,7 +192,7 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 			}, 2000);
 		} else {
 			isUpload = false;
-			CommonTools.showToast(mContext, getString(R.string.photo_img_url_error, getString(R.string.photo_ID_photo)), 1000);
+			CommonTools.showToast(getString(R.string.photo_img_url_error, getString(R.string.photo_ID_photo)), 1000);
 		}
 	}
 	
@@ -279,14 +279,14 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 		if (result != null) {
 			UserInfoEntity userEn = (UserInfoEntity) result;
 			if (userEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS){ //提交成功
-				CommonTools.showToast(mContext, getString(R.string.submit_success), 2000);
+				CommonTools.showToast(getString(R.string.submit_success), 2000);
 			}else if (userEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 				// 登入超时，交BaseActivity处理
 			}else {
 				if (StringUtil.isNull(userEn.getErrInfo())) {
 					showServerBusy();
 				}else {
-					CommonTools.showToast(mContext, userEn.getErrInfo(), 2000);
+					CommonTools.showToast(userEn.getErrInfo(), 2000);
 				}
 			}
 		}else {

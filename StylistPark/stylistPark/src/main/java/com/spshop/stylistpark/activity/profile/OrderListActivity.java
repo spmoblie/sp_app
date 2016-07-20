@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
@@ -34,7 +35,6 @@ import com.spshop.stylistpark.wxapi.WXPayEntryActivity;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -87,11 +87,11 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private List<OrderEntity> lv_all_3 = new ArrayList<OrderEntity>();
 	private List<OrderEntity> lv_all_4 = new ArrayList<OrderEntity>();
 	private List<OrderEntity> lv_all_5 = new ArrayList<OrderEntity>();
-	private HashMap<String, Boolean> hm_all_1 = new HashMap<String, Boolean>();
-	private HashMap<String, Boolean> hm_all_2 = new HashMap<String, Boolean>();
-	private HashMap<String, Boolean> hm_all_3 = new HashMap<String, Boolean>();
-	private HashMap<String, Boolean> hm_all_4 = new HashMap<String, Boolean>();
-	private HashMap<String, Boolean> hm_all_5 = new HashMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_1 = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_2 = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_3 = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_4 = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_5 = new ArrayMap<String, Boolean>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +152,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			btn_2.setText(getString(R.string.profile_done));
 			btn_3.setText(getString(R.string.profile_wait_commission));
 			btn_4.setText(getString(R.string.order_top_tab_4));
+			btn_4.setVisibility(View.GONE);
 		}
 		btn_1.setOnClickListener(this);
 		btn_2.setOnClickListener(this);
@@ -243,12 +244,12 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		if (orderEn != null) {
 			Intent intent =new Intent(mContext, WXPayEntryActivity.class);
 			intent.putExtra("orderSn", orderEn.getOrderNo());
-			intent.putExtra("orderTotal", LangCurrTools.getCurrencyValue(mContext) + orderEn.getPriceTotal());
+			intent.putExtra("orderTotal", LangCurrTools.getCurrencyValue() + orderEn.getPriceTotal());
 			intent.putExtra("root", TAG);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}else {
-			CommonTools.showToast(mContext, getString(R.string.pay_order_error), 1000);
+			CommonTools.showToast(getString(R.string.pay_order_error), 1000);
 		}
 	}
 
@@ -510,11 +511,11 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			lv_all_3.clear();
 			lv_all_4.clear();
 			lv_all_5.clear();
-			hm_all_1.clear();
-			hm_all_2.clear();
-			hm_all_3.clear();
-			hm_all_4.clear();
-			hm_all_5.clear();
+			am_all_1.clear();
+			am_all_2.clear();
+			am_all_3.clear();
+			am_all_4.clear();
+			am_all_5.clear();
 			getSVDatas();
 		}
 	}
@@ -564,50 +565,50 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 						switch (topType) {
 						case TYPE_1: 
 							if (loadType == 0) { //下拉
-								updEntity(total, total_1, lists, lv_all_1, hm_all_1);
+								updEntity(total, total_1, lists, lv_all_1, am_all_1);
 								page_type_1 = 2;
 							}else {
-								addEntity(lv_all_1, lists, hm_all_1);
+								addEntity(lv_all_1, lists, am_all_1);
 								page_type_1++;
 							}
 							total_1 = total;
 							break;
 						case TYPE_2: 
 							if (loadType == 0) { //下拉
-								updEntity(total, total_2, lists, lv_all_2, hm_all_2);
+								updEntity(total, total_2, lists, lv_all_2, am_all_2);
 								page_type_2 = 2;
 							}else {
-								addEntity(lv_all_2, lists, hm_all_2);
+								addEntity(lv_all_2, lists, am_all_2);
 								page_type_2++;
 							}
 							total_2 = total;
 							break;
 						case TYPE_3: 
 							if (loadType == 0) { //下拉
-								updEntity(total, total_3, lists, lv_all_3, hm_all_3);
+								updEntity(total, total_3, lists, lv_all_3, am_all_3);
 								page_type_3 = 2;
 							}else {
-								addEntity(lv_all_3, lists, hm_all_3);
+								addEntity(lv_all_3, lists, am_all_3);
 								page_type_3++;
 							}
 							total_3 = total;
 							break;
 						case TYPE_4: 
 							if (loadType == 0) { //下拉
-								updEntity(total, total_4, lists, lv_all_4, hm_all_4);
+								updEntity(total, total_4, lists, lv_all_4, am_all_4);
 								page_type_4 = 2;
 							}else {
-								addEntity(lv_all_4, lists, hm_all_4);
+								addEntity(lv_all_4, lists, am_all_4);
 								page_type_4++;
 							}
 							total_4 = total;
 							break;
 						case TYPE_5: 
 							if (loadType == 0) { //下拉
-								updEntity(total, total_5, lists, lv_all_5, hm_all_5);
+								updEntity(total, total_5, lists, lv_all_5, am_all_5);
 								page_type_5 = 2;
 							}else {
-								addEntity(lv_all_5, lists, hm_all_5);
+								addEntity(lv_all_5, lists, am_all_5);
 								page_type_5++;
 							}
 							total_5 = total;
@@ -683,7 +684,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	 * 刷新数集
 	 */
 	private void updEntity(int newTotal, int oldTotal, List<OrderEntity> newDatas, 
-			List<OrderEntity> oldDatas, HashMap<String, Boolean> oldMap) {
+			List<OrderEntity> oldDatas, ArrayMap<String, Boolean> oldMap) {
 		/*if (oldTotal < newTotal) {
 			List<OrderEntity> datas = new ArrayList<OrderEntity>();
 			datas.addAll(oldDatas);
@@ -720,16 +721,16 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	/**
 	 * 数据去重函数
 	 */
-	private void addEntity(List<OrderEntity> oldDatas, List<OrderEntity> newDatas, HashMap<String, Boolean> hashMap) {
+	private void addEntity(List<OrderEntity> oldDatas, List<OrderEntity> newDatas, ArrayMap<String, Boolean> oldMap) {
 		OrderEntity entity = null;
 		String dataId = "";
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
 			if (entity != null) {
 				dataId = entity.getOrderId();
-				if (!StringUtil.isNull(dataId) && !hashMap.containsKey(dataId)) {
+				if (!StringUtil.isNull(dataId) && !oldMap.containsKey(dataId)) {
 					oldDatas.add(entity);
-					hashMap.put(dataId, true);
+					oldMap.put(dataId, true);
 				}
 			}
 		}

@@ -176,9 +176,9 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		btn_done_right.setText(getString(R.string.cart_go_shopping));
 		btn_done_right.setOnClickListener(this);
 
-		PAYPAL_CURRENCY = LangCurrTools.getCurrencyHttpUrlValueStr(this);
-		if (LangCurrTools.getCurrency(this) == LangCurrTools.Currency.HKD
-				|| LangCurrTools.getCurrency(this) == LangCurrTools.Currency.USD) {
+		PAYPAL_CURRENCY = LangCurrTools.getCurrencyHttpUrlValueStr();
+		if (LangCurrTools.getCurrency() == LangCurrTools.Currency.HKD
+				|| LangCurrTools.getCurrency() == LangCurrTools.Currency.USD) {
 			payType = PAY_PAL;
 			ll_pay_type_1.setVisibility(View.GONE);
 			ll_pay_type_2.setVisibility(View.VISIBLE);
@@ -591,7 +591,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 						// 发送支付ID到你的服务器进行验证
 						updateViewStatus();
 					} catch (JSONException e) {
-						ExceptionUtil.handle(this, e);
+						ExceptionUtil.handle(e);
 					}
 				}
 			}

@@ -380,7 +380,7 @@ public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoL
             }
         } catch (JSONException e)
         {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
             showErrorDialog(R.string.dialog_error_msg);
         }
 
@@ -416,7 +416,7 @@ public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoL
             LogUtil.i(TAG, "getDraftTemplateJsonStr templateNumber: " + templateNumber);
         } catch (Exception e)
         {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
             CommonTools.deleteFileInCache(this, AppConfig.TEMPLATE_DRAFT_NAME);
             showErrorDialog(R.string.collage_error_load_draft);
             finish();
@@ -429,7 +429,7 @@ public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoL
             return FileManager.getStringFromFile(file);
         } catch (Exception e)
         {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
             showErrorDialog(R.string.dialog_error_msg);
             finish();
         }
@@ -521,7 +521,7 @@ public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoL
             templateJson = new JSONObject(templateJsonStr);
         } catch (Exception e)
         {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
             CommonTools.deleteFileInCache(this, AppConfig.TEMPLATE_DRAFT_NAME);
             showErrorDialog(R.string.collage_error_load_draft);
             return;
@@ -551,7 +551,7 @@ public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoL
             
         } catch (JSONException e)
         {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         }
         
     }
@@ -1072,7 +1072,7 @@ public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoL
                 jsonObj.put("type", item.getType());
             } catch (JSONException e)
             {
-                ExceptionUtil.handle(mContext, e);
+                ExceptionUtil.handle(e);
             }
             jsonArray.put(jsonObj);
         }
@@ -1082,7 +1082,7 @@ public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoL
             wholeJson.put("items", jsonArray);
         } catch (JSONException e1)
         {
-        	ExceptionUtil.handle(mContext, e1);
+        	ExceptionUtil.handle(e1);
         }
         
         File file = new File(getExternalCacheDir(), AppConfig.TEMPLATE_DRAFT_ORIGIN_NAME);
@@ -1092,9 +1092,9 @@ public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoL
             fos.write(templateJsonStr.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         } catch (IOException e) {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         }
         
         file = new File(getExternalCacheDir(), AppConfig.TEMPLATE_DRAFT_NAME);
@@ -1104,9 +1104,9 @@ public class GeneratorTemplateActivity extends BaseActivity implements UndoRedoL
             fos.write(wholeJson.toString().getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         } catch (IOException e) {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         }
     }
     

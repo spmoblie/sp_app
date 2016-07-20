@@ -67,7 +67,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	
 	private UserInfoEntity infoEn;
 	private UserManager userManager;
-	private DisplayImageOptions options;
 	private AsyncImageUpload asyncImageUpload;
 	
 	@Override
@@ -81,8 +80,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		instance = this;
 		infoEn = (UserInfoEntity) getIntent().getExtras().get("data");
 		userManager = UserManager.getInstance();
-		options = AppApplication.getHeadImageOptions();
-		
+
 		findViewById();
 		initView();
 	}
@@ -158,18 +156,18 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			tv_auth_go.setVisibility(View.VISIBLE);
 			tv_auth_ok.setVisibility(View.GONE);
 		}
-		ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + headUrl, iv_head, options);
+		ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + headUrl, iv_head, AppApplication.getHeadImageOptions());
 	}
 
 	private void uploadImage() {
 		if (!isUpload) return; //防止重复上传
-		if (!NetworkUtil.networkStateTips(mContext)) { //检测网络状态
-			CommonTools.showToast(mContext, getString((R.string.network_fault)), 1000);
+		if (!NetworkUtil.networkStateTips()) { //检测网络状态
+			CommonTools.showToast(getString((R.string.network_fault)), 1000);
 			return;
 		}
 		if (!StringUtil.isNull(headUrl)) {
 			startAnimation();
-			CommonTools.showToast(mContext, getString(R.string.photo_upload_img, getString(R.string.profile_head)), 1000);
+			CommonTools.showToast(getString(R.string.photo_upload_img, getString(R.string.profile_head)), 1000);
 			new Handler().postDelayed(new Runnable() {
 				
 				@Override
@@ -181,13 +179,17 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 							if (baseEn != null) {
 								isUpload = baseEn.getErrCode() == 1 ? false : true;
 								if (!isUpload) {
+									// 刷新头像
 									update_fragment = true;
-									CommonTools.showToast(mContext, getString(R.string.photo_upload_img_ok, getString(R.string.profile_head)), 1000);
+									// 清除缓存
+									ImageLoader.getInstance().clearDiscCache();
+									ImageLoader.getInstance().clearMemoryCache();
+									CommonTools.showToast(getString(R.string.photo_upload_img_ok, getString(R.string.profile_head)), 1000);
 								} else {
-									CommonTools.showToast(mContext, getString(R.string.photo_upload_head_fail), 2000);
+									CommonTools.showToast(getString(R.string.photo_upload_head_fail), 2000);
 								}
 							}else {
-								CommonTools.showToast(mContext, getString(R.string.photo_upload_head_fail), 2000);
+								CommonTools.showToast(getString(R.string.photo_upload_head_fail), 2000);
 							}
 							stopAnimation();
 						}
@@ -200,7 +202,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			}, 2000);
 		} else {
 			isUpload = false;
-			CommonTools.showToast(mContext, getString(R.string.photo_img_url_error, getString(R.string.profile_head)), 1000);
+			CommonTools.showToast(getString(R.string.photo_img_url_error, getString(R.string.profile_head)), 1000);
 		}
 	}
 	
@@ -332,11 +334,11 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 										intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
 										startActivityForResult(intent,AppConfig.ACTIVITY_GET_IMAGE_VIA_CAMERA);
 									} catch (ActivityNotFoundException e) {
-										ExceptionUtil.handle(mContext, e);
-										CommonTools.showToast(mContext, getString(R.string.photo_save_directory_error), 1000);
+										ExceptionUtil.handle(e);
+										CommonTools.showToast(getString(R.string.photo_save_directory_error), 1000);
 									}
 								}else{
-									CommonTools.showToast(mContext, getString(R.string.photo_save_sd_error), 1000);
+									CommonTools.showToast(getString(R.string.photo_save_sd_error), 1000);
 								}
 								break;
 							case 1: //本地
@@ -467,7 +469,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
         if (!StringUtil.isNull(AppApplication.clip_photo_path)) { //修改头像
         	isUpload = true;
         	headUrl = AppApplication.clip_photo_path;
-        	ImageLoader.getInstance().displayImage("file://" + headUrl, iv_head, options);
+        	ImageLoader.getInstance().displayImage("file://" + headUrl, iv_head, AppApplication.getHeadImageOptions());
         	uploadImage();
 		}
         AppApplication.clip_photo_path = "";
@@ -533,14 +535,14 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			if (result != null) {
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					CommonTools.showToast(mContext, getString(R.string.profile_send_email_ok), 1000);
+					CommonTools.showToast(getString(R.string.profile_send_email_ok), 1000);
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
 				}else {
 					if (StringUtil.isNull(baseEn.getErrInfo())) {
 						showServerBusy();
 					}else {
-						CommonTools.showToast(mContext, baseEn.getErrInfo(), 2000);
+						CommonTools.showToast(baseEn.getErrInfo(), 2000);
 					}
 				}
 			}else {

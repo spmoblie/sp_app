@@ -178,10 +178,10 @@
     <string name="events_comment_input">Input your comment</string>
     
     <!-- Member page -->
-    <string name="member_top_tab_1">Latest</string>
-    <string name="member_top_tab_2">Active</string>
+    <string name="member_top_tab_1">@string/all</string>
+    <string name="member_top_tab_2">Revenue</string>
     <string name="member_top_tab_3">Orders</string>
-    <string name="member_top_tab_4">Revenue</string>
+    <string name="member_top_tab_4">Active</string>
     <string name="member_no_order">Your members is no %1$s ~</string>
     <string name="member_no_member">You have no members, \nInvite your friend to be your member.</string>
         

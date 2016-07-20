@@ -143,7 +143,7 @@ public class AsyncTaskManager {
 				LogUtil.i(TAG, "loadNum = " + num);
 				num++;
 				try {
-					boolean networkOK = NetworkUtil.networkStateTips(mContext);
+					boolean networkOK = NetworkUtil.networkStateTips();
 					if (networkOK || AppApplication.loadDBData) {
 						Object result = null;
 						if (bean.getListener() != null) {
@@ -167,12 +167,12 @@ public class AsyncTaskManager {
 				} catch (Exception e) {
 					bean.setState(REQUEST_ERROR_CODE);
 					bean.setResult(mContext.getString((R.string.toast_server_busy)));
-					ExceptionUtil.handle(mContext, e);
+					ExceptionUtil.handle(e);
 				}
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e1) {
-					ExceptionUtil.handle(mContext, e1);
+					ExceptionUtil.handle(e1);
 				}
 			}
 			return bean;

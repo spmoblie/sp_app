@@ -49,7 +49,6 @@ public class ClipImageView extends ImageView implements View.OnTouchListener,
 	private float maxScale = DEFAULT_MAX_SCALE;
 
 	private MultiGestureDetector multiGestureDetector;
-	private Context context;
 
 	private int borderlength;
 	private boolean isJusted;
@@ -63,12 +62,10 @@ public class ClipImageView extends ImageView implements View.OnTouchListener,
 
 	public ClipImageView(Context context) {
 		this(context, null);
-		this.context = context;
 	}
 
 	public ClipImageView(Context context, AttributeSet attr) {
 		this(context, attr, 0);
-		this.context = context;
 	}
 
 	public ClipImageView(Context context, AttributeSet attr, int defStyle) {
@@ -76,7 +73,6 @@ public class ClipImageView extends ImageView implements View.OnTouchListener,
 
 		super.setScaleType(ScaleType.MATRIX);
 		
-		this.context = context;
 		setOnTouchListener(this);
 
 		multiGestureDetector = new MultiGestureDetector(context);
@@ -294,7 +290,7 @@ public class ClipImageView extends ImageView implements View.OnTouchListener,
 					post(new AnimatedZoomRunnable(scale, minScale, x, y));
 				}
 			} catch (Exception e) {
-				ExceptionUtil.handle(context, e);
+				ExceptionUtil.handle(e);
 			}
 
 			return true;

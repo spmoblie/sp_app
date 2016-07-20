@@ -63,35 +63,35 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 		emailStr = et_email.getText().toString();
 		// 邮箱非空
 		if (emailStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.login_input_email), 1000);
+			CommonTools.showToast(getString(R.string.login_input_email), 1000);
 			return;
 		}
 		// 校验邮箱格式
 		if (!StringUtil.isEmail(emailStr)) {
-			CommonTools.showToast(mContext, getString(R.string.login_email_format_error), 1000);
+			CommonTools.showToast(getString(R.string.login_email_format_error), 1000);
 			return;
 		}
 		// 密码非空
 		passwordStr = et_password.getText().toString();
 		if (passwordStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.login_input_password), 1000);
+			CommonTools.showToast(getString(R.string.login_input_password), 1000);
 			return;
 		}
 		// 校验密码
 		passwordAgain = et_password_again.getText().toString();
 		if (!passwordStr.equals(passwordAgain)) {
-			CommonTools.showToast(mContext, getString(R.string.login_password_error), 1000);
+			CommonTools.showToast(getString(R.string.login_password_error), 1000);
 			return;
 		}
 		// 验证码非空
 		verifyCodeStr = et_verify_code.getText().toString();
 		if (verifyCodeStr.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.login_input_verify_code), 1000);
+			CommonTools.showToast(getString(R.string.login_input_verify_code), 1000);
 			return;
 		}
 		// 校验验证码
 		if (!verifyCodeStr.equalsIgnoreCase(randomCode)) {
-			CommonTools.showToast(mContext, getString(R.string.login_error_verify_code), 1000);
+			CommonTools.showToast(getString(R.string.login_error_verify_code), 1000);
 			new Handler().postDelayed(new Runnable() {
 				
 				@Override
@@ -163,7 +163,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 		stopAnimation();
 		createVerifyCode();
 		if (result != null) {
-			CommonTools.showToast(mContext, ((BaseEntity) result).getErrInfo(), 2000);
+			CommonTools.showToast(((BaseEntity) result).getErrInfo(), 2000);
 		}else {
 			showServerBusy();
 		}

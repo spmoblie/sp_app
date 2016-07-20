@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
@@ -52,7 +51,6 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	private TextView tv_pay_num, tv_delivery_num, tv_receive_num, tv_return_num;
 	private TextView tv_money, tv_bonus, tv_member_list, tv_member_order;
 	
-	private DisplayImageOptions options;
 	private AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
 
@@ -71,15 +69,14 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		instance = this;
 		mContext = getActivity();
 		atm = AsyncTaskManager.getInstance(mContext);
-		options = AppApplication.getHeadImageOptions();
-		
+
 		View view = null;
 		try {
 			view = inflater.inflate(R.layout.fragment_layout_five, null);
 			findViewById(view);
 			initView();
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 		}
 		return view;
 	}
@@ -132,8 +129,8 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 
 	private void setView() {
 		if (infoEn != null) {
-			ImageLoader.getInstance().displayImage(
-					AppConfig.ENVIRONMENT_PRESENT_IMG_APP + infoEn.getHeadImg(), iv_info, options);
+			ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP
+					+ infoEn.getHeadImg(), iv_info, AppApplication.getHeadImageOptions());
 			tv_money.setText(infoEn.getMoney());
 			tv_bonus.setText(infoEn.getBonus());
 			int order_1 = infoEn.getOrder_1();
@@ -195,7 +192,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			tv_receive_num.setVisibility(View.GONE);
 			tv_return_num.setText(num);
 			tv_return_num.setVisibility(View.GONE);
-			tv_money.setText(LangCurrTools.getCurrencyValue(mContext)+num);
+			tv_money.setText(LangCurrTools.getCurrencyValue() + num);
 			tv_bonus.setText(num);
 			tv_member_list.setText(num);
 			tv_member_order.setText(num);
@@ -402,7 +399,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 
 	private void loadFailHandle(String msg) {
 		isSuccess = false;
-		CommonTools.showToast(mContext, msg, 3000);
+		CommonTools.showToast(msg, 3000);
 	}
 
 	@Override

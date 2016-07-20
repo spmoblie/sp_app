@@ -1,13 +1,13 @@
 package com.spshop.stylistpark.utils;
 
-import java.io.File;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.db.CategoryDBService;
+
+import java.io.File;
 
 /** 
  * 清除应用缓存数据控制器 

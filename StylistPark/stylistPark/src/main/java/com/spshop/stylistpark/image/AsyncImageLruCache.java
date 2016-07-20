@@ -1,13 +1,11 @@
 package com.spshop.stylistpark.image;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.util.LruCache;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 
 import java.net.HttpURLConnection;
@@ -20,7 +18,6 @@ import java.util.HashSet;
 @SuppressLint("NewApi")
 public class AsyncImageLruCache {
 
-	private Context mContext;
 	private AsyncImageLruCacheCallback mCallback;
 	// 图片缓存类
 	private LruCache<String, Bitmap> mLruCache;
@@ -28,9 +25,7 @@ public class AsyncImageLruCache {
 	private HashSet<DownloadBitmapAsyncTask> dbatHashSet;
 
 	public AsyncImageLruCache(AsyncImageLruCacheCallback callback) {
-		this.mContext = AppApplication.spApp.getApplicationContext();
 		this.mCallback = callback;
-
 		dbatHashSet = new HashSet<DownloadBitmapAsyncTask>();
 
 		// 获取应用程序最大可用内存
@@ -97,7 +92,7 @@ public class AsyncImageLruCache {
 			httpURLConnection.setDoOutput(true);
 			bitmap = BitmapFactory.decodeStream(httpURLConnection.getInputStream());
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 		} finally {
 			if (httpURLConnection != null) {
 				httpURLConnection.disconnect();

@@ -34,7 +34,7 @@ public class CategoryRightListAdapter extends BaseAdapter{
 		this.context = context;
 		this.datas = datas;
 		this.callback = callback;
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_icon_120, true);
+		options = AppApplication.getDefaultImageOptions();
 	}
 	
 	public void updateAdapter(List<CategoryListEntity> datas){

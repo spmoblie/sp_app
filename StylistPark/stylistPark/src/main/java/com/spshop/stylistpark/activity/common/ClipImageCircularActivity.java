@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.activity.common;
 
-import java.io.File;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -13,6 +11,8 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.widgets.ClipImageView;
+
+import java.io.File;
 
 public class ClipImageCircularActivity extends BaseActivity{
 	
@@ -46,7 +46,7 @@ public class ClipImageCircularActivity extends BaseActivity{
 			bm = BitmapUtil.resizeImageByWidth(bm, 640);
 			imageView.setImageBitmap(bm);
 		}else {
-			CommonTools.showToast(this, getString(R.string.photo_select_no_data), 1000);
+			CommonTools.showToast(getString(R.string.photo_select_no_data), 1000);
 		}
 	}
 	
@@ -64,7 +64,7 @@ public class ClipImageCircularActivity extends BaseActivity{
 			AppApplication.clip_photo_path = file.getPath();
 			AppApplication.saveBitmapFile(bm, file, 100);
 		}else {
-			CommonTools.showToast(this, getString(R.string.photo_clip_error), 1000);
+			CommonTools.showToast(getString(R.string.photo_clip_error), 1000);
 		}
 		if (ClipPhotoGridActivity.instance != null) {
 			ClipPhotoGridActivity.instance.finish();

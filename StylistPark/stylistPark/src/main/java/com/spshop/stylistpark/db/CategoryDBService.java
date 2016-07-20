@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.db;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.spshop.stylistpark.entity.CategoryListEntity;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryDBService {
 	
@@ -20,12 +20,10 @@ public class CategoryDBService {
 	private static final String NAME_04 = "data_type";
 	
 	private DBOpenHelper dbOpenHelper;
-	private Context context;
 	private static CategoryDBService instance = null;
 
 	public CategoryDBService(Context context) {
 		this.dbOpenHelper = new DBOpenHelper(context);
-		this.context = context;
 	}
 
 	public synchronized static CategoryDBService getInstance(Context ctx) {
@@ -95,7 +93,7 @@ public class CategoryDBService {
 			}
 			return null;
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 			return null;
 		} finally {
 			cursor.close();
@@ -121,7 +119,7 @@ public class CategoryDBService {
 //			}
 			return lists;
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 			return null;
 		} finally {
 			cursor.close();
@@ -135,7 +133,7 @@ public class CategoryDBService {
 			cursor.moveToFirst();
 			return cursor.getInt(0);
 		} catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 			return 0;
 		} finally {
 			cursor.close();

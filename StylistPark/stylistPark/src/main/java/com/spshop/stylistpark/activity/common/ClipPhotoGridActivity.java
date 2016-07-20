@@ -1,11 +1,6 @@
 package com.spshop.stylistpark.activity.common;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -23,6 +18,11 @@ import com.spshop.stylistpark.entity.ClipPhotoEntity;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.tencent.stat.StatService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * "选择相片"Activity
@@ -67,7 +67,7 @@ public class ClipPhotoGridActivity extends BaseActivity {
 		
 		aibumList = getPhotoAlbum();
 		if (aibumList.size() < 1) {
-			CommonTools.showToast(this, getString(R.string.photo_select_no_data), 1000);
+			CommonTools.showToast(getString(R.string.photo_select_no_data), 1000);
 		}
 		gv_aibum.setAdapter(new ClipPhotoGridAdapter(aibumList, this));
 		gv_aibum.setOnItemClickListener(aibumClickListener);

@@ -1,6 +1,5 @@
 package com.spshop.stylistpark.utils;
 
-import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.widget.TextView;
@@ -10,24 +9,21 @@ import android.widget.TextView;
  */
 public class MyCountDownTimer  extends CountDownTimer {
 
-    private Context mContext;
     private MyTimerCallback mCallback;
     private int strId;
     private TextView tv_time_one, tv_time_day, tv_time_hour, tv_time_minute, tv_time_second;
 
-    public MyCountDownTimer(Context ctx, TextView timeView, int stringId,
+    public MyCountDownTimer(TextView timeView, int stringId,
                             long millisInFuture, long countDownInterval, MyTimerCallback callback){
         super(millisInFuture, countDownInterval);
-        this.mContext = ctx;
         this.mCallback = callback;
         this.strId = stringId;
         this.tv_time_one = timeView;
     }
 
-    public MyCountDownTimer(Context ctx, TextView dayView, TextView hourView, TextView minuteView, TextView secondView,
+    public MyCountDownTimer(TextView dayView, TextView hourView, TextView minuteView, TextView secondView,
                             long millisInFuture, long countDownInterval, MyTimerCallback callback){
         super(millisInFuture, countDownInterval);
-        this.mContext = ctx;
         this.mCallback = callback;
         this.tv_time_day = dayView;
         this.tv_time_hour = hourView;
@@ -59,10 +55,10 @@ public class MyCountDownTimer  extends CountDownTimer {
 
     private void updateTime(long time) {
         if (tv_time_one != null) {
-            String timeStr = TimeUtil.getTextTime(mContext, time);
+            String timeStr = TimeUtil.getTextTime(time);
             tv_time_one.setText(timeStr);
         }else {
-            Integer[] times = TimeUtil.getArrayIntegerTime(mContext, time);
+            Integer[] times = TimeUtil.getArrayIntegerTime(time);
             String day = "00";
             String hour = "00";
             String minute = "00";

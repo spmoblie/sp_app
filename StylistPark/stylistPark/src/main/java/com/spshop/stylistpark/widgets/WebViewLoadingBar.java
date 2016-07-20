@@ -15,7 +15,6 @@ import java.util.List;
 
 public class WebViewLoadingBar extends ImageView{
 	
-	private Context context;
 	private List<Integer> resIdList = new ArrayList<Integer>();
 	private int scaleSize = 0;
 	private Bitmap previousBitmap;
@@ -23,19 +22,16 @@ public class WebViewLoadingBar extends ImageView{
 	
 	public WebViewLoadingBar(Context context) {
 		super(context);
-		this.context = context;
 		init();
 	}
 	
 	public WebViewLoadingBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.context = context;
 		init();
 	}
 
 	public WebViewLoadingBar(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		this.context = context;
 		init();
 	}
 	
@@ -84,7 +80,7 @@ public class WebViewLoadingBar extends ImageView{
 					
 					previousBitmap = loadingBarBitmap;
 				} catch(Exception e) {
-					ExceptionUtil.handle(context, e);
+					ExceptionUtil.handle(e);
 					
 					exceptionOccurred = true;
 					setVisibility(View.GONE);

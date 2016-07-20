@@ -1,6 +1,5 @@
 package com.spshop.stylistpark.utils;
 
-import android.content.Context;
 import android.text.TextUtils;
 
 import org.json.JSONException;
@@ -23,7 +22,7 @@ public class APIResult {
 		// comment line for code analysis
 	}
 
-	public APIResult(Context context, JSONObject json, String... returnParamNames) {
+	public APIResult(JSONObject json, String... returnParamNames) {
 		if(json == null){
 			mErrorMsg = "Sever error";
 			return;
@@ -40,12 +39,12 @@ public class APIResult {
 					}
 				}
 			}catch(JSONException e){
-				ExceptionUtil.handle(context, e);
+				ExceptionUtil.handle(e);
 			}
 			try{
 				mErrorMsg = json.getString("errMsg");
 			}catch(JSONException e){
-				ExceptionUtil.handle(context, e);
+				ExceptionUtil.handle(e);
 				LogUtil.i("APIResult", "JSONException: no errMsg");
 			}
 			
@@ -61,13 +60,13 @@ public class APIResult {
 						try{
 							tmpReturnStr = json.getString(tmpParamName);
 						}catch(JSONException e){
-							ExceptionUtil.handle(context, e);
+							ExceptionUtil.handle(e);
 						}
 						if(tmpReturnStr == null){
 							try{
 								tmpReturnStr = json.getInt(tmpParamName) + "";
 							}catch(JSONException e){
-								ExceptionUtil.handle(context, e);
+								ExceptionUtil.handle(e);
 							}
 						}
 						mReuturnStrMap.put(tmpParamName, tmpReturnStr);
@@ -77,7 +76,7 @@ public class APIResult {
 			}
 			display();
 		}catch (Exception e) {
-			ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
 		}
 		
 	}

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
@@ -48,7 +49,6 @@ import com.tencent.stat.StatService;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -114,9 +114,9 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private List<ProductListEntity> lv_all_1 = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all_3_DSC = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all_3_ASC = new ArrayList<ProductListEntity>();
-	private HashMap<Integer, Boolean> hm_all_1 = new HashMap<Integer, Boolean>();
-	private HashMap<Integer, Boolean> hm_all_3_asc = new HashMap<Integer, Boolean>();
-	private HashMap<Integer, Boolean> hm_all_3_dsc = new HashMap<Integer, Boolean>();
+	private SparseBooleanArray sa_all_1 = new SparseBooleanArray();
+	private SparseBooleanArray sa_all_3_asc = new SparseBooleanArray();
+	private SparseBooleanArray sa_all_3_dsc = new SparseBooleanArray();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -212,7 +212,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 				if (countTotal%Page_Count > 0) {
 					page_total++;
 				}
-				CommonTools.showPageNum(mContext, page_num + "/" + page_total, 1000);
+				CommonTools.showPageNum(page_num + "/" + page_total, 1000);
 
 				if (!isStop()) {
 					loadSVDatas();
@@ -269,7 +269,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			endTime = brandEn.getEndTime();
 			if (endTime > 0) {
 				tv_favourable_title.setText(brandEn.getFavourable());
-				mcdt = new MyCountDownTimer(mContext, tv_time_day, tv_time_hour, tv_time_minute, tv_time_second,
+				mcdt = new MyCountDownTimer(tv_time_day, tv_time_hour, tv_time_minute, tv_time_second,
 						endTime * 1000, 1000, new MyCountDownTimer.MyTimerCallback() {
 					@Override
 					public void onFinish() {
@@ -613,7 +613,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 				intent.putExtra("dataType", SelectListAdapter.DATA_TYPE_7);
 				startActivity(intent);
 			}else {
-				CommonTools.showToast(mContext, getString(R.string.toast_error_data_null), 1000);
+				CommonTools.showToast(getString(R.string.toast_error_data_null), 1000);
 			}
 			break;
 		case R.id.show_list_iv_to_top: //回顶
@@ -645,9 +645,9 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		lv_all_1.clear();
 		lv_all_3_DSC.clear();
 		lv_all_3_ASC.clear();
-		hm_all_1.clear();
-		hm_all_3_asc.clear();
-		hm_all_3_dsc.clear();
+		sa_all_1.clear();
+		sa_all_3_asc.clear();
+		sa_all_3_dsc.clear();
 		getSVDatas();
 	}
 
@@ -747,19 +747,19 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 				if (lists.size() > 0) {
 					switch (topType) {
 					case TYPE_1: //默认
-						addEntity(lv_all_1, lists, hm_all_1);
+						addEntity(lv_all_1, lists, sa_all_1);
 						page_type_1++;
 						total_1 = total;
 						break;
 					case TYPE_3: //价格
 						switch (sortType) {
 						case 1: //降序
-							addEntity(lv_all_3_DSC, lists, hm_all_3_dsc);
+							addEntity(lv_all_3_DSC, lists, sa_all_3_dsc);
 							page_type_3_DSC++;
 							total_3_DSC = total;
 							break;
 						case 2: //升序
-							addEntity(lv_all_3_ASC, lists, hm_all_3_asc);
+							addEntity(lv_all_3_ASC, lists, sa_all_3_asc);
 							page_type_3_ASC++;
 							total_3_ASC = total;
 							break;
@@ -809,16 +809,16 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	/**
 	 * 数据去重函数
 	 */
-	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, HashMap<Integer, Boolean> hashMap) {
+	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, SparseBooleanArray oldMap) {
 		ProductListEntity entity = null;
 		int dataId = 0;
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
 			if (entity != null) {
 				dataId = entity.getId();
-				if (dataId != 0 && !hashMap.containsKey(dataId)) {
+				if (dataId != 0 && oldMap.indexOfKey(dataId) < 0) {
 					oldDatas.add(entity);
-					hashMap.put(dataId, true);
+					oldMap.put(dataId, true);
 				}
 			}
 		}

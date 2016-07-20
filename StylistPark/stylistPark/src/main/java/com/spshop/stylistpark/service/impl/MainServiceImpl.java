@@ -1,8 +1,6 @@
 
 package com.spshop.stylistpark.service.impl;
 
-import android.content.Context;
-
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
@@ -749,7 +747,7 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public APIResult submitLookBook(Context ctx, String userId, String sessionKey, String lookBookType, String title,
+	public APIResult submitLookBook(String userId, String sessionKey, String lookBookType, String title,
 									String descripton, String filePath, String[] productIdList, String html, String mobileHtml) throws Exception {
 //		String uri = AppConfig.API_SUBMIT_LOOKBOOK;
 //		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
@@ -774,9 +772,9 @@ public class MainServiceImpl implements MainService {
 		postData.put("html", html);
 		postData.put("mobileHtml", mobileHtml);
 		postData.put("isAndroid", "1");
-		//JSONObject jsonObj = NetworkUtil.getJSONFromURL(ctx, AppConfig.API_SUBMIT_LOOKBOOK, postData, filePath);
+		//JSONObject jsonObj = NetworkUtil.getJSONFromURL(AppConfig.API_SUBMIT_LOOKBOOK, postData, filePath);
 		JSONObject jsonObj = new JSONObject();
-		return new APIResult(ctx, jsonObj, "url", "mediaUrl");
+		return new APIResult(jsonObj, "url", "mediaUrl");
 	}
 
 }

@@ -125,7 +125,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 				break;
 			}
 		}
-		tv_amount_title.setText(getString(R.string.money_balance_burrency, LangCurrTools.getCurrencyValue(mContext)));
+		tv_amount_title.setText(getString(R.string.money_balance_burrency, LangCurrTools.getCurrencyValue()));
 	}
 
 	private void initListView() {

@@ -56,14 +56,14 @@ public class UpdateAppVersion {
 	private void startCheckAppVersion() {
 		getAppVersionInfo();
 		// 检测网络状态
-		boolean isNewworkAvailabel = NetworkUtil.networkStateTips(mContext);
+		boolean isNewworkAvailabel = NetworkUtil.networkStateTips();
 		if (isNewworkAvailabel) {
 			if (!isHomeIndex) { //非首页
 				LoadDialog.show(mContext);
 			}
 			new HttpTask().execute(); //异步检查版本信息
 		} else {
-			CommonTools.showToast(mContext, mContext.getString(R.string.network_fault), 1000);
+			CommonTools.showToast(mContext.getString(R.string.network_fault), 1000);
 			clearInstance();
 		}
 	}
@@ -79,7 +79,7 @@ public class UpdateAppVersion {
 			curVersionCode = pinfo.versionCode;
 			AppApplication.version_name = curVersionName;
 		} catch (NameNotFoundException e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 			clearInstance();
 		}
 	}
@@ -94,7 +94,7 @@ public class UpdateAppVersion {
 			try {
 				versionEn = ServiceContext.getServiceContext().checkVersionUpdate(0, curVersionName);
 			} catch (Exception e) {
-				ExceptionUtil.handle(mContext, e);
+				ExceptionUtil.handle(e);
 				clearInstance();
 			}
 			return versionEn;

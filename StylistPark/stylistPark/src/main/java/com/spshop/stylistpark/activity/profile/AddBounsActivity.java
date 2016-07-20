@@ -50,7 +50,7 @@ public class AddBounsActivity extends BaseActivity implements OnClickListener{
 		bounsNo = et_bouns.getText().toString();
 		// 输入非空
 		if (bounsNo.isEmpty()) {
-			CommonTools.showToast(mContext, getString(R.string.bouns_input_error), 1000);
+			CommonTools.showToast(getString(R.string.bouns_input_error), 1000);
 			return;
 		}
 		postResetData();
@@ -104,7 +104,7 @@ public class AddBounsActivity extends BaseActivity implements OnClickListener{
 		if (result != null) {
 			BaseEntity baseEn = (BaseEntity) result;
 			if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-				CommonTools.showToast(mContext, getString(R.string.bouns_add_ok), 1000);
+				CommonTools.showToast(getString(R.string.bouns_add_ok), 1000);
 				if (BounsListActivity.instance != null) {
 					BounsListActivity.instance.isUpdateAllData = true;
 				}
@@ -118,7 +118,7 @@ public class AddBounsActivity extends BaseActivity implements OnClickListener{
 				if (StringUtil.isNull(baseEn.getErrInfo())) {
 					showServerBusy();
 				}else {
-					CommonTools.showToast(mContext, baseEn.getErrInfo(), 2000);
+					CommonTools.showToast(baseEn.getErrInfo(), 2000);
 				}
 			}
 		}else {

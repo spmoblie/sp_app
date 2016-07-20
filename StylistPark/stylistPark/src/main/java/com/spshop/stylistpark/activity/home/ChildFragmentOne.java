@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,7 +56,6 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @SuppressLint("UseSparseArrays")
@@ -96,7 +96,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all = new ArrayList<ProductListEntity>();
-	private HashMap<Integer, Boolean> hm_all = new HashMap<Integer, Boolean>();
+	private SparseBooleanArray sa_all = new SparseBooleanArray();
 	private boolean vprStop = false;
 	private int idsSize, idsPosition, vprPosition;
 	private ImageView[] indicators = null;
@@ -118,7 +118,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		LogUtil.i(TAG, "onCreate");
 		instance = this;
 		mContext = getActivity();
-		currStr = LangCurrTools.getCurrencyValue(mContext);
+		currStr = LangCurrTools.getCurrencyValue();
 		atm = AsyncTaskManager.getInstance(mContext);
 		mInflater = LayoutInflater.from(mContext);
 		options = AppApplication.getDefaultImageOptions();
@@ -134,7 +134,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			findViewById(view);
 			initView();
 		} catch (Exception e) {
-			ExceptionUtil.handle(getActivity(), e);
+			ExceptionUtil.handle(e);
 		}
 		return view;
 	}
@@ -538,7 +538,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private void getSVDatas() {
 		current_Page = 1;
 		lv_all.clear();
-		hm_all.clear();
+		sa_all.clear();
 		startAnimation();
 		requestHeadDatas();
 		requestListDatas();
@@ -677,7 +677,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				if (lists != null && lists.size() > 0) {
 					lv_all.addAll(lists);
 					addAllShow(lv_all);
-					//addEntity(lv_all, lists, hm_all);
+					//addEntity(lv_all, lists, sa_all);
 					current_Page++;
 					myUpdateAdapter();
 				}else {
@@ -693,7 +693,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
 		if (getActivity() == null) return;
-		CommonTools.showToast(mContext, String.valueOf(result), 1000);
+		CommonTools.showToast(String.valueOf(result), 1000);
 		loadFailHandle();
 	}
 
@@ -705,16 +705,16 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	/**
 	 * 数据去重函数
 	 */
-	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, HashMap<Integer, Boolean> hashMap) {
+	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, SparseBooleanArray sa_old) {
 		ProductListEntity entity = null;
 		int dataId = 0;
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
 			if (entity != null) {
 				dataId = entity.getId();
-				if (dataId != 0 && !hashMap.containsKey(dataId)) {
+				if (dataId != 0 && sa_old.indexOfKey(dataId) < 0) {
 					oldDatas.add(entity);
-					hashMap.put(dataId, true);
+					sa_old.put(dataId, true);
 				}
 			}
 		}

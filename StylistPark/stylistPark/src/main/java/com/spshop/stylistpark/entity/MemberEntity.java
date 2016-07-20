@@ -20,7 +20,12 @@ public class MemberEntity extends BaseEntity {
 	 * 会员名称
 	 */
 	private String userName;
-	
+
+	/**
+	 * 会员性别
+	 */
+	private String userSex;
+
 	/**
 	 * 会员等级
 	 */
@@ -91,6 +96,13 @@ public class MemberEntity extends BaseEntity {
 		this.userName = userName;
 	}
 
+	public String getUserSex() {
+		return userSex;
+	}
+
+	public void setUserSex(String userSex) {
+		this.userSex = userSex;
+	}
 
 	public int getMemberRank() {
 		return memberRank;

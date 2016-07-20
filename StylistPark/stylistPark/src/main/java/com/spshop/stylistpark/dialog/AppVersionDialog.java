@@ -134,7 +134,7 @@ public class AppVersionDialog {
 							exit = Boolean.FALSE;
 						}
 					}, 2000);
-					CommonTools.showToast(mContext, mContext.getString(R.string.toast_exit_prompt), 1000);
+					CommonTools.showToast(mContext.getString(R.string.toast_exit_prompt), 1000);
 				}
 				return true;
 			} else {
@@ -153,9 +153,9 @@ public class AppVersionDialog {
 			List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 			try {
 				HttpEntity entity = HttpUtil.getEntity(url[0], params, HttpUtil.METHOD_POST);
-				result = FileManager.writeFileSaveHttpEntity(mContext, APK_PATH, entity);
+				result = FileManager.writeFileSaveHttpEntity(APK_PATH, entity);
 			} catch (Exception e) {
-				ExceptionUtil.handle(mContext, e);
+				ExceptionUtil.handle(e);
 				result = null;
 			}
 			return result;

@@ -1,8 +1,5 @@
 package com.spshop.stylistpark.activity.common;
 
-import java.io.IOException;
-import java.util.Vector;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -29,6 +26,9 @@ import com.mining.app.zxing.view.ViewfinderView;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.StringUtil;
+
+import java.io.IOException;
+import java.util.Vector;
 
 /**
  * Initial the camera
@@ -119,7 +119,7 @@ public class MipcaActivityCapture extends Activity implements Callback {
 		playBeepSoundAndVibrate();
 		String resultString = result.getText();
 		if (StringUtil.isNull(resultString)) {
-			CommonTools.showToast(MipcaActivityCapture.this, "Scan failed!", 1000);
+			CommonTools.showToast("Scan failed!", 1000);
 		}else {
 			Intent intent = new Intent(MipcaActivityCapture.this, VideoActivity.class);
 			intent.putExtra("videoUrl", resultString);

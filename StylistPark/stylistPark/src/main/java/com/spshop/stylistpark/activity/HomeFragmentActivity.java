@@ -83,7 +83,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 
 			findViewById();
 		} catch (Exception e) {
-			ExceptionUtil.handle(this, e);
+			ExceptionUtil.handle(e);
 		}
 	}
 
@@ -167,7 +167,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 						exit = Boolean.FALSE;
 					}
 				}, 2000);
-				CommonTools.showToast(instance, getString(R.string.toast_exit_prompt), 1000);
+				CommonTools.showToast(getString(R.string.toast_exit_prompt), 1000);
 			}
 			return true;
 		}

@@ -31,7 +31,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 	private List<OrderEntity> datas;
 	//private AdapterCallback adapterCallback;
 	private LayoutInflater mInflater;
-	private DisplayImageOptions options, head_options;
+	private DisplayImageOptions options, headOptions;
 
 	public MemberOrderListAdapter(Context context, List<OrderEntity> datas, AdapterCallback adapterCallback) {
 		this.context = context;
@@ -39,7 +39,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 		//this.adapterCallback = adapterCallback;
 		this.mInflater = LayoutInflater.from(context);
 		options = AppApplication.getDefaultImageOptions();
-		head_options = AppApplication.getHeadImageOptions();
+		headOptions = AppApplication.getHeadImageOptions();
 	}
 
 	public void updateAdapter(List<OrderEntity> datas) {
@@ -99,7 +99,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 		
 		UserInfoEntity infoEn = data.getUserInfo();
 		if (infoEn != null) {
-			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + infoEn.getHeadImg(), holder.iv_head, head_options);
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + infoEn.getHeadImg(), holder.iv_head, headOptions);
 			switch (infoEn.getUserRankType()) {
 			case 0:
 				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_1));

@@ -347,7 +347,7 @@ public class ShareView{
 
 	private void wechatShare(boolean isFriends){
 		if(!DeviceUtil.checkAppInstalled(mContext, "com.tencent.mm")){ //检测是否安装微信APP
-			CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_no_wechat), 1000);
+			CommonTools.showToast(mContext.getString(R.string.share_msg_no_wechat), 1000);
 			return;
 		}
 		if (mShareEn != null) {
@@ -415,7 +415,7 @@ public class ShareView{
 
 				@Override
 				public void onWeiboException(WeiboException e) {
-					ExceptionUtil.handle(mContext, e);
+					ExceptionUtil.handle(e);
 					showAuthFail();
 				}
 			});
@@ -471,7 +471,7 @@ public class ShareView{
 			mWeiboShareAPI.sendRequest(mActivity, request, mAuthInfo, token, new WeiboAuthListener() {
 				@Override
 				public void onWeiboException( WeiboException arg0 ) {
-					ExceptionUtil.handle(mContext, arg0);
+					ExceptionUtil.handle(arg0);
 				}
 				
 				@Override
@@ -513,13 +513,13 @@ public class ShareView{
 				showEntityError();
 			}
 		} else {
-			CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_no_facebook), 1000);
+			CommonTools.showToast(mContext.getString(R.string.share_msg_no_facebook), 1000);
 		}
 	}
 	
 	private void whatsAppShare() {
 		if(!DeviceUtil.checkAppInstalled(mContext, "com.whatsapp")){ //检测是否安装WhatsApp
-			CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_no_whatsapp), 1000);
+			CommonTools.showToast(mContext.getString(R.string.share_msg_no_whatsapp), 1000);
 			return;
 		}
 		if (mShareEn != null) {
@@ -537,7 +537,7 @@ public class ShareView{
 
 	private void lineShare() {
 		if(!DeviceUtil.checkAppInstalled(mContext, "jp.naver.line.android")){ //检测是否安装Line
-			CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_no_line), 1000);
+			CommonTools.showToast(mContext.getString(R.string.share_msg_no_line), 1000);
 			return;
 		}
 		if (mShareEn != null) {
@@ -546,7 +546,7 @@ public class ShareView{
 			try {
                 share_Msg_For_Line = URLEncoder.encode(share_Msg_For_Line, "UTF-8");
             } catch (UnsupportedEncodingException e) {
-                ExceptionUtil.handle(mContext, e);
+				ExceptionUtil.handle(e);
             }
 			mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("line://msg/text/" + share_Msg_For_Line)));
 		}else {
@@ -559,7 +559,7 @@ public class ShareView{
 		if (mShareEn != null) {
 			ClipboardManager clip = (ClipboardManager)mContext.getSystemService(Context.CLIPBOARD_SERVICE);
 			clip.setText(mShareEn.getUrl()); // Copy link
-			CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_copy_link_ok), 2000);
+			CommonTools.showToast(mContext.getString(R.string.share_msg_copy_link_ok), 2000);
 		}else {
 			showEntityError();
 		}
@@ -569,35 +569,35 @@ public class ShareView{
 	 * 分享成功提示
 	 */
 	private void showShareSuccess() {
-		CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_success), 1000);
+		CommonTools.showToast(mContext.getString(R.string.share_msg_success), 1000);
 	}
 
 	/**
 	 * 分享出错提示
 	 */
 	private void showShareError() {
-		CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_error), 1000);
+		CommonTools.showToast(mContext.getString(R.string.share_msg_error), 1000);
 	}
 
 	/**
 	 * 用户取消了分享操作
 	 */
 	private void showShareCancel() {
-		CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_cancel), 1000);
+		CommonTools.showToast(mContext.getString(R.string.share_msg_cancel), 1000);
 	}
 	
 	/**
 	 * 分享参数出错提示
 	 */
 	private void showEntityError() {
-		CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_entity_error), 1000);
+		CommonTools.showToast(mContext.getString(R.string.share_msg_entity_error), 1000);
 	}
 
 	/**
 	 * 提示授权失败
 	 */
 	private void showAuthFail() {
-		CommonTools.showToast(mContext, mContext.getString(R.string.share_msg_error_license), 1000);
+		CommonTools.showToast(mContext.getString(R.string.share_msg_error_license), 1000);
 	}
 	
 	/**

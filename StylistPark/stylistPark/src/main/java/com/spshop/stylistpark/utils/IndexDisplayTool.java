@@ -1,6 +1,7 @@
 package com.spshop.stylistpark.utils;
 
 import android.content.Context;
+import android.support.v4.util.ArrayMap;
 import android.util.Pair;
 import android.util.SparseArray;
 
@@ -10,7 +11,6 @@ import com.spshop.stylistpark.entity.IndexDisplay;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 public class IndexDisplayTool {
@@ -87,11 +87,11 @@ public class IndexDisplayTool {
 		return buildIndexListChineseAndEng(context, dataList, null, false);
 	}
 	public static ArrayList<Pair<String, List<? extends IndexDisplay>>> buildIndexListChineseAndEng(
-			Context context,List<? extends IndexDisplay> dataList, HashMap<String, Integer> hm_index){
-		return buildIndexListChineseAndEng(context, dataList, hm_index, false);
+			Context context,List<? extends IndexDisplay> dataList, ArrayMap<String, Integer> am_index){
+		return buildIndexListChineseAndEng(context, dataList, am_index, false);
 	}
 	private static ArrayList<Pair<String, List<? extends IndexDisplay>>> buildIndexListChineseAndEng(
-			Context context, List<? extends IndexDisplay> dataList, HashMap<String, Integer> hm_index, boolean emptyHeader) {
+			Context context, List<? extends IndexDisplay> dataList, ArrayMap<String, Integer> am_index, boolean emptyHeader) {
 		ArrayList<Pair<String, List<? extends IndexDisplay>>> result = new ArrayList<Pair<String, List<? extends IndexDisplay>>>();
 
 		//ArrayList<StationDAO> stationList = getStationList(keyword);
@@ -109,15 +109,15 @@ public class IndexDisplayTool {
 			int i = 0;
 			ArrayList<IndexDisplay> l = null;
 			String strokeString;
-			if (hm_index != null) {
-				hm_index.clear();
+			if (am_index != null) {
+				am_index.clear();
 			}
 			for (IndexDisplay s : dataList) {
 				if (index.indexOfKey(i) >= 0) {
 					l = new ArrayList<IndexDisplay>();
 					strokeString = index.get(i);
-					if (hm_index != null && !hm_index.containsKey(strokeString)) {
-						hm_index.put(strokeString, i);
+					if (am_index != null && !am_index.containsKey(strokeString)) {
+						am_index.put(strokeString, i);
 					}
 					if(emptyHeader){
 						result.add(new Pair<String, List<? extends IndexDisplay>>("", l));

@@ -3,6 +3,7 @@ package com.spshop.stylistpark.activity.profile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
@@ -32,7 +33,6 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -80,10 +80,10 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	private List<BounsEntity> lv_all_2 = new ArrayList<BounsEntity>();
 	private List<BounsEntity> lv_all_3 = new ArrayList<BounsEntity>();
 	private List<BounsEntity> lv_all_4 = new ArrayList<BounsEntity>();
-	private HashMap<String, Boolean> hm_all_1 = new HashMap<String, Boolean>();
-	private HashMap<String, Boolean> hm_all_2 = new HashMap<String, Boolean>();
-	private HashMap<String, Boolean> hm_all_3 = new HashMap<String, Boolean>();
-	private HashMap<String, Boolean> hm_all_4 = new HashMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_1 = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_2 = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_3 = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_4 = new ArrayMap<String, Boolean>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -410,10 +410,10 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			lv_all_2.clear();
 			lv_all_3.clear();
 			lv_all_4.clear();
-			hm_all_1.clear();
-			hm_all_2.clear();
-			hm_all_3.clear();
-			hm_all_4.clear();
+			am_all_1.clear();
+			am_all_2.clear();
+			am_all_3.clear();
+			am_all_4.clear();
 			getSVDatas();
 		}
 	}
@@ -459,40 +459,40 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 						switch (topType) {
 						case TYPE_1:
 							if (loadType == 0) {
-								updEntity(total, total_1, lists, lv_all_1, hm_all_1);
+								updEntity(total, total_1, lists, lv_all_1, am_all_1);
 								page_type_1 = 2;
 							} else {
-								addEntity(lv_all_1, lists, hm_all_1);
+								addEntity(lv_all_1, lists, am_all_1);
 								page_type_1++;
 							}
 							total_1 = total;
 							break;
 						case TYPE_2:
 							if (loadType == 0) {
-								updEntity(total, total_2, lists, lv_all_2, hm_all_2);
+								updEntity(total, total_2, lists, lv_all_2, am_all_2);
 								page_type_2 = 2;
 							} else {
-								addEntity(lv_all_2, lists, hm_all_2);
+								addEntity(lv_all_2, lists, am_all_2);
 								page_type_2++;
 							}
 							total_2 = total;
 							break;
 						case TYPE_3:
 							if (loadType == 0) {
-								updEntity(total, total_3, lists, lv_all_3, hm_all_3);
+								updEntity(total, total_3, lists, lv_all_3, am_all_3);
 								page_type_3 = 2;
 							} else {
-								addEntity(lv_all_3, lists, hm_all_3);
+								addEntity(lv_all_3, lists, am_all_3);
 								page_type_3++;
 							}
 							total_3 = total;
 							break;
 						case TYPE_4:
 							if (loadType == 0) {
-								updEntity(total, total_4, lists, lv_all_4, hm_all_4);
+								updEntity(total, total_4, lists, lv_all_4, am_all_4);
 								page_type_4 = 2;
 							} else {
-								addEntity(lv_all_4, lists, hm_all_4);
+								addEntity(lv_all_4, lists, am_all_4);
 								page_type_4++;
 							}
 							total_4 = total;
@@ -526,7 +526,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 					if (StringUtil.isNull(baseEn.getErrInfo())) {
 						showServerBusy();
 					}else {
-						CommonTools.showToast(mContext, baseEn.getErrInfo(), 2000);
+						CommonTools.showToast(baseEn.getErrInfo(), 2000);
 					}
 				}
 			}else {
@@ -564,7 +564,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	 * 刷新数集
 	 */
 	private void updEntity(int newTotal, int oldTotal, List<BounsEntity> newDatas,
-						   List<BounsEntity> oldDatas, HashMap<String, Boolean> oldMap) {
+						   List<BounsEntity> oldDatas, ArrayMap<String, Boolean> oldMap) {
 		/*if (oldTotal < newTotal) {
 			List<OrderEntity> datas = new ArrayList<OrderEntity>();
 			datas.addAll(oldDatas);
@@ -601,16 +601,16 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	/**
 	 * 数据去重函数
 	 */
-	private void addEntity(List<BounsEntity> oldDatas, List<BounsEntity> newDatas, HashMap<String, Boolean> hashMap) {
+	private void addEntity(List<BounsEntity> oldDatas, List<BounsEntity> newDatas, ArrayMap<String, Boolean> oldMap) {
 		BounsEntity entity = null;
 		String dataId = "";
 		for (int i = 0; i < newDatas.size(); i++) {
 			entity = newDatas.get(i);
 			if (entity != null) {
 				dataId = entity.getBounsId();
-				if (!StringUtil.isNull(dataId) && !hashMap.containsKey(dataId)) {
+				if (!StringUtil.isNull(dataId) && !oldMap.containsKey(dataId)) {
 					oldDatas.add(entity);
-					hashMap.put(dataId, true);
+					oldMap.put(dataId, true);
 				}
 			}
 		}

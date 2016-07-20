@@ -37,7 +37,7 @@ import java.util.Calendar;
 @SuppressLint({ "NewApi", "UseSparseArrays" })
 public class AppApplication extends Application implements OnDataListener{
 	
-	public static AppApplication spApp = null;
+	private static AppApplication spApp = null;
 	
 	public static String model = ""; //手机型号
 	public static String version_name = ""; //当前版本号
@@ -54,10 +54,10 @@ public class AppApplication extends Application implements OnDataListener{
 	public static boolean isWXShare = false; //记录是否微信分享
 	public static boolean isStartHome = true; //记录是否允许重新启动HomeFragmentActivity
 
+	public static DisplayImageOptions defaultOptions, headOptions;
 	private RequestQueue mRequestQueue;
 	private static SharedPreferences shared;
 	private static AsyncTaskManager atm;
-	private static DisplayImageOptions defaultOptions, headOptions;
 	private ServiceContext sc = ServiceContext.getServiceContext();
 	private Calendar calendar = Calendar.getInstance();
 
@@ -147,8 +147,8 @@ public class AppApplication extends Application implements OnDataListener{
 		if (defaultOptions == null) {
 			defaultOptions = new DisplayImageOptions.Builder()
 					//.displayer(new FadeInBitmapDisplayer(300)) // 图片加载好后渐入的动画时间
-					.showImageForEmptyUri(R.drawable.bg_img_white)
-					.showImageOnFail(R.drawable.bg_img_white)
+					.showImageForEmptyUri(R.drawable.bg_img_default)
+					.showImageOnFail(R.drawable.bg_img_default)
 					.cacheInMemory(true) // 内存缓存
 					.cacheOnDisc(true) // sdcard缓存
 					.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
@@ -166,8 +166,8 @@ public class AppApplication extends Application implements OnDataListener{
 					.displayer(new RoundedBitmapDisplayer(90))
 					.showImageForEmptyUri(R.drawable.head_portrait)
 					.showImageOnFail(R.drawable.head_portrait)
-					.cacheInMemory(false) // 内存缓存
-					.cacheOnDisc(false) // sdcard缓存
+					.cacheInMemory(true) // 内存缓存
+					.cacheOnDisc(true) // sdcard缓存
 					.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 					.bitmapConfig(Bitmap.Config.ARGB_8888).build();
 		}
@@ -186,7 +186,7 @@ public class AppApplication extends Application implements OnDataListener{
 	 */
 	public static void saveBitmapFile(Bitmap bm, File file, int compress) {
 		if (bm == null || file == null) {
-			CommonTools.showToast(spApp, spApp.getResources().getString(R.string.photo_show_save_fail), 2000);
+			CommonTools.showToast(spApp.getResources().getString(R.string.photo_show_save_fail), 2000);
 			return;
 		}
 		try {
@@ -195,7 +195,7 @@ public class AppApplication extends Application implements OnDataListener{
 				updatePhoto(file); //需要保存的图片更新相册
 			}
 		} catch (IOException e) {
-			ExceptionUtil.handle(spApp, e);
+			ExceptionUtil.handle(e);
 		}
 	}
 
@@ -223,8 +223,8 @@ public class AppApplication extends Application implements OnDataListener{
 	 * 获取HttpUrl语言、货币参数
 	 */
 	public static String getHttpUrlLangCurValueStr(){
-		return "&lang=" +LangCurrTools.getLanguageHttpUrlValueStr(spApp) 
-			 + "&currency=" + LangCurrTools.getCurrencyHttpUrlValueStr(spApp);
+		return "&lang=" + LangCurrTools.getLanguageHttpUrlValueStr()
+			 + "&currency=" + LangCurrTools.getCurrencyHttpUrlValueStr();
 	}
 	
     public RequestQueue getRequestQueue() {
@@ -257,7 +257,7 @@ public class AppApplication extends Application implements OnDataListener{
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
-		CommonTools.showToast(spApp, String.valueOf(result), 1000);
+		CommonTools.showToast(String.valueOf(result), 1000);
 	}
 
 }

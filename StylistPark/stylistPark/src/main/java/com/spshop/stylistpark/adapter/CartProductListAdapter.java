@@ -1,6 +1,7 @@
 package com.spshop.stylistpark.adapter;
 
 import android.content.Context;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +20,6 @@ import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.slider.SlideView;
 
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -37,25 +37,25 @@ public class CartProductListAdapter extends BaseAdapter{
 	
 	private Context context;
 	private List<ProductDetailEntity> datas;
-	//private HashMap<Integer, ProductDetailEntity> cartHashMap;
+	//private SparseArray<ProductDetailEntity> sa_cart;
 	private AdapterCallback apCallback;
     private SlideView slideview;
     private DisplayImageOptions options;
 	
-	public CartProductListAdapter(Context context, List<ProductDetailEntity> datas, 
-			HashMap<Integer, ProductDetailEntity> cartHashMap, AdapterCallback callback) {
+	public CartProductListAdapter(Context context, List<ProductDetailEntity> datas,
+					SparseArray<ProductDetailEntity> sa_cart, AdapterCallback callback) {
 		this.context = context;
 		this.datas = datas;
-		//this.cartHashMap = cartHashMap;
+		//this.sa_cart = sa_cart;
 		this.apCallback = callback;
         
         options = AppApplication.getDefaultImageOptions();
 	}
 	
-	public void updateAdapter(List<ProductDetailEntity> datas, HashMap<Integer, ProductDetailEntity> cartHashMap){
+	public void updateAdapter(List<ProductDetailEntity> datas, SparseArray<ProductDetailEntity> sa_cart){
 		if (datas != null) {
 			this.datas = datas;
-			//this.cartHashMap = cartHashMap;
+			//this.sa_cart = sa_cart;
 			notifyDataSetChanged();
 		}
 	}

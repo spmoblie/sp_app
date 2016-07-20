@@ -582,7 +582,7 @@ public class GeneratorFreeStyleActivity extends BaseActivity implements
         } catch (Exception e)
         {
             LogUtil.i(TAG, "loadDraft" + " error");
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
             CommonTools.deleteFileInCache(this, AppConfig.FREE_STYLE_DRAFT_NAME);
             showErrorDialog(R.string.collage_error_load_draft);
         }
@@ -769,7 +769,7 @@ public class GeneratorFreeStyleActivity extends BaseActivity implements
                 jsonObj.put("rotate", cv.getRotation());
             } catch (JSONException e)
             {
-                ExceptionUtil.handle(mContext, e);
+                ExceptionUtil.handle(e);
             }
             jsonArray.put(jsonObj);
         }
@@ -782,9 +782,9 @@ public class GeneratorFreeStyleActivity extends BaseActivity implements
             fos.write(jsonArray.toString().getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         } catch (IOException e) {
-            ExceptionUtil.handle(mContext, e);
+            ExceptionUtil.handle(e);
         }
     }
     
@@ -1118,7 +1118,7 @@ public class GeneratorFreeStyleActivity extends BaseActivity implements
                 r = jsonObj.getDouble("rotate");
             } catch (Exception e)
             {
-                ExceptionUtil.handle(mContext, e);
+                ExceptionUtil.handle(e);
                 CommonTools.deleteFileInCache(GeneratorFreeStyleActivity.this, AppConfig.FREE_STYLE_DRAFT_NAME);
                 showErrorDialog(R.string.collage_error_load_draft);
             }

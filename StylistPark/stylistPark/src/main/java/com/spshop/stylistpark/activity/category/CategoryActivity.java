@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -41,7 +42,6 @@ import com.spshop.stylistpark.utils.StringUtil;
 import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -72,7 +72,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	private List<CategoryListEntity> lv_lists = new ArrayList<CategoryListEntity>();
 	private List<CategoryListEntity> gv_lists = new ArrayList<CategoryListEntity>();
 	private List<BrandEntity> brandList = new ArrayList<BrandEntity>();
-	private HashMap<String, Integer> hm_index = new HashMap<String, Integer>();
+	private ArrayMap<String, Integer> am_index = new ArrayMap<String, Integer>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -196,9 +196,9 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 
 			});
 			idf = IndexDisplayFragment.newInstance();
-			idf.setDataList(IndexDisplayTool.buildIndexListChineseAndEng(this, brandList, hm_index));
+			idf.setDataList(IndexDisplayTool.buildIndexListChineseAndEng(this, brandList, am_index));
 			idf.setAdapter(adapter);
-			idf.setIndexHashMap(hm_index);
+			idf.setIndexHashMap(am_index);
 
 			FragmentTransaction ft = fm.beginTransaction();
 			ft.add(R.id.category_brand_fl, idf).commit();

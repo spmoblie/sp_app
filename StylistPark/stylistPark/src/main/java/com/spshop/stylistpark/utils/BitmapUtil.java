@@ -145,9 +145,10 @@ public class BitmapUtil {
      * 从字节流中获取图片对象
      */
     @SuppressWarnings("deprecation")
-	public static Bitmap getBitmapFromByte(Context context, byte[] bitmapBytes) {
+	public static Bitmap getBitmapFromByte(byte[] bitmapBytes) {
     	if (bitmapBytes != null) {
-    		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+    		Display display = ((WindowManager) AppApplication.getInstance().getApplicationContext()
+					.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
     		int reqWidth, reqHeight;
     		Point point = new Point();
     		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
@@ -355,13 +356,13 @@ public class BitmapUtil {
      * @param filepath
      * @return
      */
-    public static int getExifOrientation(Context context, String filepath) {
+    public static int getExifOrientation(String filepath) {
         int degree = 0;
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(filepath);
         } catch (IOException e) {
-        	ExceptionUtil.handle(context, e);
+			ExceptionUtil.handle(e);
         }
         if (exif != null) {
     	int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, -1);
@@ -431,19 +432,18 @@ public class BitmapUtil {
 	 * 将多张图片拼接成长图并返回长图在本地的绝对路径
 	 * 
 	 * @param imageUris
-	 * @return
 	 */
-	public static String addLongBitmap(Context context, ArrayList<Uri> imageUris) {
+	public static String addLongBitmap(ArrayList<Uri> imageUris) {
 		String longImgPath = "";
 		int size = imageUris.size();
 		if (size == 1) {
-			longImgPath = FileManager.getRealFilePath(context, imageUris.get(0));
+			longImgPath = FileManager.getRealFilePath(imageUris.get(0));
 		}else if (size > 1) {
-			Bitmap bm1 = BitmapFactory.decodeFile(FileManager.getRealFilePath(context, imageUris.get(0)));
+			Bitmap bm1 = BitmapFactory.decodeFile(FileManager.getRealFilePath(imageUris.get(0)));
 			Bitmap bm2 = null;
 			Bitmap longBm = null;
 			for (int i = 1; i < imageUris.size(); i++) {
-				bm2 = BitmapFactory.decodeFile(FileManager.getRealFilePath(context, imageUris.get(i)));
+				bm2 = BitmapFactory.decodeFile(FileManager.getRealFilePath(imageUris.get(i)));
 				if (longBm != null) {
 					longBm = add2Bitmap(longBm, bm2);
 				}else {
@@ -455,7 +455,7 @@ public class BitmapUtil {
 				try {
 					save(longBm, new File(longImgPath), 100);
 				} catch (IOException e) {
-					ExceptionUtil.handle(context, e);
+					ExceptionUtil.handle(e);
 					longImgPath = "";
 				}
 			}

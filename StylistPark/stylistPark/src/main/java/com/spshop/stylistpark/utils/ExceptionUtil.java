@@ -1,7 +1,6 @@
 package com.spshop.stylistpark.utils;
 
-import android.content.Context;
-
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.tencent.stat.StatService;
 
@@ -10,10 +9,11 @@ import java.io.StringWriter;
 
 public class ExceptionUtil {
 	
-	public static void handle(Context ctx, Exception e)
+	public static void handle(Exception e)
 	{
 		if (AppConfig.IS_PUBLISH) {
-			StatService.reportException(ctx, e); // App正式发布之后将异常详细信息上传至TA平台
+			// App正式发布之后将异常详细信息上传至TA平台
+			StatService.reportException(AppApplication.getInstance().getApplicationContext(), e);
 		}
 		
 		StringWriter stringWriter = new StringWriter();

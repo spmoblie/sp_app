@@ -108,7 +108,7 @@ public class GeneratorPhotoEditActivity extends BaseActivity {
 		try {
 			collageBitmap = BitmapFactory.decodeStream(new FileInputStream(collageFile), null, options);
 		} catch (Exception e) {
-			ExceptionUtil.handle(mContext, e);
+			ExceptionUtil.handle(e);
 		}
 		layoutHeaderNImage = findViewById(R.id.layoutHeaderNImage);
 		iv = (ImageView) findViewById(R.id.ivCollage);
@@ -454,7 +454,7 @@ public class GeneratorPhotoEditActivity extends BaseActivity {
 			Message msg = new Message();
 			try {
 				UserManager um = UserManager.getInstance();
-				APIResult result = ServiceContext.getServiceContext().submitLookBook(mCtx, um.getUserId(), "", 
+				APIResult result = ServiceContext.getServiceContext().submitLookBook(um.getUserId(), "",
 						lookBookType, title, description, filePath, productIdList, html, mobileHtml);
 				if (result.isInvalidKey()) {
 					AppApplication.AppLogout(false); //登录失效
@@ -469,7 +469,7 @@ public class GeneratorPhotoEditActivity extends BaseActivity {
 					msg.what = SUMBIT_FAIL;
 				}
 			} catch (Exception e) {
-				ExceptionUtil.handle(mCtx, e);
+				ExceptionUtil.handle(e);
 			}
 			if (!interrupted()) {
 				mTHander.sendMessage(msg);

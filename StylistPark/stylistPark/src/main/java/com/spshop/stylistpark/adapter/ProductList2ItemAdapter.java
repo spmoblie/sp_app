@@ -36,7 +36,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		this.context = context;
 		this.datas = datas;
 		this.apCallback = callback;
-		currStr = LangCurrTools.getCurrencyValue(context);
+		currStr = LangCurrTools.getCurrencyValue();
         options = AppApplication.getDefaultImageOptions();
 	}
 	

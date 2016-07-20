@@ -1,10 +1,10 @@
 package com.spshop.stylistpark.utils;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import android.graphics.Bitmap;
 import android.util.Log;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class LimitedHashMap<K, V> extends LinkedHashMap<K, V>

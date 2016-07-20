@@ -87,7 +87,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		rl_about_us.setOnClickListener(this);
 		rl_logout.setOnClickListener(this);
 		// 当前语言
-		Language lang = LangCurrTools.getLanguage(mContext);
+		Language lang = LangCurrTools.getLanguage();
 		switch (lang) {
 		case En:
 			tv_lang_content.setText(getString(R.string.language_en));
@@ -103,7 +103,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			break;
 		}
 		// 当前货币
-		Currency cur = LangCurrTools.getCurrency(mContext);
+		Currency cur = LangCurrTools.getCurrency();
 		switch (cur) {
 		case HKD:
 			tv_cur_content.setText(getString(R.string.currency_hkd));
