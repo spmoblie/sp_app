@@ -1,10 +1,7 @@
 StylistPark/.gradle/
 StylistPark/.idea/
 *.iml
-*.gradle
 *.properties
-StylistPark/gradlew
-StylistPark/gradlew.bat
 StylistPark/import-summary.txt
 StylistPark/gradle/
 StylistPark/build/
