@@ -37,7 +37,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "MemberListActivity";
 	public static MemberListActivity instance = null;
-	public boolean isUpdateAllData = false; 
+	public boolean isUpdate = false;
 	public static final int TYPE_1 = 0;  //最新客户
 	public static final int TYPE_2 = 1;  //活跃排名
 	public static final int TYPE_3 = 2;  //订单排名
@@ -357,7 +357,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdateAllData = true;
+				isUpdate = true;
 			}
 			updateAllData();
 		}else {
@@ -366,8 +366,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void updateAllData() {
-		if (isUpdateAllData) {
-			isUpdateAllData = false;
+		if (isUpdate) {
+			isUpdate = false;
 			lv_show.clear();
 			lv_all_1.clear();
 			lv_all_2.clear();

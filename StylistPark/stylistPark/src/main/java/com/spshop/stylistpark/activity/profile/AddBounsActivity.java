@@ -106,7 +106,7 @@ public class AddBounsActivity extends BaseActivity implements OnClickListener{
 			if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 				CommonTools.showToast(getString(R.string.bouns_add_ok), 1000);
 				if (BounsListActivity.instance != null) {
-					BounsListActivity.instance.isUpdateAllData = true;
+					BounsListActivity.instance.isUpdate = true;
 				}
 				if (ChildFragmentFive.instance != null) { //刷新个人页数据
 					ChildFragmentFive.instance.isUpdate = true;

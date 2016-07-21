@@ -33,7 +33,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	
 	private static final String TAG = "AccountBalanceActivity";
 	public static AccountBalanceActivity instance = null;
-	public static boolean isUpdate = false;
+	public boolean isUpdate = false;
 	
 	private static final int Page_Count = 20;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页

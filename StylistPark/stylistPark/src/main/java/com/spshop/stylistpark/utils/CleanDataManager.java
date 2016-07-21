@@ -128,7 +128,7 @@ public class CleanDataManager {
         cleanInternalCache(context);  
         cleanExternalCache(context);  
         //cleanDatabases(context);  
-        //cleanDatabaseByName(context, "remi.db");
+        //cleanDatabaseByName(context, "stylistpark.db");
         cleanSharedPreference(context);  
         cleanFiles(context);  
         /*for (String filePath : filepath) {  

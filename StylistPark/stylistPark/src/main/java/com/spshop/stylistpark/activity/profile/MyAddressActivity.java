@@ -30,7 +30,7 @@ public class MyAddressActivity extends BaseActivity {
 
 	private static final String TAG = "MyAddressActivity";
 	public static MyAddressActivity instance = null;
-	public boolean isChange = false;
+	public boolean isUpdate = false;
 
 	private boolean isLogined, isSuccess;
 
@@ -142,7 +142,7 @@ public class MyAddressActivity extends BaseActivity {
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isChange = true;
+				isUpdate = true;
 			}
 			updateAllData();
 		}else {
@@ -151,8 +151,8 @@ public class MyAddressActivity extends BaseActivity {
 	}
 
 	private void updateAllData() {
-		if (isChange) {
-			isChange = false;
+		if (isUpdate) {
+			isUpdate = false;
 			getSVDatas();
 		}
 	}

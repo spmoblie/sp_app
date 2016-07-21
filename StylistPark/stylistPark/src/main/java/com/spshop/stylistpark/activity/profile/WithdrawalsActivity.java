@@ -13,7 +13,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.entity.UserInfoEntity;
+import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -156,18 +156,20 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		super.onSuccess(requestCode, result);
 		stopAnimation();
 		if (result != null) {
-			UserInfoEntity userEn = (UserInfoEntity) result;
-			if (userEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS){ //确认提现OK
-				AccountBalanceActivity.isUpdate = true;
+			BaseEntity baseEn = (BaseEntity) result;
+			if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS){ //确认提现OK
+				if (AccountBalanceActivity.instance != null) {
+					AccountBalanceActivity.instance.isUpdate = true;
+				}
 				CommonTools.showToast(getString(R.string.money_withdrawals_success), 2000);
 				finish();
-			}else if (userEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
+			}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 				// 登入超时，交BaseActivity处理
 			}else {
-				if (StringUtil.isNull(userEn.getErrInfo())) {
+				if (StringUtil.isNull(baseEn.getErrInfo())) {
 					showServerBusy();
 				}else {
-					CommonTools.showToast(userEn.getErrInfo(), 2000);
+					CommonTools.showToast(baseEn.getErrInfo(), 2000);
 				}
 			}
 		}else {

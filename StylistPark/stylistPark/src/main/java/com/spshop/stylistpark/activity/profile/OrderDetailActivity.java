@@ -331,7 +331,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		@Override
 		public void onFinish() {
 			if (OrderListActivity.instance != null) { //刷新订单列表
-				OrderListActivity.instance.isUpdateAllData = true;
+				OrderListActivity.instance.isUpdate = true;
 			}
 			getSVData();
 		}
@@ -427,7 +427,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					if (OrderListActivity.instance != null) {
-						OrderListActivity.instance.isUpdateAllData = true;
+						OrderListActivity.instance.isUpdate = true;
 					}
 					isUpdate = true;
 					updateAllData();

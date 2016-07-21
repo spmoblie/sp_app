@@ -50,15 +50,14 @@ public class AppApplication extends Application implements OnDataListener{
 	
 	public static boolean loadDBData = false; //是否从本地数据库加载数据
 	public static boolean loadSVData_category = true; //是从服务器加载商品分类数据
-	public static boolean initCookies = true; //重新登录时初始化cookies
 	public static boolean isWXShare = false; //记录是否微信分享
 	public static boolean isStartHome = true; //记录是否允许重新启动HomeFragmentActivity
 
 	public static DisplayImageOptions defaultOptions, headOptions;
-	private RequestQueue mRequestQueue;
 	private static SharedPreferences shared;
 	private static AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
+	private RequestQueue mRequestQueue;
 	private Calendar calendar = Calendar.getInstance();
 
 	

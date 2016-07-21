@@ -44,7 +44,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "OrderListActivity";
 	public static OrderListActivity instance = null;
-	public boolean isUpdateAllData = false;
+	public boolean isUpdate = false;
 	public static final int TYPE_1 = 0;  //全部
 	public static final int TYPE_2 = 1;  //待付款或已完成
 	public static final int TYPE_3 = 2;  //待发货或待分成
@@ -491,7 +491,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdateAllData = true;
+				isUpdate = true;
 			}
 			updateAllData();
 			if (rootCode == 0 && lv_adapter != null) {
@@ -503,8 +503,8 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void updateAllData() {
-		if (isUpdateAllData) {
-			isUpdateAllData = false;
+		if (isUpdate) {
+			isUpdate = false;
 			lv_show.clear();
 			lv_all_1.clear();
 			lv_all_2.clear();
@@ -632,7 +632,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			if (result != null) {
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					isUpdateAllData = true;
+					isUpdate = true;
 					updateAllData();
 					if (ChildFragmentFive.instance != null) {
 						ChildFragmentFive.instance.isUpdate = true;

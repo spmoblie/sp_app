@@ -406,9 +406,9 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public AddressEntity getAddressLists() throws Exception {
-		String uri = AppConfig.URL_COMMON_FLOW_URL;
+		String uri = AppConfig.URL_COMMON_USER_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		params.add(new MyNameValuePair("step", "address"));
+		params.add(new MyNameValuePair("act", "address_list"));
 		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);
@@ -642,7 +642,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public BaseEntity postWithdrawalsData(String card, int amount) throws Exception {
-		String uri = AppConfig.URL_COMMON_USER_URL + "?act=withdrawals";
+		String uri = AppConfig.URL_COMMON_USER_URL + "?act=act_account";
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		params.add(new MyNameValuePair("card", card));
 		params.add(new MyNameValuePair("amount", String.valueOf(amount)));

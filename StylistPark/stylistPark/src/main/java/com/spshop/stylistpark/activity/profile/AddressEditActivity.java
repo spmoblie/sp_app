@@ -522,7 +522,7 @@ public class AddressEditActivity extends BaseActivity implements
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					CommonTools.showToast(getString(R.string.save_ok), 1000);
 					if (MyAddressActivity.instance != null) {
-						MyAddressActivity.instance.isChange = true;
+						MyAddressActivity.instance.isUpdate = true;
 					}
 					if (PostOrderActivity.instance != null) {
 						PostOrderActivity.instance.isUpdate = true;

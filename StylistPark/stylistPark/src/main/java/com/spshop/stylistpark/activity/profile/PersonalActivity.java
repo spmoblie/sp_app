@@ -588,12 +588,19 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		childEn2.setChildId(2);
 		childEn2.setChildShowName(getString(R.string.profile_gender_female));
 		childLists.add(childEn2);
+		SelectListEntity childEn3 = new SelectListEntity();
+		childEn3.setChildId(3);
+		childEn3.setChildShowName(getString(R.string.profile_gender_confidential));
+		childLists.add(childEn3);
 		switch (sexCode) {
 		case 1:
 			selectEn.setSelectEn(childEn1);
 			break;
 		case 2:
 			selectEn.setSelectEn(childEn2);
+			break;
+		case 3:
+			selectEn.setSelectEn(childEn3);
 			break;
 		}
 		selectEn.setChildLists(childLists);

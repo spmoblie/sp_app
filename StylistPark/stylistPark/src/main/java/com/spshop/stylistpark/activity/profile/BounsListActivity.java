@@ -42,7 +42,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "BounsListActivity";
 	public static BounsListActivity instance = null;
-	public boolean isUpdateAllData = false; 
+	public boolean isUpdate = false;
 	public static final int TYPE_1 = 0;  //全部
 	public static final int TYPE_2 = 1;  //未使用
 	public static final int TYPE_3 = 2;  //已过期
@@ -394,7 +394,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdateAllData = true;
+				isUpdate = true;
 			}
 			updateAllData();
 		}else {
@@ -403,8 +403,8 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void updateAllData() {
-		if (isUpdateAllData) {
-			isUpdateAllData = false;
+		if (isUpdate) {
+			isUpdate = false;
 			lv_show.clear();
 			lv_all_1.clear();
 			lv_all_2.clear();
