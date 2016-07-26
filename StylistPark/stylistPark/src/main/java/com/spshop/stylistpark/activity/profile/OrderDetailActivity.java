@@ -388,6 +388,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		if (mTimer != null) {
 			mTimer.cancel();
 		}
+		instance = null;
 	}
 	
 	@Override
@@ -404,6 +405,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		stopAnimation();
 		switch (requestCode) {
@@ -449,6 +451,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 	}
 

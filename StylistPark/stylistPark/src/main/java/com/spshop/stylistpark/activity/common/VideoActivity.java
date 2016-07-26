@@ -30,6 +30,7 @@ public class VideoActivity extends BaseActivity {
 	private RelativeLayout rl_close;
 	private String videoUrl;
 	private int old_duration;
+	private int mSeekPosition;
 	private Runnable runnable;
 	private Handler handler;
 	
@@ -163,6 +164,11 @@ public class VideoActivity extends BaseActivity {
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		StatService.onResume(this);
+
+		if (videoView != null && !videoView.isPlaying() && mSeekPosition > 0) {
+			videoView.seekTo(mSeekPosition);
+			videoView.start();
+		}
 	}
 
 	@Override
@@ -171,6 +177,11 @@ public class VideoActivity extends BaseActivity {
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
 		StatService.onPause(this);
+
+		if (videoView != null && videoView.isPlaying()) {
+			mSeekPosition = videoView.getCurrentPosition();
+			videoView.pause();
+		}
 	}
 
 	@Override

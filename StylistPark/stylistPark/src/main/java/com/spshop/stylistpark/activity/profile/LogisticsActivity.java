@@ -22,8 +22,7 @@ import java.util.List;
 public class LogisticsActivity extends BaseActivity {
 
 	private static final String TAG = "LogisticsActivity";
-	public static LogisticsActivity instance = null;
-	public boolean isChange = false;
+	public boolean isUpdate = false;
 	
 	private FrameLayout rl_no_data;
 	private TextView tv_no_data;
@@ -39,7 +38,6 @@ public class LogisticsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_logistics);
 		
-		instance = this;
 		typeStr = getIntent().getExtras().getString("typeStr");
 		postId = getIntent().getExtras().getString("postId");
 		
@@ -85,7 +83,7 @@ public class LogisticsActivity extends BaseActivity {
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isChange = true;
+				isUpdate = true;
 			}
 			updateAllData();
 		}else {
@@ -94,8 +92,8 @@ public class LogisticsActivity extends BaseActivity {
 	}
 
 	private void updateAllData() {
-		if (isChange) {
-			isChange = false;
+		if (isUpdate) {
+			isUpdate = false;
 			getSVDatas();
 		}
 	}

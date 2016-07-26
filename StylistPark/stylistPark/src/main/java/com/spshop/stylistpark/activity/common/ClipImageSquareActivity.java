@@ -83,4 +83,9 @@ public class ClipImageSquareActivity extends BaseActivity{
 		return DeviceUtil.getStatusBarHeight(this) + getHeadHeight();
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		instance = null;
+	}
 }

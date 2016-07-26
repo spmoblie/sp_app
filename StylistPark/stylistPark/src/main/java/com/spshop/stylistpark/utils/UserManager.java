@@ -18,33 +18,33 @@ import com.spshop.stylistpark.share.weibo.AccessTokenKeeper;
 public class UserManager {
 	
 	private static UserManager instance;
-	private static SharedPreferences sp;
+	private SharedPreferences sp;
 	
-	private static String mUserId = null;
-	private static String mLoginName = null;
-	private static String mUserNickName = null;
-	private static String mUserHeadImg = null;
-	private static String mUserIntro = null;
-	private static String mUserBirthday = null;
-	private static String mUserEmail = null;
-	private static String mUserPhone = null;
-	private static String mUserRank = null;
-	private static String mUserLevel = null;
+	private String mUserId = null;
+	private String mLoginName = null;
+	private String mUserNickName = null;
+	private String mUserHeadImg = null;
+	private String mUserIntro = null;
+	private String mUserBirthday = null;
+	private String mUserEmail = null;
+	private String mUserPhone = null;
+	private String mUserRank = null;
+	private String mUserLevel = null;
 	
-	private static String wxAccessToken = null;
-	private static String wxOpenid = null;
-	private static String wxUnionid = null;
-	private static String wxRefreshToken = null;
-	
-	private UserManager(){
-		sp = AppApplication.getSharedPreferences();
-	}
-	
+	private String wxAccessToken = null;
+	private String wxOpenid = null;
+	private String wxUnionid = null;
+	private String wxRefreshToken = null;
+
 	public static UserManager getInstance(){
 		if (instance == null) {
 			instance = new UserManager();
 		}
 		return instance;
+	}
+
+	private UserManager(){
+		sp = AppApplication.getSharedPreferences();
 	}
 	
 	public String getUserId(){

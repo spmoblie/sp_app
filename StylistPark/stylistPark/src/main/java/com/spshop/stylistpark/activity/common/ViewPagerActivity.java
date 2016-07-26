@@ -50,7 +50,6 @@ public class ViewPagerActivity extends BaseActivity {
 	private ArrayMap<String, Bitmap> am_btm = new ArrayMap<String, Bitmap>();
 	private int mCurrentItem;
 	private TextView tv_save, tv_page;
-	private Bitmap showBitmap;
 	private FrameLayout frameLayout;
 	private ProgressBar progress;
 	private DragImageView imageView, showView;
@@ -99,7 +98,6 @@ public class ViewPagerActivity extends BaseActivity {
 			public void imageLoaded(String path, File saveFile, Bitmap bm) {
 				DragImageView imgView = am_img.get(HASHMAP_KEY_IMG + path);
 				if (imgView != null && bm != null) {
-					showBitmap = bm;
 					am_btm.put(HASHMAP_KEY_BTM + path, bm); //记录图片
 					imgView.setImageBitmap(bm);
 				}
@@ -134,7 +132,6 @@ public class ViewPagerActivity extends BaseActivity {
 			// 加载图片对象
 			Bitmap bm = asyncImageLoader.loadImage(true, imgUrl, 0);
 			if (bm != null) {
-				showBitmap = bm;
 				imageView.setImageBitmap(bm);
 				am_btm.put(HASHMAP_KEY_BTM + imgUrl, bm); //记录图片
 			}else {

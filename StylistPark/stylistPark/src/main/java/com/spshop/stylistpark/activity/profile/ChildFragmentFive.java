@@ -3,6 +3,7 @@ package com.spshop.stylistpark.activity.profile;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	public boolean isUpdate = false;
 	
 	private Context mContext;
+	private SharedPreferences shared;
 	private boolean isLogined, isSuccess;
 	private UserInfoEntity infoEn;
 	
@@ -69,6 +71,11 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		instance = this;
 		mContext = getActivity();
 		atm = AsyncTaskManager.getInstance(mContext);
+		shared = AppApplication.getSharedPreferences();
+		// 自动跳转至MemberListActivity
+		if (shared.getBoolean(AppConfig.KEY_PUSH_PAGE_MEMBER, false)) {
+			startMemberListActivity(MemberListActivity.TYPE_1);
+		}
 
 		View view = null;
 		try {
@@ -356,6 +363,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	public void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 
 	@Override

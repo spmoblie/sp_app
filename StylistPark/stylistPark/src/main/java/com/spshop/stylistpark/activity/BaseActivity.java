@@ -53,6 +53,7 @@ import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.umeng.message.PushAgent;
 
 /**
  * 所有Activity的父类
@@ -84,15 +85,15 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected int headAnimHeight;
 	protected TranslateAnimation headGONE, headVISIBLE;
 	protected ServiceContext sc = ServiceContext.getServiceContext();
-	
+
+	public static final int DIALOG_CONFIRM_CLICK = 456; //全局对话框“确定”
+	public static final int DIALOG_CANCEL_CLICK = 887; //全局对话框“取消”
 	protected static final int STACK_MAX_SIZE = 5;
 	protected static final int MAX_DECOR = 5; //搭配素材上限
 	protected static final int MIN_PRODUCT = 1; //搭配货品下限
 	protected static final int MAX_PRODUCT = 10; //搭配货品上限
 	protected static final int GEN_OUTPUT_SIDE = 450;
 	protected static final int GEN_OUTPUT_MOBILE_SIDE = 300;
-	public static final int DIALOG_CONFIRM_CLICK = 456; //全局对话框“确定”
-	public static final int DIALOG_CANCEL_CLICK = 887; //全局对话框“取消”
 
 	protected RetryPolicy retryPolicy60s = new DefaultRetryPolicy(60000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
@@ -119,6 +120,10 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
+
+		// 友盟统计应用启动数据
+		// 如果不调用此方法，不仅会导致按照"几天不活跃"条件来推送失效，还将导致广播发送不成功以及设备描述红色等问题发生。
+		PushAgent.getInstance(mContext).onAppStart();
 		
 		findViewById();
 		initView();

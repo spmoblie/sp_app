@@ -35,7 +35,6 @@ public class UniversalMediaController extends FrameLayout {
 
     private TextView mTitle;
 
-    private String videoPath;
     private boolean isFrist = true;
     private boolean mShowing = true;
     private boolean mDragging;
@@ -157,14 +156,13 @@ public class UniversalMediaController extends FrameLayout {
         mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
     }
 
-    public void setVideoPath(MediaPlayerControl player, String videoPath) {
-        this.videoPath = videoPath;
-        setMediaPlayer(player);
-    }
-
     public void setMediaPlayer(MediaPlayerControl player) {
         mPlayer = player;
         updatePausePlay();
+    }
+
+    public void setIsFrist(boolean isFrist) {
+        this.isFrist = isFrist;
     }
 
     /**
@@ -205,7 +203,7 @@ public class UniversalMediaController extends FrameLayout {
             if (mTurnButton != null) {
                 mTurnButton.requestFocus();
             }
-            disableUnsupportedButtons();
+            //disableUnsupportedButtons(); //Xu 禁止触发事件
             mShowing = true;
         }
         updatePausePlay();
@@ -275,10 +273,16 @@ public class UniversalMediaController extends FrameLayout {
                     showCenterView(R.id.error_layout);
                     break;
                 case HIDE_LOADING: //4
+                    hide();
+                    hideCenterView(HIDE_LOADING);
+                    break;
                 case HIDE_ERROR: //6
+                    hide();
+                    hideCenterView(HIDE_ERROR);
+                    break;
                 case HIDE_COMPLETE: //8
                     hide();
-                    hideCenterView();
+                    hideCenterView(HIDE_COMPLETE);
                     break;
             }
         }
@@ -321,14 +325,14 @@ public class UniversalMediaController extends FrameLayout {
     }
 
 
-    public void hideCenterView() {
-        if (mCenterPlayButton.getVisibility() == VISIBLE) {
+    private void hideCenterView(int code) {
+        if (code == HIDE_COMPLETE && mCenterPlayButton.getVisibility() == VISIBLE) {
             mCenterPlayButton.setVisibility(GONE);
         }
-        if (errorLayout.getVisibility() == VISIBLE) {
+        if (code == HIDE_ERROR && errorLayout.getVisibility() == VISIBLE) {
             errorLayout.setVisibility(GONE);
         }
-        if (loadingLayout.getVisibility() == VISIBLE) {
+        if (code == HIDE_LOADING && loadingLayout.getVisibility() == VISIBLE) {
             loadingLayout.setVisibility(GONE);
         }
     }
@@ -474,12 +478,7 @@ public class UniversalMediaController extends FrameLayout {
 
     private View.OnClickListener mPauseListener = new View.OnClickListener() {
         public void onClick(View v) {
-            if (mPlayer != null) {
-                orFirstPlay();
-                hideCenterView();
-                doPauseResume();
-                show(sDefaultTimeout);
-            }
+            startOrPause();
         }
     };
 
@@ -507,18 +506,19 @@ public class UniversalMediaController extends FrameLayout {
 
     private View.OnClickListener mCenterPlayListener = new View.OnClickListener() {
         public void onClick(View v) {
-            if (mPlayer != null) {
-                orFirstPlay();
-                hideCenterView();
-                mPlayer.start();
-            }
+            startOrPause();
         }
     };
 
-    private void orFirstPlay() {
-        if (mPlayer != null && isFrist) {
-            mPlayer.setVideoPath(videoPath);
-            isFrist = false;
+    private void startOrPause() {
+        if (mPlayer != null) {
+            if (isFrist) {
+                isFrist = false;
+                mPlayer.loadVideo();
+            } else {
+                doPauseResume();
+                show(sDefaultTimeout);
+            }
         }
     }
 
@@ -617,8 +617,8 @@ public class UniversalMediaController extends FrameLayout {
 
     @Override
     public void setEnabled(boolean enabled) {
-//        super.setEnabled(enabled);
-        if (mTurnButton != null) {
+        super.setEnabled(enabled);
+        /*if (mTurnButton != null) {
             mTurnButton.setEnabled(enabled);
         }
         if (mProgress != null) {
@@ -626,7 +626,7 @@ public class UniversalMediaController extends FrameLayout {
         }
         if (mScalable) {
             mScaleButton.setEnabled(enabled);
-        }
+        }*/ //Xu 触发事件控制
         mBackButton.setEnabled(true);// 全屏状态下右上角的返回键总是可用.
     }
 
@@ -691,6 +691,8 @@ public class UniversalMediaController extends FrameLayout {
     }
 
     public interface MediaPlayerControl {
+
+        void loadVideo();
 
         void setVideoPath(String path);
 

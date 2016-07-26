@@ -28,7 +28,6 @@ import com.tencent.stat.StatService;
 public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "SettingActivity";
-	
 	public static SettingActivity instance = null;
 	public boolean change_language = false;
 	public boolean change_currency = false;
@@ -157,7 +156,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			intent = new Intent(mContext, FeedBackActivity.class);
 			break;
 		case R.id.setting_rl_version:
-			UpdateAppVersion.getInstance(this, false);
+			UpdateAppVersion.getInstance(mContext, false);
 			break;
 		case R.id.setting_rl_about_us:
 			intent = new Intent(mContext, MyWebViewActivity.class);
@@ -237,6 +236,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 	
 	@Override
@@ -250,6 +250,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		stopAnimation();
 		switch (requestCode) {
@@ -266,6 +267,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 	}
 	

@@ -24,8 +24,7 @@ import com.tencent.stat.StatService;
 public class RegisterOauthActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "RegisterOauthActivity";
-	public static RegisterOauthActivity instance = null;
-	
+
 	private EditText et_account, et_password;
 	private Button btn_oauth, btn_register;
 	private UserInfoEntity infoEn;
@@ -39,7 +38,6 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 		
-		instance = this;
 		infoEn = (UserInfoEntity) getIntent().getExtras().get("oauthEn");
 		
 		findViewById();

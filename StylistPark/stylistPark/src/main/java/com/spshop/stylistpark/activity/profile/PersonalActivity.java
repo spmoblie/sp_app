@@ -51,9 +51,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "PersonalActivity";
 	private static final String LOCAL_TEMP_IMG_DIR = "StylistPark/MicroMsg/Camera/SP";
-	
-	public static PersonalActivity instance = null;
-	
+
 	private RelativeLayout rl_head, rl_nick, rl_sex, rl_birthday, rl_email, rl_phone, rl_identity;
 	private ImageView iv_head;
 	private TextView tv_nick, tv_sex, tv_birthday, tv_email, tv_phone, tv_auth_go, tv_auth_ok;
@@ -77,7 +75,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 		
-		instance = this;
 		infoEn = (UserInfoEntity) getIntent().getExtras().get("data");
 		userManager = UserManager.getInstance();
 

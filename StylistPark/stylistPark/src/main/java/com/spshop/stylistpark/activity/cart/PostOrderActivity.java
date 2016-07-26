@@ -296,7 +296,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		case R.id.post_order_rl_bouns_main:
 			if (!isSuccess) return;
 			intent = new Intent(mContext, BounsListActivity.class);
-			intent.putExtra("topType", BounsListActivity.TYPE_2);
+			intent.putExtra("topType", BounsListActivity.TYPE_1);
 			intent.putExtra("root", TAG);
 			intent.putExtra("bounsId", bounsId);
 			startActivity(intent);
@@ -425,6 +425,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 
 	@Override
@@ -480,6 +481,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		stopAnimation();
 		switch (requestCode) {
@@ -545,6 +547,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 	}
 

@@ -43,6 +43,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Umeng push -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5797051e67e58e2fb30018d4" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="c313380fa72203f109e54ba9c3020bcd" >
+        </meta-data>
         
         <!-- alipay sdk begin -->
         <activity

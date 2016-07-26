@@ -125,8 +125,7 @@ public class FileManager {
 				path = AppConfig.SAVE_TXT_PATH_TEMPORARY + fileName;
 			}
 			checkFilePath(path);
-			File file = new File(path);
-			fos = new FileOutputStream(file);
+			fos = new FileOutputStream(new File(path));
 			objOut = new ObjectOutputStream(fos);
             objOut.writeObject(obj);
             objOut.flush();

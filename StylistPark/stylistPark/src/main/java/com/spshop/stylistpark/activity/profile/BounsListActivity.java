@@ -43,23 +43,20 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	private static final String TAG = "BounsListActivity";
 	public static BounsListActivity instance = null;
 	public boolean isUpdate = false;
-	public static final int TYPE_1 = 0;  //全部
-	public static final int TYPE_2 = 1;  //未使用
+	public static final int TYPE_1 = 0;  //可使用
+	public static final int TYPE_2 = 1;  //已使用
 	public static final int TYPE_3 = 2;  //已过期
-	public static final int TYPE_4 = 3;  //已使用
 	
 	private static final int Page_Count = 20;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页
-	private int page_type_1 = 1;  //全部加载页
-	private int page_type_2 = 1;  //未使用加载页
-	private int page_type_3 = 1;  //已过期加载页
-	private int page_type_4 = 1;  //已使用加载页
-	private int topType = TYPE_1; //Top标记
+	private int page_type_1 = 1;  //未使用加载页
+	private int page_type_2 = 1;  //已过期加载页
+	private int page_type_3 = 1;  //已使用加载页
+	private int topType = TYPE_2; //Top标记
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int countTotal = 0; //数集总数量
-	private int total_1, total_2, total_3, total_4;
+	private int total_1, total_2, total_3;
 	private boolean isLoadOk = true; //加载数据控制符
-	private boolean isFrist = true; //识别是否第一次打开页面
 	private boolean isLogined, isSuccess;
 	private String rootStr, bounsId, bounsStr, noDataShowStr;
 	
@@ -79,12 +76,10 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	private List<BounsEntity> lv_all_1 = new ArrayList<BounsEntity>();
 	private List<BounsEntity> lv_all_2 = new ArrayList<BounsEntity>();
 	private List<BounsEntity> lv_all_3 = new ArrayList<BounsEntity>();
-	private List<BounsEntity> lv_all_4 = new ArrayList<BounsEntity>();
 	private ArrayMap<String, Boolean> am_all_1 = new ArrayMap<String, Boolean>();
 	private ArrayMap<String, Boolean> am_all_2 = new ArrayMap<String, Boolean>();
 	private ArrayMap<String, Boolean> am_all_3 = new ArrayMap<String, Boolean>();
-	private ArrayMap<String, Boolean> am_all_4 = new ArrayMap<String, Boolean>();
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -134,10 +129,11 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		btn_2.setOnClickListener(this);
 		btn_3.setText(getString(R.string.bouns_top_tab_3));
 		btn_3.setOnClickListener(this);
-		btn_4.setText(getString(R.string.bouns_top_tab_4));
-		btn_4.setOnClickListener(this);
+		btn_4.setVisibility(View.GONE);
 		rl_top_screen.setVisibility(View.GONE);
-		ll_radio_main.setVisibility(View.GONE); //隐藏红包分类
+		if ("PostOrderActivity".equals(rootStr)) {
+			ll_radio_main.setVisibility(View.GONE); //隐藏分类导航
+		}
 	}
 
 	private void initListView() {
@@ -203,6 +199,15 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	/**
+	 * 添加红包成功后刷新数据
+	 */
+	public void addBounsOk() {
+		isUpdate = true;
+		topType = TYPE_1;
+		setDefaultRadioButton();
+	}
+
+	/**
 	 * 设置默认项
 	 */
 	private void setDefaultRadioButton() {
@@ -217,18 +222,11 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		case TYPE_3:
 			defaultBtn = btn_3;
 			break;
-		case TYPE_4:
-			defaultBtn = btn_4;
-			break;
 		default:
 			defaultBtn = btn_1;
 			break;
 		}
 		defaultBtn.setChecked(true);
-		if (isFrist) {
-			onClick(defaultBtn);
-			isFrist = false;
-		}
 	}
 
 	/**
@@ -257,9 +255,6 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			break;
 		case TYPE_3:
 			current_Page = page_type_3;
-			break;
-		case TYPE_4:
-			current_Page = page_type_4;
 			break;
 		}
 		requestProductLists();
@@ -313,7 +308,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		}
 		switch (v.getId()) {
 		case R.id.topbar_radio_rb_1:
-			if (!isFrist && topType == TYPE_1) return;
+			if (topType == TYPE_1) return;
 			topType = TYPE_1;
 			noDataShowStr = bounsStr;
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
@@ -325,7 +320,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.topbar_radio_rb_2:
-			if (!isFrist && topType == TYPE_2) return;
+			if (topType == TYPE_2) return;
 			topType = TYPE_2;
 			noDataShowStr = getString(R.string.bouns_usable) + bounsStr;
 			if (lv_all_2 != null && lv_all_2.size() > 0) {
@@ -337,7 +332,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.topbar_radio_rb_3:
-			if (!isFrist && topType == TYPE_3) return;
+			if (topType == TYPE_3) return;
 			topType = TYPE_3;
 			noDataShowStr = getString(R.string.bouns_top_tab_3) + bounsStr;
 			if (lv_all_3 != null && lv_all_3.size() > 0) {
@@ -345,18 +340,6 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			}else {
 				page_type_3 = 1;
 				total_3 = 0;
-				getSVDatas();
-			}
-			break;
-		case R.id.topbar_radio_rb_4:
-			if (!isFrist && topType == TYPE_4) return;
-			topType = TYPE_4;
-			noDataShowStr = getString(R.string.bouns_top_tab_4) + bounsStr;
-			if (lv_all_4 != null && lv_all_4.size() > 0) {
-				addOldListDatas(lv_all_4, page_type_4, total_4);
-			}else {
-				page_type_4 = 1;
-				total_4 = 0;
 				getSVDatas();
 			}
 			break;
@@ -409,11 +392,9 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			lv_all_1.clear();
 			lv_all_2.clear();
 			lv_all_3.clear();
-			lv_all_4.clear();
 			am_all_1.clear();
 			am_all_2.clear();
 			am_all_3.clear();
-			am_all_4.clear();
 			getSVDatas();
 		}
 	}
@@ -430,6 +411,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 	
 	@Override
@@ -447,6 +429,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_BOUNS_LIST_CODE:
@@ -486,16 +469,6 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 								page_type_3++;
 							}
 							total_3 = total;
-							break;
-						case TYPE_4:
-							if (loadType == 0) {
-								updEntity(total, total_4, lists, lv_all_4, am_all_4);
-								page_type_4 = 2;
-							} else {
-								addEntity(lv_all_4, lists, am_all_4);
-								page_type_4++;
-							}
-							total_4 = total;
 							break;
 						}
 						countTotal = total;
@@ -538,6 +511,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 		loadFailHandle();
 	}
@@ -552,9 +526,6 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			break;
 		case TYPE_3: 
 			addAllShow(lv_all_3);
-			break;
-		case TYPE_4: 
-			addAllShow(lv_all_4);
 			break;
 		}
 		myUpdateAdapter();

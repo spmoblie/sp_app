@@ -687,6 +687,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 
 	class OnMyScrollListener implements AbsListView.OnScrollListener {
@@ -771,6 +772,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_SCREEN_LIST_CODE:
 			if (screen_MainEn == null && loadNum < 3) {
@@ -842,6 +844,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 		loadFailHandle();
 	}

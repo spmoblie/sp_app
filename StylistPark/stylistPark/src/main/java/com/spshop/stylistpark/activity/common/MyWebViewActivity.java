@@ -34,10 +34,12 @@ import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
+import com.spshop.stylistpark.image.AsyncMediaLoader;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.ObservableWebView;
@@ -60,6 +62,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	private Context mContext;
 	private ShareEntity shareEn;
 	private AsyncImageLoader asyncImageLoader;
+	private AsyncMediaLoader asyncMediaLoader;
 	// 评论组件
 	private LinearLayout ll_comment_main;
 	private EditText et_comment;
@@ -81,7 +84,8 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	private int cachedHeight;
 	private String vdoUrl;
 	private boolean isFullscreen;
-	private boolean isPause = false;
+	private boolean isload = true;
+	private boolean isStop = false;
 
 	private Handler mHandler = new Handler(){
 		@Override
@@ -131,6 +135,10 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 
 	private void initView() {
 		setTitle(titleStr);
+		if (!NetworkUtil.isNetworkAvailable()) {
+			showMyErrorDialog(getString(R.string.network_fault));
+			return;
+		}
 		initWebview();
 		initVideo();
 		if (shareEn != null) {
@@ -165,6 +173,20 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		} else {
 			ll_comment_main.setVisibility(View.GONE);
 		}
+	}
+
+	private void showMyErrorDialog(String content) {
+		Handler mHandler = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+					case DIALOG_CONFIRM_CLICK:
+						finish();
+						break;
+				}
+			}
+		};
+		showErrorDialog(content, false, mHandler);
 	}
 
 	private void loadShareImg() {
@@ -258,18 +280,37 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	private void initVideo() {
 		if (!StringUtil.isNull(vdoUrl)) {
 			fl_video_main.setVisibility(View.VISIBLE);
-			umc.setVideoPath(uvv, vdoUrl);
+			umc.setMediaPlayer(uvv);
 			umc.showComplete(); //显示居中播放按钮
+			umc.setOnErrorViewClick(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					umc.hideError();
+				}
+			});
 			uvv.setMediaController(umc);
 			setVideoAreaSize();
 			uvv.setVideoViewCallback(this);
 			uvv.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 				@Override
 				public void onCompletion(MediaPlayer mp) {
-					LogUtil.i(TAG, "onCompletion ");
+					isStop = true;
+					mSeekPosition = uvv.getCurrentPosition();
+					LogUtil.i(TAG, "onCompletion Position = " + mSeekPosition);
 				}
 			});
-			new MyVideoBitmapTask().execute(vdoUrl);
+			uvv.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+				@Override
+				public boolean onError(MediaPlayer mp, int what, int extra) {
+					umc.setIsFrist(true);
+					editor.putString(AppConfig.KEY_VIDEO_LOAD_PATH, "").commit();
+					editor.putString(AppConfig.KEY_VIDEO_SAVE_PATH, "").commit();
+					LogUtil.i(TAG, "onError");
+					return false;
+				}
+			});
+			// 异步抓取视频缩略图
+			//new MyVideoBitmapTask().execute(vdoUrl);
 		}else {
 			fl_video_main.setVisibility(View.GONE);
 		}
@@ -298,7 +339,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		LogUtil.i(TAG, "onSaveInstanceState Position=" + uvv.getCurrentPosition());
+		LogUtil.i(TAG, "onSaveInstanceState Position = " + mSeekPosition);
 		outState.putInt(SEEK_POSITION_KEY, mSeekPosition);
 		super.onSaveInstanceState(outState);
 	}
@@ -307,7 +348,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	protected void onRestoreInstanceState(Bundle outState) {
 		super.onRestoreInstanceState(outState);
 		mSeekPosition = outState.getInt(SEEK_POSITION_KEY);
-		LogUtil.i(TAG, "onRestoreInstanceState Position=" + mSeekPosition);
+		LogUtil.i(TAG, "onRestoreInstanceState Position = " + mSeekPosition);
 	}
 
 
@@ -330,16 +371,74 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	}
 
 	@Override
+	public void onLoadVideo() {
+		if (!NetworkUtil.isWifi()) {
+			umc.setIsFrist(true);
+			showConfirmDialog(getString(R.string.network_no_wifi), getString(R.string.cancel),
+					getString(R.string.proceed), true, true, new Handler() {
+						@Override
+						public void handleMessage(Message msg) {
+							switch (msg.what) {
+								case DIALOG_CANCEL_CLICK:
+									break;
+								case DIALOG_CONFIRM_CLICK:
+									loadVideo();
+									break;
+							}
+						}
+					});
+			return;
+		} else {
+			loadVideo();
+		}
+	}
+
+	private void loadVideo() {
+		String loadPath = shared.getString(AppConfig.KEY_VIDEO_LOAD_PATH, "");
+		String savePath = shared.getString(AppConfig.KEY_VIDEO_SAVE_PATH, "");
+		if (vdoUrl.equals(loadPath) && !StringUtil.isNull(savePath)) {
+			isload = false; // 相同页面加载缓存视频
+		} else {
+			savePath = vdoUrl;
+			editor.putString(AppConfig.KEY_VIDEO_LOAD_PATH, vdoUrl).commit();
+			editor.putString(AppConfig.KEY_VIDEO_SAVE_PATH, "").commit();
+		}
+		umc.setIsFrist(false);
+		uvv.setVideoPath(savePath);
+		uvv.requestFocus();
+		uvv.start();
+		if (isload) {
+			asyncMediaLoader = AsyncMediaLoader.getInstance(new AsyncMediaLoader.AsyncMediaLoaderCallback() {
+
+				@Override
+				public void mediaLoaded(String path, String savePath) {
+					if (uvv != null && !StringUtil.isNull(savePath)) {
+						editor.putString(AppConfig.KEY_VIDEO_SAVE_PATH, savePath).commit();
+						if (uvv.isPlaying()) {
+							mSeekPosition = uvv.getCurrentPosition();
+						}
+						uvv.setVideoPath(savePath);
+						uvv.seekTo(mSeekPosition);
+						LogUtil.i(TAG, "change cache path Position = " + mSeekPosition);
+					}
+				}
+			});
+			asyncMediaLoader.loadMedia(false, vdoUrl, AsyncMediaLoader.TYPE_VIDEO);
+		}
+	}
+
+	@Override
 	public void onPause(MediaPlayer mediaPlayer) {
 		LogUtil.i(TAG, "onPause UniversalVideoView callback");
-		// 销毁对象
-		if (asyncImageLoader != null) {
-			asyncImageLoader.clearInstance();
+		if (uvv != null) {
+			mSeekPosition = uvv.getCurrentPosition();
+			LogUtil.i(TAG, "onPause mSeekPosition = " + mSeekPosition);
 		}
 	}
 
 	@Override
 	public void onStart(MediaPlayer mediaPlayer) {
+		isStop = false;
 		if (uvv != null) {
 			uvv.setBackgroundResource(R.color.ui_bg_color_percent_100);
 		}
@@ -423,11 +522,13 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		// 页面开始
         StatService.onResume(this);
 
-		if (isPause && uvv != null && !uvv.isPlaying()) {
-			LogUtil.i(TAG, "onResume mSeekPosition=" + mSeekPosition);
-			uvv.seekTo(mSeekPosition);
-			uvv.start();
-			isPause = false;
+		if (uvv != null && umc != null) {
+			uvv.setBackground(getResources().getDrawable(R.drawable.bg_profile_top_login_no));
+			if (mSeekPosition > 0 && !isStop) {
+				uvv.seekTo(mSeekPosition);
+				uvv.start();
+				LogUtil.i(TAG, "onResume mSeekPosition = " + mSeekPosition);
+			}
 		}
 	}
 	
@@ -437,12 +538,16 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
         StatService.onPause(this);
-
+		// 销毁对象
+		if (asyncImageLoader != null) {
+			asyncImageLoader.clearInstance();
+		}
+		// 销毁对象
+		if (asyncMediaLoader != null) {
+			asyncMediaLoader.clearInstance();
+		}
 		if (uvv != null && uvv.isPlaying()) {
-			mSeekPosition = uvv.getCurrentPosition();
-			LogUtil.i(TAG, "onPause mSeekPosition=" + mSeekPosition);
 			uvv.pause();
-			isPause = true;
 		}
 	}
 
@@ -453,6 +558,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 
 		if (uvv != null) {
 			uvv.closePlayer();
+			uvv = null;
 		}
 	}
 

@@ -22,8 +22,7 @@ import com.tencent.stat.StatService;
 public class ResetPasswordActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "ResetPasswordActivity";
-	public static ResetPasswordActivity instance = null;
-	
+
 	private EditText et_email, et_verify_code;
 	private Button btn_send;
 	private ImageView iv_verify_code;
@@ -36,8 +35,6 @@ public class ResetPasswordActivity extends BaseActivity implements OnClickListen
 		
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
-		
-		instance = this;
 		
 		findViewById();
 		initView();

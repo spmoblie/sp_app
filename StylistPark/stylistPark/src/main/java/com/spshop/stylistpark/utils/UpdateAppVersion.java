@@ -56,8 +56,7 @@ public class UpdateAppVersion {
 	private void startCheckAppVersion() {
 		getAppVersionInfo();
 		// 检测网络状态
-		boolean isNewworkAvailabel = NetworkUtil.networkStateTips();
-		if (isNewworkAvailabel) {
+		if (NetworkUtil.networkStateTips()) {
 			if (!isHomeIndex) { //非首页
 				LoadDialog.show(mContext);
 			}

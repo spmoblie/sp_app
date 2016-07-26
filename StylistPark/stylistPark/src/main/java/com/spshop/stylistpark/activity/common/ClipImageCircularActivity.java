@@ -75,4 +75,9 @@ public class ClipImageCircularActivity extends BaseActivity{
 		finish();
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		instance = null;
+	}
 }

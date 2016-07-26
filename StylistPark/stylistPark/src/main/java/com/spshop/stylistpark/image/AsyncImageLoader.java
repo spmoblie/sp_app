@@ -1,12 +1,10 @@
 package com.spshop.stylistpark.image;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
@@ -36,7 +34,7 @@ public class AsyncImageLoader {
 		if (instance == null) {
 			synchronized (AsyncImageLoader.class) {
 				if (instance == null) {
-					instance = new AsyncImageLoader(AppApplication.getInstance().getApplicationContext(), callback);
+					instance = new AsyncImageLoader(callback);
 				}
 			}
 		}
@@ -44,7 +42,7 @@ public class AsyncImageLoader {
 	}
 
 	@SuppressLint("HandlerLeak")
-	private AsyncImageLoader(final Context context, final AsyncImageLoaderCallback callback) {
+	private AsyncImageLoader(final AsyncImageLoaderCallback callback) {
 		this.isLoop = true;
 		this.caches = BitmapCache.getInstance();
 		this.tasks = new ArrayList<ImageLoadTask>();

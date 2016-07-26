@@ -44,8 +44,7 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 	
 	private static final String TAG = "AuthenticationActivity";
 	private static final String LOCAL_TEMP_IMG_DIR = "StylistPark/MicroMsg/Camera/SP";
-	public static AuthenticationActivity instance = null;
-	
+
 	private String localTempImgFileName = "";
 	private String clipPhotoPath, nameStr;
 	private boolean isUpload = false;
@@ -65,7 +64,6 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 		
-		instance = this;
 		options = AppApplication.getImageOptions(0, R.drawable.icon_authentication, true);
 		
 		findViewById();

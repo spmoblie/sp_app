@@ -63,7 +63,6 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private int countTotal = 0; //数集总数量
 	private int total_1, total_2, total_3, total_4, total_5;
 	private boolean isLoadOk = true; //加载数据控制符
-	private boolean isFrist = true; //识别是否第一次打开页面
 	private boolean isLogined, isSuccess;
 
 	private int rootCode = 0; //页面来源标记
@@ -304,10 +303,6 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			break;
 		}
 		defaultBtn.setChecked(true);
-		if (isFrist) {
-			onClick(defaultBtn);
-			isFrist = false;
-		}
 	}
 
 	/**
@@ -390,7 +385,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		}
 		switch (v.getId()) {
 		case R.id.topbar_radio_rb_1: //全部
-			if (!isFrist && topType == TYPE_1) return;
+			if (topType == TYPE_1) return;
 			topType = TYPE_1;
 			noDataShowStr = orderStr;
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
@@ -402,7 +397,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.topbar_radio_rb_2: //待付款或已完成
-			if (!isFrist && topType == TYPE_2) return;
+			if (topType == TYPE_2) return;
 			topType = TYPE_2;
 			if (rootCode == 0) {
 				noDataShowStr = getString(R.string.profile_wait_pay) + orderStr;
@@ -418,7 +413,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.topbar_radio_rb_3: //待发货或待分成
-			if (!isFrist && topType == TYPE_3) return;
+			if (topType == TYPE_3) return;
 			topType = TYPE_3;
 			if (rootCode == 0) {
 				noDataShowStr = getString(R.string.profile_wait_delivery) + orderStr;
@@ -434,7 +429,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.topbar_radio_rb_4: //待收货
-			if (!isFrist && topType == TYPE_4) return;
+			if (topType == TYPE_4) return;
 			topType = TYPE_4;
 			noDataShowStr = getString(R.string.profile_wait_receive) + orderStr;
 			if (lv_all_4 != null && lv_all_4.size() > 0) {
@@ -446,7 +441,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.topbar_radio_rb_5: //退换货
-			if (!isFrist && topType == TYPE_5) return;
+			if (topType == TYPE_5) return;
 			topType = TYPE_5;
 			noDataShowStr = getString(R.string.profile_repair_return) + orderStr;
 			if (lv_all_5 != null && lv_all_5.size() > 0) {
@@ -532,6 +527,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 	
 	@Override
@@ -553,6 +549,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ORDER_LIST_CODE:
@@ -655,6 +652,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 		loadFailHandle();
 	}

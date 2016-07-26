@@ -26,8 +26,7 @@ import com.tencent.stat.StatService;
 public class WithdrawalsActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "WithdrawalsActivity";
-	public static WithdrawalsActivity instance = null;
-	
+
 	private EditText et_card, et_amount;
 	private TextView tv_amount_max;
 	private Button btn_confirm;
@@ -42,7 +41,6 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 		
-		instance = this;
 		amountTotal = getIntent().getExtras().getInt("amountTotal", 0);
 		
 		findViewById();

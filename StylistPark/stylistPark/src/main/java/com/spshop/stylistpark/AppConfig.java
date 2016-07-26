@@ -146,7 +146,11 @@ public class AppConfig {
 	public static final String SAVE_IMAGE_PATH_LONG = SDPATH + "/stylistpark/image/long/";
 	// 临时存储图片的路径，应用关闭时要清除
 	public static final String SAVE_IMAGE_PATH_TEMPORARY = SDPATH + "/stylistpark/image/temporary/";
-	
+	// 长久存储多媒体的路径，应用关闭时不清除
+	public static final String SAVE_MEDIA_PATH_LONG = SDPATH + "/stylistpark/media/long/";
+	// 临时存储多媒体的路径，应用关闭时要清除
+	public static final String SAVE_MEDIA_PATH_TEMPORARY = SDPATH + "/stylistpark/media/temporary/";
+
 	/**
 	 ******************************************* 全局常量设置结束 ******************************************
 	 */
@@ -312,7 +316,13 @@ public class AppConfig {
 	public static final String KEY_SEARCH_WORDS_HISTORY = "search_words_history";
 	// 偏好设置Key-记录首页当前的下标索引
 	public static final String KEY_HOME_CURRENT_INDEX = "home_current_index";
-	
+	// 偏好设置Key-记录是否自动跳转到会员页面
+	public static final String KEY_PUSH_PAGE_MEMBER = "push_page_member";
+	// 偏好设置Key-记录视频加载地址
+	public static final String KEY_VIDEO_LOAD_PATH = "video_load_path";
+	// 偏好设置Key-记录视频缓存地址
+	public static final String KEY_VIDEO_SAVE_PATH = "video_save_path";
+
 	/**
 	 ******************************************* 偏好设置Key值设置结束 ******************************************
 	 */
@@ -320,7 +330,7 @@ public class AppConfig {
 	/**
 	 ******************************************* Activity传参设置开始 ******************************************
 	 */
-	
+
 	public static final String ACTIVITY_SELECT_PHOTO_LIST = "select_photo_list";
 	public static final String ACTIVITY_SHOW_PHOTO_LIST = "show_photo_list";
 	public static final String ACTIVITY_CLIP_PHOTO_PATH = "clip_photo_path";

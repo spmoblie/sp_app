@@ -691,6 +691,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		if (mcdt != null) {
 			mcdt.cancel();
 		}
+		instance = null;
 	}
 
 	class OnMyScrollListener implements AbsListView.OnScrollListener {
@@ -736,6 +737,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_BRAND_PROFILE_CODE:
 			setHeadView();
@@ -781,6 +783,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 		loadFailHandle();
 	}

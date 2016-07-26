@@ -52,7 +52,6 @@ import java.util.List;
 public class ChildFragmentFour extends Fragment implements OnClickListener, OnDataListener {
 
 	private static final String TAG = "ChildFragmentFour";
-	public static ChildFragmentFour instance = null;
 
 	private Context mContext;
 	private View ptrsv_chlid;
@@ -78,7 +77,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	private ProductDetailEntity changeData;
 	private List<ProductDetailEntity> lv_datas = new ArrayList<ProductDetailEntity>();
 	private SparseArray<ProductDetailEntity> sa_cart = new SparseArray<ProductDetailEntity>();
-	protected DialogManager dm;
+	private DialogManager dm;
 	private AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
 
@@ -95,7 +94,6 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 			Bundle savedInstanceState) {
 
 		LogUtil.i(TAG, "onCreate");
-		instance = this;
 		mContext = getActivity();
 		dm = DialogManager.getInstance(mContext);
 		atm = AsyncTaskManager.getInstance(mContext);
@@ -290,7 +288,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	 * 发起加载数据的请求
 	 */
 	private void requestProductLists() {
-		atm.request(AppConfig.REQUEST_SV_GET_CART_LIST_CODE, instance);
+		atm.request(AppConfig.REQUEST_SV_GET_CART_LIST_CODE, this);
 	}
 	
 	/**
@@ -298,7 +296,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	 */
 	private void requestDeleteGoods() {
 		startAnimation();
-		atm.request(AppConfig.REQUEST_SV_POST_DELETE_GOODS_CODE, instance);
+		atm.request(AppConfig.REQUEST_SV_POST_DELETE_GOODS_CODE, this);
 	}
 	
 	/**
@@ -307,7 +305,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	private void requestChangeCartNum() {
 		isChange = false;
 		startAnimation();
-		atm.request(AppConfig.REQUEST_SV_POST_CHANGE_GOODS_CODE, instance);
+		atm.request(AppConfig.REQUEST_SV_POST_CHANGE_GOODS_CODE, this);
 	}
 
 	@Override

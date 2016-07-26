@@ -107,6 +107,7 @@ public class ClipPhotoOneActivity extends BaseActivity{
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 
 	private OnItemClickListener gvItemClickListener = new OnItemClickListener() {

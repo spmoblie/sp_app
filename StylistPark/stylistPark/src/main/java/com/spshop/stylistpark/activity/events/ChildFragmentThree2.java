@@ -43,14 +43,13 @@ import java.util.List;
 public class ChildFragmentThree2 extends Fragment implements OnClickListener, OnDataListener {
 
 	private static final String TAG = "ChildFragmentThree2";
-	public static ChildFragmentThree2 instance = null;
 	public static final int TYPE_1 = 3;  //全部
 	public static final int TYPE_2 = 5;  //视频
 	public static final int TYPE_3 = 7;  //专题
 
 	private Context mContext;
 	private AsyncTaskManager atm;
-	protected ServiceContext sc = ServiceContext.getServiceContext();
+	private ServiceContext sc = ServiceContext.getServiceContext();
 	private static final int Page_Count = 20;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页
 	private int page_type_1 = 1;  //默认列表加载页
@@ -95,7 +94,6 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 			Bundle savedInstanceState) {
 
 		LogUtil.i(TAG, "onCreate");
-		instance = this;
 		mContext = getActivity();
 		atm = AsyncTaskManager.getInstance(mContext);
 
@@ -275,7 +273,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 
 			@Override
 			public void run() {
-				atm.request(AppConfig.REQUEST_SV_GET_SPECIAL_LIST_CODE, instance);
+				atm.request(AppConfig.REQUEST_SV_GET_SPECIAL_LIST_CODE, ChildFragmentThree2.this);
 			}
 		}, 1000);
 	}

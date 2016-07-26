@@ -192,6 +192,7 @@ public class ScreenListActivity extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 	
 	@Override
@@ -201,11 +202,12 @@ public class ScreenListActivity extends BaseActivity {
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
-		
+		if (instance == null) return;
 	}
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 	}
 	

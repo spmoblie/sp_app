@@ -22,8 +22,7 @@ import com.tencent.stat.StatService;
 public class RegisterActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "RegisterActivity";
-	public static RegisterActivity instance = null;
-	
+
 	private EditText et_email, et_verify_code, et_password, et_password_again;
 	private Button btn_register;
 	private ImageView iv_verify_code;
@@ -36,8 +35,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 		
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
-		
-		instance = this;
 		
 		findViewById();
 		initView();

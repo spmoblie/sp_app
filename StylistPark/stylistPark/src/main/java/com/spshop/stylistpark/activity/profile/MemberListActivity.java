@@ -36,7 +36,6 @@ import java.util.List;
 public class MemberListActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "MemberListActivity";
-	public static MemberListActivity instance = null;
 	public boolean isUpdate = false;
 	public static final int TYPE_1 = 0;  //最新客户
 	public static final int TYPE_2 = 1;  //活跃排名
@@ -54,7 +53,6 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private int countTotal = 0; //数集总数量
 	private int total_1, total_2, total_3, total_4;
 	private boolean isLoadOk = true; //加载数据控制符
-	private boolean isFrist = true; //识别是否第一次打开页面
 	private boolean isLogined, isSuccess;
 	
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
@@ -85,7 +83,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
-		instance = this;
+
+		shared.edit().putBoolean(AppConfig.KEY_PUSH_PAGE_MEMBER, false).commit();
 		topType = getIntent().getExtras().getInt("topType", TYPE_1);
 		
 		findViewById();
@@ -197,10 +196,6 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			break;
 		}
 		defaultBtn.setChecked(true);
-		if (isFrist) {
-			onClick(defaultBtn);
-			isFrist = false;
-		}
 	}
 
 	/**
@@ -280,7 +275,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		}
 		switch (v.getId()) {
 		case R.id.topbar_radio_rb_1: //最新客户
-			if (!isFrist && topType == TYPE_1) return;
+			if (topType == TYPE_1) return;
 			topType = TYPE_1;
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
 				addOldListDatas(lv_all_1, page_type_1, total_1);
@@ -291,7 +286,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.topbar_radio_rb_2: //活跃排名
-			if (!isFrist && topType == TYPE_2) return;
+			if (topType == TYPE_2) return;
 			topType = TYPE_2;
 			if (lv_all_2 != null && lv_all_2.size() > 0) {
 				addOldListDatas(lv_all_2, page_type_2, total_2);
@@ -302,7 +297,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.topbar_radio_rb_3: //订单排名
-			if (!isFrist && topType == TYPE_3) return;
+			if (topType == TYPE_3) return;
 			topType = TYPE_3;
 			if (lv_all_3 != null && lv_all_3.size() > 0) {
 				addOldListDatas(lv_all_3, page_type_3, total_3);
@@ -313,7 +308,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.topbar_radio_rb_4: //收入排名
-			if (!isFrist && topType == TYPE_4) return;
+			if (topType == TYPE_4) return;
 			topType = TYPE_4;
 			if (lv_all_4 != null && lv_all_4.size() > 0) {
 				addOldListDatas(lv_all_4, page_type_4, total_4);

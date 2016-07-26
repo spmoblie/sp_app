@@ -301,7 +301,7 @@ public class BitmapUtil {
 	/**
 	 * 检测文件路径是否存在，不存在则创建
 	 */
-	private static File checkFile(File file) {
+	public static File checkFile(File file) {
 		try {
 			// 判定目录是否存在
 			File parentFile = file.getParentFile();

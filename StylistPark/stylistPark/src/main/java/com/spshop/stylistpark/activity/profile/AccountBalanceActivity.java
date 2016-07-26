@@ -282,6 +282,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 	
 	@Override
@@ -297,6 +298,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		stopAnimation();
 		switch (requestCode) {
@@ -326,6 +328,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 		stopAnimation();
 	}

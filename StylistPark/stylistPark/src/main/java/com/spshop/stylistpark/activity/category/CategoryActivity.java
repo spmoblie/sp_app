@@ -51,8 +51,7 @@ import java.util.List;
 public class CategoryActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "CategoryActivity";
-	public static CategoryActivity instance = null;
-	
+
 	private ViewPager mViewPager;
 	private RelativeLayout rl_top_left, rl_top_right;
 	private ImageView iv_lines_3;
@@ -82,7 +81,6 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 		
-		instance = this;
 		dbs = CategoryDBService.getInstance(this);
 		
 		findViewById();
@@ -335,7 +333,6 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
-		instance = null;
 	}
 	
 	@Override
@@ -384,7 +381,6 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
-		if (instance == null) return;
 		switch (requestCode) {
 		case AppConfig.REQUEST_DB_GET_CATEGORY_LIST_CODE:
 			if (dataType == 0) { //父级
@@ -419,7 +415,6 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
-		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 		stopAnimation();
 	}

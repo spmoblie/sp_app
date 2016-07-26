@@ -20,6 +20,8 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.spshop.stylistpark.config.SharedConfig;
+import com.spshop.stylistpark.receiver.umeng.MyUmengMessageHandler;
+import com.spshop.stylistpark.receiver.umeng.MyUmengNotificationClickHandler;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
@@ -29,6 +31,7 @@ import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.umeng.message.PushAgent;
 
 import java.io.File;
 import java.io.IOException;
@@ -88,6 +91,14 @@ public class AppApplication extends Application implements OnDataListener{
 		
 		// 初始化异步加载图片的第三jar配置
 		initImageLoader(spApp);
+
+		// 启动友盟推送服务
+		PushAgent mPushAgent = PushAgent.getInstance(spApp);
+		mPushAgent.setDebugMode(true);
+		// 自定义消息处理
+		mPushAgent.setMessageHandler(new MyUmengMessageHandler());
+		// 自定义通知处理
+		mPushAgent.setNotificationClickHandler(new MyUmengNotificationClickHandler());
 	}
 	
 	/**

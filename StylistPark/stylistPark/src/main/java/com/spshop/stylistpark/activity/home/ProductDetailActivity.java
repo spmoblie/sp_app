@@ -331,6 +331,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	}
 
 	private void initViewPager() {
+		if (viewPager == null) return;
 		viewPager.removeAllViews();
 		viewLists.clear();
 		urlLists.clear();
@@ -868,6 +869,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			viewPager.removeAllViews();
 			viewPager = null;
 		}
+		instance = null;
 		super.onDestroy();
 	}
 
@@ -905,6 +907,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		stopAnimation();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE:
@@ -952,6 +955,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 	}
 

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -95,14 +97,14 @@ public class AddressEditActivity extends BaseActivity implements
 	private List<String> ls_province = new ArrayList<String>();
 	private List<String> ls_city = new ArrayList<String>();
 	private List<String> ls_district = new ArrayList<String>();
-	private HashMap<Integer, Integer> hm_id_country = new HashMap<Integer, Integer>(); 
-	private HashMap<Integer, Integer> hm_id_province = new HashMap<Integer, Integer>(); 
-	private HashMap<Integer, Integer> hm_id_city = new HashMap<Integer, Integer>(); 
-	private HashMap<Integer, Integer> hm_id_district = new HashMap<Integer, Integer>(); 
-	private HashMap<Integer, AddressEntity> hm_ae_country = new HashMap<Integer, AddressEntity>(); 
-	private HashMap<Integer, AddressEntity> hm_ae_province = new HashMap<Integer, AddressEntity>(); 
-	private HashMap<Integer, AddressEntity> hm_ae_city = new HashMap<Integer, AddressEntity>(); 
-	private HashMap<Integer, AddressEntity> hm_ae_district = new HashMap<Integer, AddressEntity>(); 
+	private SparseIntArray sa_id_country = new SparseIntArray(); 
+	private SparseIntArray sa_id_province = new SparseIntArray(); 
+	private SparseIntArray sa_id_city = new SparseIntArray(); 
+	private SparseIntArray sa_id_district = new SparseIntArray(); 
+	private SparseArray<AddressEntity> sa_ae_country = new SparseArray<AddressEntity>(); 
+	private SparseArray<AddressEntity> sa_ae_province = new SparseArray<AddressEntity>(); 
+	private SparseArray<AddressEntity> sa_ae_city = new SparseArray<AddressEntity>(); 
+	private SparseArray<AddressEntity> sa_ae_district = new SparseArray<AddressEntity>(); 
 	private int postId = 0;
 	private int addressId = 0;
 	private int countryId, provinceId, cityId, districtId;
@@ -187,14 +189,12 @@ public class AddressEditActivity extends BaseActivity implements
 				
 			});
 			// 编辑地址时定位域
-			if (hm_id_country.containsKey(id_country)) {
-				int position = hm_id_country.get(id_country);
-				if (position >= 0 && position < ls_country.size()) {
-					sp_country.setSelection(position);
-				}
+			int position = sa_id_country.get(id_country);
+			if (position >= 0 && position < ls_country.size()) {
+				sp_country.setSelection(position);
 			}
 		}else {
-			clearTypeDatas(ap_province, ls_province, hm_ae_province, hm_id_province);
+			clearTypeDatas(ap_province, ls_province, sa_ae_province, sa_id_province);
 			initProvinceSpinner();
 		}
 	}
@@ -220,16 +220,14 @@ public class AddressEditActivity extends BaseActivity implements
 				
 			});
 			// 编辑地址时定位省
-			if (hm_id_province.containsKey(id_province)) {
-				int position = hm_id_province.get(id_province);
-				if (position >= 0 && position < ls_province.size()) {
-					sp_province.setSelection(position);
-				}
+			int position = sa_id_province.get(id_province);
+			if (position >= 0 && position < ls_province.size()) {
+				sp_province.setSelection(position);
 			}
 		}else {
 			ll_province_main.setVisibility(View.GONE);
 			provinceId = 0;
-			clearTypeDatas(ap_city, ls_city, hm_ae_city, hm_id_city);
+			clearTypeDatas(ap_city, ls_city, sa_ae_city, sa_id_city);
 			initCitySpinner();
 		}
 	}
@@ -255,16 +253,14 @@ public class AddressEditActivity extends BaseActivity implements
 				
 			});
 			// 编辑地址时定位市
-			if (hm_id_city.containsKey(id_city)) {
-				int position = hm_id_city.get(id_city);
-				if (position >= 0 && position < ls_city.size()) {
-					sp_city.setSelection(position);
-				}
+			int position = sa_id_city.get(id_city);
+			if (position >= 0 && position < ls_city.size()) {
+				sp_city.setSelection(position);
 			}
 		}else {
 			ll_city_main.setVisibility(View.GONE);
 			cityId = 0;
-			clearTypeDatas(ap_district, ls_district, hm_ae_district, hm_id_district);
+			clearTypeDatas(ap_district, ls_district, sa_ae_district, sa_id_district);
 			initDistrictSpinner();
 		}
 	}
@@ -290,11 +286,9 @@ public class AddressEditActivity extends BaseActivity implements
 				
 			});
 			// 编辑地址时定位区
-			if (hm_id_district.containsKey(id_district)) {
-				int position = hm_id_district.get(id_district);
-				if (position >= 0 && position < ls_district.size()) {
-					sp_district.setSelection(position);
-				}
+			int position = sa_id_district.get(id_district);
+			if (position >= 0 && position < ls_district.size()) {
+				sp_district.setSelection(position);
 			}
 		}else {
 			ll_district_main.setVisibility(View.GONE);
@@ -308,43 +302,43 @@ public class AddressEditActivity extends BaseActivity implements
 	}
 
 	private void selectCountryData(int position) {
-		AddressEntity ae = hm_ae_country.get(position);
+		AddressEntity ae = sa_ae_country.get(position);
 		if (ae != null) {
 			typeCode = TYPE_CODE_PROVICE;
 			countryId = ae.getCountryId();
 			postId = countryId;
 			provinceId = 0;
-			clearTypeDatas(ap_province, ls_province, hm_ae_province, hm_id_province);
+			clearTypeDatas(ap_province, ls_province, sa_ae_province, sa_id_province);
 			getSVDatas();
 		}
 	}
 	
 	private void selectProvinceData(int position) {
-		AddressEntity ae = hm_ae_province.get(position);
+		AddressEntity ae = sa_ae_province.get(position);
 		if (ae != null) {
 			typeCode = TYPE_CODE_CITY;
 			provinceId = ae.getCountryId();
 			postId = provinceId;
 			cityId = 0;
-			clearTypeDatas(ap_city, ls_city, hm_ae_city, hm_id_city);
+			clearTypeDatas(ap_city, ls_city, sa_ae_city, sa_id_city);
 			getSVDatas();
 		}
 	}
 	
 	private void selectCityData(int position) {
-		AddressEntity ae = hm_ae_city.get(position);
+		AddressEntity ae = sa_ae_city.get(position);
 		if (ae != null) {
 			typeCode = TYPE_CODE_DISTRICT;
 			cityId = ae.getCountryId();
 			postId = cityId;
 			districtId = 0;
-			clearTypeDatas(ap_district, ls_district, hm_ae_district, hm_id_district);
+			clearTypeDatas(ap_district, ls_district, sa_ae_district, sa_id_district);
 			getSVDatas();
 		}
 	}
 	
 	private void selectDistrictData(int position) {
-		AddressEntity ae = hm_ae_district.get(position);
+		AddressEntity ae = sa_ae_district.get(position);
 		if (ae != null) {
 			districtId = ae.getCountryId();
 		}
@@ -483,23 +477,23 @@ public class AddressEditActivity extends BaseActivity implements
 				List<AddressEntity> ae_lists = mainEn.getMainLists();
 				switch (typeCode) {
 				case TYPE_CODE_COUNTRY:
-					getSpinnerDatas(ae_lists, ls_country, hm_ae_country, hm_id_country);
+					getSpinnerDatas(ae_lists, ls_country, sa_ae_country, sa_id_country);
 					initCountrySpinner();
 					break;
 				case TYPE_CODE_PROVICE:
-					getSpinnerDatas(ae_lists, ls_province, hm_ae_province, hm_id_province);
+					getSpinnerDatas(ae_lists, ls_province, sa_ae_province, sa_id_province);
 					initProvinceSpinner();
 					break;
 				case TYPE_CODE_CITY:
-					getSpinnerDatas(ae_lists, ls_city, hm_ae_city, hm_id_city);
+					getSpinnerDatas(ae_lists, ls_city, sa_ae_city, sa_id_city);
 					initCitySpinner();
 					break;
 				case TYPE_CODE_DISTRICT:
-					getSpinnerDatas(ae_lists, ls_district, hm_ae_district, hm_id_district);
+					getSpinnerDatas(ae_lists, ls_district, sa_ae_district, sa_id_district);
 					initDistrictSpinner();
 					break;
 				default:
-					getSpinnerDatas(ae_lists, ls_country, hm_ae_country, hm_id_country);
+					getSpinnerDatas(ae_lists, ls_country, sa_ae_country, sa_id_country);
 					initCountrySpinner();
 					break;
 				}
@@ -545,22 +539,22 @@ public class AddressEditActivity extends BaseActivity implements
 	}
 
 	private void getSpinnerDatas(List<AddressEntity> ae_lists, List<String> lists,
-			HashMap<Integer, AddressEntity> hm_ae, HashMap<Integer, Integer> hm_id) {
-		clearTypeDatas(null, lists, hm_ae, hm_id);
+			SparseArray<AddressEntity> sa_ae, SparseIntArray sa_id) {
+		clearTypeDatas(null, lists, sa_ae, sa_id);
 		AddressEntity ae = null;
 		for (int i = 0; i < ae_lists.size(); i++) {
 			ae = ae_lists.get(i);
 			lists.add(ae.getCountry());
-			hm_ae.put(i, ae);
-			hm_id.put(ae.getCountryId(), i);
+			sa_ae.put(i, ae);
+			sa_id.put(ae.getCountryId(), i);
 		}
 	}
 	
 	private void clearTypeDatas(ArrayAdapter<String> adapter, List<String> lists, 
-			HashMap<Integer, AddressEntity> hm_ae, HashMap<Integer, Integer> hm_id) {
+			SparseArray<AddressEntity> sa_ae, SparseIntArray sa_id) {
 		lists.clear();
-		hm_ae.clear();
-		hm_id.clear();
+		sa_ae.clear();
+		sa_id.clear();
 		if (adapter != null) {
 			adapter.notifyDataSetChanged();
 		}

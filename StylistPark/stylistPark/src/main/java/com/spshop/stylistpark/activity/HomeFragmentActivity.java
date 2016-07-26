@@ -30,6 +30,7 @@ import com.spshop.stylistpark.activity.events.ChildFragmentThree2;
 import com.spshop.stylistpark.activity.home.ChildFragmentOne;
 import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.activity.profile.ChildFragmentFive;
+import com.spshop.stylistpark.activity.profile.MemberListActivity;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -226,6 +227,18 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			tv_four_warn.setVisibility(View.GONE);
 		}
 		tv_four_warn.setText(String.valueOf(cartTotal));
+	}
+
+	/**
+	 * 打开推送通知跳转至MemberListActivity
+	 */
+	public void pushGoToMemberListActivity() {
+		if (ChildFragmentFive.instance != null) {
+			Intent intent = new Intent(this, MemberListActivity.class);
+			intent.putExtra("topType", MemberListActivity.TYPE_1);
+			startActivity(intent);
+		}
+		changeFragmen(4);
 	}
 
 	/**

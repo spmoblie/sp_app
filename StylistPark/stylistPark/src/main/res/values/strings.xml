@@ -187,10 +187,9 @@
         
     <!-- Bouns page -->
     <string name="bouns_bouns">&#160;Coupon</string>
-    <string name="bouns_top_tab_1">@string/all</string>
-    <string name="bouns_top_tab_2">Unused</string>
+    <string name="bouns_top_tab_1">Usable</string>
+    <string name="bouns_top_tab_2">Used</string>
     <string name="bouns_top_tab_3">Expired</string>
-    <string name="bouns_top_tab_4">Used</string>
     <string name="bouns_usable">Usable</string>
     <string name="bouns_used_sum">Used %1$s</string>
     <string name="bouns_add_ok">Add OK</string>

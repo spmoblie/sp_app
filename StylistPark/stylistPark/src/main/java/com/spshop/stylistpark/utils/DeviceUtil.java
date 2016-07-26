@@ -1,6 +1,7 @@
 package com.spshop.stylistpark.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -13,6 +14,7 @@ import android.view.WindowManager;
 
 import com.spshop.stylistpark.AppApplication;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -139,6 +141,28 @@ public class DeviceUtil {
             return false;
         }
     }
+
+	/**
+	 * 判断应用是否已经启动
+	 * @param context 一个context
+	 * @param packageName 要判断应用的包名
+	 */
+	public static boolean isAppAlive(Context context, String packageName){
+		ActivityManager activityManager =
+				(ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+		List<ActivityManager.RunningAppProcessInfo> processInfos
+				= activityManager.getRunningAppProcesses();
+		for(int i = 0; i < processInfos.size(); i++){
+			if(processInfos.get(i).processName.equals(packageName)){
+				LogUtil.i("NotificationLaunch",
+						String.format("the %s is running, isAppAlive return true", packageName));
+				return true;
+			}
+		}
+		LogUtil.i("NotificationLaunch",
+				String.format("the %s is not running, isAppAlive return false", packageName));
+		return false;
+	}
 	
 	public static boolean isDisplayFullNumBannerInSR1()
 	{

@@ -1,7 +1,6 @@
 package com.spshop.stylistpark.image;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -38,7 +37,7 @@ public class LoaderAndSaveImage {
 		if (instance == null) {
 			synchronized (LoaderAndSaveImage.class) {
 				if (instance == null) {
-					instance = new LoaderAndSaveImage(AppApplication.getInstance().getApplicationContext(), callback);
+					instance = new LoaderAndSaveImage(callback);
 				}
 			}
 		}
@@ -46,7 +45,7 @@ public class LoaderAndSaveImage {
 	}
 	
 	@SuppressLint("HandlerLeak")
-	private LoaderAndSaveImage(final Context context, final LoaderAndSaveImageCallback callback){
+	private LoaderAndSaveImage(final LoaderAndSaveImageCallback callback){
 		this.isLoop = true;
 		this.tasks = new ArrayList<ImageLoadTask>();
 		imageUrls = new ArrayList<File>();

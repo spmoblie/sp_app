@@ -53,11 +53,10 @@ import java.util.List;
 public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDataListener {
 
 	private static final String TAG = "ChildFragmentTwo";
-	public static ChildFragmentTwo instance = null;
-	
+
 	private Context mContext;
 	private AsyncTaskManager atm;
-	protected ServiceContext sc = ServiceContext.getServiceContext();
+	private ServiceContext sc = ServiceContext.getServiceContext();
 
 	private ViewPager mViewPager;
 	private RelativeLayout rl_top_left;
@@ -93,7 +92,6 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 			Bundle savedInstanceState) {
 
 		LogUtil.i(TAG, "onCreate");
-		instance = this;
 		mContext = getActivity();
 		atm = AsyncTaskManager.getInstance(mContext);
 		dbs = CategoryDBService.getInstance(mContext);
@@ -226,7 +224,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	private void getSVDatas() {
 		if (AppApplication.loadSVData_category) {
 			startAnimation();
-			atm.request(AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE, instance);
+			atm.request(AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE, this);
 		}else {
 			getDBDatas();
 		}
@@ -237,7 +235,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	 * 加载所有品牌列表数据
 	 */
 	private void getSVBrandDatas() {
-		atm.request(AppConfig.REQUEST_SV_GET_BRANDS_LIST_CODE, instance);
+		atm.request(AppConfig.REQUEST_SV_GET_BRANDS_LIST_CODE, this);
 	}
 
 	/**
@@ -245,7 +243,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	 */
 	private void getDBDatas() {
 		AppApplication.loadDBData = true;
-		atm.request(AppConfig.REQUEST_DB_GET_CATEGORY_LIST_CODE, instance);
+		atm.request(AppConfig.REQUEST_DB_GET_CATEGORY_LIST_CODE, this);
 	}
 
 	/**

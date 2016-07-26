@@ -169,6 +169,7 @@ public class MyAddressActivity extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 
 	@Override
@@ -187,6 +188,7 @@ public class MyAddressActivity extends BaseActivity {
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE:
@@ -237,6 +239,7 @@ public class MyAddressActivity extends BaseActivity {
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 	}
 

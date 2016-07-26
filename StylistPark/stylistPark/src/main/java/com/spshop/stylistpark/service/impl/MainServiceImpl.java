@@ -662,6 +662,7 @@ public class MainServiceImpl implements MainService {
 		}else {
 			uri = AppConfig.URL_COMMON_USER_URL;
 			params.add(new MyNameValuePair("act", "bonus"));
+			params.add(new MyNameValuePair("status", String.valueOf(status)));
 		}
 		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
 		String jsonStr = HttpUtil.getString(entity);

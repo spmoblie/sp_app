@@ -18,6 +18,7 @@ import com.spshop.stylistpark.utils.UserManager;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatReportStrategy;
 import com.tencent.stat.StatService;
+import com.umeng.message.PushAgent;
 
 /**
  * App首页欢迎界面
@@ -25,18 +26,21 @@ import com.tencent.stat.StatService;
 public class SplashActivity extends BaseActivity {
 
 	private static final String TAG = "SplashActivity";
-	public static SplashActivity instance = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		instance = this;
 		setContentView(R.layout.activity_splash);
 		
 		LangCurrTools.setLanguage(this, LangCurrTools.getLanguage()); //更新设置的系统语言
 		setHeadVisibility(View.GONE); //隐藏父类组件
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		editor.putInt(AppConfig.KEY_HOME_CURRENT_INDEX, 0).commit(); //设置首页初始化默认页
+
+		// 启动友盟推送服务
+		PushAgent mPushAgent = PushAgent.getInstance(mContext);
+		// 开启推送并设置注册的回调处理
+		mPushAgent.enable();
 		
 		// androidManifest.xml指定本activity最先启动
 		// 因此，MTA的初始化工作需要在本onCreate中进行

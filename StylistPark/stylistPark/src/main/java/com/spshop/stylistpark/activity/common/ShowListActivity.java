@@ -231,6 +231,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 	
 	@Override
@@ -253,6 +254,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		if (product_MainEn != null && product_MainEn.getMainLists() != null) {
 			countTotal = product_MainEn.getTotal();
@@ -272,6 +274,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 		loadFailHandle();
 	}

@@ -31,6 +31,7 @@ public class ClipPhotoGridActivity extends BaseActivity {
 
 	private static final String TAG = "ClipPhotoGridActivity";
 	public static ClipPhotoGridActivity instance;
+
 	private GridView gv_aibum;
 	private List<ClipPhotoEntity> aibumList = new ArrayList<ClipPhotoEntity>();
 
@@ -112,6 +113,7 @@ public class ClipPhotoGridActivity extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
+		instance = null;
 	}
 	
 	/**

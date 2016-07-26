@@ -181,6 +181,7 @@ public class AsyncTaskManager {
 		@Override
 		protected void onPostExecute(Object result) {
 			DownLoad bean = (DownLoad) result;
+			if (bean == null || bean.getListener() == null) return;
 			switch (bean.getState()) {
 			case REQUEST_SUCCESS_CODE: // 加载成功
 				bean.getListener().onSuccess(bean.getRequestCode(), bean.getResult());

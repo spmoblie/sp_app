@@ -221,6 +221,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	}
 
 	private void initViewPager(ThemeEntity adEn) {
+		if (viewPager == null) return;
 		if (adEn != null && adEn.getMainLists() != null) {
 			iv_head_null.setVisibility(View.GONE);
 			viewLists.clear();
@@ -630,6 +631,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		if(myBroadcastReceiver != null){
 			mContext.unregisterReceiver(myBroadcastReceiver); 
         }
+		instance = null;
 	}
 
 	class OnMyScrollListener implements OnScrollListener {

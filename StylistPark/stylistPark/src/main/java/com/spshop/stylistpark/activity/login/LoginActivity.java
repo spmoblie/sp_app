@@ -763,6 +763,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			uiHelper.onDestroy();
 		}
 		isStop = true;
+		instance = null;
 	}
 	
 	/**
@@ -790,6 +791,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		if (infoEn != null) {
 			if (infoEn.getErrCode() == 1) //校验通过
@@ -839,6 +841,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 	}
 	
