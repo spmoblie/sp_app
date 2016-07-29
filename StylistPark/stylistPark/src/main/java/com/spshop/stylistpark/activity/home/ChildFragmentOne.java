@@ -53,7 +53,6 @@ import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
-import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -593,7 +592,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(getActivity());
+		AppApplication.onPageStart(getActivity(), TAG);
 		if (isUpdate) {
 			isUpdate = false;
 			getSVDatas();
@@ -605,7 +604,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(getActivity());
+		AppApplication.onPageEnd(getActivity(), TAG);
 	}
 
 	@Override

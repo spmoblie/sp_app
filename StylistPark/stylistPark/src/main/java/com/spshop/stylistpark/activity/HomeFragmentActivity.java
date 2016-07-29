@@ -36,7 +36,6 @@ import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UpdateAppVersion;
 import com.spshop.stylistpark.utils.UserManager;
-import com.tencent.stat.StatService;
 
 public class HomeFragmentActivity extends FragmentActivity implements OnClickListener {
 
@@ -180,7 +179,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
 		
@@ -193,7 +192,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-		StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 
 	@Override

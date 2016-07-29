@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
@@ -17,7 +18,6 @@ import com.spshop.stylistpark.adapter.ClipPhotoGridAdapter;
 import com.spshop.stylistpark.entity.ClipPhotoEntity;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LogUtil;
-import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,7 +98,7 @@ public class ClipPhotoGridActivity extends BaseActivity {
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 	}
 	
 	@Override
@@ -106,7 +106,7 @@ public class ClipPhotoGridActivity extends BaseActivity {
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 
 	@Override

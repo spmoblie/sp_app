@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,7 +24,6 @@ import com.spshop.stylistpark.utils.LangCurrTools.Language;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UpdateAppVersion;
 import com.spshop.stylistpark.utils.UserManager;
-import com.tencent.stat.StatService;
 
 public class SettingActivity extends BaseActivity implements OnClickListener{
 	
@@ -35,9 +35,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private RelativeLayout rl_language, rl_currency, rl_feedback;
 	private RelativeLayout rl_version, rl_about_us, rl_logout;
 	private TextView tv_lang_title, tv_lang_content, tv_cur_title, tv_cur_content;
-	private TextView tv_feedback, tv_version_title, tv_version_no, tv_about_us, tv_logout;
-	
+	private TextView tv_feedback, tv_version_title, tv_version_no, tv_about_us;
+	private TextView tv_push_title, tv_logout;
+	private ImageView iv_push_status;
+
 	private boolean isLogined = false;
+	private boolean pushStatus = true;
 	private boolean update_fragment = false;
 
 	@Override
@@ -49,6 +52,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		LogUtil.i(TAG, "onCreate");
 		
 		instance = this;
+		pushStatus = AppApplication.getPushStatus();
 
 		findViewById();
 		initView();
@@ -69,7 +73,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		tv_version_title = (TextView) findViewById(R.id.setting_tv_version_title);
 		tv_version_no = (TextView) findViewById(R.id.setting_tv_version_content);
 		tv_about_us = (TextView) findViewById(R.id.setting_tv_about_us_title);
+		tv_push_title = (TextView) findViewById(R.id.setting_tv_push_control_title);
 		tv_logout = (TextView) findViewById(R.id.setting_tv_logout);
+		iv_push_status = (ImageView) findViewById(R.id.setting_iv_push_control_btn);
 	}
 
 	private void initView() {
@@ -77,8 +83,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		tv_lang_title.setText(getString(R.string.setting_language));
 		tv_cur_title.setText(getString(R.string.setting_currency));
 		tv_feedback.setText(getString(R.string.setting_feedback));
-		tv_version_title.setText(getString(R.string.setting_version));
 		tv_about_us.setText(getString(R.string.setting_about_us));
+		tv_version_title.setText(getString(R.string.setting_version));
+		tv_push_title.setText(getString(R.string.setting_notification));
 		rl_language.setOnClickListener(this);
 		rl_currency.setOnClickListener(this);
 		rl_feedback.setOnClickListener(this);
@@ -118,6 +125,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			break;
 		}
 		tv_version_no.setText("V" + AppApplication.version_name);
+
+		iv_push_status.setSelected(pushStatus);
+		iv_push_status.setOnClickListener(this);
 	}
 	
 	private void postLogouRequest(){
@@ -146,7 +156,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		case R.id.setting_rl_language:
 			intent = new Intent(mContext, LanguageCurrencyActivity.class);
 			intent.putExtra("dataType", 1);
-			startActivity(intent);
 			break;
 		case R.id.setting_rl_currency:
 			intent = new Intent(mContext, LanguageCurrencyActivity.class);
@@ -157,6 +166,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.setting_rl_version:
 			UpdateAppVersion.getInstance(mContext, false);
+			break;
+		case R.id.setting_iv_push_control_btn:
+			pushStatus = !pushStatus;
+			iv_push_status.setSelected(pushStatus);
+			AppApplication.setPushStatus(pushStatus);
 			break;
 		case R.id.setting_rl_about_us:
 			intent = new Intent(mContext, MyWebViewActivity.class);
@@ -194,8 +208,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
-        
+		AppApplication.onPageStart(this, TAG);
+
         if (change_language) {
         	initView();
         	change_language = false;
@@ -223,7 +237,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 	
 	@Override

@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/btn_select_single_focused"
+                android:src="@drawable/selector_btn_hook_circle"
                 android:contentDescription="@string/desc" />
         </RelativeLayout>
 
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/btn_select_single_normal"
+                android:src="@drawable/selector_btn_hook_circle"
                 android:contentDescription="@string/desc" />
         </RelativeLayout>
         
@@ -218,7 +218,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/btn_select_single_normal"
+                android:src="@drawable/selector_btn_hook_circle"
                 android:contentDescription="@string/desc" />
         </RelativeLayout>
 
@@ -277,7 +277,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/btn_select_single_focused"
+                android:src="@drawable/selector_btn_hook_circle"
                 android:contentDescription="@string/desc" />
         </RelativeLayout>
 

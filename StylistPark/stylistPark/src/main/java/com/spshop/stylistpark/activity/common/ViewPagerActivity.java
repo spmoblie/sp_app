@@ -26,7 +26,6 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.widgets.DragImageView;
 import com.spshop.stylistpark.widgets.DragImageView.ImgOnLongClickListener;
 import com.spshop.stylistpark.widgets.IViewPager;
-import com.tencent.stat.StatService;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -259,14 +258,14 @@ public class ViewPagerActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		// 页面开始
-		StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		// 页面结束
-		StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 		// 销毁对象
         if (asyncImageLoader != null) {
         	asyncImageLoader.clearInstance();

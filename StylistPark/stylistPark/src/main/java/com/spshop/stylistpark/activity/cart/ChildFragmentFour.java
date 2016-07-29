@@ -43,7 +43,6 @@ import com.spshop.stylistpark.widgets.ScrollListView;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView;
-import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -340,8 +339,8 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(mContext);
-		
+		AppApplication.onPageStart(getActivity(), TAG);
+
 		checkLogin();
 	}
 
@@ -357,7 +356,8 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-		StatService.onPause(mContext);
+		AppApplication.onPageEnd(getActivity(), TAG);
+
 		if (dm != null) {
 			dm.clearInstance();
 		}

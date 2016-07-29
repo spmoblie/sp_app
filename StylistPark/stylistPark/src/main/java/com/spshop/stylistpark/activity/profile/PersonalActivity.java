@@ -39,7 +39,6 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
-import com.tencent.stat.StatService;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -461,8 +460,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
-        
+		AppApplication.onPageStart(this, TAG);
+
         if (!StringUtil.isNull(AppApplication.clip_photo_path)) { //修改头像
         	isUpload = true;
         	headUrl = AppApplication.clip_photo_path;
@@ -477,7 +476,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
         // 销毁对象
         if (asyncImageUpload != null) {
 			asyncImageUpload.clearInstance();

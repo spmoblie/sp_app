@@ -312,6 +312,8 @@ public class AppConfig {
 	public static final String KEY_UPDATE_VERSION_LAST_TIME = "update_version_last_time";
 	// 偏好设置Key-记录同步远程服务器数据的日期
 	public static final String KEY_LOAD_SV_DATA_DAY = "load_sv_data_day";
+	// 偏好设置Key-记录推送服务的开关状态
+	public static final String KEY_PUSH_STATUS = "push_status";
 	// 偏好设置Key-记录商品搜索的历史记录
 	public static final String KEY_SEARCH_WORDS_HISTORY = "search_words_history";
 	// 偏好设置Key-记录首页当前的下标索引

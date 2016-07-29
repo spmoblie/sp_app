@@ -122,7 +122,7 @@ public class CartProductListAdapter extends BaseAdapter{
 		}
 		holder.tv_brand.setText(data.getBrandName());
 		holder.tv_name.setText(data.getName());
-		holder.tv_price.setText(data.getSellPrice());
+		holder.tv_price.setText(data.getCurrency() + data.getSellPrice());
 		holder.tv_number.setText(String.valueOf(data.getCartNum()));
 		
 		String attrStr = data.getAttrStr();

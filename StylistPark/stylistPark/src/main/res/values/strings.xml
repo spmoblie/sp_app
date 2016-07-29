@@ -295,8 +295,9 @@
     <string name="setting_language">Language</string>
     <string name="setting_currency">Currency</string>
     <string name="setting_feedback">Feedback</string>
-    <string name="setting_version">Check update</string>
     <string name="setting_about_us">About Us</string>
+    <string name="setting_version">Check update</string>
+    <string name="setting_notification">Notification</string>
     <string name="setting_logout">Log Out</string>
     <string name="setting_logout_confirm">&#160;Confirm logout?</string>
     <string name="setting_input_hint_feedback">Write down your comments or advice</string>

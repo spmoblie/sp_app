@@ -261,7 +261,7 @@ public class UserManager {
 	}
 
 	/**
-	 * 保存用户资料
+	 * 保存用户信息
 	 */
 	public void saveUserInfo(UserInfoEntity infoEn) {
 		if (infoEn != null) {
@@ -275,6 +275,8 @@ public class UserManager {
 			saveUserPhone(infoEn.getUserPhone());
 			saveUserAuth(infoEn.isAuth());
 			saveUserRank(infoEn.getUserRankName());
+			// 绑定用户信息至推送服务
+			AppApplication.onPushRegister(true);
 		}
 	}
 	
@@ -297,7 +299,10 @@ public class UserManager {
 		saveUserId(userId);
 		changeAllDataStatus();
 	}
-	
+
+	/**
+	 * 刷新所有登录状态下的数据
+	 */
 	private void changeAllDataStatus() {
 		if (ChildFragmentOne.instance != null) {
 			ChildFragmentOne.instance.isUpdate = true;
@@ -317,9 +322,15 @@ public class UserManager {
 	 * 用户登出清除状态
 	 */
 	public void clearUserLoginInfo(Context ctx){
-		clearWechatUserInfo(); //清空微信授权信息
-		AccessTokenKeeper.clear(ctx); //清空微博授权信息
+		// 解绑推送服务的用户信息
+		AppApplication.onPushRegister(false);
+		// 清空微信授权信息
+		clearWechatUserInfo();
+		// 清空微博授权信息
+		AccessTokenKeeper.clear(ctx);
+		// 清空缓存的用户信息
 		updateUserLoginInfo(null, null, null, null, 0, null, null, null, null, null, false, 0, 0);
+		// 刷新所有登录状态下的数据
 		changeAllDataStatus();
 	}
 

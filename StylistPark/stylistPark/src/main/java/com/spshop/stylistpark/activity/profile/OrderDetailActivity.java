@@ -32,7 +32,6 @@ import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.TimeUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.wxapi.WXPayEntryActivity;
-import com.tencent.stat.StatService;
 
 import java.util.List;
 
@@ -343,8 +342,8 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
-        
+		AppApplication.onPageStart(this, TAG);
+
         checkLogin();
 	}
 
@@ -372,7 +371,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 	
 	@Override

@@ -1141,7 +1141,7 @@ public class JsonParser {
 				en.setImageUrl(item.getString("thumb"));
 				en.setName(item.getString("goods_name"));
 				en.setBrand(item.getString("brand"));
-				en.setSellPrice(item.getString("price"));
+				en.setSellPrice(item.getString("goods_price"));
 				en.setTotal(StringUtil.getInteger(item.getString("goods_number")));
 				en.setAttr(item.getString("goods_attr"));
 				mainLists.add(en);
@@ -1166,8 +1166,7 @@ public class JsonParser {
 				proEn.setImgMinUrl(item.getString("thumb"));
 				proEn.setAttrStr(item.getString("goods_attr"));
 				proEn.setCurrency(item.getString("currency"));
-				proEn.setSellPrice(item.getString("price"));
-				proEn.setComputePrice(StringUtil.getInteger(item.getString("price")));
+				proEn.setSellPrice(item.getString("goods_price"));
 				proEn.setRecId(StringUtil.getInteger(item.getString("rec_id")));
 				proEn.setCartNum(StringUtil.getInteger(item.getString("goods_number")));
 				proEn.setStockNum(StringUtil.getInteger(item.getString("total_number")));

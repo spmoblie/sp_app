@@ -45,7 +45,6 @@ import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.IndexDisplayTool;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -317,7 +316,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(mContext);
+		AppApplication.onPageStart(getActivity(), TAG);
 	}
 
 	@Override
@@ -325,7 +324,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(mContext);
+		AppApplication.onPageEnd(getActivity(), TAG);
 	}
 
 	@Override

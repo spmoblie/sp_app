@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.common.MyWebViewActivity;
@@ -35,7 +36,6 @@ import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
-import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -362,7 +362,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(mContext);
+		AppApplication.onPageStart(getActivity(), TAG);
 	}
 
 	@Override
@@ -370,7 +370,7 @@ public class ChildFragmentThree2 extends Fragment implements OnClickListener, On
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(mContext);
+		AppApplication.onPageEnd(getActivity(), TAG);
 	}
 
 	@Override

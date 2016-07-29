@@ -294,8 +294,9 @@
     <string name="setting_language">语言</string>
     <string name="setting_currency">货币</string>
     <string name="setting_feedback">意见反馈</string>
-    <string name="setting_version">检查更新</string>
     <string name="setting_about_us">关于我们</string>
+    <string name="setting_version">检查更新</string>
+    <string name="setting_notification">接收通知</string>
     <string name="setting_logout">登出帐户</string>
     <string name="setting_logout_confirm">&#160;确定要退出登入么？</string>
     <string name="setting_input_hint_feedback">写下您的意见或建议</string>

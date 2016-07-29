@@ -53,7 +53,6 @@ import com.spshop.stylistpark.utils.UserManager;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
-import com.tencent.stat.StatService;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -735,7 +734,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
         // FB
 		if(uiHelper != null){
 			uiHelper.onResume();
@@ -747,7 +746,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
         // FB
         if (uiHelper != null) {
 			uiHelper.onPause();

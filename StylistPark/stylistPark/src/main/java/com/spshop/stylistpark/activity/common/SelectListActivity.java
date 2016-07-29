@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
@@ -16,7 +17,6 @@ import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.utils.LogUtil;
-import com.tencent.stat.StatService;
 
 import java.util.List;
 
@@ -154,7 +154,7 @@ public class SelectListActivity extends BaseActivity {
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 	}
 	
 	@Override
@@ -162,7 +162,7 @@ public class SelectListActivity extends BaseActivity {
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 
 	@Override

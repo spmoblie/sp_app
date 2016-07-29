@@ -12,13 +12,13 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.tencent.stat.StatService;
 
 
 @SuppressLint("HandlerLeak")
@@ -163,7 +163,7 @@ public class VideoActivity extends BaseActivity {
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 
 		if (videoView != null && !videoView.isPlaying() && mSeekPosition > 0) {
 			videoView.seekTo(mSeekPosition);
@@ -176,7 +176,7 @@ public class VideoActivity extends BaseActivity {
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-		StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 
 		if (videoView != null && videoView.isPlaying()) {
 			mSeekPosition = videoView.getCurrentPosition();

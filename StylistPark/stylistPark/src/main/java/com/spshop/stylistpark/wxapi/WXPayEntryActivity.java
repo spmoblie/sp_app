@@ -25,6 +25,7 @@ import com.paypal.android.sdk.payments.PayPalPaymentDetails;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
@@ -47,7 +48,6 @@ import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.stat.StatService;
 import com.unionpay.UPPayAssistEx;
 
 import org.json.JSONException;
@@ -80,7 +80,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			.merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"));
 
 	private TextView tv_pay_result, tv_pay_amount;
-	private ImageView iv_select_zfb, iv_select_weixi, iv_select_union;
+	private ImageView iv_select_zfb, iv_select_weixi, iv_select_union, iv_select_pal;
 	private RelativeLayout rl_select_zfb, rl_select_weixi, rl_select_union;
 	private Button btn_confirm, btn_done_left, btn_done_right;
 	private LinearLayout ll_pay_type_1, ll_pay_type_2, ll_pay_confirm, ll_pay_done;
@@ -151,6 +151,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		iv_select_zfb = (ImageView) findViewById(R.id.payment_iv_select_zfb);
 		iv_select_weixi = (ImageView) findViewById(R.id.payment_iv_select_weixi);
 		iv_select_union = (ImageView) findViewById(R.id.payment_iv_select_union);
+		iv_select_pal = (ImageView) findViewById(R.id.payment_iv_select_pal);
 		rl_select_zfb = (RelativeLayout) findViewById(R.id.payment_rl_select_zfb);
 		rl_select_weixi = (RelativeLayout) findViewById(R.id.payment_rl_select_weixi);
 		rl_select_union = (RelativeLayout) findViewById(R.id.payment_rl_select_union);
@@ -180,10 +181,12 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		if (LangCurrTools.getCurrency() == LangCurrTools.Currency.HKD
 				|| LangCurrTools.getCurrency() == LangCurrTools.Currency.USD) {
 			payType = PAY_PAL;
+			iv_select_pal.setSelected(true);
 			ll_pay_type_1.setVisibility(View.GONE);
 			ll_pay_type_2.setVisibility(View.VISIBLE);
 		} else {
 			payType = PAY_ZFB;
+			iv_select_zfb.setSelected(true);
 			ll_pay_type_1.setVisibility(View.VISIBLE);
 			ll_pay_type_2.setVisibility(View.GONE);
 		}
@@ -209,26 +212,17 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		switch (v.getId()) {
 		case R.id.payment_rl_select_zfb:
 			if (payType != PAY_ZFB) {
-				payType = PAY_ZFB;
-				iv_select_zfb.setImageResource(R.drawable.btn_select_single_focused);
-				iv_select_weixi.setImageResource(R.drawable.btn_select_single_normal);
-				iv_select_union.setImageResource(R.drawable.btn_select_single_normal);
+				changeSelected(PAY_ZFB);
 			}
 			break;
 		case R.id.payment_rl_select_weixi:
 			if (payType != PAY_WEIXI) {
-				payType = PAY_WEIXI;
-				iv_select_zfb.setImageResource(R.drawable.btn_select_single_normal);
-				iv_select_weixi.setImageResource(R.drawable.btn_select_single_focused);
-				iv_select_union.setImageResource(R.drawable.btn_select_single_normal);
+				changeSelected(PAY_WEIXI);
 			}
 			break;
 		case R.id.payment_rl_select_union:
 			if (payType != PAY_UNION) {
-				payType = PAY_UNION;
-				iv_select_zfb.setImageResource(R.drawable.btn_select_single_normal);
-				iv_select_weixi.setImageResource(R.drawable.btn_select_single_normal);
-				iv_select_union.setImageResource(R.drawable.btn_select_single_focused);
+				changeSelected(PAY_UNION);
 			}
 			break;
 		case R.id.button_confirm_btn_one:
@@ -241,6 +235,24 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			startActivity(new Intent(this, CategoryActivity.class));
 			finish();
 			break;
+		}
+	}
+
+	private void changeSelected(int typeCode) {
+		payType = typeCode;
+		iv_select_zfb.setSelected(false);
+		iv_select_weixi.setSelected(false);
+		iv_select_union.setSelected(false);
+		switch (typeCode) {
+			case PAY_ZFB:
+				iv_select_zfb.setSelected(true);
+				break;
+			case PAY_WEIXI:
+				iv_select_weixi.setSelected(true);
+				break;
+			case PAY_UNION:
+				iv_select_union.setSelected(true);
+				break;
 		}
 	}
 
@@ -262,7 +274,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 	}
 	
 	@Override
@@ -270,7 +282,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 
 	@Override

@@ -31,7 +31,6 @@ import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.FileManager;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.widgets.SquareCameraPreview;
-import com.tencent.stat.StatService;
 
 import java.io.File;
 import java.util.Arrays;
@@ -314,7 +313,7 @@ public class GeneratorPhotoActivity extends BaseActivity implements
         super.onResume();
         LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(this);
+        AppApplication.onPageStart(this, TAG);
     }
 
 	@Override
@@ -322,7 +321,7 @@ public class GeneratorPhotoActivity extends BaseActivity implements
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-		StatService.onPause(this);
+        AppApplication.onPageEnd(this, TAG);
 	}
 
     @Override

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
@@ -25,7 +26,6 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
-import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -207,8 +207,8 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
-        
+		AppApplication.onPageStart(this, TAG);
+
         if (pageCode == PAGE_ROOT_CODE_1 && isUpdate) {
         	isUpdate = false;
         	lv_show_two.clear();
@@ -224,7 +224,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 
 	@Override

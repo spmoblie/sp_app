@@ -20,8 +20,6 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.spshop.stylistpark.config.SharedConfig;
-import com.spshop.stylistpark.receiver.umeng.MyUmengMessageHandler;
-import com.spshop.stylistpark.receiver.umeng.MyUmengNotificationClickHandler;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
@@ -31,7 +29,8 @@ import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
-import com.umeng.message.PushAgent;
+import com.spshop.stylistpark.utils.PushManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,13 +51,14 @@ public class AppApplication extends Application implements OnDataListener{
 	public static int network_current_state = 0; //记录当前网络的状态
 	
 	public static boolean loadDBData = false; //是否从本地数据库加载数据
-	public static boolean loadSVData_category = true; //是从服务器加载商品分类数据
+	public static boolean loadSVData_category = true; //是否从服务器加载商品分类数据
 	public static boolean isWXShare = false; //记录是否微信分享
 	public static boolean isStartHome = true; //记录是否允许重新启动HomeFragmentActivity
 
-	public static DisplayImageOptions defaultOptions, headOptions;
+	private static DisplayImageOptions defaultOptions, headOptions;
 	private static SharedPreferences shared;
 	private static AsyncTaskManager atm;
+	private static PushManager pushManager;
 	private ServiceContext sc = ServiceContext.getServiceContext();
 	private RequestQueue mRequestQueue;
 	private Calendar calendar = Calendar.getInstance();
@@ -71,8 +71,18 @@ public class AppApplication extends Application implements OnDataListener{
 		spApp = this;
 		shared = getSharedPreferences();
 		atm = AsyncTaskManager.getInstance(spApp);
+		pushManager = PushManager.getInstance();
+		// 初始化推送服务SDK
+		pushManager.initPushService();
+		// 初始化应用统计SDK
+		MobclickAgent.setDebugMode(!AppConfig.IS_PUBLISH); //设置调试模式
+		// 设置是否对日志信息进行加密, 默认false(不加密).
+		MobclickAgent.enableEncrypt(true);
+		// 禁止默认的页面统计方式，在onResume()和onPause()手动添加代码统计;
+		MobclickAgent.openActivityDurationTrack(false);
+		MobclickAgent.setScenarioType(spApp, MobclickAgent.EScenarioType.E_UM_NORMAL);
 
-	    // 获取手机型号及屏幕的宽高
+	    // 获取手机型号及屏幕的宽高许
 		screenWidth = DeviceUtil.getDeviceWidth(spApp);
 		screenHeight = DeviceUtil.getDeviceHeight(spApp);
 		model = DeviceUtil.getModel();
@@ -89,31 +99,38 @@ public class AppApplication extends Application implements OnDataListener{
 		// 设置App字体不随系统字体变化
 		initDisplayMetrics();
 		
-		// 初始化异步加载图片的第三jar配置
+		// 初始化异步加载图片的jar配置
 		initImageLoader(spApp);
+	}
 
-		// 启动友盟推送服务
-		PushAgent mPushAgent = PushAgent.getInstance(spApp);
-		mPushAgent.setDebugMode(true);
-		// 自定义消息处理
-		mPushAgent.setMessageHandler(new MyUmengMessageHandler());
-		// 自定义通知处理
-		mPushAgent.setNotificationClickHandler(new MyUmengNotificationClickHandler());
+	public static synchronized AppApplication getInstance() {
+		return spApp;
+	}
+
+	public static SharedPreferences getSharedPreferences() {
+		if (shared == null) {
+			shared = new SharedConfig(spApp).GetConfig();
+		}
+		return shared;
 	}
 	
 	/**
-	 * 清除偏好设置保存加载远程服务器数据的记录
+	 * 清除联网加载数据控制符的缓存
 	 */
 	private void clearSharedLoadSVData(){
-		
+		//备用
 	}
-	
-    public static synchronized AppApplication getInstance() {
-        return spApp;
-    }
-	
+
 	/**
-	 * 异步加载图片的第三jar配置
+	 * 设置App字体不随系统字体变化
+	 */
+	public static void initDisplayMetrics() {
+		DisplayMetrics displayMetrics = spApp.getResources().getDisplayMetrics();
+		displayMetrics.scaledDensity = displayMetrics.density;
+	}
+
+	/**
+	 * 异步加载图片的jar配置
 	 */
 	public static void initImageLoader(Context mContext){
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
@@ -125,14 +142,6 @@ public class AppApplication extends Application implements OnDataListener{
 		ImageLoader.getInstance().init(config);
 	}
 
-	/**
-	 * 设置App字体不随系统字体变化
-	 */
-	public static void initDisplayMetrics() {
-		DisplayMetrics displayMetrics = spApp.getResources().getDisplayMetrics();
-		displayMetrics.scaledDensity = displayMetrics.density;
-	}
-	
 	/**
 	 * 创建图片加载器对象
 	 * 
@@ -184,13 +193,6 @@ public class AppApplication extends Application implements OnDataListener{
 		return headOptions;
 	}
 
-	public static SharedPreferences getSharedPreferences() {
-		if (shared == null) {
-			shared = new SharedConfig(spApp).GetConfig();
-		}
-		return shared;
-	}
-
 	/**
 	 * 保存图片对象到指定文件并通知相册更新相片
 	 */
@@ -218,13 +220,68 @@ public class AppApplication extends Application implements OnDataListener{
 		intent.setData(uri);
 		spApp.sendBroadcast(intent);
 	}
-	
+
 	/**
-	 * App注销登入统一入口
+	 * 应用数据统计之页面启动
 	 */
-	public static void AppLogout(boolean sendOr){
+	public static void onPageStart(Context ctx, String pageName) {
+		MobclickAgent.onPageStart(pageName);
+		MobclickAgent.onResume(ctx);
+	}
+
+	/**
+	 * 应用数据统计之页面关闭
+	 */
+	public static void onPageEnd(Context ctx, String pageName) {
+		MobclickAgent.onPageEnd(pageName);
+		MobclickAgent.onPause(ctx);
+	}
+
+	/**
+	 * 推送服务统计应用启动数据
+	 */
+	public static void onPushAppStartData() {
+		pushManager.onPushAppStartData();
+	}
+
+	/**
+	 * 初始化推送服务状态
+	 */
+	public static void onPushDefaultStatus() {
+		pushManager.onPushDefaultStatus();
+	}
+
+	/**
+	 * 设置推送服务的权限
+	 */
+	public static void setPushStatus(boolean isStatus) {
+		pushManager.setPushStatus(isStatus);
+	}
+
+	/**
+	 * 获取推送服务的权限
+	 */
+	public static boolean getPushStatus() {
+		return pushManager.getPushStatus();
+	}
+
+	/**
+	 * 注册或注销用户信息至推送服务
+	 */
+	public static void onPushRegister(boolean isRegister) {
+		if (isRegister) {
+			pushManager.registerPush();
+		} else {
+			pushManager.unregisterPush();
+		}
+	}
+
+	/**
+	 * App注销登出统一入口
+	 */
+	public static void AppLogout(boolean isSend) {
 		AppManager.getInstance().AppLogout(spApp);
-		if (sendOr) {
+		if (isSend) {
 			atm.request(AppConfig.REQUEST_SV_POST_LOGOUT_CODE, spApp); //通知服务器登出
 		}
 	}
@@ -232,7 +289,7 @@ public class AppApplication extends Application implements OnDataListener{
 	/**
 	 * 获取HttpUrl语言、货币参数
 	 */
-	public static String getHttpUrlLangCurValueStr(){
+	public static String getHttpUrlLangCurValueStr() {
 		return "&lang=" + LangCurrTools.getLanguageHttpUrlValueStr()
 			 + "&currency=" + LangCurrTools.getCurrencyHttpUrlValueStr();
 	}
@@ -241,7 +298,6 @@ public class AppApplication extends Application implements OnDataListener{
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        
         return mRequestQueue;
     }
     
@@ -262,11 +318,12 @@ public class AppApplication extends Application implements OnDataListener{
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
-		
+		if (spApp == null) return;
 	}
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		if (spApp == null) return;
 		CommonTools.showToast(String.valueOf(result), 1000);
 	}
 

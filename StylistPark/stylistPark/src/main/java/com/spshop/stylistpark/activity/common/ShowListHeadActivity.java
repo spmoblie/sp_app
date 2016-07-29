@@ -45,7 +45,6 @@ import com.spshop.stylistpark.widgets.stikkyheader.AnimatorBuilder;
 import com.spshop.stylistpark.widgets.stikkyheader.HeaderStikkyAnimator;
 import com.spshop.stylistpark.widgets.stikkyheader.StikkyHeader;
 import com.spshop.stylistpark.widgets.stikkyheader.StikkyHeaderBuilder;
-import com.tencent.stat.StatService;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -656,7 +655,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 
 		if (isUpdate) {
 			isUpdate = false;
@@ -676,7 +675,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 		// 销毁对象
 		if (asyncImageLoader != null) {
 			asyncImageLoader.clearInstance();

@@ -21,7 +21,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
-import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 
@@ -29,6 +28,8 @@ import java.util.ArrayList;
  * 相片查看器
  */
 public class ShowPhotoActivity extends FragmentActivity {
+
+	private static final String TAG = "ShowPhotoActivity";
 
 	private ArrayList<String> pathLists;
 	private int position;
@@ -176,14 +177,14 @@ public class ShowPhotoActivity extends FragmentActivity {
 	protected void onResume() {
 		super.onResume();
 		// 页面开始
-		StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		// 页面结束
-		StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 
 }

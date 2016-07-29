@@ -66,7 +66,6 @@ import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.ObservableScrollView;
 import com.spshop.stylistpark.widgets.ObservableScrollView.ScrollViewListener;
 import com.spshop.stylistpark.widgets.ScrollViewListView;
-import com.tencent.stat.StatService;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -828,7 +827,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	protected void onResume() {
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 		if (isUpdate) {
 			isUpdate = false;
 			getSVDatas();
@@ -842,7 +841,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	protected void onPause() {
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-		StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 		// 销毁对象
         if (asyncImageLoader != null) {
         	asyncImageLoader.clearInstance();

@@ -38,7 +38,6 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.wxapi.WXPayEntryActivity;
-import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,6 +180,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				tv_charges.setText(orderEn.getPriceCharges());
 				break;
 			}
+			// 是否支持货到付款
 			payTypeCode = orderEn.getPayTypeCode();
 			isCashPay = payTypeCode == 1 ? true : false;
 			if (isCashPay) {
@@ -383,8 +383,8 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
-        
+		AppApplication.onPageStart(this, TAG);
+
         checkLogin();
 	}
 
@@ -412,7 +412,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 	
 	@Override

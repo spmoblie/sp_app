@@ -53,7 +53,6 @@ import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.umeng.message.PushAgent;
 
 /**
  * 所有Activity的父类
@@ -121,9 +120,8 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
 
-		// 友盟统计应用启动数据
-		// 如果不调用此方法，不仅会导致按照"几天不活跃"条件来推送失效，还将导致广播发送不成功以及设备描述红色等问题发生。
-		PushAgent.getInstance(mContext).onAppStart();
+		// 推送服务统计应用启动数据
+		AppApplication.onPushAppStartData();
 		
 		findViewById();
 		initView();

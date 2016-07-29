@@ -25,6 +25,7 @@ import com.district.selector.wheel.model.ProvinceModel;
 import com.district.selector.wheel.service.XmlParserHandler;
 import com.district.selector.wheel.widget.OnWheelChangedListener;
 import com.district.selector.wheel.widget.WheelView;
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
@@ -35,7 +36,6 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.tencent.stat.StatService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -439,7 +439,7 @@ public class AddressEditActivity extends BaseActivity implements
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 	}
 
 	@Override
@@ -447,7 +447,7 @@ public class AddressEditActivity extends BaseActivity implements
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-		StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 
 	@Override

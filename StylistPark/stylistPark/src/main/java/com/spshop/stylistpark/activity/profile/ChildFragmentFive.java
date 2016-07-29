@@ -31,7 +31,6 @@ import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UserManager;
-import com.tencent.stat.StatService;
 
 @SuppressLint("NewApi")
 public class ChildFragmentFive extends Fragment implements OnClickListener, OnDataListener {
@@ -347,7 +346,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(mContext);
+		AppApplication.onPageStart(getActivity(), TAG);
 		checkLogin();
 	}
 
@@ -356,7 +355,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(mContext);
+		AppApplication.onPageEnd(getActivity(), TAG);
 	}
 
 	@Override

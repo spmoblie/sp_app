@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
@@ -18,7 +19,6 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.tencent.stat.StatService;
 
 /**
  * 提现页面
@@ -127,7 +127,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 	}
 	
 	@Override
@@ -135,7 +135,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 	}
 
 	@Override

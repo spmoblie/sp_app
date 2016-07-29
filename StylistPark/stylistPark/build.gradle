@@ -33,6 +33,12 @@ repositories {
     }
 }
 
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
 dependencies {
     compile project(':facebook3220')
     compile project(':weiboSDK')
@@ -45,7 +51,6 @@ dependencies {
     compile files('libs/core-3.1.0.jar')
     compile files('libs/FlurryAgent.jar')
     compile files('libs/libammsdk.jar')
-    compile files('libs/mta-sdk-1.6.2.jar')
     compile files('libs/open_sdk_r5509.jar')
     compile files('libs/twowayviewcore.jar')
     compile files('libs/twowayviewlayout.jar')
@@ -54,5 +59,6 @@ dependencies {
     compile files('libs/UPPayPluginExPro.jar')
     compile files('libs/volley.jar')
     compile 'com.linsea:universalvideoview:1.0.2@aar'
+    compile 'com.umeng.analytics:analytics:latest.integration'
     compile(name:'PayPalAndroidSDK-2.14.4', ext:'aar')
 }

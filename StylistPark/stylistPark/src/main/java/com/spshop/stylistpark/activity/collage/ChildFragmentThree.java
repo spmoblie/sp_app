@@ -20,13 +20,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UserTracker;
-import com.tencent.stat.StatService;
 
 public class ChildFragmentThree extends Fragment implements OnClickListener, OnDataListener {
 
@@ -302,7 +302,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		StatService.onResume(getActivity());
+		AppApplication.onPageStart(getActivity(), TAG);
 	}
 
 	@Override
@@ -310,7 +310,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-		StatService.onPause(getActivity());
+		AppApplication.onPageEnd(getActivity(), TAG);
 	}
 
 	@Override

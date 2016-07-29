@@ -46,7 +46,6 @@ import com.spshop.stylistpark.widgets.ObservableWebView;
 import com.spshop.stylistpark.widgets.WebViewLoadingBar;
 import com.spshop.stylistpark.widgets.video.UniversalMediaController;
 import com.spshop.stylistpark.widgets.video.UniversalVideoView;
-import com.tencent.stat.StatService;
 
 import java.io.File;
 
@@ -520,7 +519,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-        StatService.onResume(this);
+		AppApplication.onPageStart(this, TAG);
 
 		if (uvv != null && umc != null) {
 			uvv.setBackground(getResources().getDrawable(R.drawable.bg_profile_top_login_no));
@@ -537,7 +536,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
-        StatService.onPause(this);
+		AppApplication.onPageEnd(this, TAG);
 		// 销毁对象
 		if (asyncImageLoader != null) {
 			asyncImageLoader.clearInstance();
