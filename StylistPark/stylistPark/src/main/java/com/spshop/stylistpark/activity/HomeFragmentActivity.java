@@ -309,7 +309,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 		mFragmentPagerAdapter.setPrimaryItem(fl_container, 0, fragment);
 		mFragmentPagerAdapter.finishUpdate(fl_container);
 		current_fragment = FRAGMENT_CONTAINER[current_index];
-		shared.edit().putInt(AppConfig.KEY_HOME_CURRENT_INDEX, current_index).commit();
+		shared.edit().putInt(AppConfig.KEY_HOME_CURRENT_INDEX, current_index).apply();
 		updateImageViewStatus();
 		exit = Boolean.FALSE;
 	}

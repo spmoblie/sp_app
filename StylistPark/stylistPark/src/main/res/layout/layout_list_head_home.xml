@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:src="@drawable/bg_profile_top_login_no"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:contentDescription="@string/desc" />
     </FrameLayout>
 
     <include

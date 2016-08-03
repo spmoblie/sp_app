@@ -19,6 +19,7 @@ public class UserManager {
 	
 	private static UserManager instance;
 	private SharedPreferences sp;
+	private Editor editor;
 	
 	private String mUserId = null;
 	private String mLoginName = null;
@@ -45,6 +46,8 @@ public class UserManager {
 
 	private UserManager(){
 		sp = AppApplication.getSharedPreferences();
+		editor = sp.edit();
+		editor.apply();
 	}
 	
 	public String getUserId(){
@@ -56,7 +59,7 @@ public class UserManager {
 	}
 	
 	private void saveUserId(String userId){
-		sp.edit().putString(AppConfig.KEY_USER_ID, userId).commit();
+		editor.putString(AppConfig.KEY_USER_ID, userId).apply();
 		mUserId = userId;
 		LogUtil.i("isLogined", "saveUserId = " + userId);
 	}
@@ -69,7 +72,7 @@ public class UserManager {
 	}
 	
 	public void saveLoginName(String loginName){
-		sp.edit().putString(AppConfig.KEY_USER_LOGIN_NAME, loginName).commit();
+		editor.putString(AppConfig.KEY_USER_LOGIN_NAME, loginName).apply();
 	    mLoginName = loginName;
 	}
 	
@@ -81,7 +84,7 @@ public class UserManager {
 	}
 	
 	public void saveUserNickName(String nickName){
-		sp.edit().putString(AppConfig.KEY_USER_NICK_NAME, nickName).commit();
+		editor.putString(AppConfig.KEY_USER_NICK_NAME, nickName).apply();
 		mUserNickName = nickName;
 	}
 	
@@ -93,7 +96,7 @@ public class UserManager {
 	}
 	
 	public void saveUserHeadImg(String userHeadImg){
-		sp.edit().putString(AppConfig.KEY_USER_HEAD_IMG_URL, userHeadImg).commit();
+		editor.putString(AppConfig.KEY_USER_HEAD_IMG_URL, userHeadImg).apply();
 		mUserRank = userHeadImg;
 	}
 	
@@ -105,7 +108,7 @@ public class UserManager {
 	}
 	
 	public void saveUserIntro(String userIntro){
-		sp.edit().putString(AppConfig.KEY_USER_INTRO, userIntro).commit();
+		editor.putString(AppConfig.KEY_USER_INTRO, userIntro).apply();
 		mUserIntro = userIntro;
 	}
 	
@@ -114,7 +117,7 @@ public class UserManager {
 	}
 	
 	public void saveUserSex(int sexCode){
-		sp.edit().putInt(AppConfig.KEY_USER_SEX, sexCode).commit();
+		editor.putInt(AppConfig.KEY_USER_SEX, sexCode).apply();
 	}
 	
 	public String getUserBirthday(){
@@ -125,7 +128,7 @@ public class UserManager {
 	}
 	
 	public void saveUserBirthday(String userBirthday){
-		sp.edit().putString(AppConfig.KEY_USER_BIRTHDAY, userBirthday).commit();
+		editor.putString(AppConfig.KEY_USER_BIRTHDAY, userBirthday).apply();
 		mUserBirthday = userBirthday;
 	}
 	
@@ -137,7 +140,7 @@ public class UserManager {
 	}
 	
 	public void saveUserEmail(String userEmail){
-		sp.edit().putString(AppConfig.KEY_USER_EMAIL, userEmail).commit();
+		editor.putString(AppConfig.KEY_USER_EMAIL, userEmail).apply();
 		mUserEmail = userEmail;
 	}
 	
@@ -149,7 +152,7 @@ public class UserManager {
 	}
 	
 	public void saveUserPhone(String userPhone){
-		sp.edit().putString(AppConfig.KEY_USER_PHONE, userPhone).commit();
+		editor.putString(AppConfig.KEY_USER_PHONE, userPhone).apply();
 		mUserPhone = userPhone;
 	}
 	
@@ -161,7 +164,7 @@ public class UserManager {
 	}
 	
 	public void saveUserRank(String userRank){
-		sp.edit().putString(AppConfig.KEY_USER_RANK, userRank).commit();
+		editor.putString(AppConfig.KEY_USER_RANK, userRank).apply();
 		mUserRank = userRank;
 	}
 	
@@ -173,7 +176,7 @@ public class UserManager {
 	}
 	
 	public void saveUserLevel(String userLevel){
-		sp.edit().putString(AppConfig.KEY_USER_LEVEL, userLevel).commit();
+		editor.putString(AppConfig.KEY_USER_LEVEL, userLevel).apply();
 		mUserLevel = userLevel;
 	}
 	
@@ -185,7 +188,7 @@ public class UserManager {
 	}
 	
 	public void saveWXAccessToken(String access_token){
-		sp.edit().putString(AppConfig.KEY_WX_ACCESS_TOKEN, access_token).commit();
+		editor.putString(AppConfig.KEY_WX_ACCESS_TOKEN, access_token).apply();
 		wxAccessToken = access_token;
 	}
 	
@@ -197,7 +200,7 @@ public class UserManager {
 	}
 	
 	public void saveWXOpenid(String openid){
-		sp.edit().putString(AppConfig.KEY_WX_OPEN_ID, openid).commit();
+		editor.putString(AppConfig.KEY_WX_OPEN_ID, openid).apply();
 		wxOpenid = openid;
 	}
 	
@@ -209,7 +212,7 @@ public class UserManager {
 	}
 	
 	public void saveWXUnionid(String unionid){
-		sp.edit().putString(AppConfig.KEY_WX_UNION_ID, unionid).commit();
+		editor.putString(AppConfig.KEY_WX_UNION_ID, unionid).apply();
 		wxUnionid = unionid;
 	}
 	
@@ -221,7 +224,7 @@ public class UserManager {
 	}
 	
 	public void saveWXRefreshToken(String refreshToken){
-		sp.edit().putString(AppConfig.KEY_WX_REFRESH_TOKEN, refreshToken).commit();
+		editor.putString(AppConfig.KEY_WX_REFRESH_TOKEN, refreshToken).apply();
 		wxRefreshToken = refreshToken;
 	}
 	
@@ -230,7 +233,7 @@ public class UserManager {
 	}
 	
 	public void saveUserAuth(boolean isAuth){
-		sp.edit().putBoolean(AppConfig.KEY_USER_AUTH, isAuth).commit();
+		editor.putBoolean(AppConfig.KEY_USER_AUTH, isAuth).apply();
 	}
 	
 	public int getUserAddressId(){
@@ -238,7 +241,7 @@ public class UserManager {
 	}
 	
 	public void saveUserAddressId(int addressId){
-		sp.edit().putInt(AppConfig.KEY_USER_ADDRESS, addressId).commit();
+		editor.putInt(AppConfig.KEY_USER_ADDRESS, addressId).apply();
 	}
 	
 	public int getCartTotal(){
@@ -250,7 +253,7 @@ public class UserManager {
 			HomeFragmentActivity.instance.changeCartTotal(cartTotal);
 		}
 		LogUtil.i("CartTotal", "saveCartTotal = " + cartTotal);
-		sp.edit().putInt(AppConfig.KEY_CART_NUM, cartTotal).commit();
+		editor.putInt(AppConfig.KEY_CART_NUM, cartTotal).apply();
 	}
 	
 	/**
@@ -359,12 +362,11 @@ public class UserManager {
 	 * 清除微信授权信息
 	 */
 	private void clearWechatUserInfo() {
-		Editor editor = sp.edit();
 		editor.putString(AppConfig.KEY_WX_ACCESS_TOKEN, null);
 		editor.putString(AppConfig.KEY_WX_OPEN_ID, null);
 		editor.putString(AppConfig.KEY_WX_UNION_ID, null);
 		editor.putString(AppConfig.KEY_WX_REFRESH_TOKEN, null);
-		editor.commit();
+		editor.apply();
 	}
 
 }

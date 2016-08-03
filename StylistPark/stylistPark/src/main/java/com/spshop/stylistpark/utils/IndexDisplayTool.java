@@ -12,6 +12,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class IndexDisplayTool {
 	
@@ -338,11 +339,11 @@ public class IndexDisplayTool {
 			return "#";
 
 		if (stroke > 0 && stroke < 25)
-			return String.format("%d %s", stroke, ctx.getString(R.string.filter_stroke));
+			return String.format(Locale.getDefault(), "%d %s", stroke, ctx.getString(R.string.filter_stroke));
 		
 
 		if (stroke == 25)
-			return String.format("25 %s", ctx.getString(R.string.filter_stroke_more));
+			return String.format(Locale.getDefault(), "25 %s", ctx.getString(R.string.filter_stroke_more));
 
 		return "#";
 	}

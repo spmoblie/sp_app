@@ -8,7 +8,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/uvv_on_error" />
+        android:src="@drawable/uvv_on_error"
+        android:contentDescription="@string/desc" />
 
     <TextView
         android:id="@+id/error_text"

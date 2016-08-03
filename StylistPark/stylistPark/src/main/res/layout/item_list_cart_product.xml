@@ -40,7 +40,8 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/bg_img_white" />
+                android:src="@drawable/bg_img_white"
+                android:contentDescription="@string/desc" />
         </RelativeLayout>
 
         <LinearLayout

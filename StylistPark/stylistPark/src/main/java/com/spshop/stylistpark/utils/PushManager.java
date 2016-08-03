@@ -71,11 +71,11 @@ public class PushManager {
 	 */
 	public void setPushStatus(boolean status) {
 		if (status) {
-			shared.edit().putBoolean(AppConfig.KEY_PUSH_STATUS, true).commit();
+			shared.edit().putBoolean(AppConfig.KEY_PUSH_STATUS, true).apply();
 			startPushService(); //先修改状态标记再开启、注册
 		} else {
 			closePushService(); //先注销、关闭再修改状态标记
-			shared.edit().putBoolean(AppConfig.KEY_PUSH_STATUS, false).commit();
+			shared.edit().putBoolean(AppConfig.KEY_PUSH_STATUS, false).apply();
 		}
 	}
 

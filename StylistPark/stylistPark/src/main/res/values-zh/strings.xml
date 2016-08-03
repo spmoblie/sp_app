@@ -170,7 +170,7 @@
     <string name="events_top_tab_1">全部</string>
     <string name="events_top_tab_2">視頻</string>
     <string name="events_top_tab_3">專題</string>
-    <string name="events_no_data">暫無發現，\n可能是專題欄目出錯啦！</string>
+    <string name="events_no_data">暫無發現，\n可能是欄目出錯啦！</string>
     <string name="events_comment">評論</string>
     <string name="events_comment_participate">參與評論</string>
     <string name="events_comment_ok">評論已發布</string>

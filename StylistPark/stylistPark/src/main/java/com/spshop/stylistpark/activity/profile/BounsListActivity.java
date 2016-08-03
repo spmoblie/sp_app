@@ -215,15 +215,19 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		switch (topType) {
 		case TYPE_1:
 			defaultBtn = btn_1;
+			noDataShowStr = getString(R.string.bouns_top_tab_1) + bounsStr;
 			break;
 		case TYPE_2:
 			defaultBtn = btn_2;
+			noDataShowStr = getString(R.string.bouns_top_tab_2) + bounsStr;
 			break;
 		case TYPE_3:
 			defaultBtn = btn_3;
+			noDataShowStr = getString(R.string.bouns_top_tab_3) + bounsStr;
 			break;
 		default:
 			defaultBtn = btn_1;
+			noDataShowStr = getString(R.string.bouns_top_tab_1) + bounsStr;
 			break;
 		}
 		defaultBtn.setChecked(true);
@@ -310,7 +314,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_1:
 			if (topType == TYPE_1) return;
 			topType = TYPE_1;
-			noDataShowStr = bounsStr;
+			noDataShowStr = getString(R.string.bouns_top_tab_1) + bounsStr;
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
 				addOldListDatas(lv_all_1, page_type_1, total_1);
 			}else {
@@ -322,7 +326,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_2:
 			if (topType == TYPE_2) return;
 			topType = TYPE_2;
-			noDataShowStr = getString(R.string.bouns_usable) + bounsStr;
+			noDataShowStr = getString(R.string.bouns_top_tab_2) + bounsStr;
 			if (lv_all_2 != null && lv_all_2.size() > 0) {
 				addOldListDatas(lv_all_2, page_type_2, total_2);
 			}else {

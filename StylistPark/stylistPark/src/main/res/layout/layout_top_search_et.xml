@@ -21,7 +21,8 @@
 
             <ImageView
                 android:id="@+id/search_iv_back"
-                style="@style/top_left_back" />
+                style="@style/top_left_back"
+                android:contentDescription="@string/desc" />
 
             <TextView
                 android:id="@+id/search_tv_title"
@@ -89,6 +90,8 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <ImageView style="@style/set_line_horizontal_bg" />
+    <ImageView
+        style="@style/set_line_horizontal_bg"
+        android:contentDescription="@string/desc" />
 
 </LinearLayout>

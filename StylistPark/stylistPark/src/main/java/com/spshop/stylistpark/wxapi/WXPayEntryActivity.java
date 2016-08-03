@@ -56,7 +56,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler, OnClickListener{
+public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler, OnClickListener {
 	
 	private static final String TAG = "WXPayEntryActivity";
 	public static final int PAY_ZFB = 1;
@@ -136,11 +136,6 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		orderTotal = getIntent().getExtras().getString("orderTotal");
 		rootPage = getIntent().getExtras().getString("root");
 
-		// 启动paypal的服务
-		Intent intent = new Intent(this, PayPalService.class);
-		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
-		startService(intent);
-		
 		findViewById();
 		initView();
     }
@@ -178,17 +173,20 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		btn_done_right.setOnClickListener(this);
 
 		PAYPAL_CURRENCY = LangCurrTools.getCurrencyHttpUrlValueStr();
-		if (LangCurrTools.getCurrency() == LangCurrTools.Currency.HKD
-				|| LangCurrTools.getCurrency() == LangCurrTools.Currency.USD) {
-			payType = PAY_PAL;
-			iv_select_pal.setSelected(true);
-			ll_pay_type_1.setVisibility(View.GONE);
-			ll_pay_type_2.setVisibility(View.VISIBLE);
-		} else {
+		if (LangCurrTools.getCurrency() == LangCurrTools.Currency.RMB) {
 			payType = PAY_ZFB;
 			iv_select_zfb.setSelected(true);
 			ll_pay_type_1.setVisibility(View.VISIBLE);
 			ll_pay_type_2.setVisibility(View.GONE);
+		} else {
+			payType = PAY_PAL;
+			iv_select_pal.setSelected(true);
+			ll_pay_type_1.setVisibility(View.GONE);
+			ll_pay_type_2.setVisibility(View.VISIBLE);
+			// 启动paypal的服务
+			Intent intent = new Intent(this, PayPalService.class);
+			intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
+			startService(intent);
 		}
 	}
 	
@@ -507,7 +505,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	 */
 	private void sendUnionPayReq(PaymentEntity payEntity) {
 		// 获取银联支付订单号
-		String payInfo = "201604051210026523228";
+		String payInfo = "201608011419051350568";
 		if (!StringUtil.isNumeric(payInfo)) {
 			getPayDataFail();
 			return;
@@ -523,7 +521,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	 */
 	private void sendPALPayReq(PaymentEntity payEntity) {
 		// 获取支付订单号
-		String payInfo = "201604051210026523228";
+		String payInfo = "201608011034301340338";
 		if (!StringUtil.isNumeric(payInfo)) {
 			getPayDataFail();
 			return;
@@ -627,5 +625,5 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		}
 		tv_pay_result.setText(msg);
     }
-	
+
 }

@@ -2,7 +2,7 @@ package com.spshop.stylistpark.receiver.umeng;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
@@ -36,9 +36,10 @@ public class MyUmengNotificationClickHandler extends UmengNotificationClickHandl
     @Override
     public void launchApp(Context context, UMessage uMessage) {
         //页面跳转路径参数设置
-        SharedPreferences shared = AppApplication.getSharedPreferences();
-        shared.edit().putInt(AppConfig.KEY_HOME_CURRENT_INDEX, 4).commit();
-        shared.edit().putBoolean(AppConfig.KEY_PUSH_PAGE_MEMBER, true).commit();
+        Editor editor = AppApplication.getSharedPreferences().edit();
+        editor.putInt(AppConfig.KEY_HOME_CURRENT_INDEX, 4);
+        editor.putBoolean(AppConfig.KEY_PUSH_PAGE_MEMBER, true);
+        editor.apply();
         //判断app进程是否存活
         if(DeviceUtil.isAppAlive(context, "com.spshop.stylistpark")){
             LogUtil.i("PushManager", "the app process is alive");

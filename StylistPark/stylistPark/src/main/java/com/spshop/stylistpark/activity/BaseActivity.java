@@ -26,8 +26,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.RetryPolicy;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sina.weibo.sdk.api.share.BaseResponse;
@@ -87,14 +85,6 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 	public static final int DIALOG_CONFIRM_CLICK = 456; //全局对话框“确定”
 	public static final int DIALOG_CANCEL_CLICK = 887; //全局对话框“取消”
-	protected static final int STACK_MAX_SIZE = 5;
-	protected static final int MAX_DECOR = 5; //搭配素材上限
-	protected static final int MIN_PRODUCT = 1; //搭配货品下限
-	protected static final int MAX_PRODUCT = 10; //搭配货品上限
-	protected static final int GEN_OUTPUT_SIDE = 450;
-	protected static final int GEN_OUTPUT_MOBILE_SIDE = 300;
-
-	protected RetryPolicy retryPolicy60s = new DefaultRetryPolicy(60000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +97,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		mContext = this;
 		shared = AppApplication.getSharedPreferences();
 		editor = shared.edit();
+		editor.apply();
 		dm = DialogManager.getInstance(mContext);
 		atm = AsyncTaskManager.getInstance(mContext);
 		api = WXAPIFactory.createWXAPI(this, AppConfig.WX_APP_ID);

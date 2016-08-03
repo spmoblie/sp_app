@@ -23,6 +23,7 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.utils.LogUtil;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -350,7 +351,8 @@ public class UniversalVideoView extends SurfaceView
                 public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
                     mVideoWidth = mp.getVideoWidth();
                     mVideoHeight = mp.getVideoHeight();
-                    LogUtil.i(TAG, String.format("onVideoSizeChanged width=%d,height=%d", mVideoWidth, mVideoHeight));
+                    LogUtil.i(TAG, String.format(Locale.getDefault(),
+                            "onVideoSizeChanged width=%d,height=%d", mVideoWidth, mVideoHeight));
                     if (mVideoWidth != 0 && mVideoHeight != 0) {
                         getHolder().setFixedSize(mVideoWidth, mVideoHeight);
                         requestLayout();
@@ -422,7 +424,7 @@ public class UniversalVideoView extends SurfaceView
                         int b = mCurrentState;
                         mMediaController.showComplete();
                         mMediaController.hide();
-                        LogUtil.i(TAG, String.format("a=%s,b=%d", a, b));
+                        LogUtil.i(TAG, String.format(Locale.getDefault(), "a=%s,b=%d", a, b));
                     }
                     if (mOnCompletionListener != null) {
                         mOnCompletionListener.onCompletion(mMediaPlayer);

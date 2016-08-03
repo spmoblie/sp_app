@@ -23,7 +23,6 @@ import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.service.JsonParser;
 import com.spshop.stylistpark.service.LoginJsonParser;
 import com.spshop.stylistpark.service.MainService;
-import com.spshop.stylistpark.utils.APIResult;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -33,10 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainServiceImpl implements MainService {
 
@@ -690,92 +686,6 @@ public class MainServiceImpl implements MainService {
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);
 		return JsonParser.getCommonResult(jsonStr);
-	}
-
-	@Override
-	public Object[] getCollageProductList(String userId, String typeId, String color, String brand,
-										  String price, String keyword, Boolean isSelected, String endKey) throws Exception {
-		String uri = AppConfig.API_GET_PRODUCT_LIST;
-		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		if(!StringUtil.isNull(userId)) {
-			params.add(new MyNameValuePair("userId", userId));
-			params.add(new MyNameValuePair("fav", "true"));
-		} else if(typeId != null){
-			params.add(new MyNameValuePair("productCatIds", typeId));
-		}
-		if(color != null){
-			params.add(new MyNameValuePair("color", color));
-		}
-		if(brand != null){
-			params.add(new MyNameValuePair("brandId", brand));
-		}
-		if(price != null){
-			params.add(new MyNameValuePair("price", price));
-		}
-		if(keyword != null){
-			params.add(new MyNameValuePair("keyword", keyword));
-		}
-		if(isSelected != null){
-			params.add(new MyNameValuePair("isSelected", isSelected ? "true":"false"));
-		}
-		if(endKey != null){
-			params.add(new MyNameValuePair("endKey", endKey));
-		}
-		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
-		String jsonStr = HttpUtil.getString(entity);
-		LogUtil.i("JsonParser", jsonStr);
-		return JsonParser.getCollageProductList(jsonStr);
-	}
-
-	@Override
-	public List<BrandEntity> getCollageBrandList() throws Exception {
-		String uri = AppConfig.API_GET_BRAND_LIST;
-		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
-		String jsonStr = HttpUtil.getString(entity);
-		LogUtil.i("JsonParser", jsonStr);
-		return JsonParser.getCollageBrandList(jsonStr);
-	}
-
-	@Override
-	public JSONArray getCollageTemplateList() throws Exception {
-		String uri = AppConfig.URL_TEMPLATE_JSON;
-		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
-		String jsonStr = HttpUtil.getString(entity);
-		LogUtil.i("JsonParser", jsonStr);
-		return new JSONArray(jsonStr);
-	}
-
-	@Override
-	public APIResult submitLookBook(String userId, String sessionKey, String lookBookType, String title,
-									String descripton, String filePath, String[] productIdList, String html, String mobileHtml) throws Exception {
-//		String uri = AppConfig.API_SUBMIT_LOOKBOOK;
-//		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-//		params.add(new MyNameValuePair("userId", userId));
-//		params.add(new MyNameValuePair("key", sessionKey));
-//		params.add(new MyNameValuePair("lookBookType", lookBookType));
-//		params.add(new MyNameValuePair("title", title));
-//		params.add(new MyNameValuePair("descripton", descripton));
-//		params.add(new MyNameValuePair("productIdList", Arrays.toString(productIdList)));
-//		params.add(new MyNameValuePair("html", html));
-//		params.add(new MyNameValuePair("mobileHtml", mobileHtml));
-//		params.add(new MyNameValuePair("isAndroid", "1"));
-//		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_POST);
-//		String jsonStr = HttpUtil.getString(entity);
-
-		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("userid", userId);
-		postData.put("lookBookType", lookBookType);
-		postData.put("title", title);
-		postData.put("descripton", descripton);
-		postData.put("productIdList", Arrays.toString(productIdList));
-		postData.put("html", html);
-		postData.put("mobileHtml", mobileHtml);
-		postData.put("isAndroid", "1");
-		//JSONObject jsonObj = NetworkUtil.getJSONFromURL(AppConfig.API_SUBMIT_LOOKBOOK, postData, filePath);
-		JSONObject jsonObj = new JSONObject();
-		return new APIResult(jsonObj, "url", "mediaUrl");
 	}
 
 }

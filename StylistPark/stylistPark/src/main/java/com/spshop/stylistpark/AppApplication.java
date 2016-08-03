@@ -9,8 +9,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.DisplayMetrics;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -18,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.spshop.stylistpark.config.SharedConfig;
 import com.spshop.stylistpark.service.ServiceContext;
@@ -60,10 +59,7 @@ public class AppApplication extends Application implements OnDataListener{
 	private static AsyncTaskManager atm;
 	private static PushManager pushManager;
 	private ServiceContext sc = ServiceContext.getServiceContext();
-	private RequestQueue mRequestQueue;
-	private Calendar calendar = Calendar.getInstance();
 
-	
 	//必须注册，Android框架调用Application
 	@Override
 	public void onCreate() {
@@ -89,11 +85,11 @@ public class AppApplication extends Application implements OnDataListener{
 		LogUtil.i("device", "手机型号："+ model + "宽："+screenWidth + " / 高："+screenHeight);
 
 		// 设置每天第一次启动App时清除与日期关联的缓存标志
-		long newDay = calendar.get(Calendar.DAY_OF_MONTH);
+		long newDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		long oldDay = shared.getLong(AppConfig.KEY_LOAD_SV_DATA_DAY, 00);
 		if ((newDay == 1 && oldDay != 1) || newDay - oldDay > 0) {
 			clearSharedLoadSVData();
-			shared.edit().putLong(AppConfig.KEY_LOAD_SV_DATA_DAY, newDay).commit();
+			shared.edit().putLong(AppConfig.KEY_LOAD_SV_DATA_DAY, newDay).apply();
 		}
 
 		// 设置App字体不随系统字体变化
@@ -155,8 +151,9 @@ public class AppApplication extends Application implements OnDataListener{
 				.showImageOnFail(drawableId)
 				.cacheInMemory(isCache) // 内存缓存
 				.cacheOnDisc(isCache) // sdcard缓存
+				.resetViewBeforeLoading(true)//设置图片下载前复位
 				.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-				.bitmapConfig(Bitmap.Config.ARGB_8888).build();
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
 	/**
@@ -165,13 +162,14 @@ public class AppApplication extends Application implements OnDataListener{
 	public static DisplayImageOptions getDefaultImageOptions() {
 		if (defaultOptions == null) {
 			defaultOptions = new DisplayImageOptions.Builder()
-					//.displayer(new FadeInBitmapDisplayer(300)) // 图片加载好后渐入的动画时间
+					.displayer(new FadeInBitmapDisplayer(300)) // 图片加载好后渐入的动画时间
 					.showImageForEmptyUri(R.drawable.bg_img_default)
 					.showImageOnFail(R.drawable.bg_img_default)
 					.cacheInMemory(true) // 内存缓存
 					.cacheOnDisc(true) // sdcard缓存
+					.resetViewBeforeLoading(true)//设置图片下载前复位
 					.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-					.bitmapConfig(Bitmap.Config.ARGB_8888).build();
+					.bitmapConfig(Bitmap.Config.RGB_565).build();
 		}
 		return defaultOptions;
 	}
@@ -187,8 +185,9 @@ public class AppApplication extends Application implements OnDataListener{
 					.showImageOnFail(R.drawable.head_portrait)
 					.cacheInMemory(true) // 内存缓存
 					.cacheOnDisc(true) // sdcard缓存
+					.resetViewBeforeLoading(true)//设置图片下载前复位
 					.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-					.bitmapConfig(Bitmap.Config.ARGB_8888).build();
+					.bitmapConfig(Bitmap.Config.RGB_565).build();
 		}
 		return headOptions;
 	}
@@ -293,19 +292,6 @@ public class AppApplication extends Application implements OnDataListener{
 		return "&lang=" + LangCurrTools.getLanguageHttpUrlValueStr()
 			 + "&currency=" + LangCurrTools.getCurrencyHttpUrlValueStr();
 	}
-	
-    public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-        }
-        return mRequestQueue;
-    }
-    
-    public void cancelPendingRequests(Object tag) {
-        if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(tag);
-        }
-    }
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {

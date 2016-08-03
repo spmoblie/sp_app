@@ -18,11 +18,6 @@ import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.service.impl.MainServiceImpl;
-import com.spshop.stylistpark.utils.APIResult;
-
-import org.json.JSONArray;
-
-import java.util.List;
 
 
 /**
@@ -399,36 +394,6 @@ public class ServiceContext {
 	 */
 	public BaseEntity postChooseBouns(String bounsId) throws Exception {
 		return ms.postChooseBouns(bounsId);
-	}
-	
-	/**
-	 * 获取搭配的商品列表
-	 */
-	public Object[] getCollageProductList(String userId, String typeId, String color, String brand, 
-			String price, String keyword, Boolean isSelected, String endKey) throws Exception{
-		return ms.getCollageProductList(userId, typeId, color, brand, price, keyword, isSelected, endKey);
-	}
-	
-	/**
-	 * 获取搭配的品牌列表
-	 */
-	public List<BrandEntity> getCollageBrandList() throws Exception{
-		return ms.getCollageBrandList();
-	}
-	
-	/**
-	 * 获取搭配模板列表
-	 */
-	public JSONArray getCollageTemplateList() throws Exception{
-		return ms.getCollageTemplateList();
-	}
-	
-	/**
-	 * 提交创建的搭配数据
-	 */
-	public APIResult submitLookBook(String userId, String sessionKey, String lookBookType, String title,
-			String descripton, String filePath, String[] productIdList, String html, String mobileHtml) throws Exception {
-		return ms.submitLookBook(userId, sessionKey, lookBookType, title, descripton, filePath, productIdList, html, mobileHtml);
 	}
 
 }

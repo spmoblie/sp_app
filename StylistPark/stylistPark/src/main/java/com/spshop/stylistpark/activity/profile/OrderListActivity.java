@@ -285,21 +285,35 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		switch (topType) {
 		case TYPE_1:
 			defaultBtn = btn_1;
+			noDataShowStr = orderStr;
 			break;
 		case TYPE_2:
 			defaultBtn = btn_2;
+			if (rootCode == 0) {
+				noDataShowStr = getString(R.string.profile_wait_pay) + orderStr;
+			}else { //会员订单
+				noDataShowStr = getString(R.string.profile_done) + orderStr;
+			}
 			break;
 		case TYPE_3:
 			defaultBtn = btn_3;
+			if (rootCode == 0) {
+				noDataShowStr = getString(R.string.profile_wait_delivery) + orderStr;
+			}else { //会员订单
+				noDataShowStr = getString(R.string.profile_wait_commission) + orderStr;
+			}
 			break;
 		case TYPE_4:
 			defaultBtn = btn_4;
+			noDataShowStr = getString(R.string.profile_wait_receive) + orderStr;
 			break;
 		case TYPE_5:
 			defaultBtn = btn_5;
+			noDataShowStr = getString(R.string.profile_repair_return) + orderStr;
 			break;
 		default:
 			defaultBtn = btn_1;
+			noDataShowStr = orderStr;
 			break;
 		}
 		defaultBtn.setChecked(true);

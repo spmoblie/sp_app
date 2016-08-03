@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Sorter {
+	
 	private static final String TAG = "Sorter";
 	private static final int MAX_STROKE = 25;
 

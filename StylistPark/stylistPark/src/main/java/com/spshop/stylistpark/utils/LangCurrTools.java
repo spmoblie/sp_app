@@ -61,7 +61,7 @@ public class LangCurrTools {
 		} else {
 			editor.putString(langKey, "Cn");
 		}
-		editor.commit();
+		editor.apply();
 	}
 
 	public static void setLanguage(Activity ctx, Language data) {
@@ -153,7 +153,7 @@ public class LangCurrTools {
 		} else {
 			editor.putString(currencyKey, "RMB");
 		}
-		editor.commit();
+		editor.apply();
 	}
 
 	public static void setCurrency(Currency data) {

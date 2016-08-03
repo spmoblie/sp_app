@@ -84,7 +84,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 
-		shared.edit().putBoolean(AppConfig.KEY_PUSH_PAGE_MEMBER, false).commit();
+		shared.edit().putBoolean(AppConfig.KEY_PUSH_PAGE_MEMBER, false).apply();
 		topType = getIntent().getExtras().getInt("topType", TYPE_1);
 		
 		findViewById();

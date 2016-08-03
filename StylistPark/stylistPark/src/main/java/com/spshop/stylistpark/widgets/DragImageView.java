@@ -473,7 +473,6 @@ public class DragImageView extends ImageView {
 		protected Void doInBackground(Void... params) {
 
 			while (current_Width <= screen_W) {
-
 				left -= step_H;
 				top -= step_V;
 				right += step_H;
@@ -485,16 +484,20 @@ public class DragImageView extends ImageView {
 				top = Math.max(top, start_Top);
 				right = Math.min(right, start_Right);
 				bottom = Math.min(bottom, start_Bottom);
-                LogUtil.i("DragImageView", "top="+top+", bottom="+bottom+", left="+left+", right="+right);
-				onProgressUpdate(new Integer[] { left, top, right, bottom });
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					ExceptionUtil.handle(e);
-				}
 			}
 
 			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			onProgressUpdate(new Integer[] { left, top, right, bottom });
+			LogUtil.i("DragImageView", "top="+top+", bottom="+bottom+", left="+left+", right="+right);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				ExceptionUtil.handle(e);
+			}
 		}
 
 		@Override

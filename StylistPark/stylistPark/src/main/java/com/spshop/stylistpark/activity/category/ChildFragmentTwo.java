@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
-import com.spshop.stylistpark.activity.collage.IndexDisplayFragment;
+import com.spshop.stylistpark.activity.common.IndexDisplayFragment;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
 import com.spshop.stylistpark.activity.home.ProductListActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;

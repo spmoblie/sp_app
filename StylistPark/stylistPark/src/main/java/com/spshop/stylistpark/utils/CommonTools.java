@@ -3,28 +3,17 @@ package com.spshop.stylistpark.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,16 +22,10 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.RowObject;
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import jp.co.cyberagent.android.gpuimage.GPUImage;
-import jp.co.cyberagent.android.gpuimage.GPUImageGaussianBlurFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageGrayscaleFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageSobelEdgeDetection;
 
 /**
  * 系统通用工具类
@@ -210,28 +193,7 @@ public class CommonTools {
 	        }
 	    }
 	}
-	
-	public static int getTotalHeightofListView(ListView listView) {
 
-	    ListAdapter mAdapter = listView.getAdapter();
-
-	    int totalHeight = 0;
-
-	    for (int i = 0; i < mAdapter.getCount(); i++) {
-	        View mView = mAdapter.getView(i, null, listView);
-
-	        mView.measure(
-	                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-
-	                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-
-	        totalHeight += mView.getMeasuredHeight();
-	        Log.w("HEIGHT" + i, String.valueOf(totalHeight));
-
-	    }
-	    return totalHeight;
-    }
-	
 	/**
 	 * 获取存储屏幕信息的Point
 	 */
@@ -241,18 +203,7 @@ public class CommonTools {
 	    display.getSize(size);
 	    return size;
 	}
-	
-	public static URI captureView(Context context, View view, String filename,int scaledWidth){
-        view.setDrawingCacheEnabled(true);
-        Bitmap b = view.getDrawingCache();
-        File file = new File(context.getExternalCacheDir(), filename);
-        b = BitmapUtil.getBitmap(b, scaledWidth, scaledWidth);
-        AppApplication.saveBitmapFile(b, file, 70);
-        view.destroyDrawingCache();
-        view.setDrawingCacheEnabled(false);
-        return file.toURI();
-     }
-	
+
 	/**
 	 * 正则匹配手机号码
 	 * 
@@ -276,90 +227,5 @@ public class CommonTools {
 		// 应用布局参数
 		view.setLayoutParams(linearParams);
 	}
-	
-	public static Bitmap keyEffects(Context ctx, Bitmap bitmap){
-	    try{
-        	Bitmap bm = Bitmap.createBitmap(bitmap);
-        	GPUImage gpuImage = new GPUImage(ctx);
-        	gpuImage.setImage(bm);
-        	GPUImageGrayscaleFilter grayF = new GPUImageGrayscaleFilter();
-        	gpuImage.setFilter(grayF);
-        	bm = gpuImage.getBitmapWithFilterApplied();
-        	fixGPUImage(bm);
-        	gpuImage.setImage(bm);
-        	GPUImageSobelEdgeDetection edgeF = new GPUImageSobelEdgeDetection();
-        	edgeF.setLineSize(0.5f);
-        	gpuImage.setFilter(edgeF);
-        	bm = gpuImage.getBitmapWithFilterApplied();
-        	fixGPUImage(bm);
-        	
-        	FloodFill ff = new FloodFill();
-        	ff.mBitmap = bm;
-        	ff.floodFillScanlineStack(0, 0, Color.MAGENTA, Color.BLACK);
-        	int w = bm.getWidth();
-        	int h = bm.getHeight();
-        	for (int i = 0; i < h; i++) {  
-                for (int j = 0; j < w; j++) {  
-                    int color = bm.getPixel(j, i);
-                    if(color == Color.MAGENTA){
-                    	bm.setPixel(j, i, Color.TRANSPARENT);  
-                    }else{
-                    	bm.setPixel(j, i, Color.WHITE);  
-                    }
-                }  
-            }
-        	gpuImage.setImage(bm);
-        	
-        	GPUImageGaussianBlurFilter gBlurF = new GPUImageGaussianBlurFilter();
-        	gpuImage.setFilter(gBlurF);
-        	bm = gpuImage.getBitmapWithFilterApplied();
-        	fixGPUImage(bm);
-        	
-        	Bitmap result = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Config.ARGB_8888);
-        	Canvas mCanvas = new Canvas(result);
-        	
-        	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        	paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-        	mCanvas.drawBitmap(bitmap, 0, 0, null);
-        	mCanvas.drawBitmap(bm, 0, 0, paint);
-        	paint.setXfermode(null);
-        	return result;
-	    }catch (OutOfMemoryError error) {
-	        int newW = (int) (bitmap.getWidth() * 0.75);
-	        int newH = (int) (bitmap.getHeight() * 0.75);
-	        Bitmap bm = Bitmap.createScaledBitmap(bitmap, newW, newH, false);
-	        return keyEffects(ctx, bm);
-	    }
-	}
-	
-	private static void fixGPUImage(Bitmap bitmap) {
-	    int wrongLineCount = getWrongLineCount(bitmap);
-        if(wrongLineCount != 0) {
-            int pixel = bitmap.getPixel((bitmap.getWidth() - 1) - wrongLineCount, 0);
-            for (int i = bitmap.getWidth() - 1; i > (bitmap.getWidth() - 1) - wrongLineCount; i--) {
-                for (int j = 0; j < bitmap.getHeight(); j++) {
-                    bitmap.setPixel(i, j, pixel);
-                }
-            }
-        }
-	}
-	
-	private static int getWrongLineCount(Bitmap bitmap) {
-        int count = 0;
-        int pixel = bitmap.getPixel(bitmap.getWidth() - 1, 0);
-        for(int i = bitmap.getWidth() - 1;i >= 0;i--) {
-            boolean isWrongLine = true;
-            for(int j = 0;j < bitmap.getHeight();j++) {
-                if(pixel != bitmap.getPixel(i, j)) {
-                    isWrongLine = false;
-                    return count;
-                }
-            }
-            if(isWrongLine) {
-                count++;
-            }
-        }
-        return 0;
-    }
-	
+
 }

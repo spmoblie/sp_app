@@ -125,7 +125,7 @@ public class UpdateAppVersion {
 						long oldTime = shared.getLong(AppConfig.KEY_UPDATE_VERSION_LAST_TIME, 0);
 						if (newTime - oldTime > 86400000) { //设置首页检测版本的频率为一天
 							appDialog.foundNewVersion(address, description);
-							shared.edit().putLong(AppConfig.KEY_UPDATE_VERSION_LAST_TIME, newTime).commit();
+							shared.edit().putLong(AppConfig.KEY_UPDATE_VERSION_LAST_TIME, newTime).apply();
 							isNewVersion = true;
 						} else {
 							if (!isHomeIndex) {

@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
@@ -256,6 +255,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 
+	@SuppressWarnings("ResourceType")
 	private void showDateDialog() {
 		String[] dates = null;
 		if (!StringUtil.isNull(birthdayStr) && birthdayStr.contains("-")) { //解析当前生日

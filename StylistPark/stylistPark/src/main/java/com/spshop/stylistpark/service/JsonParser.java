@@ -12,7 +12,6 @@ import com.spshop.stylistpark.entity.LogisticsEntity;
 import com.spshop.stylistpark.entity.MemberEntity;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.PaymentEntity;
-import com.spshop.stylistpark.entity.Product;
 import com.spshop.stylistpark.entity.ProductAttrEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
@@ -1040,42 +1039,6 @@ public class JsonParser {
 			}
 		}
 		return mainEn;
-	}
-
-	/**
-	 * 获取搭配的商品列表
-	 */
-	public static Object[] getCollageProductList(String jsonStr) throws JSONException {
-		JSONObject jsonObject = new JSONObject(jsonStr);
-		String newEndKey = jsonObject.getString("endKey");
-		List<Product> productList = new ArrayList<Product>();
-		if (!StringUtil.isNull(jsonObject, "productList")) {
-			JSONArray data = jsonObject.getJSONArray("productList");
-			JSONObject tmpJsonObj;
-			for (int i = 0; i < data.length(); i++) {
-				tmpJsonObj = data.getJSONObject(i);
-				productList.add(new Product(tmpJsonObj));
-			}
-		}
-		return new Object[] {newEndKey, productList};
-	}
-
-	/**
-	 * 获取搭配的品牌列表
-	 */
-	public static List<BrandEntity> getCollageBrandList(String jsonStr) throws JSONException {
-		JSONArray jsonArr = new JSONArray(jsonStr);
-		List<BrandEntity> reult = new ArrayList<BrandEntity>();
-		BrandEntity brand = null;
-		for (int i = 0; i < jsonArr.length(); i++) {
-			JSONObject jsonObj = jsonArr.getJSONObject(i);
-			brand = new BrandEntity();
-			brand.setBrandId(jsonObj.getString("brandId"));
-			brand.setName(jsonObj.getString("name"));
-			brand.setDefineURL(jsonObj.getString("defineUrl"));
-			reult.add(brand);
-		}
-		return reult;
 	}
 
 	/**

@@ -11,18 +11,18 @@ public class AppConfig {
 	
 	// 是否正式发布
 	public static final boolean IS_PUBLISH = false;
-	// 网络传输协议https
-	public final static String APP_HTTP = "http://"; 
+	// 网络传输协议http
+	public final static String APP_HTTP = "http://";
 	// 网络传输协议https
 	public final static String APP_HTTPS = "https://";
 	// 域名1
-	public final static String ENVIRONMENT_TEST_APP_1 = "192.168.11.155/";
+	public final static String ENVIRONMENT_TEST_APP_1 = "www.spshop.com/";
 	// 域名2
 	public final static String ENVIRONMENT_TEST_APP_2 = "www.spshop.com/api/mobile/";
 	// 域名3
 	public final static String ENVIRONMENT_TEST_APP_3 = "192.168.11.155/api/mobile/";
 	// 加载数据使用的域名
-	public final static String ENVIRONMENT_PRESENT_URL_APP = APP_HTTP + ENVIRONMENT_TEST_APP_3;
+	public final static String ENVIRONMENT_PRESENT_URL_APP = APP_HTTP + ENVIRONMENT_TEST_APP_2;
 	// 加载图片使用的域名
 	public final static String ENVIRONMENT_PRESENT_IMG_APP = APP_HTTP + ENVIRONMENT_TEST_APP_1;
 	// 分享URL使用的域名
@@ -46,16 +46,9 @@ public class AppConfig {
 	public static final String URL_COMMON_MY_URL = ENVIRONMENT_PRESENT_URL_APP + "my.php";
 	// 其它通用URL
 	public static final String URL_COMMON_INDEX_URL = ENVIRONMENT_PRESENT_URL_APP + "index.php";
-	
-	// 搭配模块暂定URL
-	public static final String URL_COMMON_FRANCHISEE_URL = ENVIRONMENT_PRESENT_URL_APP + "franchisee.php";
-	public static final String API_GET_PRODUCT_LIST = ENVIRONMENT_PRESENT_URL_APP + "getProductList2.php";
-	public static final String API_GET_BRAND_LIST = ENVIRONMENT_PRESENT_URL_APP + "getBrandList.php";
-	public static final String API_SUBMIT_LOOKBOOK = ENVIRONMENT_PRESENT_URL_APP + "submitLookBook.php";
-	public static final String API_UPDATE_PROFILE = "http://192.168.11.155/user.php?act=act_edit_profile";
-	public static final String URL_DECOR_DB = "http://download.cherrypicks.com/StylishPark/SP/DecorationElement.zip";
-	public static final String URL_TEMPLATE_JSON = "http://download.cherrypicks.com/StylishPark/SP/TemplateJsonSample.json";
-	
+	// 上传头像URL
+	public static final String API_UPDATE_PROFILE = URL_COMMON_USER_URL + "?act=act_edit_profile";
+
 	/**
 	 ******************************************* URL设置结束 ******************************************
 	 */
@@ -71,8 +64,6 @@ public class AppConfig {
 	
 	// QQ AppID
 	public static final String QQ_APP_ID = "1104891333";
-	// QQ AppKey
-	public static final String QQ_APP_KEY = "vA7VOktMGfkbCItG";
 	// QQ授权接口参数：Scope权限
 	public static final String QQ_SCOPE = "all";
 	// 微信AppID
@@ -95,43 +86,7 @@ public class AppConfig {
 	// PayPal ClientID
 	public static final String PAYPAL_CLIENT_ID = "credentials from developer.paypal.com";
 
-	public static final String FLURRY_API_KEY = "XFDM994XFQV5MPSKK5S4";
-	public static final String PRODUCT_JSON_DOMAIN = "";
-	public static final String PRODUCT_DETAIL_PAGE_PTAH_FORMAT = "/brand/stylistpark/%s.html";
-	
-	public static final String NAME_DECOR_ZIP = "DecorationElement.zip";
-	public static final String NAME_DECOR_TEMP_DB = "DecorationElementTemp.db";
-	public static final String FREE_STYLE_DRAFT_NAME = "free_style_draft.json";
-	public static final String TEMPLATE_DRAFT_NAME = "template_draft.json";
-	public static final String TEMPLATE_DRAFT_ORIGIN_NAME = "template_draft_origin.json";
-	
-	// 货品分类索引（仅供搭配选择货品时使用）
-	public static String PRODUCT_TYPE_SUGGESTED = "[recommend]";
-	public static String PRODUCT_TYPE_NEW = "[1]";
-	public static String PRODUCT_TYPE_FAVOURITE = "[fav]";
-	public static String PRODUCT_TYPE_UPPER_CLOTHES = "[20,71,62,72,64,53]";
-	public static String PRODUCT_TYPE_JACKET = "[66]";
-	public static String PRODUCT_TYPE_DRESS = "[58]";
-	public static String PRODUCT_TYPE_PLANT = "[73,68,61]";
-	public static String PRODUCT_TYPE_ONE_PIECE = "[57]";
-	public static String PRODUCT_TYPE_PERFUME = "[29,84,85]";
-	public static String PRODUCT_TYPE_SKINCARE = "[46,90,88]";
-	public static String PRODUCT_TYPE_HAIR_CARE = "[87]";
-	public static String PRODUCT_TYPE_NAILS = "[70]";
-	public static String PRODUCT_TYPE_MAKE_UP = "[86]";
-	public static String PRODUCT_TYPE_HOME_FRAGRANCE = "[89]";
-	public static String PRODUCT_TYPE_ACCESSORIES = "[3,42,43,44,48,47]";
-	public static String PRODUCT_TYPE_BAG = "[17]";
-	public static String PRODUCT_TYPE_SHOES = "[74]";
-	public static String PRODUCT_TYPE_DECORATION = "[sticker]";
-	// 货品分类索引集
-	public static String[] PRODUCT_MENU_ORDER_ARR = {"", PRODUCT_TYPE_FAVOURITE, PRODUCT_TYPE_NEW, //2
-		                    PRODUCT_TYPE_UPPER_CLOTHES, PRODUCT_TYPE_JACKET, PRODUCT_TYPE_DRESS, // 5
-		                    PRODUCT_TYPE_PLANT, PRODUCT_TYPE_ONE_PIECE, PRODUCT_TYPE_PERFUME, //8
-		                    PRODUCT_TYPE_SKINCARE, PRODUCT_TYPE_HAIR_CARE, PRODUCT_TYPE_NAILS, //11
-		                    PRODUCT_TYPE_MAKE_UP, PRODUCT_TYPE_HOME_FRAGRANCE, PRODUCT_TYPE_ACCESSORIES, //14
-		                    PRODUCT_TYPE_BAG, PRODUCT_TYPE_SHOES, PRODUCT_TYPE_DECORATION}; //17
-	
+
 	// 缓存Cookies文件名
 	public static final String cookiesFileName = "cookies";
 	// 内置SD卡路径

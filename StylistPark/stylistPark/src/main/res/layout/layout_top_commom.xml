@@ -17,7 +17,8 @@
 
             <ImageView
                 android:id="@+id/top_commom_iv_left"
-                style="@style/top_left_back" />
+                style="@style/top_left_back"
+                android:contentDescription="@string/desc" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -42,6 +43,7 @@
     </LinearLayout>
 
     <ImageView
-        style="@style/set_line_horizontal_bg" />
+        style="@style/set_line_horizontal_bg"
+        android:contentDescription="@string/desc" />
 
 </LinearLayout>

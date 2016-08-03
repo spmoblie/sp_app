@@ -170,7 +170,7 @@
     <string name="events_top_tab_1">全部</string>
     <string name="events_top_tab_2">视频</string>
     <string name="events_top_tab_3">专题</string>
-    <string name="events_no_data">暂无发现，\n可能是专题栏目出错啦！</string>
+    <string name="events_no_data">暂无发现，\n可能是栏目出错啦！</string>
     <string name="events_comment">评论</string>
     <string name="events_comment_participate">参与评论</string>
     <string name="events_comment_ok">评论已发布</string>

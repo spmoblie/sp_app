@@ -9,7 +9,8 @@
     <ImageView
         style="@style/set_line_horizontal_bg"
         android:layout_width="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:contentDescription="@string/desc" />
 
     <TextView
         android:id="@+id/text_two_line_tv_title"
@@ -23,6 +24,7 @@
     <ImageView
         style="@style/set_line_horizontal_bg"
         android:layout_width="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:contentDescription="@string/desc" />
 
 </LinearLayout>

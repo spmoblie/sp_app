@@ -1,18 +1,18 @@
 package com.spshop.stylistpark.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.spshop.stylistpark.entity.IndexDisplay;
+import com.spshop.stylistpark.utils.LogUtil;
 
 import java.util.List;
 
 public abstract class IndexDisplayAdapter extends AppBaseAdapter<Pair<String, List<? extends IndexDisplay>>> {
 
-	final String TAG="IndexDisplayAdapter";
+	final String TAG = "IndexDisplayAdapter";
 
 	public interface OnIndexDisplayItemClick {
 		
@@ -34,7 +34,7 @@ public abstract class IndexDisplayAdapter extends AppBaseAdapter<Pair<String, Li
 			for (int i = 0; i < mDataList.size(); i++) {
 				if (position >= cursor
 						&& position < cursor + mDataList.get(i).second.size()) {
-					Log.d(TAG,"getItem(): Position="+position+" Item Position="+(position - cursor)+" cursor="+cursor);
+					LogUtil.i(TAG,"getItem(): Position="+position+" Item Position="+(position - cursor)+" cursor="+cursor);
 					return mDataList.get(i).second.get(position - cursor);
 				}
 				cursor += mDataList .get(i).second.size();
@@ -53,7 +53,7 @@ public abstract class IndexDisplayAdapter extends AppBaseAdapter<Pair<String, Li
 				count += mDataList.get(i).second.size();
 			}
 		}
-		Log.d(TAG, "item count="+count);
+		LogUtil.i(TAG, "item count="+count);
 		return count;
 	}
 	
@@ -106,7 +106,7 @@ public abstract class IndexDisplayAdapter extends AppBaseAdapter<Pair<String, Li
 			for (int i = 0; i < mDataList.size(); i++) {
 				if (position >= cursor
 						&& position < cursor + mDataList.get(i).second.size()) {
-					Log.d(TAG,"getIndexChar(): Position="+position+" Item Position="+(position - cursor)+" cursor="+cursor);
+					LogUtil.i(TAG,"getIndexChar(): Position="+position+" Item Position="+(position - cursor)+" cursor="+cursor);
 					return mDataList.get(i).first;
 				}
 				cursor += mDataList .get(i).second.size();

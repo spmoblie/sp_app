@@ -1045,7 +1045,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		wordsEn.setChildShowName(searchStr);
 		lv_words.add(wordsEn);
 		lv_words.addAll(lists);
-		editor.putString(AppConfig.KEY_SEARCH_WORDS_HISTORY, wordsHistoryStr).commit();
+		editor.putString(AppConfig.KEY_SEARCH_WORDS_HISTORY, wordsHistoryStr).apply();
 	}
 
 	/**

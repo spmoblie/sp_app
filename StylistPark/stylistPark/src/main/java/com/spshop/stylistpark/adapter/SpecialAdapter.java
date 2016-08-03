@@ -21,7 +21,7 @@ import com.spshop.stylistpark.entity.ThemeEntity;
 import java.util.List;
 
 /**
- * 活动列表适配器
+ * 专题列表适配器
  */
 public class SpecialAdapter extends BaseAdapter {
 

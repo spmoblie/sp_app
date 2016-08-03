@@ -1,7 +1,5 @@
 package com.spshop.stylistpark.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
@@ -16,6 +14,8 @@ import android.widget.TextView;
 
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ClipPhotoEntity;
+
+import java.util.List;
 
 /**
  * 选择相册适配器

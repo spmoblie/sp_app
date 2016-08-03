@@ -10,7 +10,8 @@
         android:id="@+id/home_line_sales_item_iv_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/desc" />
 
     <RelativeLayout
         android:layout_width="match_parent"

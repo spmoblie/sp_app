@@ -17,11 +17,6 @@ import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
-import com.spshop.stylistpark.utils.APIResult;
-
-import org.json.JSONArray;
-
-import java.util.List;
 
 public interface MainService {
 
@@ -129,15 +124,5 @@ public interface MainService {
 
 	BaseEntity postChooseBouns(String bounsId) throws Exception;
 
-	Object[] getCollageProductList(String userId, String typeId, String color, String brand, 
-			String price, String keyword, Boolean isSelected, String endKey) throws Exception;
-	
-	List<BrandEntity> getCollageBrandList() throws Exception;
-	
-	JSONArray getCollageTemplateList() throws Exception;
-	
-	APIResult submitLookBook(String userId, String sessionKey, String lookBookType, String title,
-			String descripton, String filePath, String[] productIdList, String html, String mobileHtml) throws Exception;
-	
 }
 

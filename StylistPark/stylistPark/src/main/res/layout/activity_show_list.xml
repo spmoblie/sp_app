@@ -20,7 +20,7 @@
         android:layout_marginTop="30dp"
         android:text="@string/product_search_no_data"
         android:textColor="@color/text_color_assist"
-        android:textSize="@dimen/text_size_18"
+        android:textSize="@dimen/text_size_14"
         android:visibility="gone" />
 
     <LinearLayout
@@ -59,7 +59,8 @@
                         android:layout_width="60dp"
                         android:layout_height="30dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp" />
+                        android:layout_marginLeft="15dp"
+                        android:contentDescription="@string/desc" />
 
                     <TextView
                         android:id="@+id/show_list_tv_brand_name"
@@ -114,7 +115,8 @@
                     <ImageView
                         style="@style/set_line_horizontal_bg"
                         android:layout_width="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:contentDescription="@string/desc" />
 
                     <TextView
                         android:id="@+id/show_list_tv_favourable"
@@ -123,12 +125,14 @@
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:textColor="@color/text_color_content"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_16"
+                        android:contentDescription="@string/desc" />
 
                     <ImageView
                         style="@style/set_line_horizontal_bg"
                         android:layout_width="0dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:contentDescription="@string/desc" />
                 </LinearLayout>
 
                 <LinearLayout
