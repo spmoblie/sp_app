@@ -54,6 +54,7 @@ import com.spshop.stylistpark.entity.ProductAttrEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
+import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.image.AsyncImageLoader.AsyncImageLoaderCallback;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
@@ -67,7 +68,6 @@ import com.spshop.stylistpark.widgets.ObservableScrollView;
 import com.spshop.stylistpark.widgets.ObservableScrollView.ScrollViewListener;
 import com.spshop.stylistpark.widgets.ScrollViewListView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -478,13 +478,14 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoaderCallback() {
 				
 				@Override
-				public void imageLoaded(String path, File saveFile, Bitmap bm) {
-					if (saveFile != null) {
-						fristGoodsImgPath = saveFile.getPath();
-					}
+				public void imageLoaded(String path, String cachePath, Bitmap bm) {
+					fristGoodsImgPath = cachePath;
 				}
 			});
-			asyncImageLoader.loadImage(false, fristGoodsImgUrl, 0);
+			ImageLoadTask task = asyncImageLoader.loadImage(fristGoodsImgUrl, 0);
+			if (task != null && task.getBitmap() != null) {
+				fristGoodsImgPath = task.getNewPath();
+			}
 		}
 	}
 

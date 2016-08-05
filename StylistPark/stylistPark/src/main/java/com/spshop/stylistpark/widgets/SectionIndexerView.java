@@ -229,7 +229,7 @@ public class SectionIndexerView extends View implements OnTouchListener {
                 return false;
         }
 
-        if (index < mSections.length && index != mCurrentSection) {
+        if (index >= 0 && index < mSections.length && index != mCurrentSection) {
             mCurrentSection = index;
 
             if (mListener != null) {

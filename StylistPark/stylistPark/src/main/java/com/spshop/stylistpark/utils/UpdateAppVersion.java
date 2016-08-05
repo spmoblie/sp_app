@@ -103,7 +103,7 @@ public class UpdateAppVersion {
 			if (result != null) {
 				AppVersionDialog appDialog = new AppVersionDialog(mContext, dm);
 				if (!isHomeIndex) {
-					LoadDialog.hidden(mContext);
+					LoadDialog.hidden();
 				}
 				UpdateVersionEntity entity = (UpdateVersionEntity) result;
 				if (entity != null && entity.getErrCode() == 0) {

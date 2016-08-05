@@ -47,9 +47,11 @@ import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.FileManager;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
+import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
@@ -78,10 +80,10 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private LinearLayout ll_head_main, ll_indicator, ll_goods_main, ll_peida_main, ll_sale_main;
 
 	private View sv_goods_main, vw_goods_title, sv_peida_main, vw_peida_title, vw_sale_title;
-	private TextView tv_goods_title, tv_peida_title, tv_sale_title;
-	private RelativeLayout rl_loading;
+	private TextView tv_goods_title, tv_peida_title, tv_sale_title, tv_load_again;
+	private RelativeLayout rl_loading, rl_load_fail;
 	private ViewPager viewPager;
-	private ImageView iv_head_null, iv_to_top;
+	private ImageView iv_to_top;
 	private PullToRefreshListView refresh_lv;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
@@ -145,6 +147,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		refresh_lv = (PullToRefreshListView) view.findViewById(R.id.fragment_one_listview);
 		rl_loading = (RelativeLayout) view.findViewById(R.id.loading_anim_large_ll_main);
 		iv_to_top = (ImageView) view.findViewById(R.id.fragment_one_iv_to_top);
+		rl_load_fail = (RelativeLayout) view.findViewById(R.id.loading_fail_rl_main);
+		tv_load_again = (TextView) view.findViewById(R.id.loading_fail_tv_update);
 
 		ll_head_main = (LinearLayout) FrameLayout.inflate(mContext, R.layout.layout_list_head_home, null);
 	}
@@ -155,6 +159,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		rl_search.setOnClickListener(this);
 		rl_zxing.setOnClickListener(this);
 		iv_to_top.setOnClickListener(this);
+		tv_load_again.setOnClickListener(this);
 
 		initListView();
 		initListViewHead();
@@ -182,7 +187,21 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 加载更多
-				loadSVDatas();
+				if (lv_show.size() > 0) {
+					loadSVDatas();
+				} else {
+					new Handler().postDelayed(new Runnable() {
+
+						@Override
+						public void run() {
+							if (NetworkUtil.isNetworkAvailable()) {
+								requestListDatas();
+							} else {
+								refresh_lv.onPullUpRefreshComplete();
+							}
+						}
+					}, 1000);
+				}
 			}
 		});
 		mListView = refresh_lv.getRefreshableView();
@@ -193,7 +212,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private void initListViewHead() {
 		viewPager = (ViewPager) ll_head_main.findViewById(R.id.home_list_head_viewPager);
 		ll_indicator = (LinearLayout) ll_head_main.findViewById(R.id.home_list_head_indicator);
-		iv_head_null = (ImageView) ll_head_main.findViewById(R.id.home_list_head_iv_null);
 		sv_goods_main = ll_head_main.findViewById(R.id.home_list_head_sv_goods_main);
 		vw_goods_title = ll_head_main.findViewById(R.id.home_list_head_ll_goods_title);
 		tv_goods_title = (TextView) vw_goods_title.findViewById(R.id.text_two_line_tv_title);
@@ -205,11 +223,11 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		vw_sale_title = ll_head_main.findViewById(R.id.home_list_head_ll_sale_title);
 		tv_sale_title = (TextView) vw_sale_title.findViewById(R.id.text_two_line_tv_title);
 		ll_sale_main = (LinearLayout) ll_head_main.findViewById(R.id.home_list_head_ll_sale_main);
-		mListView.addHeaderView(ll_head_main);
 	}
 
 	private void setHeadView() {
 		if (themeEn != null) {
+			mListView.addHeaderView(ll_head_main);
 			if (viewLists.size() == 0) {
 				initViewPager(themeEn.getAdEn());
 			}
@@ -222,7 +240,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private void initViewPager(ThemeEntity adEn) {
 		if (viewPager == null) return;
 		if (adEn != null && adEn.getMainLists() != null) {
-			iv_head_null.setVisibility(View.GONE);
 			viewLists.clear();
 			imgEns.clear();
 			imgEns.addAll(adEn.getMainLists());
@@ -541,9 +558,26 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		sa_all.clear();
 		startAnimation();
 		requestHeadDatas();
-		requestListDatas();
 	}
-	
+
+	/**
+	 * 从本地数据库加载数据
+	 */
+	private void getDBDatas() {
+		AppApplication.loadDBData = true;
+		atm.request(AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE, instance);
+	}
+
+	private void requestHeadDatas() {
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				atm.request(AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE, instance);
+			}
+		}, 1000);
+	}
+
 	/**
 	 * 加载翻页数据
 	 */
@@ -553,10 +587,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 	private void requestListDatas() {
 		atm.request(AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE, instance);
-	}
-
-	private void requestHeadDatas() {
-		atm.request(AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE, instance);
 	}
 
 	@Override
@@ -580,6 +610,9 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			break;
 		case R.id.fragment_one_iv_to_top: //回顶
 			toTop();
+			break;
+		case R.id.loading_fail_tv_update: //重加载
+			getSVDatas();
 			break;
 		}
 		if (intent != null) {
@@ -656,26 +689,44 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
 			themeEn = null;
 			themeEn = sc.getHomeHeadDatas();
+			if (themeEn != null) {
+				FileManager.writeFileSaveObject(AppConfig.homeAdsFileName, themeEn, true);
+			}
 			return themeEn;
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
 			mainEn = null;
 			mainEn = sc.getProductListDatas(0, 0, 1, Page_Count, current_Page, "", "", 0);
 			return mainEn;
+		case AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE:
+			Object obj = FileManager.readFileSaveObject(AppConfig.homeAdsFileName, true);
+			if (obj != null) {
+				themeEn = (ThemeEntity) obj;
+			}
+			return themeEn;
 		}
 		return null;
 	}
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
-		if (getActivity() == null) return;
+		if (getActivity() == null) {
+			stopAnimation();
+			return;
+		}
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
 			setHeadView();
+			if (themeEn != null) {
+				requestListDatas();
+			} else {
+				getDBDatas(); //加载远程数据失败则获取本地数据
+			}
 			break;
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
 			if (mainEn != null) {
 				List<ProductListEntity> lists = mainEn.getMainLists();
 				if (lists != null && lists.size() > 0) {
+					rl_load_fail.setVisibility(View.GONE);
 					lv_all.addAll(lists);
 					addAllShow(lv_all);
 					//addEntity(lv_all, lists, sa_all);
@@ -688,19 +739,39 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				loadFailHandle();
 			}
 			break;
+		case AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE:
+			AppApplication.loadDBData = false;
+			setHeadView();
+			if (themeEn != null) {
+				requestListDatas();
+			} else {
+				stopAnimation();
+				rl_load_fail.setVisibility(View.VISIBLE);
+			}
+			break;
 		}
 	}
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
-		if (getActivity() == null) return;
+		if (getActivity() == null) {
+			stopAnimation();
+			return;
+		}
 		CommonTools.showToast(String.valueOf(result), 1000);
-		loadFailHandle();
+		if (themeEn == null) {
+			getDBDatas(); //加载远程数据失败则获取本地数据
+		} else {
+			loadFailHandle();
+		}
 	}
 
 	private void loadFailHandle() {
 		addAllShow(lv_all);
 		myUpdateAdapter();
+		if (themeEn == null && lv_show.size() == 0) {
+			rl_load_fail.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	/**
@@ -760,6 +831,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	 * 显示缓冲动画
 	 */
 	private void startAnimation() {
+		rl_load_fail.setVisibility(View.GONE);
 		rl_loading.setVisibility(View.VISIBLE);
 	}
 	

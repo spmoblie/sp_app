@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -56,21 +55,20 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	public static ProductListActivity instance = null;
 	public boolean isUpdate = false;
 	public static final int TYPE_1 = 1;  //默认
-	public static final int TYPE_3 = 3;  //价格
+	public static final int TYPE_2 = 2;  //价格
 
 	private static final int Page_Count = 20;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页
 	private int page_type_1 = 1;  //默认列表加载页
-	private int page_type_3_ASC = 1;  //价格升序列表加载页
-	private int page_type_3_DSC = 1;  //价格降序列表加载页
+	private int page_type_2_ASC = 1;  //价格升序列表加载页
+	private int page_type_2_DSC = 1;  //价格降序列表加载页
 	private int topType = TYPE_1; //Top标记
 	private int sortType = 0; //排序标记(0:默认排序/1:价格降序/2:价格升序)
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int countTotal = 0; //数集总数量
-	private int total_1, total_3_ASC, total_3_DSC;
+	private int total_1, total_2_ASC, total_2_DSC;
 	private boolean isLoadOk = true; //加载数据控制符
-	private boolean isFrist = true; //识别是否第一次打开页面
-	private boolean flag_type_3 = true; //价格排序控制符(true:价格升序/false:价格降序)
+	private boolean flag_type_2 = true; //价格排序控制符(true:价格升序/false:价格降序)
 
 	private int mFirstVisibleItem = 0;
 	private int typeId = 0; //0:搜索页面  非0:商品列表
@@ -83,11 +81,12 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private String wordsHistoryStr = "";
 
 	private RelativeLayout rl_search_et, rl_search_txt, rl_search_line;
-	private RelativeLayout rl_screen, rl_words_clear, rl_search_no_data;
+	private RelativeLayout rl_words_clear, rl_search_no_data;
 	private LinearLayout ll_top, ll_bottom, ll_other;
 	private LinearLayout ll_hot_words, ll_radio_group, ll_search_history, ll_words_history;
-	private RadioButton btn_1, btn_2, btn_3, btn_4;
-	private Button btn_screen, btn_words_clear;
+	private RelativeLayout rl_top_1, rl_top_2, rl_top_3;
+	private TextView tv_top_1, tv_top_2, tv_top_3;
+	private Button btn_words_clear;
 	private EditText et_search;
 	private ImageView iv_top_back, iv_search_clear, iv_to_top;
 	private TextView tv_title, tv_words_title;
@@ -108,11 +107,11 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all_1 = new ArrayList<ProductListEntity>();
-	private List<ProductListEntity> lv_all_3_DSC = new ArrayList<ProductListEntity>();
-	private List<ProductListEntity> lv_all_3_ASC = new ArrayList<ProductListEntity>();
+	private List<ProductListEntity> lv_all_2_DSC = new ArrayList<ProductListEntity>();
+	private List<ProductListEntity> lv_all_2_ASC = new ArrayList<ProductListEntity>();
 	private SparseBooleanArray sa_all_1 = new SparseBooleanArray();
-	private SparseBooleanArray sa_all_3_asc = new SparseBooleanArray();
-	private SparseBooleanArray sa_all_3_dsc = new SparseBooleanArray();
+	private SparseBooleanArray sa_all_2_asc = new SparseBooleanArray();
+	private SparseBooleanArray sa_all_2_dsc = new SparseBooleanArray();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,11 +129,12 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	}
 	
 	private void findViewById() {
-		btn_1 = (RadioButton) findViewById(R.id.topbar_radio_rb_1);
-		btn_2 = (RadioButton) findViewById(R.id.topbar_radio_rb_2);
-		btn_3 = (RadioButton) findViewById(R.id.topbar_radio_rb_3);
-		btn_4 = (RadioButton) findViewById(R.id.topbar_radio_rb_4);
-		btn_screen = (Button) findViewById(R.id.topbar_radio_btn_screen);
+		rl_top_1 = (RelativeLayout) findViewById(R.id.topbar_group_rl_1);
+		rl_top_2 = (RelativeLayout) findViewById(R.id.topbar_group_rl_2);
+		rl_top_3 = (RelativeLayout) findViewById(R.id.topbar_group_rl_3);
+		tv_top_1 = (TextView) findViewById(R.id.topbar_group_tv_1);
+		tv_top_2 = (TextView) findViewById(R.id.topbar_group_tv_2);
+		tv_top_3 = (TextView) findViewById(R.id.topbar_group_tv_3);
 		btn_words_clear = (Button) findViewById(R.id.button_confirm_btn_one);
 		refresh_lv = (PullToRefreshListView) findViewById(R.id.product_refresh_lv);
 		sv_words_history = (ScrollView) findViewById(R.id.scroll_list_btn_sv);
@@ -149,7 +149,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		tv_words_4 = (TextView) findViewById(R.id.product_tv_hot_words_4);
 		tv_words_title = (TextView) findViewById(R.id.scroll_list_btn_tv_top_title);
 		et_search = (EditText) findViewById(R.id.search_et_search);
-		rl_screen = (RelativeLayout) findViewById(R.id.topbar_radio_rl_screen);
 		rl_search_et = (RelativeLayout) findViewById(R.id.search_rl_search_et);
 		rl_search_txt = (RelativeLayout) findViewById(R.id.search_rl_search_txt);
 		rl_search_line = (RelativeLayout) findViewById(R.id.product_rl_search_line);
@@ -184,7 +183,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		
 		if (typeId == 0) {
 			ll_radio_group.setVisibility(View.GONE);
-			rl_screen.setVisibility(View.GONE);
+			rl_top_3.setVisibility(View.GONE);
 			ll_other.setVisibility(View.GONE);
 			ll_search_history.setVisibility(View.VISIBLE);
 			
@@ -198,14 +197,13 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			tv_title.setVisibility(View.VISIBLE);
 			ll_hot_words.setVisibility(View.GONE);
 			ll_radio_group.setVisibility(View.VISIBLE);
-			rl_screen.setVisibility(View.VISIBLE);
 			ll_other.setVisibility(View.VISIBLE);
 			ll_search_history.setVisibility(View.GONE);
-			setDefaultRadioButton();
 			getScreenListDatas();
+			getSVDatas();
 		}
-		
-		initRaidoGroup();
+
+		initViewGroup();
 		initListView();
 		setAdapter();
 	}
@@ -295,16 +293,49 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		});
 	}
 
-	private void initRaidoGroup() {
-		btn_1.setText(getString(R.string.product_top_tab_1));
-		btn_1.setChecked(true);
-		btn_1.setOnClickListener(this);
-		btn_2.setVisibility(View.GONE);
-		btn_3.setText(getString(R.string.product_top_tab_3));
-		btn_3.setOnClickListener(this);
-		btn_4.setVisibility(View.GONE);
-		btn_screen.setOnClickListener(this);
-		btn_screen.setText(getString(R.string.product_top_tab_4));
+	private void initViewGroup() {
+		tv_top_1.setText(getString(R.string.product_top_tab_1));
+		rl_top_1.setOnClickListener(this);
+		tv_top_2.setText(getString(R.string.product_top_tab_3));
+		rl_top_2.setOnClickListener(this);
+		tv_top_3.setText(R.string.product_top_tab_4);
+		rl_top_3.setOnClickListener(this);
+		updateViewGroupStatus();
+	}
+
+	/**
+	 * 自定义ViewGroup状态切换
+	 */
+	private void updateViewGroupStatus() {
+		tv_top_1.setSelected(false);
+		tv_top_2.setSelected(false);
+		switch (topType) {
+			case TYPE_1:
+				tv_top_1.setSelected(true);
+				tv_top_2.setCompoundDrawables(null, null, rank_normal, null);
+				break;
+			case TYPE_2:
+				tv_top_2.setSelected(true);
+				if (flag_type_2) {
+					tv_top_2.setCompoundDrawables(null, null, rank_up, null);
+				} else {
+					tv_top_2.setCompoundDrawables(null, null, rank_down, null);
+				}
+				break;
+		}
+	}
+
+	/**
+	 * 自定义筛选状态切换
+	 */
+	private void updateScreenStatus() {
+		if (isScreenOR()) {
+			tv_top_3.setSelected(true);
+			tv_top_3.setText(brandName);
+		}else {
+			tv_top_3.setSelected(false);
+			tv_top_3.setText(getString(R.string.product_top_tab_4));
+		}
 	}
 
 	private void initListView() {
@@ -369,29 +400,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	}
 
 	/**
-	 * 设置默认项
-	 */
-	private void setDefaultRadioButton() {
-		RadioButton defaultBtn = null;
-		switch (topType) {
-		case TYPE_1:
-			defaultBtn = btn_1;
-			break;
-		case TYPE_3:
-			defaultBtn = btn_3;
-			break;
-		default:
-			defaultBtn = btn_1;
-			break;
-		}
-		defaultBtn.setChecked(true);
-		if (isFrist) {
-			onClick(defaultBtn);
-			isFrist = false;
-		}
-	}
-
-	/**
 	 * 加载筛选列表数据
 	 */
 	private void getScreenListDatas() {
@@ -407,8 +415,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			return;
 		}
 		clearAllData();
-		btn_1.setChecked(true);
-		onClick(btn_1);
+		onClick(rl_top_1);
 		addNewSearchWords();
 		initWordsHistoryList();
 	}
@@ -434,13 +441,13 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		case TYPE_1: //默认
 			current_Page = page_type_1;
 			break;
-		case TYPE_3: //价格
+		case TYPE_2: //价格
 			switch (sortType) {
 			case 1: //降序
-				current_Page = page_type_3_DSC;
+				current_Page = page_type_2_DSC;
 				break;
 			case 2: //升序
-				current_Page = page_type_3_ASC;
+				current_Page = page_type_2_ASC;
 				break;
 			}
 			break;
@@ -520,15 +527,13 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	public void onClick(View v) {
-		if (!isLoadOk) { //加载频率控制
-			setDefaultRadioButton();
-			return;
-		}
+		if (!isLoadOk) return; //加载频率控制
 		switch (v.getId()) {
-		case R.id.topbar_radio_rb_1: //默认
+		case R.id.topbar_group_rl_1: //默认
+			if (topType == TYPE_1 && lv_all_1.size() > 0) return;
 			topType = TYPE_1;
-			btn_3.setCompoundDrawables(null, null, rank_normal, null);
-			flag_type_3 = true;
+			updateViewGroupStatus();
+			flag_type_2 = true;
 			sortType = 0;
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
 				addOldListDatas(lv_all_1, page_type_1, total_1);
@@ -538,35 +543,35 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				getSVDatas();
 			}
 			break;
-		case R.id.topbar_radio_rb_3: //价格
-			topType = TYPE_3;
-			if (flag_type_3) //价格升序
+		case R.id.topbar_group_rl_2: //价格
+			topType = TYPE_2;
+			if (flag_type_2) //价格升序
 			{
-				flag_type_3 = false;
-				btn_3.setCompoundDrawables(null, null, rank_up, null);
+				updateViewGroupStatus();
+				flag_type_2 = false;
 				sortType = 2;
-				if (lv_all_3_ASC != null && lv_all_3_ASC.size() > 0) {
-					addOldListDatas(lv_all_3_ASC, page_type_3_ASC, total_3_ASC);
+				if (lv_all_2_ASC != null && lv_all_2_ASC.size() > 0) {
+					addOldListDatas(lv_all_2_ASC, page_type_2_ASC, total_2_ASC);
 				}else {
-					page_type_3_ASC = 1;
-					total_3_ASC = 0;
+					page_type_2_ASC = 1;
+					total_2_ASC = 0;
 					getSVDatas();
 				}
 			} else //价格降序
 			{
-				flag_type_3 = true;
-				btn_3.setCompoundDrawables(null, null, rank_down, null);
+				updateViewGroupStatus();
+				flag_type_2 = true;
 				sortType = 1;
-				if (lv_all_3_DSC != null && lv_all_3_DSC.size() > 0) {
-					addOldListDatas(lv_all_3_DSC, page_type_3_DSC, total_3_DSC);
+				if (lv_all_2_DSC != null && lv_all_2_DSC.size() > 0) {
+					addOldListDatas(lv_all_2_DSC, page_type_2_DSC, total_2_DSC);
 				} else {
-					page_type_3_DSC = 1;
-					total_3_DSC = 0;
+					page_type_2_DSC = 1;
+					total_2_DSC = 0;
 					getSVDatas();
 				}
 			}
 			break;
-		case R.id.topbar_radio_btn_screen: //筛选
+		case R.id.topbar_group_rl_3: //筛选
 			if (screen_MainEn != null && screen_MainEn.getMainLists() != null) {
 				/*Intent intent = new Intent(mContext, ScreenListActivity.class);
 				intent.putExtra("data", screen_MainEn);
@@ -648,13 +653,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
         	isUpdate = false;
         	clearAllData();
         	getSVDatas();
-        	if (isScreenOR()) {
-        		btn_screen.setText(brandName);
-        		btn_screen.setTextColor(mContext.getResources().getColor(R.color.text_color_red_1));
-			}else {
-				btn_screen.setText(getString(R.string.product_top_tab_4));
-				btn_screen.setTextColor(mContext.getResources().getColor(R.color.text_color_assist));
-			}
+			updateScreenStatus();
 		}
 	}
 	
@@ -802,25 +801,25 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 						}
 						total_1 = total;
 						break;
-					case TYPE_3: //价格
+					case TYPE_2: //价格
 						switch (sortType) {
 						case 1: //降序
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all_3_DSC, sa_all_3_dsc);
+								updEntity(total, countTotal, lists, lv_all_2_DSC, sa_all_2_dsc);
 							}else {
-								addEntity(lv_all_3_DSC, lists, sa_all_3_dsc);
-								page_type_3_DSC++;
+								addEntity(lv_all_2_DSC, lists, sa_all_2_dsc);
+								page_type_2_DSC++;
 							}
-							total_3_DSC = total;
+							total_2_DSC = total;
 							break;
 						case 2: //升序
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all_3_ASC, sa_all_3_asc);
+								updEntity(total, countTotal, lists, lv_all_2_ASC, sa_all_2_asc);
 							}else {
-								addEntity(lv_all_3_ASC, lists, sa_all_3_asc);
-								page_type_3_ASC++;
+								addEntity(lv_all_2_ASC, lists, sa_all_2_asc);
+								page_type_2_ASC++;
 							}
-							total_3_ASC = total;
+							total_2_ASC = total;
 							break;
 						}
 						break;
@@ -856,13 +855,13 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				addAllShow(lv_all_1);
 			}
 			break;
-		case TYPE_3: //价格
+		case TYPE_2: //价格
 			switch (sortType) {
 			case 1: //降序
-				addAllShow(lv_all_3_DSC);
+				addAllShow(lv_all_2_DSC);
 				break;
 			case 2: //升序
-				addAllShow(lv_all_3_ASC);
+				addAllShow(lv_all_2_ASC);
 				break;
 			}
 			break;
@@ -1055,11 +1054,11 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		lv_show.clear();
 		lv_show_two.clear();
 		lv_all_1.clear();
-		lv_all_3_DSC.clear();
-		lv_all_3_ASC.clear();
+		lv_all_2_DSC.clear();
+		lv_all_2_ASC.clear();
 		sa_all_1.clear();
-		sa_all_3_asc.clear();
-		sa_all_3_dsc.clear();
+		sa_all_2_asc.clear();
+		sa_all_2_dsc.clear();
 	}
 	
 }

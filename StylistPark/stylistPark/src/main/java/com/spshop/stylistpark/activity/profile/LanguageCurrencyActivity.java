@@ -178,7 +178,7 @@ public class LanguageCurrencyActivity extends BaseActivity {
 			switch (dataType) {
 			case 1:
 				SettingActivity.instance.change_language = true; //切换App展示的语言
-				AppApplication.loadSVData_category = true; //更新缓存的商品分类数据
+				AppApplication.getInstance().clearSharedLoadSVData();
 				break;
 			case 2:
 				SettingActivity.instance.change_currency = true; //切换App展示的货币

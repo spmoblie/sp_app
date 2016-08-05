@@ -111,12 +111,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		final ProductListEntity leftEn = (ProductListEntity) data.getLeftEn();
 		if (leftEn != null) {
 			// 网络图片地址
-			String imageUrl = IMAGE_URL_HTTP + leftEn.getImageUrl();
-			if (!StringUtil.isNull(leftEn.getImageUrl())) {
-				ImageLoader.getInstance().displayImage(imageUrl, holder.left_img, options);
-			} else {
-				holder.left_img.setImageResource(R.drawable.bg_img_white);
-			}
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + leftEn.getImageUrl(), holder.left_img, options);
 			holder.left_brand.setText(leftEn.getBrand()); //商品品牌
 			holder.left_name.setText(leftEn.getName()); //商品名称
 			holder.left_curr.setText(currStr);
@@ -148,12 +143,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		if (rightEn != null) {
 			holder.right_main.setVisibility(View.VISIBLE);
 			// 网络图片地址
-			String imageUrl = IMAGE_URL_HTTP + rightEn.getImageUrl();
-			if (!StringUtil.isNull(rightEn.getImageUrl())) {
-				ImageLoader.getInstance().displayImage(imageUrl, holder.right_img, options);
-			} else {
-				holder.right_img.setImageResource(R.drawable.bg_img_white);
-			}
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getImageUrl(), holder.right_img, options);
 			holder.right_brand.setText(leftEn.getBrand()); //商品品牌
 			holder.right_name.setText(rightEn.getName()); //商品名称
 			holder.right_curr.setText(currStr);

@@ -51,7 +51,7 @@
                 android:text="@string/product_search_hot_words_4" />
         </LinearLayout>
 
-        <include layout="@layout/layout_topbar_radio_group" />
+        <include layout="@layout/layout_topbar_view_group" />
     </LinearLayout>
 
     <LinearLayout

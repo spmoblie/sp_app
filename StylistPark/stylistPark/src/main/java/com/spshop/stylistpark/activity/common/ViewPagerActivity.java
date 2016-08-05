@@ -20,6 +20,7 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
+import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.image.AsyncImageLoader.AsyncImageLoaderCallback;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
@@ -94,7 +95,7 @@ public class ViewPagerActivity extends BaseActivity {
 		asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoaderCallback() {
 
 			@Override
-			public void imageLoaded(String path, File saveFile, Bitmap bm) {
+			public void imageLoaded(String path, String cachePath, Bitmap bm) {
 				DragImageView imgView = am_img.get(HASHMAP_KEY_IMG + path);
 				if (imgView != null && bm != null) {
 					am_btm.put(HASHMAP_KEY_BTM + path, bm); //记录图片
@@ -129,10 +130,10 @@ public class ViewPagerActivity extends BaseActivity {
 			imageView.setScreen_W(width);
 			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 			// 加载图片对象
-			Bitmap bm = asyncImageLoader.loadImage(true, imgUrl, 0);
-			if (bm != null) {
-				imageView.setImageBitmap(bm);
-				am_btm.put(HASHMAP_KEY_BTM + imgUrl, bm); //记录图片
+			ImageLoadTask task = asyncImageLoader.loadImage(imgUrl, 0);
+			if (task != null && task.getBitmap() != null) {
+				imageView.setImageBitmap(task.getBitmap());
+				am_btm.put(HASHMAP_KEY_BTM + imgUrl, task.getBitmap()); //记录图片
 			}else {
 				imageView.setImageResource(R.drawable.bg_img_white);
 				progress.setVisibility(View.VISIBLE);

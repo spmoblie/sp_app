@@ -304,8 +304,9 @@
     
     
     <!-- UI背景常用颜色值 -->
-    <color name="ui_bg_color_app">#FFFFFF</color><!-- AppUI背景色 -->
     <color name="ui_bg_color_bar">#f383b6</color><!-- AppUI状态色 -->
+    <color name="ui_bg_color_app">#FFFFFF</color><!-- AppUI背景色 -->
+    <color name="ui_bg_color_nut">#F4F4F4</color><!-- AppUI主区域 -->
     <color name="ui_bg_color_white">#FFFFFF</color><!-- 白色 -->
     <color name="ui_bg_color_black">#000000</color><!-- 黑色 -->
     <color name="ui_bg_color_purple">#C769C6</color><!-- 紫色 -->

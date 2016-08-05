@@ -3,7 +3,11 @@ package com.spshop.stylistpark.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class BrandEntity implements IndexDisplay, Parcelable {
+import java.io.Serializable;
+
+public class BrandEntity implements IndexDisplay, Parcelable, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	String brandId;
 	String name;

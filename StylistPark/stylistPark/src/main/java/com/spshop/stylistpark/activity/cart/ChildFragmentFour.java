@@ -275,7 +275,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	private void getSVDatas() {
 		startAnimation();
 		new Handler().postDelayed(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				requestProductLists();
@@ -385,7 +385,10 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
-		if (getActivity() == null) return;
+		if (getActivity() == null) {
+			stopAnimation();
+			return;
+		}
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_CART_LIST_CODE:
 			lv_datas.clear();
@@ -459,7 +462,10 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
-		if (getActivity() == null) return;
+		if (getActivity() == null) {
+			stopAnimation();
+			return;
+		}
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_CART_LIST_CODE:
 			if (!pullUpdate && lv_datas.size() == 0) {

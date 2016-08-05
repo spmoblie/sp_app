@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Environment;
 
 import com.spshop.stylistpark.AppConfig;
-import com.spshop.stylistpark.db.CategoryDBService;
 
 import java.io.File;
 
@@ -113,9 +112,6 @@ public class CleanDataManager {
     public static void cleanAppTemporaryData(Context context){
     	cleanCustomCache(AppConfig.SAVE_TXT_PATH_TEMPORARY); 
         cleanCustomCache(AppConfig.SAVE_IMAGE_PATH_TEMPORARY);
-
-        // 清除商品分类数据库缓存数据
-        CategoryDBService.getInstance(context).deleteAll();
     }
   
     /** 

@@ -55,7 +55,7 @@ public class SelectListAdapter extends BaseAdapter{
 		this.datas = datas;
 		this.apCallback = callback;
 		this.dataType = dataType;
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_gray, true);
+		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white, true);
 	}
 	
 	public void updateAdapter(List<SelectListEntity> datas, int dataType){
@@ -182,7 +182,6 @@ public class SelectListAdapter extends BaseAdapter{
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + data.getChildLogoUrl(), holder.iv_logo, options);
 		}else {
 			holder.iv_logo.setVisibility(View.GONE);
-			holder.iv_logo.setImageDrawable(context.getResources().getDrawable(R.drawable.bg_img_gray));
 		}
 	}
 
@@ -204,7 +203,6 @@ public class SelectListAdapter extends BaseAdapter{
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + data.getChildLogoUrl(), holder.iv_logo, options);
 		}else {
 			holder.iv_logo.setVisibility(View.GONE);
-			holder.iv_go.setImageDrawable(context.getResources().getDrawable(R.drawable.bg_img_gray));
 		}
 	}
 

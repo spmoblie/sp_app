@@ -483,7 +483,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 * 停止缓冲动画
 	 */
 	protected void stopAnimation() {
-		LoadDialog.hidden(mContext);
+		LoadDialog.hidden();
 	}
 	
 	/**

@@ -44,6 +44,7 @@ public class FileManager {
 	 * @param longSave 是否长久保存
 	 */
 	public static void writeFileSaveString(String fileName, String writeStr, boolean longSave) {
+		if (StringUtil.isNull(fileName) || StringUtil.isNull(writeStr)) return;
 		FileOutputStream fout = null;
 		try {
 			String path = "";
@@ -115,7 +116,8 @@ public class FileManager {
 	 * @param longSave 是否长久保存
 	 */
     public static void writeFileSaveObject(String fileName, Object obj, boolean longSave) {
-    	ObjectOutputStream objOut = null;
+		if (StringUtil.isNull(fileName) || obj == null) return;
+		ObjectOutputStream objOut = null;
     	FileOutputStream fos = null;
         try {
         	String path = "";
@@ -192,6 +194,7 @@ public class FileManager {
 	 * @param entity 网络流对象
 	 */
     public static String writeFileSaveHttpEntity(String path, HttpEntity entity) {
+		if (StringUtil.isNull(path) || entity == null) return "";
     	InputStream is = null;
 		FileOutputStream fos = null;
 		String resu = "ok";

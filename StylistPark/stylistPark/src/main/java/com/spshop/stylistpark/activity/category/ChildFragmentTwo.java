@@ -2,6 +2,7 @@ package com.spshop.stylistpark.activity.category;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,7 +31,6 @@ import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.BrandIndexDisplayAdapter;
 import com.spshop.stylistpark.adapter.CategoryGridAdapter;
 import com.spshop.stylistpark.adapter.CategoryLeftListAdapter;
-import com.spshop.stylistpark.adapter.CategoryRightListAdapter;
 import com.spshop.stylistpark.adapter.IndexDisplayAdapter;
 import com.spshop.stylistpark.db.CategoryDBService;
 import com.spshop.stylistpark.dialog.LoadDialog;
@@ -42,6 +42,7 @@ import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.FileManager;
 import com.spshop.stylistpark.utils.IndexDisplayTool;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -55,6 +56,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 
 	private Context mContext;
 	private AsyncTaskManager atm;
+	private SharedPreferences shared;
 	private ServiceContext sc = ServiceContext.getServiceContext();
 
 	private ViewPager mViewPager;
@@ -64,7 +66,6 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	private ListView lv_left;
 	private GridView gv_right;
 	private CategoryLeftListAdapter lv_left_Adapter;
-	private CategoryRightListAdapter lv_right_Adapter;
 	private CategoryGridAdapter gv_Adapter;
 	private CategoryListEntity mainEn, brandsEn;
 	private CategoryDBService dbs;
@@ -92,6 +93,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 
 		LogUtil.i(TAG, "onCreate");
 		mContext = getActivity();
+		shared = AppApplication.getSharedPreferences();
 		atm = AsyncTaskManager.getInstance(mContext);
 		dbs = CategoryDBService.getInstance(mContext);
 
@@ -221,13 +223,20 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	 * 从远程服务器加载数据
 	 */
 	private void getSVDatas() {
-		if (AppApplication.loadSVData_category) {
-			startAnimation();
-			atm.request(AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE, this);
+		if (shared.getBoolean(AppConfig.KEY_LOAD_CATEGORY_DATA, true)) {
+			getSVCategoryDatas();
+			getSVBrandDatas();
 		}else {
 			getDBDatas();
 		}
-		getSVBrandDatas();
+	}
+
+	/**
+	 * 加载所有分类数据
+	 */
+	private void getSVCategoryDatas() {
+		startAnimation();
+		atm.request(AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE, this);
 	}
 
 	/**
@@ -347,6 +356,10 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 						gv_lists.addAll(lvs);
 					}
 				}
+				Object obj = FileManager.readFileSaveObject(AppConfig.brandsFileName, true);
+				if (obj != null) {
+					brandsEn = (CategoryListEntity) obj;
+				}
 				return lvs;
 			case AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE:
 				mainEn = null;
@@ -372,6 +385,9 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 			case AppConfig.REQUEST_SV_GET_BRANDS_LIST_CODE:
 				brandsEn = null;
 				brandsEn = sc.getCategoryBrandDatas();
+				if (brandsEn != null) {
+					FileManager.writeFileSaveObject(AppConfig.brandsFileName, brandsEn, true);
+				}
 				return brandsEn;
 		}
 		return null;
@@ -379,42 +395,62 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
-		if (getActivity() == null) return;
+		if (getActivity() == null) {
+			stopAnimation();
+			return;
+		}
 		switch (requestCode) {
 			case AppConfig.REQUEST_DB_GET_CATEGORY_LIST_CODE:
+				AppApplication.loadDBData = false;
 				if (dataType == 0) { //父级
-					lv_left_Adapter.updateAdapter(lv_lists, index);
-					dataType = lv_lists.get(index).getTypeId();
-					getDBDatas();
+					if (lv_lists.size() > 0) {
+						lv_left_Adapter.updateAdapter(lv_lists, index);
+						if (index >= 0 && index < lv_lists.size()) {
+							dataType = lv_lists.get(index).getTypeId();
+							getDBDatas();
+						}
+					} else {
+						getSVCategoryDatas();
+					}
+					if (brandsEn != null && brandsEn.getBrandLists() != null) {
+						setBrandDatas();
+					} else {
+						getSVBrandDatas();
+					}
 				}else { //子级
 					gv_Adapter.updateAdapter(gv_lists);
 				}
 				break;
 			case AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE:
 				if (lv_lists.size() > 0) {
-					AppApplication.loadSVData_category = false;
 					lv_left_Adapter.updateAdapter(lv_lists, 0);
 					gv_Adapter.updateAdapter(gv_lists);
 					dataType = lv_lists.get(index).getTypeId();
+					shared.edit().putBoolean(AppConfig.KEY_LOAD_CATEGORY_DATA, false).apply();
 				}else {
-					AppApplication.loadSVData_category = true;
 					CommonTools.showToast(getString(R.string.toast_server_busy), 1000);
 				}
 				stopAnimation();
 				break;
 			case AppConfig.REQUEST_SV_GET_BRANDS_LIST_CODE:
 				if (brandsEn != null && brandsEn.getBrandLists() != null) {
-					brandList.addAll(brandsEn.getBrandLists());
-					initIndexDisplayFragment();
-					//lv_right_Adapter.updateAdapter(brandsEn.getChildLists());
+					setBrandDatas();
 				}
 				break;
 		}
 	}
 
+	private void setBrandDatas() {
+		brandList.addAll(brandsEn.getBrandLists());
+		initIndexDisplayFragment();
+	}
+
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
-		if (getActivity() == null) return;
+		if (getActivity() == null) {
+			stopAnimation();
+			return;
+		}
 		stopAnimation();
 		CommonTools.showToast(String.valueOf(result), 1000);
 	}
@@ -430,8 +466,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	 * 停止缓冲动画
 	 */
 	private void stopAnimation() {
-		LoadDialog.hidden(mContext);
-		AppApplication.loadDBData = false;
+		LoadDialog.hidden();
 	}
 
 	@Override

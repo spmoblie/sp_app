@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/ui_bg_color_white"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,13 +46,14 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/desc"
                     android:scaleType="fitXY"
-                    android:src="@drawable/bg_profile_top_login_no" />
+                    android:src="@drawable/bg_img_white" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/ui_bg_color_percent_80">
+                    android:background="@color/ui_bg_color_percent_80"
+                    android:visibility="gone" >
 
                     <ImageView
                         android:id="@+id/show_list_iv_brand_img_logo"
@@ -95,7 +96,8 @@
                 android:paddingRight="15dp"
                 android:paddingTop="5dp"
                 android:textColor="@color/text_color_title"
-                android:textSize="@dimen/text_size_12" />
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/show_list_ll_favourable_time"
@@ -104,7 +106,7 @@
                 android:paddingTop="5dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:visibility="invisible" >
+                android:visibility="gone" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -209,10 +211,11 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/show_list_iv_topbar_line"
             style="@style/set_line_horizontal_bg"
             android:contentDescription="@string/desc" />
 
-        <include layout="@layout/layout_topbar_radio_group" />
+        <include layout="@layout/layout_topbar_view_group" />
     </LinearLayout>
 
     <ImageView

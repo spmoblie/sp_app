@@ -16,9 +16,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.spshop.stylistpark.config.SharedConfig;
+import com.spshop.stylistpark.db.CategoryDBService;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
@@ -50,7 +50,6 @@ public class AppApplication extends Application implements OnDataListener{
 	public static int network_current_state = 0; //记录当前网络的状态
 	
 	public static boolean loadDBData = false; //是否从本地数据库加载数据
-	public static boolean loadSVData_category = true; //是否从服务器加载商品分类数据
 	public static boolean isWXShare = false; //记录是否微信分享
 	public static boolean isStartHome = true; //记录是否允许重新启动HomeFragmentActivity
 
@@ -113,8 +112,14 @@ public class AppApplication extends Application implements OnDataListener{
 	/**
 	 * 清除联网加载数据控制符的缓存
 	 */
-	private void clearSharedLoadSVData(){
-		//备用
+	public void clearSharedLoadSVData(){
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				CategoryDBService.getInstance(spApp).deleteAll();
+			}
+		}).start();
+		shared.edit().putBoolean(AppConfig.KEY_LOAD_CATEGORY_DATA, true).apply();
 	}
 
 	/**
@@ -162,9 +167,9 @@ public class AppApplication extends Application implements OnDataListener{
 	public static DisplayImageOptions getDefaultImageOptions() {
 		if (defaultOptions == null) {
 			defaultOptions = new DisplayImageOptions.Builder()
-					.displayer(new FadeInBitmapDisplayer(300)) // 图片加载好后渐入的动画时间
-					.showImageForEmptyUri(R.drawable.bg_img_default)
-					.showImageOnFail(R.drawable.bg_img_default)
+					//.displayer(new FadeInBitmapDisplayer(300)) // 图片加载好后渐入的动画时间
+					.showImageForEmptyUri(R.drawable.bg_img_white)
+					.showImageOnFail(R.drawable.bg_img_white)
 					.cacheInMemory(true) // 内存缓存
 					.cacheOnDisc(true) // sdcard缓存
 					.resetViewBeforeLoading(true)//设置图片下载前复位

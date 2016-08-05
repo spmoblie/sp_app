@@ -34,6 +34,7 @@ import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
+import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.image.AsyncMediaLoader;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
@@ -46,8 +47,6 @@ import com.spshop.stylistpark.widgets.ObservableWebView;
 import com.spshop.stylistpark.widgets.WebViewLoadingBar;
 import com.spshop.stylistpark.widgets.video.UniversalMediaController;
 import com.spshop.stylistpark.widgets.video.UniversalVideoView;
-
-import java.io.File;
 
 
 /**
@@ -193,13 +192,14 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 			asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoader.AsyncImageLoaderCallback() {
 
 				@Override
-				public void imageLoaded(String path, File saveFile, Bitmap bm) {
-					if (saveFile != null) {
-						shareEn.setImagePath(saveFile.getPath());
-					}
+				public void imageLoaded(String path, String cachePath, Bitmap bm) {
+					shareEn.setImagePath(cachePath);
 				}
 			});
-			asyncImageLoader.loadImage(false, shareEn.getImageUrl(), 0);
+			ImageLoadTask task = asyncImageLoader.loadImage(shareEn.getImageUrl(), 0);
+			if (task != null && task.getBitmap() != null) {
+				shareEn.setImagePath(task.getNewPath());
+			}
 		}
 	}
 
@@ -522,7 +522,6 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		AppApplication.onPageStart(this, TAG);
 
 		if (uvv != null && umc != null) {
-			uvv.setBackground(getResources().getDrawable(R.drawable.bg_profile_top_login_no));
 			if (mSeekPosition > 0 && !isStop) {
 				uvv.seekTo(mSeekPosition);
 				uvv.start();

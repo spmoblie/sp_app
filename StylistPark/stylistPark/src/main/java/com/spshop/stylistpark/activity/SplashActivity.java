@@ -34,7 +34,7 @@ public class SplashActivity extends BaseActivity {
 		// 非推送通知打开首页
 		boolean isPushOpen = shared.getBoolean(AppConfig.KEY_PUSH_PAGE_MEMBER, false);
 		if (!isPushOpen) {
-			editor.putInt(AppConfig.KEY_HOME_CURRENT_INDEX, 0).commit(); //设置首页初始化默认页
+			editor.putInt(AppConfig.KEY_HOME_CURRENT_INDEX, -1).commit(); //设置首页初始化默认页
 		}
 
 		// 初始化推送服务状态(开启或关闭)

@@ -30,12 +30,12 @@ import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.BrandIndexDisplayAdapter;
 import com.spshop.stylistpark.adapter.CategoryGridAdapter;
 import com.spshop.stylistpark.adapter.CategoryLeftListAdapter;
-import com.spshop.stylistpark.adapter.CategoryRightListAdapter;
 import com.spshop.stylistpark.adapter.IndexDisplayAdapter.OnIndexDisplayItemClick;
 import com.spshop.stylistpark.db.CategoryDBService;
 import com.spshop.stylistpark.entity.BrandEntity;
 import com.spshop.stylistpark.entity.CategoryListEntity;
 import com.spshop.stylistpark.entity.IndexDisplay;
+import com.spshop.stylistpark.utils.FileManager;
 import com.spshop.stylistpark.utils.IndexDisplayTool;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -55,10 +55,9 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	private RelativeLayout rl_top_left, rl_top_right;
 	private ImageView iv_lines_3;
 	private TextView tv_title_1, tv_title_2, tv_title_3;
-	private ListView lv_left, lv_brand;
+	private ListView lv_left;
 	private GridView gv_right;
 	private CategoryLeftListAdapter lv_left_Adapter;
-	private CategoryRightListAdapter lv_right_Adapter;
 	private CategoryGridAdapter gv_Adapter;
 	private CategoryListEntity mainEn, brandsEn;
 	private CategoryDBService dbs;
@@ -124,7 +123,6 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 		// 添加布局2
 		FrameLayout frameLayout2 = new FrameLayout(this);
 		View view2 = FrameLayout.inflate(mContext, R.layout.layout_category_viewpager_2, null);
-		lv_brand = (ListView) view2.findViewById(R.id.category_brand_lv);
 		frameLayout2.addView(view2);
 		viewLists.add(frameLayout2);
 		
@@ -206,13 +204,20 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	 * 从远程服务器加载数据
 	 */
 	private void getSVDatas() {
-		if (AppApplication.loadSVData_category) {
-			startAnimation();
-			request(AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE);
+		if (shared.getBoolean(AppConfig.KEY_LOAD_CATEGORY_DATA, true)) {
+			getSVCategoryDatas();
+			getSVBrandDatas();
 		}else {
 			getDBDatas();
 		}
-		getSVBrandDatas();
+	}
+
+	/**
+	 * 加载所有分类数据
+	 */
+	private void getSVCategoryDatas() {
+		startAnimation();
+		atm.request(AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE, this);
 	}
 	
 	/**
@@ -246,20 +251,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 		});
 		lv_left.setAdapter(lv_left_Adapter);
 		lv_left.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
-		
-		lv_right_Adapter = new CategoryRightListAdapter(mContext, gv_lists, new AdapterCallback() {
-			
-			@Override
-			public void setOnClick(Object entity, int position, int type) {
-				if (entity != null) {
-					CategoryListEntity itemEn = (CategoryListEntity) entity;
-					startShowListHeadActivity(itemEn.getTypeId());
-				}
-			}
-		});
-		lv_brand.setAdapter(lv_right_Adapter);
-		lv_brand.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
-		
+
 		gv_Adapter = new CategoryGridAdapter(mContext, gv_lists, new AdapterCallback() {
 			
 			@Override
@@ -348,6 +340,10 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 					gv_lists.addAll(lvs);
 				}
 			}
+			Object obj = FileManager.readFileSaveObject(AppConfig.brandsFileName, true);
+			if (obj != null) {
+				brandsEn = (CategoryListEntity) obj;
+			}
 			return lvs;
 		case AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE:
 			mainEn = null;
@@ -373,6 +369,9 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 		case AppConfig.REQUEST_SV_GET_BRANDS_LIST_CODE:
 			brandsEn = null;
 			brandsEn = sc.getCategoryBrandDatas();
+			if (brandsEn != null) {
+				FileManager.writeFileSaveObject(AppConfig.brandsFileName, brandsEn, true);
+			}
 			return brandsEn;
 		}
 		return null;
@@ -382,34 +381,48 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	public void onSuccess(int requestCode, Object result) {
 		switch (requestCode) {
 		case AppConfig.REQUEST_DB_GET_CATEGORY_LIST_CODE:
+			AppApplication.loadDBData = false;
 			if (dataType == 0) { //父级
-				lv_left_Adapter.updateAdapter(lv_lists, index);
-				dataType = lv_lists.get(index).getTypeId();
-				getDBDatas();
+				if (lv_lists.size() > 0) {
+					lv_left_Adapter.updateAdapter(lv_lists, index);
+					if (index >= 0 && index < lv_lists.size()) {
+						dataType = lv_lists.get(index).getTypeId();
+						getDBDatas();
+					}
+				} else {
+					getSVCategoryDatas();
+				}
+				if (brandsEn != null && brandsEn.getBrandLists() != null) {
+					setBrandDatas();
+				} else {
+					getSVBrandDatas();
+				}
 			}else { //子级
 				gv_Adapter.updateAdapter(gv_lists);
 			}
 			break;
 		case AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE:
 			if (lv_lists.size() > 0) {
-				AppApplication.loadSVData_category = false;
 				lv_left_Adapter.updateAdapter(lv_lists, 0);
 				gv_Adapter.updateAdapter(gv_lists);
 				dataType = lv_lists.get(index).getTypeId();
+				editor.putBoolean(AppConfig.KEY_LOAD_CATEGORY_DATA, false).apply();
 			}else {
-				AppApplication.loadSVData_category = true;
 				showServerBusy();
 			}
 			stopAnimation();
 			break;
 		case AppConfig.REQUEST_SV_GET_BRANDS_LIST_CODE:
 			if (brandsEn != null && brandsEn.getBrandLists() != null) {
-				brandList.addAll(brandsEn.getBrandLists());
-				initIndexDisplayFragment();
-				//lv_right_Adapter.updateAdapter(brandsEn.getChildLists());
+				setBrandDatas();
 			}
 			break;
 		}
+	}
+
+	private void setBrandDatas() {
+		brandList.addAll(brandsEn.getBrandLists());
+		initIndexDisplayFragment();
 	}
 
 	@Override
@@ -417,11 +430,5 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 		super.onFailure(requestCode, state, result);
 		stopAnimation();
 	}
-	
-	@Override
-	protected void stopAnimation() {
-		super.stopAnimation();
-		AppApplication.loadDBData = false;
-	}
-    
+
 }

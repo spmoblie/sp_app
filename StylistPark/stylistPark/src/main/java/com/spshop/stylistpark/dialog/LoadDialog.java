@@ -116,7 +116,7 @@ public class LoadDialog extends Dialog {
 	/**
 	 * hidden the dialog
 	 */
-	public static void hidden(Context context) {
+	public static void hidden() {
 		try {
 			if (loadDialog != null && loadDialog.isShowing()) {
 				if (loadDialog.getContext() instanceof Activity) {

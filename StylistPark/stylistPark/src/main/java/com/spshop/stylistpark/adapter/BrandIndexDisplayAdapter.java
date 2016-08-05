@@ -8,16 +8,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.spshop.stylistpark.AppApplication;
+import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.BrandEntity;
 import com.spshop.stylistpark.entity.IndexDisplay;
 
 public class BrandIndexDisplayAdapter extends IndexDisplayAdapter {
 
+	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
+	private DisplayImageOptions options;
 	OnIndexDisplayItemClick onIndexDisplayItemClick;
 
 	public BrandIndexDisplayAdapter(Context mContext) {
 		super(mContext);
+		options = AppApplication.getImageOptions(0, 0, true);
 	}
 
 	public void setOnIndexDisplayItemClick(OnIndexDisplayItemClick onIndexDisplayItemClick) {
@@ -33,6 +40,7 @@ public class BrandIndexDisplayAdapter extends IndexDisplayAdapter {
 			convertView = ((Activity) weakContext.get()).getLayoutInflater().inflate(R.layout.item_brand_index_display, null);
 
 			holder.brand_indexLayout = (ViewGroup) convertView.findViewById(R.id.brand_indexLayout);
+			holder.brand_logoImageView = (ImageView) convertView.findViewById(R.id.brand_iv_logo);
 			holder.brand_indexNameTextView = (TextView) convertView.findViewById(R.id.brand_indexNameTextView);
 			holder.brand_nameTextView = (TextView) convertView.findViewById(R.id.brand_nameTextView);
 			holder.brand_dividerImageView = (ImageView) convertView.findViewById(R.id.brand_dividerImageView);
@@ -62,11 +70,13 @@ public class BrandIndexDisplayAdapter extends IndexDisplayAdapter {
 			} else {
 				holder.brand_indexLayout.setVisibility(View.GONE);
 			}
-			if (isLast(position)) {
+			/*if (isLast(position)) {
 				holder.brand_dividerImageView.setVisibility(View.GONE);
 			} else {
 				holder.brand_dividerImageView.setVisibility(View.VISIBLE);
-			}
+			}*/
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP +
+					((BrandEntity) item).getDefineUrl(), holder.brand_logoImageView, options);
 			holder.brand_nameTextView.setText(((BrandEntity) item).getName());
 		}
 		return convertView;
@@ -77,6 +87,7 @@ public class BrandIndexDisplayAdapter extends IndexDisplayAdapter {
 		TextView brand_indexNameTextView;
 
 		ViewGroup brand_itemLayout;
+		ImageView brand_logoImageView;
 		TextView brand_nameTextView;
 		ImageView brand_dividerImageView;
 	}

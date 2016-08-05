@@ -26,7 +26,7 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.cart.ChildFragmentFour;
 import com.spshop.stylistpark.activity.category.ChildFragmentTwo;
-import com.spshop.stylistpark.activity.events.ChildFragmentThree2;
+import com.spshop.stylistpark.activity.events.ChildFragmentThree;
 import com.spshop.stylistpark.activity.home.ChildFragmentOne;
 import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.activity.profile.ChildFragmentFive;
@@ -114,7 +114,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 
 		int shared_index = shared.getInt(AppConfig.KEY_HOME_CURRENT_INDEX, 0);
 		LogUtil.i(TAG, "current_index = " + current_index + " shared_index = " + shared_index);
-		// 程序出现错误时重新启动Home
+		// 程序出现错误时重启Home
 		if (AppApplication.isStartHome && current_index != shared_index) {
 			startFragmen();
 			return;
@@ -376,7 +376,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			case R.id.home_fragment_fl_three:
 				fragment = (Fragment) manager.findFragmentByTag(current_fragment);
 				if (fragment == null) {
-					fragment = new ChildFragmentThree2();
+					fragment = new ChildFragmentThree();
 				}
 				return fragment;
 			case R.id.home_fragment_fl_four:

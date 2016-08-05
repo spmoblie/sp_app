@@ -12,7 +12,6 @@ import com.spshop.stylistpark.utils.HttpUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -51,7 +50,7 @@ public class AsyncImageLoader {
 			@Override
 			public void handleMessage(Message msg) {
 				ImageLoadTask task = (ImageLoadTask) msg.obj;
-				callback.imageLoaded(task.oldPath, task.saveFile, task.bitmap);
+				callback.imageLoaded(task.oldPath, task.newPath, task.bitmap);
 			};
 		};
 		this.workThread = new Thread() {
@@ -72,8 +71,8 @@ public class AsyncImageLoader {
 							// 缓存到集合
 							caches.addCacheBitmap(task.bitmap, task.newPath);
 							// 缓存到内存
-							/*task.saveFile = BitmapUtil.createPath(task.newPath, false);
-							BitmapUtil.save(task.bitmap, task.saveFile, 100);*/
+							/*task.cachePath = BitmapUtil.createPath(task.newPath, false).getAbsolutePath();
+							BitmapUtil.save(task.bitmap, new File(task.cachePath), 100);*/
 						} catch (Exception e) {
 							ExceptionUtil.handle(e);
 						} finally {
@@ -117,43 +116,41 @@ public class AsyncImageLoader {
 	/**
 	 * 根据指定的图片路径获取图片对象
 	 * 
-	 * @param readCach
-	 *            是否从缓存获取
 	 * @param oldPath
 	 *            图片路径
 	 * @param type
 	 *            图片类型（0:普通相片/1:头像）
 	 */
-	public Bitmap loadImage(boolean readCach, String oldPath, int type) {
+	public ImageLoadTask loadImage(String oldPath, int type) {
+		ImageLoadTask task = null;
 		String newPath = "";
 		if (oldPath.contains(":")) {
 			newPath = oldPath.toString().replace(":", "");
 		} else {
 			newPath = oldPath;
 		}
-		Bitmap bm = null;
-		if (readCach) {
-			try {
-				// 判定缓存集合中是否存在图片,如果存在则直接返回
-				bm = caches.getBitmap(newPath);
-				if (bm != null) {
-                    return bm;
-                }
-				// 判定SD卡中是否存在图片,如果存在则直接返回
-				/*File file = BitmapUtil.createPath(newPath, false);
-				if (file != null) {
-					bm = BitmapUtil.getBitmap(file.getAbsolutePath());
-					if (bm != null) {
-						return bm;
-					}
-				}*/
-			} catch (Exception e) {
-				ExceptionUtil.handle(e);
-				return  null;
+		try {
+			// 判定缓存集合中是否存在图片,如果存在则直接返回
+			Bitmap bm = caches.getBitmap(newPath);
+			if (bm != null) {
+				task = new ImageLoadTask(oldPath, newPath, bm);
+				return task;
 			}
+			// 判定SD卡中是否存在图片,如果存在则直接返回
+			/*File file = BitmapUtil.createPath(newPath, false);
+			if (file != null) {
+				bm = BitmapUtil.getBitmap(file.getAbsolutePath());
+				if (bm != null) {
+					task = new ImageLoadTask(oldPath, file.getAbsolutePath(), bm);
+					return task;
+				}
+			}*/
+		} catch (Exception e) {
+			ExceptionUtil.handle(e);
+			return  null;
 		}
 		// 缓存及SD卡都不存在图片则新建任务加入任务队列
-		ImageLoadTask task = new ImageLoadTask(newPath, oldPath, type);
+		task = new ImageLoadTask(newPath, oldPath, type);
 		if (!tasks.equals(task)) {
 			tasks.add(task);
 			synchronized (workThread) {
@@ -165,20 +162,38 @@ public class AsyncImageLoader {
 				}
 			}
 		}
-		return bm;
+		return task;
 	}
 
-	private class ImageLoadTask {
+	public class ImageLoadTask {
 		private String newPath;
 		private String oldPath;
+		private String cachePath;
 		private int type;
-		private File saveFile;
 		private Bitmap bitmap;
+
+		public ImageLoadTask(String oldPath, String newPath, Bitmap bitmap) {
+			this.oldPath = oldPath;
+			this.newPath = newPath;
+			this.bitmap = bitmap;
+		}
 
 		public ImageLoadTask(String newPath, String oldPath, int type) {
 			this.newPath = newPath;
 			this.oldPath = oldPath;
 			this.type = type;
+		}
+
+		public String getNewPath() {
+			return newPath;
+		}
+
+		public String getOldPath() {
+			return oldPath;
+		}
+
+		public Bitmap getBitmap() {
+			return bitmap;
 		}
 
 		@Override
@@ -189,7 +204,7 @@ public class AsyncImageLoader {
 	}
 
 	public interface AsyncImageLoaderCallback {
-		void imageLoaded(String path, File saveFile, Bitmap bm);
+		void imageLoaded(String path, String cachePath, Bitmap bm);
 	}
 
 }

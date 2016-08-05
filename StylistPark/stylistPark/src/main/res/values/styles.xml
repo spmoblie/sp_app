@@ -212,6 +212,17 @@
         <item name="android:textSize">@dimen/text_size_14</item>
     </style>
 
+    <!-- Top ViewGroup样式 -->
+    <style name="ViewGroup_TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/selector_text_home_bottom</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+    </style>
+
     <!-- 通用价格文本样式 -->
     <style name="common_text_price">
         <item name="android:layout_width">wrap_content</item>

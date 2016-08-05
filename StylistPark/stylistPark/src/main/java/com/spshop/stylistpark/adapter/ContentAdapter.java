@@ -25,13 +25,15 @@ public class ContentAdapter extends ArrayAdapter<String> implements SectionIndex
 
     @Override
     public int getPositionForSection(int sectionIndex) {
+        if (sectionIndex < 0 || sectionIndex >= mSections.length) {
+            return 0;
+        }
         char ch;
         for (int pos = 0; pos < getCount(); pos++) {
             ch = Character.toUpperCase(getItem(pos).charAt(0));
             if (ch == mSections[sectionIndex].charAt(0))
                 return pos;
         }
-
         return 0;
     }
 

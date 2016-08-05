@@ -89,6 +89,10 @@ public class AppConfig {
 
 	// 缓存Cookies文件名
 	public static final String cookiesFileName = "cookies";
+	// 缓存首页数据文件名
+	public static final String homeAdsFileName = "homeAds";
+	// 缓存品牌列表文件名
+	public static final String brandsFileName = "brands";
 	// 内置SD卡路径
 	public static final String SDPATH = Environment.getExternalStorageDirectory().toString();
 	// 长久存储apk包的路径，应用关闭时不清除
@@ -117,10 +121,12 @@ public class AppConfig {
 	// 校验Sessions
 	public static final int REQUEST_SV_GET_SESSIONS_CODE = 0X0001;
 	
-	// 加载首页展示头部数据
+	// 加载远程首页推广数据
 	public static final int REQUEST_SV_GET_HOME_SHOW_HEAD_CODE = 0X1010;
+	// 加载本地首页推广数据
+	public static final int REQUEST_DB_GET_HOME_SHOW_HEAD_CODE = 0X1011;
 	// 加载首页展示列表数据
-	public static final int REQUEST_SV_GET_HOME_SHOW_LIST_CODE = 0X1011;
+	public static final int REQUEST_SV_GET_HOME_SHOW_LIST_CODE = 0X1012;
 	// 加载本地商品分类数据
 	public static final int REQUEST_DB_GET_CATEGORY_LIST_CODE = 0X1030;
 	// 加载服务器商品分类数据
@@ -267,6 +273,8 @@ public class AppConfig {
 	public static final String KEY_UPDATE_VERSION_LAST_TIME = "update_version_last_time";
 	// 偏好设置Key-记录同步远程服务器数据的日期
 	public static final String KEY_LOAD_SV_DATA_DAY = "load_sv_data_day";
+	// 偏好设置Key-记录是否重加载分类数据
+	public static final String KEY_LOAD_CATEGORY_DATA = "load_category_data";
 	// 偏好设置Key-记录推送服务的开关状态
 	public static final String KEY_PUSH_STATUS = "push_status";
 	// 偏好设置Key-记录商品搜索的历史记录
