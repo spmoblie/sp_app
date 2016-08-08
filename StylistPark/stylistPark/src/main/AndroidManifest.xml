@@ -37,6 +37,8 @@
         android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
             android:name=".activity.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,7 +59,7 @@
         <!-- alipay sdk begin -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
+            android:configChanges="orientation|keyboardHidden|screenSize|navigation"
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -69,23 +71,25 @@
             android:required="false"/>
         <activity
             android:name="com.unionpay.uppay.PayActivity"
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:excludeFromRecents="true"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.unionpay.UPPayWapActivity"
-            android:configChanges="orientation|keyboardHidden|fontScale"
+            android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <!-- UnionPay sdk end -->
         
         <!-- QQ -->
         <activity
-			android:name="com.tencent.tauth.AuthActivity" 
-			android:noHistory="true" 
-			android:launchMode="singleTask" >
+			android:name="com.tencent.tauth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:noHistory="true"
+            android:launchMode="singleTask" >
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
@@ -95,16 +99,20 @@
 		</activity>
         <activity android:name="com.tencent.connect.common.AssistActivity"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar"
-			android:configChanges="orientation|keyboardHidden|screenSize" />
+			android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
         <!-- Weibo -->
         <activity android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser" 
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
 
         <!-- Facebook -->
         <activity android:name="com.facebook.LoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         <meta-data android:name="com.facebook.sdk.ApplicationId"
@@ -112,146 +120,189 @@
         
         <!-- Activity -->
         <activity android:name=".activity.BaseActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.HomeFragmentActivity" 
-            android:screenOrientation="nosensor"
+        <activity android:name=".activity.HomeFragmentActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:theme="@style/MyTheme_1" />
 
         <activity android:name=".activity.category.CategoryActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         
         <activity android:name=".activity.home.ProductListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         
         <activity android:name=".activity.home.ProductDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.home.ScreenListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.ClipImageCircularActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.ClipImageSquareActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.ClipPhotoGridActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.ClipPhotoOneActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.SelectListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.ShowListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.ShowListHeadActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         
         <activity android:name=".activity.common.ShowPhotoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
         <activity android:name=".activity.common.ViewPagerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.VideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.MipcaActivityCapture"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.MyWebViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+            android:windowSoftInputMode="adjustResize" />
         
         <activity android:name=".activity.login.LoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         
         <activity android:name=".activity.login.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.login.RegisterOauthActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.login.ResetPasswordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.cart.CartActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         
         <activity android:name=".activity.cart.PostOrderActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".activity.profile.BounsListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.EditUserInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         
         <activity android:name=".activity.profile.MemberListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.MyAddressActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.AddBounsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.AddressEditActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.OrderListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         
         <activity android:name=".activity.profile.OrderDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.LogisticsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.AccountBalanceActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.AuthenticationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.PersonalActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.WithdrawalsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.SettingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         
         <activity android:name=".activity.profile.LanguageCurrencyActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.profile.FeedBackActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
         <activity android:name=".wxapi.WXEntryActivity"
-            android:exported="true"
-            android:label="@string/app_name" >
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"
+            android:exported="true" >
         </activity>
         
         <activity android:name=".wxapi.WXPayEntryActivity"
-            android:exported="true"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:exported="true"
             android:label="@string/app_name" >
         </activity>
     </application>

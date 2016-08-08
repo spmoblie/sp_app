@@ -336,12 +336,11 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 
 	@Override
 	public void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		AppApplication.onPageStart(getActivity(), TAG);
-
+		AppApplication.onPageStart(TAG);
 		checkLogin();
+		super.onResume();
 	}
 
 	private void checkLogin() {

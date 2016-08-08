@@ -131,10 +131,10 @@
     <string name="product_stock">有货</string>
     <string name="product_search">搜索</string>
     <string name="product_search_hot">热搜</string>
-    <string name="product_search_hot_words_1">长裙</string>
-    <string name="product_search_hot_words_2">包</string>
+    <string name="product_search_hot_words_1">化妆品</string>
+    <string name="product_search_hot_words_2">长裙</string>
     <string name="product_search_hot_words_3">鞋</string>
-    <string name="product_search_hot_words_4">化妆品</string>
+    <string name="product_search_hot_words_4">包</string>
     <string name="product_search_et_hint">输入商品关键字</string>
     <string name="product_search_history">历史搜索</string>
     <string name="product_search_history_no">暂无搜索记录</string>

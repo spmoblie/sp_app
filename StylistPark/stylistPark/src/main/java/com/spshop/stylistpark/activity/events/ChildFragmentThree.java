@@ -359,10 +359,10 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 
 	@Override
 	public void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		AppApplication.onPageStart(getActivity(), TAG);
+		AppApplication.onPageStart(TAG);
+		super.onResume();
 	}
 
 	@Override

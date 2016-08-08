@@ -369,12 +369,11 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
-
         checkLogin();
+		super.onResume();
 	}
 
 	private void checkLogin() {

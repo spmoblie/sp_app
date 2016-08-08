@@ -1,6 +1,7 @@
 package com.spshop.stylistpark;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -81,6 +82,7 @@ public class AppApplication extends Application implements OnDataListener{
 		screenWidth = DeviceUtil.getDeviceWidth(spApp);
 		screenHeight = DeviceUtil.getDeviceHeight(spApp);
 		model = DeviceUtil.getModel();
+		// 判定是否为Pad
 		LogUtil.i("device", "手机型号："+ model + "宽："+screenWidth + " / 高："+screenHeight);
 
 		// 设置每天第一次启动App时清除与日期关联的缓存标志
@@ -228,9 +230,16 @@ public class AppApplication extends Application implements OnDataListener{
 	/**
 	 * 应用数据统计之页面启动
 	 */
-	public static void onPageStart(Context ctx, String pageName) {
+	public static void onPageStart(Activity activity, String pageName) {
 		MobclickAgent.onPageStart(pageName);
-		MobclickAgent.onResume(ctx);
+		MobclickAgent.onResume(activity);
+	}
+
+	/**
+	 * 应用数据统计之页面启动
+	 */
+	public static void onPageStart(String pageName) {
+		MobclickAgent.onPageStart(pageName);
 	}
 
 	/**

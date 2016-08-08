@@ -205,7 +205,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
@@ -221,6 +220,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
         	update_fragment = true;
 		}
         checkLogin();
+		super.onResume();
 	}
 
 	private void checkLogin() {

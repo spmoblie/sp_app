@@ -204,7 +204,6 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 	
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
@@ -217,6 +216,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 			sa_all_1.clear();
         	refresh_lv.doPullRefreshing(true, 500);
 		}
+		super.onResume();
 	}
 
 	@Override

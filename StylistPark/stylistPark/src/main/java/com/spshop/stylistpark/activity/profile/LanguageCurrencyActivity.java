@@ -129,6 +129,13 @@ public class LanguageCurrencyActivity extends BaseActivity {
         finish();
     }
 
+	@Override
+	protected void onResume() {
+		// 页面开始
+		AppApplication.onPageStart(this, TAG);
+		super.onResume();
+	}
+
     @Override
 	protected void onDestroy() {
 		super.onDestroy();

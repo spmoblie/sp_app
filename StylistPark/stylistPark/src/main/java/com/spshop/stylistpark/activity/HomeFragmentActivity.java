@@ -176,15 +176,15 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
-		
+
 		exit = Boolean.FALSE;
 		initView();
+		super.onResume();
 	}
 
 	@Override

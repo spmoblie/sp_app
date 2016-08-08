@@ -11,6 +11,7 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.DeviceUtil;
+import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.widgets.ClipImageView;
 
 import java.io.File;
@@ -81,6 +82,14 @@ public class ClipImageSquareActivity extends BaseActivity{
 	 */
 	public int getStatusBarHeight(){
 		return DeviceUtil.getStatusBarHeight(this) + getHeadHeight();
+	}
+
+	@Override
+	protected void onResume() {
+		LogUtil.i(TAG, "onResume");
+		// 页面开始
+		AppApplication.onPageStart(this, TAG);
+		super.onResume();
 	}
 
 	@Override

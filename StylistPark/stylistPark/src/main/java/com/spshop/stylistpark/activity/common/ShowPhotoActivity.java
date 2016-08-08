@@ -175,9 +175,9 @@ public class ShowPhotoActivity extends FragmentActivity {
 
 	@Override
 	protected void onResume() {
-		super.onResume();
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
+		super.onResume();
 	}
 
 	@Override

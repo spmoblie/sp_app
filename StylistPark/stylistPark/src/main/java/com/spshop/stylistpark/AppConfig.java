@@ -34,6 +34,8 @@ public class AppConfig {
 	public static final String URL_COMMON_FLOW_URL = ENVIRONMENT_PRESENT_IMG_APP + "flow.php";
 	// 用户提交URL
 	public static final String URL_COMMON_USER_URL = ENVIRONMENT_PRESENT_IMG_APP + "user.php";
+	// 商品详情URL
+	public static final String URL_COMMON_GOODS_DETAIL_URL = ENVIRONMENT_PRESENT_IMG_APP + "app_goods.php";
 	// 广告详情URL
 	public static final String URL_COMMON_TOPIC_URL = ENVIRONMENT_PRESENT_IMG_APP + "topic-app.php";
 	// 专题详情URL

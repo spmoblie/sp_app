@@ -73,6 +73,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	private int index = 0;
 	private int dataType = 0; //区分父级、子级分类的标记(0表示父级/1表示子级)
 	private int mCurrentItem;
+	private boolean isLeftShow = true;
 	private ArrayList<View> viewLists = new ArrayList<View>();
 	private List<CategoryListEntity> lv_lists = new ArrayList<CategoryListEntity>();
 	private List<CategoryListEntity> gv_lists = new ArrayList<CategoryListEntity>();
@@ -322,10 +323,10 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 
 	@Override
 	public void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		AppApplication.onPageStart(getActivity(), TAG);
+		AppApplication.onPageStart(TAG);
+		super.onResume();
 	}
 
 	@Override
@@ -404,7 +405,6 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 				AppApplication.loadDBData = false;
 				if (dataType == 0) { //父级
 					if (lv_lists.size() > 0) {
-						lv_left_Adapter.updateAdapter(lv_lists, index);
 						if (index >= 0 && index < lv_lists.size()) {
 							dataType = lv_lists.get(index).getTypeId();
 							getDBDatas();
@@ -418,6 +418,10 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 						getSVBrandDatas();
 					}
 				}else { //子级
+					if (isLeftShow) {
+						lv_left_Adapter.updateAdapter(lv_lists, index);
+						isLeftShow = false;
+					}
 					gv_Adapter.updateAdapter(gv_lists);
 				}
 				break;

@@ -54,8 +54,8 @@ import com.spshop.stylistpark.entity.ProductAttrEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
-import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.image.AsyncImageLoader.AsyncImageLoaderCallback;
+import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
@@ -212,6 +212,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 	private void setView() {
 		if (mainEn != null) {
+			ll_other.setVisibility(View.VISIBLE);
 			tv_title.setText(mainEn.getName());
 			if (mainEn.getImgLists() != null && viewLists.size() == 0) {
 				initViewPager();
@@ -718,7 +719,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			initVideoPopup();
 			break;
 		case R.id.topbar_radio_rb_1:
-			String loadingUrl = "http://192.168.11.155/app_goods.php?id=" + goodsId + AppApplication.getHttpUrlLangCurValueStr();
+			String loadingUrl = AppConfig.URL_COMMON_GOODS_DETAIL_URL + "?id=" + goodsId + AppApplication.getHttpUrlLangCurValueStr();
 			// 同步Cookies
 			HttpUtil.synCookies(loadingUrl);
 			webview.loadUrl(loadingUrl);

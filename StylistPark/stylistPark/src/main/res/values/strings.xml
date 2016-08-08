@@ -132,10 +132,10 @@
     <string name="product_stock">Stock</string>
     <string name="product_search">Go</string>
     <string name="product_search_hot">Hot</string>
-    <string name="product_search_hot_words_1">Skirt</string>
-    <string name="product_search_hot_words_2">Bag</string>
+    <string name="product_search_hot_words_1">Cosmetic</string>
+    <string name="product_search_hot_words_2">Skirt</string>
     <string name="product_search_hot_words_3">Shoe</string>
-    <string name="product_search_hot_words_4">Cosmetic</string>
+    <string name="product_search_hot_words_4">Bag</string>
     <string name="product_search_et_hint">Keyword input goods</string>
     <string name="product_search_history">Historical Search</string>
     <string name="product_search_history_no">No search records</string>

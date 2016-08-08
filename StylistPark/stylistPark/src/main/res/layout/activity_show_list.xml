@@ -44,9 +44,8 @@
                     android:id="@+id/show_list_iv_brand_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/desc"
                     android:scaleType="fitXY"
-                    android:src="@drawable/bg_img_white" />
+                    android:contentDescription="@string/desc" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -213,7 +212,8 @@
         <ImageView
             android:id="@+id/show_list_iv_topbar_line"
             style="@style/set_line_horizontal_bg"
-            android:contentDescription="@string/desc" />
+            android:contentDescription="@string/desc"
+            android:visibility="gone" />
 
         <include layout="@layout/layout_topbar_view_group" />
     </LinearLayout>

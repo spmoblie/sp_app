@@ -233,7 +233,6 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
@@ -243,6 +242,7 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
         	showClipPhoto(AppApplication.clip_photo_path);
 		}
         AppApplication.clip_photo_path = "";
+		super.onResume();
 	}
 	
 	@Override

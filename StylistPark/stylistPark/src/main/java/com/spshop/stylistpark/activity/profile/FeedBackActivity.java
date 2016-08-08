@@ -72,10 +72,10 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
+		super.onResume();
 	}
 	
 	@Override

@@ -65,6 +65,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	private int index = 0;
 	private int dataType = 0; //区分父级、子级分类的标记(0表示父级/1表示子级)
 	private int mCurrentItem;
+	private boolean isLeftShow = true;
 	private ArrayList<View> viewLists = new ArrayList<View>();
 	private List<CategoryListEntity> lv_lists = new ArrayList<CategoryListEntity>();
 	private List<CategoryListEntity> gv_lists = new ArrayList<CategoryListEntity>();
@@ -306,10 +307,10 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
+		super.onResume();
 	}
 	
 	@Override
@@ -398,6 +399,10 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 					getSVBrandDatas();
 				}
 			}else { //子级
+				if (isLeftShow) {
+					lv_left_Adapter.updateAdapter(lv_lists, index);
+					isLeftShow = false;
+				}
 				gv_Adapter.updateAdapter(gv_lists);
 			}
 			break;

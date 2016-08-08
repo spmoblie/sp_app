@@ -160,7 +160,6 @@ public class VideoActivity extends BaseActivity {
 
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
@@ -169,6 +168,7 @@ public class VideoActivity extends BaseActivity {
 			videoView.seekTo(mSeekPosition);
 			videoView.start();
 		}
+		super.onResume();
 	}
 
 	@Override

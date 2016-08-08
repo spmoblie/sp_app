@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
@@ -81,11 +82,12 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private int logo_height, time_height, group_height, spaceHeight;
 	private int other_height, desc_max_height, desc_min_height, desc_lines;
 	private long endTime = 0;
+	private boolean isHead = true;
 	private boolean isGone = true;
 	private String selectName = "";
 	private String logoImgUrl, logoImgPath;
 
-	private LinearLayout ll_stikky_main, ll_favourable_time;
+	private LinearLayout ll_stikky_main, ll_favourable_time, ll_group_main;
 	private RelativeLayout rl_top_1, rl_top_2, rl_top_3;
 	private TextView tv_top_1, tv_top_2, tv_top_3;
 	private ImageView iv_topbar_line, iv_to_top, iv_brand_img, iv_brand_logo;
@@ -140,6 +142,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		tv_no_data = (TextView) findViewById(R.id.show_list_tv_no_data);
 		ll_stikky_main = (LinearLayout) findViewById(R.id.show_list_ll_stikky_main);
 		ll_favourable_time = (LinearLayout) findViewById(R.id.show_list_ll_favourable_time);
+		ll_group_main = (LinearLayout) findViewById(R.id.topbar_group_ll_main);
 		rl_top_1 = (RelativeLayout) findViewById(R.id.topbar_group_rl_1);
 		rl_top_2 = (RelativeLayout) findViewById(R.id.topbar_group_rl_2);
 		rl_top_3 = (RelativeLayout) findViewById(R.id.topbar_group_rl_3);
@@ -310,11 +313,13 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 			});
 		}
+		ll_group_main.setVisibility(View.VISIBLE);
 	}
 
 	private void loadShareImg() {
 		if (!StringUtil.isNull(brandEn.getDefineUrl())) {
 			logoImgUrl = IMAGE_URL_HTTP + brandEn.getDefineUrl();
+			ImageLoader.getInstance().displayImage(logoImgUrl, iv_brand_img, options);
 			asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoader.AsyncImageLoaderCallback() {
 
 				@Override
@@ -333,18 +338,20 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private void showHeadViews(Bitmap bm) {
 		if (bm != null) {
-            logo_height = bm.getHeight();
-            iv_brand_img.setImageBitmap(bm);
+			int w = bm.getWidth();
+			int h = bm.getHeight();
+            logo_height = h * AppApplication.screenWidth / w;
+			iv_topbar_line.setVisibility(View.VISIBLE);
         } else {
             logo_height = 0;
         }
 		if (endTime > 0) {
             ll_favourable_time.setVisibility(View.VISIBLE); //height = 64dp
             other_height = time_height + group_height;
-        }else {
-            ll_favourable_time.setVisibility(View.GONE);
-            other_height = group_height;
-			iv_topbar_line.setVisibility(View.GONE);
+			iv_topbar_line.setVisibility(View.VISIBLE);
+		}else {
+			ll_favourable_time.setVisibility(View.GONE);
+			other_height = group_height;
         }
 		desc_lines = tv_brand_desc.getLineCount();
 		desc_min_height = 0;
@@ -644,7 +651,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
@@ -654,6 +660,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			updateAllDatas();
 			updateScreenStatus();
 		}
+		super.onResume();
 	}
 
 	@Override
@@ -725,7 +732,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		if (instance == null) return;
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_BRAND_PROFILE_CODE:
-			setHeadView();
 			getBrandProductLists();
 			break;
 		case AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE:
@@ -835,6 +841,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 				}
 				lv_show_two.add(lstEn);
 			}
+		}
+		if (isHead) {
+			setHeadView();
+			isHead = false;
 		}
 		lv_two_adapter.updateAdapter(lv_show_two);
 		stopAnimation();

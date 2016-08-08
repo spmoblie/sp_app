@@ -1,6 +1,5 @@
 package com.spshop.stylistpark.activity.common;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
@@ -23,8 +22,11 @@ import com.mining.app.zxing.camera.CameraManager;
 import com.mining.app.zxing.decoding.CaptureActivityHandler;
 import com.mining.app.zxing.decoding.InactivityTimer;
 import com.mining.app.zxing.view.ViewfinderView;
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.R;
+import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 
 import java.io.IOException;
@@ -34,7 +36,7 @@ import java.util.Vector;
  * Initial the camera
  * @author Ryan.Tang
  */
-public class MipcaActivityCapture extends Activity implements Callback {
+public class MipcaActivityCapture extends BaseActivity implements Callback {
 
 	private static final float BEEP_VOLUME = 0.10f;
 	private CaptureActivityHandler handler;
@@ -71,6 +73,9 @@ public class MipcaActivityCapture extends Activity implements Callback {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onResume() {
+		LogUtil.i(TAG, "onResume");
+		// 页面开始
+		AppApplication.onPageStart(this, TAG);
 		super.onResume();
 		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();

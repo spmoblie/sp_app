@@ -43,7 +43,6 @@ public class SplashActivity extends BaseActivity {
 
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
@@ -57,6 +56,7 @@ public class SplashActivity extends BaseActivity {
 				goHomeActivity();
 			}
 		}, 1000);
+		super.onResume();
 	}
 
 	private void goHomeActivity() {

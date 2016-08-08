@@ -99,6 +99,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private List<ProductListEntity> lv_all = new ArrayList<ProductListEntity>();
 	private SparseBooleanArray sa_all = new SparseBooleanArray();
 	private boolean vprStop = false;
+	private boolean addHead = false;
 	private int idsSize, idsPosition, vprPosition;
 	private ImageView[] indicators = null;
 	private ArrayList<ImageView> viewLists = new ArrayList<ImageView>();
@@ -227,7 +228,10 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 	private void setHeadView() {
 		if (themeEn != null) {
-			mListView.addHeaderView(ll_head_main);
+			if (!addHead) {
+				mListView.addHeaderView(ll_head_main);
+				addHead = true;
+			}
 			if (viewLists.size() == 0) {
 				initViewPager(themeEn.getAdEn());
 			}
@@ -622,14 +626,14 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 	@Override
 	public void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
-		AppApplication.onPageStart(getActivity(), TAG);
+		AppApplication.onPageStart(TAG);
 		if (isUpdate) {
 			isUpdate = false;
 			getSVDatas();
 		}
+		super.onResume();
 	}
 
 	@Override

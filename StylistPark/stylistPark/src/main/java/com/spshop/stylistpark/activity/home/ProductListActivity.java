@@ -83,7 +83,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private RelativeLayout rl_search_et, rl_search_txt, rl_search_line;
 	private RelativeLayout rl_words_clear, rl_search_no_data;
 	private LinearLayout ll_top, ll_bottom, ll_other;
-	private LinearLayout ll_hot_words, ll_radio_group, ll_search_history, ll_words_history;
+	private LinearLayout ll_hot_words, ll_group_main, ll_search_history, ll_words_history;
 	private RelativeLayout rl_top_1, rl_top_2, rl_top_3;
 	private TextView tv_top_1, tv_top_2, tv_top_3;
 	private Button btn_words_clear;
@@ -158,7 +158,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		ll_bottom = (LinearLayout) findViewById(R.id.product_ll_anim_bottom);
 		ll_other = (LinearLayout) findViewById(R.id.product_ll_anim_other);
 		ll_hot_words = (LinearLayout) findViewById(R.id.product_ll_search_hot_words);
-		ll_radio_group = (LinearLayout) findViewById(R.id.topbar_radio_ll_main);
+		ll_group_main = (LinearLayout) findViewById(R.id.topbar_group_ll_main);
 		ll_search_history = (LinearLayout) findViewById(R.id.product_ll_search_history);
 		ll_words_history = (LinearLayout) findViewById(R.id.scroll_list_btn_ll_main);
 		
@@ -182,7 +182,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		tv_words_4.setOnClickListener(this);
 		
 		if (typeId == 0) {
-			ll_radio_group.setVisibility(View.GONE);
 			rl_top_3.setVisibility(View.GONE);
 			ll_other.setVisibility(View.GONE);
 			ll_search_history.setVisibility(View.VISIBLE);
@@ -196,7 +195,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			rl_search_line.setVisibility(View.GONE);
 			tv_title.setVisibility(View.VISIBLE);
 			ll_hot_words.setVisibility(View.GONE);
-			ll_radio_group.setVisibility(View.VISIBLE);
 			ll_other.setVisibility(View.VISIBLE);
 			ll_search_history.setVisibility(View.GONE);
 			getScreenListDatas();
@@ -246,7 +244,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		        	iv_search_clear.setVisibility(View.GONE);
 
 		        	ll_hot_words.setVisibility(View.VISIBLE);
-					ll_radio_group.setVisibility(View.GONE);
+					ll_group_main.setVisibility(View.GONE);
 					ll_other.setVisibility(View.GONE);
 					ll_search_history.setVisibility(View.VISIBLE);
 					ll_words_history.setVisibility(View.VISIBLE);
@@ -644,7 +642,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
@@ -655,6 +652,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
         	getSVDatas();
 			updateScreenStatus();
 		}
+		super.onResume();
 	}
 	
 	/**
@@ -826,7 +824,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 					}
 					if (typeId == 0) { //搜索状态
 						ll_hot_words.setVisibility(View.GONE);
-						ll_radio_group.setVisibility(View.VISIBLE);
+						ll_group_main.setVisibility(View.VISIBLE);
 					}
 					countTotal = total;
 					myUpdateAdapter();
@@ -869,7 +867,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		if (typeId == 0 && current_Page == 1) { //搜索状态
 			clearAllData();
 			ll_hot_words.setVisibility(View.VISIBLE);
-			ll_radio_group.setVisibility(View.GONE);
+			ll_group_main.setVisibility(View.GONE);
 		}
 		myUpdateAdapter();
 	}
@@ -948,6 +946,9 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				}
 				lv_show_two.add(lstEn);
 			}
+		}
+		if (typeId != 0) {
+			ll_group_main.setVisibility(View.VISIBLE);
 		}
 		lv_two_adapter.updateAdapter(lv_show_two);
 		stopAnimation();

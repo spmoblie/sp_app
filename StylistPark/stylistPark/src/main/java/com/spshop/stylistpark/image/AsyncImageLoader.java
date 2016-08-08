@@ -63,10 +63,10 @@ public class AsyncImageLoader {
 						try {
 							HttpEntity entity = HttpUtil.getEntity(task.oldPath, null, HttpUtil.METHOD_GET);
 							byte[] data = EntityUtils.toByteArray(entity);
-							if (task.type == 1) { // 下载头像
+							if (task.type == 1) { //下载头像
 								task.bitmap = BitmapUtil.getBitmap(data, 80, 80);
 							} else {
-								task.bitmap = BitmapUtil.getBitmap(data, 640, 1080);
+								task.bitmap = BitmapUtil.getBitmap(data, 640, 1280);
 							}
 							// 缓存到集合
 							caches.addCacheBitmap(task.bitmap, task.newPath);
