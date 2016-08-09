@@ -61,7 +61,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	private CartProductListAdapter lv_Adapter;
 	private LinearLayout ll_no_data, ll_billing, ll_select_all;
 	private RelativeLayout rl_no_more, rl_loading, rl_load_fail;
-	private ImageView iv_left;
+	private ImageView iv_left, iv_billing_line;
 	private TextView tv_title, tv_shopping, tv_load_again;
 	private TextView tv_total, tv_buy_now;
 	
@@ -115,6 +115,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 		tv_buy_now = (TextView) view.findViewById(R.id.fragment_four_tv_buy_now);
 		ptrsv = (PullToRefreshScrollView) view.findViewById(R.id.fragment_four_ptrsv);
 		ll_billing = (LinearLayout) view.findViewById(R.id.fragment_four_ll_billing);
+		iv_billing_line = (ImageView) view.findViewById(R.id.fragment_four_iv_billing_line);
 		ll_select_all = (LinearLayout) view.findViewById(R.id.fragment_four_ll_select_all);
 		rl_loading = (RelativeLayout) view.findViewById(R.id.loading_anim_large_ll_main);
 		rl_load_fail = (RelativeLayout) view.findViewById(R.id.loading_fail_rl_main);
@@ -168,19 +169,29 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 
 	private void setView() {
 		if (lv_datas.size() > 0) {
-			ll_no_data.setVisibility(View.GONE);
+			showNoDataView(false);
 			ll_billing.setVisibility(View.VISIBLE);
+			iv_billing_line.setVisibility(View.VISIBLE);
 			rl_no_more.setVisibility(View.VISIBLE);
-			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_gray));
 		}else {
+			showNoDataView(true);
+			ll_billing.setVisibility(View.GONE);
+			iv_billing_line.setVisibility(View.GONE);
+			rl_no_more.setVisibility(View.GONE);
+		}
+		updateSelectAllView();
+	}
+
+	private void showNoDataView(boolean isShow) {
+		if (isShow) {
 			CommonTools.setLayoutParams(ll_no_data, AppApplication.screenWidth,
 					AppApplication.screenHeight - AppApplication.statusHeight - 300);
 			ll_no_data.setVisibility(View.VISIBLE);
-			ll_billing.setVisibility(View.GONE);
-			rl_no_more.setVisibility(View.GONE);
 			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_white));
+		} else {
+			ll_no_data.setVisibility(View.GONE);
+			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_nut));
 		}
-		updateSelectAllView();
 	}
 
 	private void setAdapter() {
@@ -468,7 +479,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_CART_LIST_CODE:
 			if (!pullUpdate && lv_datas.size() == 0) {
-				rl_load_fail.setVisibility(View.VISIBLE);
+				loadFailHandle();
 			}
 			break;
 		}
@@ -484,6 +495,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 
 	private void loadFailHandle() {
 		if (!pullUpdate) {
+			showNoDataView(false);
 			rl_load_fail.setVisibility(View.VISIBLE);
 		}
 		updateSelectAllView();

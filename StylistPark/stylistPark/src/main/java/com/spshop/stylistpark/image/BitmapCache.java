@@ -2,6 +2,8 @@ package com.spshop.stylistpark.image;
 
 import android.graphics.Bitmap;
 
+import com.spshop.stylistpark.utils.StringUtil;
+
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.util.Hashtable;
@@ -61,14 +63,15 @@ public class BitmapCache {
 	 * 依据所指定的文件名获取图片
 	 */
 	public Bitmap getBitmap(String filename) {
-
 		Bitmap bitmapImage = null;
+		if (StringUtil.isNull(filename)) {
+			return bitmapImage;
+		}
 		// 缓存中是否有该Bitmap实例的软引用，如果有，从软引用中取得。
-		if (bitmapRefs.containsKey(filename)) {
+		if (bitmapRefs != null && bitmapRefs.containsKey(filename)) {
 			BtimapRef ref = (BtimapRef) bitmapRefs.get(filename);
 			bitmapImage = (Bitmap) ref.get();
 		}
-
 		return bitmapImage;
 	}
 	

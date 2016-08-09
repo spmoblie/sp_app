@@ -69,9 +69,9 @@ public class AppConfig {
 	// QQ授权接口参数：Scope权限
 	public static final String QQ_SCOPE = "all";
 	// 微信AppID
-	public static final String WX_APP_ID = "wx8102c9afda9cfb50";
+	public static final String WX_APP_ID = "wxe75d3ed35d5ec0a3";
 	// 微信AppSecret
-	public static final String WX_APP_SECRET = "13d5722c55ca04e7aa4763507c4a4c5e";
+	public static final String WX_APP_SECRET = "df710488027a355d49c41e6b19eb41cf";
 	// 微信商户号
 	public static final String WX_MCH_ID = "1238090502";
 	// 微信API密钥，在商户平台设置

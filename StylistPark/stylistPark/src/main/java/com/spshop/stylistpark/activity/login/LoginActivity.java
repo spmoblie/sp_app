@@ -66,7 +66,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	public static final String TAG = "LoginActivity";
 	public static LoginActivity instance = null;
 	
-	public static final String LOGIN_TYPE_WX = "wechatapp";
+	public static final String LOGIN_TYPE_WX = "wechat";
 	public static final String LOGIN_TYPE_QQ = "qq";
 	public static final String LOGIN_TYPE_WB = "weibo";
 	public static final String LOGIN_TYPE_ZF = "alipay";
@@ -278,16 +278,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			CommonTools.showToast(mContext.getString(R.string.share_msg_no_wechat), 1000);
 			return;
 		}
+		startAnimation();
 //		access_token = um.getWXAccessToken();
 //		openid = um.getWXOpenid();
 //		unionid = um.getWXUnionid();
 //		refresh_token = um.getWXRefreshToken();
 //		if (access_token != null && openid != null && unionid != null && refresh_token != null) {
-//			startAnimation();
 //			// 校验access_token有效性
 //			new HttpWechatAuthTask().execute("https://api.weixin.qq.com/sns/auth?access_token=" + access_token + "&openid=" + openid);
 //		} else {
 			// 用户授权获取access_token
+			AppApplication.isWXShare = false;
 			api.registerApp(AppConfig.WX_APP_ID);
 			SendAuth.Req req = new SendAuth.Req();
 			req.scope = "snsapi_userinfo";
@@ -356,8 +357,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	public void postWechatLoginRequest() {
 		if (mTencent != null) {
 			loginType = LOGIN_TYPE_WX;
-			postUid = um.getWXUnionid();
+			access_token = um.getWXAccessToken();
+			openid = um.getWXOpenid();
+			unionid = um.getWXUnionid();
+			refresh_token = um.getWXRefreshToken();
+			postUid = unionid;
 			requestThirdPartiesLogin();
+		} else {
+			stopAnimation();
 		}
 	}
 

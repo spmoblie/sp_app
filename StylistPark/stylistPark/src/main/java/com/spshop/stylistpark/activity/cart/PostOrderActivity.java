@@ -56,7 +56,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	private TextView tv_total, tv_fee, tv_charges, tv_bonus, tv_discount, tv_pay, tv_pay_now;
 	private ImageView iv_go_pay_select, iv_invoice_select;
 	private EditText et_invoice, et_buyer;
-	private LinearLayout ll_goods_lists;
+	private LinearLayout ll_main, ll_goods_lists;
 	private RelativeLayout rl_address_main, rl_pay_type, rl_bouns_main, rl_charges_main;
 	
 	private boolean addressOk = false;
@@ -109,6 +109,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		iv_invoice_select = (ImageView) findViewById(R.id.post_order_iv_invoice_select);
 		et_invoice = (EditText) findViewById(R.id.post_order_et_invoice);
 		et_buyer = (EditText) findViewById(R.id.post_order_et_buyer);
+		ll_main = (LinearLayout) findViewById(R.id.post_order_ll_main);
 		ll_goods_lists = (LinearLayout) findViewById(R.id.post_order_ll_goods_lists);
 	}
 
@@ -122,6 +123,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 
 	private void setView() {
 		if (orderEn != null) {
+			ll_main.setVisibility(View.VISIBLE);
 			tv_goods_total.setText(getString(R.string.num_total, orderEn.getGoodsTotal()));
 			tv_total.setText(orderEn.getPriceTotal());
 			tv_fee.setText(orderEn.getPriceFee());

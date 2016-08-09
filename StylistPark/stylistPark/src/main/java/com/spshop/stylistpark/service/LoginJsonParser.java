@@ -36,7 +36,7 @@ public class LoginJsonParser {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		return new WXEntity(jsonObject.getString("access_token"), 
 				jsonObject.getString("expires_in"), jsonObject.getString("refresh_token"), 
-				jsonObject.getString("openid"), jsonObject.getString("scope"));
+				jsonObject.getString("openid"), jsonObject.getString("scope"), jsonObject.getString("unionid"));
 	}
 	
 	/**

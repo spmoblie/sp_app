@@ -4,7 +4,7 @@
 
     <LinearLayout
         style="@style/layout_full"
-        android:background="@color/ui_bg_color_app"
+        android:background="@color/ui_bg_color_nut"
         android:orientation="vertical" >
 
         <include layout="@layout/layout_top_commom" />
@@ -19,14 +19,17 @@
         </com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView>
 
         <ImageView
+            android:id="@+id/fragment_four_iv_billing_line"
             style="@style/set_line_horizontal_bg"
-            android:contentDescription="@string/desc" />
+            android:contentDescription="@string/desc"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/fragment_four_ll_billing"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="@color/ui_bg_color_white"
             android:orientation="horizontal"
             android:visibility="gone" >
 

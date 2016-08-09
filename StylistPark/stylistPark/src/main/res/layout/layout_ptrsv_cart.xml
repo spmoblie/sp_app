@@ -15,7 +15,6 @@
         android:id="@+id/ptrsv_cart_rl_no_more"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/ui_bg_color_gray"
         android:visibility="gone" >
 
         <ImageView
@@ -37,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:background="@color/ui_bg_color_app"
         android:orientation="vertical"
         android:visibility="gone" >
 

@@ -1,13 +1,14 @@
 package com.spshop.stylistpark.wxapi;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
+import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.entity.WXEntity;
 import com.spshop.stylistpark.service.LoginJsonParser;
@@ -22,7 +23,7 @@ import com.tencent.mm.sdk.modelmsg.SendAuth;
 
 import org.json.JSONException;
 
-public class WXEntryActivity extends Activity {
+public class WXEntryActivity extends BaseActivity {
 
 	private static final String TAG = "WXEntryActivity";
 	private static final String APP_ID = AppConfig.WX_APP_ID;
@@ -34,7 +35,8 @@ public class WXEntryActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wx_loading);
-		
+
+		setHeadVisibility(View.GONE);
 		http = new HttpUtil();
 		
 		handleIntent(getIntent());
@@ -50,6 +52,7 @@ public class WXEntryActivity extends Activity {
 	 * 微信SDK回调函数
 	 */
 	private void handleIntent(Intent intent) {
+		stopAnimation();
 		SendAuth.Resp resp = new SendAuth.Resp(intent.getExtras());
 		if (resp.errCode == BaseResp.ErrCode.ERR_OK) 
 		{

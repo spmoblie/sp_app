@@ -362,11 +362,10 @@ public class UserManager {
 	 * 清除微信授权信息
 	 */
 	private void clearWechatUserInfo() {
-		editor.putString(AppConfig.KEY_WX_ACCESS_TOKEN, null);
-		editor.putString(AppConfig.KEY_WX_OPEN_ID, null);
-		editor.putString(AppConfig.KEY_WX_UNION_ID, null);
-		editor.putString(AppConfig.KEY_WX_REFRESH_TOKEN, null);
-		editor.apply();
+		saveWXAccessToken(null);
+		saveWXOpenid(null);
+		saveWXUnionid(null);
+		saveWXRefreshToken(null);
 	}
 
 }

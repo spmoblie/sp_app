@@ -22,6 +22,7 @@
     <EditText
         android:id="@+id/register_oauth_et_passwords"
         style="@style/Register_EditText"
+        android:inputType="textPassword"
         android:hint="@string/login_input_password" />
 
     <Button

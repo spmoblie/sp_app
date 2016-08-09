@@ -928,6 +928,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 					cartNumTotal = cartEn.getGoodsTotal();
 					UserManager.getInstance().saveCartTotal(cartNumTotal);
 					startNumberAddAnim(buyNumber);
+				}else if (cartEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
+					loginTimeoutHandle();
 				}else {
 					if (StringUtil.isNull(cartEn.getErrInfo())) {
 						showServerBusy();
@@ -941,12 +943,23 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			break;
 		case AppConfig.REQUEST_SV_POST_COLLECITON_CODE:
 			if (result != null) {
-				isColl = !isColl;
-				changeCollectionStatus();
-				if (ShowListActivity.instance != null) { //收藏打开时刷新数据
-					ShowListActivity.instance.isUpdate = true;
+				BaseEntity baseEn = (BaseEntity) result;
+				if (baseEn.getErrCode() == 0 || baseEn.getErrCode() == 1) {
+					isColl = !isColl;
+					changeCollectionStatus();
+					if (ShowListActivity.instance != null) { //收藏打开时刷新数据
+						ShowListActivity.instance.isUpdate = true;
+					}
+					CommonTools.showToast(baseEn.getErrInfo(), 1000);
+				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
+					loginTimeoutHandle();
+				}else {
+					if (StringUtil.isNull(baseEn.getErrInfo())) {
+						showServerBusy();
+					}else {
+						CommonTools.showToast(baseEn.getErrInfo(), 2000);
+					}
 				}
-				CommonTools.showToast(((BaseEntity) result).getErrInfo(), 1000);
 			}else {
 				showServerBusy();
 			}
@@ -958,6 +971,10 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	public void onFailure(int requestCode, int state, Object result) {
 		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
+	}
+
+	private void loginTimeoutHandle() {
+		showTimeOutDialog(TAG);
 	}
 
 	private String getSelectShowStr(ProductAttrEntity en){

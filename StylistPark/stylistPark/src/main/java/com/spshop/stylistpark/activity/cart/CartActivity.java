@@ -9,6 +9,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
@@ -56,6 +57,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	private CartProductListAdapter lv_Adapter;
 	private LinearLayout ll_top, ll_no_data, ll_billing, ll_select_all;
 	private RelativeLayout rl_no_more, rl_loading, rl_load_fail;
+	private ImageView iv_billing_line;
 	private TextView tv_shopping, tv_load_again;
 	private TextView tv_total, tv_buy_now;
 	
@@ -91,6 +93,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 		tv_buy_now = (TextView) findViewById(R.id.fragment_four_tv_buy_now);
 		ptrsv = (PullToRefreshScrollView) findViewById(R.id.fragment_four_ptrsv);
 		ll_billing = (LinearLayout) findViewById(R.id.fragment_four_ll_billing);
+		iv_billing_line = (ImageView) findViewById(R.id.fragment_four_iv_billing_line);
 		ll_select_all = (LinearLayout) findViewById(R.id.fragment_four_ll_select_all);
 		rl_loading = (RelativeLayout) findViewById(R.id.loading_anim_large_ll_main);
 		rl_load_fail = (RelativeLayout) findViewById(R.id.loading_fail_rl_main);
@@ -148,18 +151,28 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 
 	private void setView() {
 		if (lv_datas.size() > 0) {
-			ll_no_data.setVisibility(View.GONE);
+			showNoDataView(false);
 			ll_billing.setVisibility(View.VISIBLE);
+			iv_billing_line.setVisibility(View.VISIBLE);
 			rl_no_more.setVisibility(View.VISIBLE);
-			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_gray));
 		}else {
-			CommonTools.setLayoutParams(ll_no_data, width, height - statusHeight - 300);
-			ll_no_data.setVisibility(View.VISIBLE);
+			showNoDataView(true);
 			ll_billing.setVisibility(View.GONE);
+			iv_billing_line.setVisibility(View.GONE);
 			rl_no_more.setVisibility(View.GONE);
-			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_white));
 		}
 		updateSelectAllView();
+	}
+
+	private void showNoDataView(boolean isShow) {
+		if (isShow) {
+			CommonTools.setLayoutParams(ll_no_data, width, height - statusHeight - 300);
+			ll_no_data.setVisibility(View.VISIBLE);
+			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_white));
+		} else {
+			ll_no_data.setVisibility(View.GONE);
+			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_nut));
+		}
 	}
 
 	private void setAdapter() {
@@ -440,7 +453,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_CART_LIST_CODE:
 			if (!pullUpdate && lv_datas.size() == 0) {
-				rl_load_fail.setVisibility(View.VISIBLE);
+				loadFailHandle();
 			}
 			break;
 		}
@@ -455,6 +468,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 
 	private void loadFailHandle() {
 		if (!pullUpdate) {
+			showNoDataView(false);
 			rl_load_fail.setVisibility(View.VISIBLE);
 		}
 		updateSelectAllView();

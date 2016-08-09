@@ -34,6 +34,7 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ShareEntity;
+import com.spshop.stylistpark.image.BitmapCache;
 import com.spshop.stylistpark.share.weibo.AccessTokenKeeper;
 import com.spshop.stylistpark.share.weixi.WXShareUtil;
 import com.spshop.stylistpark.utils.BitmapUtil;
@@ -66,7 +67,7 @@ public class ShareView{
 	ShareEntity mShareEn;
 	ObjectAnimator mover;
 	ShareVewButtonListener listener;
-	
+
 	View rootView;
 	View viewDim;
 	View ll_mainLayout;
@@ -137,7 +138,7 @@ public class ShareView{
 	public void setListener(ShareVewButtonListener listener){
 		this.listener = listener;
 	}
-	
+
 	public void showShareLayer(Context ctx, boolean show){
 		if(checkViewIsOk()){
 			if(show){
@@ -309,7 +310,7 @@ public class ShareView{
 
 	private void qqShare() {
 		if (mShareEn != null) {
-			showShareLayer(mContext, false);
+			//showShareLayer(mContext, false);
 			Bundle params = new Bundle();
 			params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
 			params.putString(QQShare.SHARE_TO_QQ_TITLE, mShareEn.getTitle());
@@ -351,13 +352,19 @@ public class ShareView{
 			return;
 		}
 		if (mShareEn != null) {
-			showShareLayer(mContext, false);
+			//showShareLayer(mContext, false);
 			WXWebpageObject webpage = new WXWebpageObject();
 			webpage.webpageUrl = mShareEn.getUrl();
 			WXMediaMessage msg = new WXMediaMessage(webpage);
 			msg.title = mShareEn.getTitle();
 			msg.description = mShareEn.getText();
-			Bitmap bitmap = BitmapFactory.decodeFile(mShareEn.getImagePath());
+			Bitmap bitmap = BitmapCache.getInstance().getBitmap(mShareEn.getImagePath());
+			if (bitmap == null) {
+				bitmap = BitmapFactory.decodeFile(mShareEn.getImagePath());
+				if (bitmap == null) {
+					bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher);
+				}
+			}
 			if (bitmap != null) {
 				bitmap = BitmapUtil.getBitmap(bitmap, 80, 80);
 			}
@@ -382,7 +389,7 @@ public class ShareView{
 	}
 	
 	private void weiboShare1(){
-		showShareLayer(mContext, false);
+		//showShareLayer(mContext, false);
 		mAccessToken = AccessTokenKeeper.readAccessToken(mContext);
 		if (mAccessToken != null  && mAccessToken.isSessionValid()) {
 			weiboShare2();
@@ -424,7 +431,6 @@ public class ShareView{
 	
 	private void weiboShare2(){
 		if (mShareEn != null) {
-			showShareLayer(mContext, false);
 			// 创建微博分享接口实例
 			mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(mContext, WB_APP_ID);
 			if (mWeiboShareAPI == null) return;
@@ -449,9 +455,12 @@ public class ShareView{
 			}
 			weiboMessage.textObject = textObject;
 			ImageObject imageObject = new ImageObject();
-			Bitmap bitmap = BitmapFactory.decodeFile(mShareEn.getImagePath());
+			Bitmap bitmap = BitmapCache.getInstance().getBitmap(mShareEn.getImagePath());
 			if (bitmap == null) {
-				bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher);
+				bitmap = BitmapFactory.decodeFile(mShareEn.getImagePath());
+				if (bitmap == null) {
+					bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher);
+				}
 			}
 			imageObject.setImageObject(bitmap);
 			weiboMessage.imageObject = imageObject;
@@ -494,7 +503,7 @@ public class ShareView{
 		// 先判断设备上是否已经安装了Facebook客户端，如果没有则提示用户安装客户端后才能进行分享。
 		if (FacebookDialog.canPresentShareDialog(mContext, FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
 			if (uiHelper != null && mShareEn != null) {
-				showShareLayer(mContext, false);
+				//showShareLayer(mContext, false);
 				FacebookDialog.ShareDialogBuilder mBuilder = new FacebookDialog.ShareDialogBuilder(mActivity);
 				mBuilder.setCaption(mContext.getString(R.string.app_name));
 				mBuilder.setApplicationName(mContext.getString(R.string.app_name));
@@ -523,7 +532,7 @@ public class ShareView{
 			return;
 		}
 		if (mShareEn != null) {
-			showShareLayer(mContext, false);
+			//showShareLayer(mContext, false);
 			Intent sendIntent = new Intent();
 			sendIntent.setAction(Intent.ACTION_SEND);
 			sendIntent.setPackage("com.whatsapp");
@@ -541,7 +550,7 @@ public class ShareView{
 			return;
 		}
 		if (mShareEn != null) {
-			showShareLayer(mContext, false);
+			//showShareLayer(mContext, false);
 			String share_Msg_For_Line = mShareEn.getTitle() + "\n" + mShareEn.getText() + "\n" + mShareEn.getUrl();
 			try {
                 share_Msg_For_Line = URLEncoder.encode(share_Msg_For_Line, "UTF-8");
