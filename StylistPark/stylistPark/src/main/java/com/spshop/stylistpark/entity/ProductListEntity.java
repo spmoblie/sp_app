@@ -2,7 +2,7 @@ package com.spshop.stylistpark.entity;
 
 import java.util.List;
 
-public class ProductListEntity extends BaseEntity{
+public class ProductListEntity extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -100,6 +100,10 @@ public class ProductListEntity extends BaseEntity{
 		this.total = total;
 	}
 
+	@Override
+	public String getEntityId() {
+		return String.valueOf(id);
+	}
 
 	public int getId() {
 		return id;

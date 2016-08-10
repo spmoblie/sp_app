@@ -218,6 +218,10 @@ public class OrderEntity extends BaseEntity {
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return orderId;
+	}
 
 	public String getOrderId() {
 		return orderId;

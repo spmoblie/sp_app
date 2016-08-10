@@ -43,6 +43,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <data android:scheme="wx4142270dbbe54cb6"/>
             </intent-filter>
         </activity>
 

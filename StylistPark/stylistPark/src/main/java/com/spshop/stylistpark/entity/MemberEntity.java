@@ -66,6 +66,10 @@ public class MemberEntity extends BaseEntity {
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return userId;
+	}
 
 	public String getUserId() {
 		return userId;

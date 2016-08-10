@@ -733,7 +733,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					rl_load_fail.setVisibility(View.GONE);
 					lv_all.addAll(lists);
 					addAllShow(lv_all);
-					//addEntity(lv_all, lists, sa_all);
 					current_Page++;
 					myUpdateAdapter();
 				}else {
@@ -777,31 +776,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			rl_load_fail.setVisibility(View.VISIBLE);
 		}
 	}
-	
-	/**
-	 * 数据去重函数
-	 */
-	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, SparseBooleanArray sa_old) {
-		ProductListEntity entity = null;
-		int dataId = 0;
-		for (int i = 0; i < newDatas.size(); i++) {
-			entity = newDatas.get(i);
-			if (entity != null) {
-				dataId = entity.getId();
-				if (dataId != 0 && sa_old.indexOfKey(dataId) < 0) {
-					oldDatas.add(entity);
-					sa_old.put(dataId, true);
-				}
-			}
-		}
-		addAllShow(oldDatas);
-	}
 
-	private void addAllShow(List<ProductListEntity> showLists) {
-		lv_show.clear();
-		lv_show.addAll(showLists);
-	}
-	
 	private void myUpdateAdapter() {
 		if (current_Page == 1) {
 			toTop();
@@ -823,14 +798,11 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		stopAnimation();
 	}
 
-	/**
-	 * 滚动到顶部
-	 */
-	private void toTop() {
-		setAdapter();
-		iv_to_top.setVisibility(View.GONE);
+	private void addAllShow(List<ProductListEntity> showLists) {
+		lv_show.clear();
+		lv_show.addAll(showLists);
 	}
-	
+
 	/**
 	 * 显示缓冲动画
 	 */
@@ -845,6 +817,14 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private void stopAnimation() {
 		rl_loading.setVisibility(View.GONE);
 		refresh_lv.onPullUpRefreshComplete();
+	}
+
+	/**
+	 * 滚动到顶部
+	 */
+	private void toTop() {
+		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 
 	// 广播接收器

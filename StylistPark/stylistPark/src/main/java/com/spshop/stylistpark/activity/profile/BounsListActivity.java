@@ -149,7 +149,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 加载更多
-            	if (!isStop()) {
+            	if (!isStopLoadMore(lv_show.size(), countTotal)) {
             		loadSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -241,7 +241,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		current_Page = 1;
 		countTotal = 0;
 		startAnimation();
-		setLoadMoreDate();
+		setLoadMoreData();
 		requestProductLists();
 	}
 	
@@ -364,7 +364,7 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		if (current_Page != 1) {
 			toTop();
 		}
-		setLoadMoreDate();
+		setLoadMoreData();
 	}
 	
 	@Override
@@ -442,37 +442,44 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 					int total = mainEn.getCountTotal();
 					List<BounsEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {
+						List<BaseEntity> newLists = null;
 						switch (topType) {
 						case TYPE_1:
 							if (loadType == 0) {
-								updEntity(total, total_1, lists, lv_all_1, am_all_1);
-								page_type_1 = 2;
+								newLists = updNewEntity(total, total_1, lists, lv_all_1, am_all_1);
 							} else {
-								addEntity(lv_all_1, lists, am_all_1);
-								page_type_1++;
+								newLists = addNewEntity(lv_all_1, lists, am_all_1);
+								if (newLists != null) {
+									page_type_1++;
+								}
 							}
 							total_1 = total;
 							break;
 						case TYPE_2:
 							if (loadType == 0) {
-								updEntity(total, total_2, lists, lv_all_2, am_all_2);
-								page_type_2 = 2;
+								newLists = updNewEntity(total, total_2, lists, lv_all_2, am_all_2);
 							} else {
-								addEntity(lv_all_2, lists, am_all_2);
-								page_type_2++;
+								newLists = addNewEntity(lv_all_2, lists, am_all_2);
+								if (newLists != null) {
+									page_type_2++;
+								}
 							}
 							total_2 = total;
 							break;
 						case TYPE_3:
 							if (loadType == 0) {
-								updEntity(total, total_3, lists, lv_all_3, am_all_3);
-								page_type_3 = 2;
+								newLists = updNewEntity(total, total_3, lists, lv_all_3, am_all_3);
 							} else {
-								addEntity(lv_all_3, lists, am_all_3);
-								page_type_3++;
+								newLists = addNewEntity(lv_all_3, lists, am_all_3);
+								if (newLists != null) {
+									page_type_3++;
+								}
 							}
 							total_3 = total;
 							break;
+						}
+						if (newLists != null) {
+							addNewShowLists(newLists);
 						}
 						countTotal = total;
 						myUpdateAdapter();
@@ -534,68 +541,6 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		myUpdateAdapter();
 	}
 
-	/**
-	 * 刷新数集
-	 */
-	private void updEntity(int newTotal, int oldTotal, List<BounsEntity> newDatas,
-						   List<BounsEntity> oldDatas, ArrayMap<String, Boolean> oldMap) {
-		/*if (oldTotal < newTotal) {
-			List<OrderEntity> datas = new ArrayList<OrderEntity>();
-			datas.addAll(oldDatas);
-			oldDatas.clear();
-
-			BounsEntity newEn, oldEn;
-			int dataId = 0;
-			for (int i = 0; i < (newTotal - oldTotal); i++) {
-				newEn = newDatas.get(i);
-				if (newEn != null) {
-					dataId = newEn.getId();
-					if (dataId != 0 && !oldMap.containsKey(dataId)) {
-						// 添加至顶层
-						oldDatas.add(newEn);
-						oldMap.put(dataId, true);
-						// 移除最底层
-						oldEn = datas.remove(datas.size()-1);
-						if (oldEn != null && oldMap.containsKey(oldEn.getId())) {
-							oldMap.remove(oldEn.getId());
-						}
-					}
-				}
-			}
-			oldDatas.addAll(datas);
-			addAllShow(oldDatas);
-			setLoadMoreDate();
-		}*/
-		oldDatas.clear();
-		oldMap.clear();
-		addEntity(oldDatas, newDatas, oldMap);
-		setLoadMoreDate();
-	}
-	
-	/**
-	 * 数据去重函数
-	 */
-	private void addEntity(List<BounsEntity> oldDatas, List<BounsEntity> newDatas, ArrayMap<String, Boolean> oldMap) {
-		BounsEntity entity = null;
-		String dataId = "";
-		for (int i = 0; i < newDatas.size(); i++) {
-			entity = newDatas.get(i);
-			if (entity != null) {
-				dataId = entity.getBounsId();
-				if (!StringUtil.isNull(dataId) && !oldMap.containsKey(dataId)) {
-					oldDatas.add(entity);
-					oldMap.put(dataId, true);
-				}
-			}
-		}
-		addAllShow(oldDatas);
-	}
-
-	private void addAllShow(List<BounsEntity> showLists) {
-		lv_show.clear();
-		lv_show.addAll(showLists);
-	}
-	
 	private void myUpdateAdapter() {
 		if (current_Page == 1) {
 			toTop();
@@ -604,14 +549,35 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		stopAnimation();
 	}
 
-	/**
-	 * 滚动到顶部
-	 */
-	private void toTop() {
-		setAdapter();
-		iv_to_top.setVisibility(View.GONE);
+	private void addAllShow(List<BounsEntity> showLists) {
+		lv_show.clear();
+		lv_show.addAll(showLists);
 	}
-	
+
+	private void addNewShowLists(List<BaseEntity> showLists) {
+		lv_show.clear();
+		for (int i = 0; i < showLists.size(); i++) {
+			lv_show.add((BounsEntity) showLists.get(i));
+		}
+		switch (topType) {
+			case TYPE_1:
+				lv_all_1.clear();
+				lv_all_1.addAll(lv_show);
+				break;
+			case TYPE_2:
+				lv_all_2.clear();
+				lv_all_2.addAll(lv_show);
+				break;
+			case TYPE_3:
+				lv_all_3.clear();
+				lv_all_3.addAll(lv_show);
+				break;
+		}
+		if (loadType == 0) {
+			setLoadMoreData();
+		}
+	}
+
 	@Override
 	protected void startAnimation() {
 		rl_no_data.setVisibility(View.GONE);
@@ -639,19 +605,20 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 			refresh_lv.setVisibility(View.VISIBLE);
 		}
 	}
-	
+
 	/**
-	 * 判定是否停止加载翻页数据
+	 * 滚动到顶部
 	 */
-	private boolean isStop(){
-		return lv_show.size() > 0 && lv_show.size() == countTotal;
+	private void toTop() {
+		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 
 	/**
 	 * 设置允许加载更多
 	 */
-	private void setLoadMoreDate() {
+	private void setLoadMoreData() {
 		refresh_lv.setHasMoreData(true);
 	}
-	
+
 }

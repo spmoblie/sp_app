@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,9 @@ import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 所有Activity的父类
@@ -100,7 +104,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		editor.apply();
 		dm = DialogManager.getInstance(mContext);
 		atm = AsyncTaskManager.getInstance(mContext);
-		api = WXAPIFactory.createWXAPI(this, AppConfig.WX_APP_ID);
+		api = WXAPIFactory.createWXAPI(mContext, AppConfig.WX_APP_ID);
 		api.registerApp(AppConfig.WX_APP_ID);
 		
 		// 获取屏幕配置
@@ -648,5 +652,74 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 			});
 		}
 	}
-	
+
+
+	/**
+	 * 数据刷新函数
+	 */
+	public static List<BaseEntity> updNewEntity(int newTotal, int oldTotal, List<? extends BaseEntity> newDatas,
+							  List<? extends BaseEntity> oldDatas, ArrayMap<String, Boolean> oldMap) {
+		if (oldDatas == null || newDatas == null || oldMap == null) return null;
+		if (oldTotal < newTotal) {
+			List<BaseEntity> newLists = new ArrayList<BaseEntity>();
+			BaseEntity newEn, oldEn;
+			String dataId;
+			int newCount = newTotal - oldTotal;
+			if (newCount > newDatas.size()) {
+				newCount = newDatas.size();
+			}
+			for (int i = 0; i < newCount; i++) {
+				newEn = newDatas.get(i);
+				if (newEn != null) {
+					dataId = newEn.getEntityId();
+					if (!StringUtil.isNull(dataId) && !oldMap.containsKey(dataId)) {
+						// 添加至顶层
+						newLists.add(newEn);
+						oldMap.put(dataId, true);
+						// 移除最底层
+						if (oldDatas.size() >= 1) {
+							oldEn = oldDatas.remove(oldDatas.size()-1);
+							if (oldEn != null && oldMap.containsKey(oldEn.getEntityId())) {
+								oldMap.remove(oldEn.getEntityId());
+							}
+						}
+					}
+				}
+			}
+			newLists.addAll(oldDatas);
+			return newLists;
+		}
+		return null;
+	}
+
+	/**
+	 * 数据去重函数
+	 */
+	public static List<BaseEntity> addNewEntity(List<? extends BaseEntity> oldDatas,
+						List<? extends BaseEntity> newDatas, ArrayMap<String, Boolean> oldMap) {
+		if (oldDatas == null || newDatas == null || oldMap == null) return null;
+		List<BaseEntity> newLists = new ArrayList<BaseEntity>();
+		newLists.addAll(oldDatas);
+		BaseEntity newEn;
+		String dataId;
+		for (int i = 0; i < newDatas.size(); i++) {
+			newEn = newDatas.get(i);
+			if (newEn != null) {
+				dataId = newEn.getEntityId();
+				if (!StringUtil.isNull(dataId) && !oldMap.containsKey(dataId)) {
+					newLists.add(newEn);
+					oldMap.put(dataId, true);
+				}
+			}
+		}
+		return newLists;
+	}
+
+	/**
+	 * 判定是否停止加载更多
+	 */
+	public static boolean isStopLoadMore(int showCount, int countTotal) {
+		return showCount > 0 && showCount == countTotal;
+	}
+
 }

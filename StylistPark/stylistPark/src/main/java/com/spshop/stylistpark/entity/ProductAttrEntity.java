@@ -2,7 +2,7 @@ package com.spshop.stylistpark.entity;
 
 import java.util.ArrayList;
 
-public class ProductAttrEntity extends BaseEntity{
+public class ProductAttrEntity extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -66,6 +66,10 @@ public class ProductAttrEntity extends BaseEntity{
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return String.valueOf(attrId);
+	}
 
 	public int getAttrId() {
 		return attrId;

@@ -2,7 +2,7 @@ package com.spshop.stylistpark.entity;
 
 import java.util.List;
 
-public class BalanceDetailEntity extends BaseEntity{
+public class BalanceDetailEntity extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -66,6 +66,10 @@ public class BalanceDetailEntity extends BaseEntity{
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return "";
+	}
 
 	public int getCountTotal() {
 		return countTotal;

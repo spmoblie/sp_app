@@ -1,7 +1,7 @@
 package com.spshop.stylistpark.entity;
 
 
-public class UserInfoEntity extends BaseEntity{
+public class UserInfoEntity extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -125,6 +125,10 @@ public class UserInfoEntity extends BaseEntity{
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return userId;
+	}
 
 	public String getUserId() {
 		return userId;

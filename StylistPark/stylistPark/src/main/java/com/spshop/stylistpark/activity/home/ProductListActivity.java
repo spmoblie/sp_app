@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.util.ArrayMap;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +32,7 @@ import com.spshop.stylistpark.activity.common.SelectListActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
+import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
@@ -109,9 +110,9 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private List<ProductListEntity> lv_all_1 = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all_2_DSC = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all_2_ASC = new ArrayList<ProductListEntity>();
-	private SparseBooleanArray sa_all_1 = new SparseBooleanArray();
-	private SparseBooleanArray sa_all_2_asc = new SparseBooleanArray();
-	private SparseBooleanArray sa_all_2_dsc = new SparseBooleanArray();
+	private ArrayMap<String, Boolean> am_all_1 = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_2_asc = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_2_dsc = new ArrayMap<String, Boolean>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -360,7 +361,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				}
 				CommonTools.showPageNum(page_num + "/" + page_total, 1000);
 
-				if (!isStop()) {
+				if (!isStopLoadMore(lv_show.size(), countTotal)) {
 					loadSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -426,7 +427,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		current_Page = 1;
 		countTotal = 0;
 		startAnimation();
-		setLoadMoreDate();
+		setLoadMoreData();
 		requestProductLists();
 	}
 
@@ -632,7 +633,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		if (current_Page != 1) {
 			toTop();
 		}
-		setLoadMoreDate();
+		setLoadMoreData();
 	}
 	
 	private void updateSearchWords(TextView tv_words) {
@@ -789,13 +790,16 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				int total = product_MainEn.getTotal();
 				List<ProductListEntity> lists = product_MainEn.getMainLists();
 				if (lists.size() > 0) {
+					List<BaseEntity> newLists = null;
 					switch (topType) {
 					case TYPE_1: //默认
 						if (loadType == 0) { //下拉
-							updEntity(total, countTotal, lists, lv_all_1, sa_all_1);
+							newLists = updNewEntity(total, countTotal, lists, lv_all_1, am_all_1);
 						}else {
-							addEntity(lv_all_1, lists, sa_all_1);
-							page_type_1++;
+							newLists = addNewEntity(lv_all_1, lists, am_all_1);
+							if (newLists != null) {
+								page_type_1++;
+							}
 						}
 						total_1 = total;
 						break;
@@ -803,19 +807,23 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 						switch (sortType) {
 						case 1: //降序
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all_2_DSC, sa_all_2_dsc);
+								newLists = updNewEntity(total, countTotal, lists, lv_all_2_DSC, am_all_2_dsc);
 							}else {
-								addEntity(lv_all_2_DSC, lists, sa_all_2_dsc);
-								page_type_2_DSC++;
+								newLists = addNewEntity(lv_all_2_DSC, lists, am_all_2_dsc);
+								if (newLists != null) {
+									page_type_2_DSC++;
+								}
 							}
 							total_2_DSC = total;
 							break;
 						case 2: //升序
 							if (loadType == 0) { //下拉
-								updEntity(total, countTotal, lists, lv_all_2_ASC, sa_all_2_asc);
+								newLists = updNewEntity(total, countTotal, lists, lv_all_2_ASC, am_all_2_asc);
 							}else {
-								addEntity(lv_all_2_ASC, lists, sa_all_2_asc);
-								page_type_2_ASC++;
+								newLists = addNewEntity(lv_all_2_ASC, lists, am_all_2_asc);
+								if (newLists != null) {
+									page_type_2_ASC++;
+								}
 							}
 							total_2_ASC = total;
 							break;
@@ -825,6 +833,9 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 					if (typeId == 0) { //搜索状态
 						ll_hot_words.setVisibility(View.GONE);
 						ll_group_main.setVisibility(View.VISIBLE);
+					}
+					if (newLists != null) {
+						addNewShowLists(newLists);
 					}
 					countTotal = total;
 					myUpdateAdapter();
@@ -872,64 +883,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		myUpdateAdapter();
 	}
 
-	/**
-	 * 刷新数集
-	 */
-	private void updEntity(int newTotal, int oldTotal, List<ProductListEntity> newDatas, 
-			List<ProductListEntity> oldDatas, SparseBooleanArray sa_old) {
-		if (oldTotal < newTotal) {
-			List<ProductListEntity> datas = new ArrayList<ProductListEntity>();
-			datas.addAll(oldDatas);
-			oldDatas.clear();
-
-			ProductListEntity newEn, oldEn;
-			int dataId = 0;
-			for (int i = 0; i < (newTotal - oldTotal); i++) {
-				newEn = newDatas.get(i);
-				if (newEn != null) {
-					dataId = newEn.getId();
-					if (dataId != 0 && sa_old.indexOfKey(dataId) < 0) {
-						// 添加至顶层
-						oldDatas.add(newEn);
-						sa_old.put(dataId, true);
-						// 移除最底层
-						oldEn = datas.remove(datas.size()-1);
-						if (oldEn != null) {
-							sa_old.delete(oldEn.getId());
-						}
-					}
-				}
-			}
-			oldDatas.addAll(datas);
-			addAllShow(oldDatas);
-			setLoadMoreDate();
-		}
-	}
-	
-	/**
-	 * 数据去重函数
-	 */
-	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, SparseBooleanArray sa_old) {
-		ProductListEntity entity = null;
-		int dataId = 0;
-		for (int i = 0; i < newDatas.size(); i++) {
-			entity = newDatas.get(i);
-			if (entity != null) {
-				dataId = entity.getId();
-				if (dataId != 0 && sa_old.indexOfKey(dataId) < 0) {
-					oldDatas.add(entity);
-					sa_old.put(dataId, true);
-				}
-			}
-		}
-		addAllShow(oldDatas);
-	}
-
-	private void addAllShow(List<ProductListEntity> showLists) {
-		lv_show.clear();
-		lv_show.addAll(showLists);
-	}
-	
 	private void myUpdateAdapter() {
 		if (current_Page == 1) {
 			toTop();
@@ -954,14 +907,39 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		stopAnimation();
 	}
 
-	/**
-	 * 滚动到顶部
-	 */
-	private void toTop() {
-		setAdapter();
-		iv_to_top.setVisibility(View.GONE);
+	private void addAllShow(List<ProductListEntity> showLists) {
+		lv_show.clear();
+		lv_show.addAll(showLists);
 	}
-	
+
+	private void addNewShowLists(List<BaseEntity> showLists) {
+		lv_show.clear();
+		for (int i = 0; i < showLists.size(); i++) {
+			lv_show.add((ProductListEntity) showLists.get(i));
+		}
+		switch (topType) {
+			case TYPE_1:
+				lv_all_1.clear();
+				lv_all_1.addAll(lv_show);
+				break;
+			case TYPE_2: //价格
+				switch (sortType) {
+					case 1: //降序
+						lv_all_2_DSC.clear();
+						lv_all_2_DSC.addAll(lv_show);
+						break;
+					case 2: //升序
+						lv_all_2_ASC.clear();
+						lv_all_2_ASC.addAll(lv_show);
+						break;
+				}
+				break;
+		}
+		if (loadType == 0) {
+			setLoadMoreData();
+		}
+	}
+
 	@Override
 	protected void stopAnimation() {
 		super.stopAnimation();
@@ -986,18 +964,19 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			ll_search_history.setVisibility(View.GONE);
 		}
 	}
-	
+
 	/**
-	 * 判定是否停止加载翻页数据
+	 * 滚动到顶部
 	 */
-	private boolean isStop(){
-		return lv_show.size() > 0 && lv_show.size() == countTotal;
+	private void toTop() {
+		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 
 	/**
 	 * 设置允许加载更多
 	 */
-	private void setLoadMoreDate() {
+	private void setLoadMoreData() {
 		refresh_lv.setHasMoreData(true);
 	}
 	
@@ -1057,9 +1036,9 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		lv_all_1.clear();
 		lv_all_2_DSC.clear();
 		lv_all_2_ASC.clear();
-		sa_all_1.clear();
-		sa_all_2_asc.clear();
-		sa_all_2_dsc.clear();
+		am_all_1.clear();
+		am_all_2_asc.clear();
+		am_all_2_dsc.clear();
 	}
 	
 }

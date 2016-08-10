@@ -3,7 +3,7 @@ package com.spshop.stylistpark.entity;
 import java.util.List;
 
 
-public class GoodsCartEntity extends BaseEntity{
+public class GoodsCartEntity extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -42,6 +42,10 @@ public class GoodsCartEntity extends BaseEntity{
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return "";
+	}
 
 	public int getGoodsTotal() {
 		return goodsTotal;

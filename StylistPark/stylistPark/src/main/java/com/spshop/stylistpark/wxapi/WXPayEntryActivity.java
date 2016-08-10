@@ -47,7 +47,6 @@ import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.unionpay.UPPayAssistEx;
 
 import org.json.JSONException;
@@ -59,10 +58,10 @@ import java.util.List;
 public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler, OnClickListener {
 	
 	private static final String TAG = "WXPayEntryActivity";
-	public static final int PAY_ZFB = 1;
-	public static final int PAY_WEIXI = 2;
-	public static final int PAY_UNION = 3;
-	public static final int PAY_PAL = 4;
+	public static final int PAY_ZFB = 12;
+	public static final int PAY_WEIXI = 11;
+	public static final int PAY_UNION = 13;
+	public static final int PAY_PAL = 14;
 
 	// 银联  mMode参数解释： "00" - 启动银联正式环境 "01" - 连接银联测试环境
 	private final String mMode = AppConfig.IS_PUBLISH ? "00":"01";
@@ -131,7 +130,6 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
         AppManager.getInstance().addActivity(this);//添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 		
-		api = WXAPIFactory.createWXAPI(this, AppConfig.WX_APP_ID);
 		orderSn = getIntent().getExtras().getString("orderSn");
 		orderTotal = getIntent().getExtras().getString("orderTotal");
 		rootPage = getIntent().getExtras().getString("root");

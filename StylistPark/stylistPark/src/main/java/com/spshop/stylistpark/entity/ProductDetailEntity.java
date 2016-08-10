@@ -156,6 +156,10 @@ public class ProductDetailEntity extends BaseEntity{
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return String.valueOf(id);
+	}
 
 	public int getId() {
 		return id;

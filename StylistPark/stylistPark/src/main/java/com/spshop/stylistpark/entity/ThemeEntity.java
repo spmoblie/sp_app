@@ -30,6 +30,10 @@ public class ThemeEntity extends BaseEntity {
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return String.valueOf(id);
+	}
 
 	public String getTitle() {
 		return title;

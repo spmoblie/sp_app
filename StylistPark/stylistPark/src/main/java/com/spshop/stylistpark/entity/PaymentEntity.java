@@ -1,6 +1,6 @@
 package com.spshop.stylistpark.entity;
 
-public class PaymentEntity extends BaseEntity{
+public class PaymentEntity extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -58,6 +58,10 @@ public class PaymentEntity extends BaseEntity{
 		this.trade_state_desc = trade_state_desc;
 	}
 
+	@Override
+	public String getEntityId() {
+		return prepayid;
+	}
 
 	public String getPrepayid() {
 		return prepayid;

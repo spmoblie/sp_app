@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ClipPhotoEntity extends BaseEntity{
+public class ClipPhotoEntity extends BaseEntity {
 	
 	private static final long serialVersionUID = 4438798104656417389L;
 	
@@ -28,6 +28,10 @@ public class ClipPhotoEntity extends BaseEntity{
 		this.photoUrl = photoUrl;
 	}
 
+	@Override
+	public String getEntityId() {
+		return String.valueOf(photoId);
+	}
 
 	public String getName() {
 		return name;

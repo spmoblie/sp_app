@@ -23,11 +23,14 @@ public class ShareEntity extends BaseEntity {
 		
 	}
 
-	
 	public ShareEntity(int errCode, String errInfo) {
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return id;
+	}
 
 	public String getId() {
 		return id;

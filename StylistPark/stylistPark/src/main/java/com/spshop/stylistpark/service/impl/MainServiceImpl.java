@@ -603,8 +603,8 @@ public class MainServiceImpl implements MainService {
 		String uri = AppConfig.URL_COMMON_MY_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		params.add(new MyNameValuePair("app", "edit_payment"));
-		params.add(new MyNameValuePair("pay_id", String.valueOf(23)));
-		params.add(new MyNameValuePair("order_id", "1187"));
+		params.add(new MyNameValuePair("pay_id", String.valueOf(payType)));
+		params.add(new MyNameValuePair("order_id", orderID));
 		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);

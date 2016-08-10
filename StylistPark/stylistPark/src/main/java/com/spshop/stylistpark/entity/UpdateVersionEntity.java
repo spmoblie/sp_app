@@ -38,6 +38,11 @@ public class UpdateVersionEntity extends BaseEntity {
 		this.force = force;
 	}
 
+	@Override
+	public String getEntityId() {
+		return "";
+	}
+
 	public String getDescription() {
 		return description;
 	}

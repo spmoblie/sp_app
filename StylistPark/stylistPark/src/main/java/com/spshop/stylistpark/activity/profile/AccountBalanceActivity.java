@@ -151,7 +151,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 加载更多
-            	if (!isStop()) {
+            	if (!isStopLoadMore(lv_show.size(), countTotal)) {
             		loadMoreDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -331,13 +331,6 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 		super.onFailure(requestCode, state, result);
 		stopAnimation();
 	}
-	
-	@Override
-	protected void stopAnimation() {
-		super.stopAnimation();
-		refresh_lv.onPullDownRefreshComplete();
-		refresh_lv.onPullUpRefreshComplete();
-	}
 
 	private void myUpdateAdapter() {
 		if (lv_show.size() == 0) {
@@ -347,11 +340,11 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 		lv_adapter.updateAdapter(lv_show);
 	}
 	
-	/**
-	 * 判定是否停止加载翻页数据
-	 */
-	private boolean isStop(){
-		return lv_show.size() > 0 && lv_show.size() == countTotal;
+	@Override
+	protected void stopAnimation() {
+		super.stopAnimation();
+		refresh_lv.onPullDownRefreshComplete();
+		refresh_lv.onPullUpRefreshComplete();
 	}
-	
+
 }

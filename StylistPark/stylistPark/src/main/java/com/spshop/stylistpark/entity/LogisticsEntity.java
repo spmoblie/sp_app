@@ -3,7 +3,7 @@ package com.spshop.stylistpark.entity;
 import java.util.List;
 
 
-public class LogisticsEntity extends BaseEntity{
+public class LogisticsEntity extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +32,10 @@ public class LogisticsEntity extends BaseEntity{
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return "";
+	}
 
 	public String getMsgContent() {
 		return msgContent;

@@ -71,6 +71,10 @@ public class BounsEntity extends BaseEntity {
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return bounsId;
+	}
 	
 	public String getBounsId() {
 		return bounsId;

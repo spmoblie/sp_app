@@ -34,6 +34,10 @@ public class AddressEntity extends BaseEntity {
 		super(errCode, errInfo);
 	}
 
+	@Override
+	public String getEntityId() {
+		return String.valueOf(addressId);
+	}
 
 	public int getAddressId() {
 		return addressId;

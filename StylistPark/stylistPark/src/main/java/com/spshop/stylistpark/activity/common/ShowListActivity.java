@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.SparseBooleanArray;
+import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
@@ -20,6 +20,7 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
+import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -62,7 +63,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all_1 = new ArrayList<ProductListEntity>();
-	private SparseBooleanArray sa_all_1 = new SparseBooleanArray();
+	private ArrayMap<String, Boolean> am_all_1 = new ArrayMap<String, Boolean>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +118,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 加载更多
-            	if (!isStop()) {
+            	if (!isStopLoadMore(lv_show.size(), countTotal)) {
             		loadSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -213,7 +214,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
         	lv_show_two.clear();
 			lv_show.clear();
 			lv_all_1.clear();
-			sa_all_1.clear();
+			am_all_1.clear();
         	refresh_lv.doPullRefreshing(true, 500);
 		}
 		super.onResume();
@@ -260,8 +261,11 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 			countTotal = product_MainEn.getTotal();
 			List<ProductListEntity> lists = product_MainEn.getMainLists();
 			if (lists.size() > 0) {
-				addEntity(lv_all_1, lists, sa_all_1);
-				current_Page++;
+				List<BaseEntity> newLists = addNewEntity(lv_all_1, lists, am_all_1);
+				if (newLists != null) {
+					addNewShowLists(newLists);
+					current_Page++;
+				}
 				myUpdateAdapter();
 			}else {
 				loadFailHandle();
@@ -282,31 +286,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 	private void loadFailHandle() {
 		stopAnimation();
 	}
-	
-	/**
-	 * 数据去重函数
-	 */
-	private void addEntity(List<ProductListEntity> oldDatas, List<ProductListEntity> newDatas, SparseBooleanArray oldMap) {
-		ProductListEntity entity = null;
-		int dataId = 0;
-		for (int i = 0; i < newDatas.size(); i++) {
-			entity = newDatas.get(i);
-			if (entity != null) {
-				dataId = entity.getId();
-				if (dataId != 0 && oldMap.indexOfKey(dataId) < 0) {
-					oldDatas.add(entity);
-					oldMap.put(dataId, true);
-				}
-			}
-		}
-		addAllShow(oldDatas);
-	}
 
-	private void addAllShow(List<ProductListEntity> showLists) {
-		lv_show.clear();
-		lv_show.addAll(showLists);
-	}
-	
 	private void myUpdateAdapter() {
 		lv_show_two.clear();
 		ListShowTwoEntity lstEn = null;
@@ -325,14 +305,15 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 		stopAnimation();
 	}
 
-	/**
-	 * 滚动到顶部
-	 */
-	private void toTop() {
-		setAdapter();
-		iv_to_top.setVisibility(View.GONE);
+	private void addNewShowLists(List<BaseEntity> showLists) {
+		lv_show.clear();
+		for (int i = 0; i < showLists.size(); i++) {
+			lv_show.add((ProductListEntity) showLists.get(i));
+		}
+		lv_all_1.clear();
+		lv_all_1.addAll(lv_show);
 	}
-	
+
 	@Override
 	protected void stopAnimation() {
 		super.stopAnimation();
@@ -355,12 +336,13 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 			refresh_lv.setVisibility(View.VISIBLE);
 		}
 	}
-	
+
 	/**
-	 * 判定是否停止加载翻页数据
+	 * 滚动到顶部
 	 */
-	private boolean isStop(){
-		return lv_show.size() > 0 && lv_show.size() == countTotal;
+	private void toTop() {
+		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
-	
+
 }

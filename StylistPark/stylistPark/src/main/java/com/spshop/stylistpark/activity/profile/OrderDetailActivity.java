@@ -304,7 +304,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	private void startPayActivity(OrderEntity orderEn) {
 		if (orderEn != null) {
 			Intent intent =new Intent(mContext, WXPayEntryActivity.class);
-			intent.putExtra("orderSn", orderEn.getOrderNo());
+			intent.putExtra("orderSn", orderEn.getOrderId());
 			intent.putExtra("orderTotal", orderEn.getCurrency() + orderEn.getPricePay());
 			intent.putExtra("root", TAG);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

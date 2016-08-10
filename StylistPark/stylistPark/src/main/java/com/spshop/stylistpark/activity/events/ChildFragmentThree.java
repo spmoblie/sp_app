@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.SparseBooleanArray;
+import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,9 +20,11 @@ import android.widget.TextView;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
+import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.SpecialAdapter;
+import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
@@ -77,9 +79,9 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 	private List<ThemeEntity> lv_all_1 = new ArrayList<ThemeEntity>();
 	private List<ThemeEntity> lv_all_2 = new ArrayList<ThemeEntity>();
 	private List<ThemeEntity> lv_all_3 = new ArrayList<ThemeEntity>();
-	private SparseBooleanArray sa_all_1 = new SparseBooleanArray();
-	private SparseBooleanArray sa_all_2 = new SparseBooleanArray();
-	private SparseBooleanArray sa_all_3 = new SparseBooleanArray();
+	private ArrayMap<String, Boolean> am_all_1 = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_2 = new ArrayMap<String, Boolean>();
+	private ArrayMap<String, Boolean> am_all_3 = new ArrayMap<String, Boolean>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -148,7 +150,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 加载更多
-				if (!isStop()) {
+				if (!BaseActivity.isStopLoadMore(lv_show.size(), countTotal)) {
 					loadSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -221,7 +223,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 		loadType = 1;
 		current_Page = 1;
 		startAnimation();
-		setLoadMoreDate();
+		setLoadMoreData();
 		requestProductLists();
 	}
 
@@ -354,7 +356,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 		if (current_Page != 1) {
 			toTop();
 		}
-		setLoadMoreDate();
+		setLoadMoreData();
 	}
 
 	@Override
@@ -420,37 +422,44 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 						int total = mainEn.getCountTotal();
 						List<ThemeEntity> lists = mainEn.getMainLists();
 						if (lists != null && lists.size() > 0) {
+							List<BaseEntity> newLists = null;
 							switch (topType) {
 								case TYPE_1:
 									if (loadType == 0) { //下拉
-										updEntity(total, total_1, lists, lv_all_1, sa_all_1);
-										//page_type_1 = 2;
+										newLists = BaseActivity.updNewEntity(total, total_1, lists, lv_all_1, am_all_1);
 									}else {
-										addEntity(lv_all_1, lists, sa_all_1);
-										page_type_1++;
+										newLists = BaseActivity.addNewEntity(lv_all_1, lists, am_all_1);
+										if (newLists != null) {
+											page_type_1++;
+										}
 									}
 									total_1 = total;
 									break;
 								case TYPE_2:
 									if (loadType == 0) { //下拉
-										updEntity(total, total_2, lists, lv_all_2, sa_all_2);
-										//page_type_2 = 2;
+										newLists = BaseActivity.updNewEntity(total, total_2, lists, lv_all_2, am_all_2);
 									}else {
-										addEntity(lv_all_2, lists, sa_all_2);
-										page_type_2++;
+										newLists = BaseActivity.addNewEntity(lv_all_2, lists, am_all_2);
+										if (newLists != null) {
+											page_type_2++;
+										}
 									}
 									total_2 = total;
 									break;
 								case TYPE_3:
 									if (loadType == 0) { //下拉
-										updEntity(total, total_3, lists, lv_all_3, sa_all_3);
-										//page_type_3 = 2;
+										newLists = BaseActivity.updNewEntity(total, total_3, lists, lv_all_3, am_all_3);
 									}else {
-										addEntity(lv_all_3, lists, sa_all_3);
-										page_type_3++;
+										newLists = BaseActivity.addNewEntity(lv_all_3, lists, am_all_3);
+										if (newLists != null) {
+											page_type_3++;
+										}
 									}
 									total_3 = total;
 									break;
+							}
+							if (newLists != null) {
+								addNewShowLists(newLists);
 							}
 							countTotal = total;
 							myUpdateAdapter();
@@ -493,68 +502,6 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 		myUpdateAdapter();
 	}
 
-	/**
-	 * 刷新数集
-	 */
-	private void updEntity(int newTotal, int oldTotal, List<ThemeEntity> newDatas,
-						   List<ThemeEntity> oldDatas, SparseBooleanArray oldMap) {
-		if (oldTotal < newTotal) {
-			List<ThemeEntity> datas = new ArrayList<ThemeEntity>();
-			datas.addAll(oldDatas);
-			oldDatas.clear();
-
-			ThemeEntity newEn, oldEn;
-			int dataId = 0;
-			for (int i = 0; i < (newTotal - oldTotal); i++) {
-				newEn = newDatas.get(i);
-				if (newEn != null) {
-					dataId = newEn.getId();
-					if (dataId != 0 && oldMap.indexOfKey(dataId) < 0) {
-						// 添加至顶层
-						oldDatas.add(newEn);
-						oldMap.put(dataId, true);
-						// 移除最底层
-						oldEn = datas.remove(datas.size()-1);
-						if (oldEn != null) {
-							oldMap.delete(oldEn.getId());
-						}
-					}
-				}
-			}
-			oldDatas.addAll(datas);
-			addAllShow(oldDatas);
-			setLoadMoreDate();
-		}
-		/*oldDatas.clear();
-		oldMap.clear();
-		addEntity(oldDatas, newDatas, oldMap);
-		setLoadMoreDate();*/
-	}
-
-	/**
-	 * 数据去重函数
-	 */
-	private void addEntity(List<ThemeEntity> oldDatas, List<ThemeEntity> newDatas, SparseBooleanArray oldMap) {
-		ThemeEntity entity = null;
-		int dataId = 0;
-		for (int i = 0; i < newDatas.size(); i++) {
-			entity = newDatas.get(i);
-			if (entity != null) {
-				dataId = entity.getId();
-				if (dataId != 0 && oldMap.indexOfKey(dataId) < 0) {
-					oldDatas.add(entity);
-					oldMap.put(dataId, true);
-				}
-			}
-		}
-		addAllShow(oldDatas);
-	}
-
-	private void addAllShow(List<ThemeEntity> showLists) {
-		lv_show.clear();
-		lv_show.addAll(showLists);
-	}
-
 	private void myUpdateAdapter() {
 		lv_show_two.clear();
 		ListShowTwoEntity lstEn = null;
@@ -573,12 +520,33 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 		stopAnimation();
 	}
 
-	/**
-	 * 滚动到顶部
-	 */
-	private void toTop() {
-		setAdapter();
-		iv_to_top.setVisibility(View.GONE);
+	private void addAllShow(List<ThemeEntity> showLists) {
+		lv_show.clear();
+		lv_show.addAll(showLists);
+	}
+
+	private void addNewShowLists(List<BaseEntity> showLists) {
+		lv_show.clear();
+		for (int i = 0; i < showLists.size(); i++) {
+			lv_show.add((ThemeEntity) showLists.get(i));
+		}
+		switch (topType) {
+			case TYPE_1:
+				lv_all_1.clear();
+				lv_all_1.addAll(lv_show);
+				break;
+			case TYPE_2:
+				lv_all_2.clear();
+				lv_all_2.addAll(lv_show);
+				break;
+			case TYPE_3:
+				lv_all_3.clear();
+				lv_all_3.addAll(lv_show);
+				break;
+		}
+		if (loadType == 0) {
+			setLoadMoreData();
+		}
 	}
 
 	/**
@@ -614,16 +582,17 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 	}
 
 	/**
-	 * 判定是否停止加载翻页数据
+	 * 滚动到顶部
 	 */
-	private boolean isStop(){
-		return lv_show.size() > 0 && lv_show.size() == countTotal;
+	private void toTop() {
+		setAdapter();
+		iv_to_top.setVisibility(View.GONE);
 	}
 
 	/**
 	 * 设置允许加载更多
 	 */
-	private void setLoadMoreDate() {
+	private void setLoadMoreData() {
 		refresh_lv.setHasMoreData(true);
 	}
 
