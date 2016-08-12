@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:text="@string/loading_pull_refresh"
-                android:textColor="@color/text_color_assist"
+                android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12" />
 
             <TextView
@@ -34,7 +34,7 @@
                 android:layout_below="@id/pull_to_refresh_header_hint_textview"
                 android:layout_marginTop="6dp"
                 android:text="@string/loading_update_time"
-                android:textColor="@color/text_color_assist"
+                android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12"
                 android:visibility="gone" />
 
@@ -47,7 +47,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_toRightOf="@id/pull_to_refresh_last_update_time_text"
                 android:minWidth="50dp"
-                android:textColor="@color/text_color_assist"
+                android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12"
                 android:visibility="gone" />
         </RelativeLayout>

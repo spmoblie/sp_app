@@ -112,7 +112,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 		int attrId = data.getAttrId();
 		TextView tv_name = new TextView(context);
 		tv_name.setText(data.getAttrName() + ":");
-		tv_name.setTextColor(context.getResources().getColor(R.color.text_color_assist));
+		tv_name.setTextColor(context.getResources().getColor(R.color.label_text_color));
 		tv_name.setTextSize(12);
 		tv_name.setId(attrId);
 		rl_main.addView(tv_name);
@@ -173,7 +173,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 				tv.setTextColor(context.getResources().getColor(R.color.ui_bg_color_bar));
 				tv.setBackground(context.getResources().getDrawable(R.drawable.selector_btn_small));
 			}else {
-				tv.setTextColor(context.getResources().getColor(R.color.text_color_thin));
+				tv.setTextColor(context.getResources().getColor(R.color.input_text_color));
 				tv.setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
 			}
 			// 记录库存数
@@ -303,7 +303,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			TextView tv_item = (TextView)views[i];
 			num = getSkuNum(String.valueOf(views[i].getId()));
 			if (num == 0) {
-				tv_item.setTextColor(context.getResources().getColor(R.color.text_color_thin));
+				tv_item.setTextColor(context.getResources().getColor(R.color.input_text_color));
 				views[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
 			}else {
 				tv_item.setTextColor(context.getResources().getColor(R.color.ui_bg_color_bar));
@@ -352,7 +352,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			TextView tv_item = (TextView)views_2[i];
 			num = getSkuNum(String.valueOf(selectId) + "|" + String.valueOf(views_2[i].getId()));
 			if (num == 0) {
-				tv_item.setTextColor(context.getResources().getColor(R.color.text_color_thin));
+				tv_item.setTextColor(context.getResources().getColor(R.color.input_text_color));
 				views_2[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
 			}else {
 				tv_item.setTextColor(context.getResources().getColor(R.color.ui_bg_color_bar));

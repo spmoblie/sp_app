@@ -60,7 +60,7 @@
                     android:layout_alignParentRight="true"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:textColor="@color/text_color_content"
+                    android:textColor="@color/conte_text_color"
                     android:textSize="@dimen/text_size_12" />
 
                 <TextView
@@ -71,7 +71,7 @@
                     android:layout_alignParentRight="true"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:textColor="@color/text_color_content"
+                    android:textColor="@color/conte_text_color"
                     android:textSize="@dimen/text_size_12" />
             </RelativeLayout>
         </LinearLayout>
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:textColor="@color/text_color_content"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_12" />
             
             <ImageView 
@@ -108,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/text_color_content"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
     </LinearLayout>

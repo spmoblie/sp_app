@@ -195,7 +195,7 @@ public class DialogManager {
 				TextView tv_item = (TextView) view.findViewById(android.R.id.text1);
 				tv_item.setPadding(30, 0, 30, 0);
 				tv_item.setTextSize(18);
-				tv_item.setTextColor(mContext.getResources().getColor(R.color.text_color_title));
+				tv_item.setTextColor(mContext.getResources().getColor(R.color.conte_text_color));
 				if (!isCenter) { //不居中
 					tv_item.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
 				} else {

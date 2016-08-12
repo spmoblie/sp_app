@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/my_webview_fl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -27,15 +27,12 @@
                 android:id="@+id/my_webview_uvv"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                app:uvv_autoRotation="true"
-                app:uvv_fitXY="false" />
+                android:layout_gravity="center" />
 
             <com.spshop.stylistpark.widgets.video.UniversalMediaController
                 android:id="@+id/my_webview_umc"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                app:uvv_scalable="true" />
+                android:layout_height="fill_parent" />
 
         </FrameLayout>
 
@@ -64,8 +61,8 @@
                 android:imeOptions="actionSearch"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textColor="@color/text_color_title"
-                android:textColorHint="@color/text_color_assist"
+                android:textColor="@color/conte_text_color"
+                android:textColorHint="@color/input_text_color"
                 android:textSize="@dimen/text_size_14" />
 
             <TextView
@@ -76,7 +73,7 @@
                 android:paddingLeft="10dp"
                 android:text="@string/events_comment"
                 android:textSize="@dimen/text_size_16"
-                android:textColor="@color/text_color_assist"/>
+                android:textColor="@color/label_text_color"/>
 
         </LinearLayout>
 

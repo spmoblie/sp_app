@@ -397,14 +397,6 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		if (mShareView != null) {
-			mShareView.onSaveInstanceState(outState);
-		}
-		super.onSaveInstanceState(outState);
-	}
-
-	@Override
 	public void onReq(BaseReq arg0) {
 
 	}
@@ -423,9 +415,6 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected void onResume() {
 		super.onResume();
 		LogUtil.i(TAG, "onResume()");
-		if (mShareView != null) {
-			mShareView.onResume();
-		}
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
 	}
@@ -437,18 +426,12 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		if (dm != null) {
 			dm.clearInstance();
 		}
-		if (mShareView != null) {
-			mShareView.onResume();
-		}
 	}
 	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy()");
-		if (mShareView != null) {
-			mShareView.onDestroy();
-		}
 		headGONE = null;
 		headVISIBLE = null;
 	}

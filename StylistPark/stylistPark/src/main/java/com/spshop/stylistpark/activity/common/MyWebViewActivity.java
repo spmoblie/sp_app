@@ -162,7 +162,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 				public void afterTextChanged(Editable s) {
 					String comStr = s.toString();
 					if (StringUtil.isNull(comStr)) {
-						tv_comment.setTextColor(getResources().getColor(R.color.text_color_assist));
+						tv_comment.setTextColor(getResources().getColor(R.color.label_text_color));
 					} else {
 						tv_comment.setTextColor(getResources().getColor(R.color.text_color_app_bar));
 					}

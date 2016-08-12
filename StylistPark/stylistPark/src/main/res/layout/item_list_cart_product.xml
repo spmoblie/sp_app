@@ -134,7 +134,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="@string/number_0"
-                        android:textColor="@color/text_color_title"
+                        android:textColor="@color/conte_text_color"
                         android:textSize="@dimen/text_size_12" />
 
                     <ImageView

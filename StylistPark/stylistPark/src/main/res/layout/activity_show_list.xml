@@ -19,7 +19,7 @@
         android:padding="15dp"
         android:layout_marginTop="30dp"
         android:text="@string/product_search_no_data"
-        android:textColor="@color/text_color_assist"
+        android:textColor="@color/label_text_color"
         android:textSize="@dimen/text_size_14"
         android:visibility="gone" />
 
@@ -94,7 +94,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:paddingTop="5dp"
-                android:textColor="@color/text_color_title"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_12"
                 android:visibility="gone" />
 
@@ -125,7 +125,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:textColor="@color/text_color_content"
+                        android:textColor="@color/conte_text_color"
                         android:textSize="@dimen/text_size_16"
                         android:contentDescription="@string/desc" />
 
@@ -155,7 +155,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="@string/day"
-                        android:textColor="@color/text_color_assist"
+                        android:textColor="@color/label_text_color"
                         android:textSize="@dimen/text_size_14" />
 
                     <TextView
@@ -171,7 +171,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="@string/hour"
-                        android:textColor="@color/text_color_assist"
+                        android:textColor="@color/label_text_color"
                         android:textSize="@dimen/text_size_14" />
 
                     <TextView
@@ -187,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="@string/minute"
-                        android:textColor="@color/text_color_assist"
+                        android:textColor="@color/label_text_color"
                         android:textSize="@dimen/text_size_14" />
 
                     <TextView
@@ -203,7 +203,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="@string/second"
-                        android:textColor="@color/text_color_assist"
+                        android:textColor="@color/label_text_color"
                         android:textSize="@dimen/text_size_14" />
                 </LinearLayout>
             </LinearLayout>

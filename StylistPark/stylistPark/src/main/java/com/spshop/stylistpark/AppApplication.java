@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.DisplayMetrics;
 
+import com.facebook.FacebookSdk;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -98,6 +99,9 @@ public class AppApplication extends Application implements OnDataListener{
 		
 		// 初始化异步加载图片的jar配置
 		initImageLoader(spApp);
+
+		// Facebook SDK初始化
+		FacebookSdk.sdkInitialize(getApplicationContext());
 	}
 
 	public static synchronized AppApplication getInstance() {

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -67,6 +68,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 
 	static class ViewHolder{
 		LinearLayout item_main, left_main, right_main;
+		RelativeLayout left_rl_bottom;
 		ImageView left_img, right_img;
 		TextView left_name, left_brand, left_curr, left_sell_price, left_full_price, left_discount;
 		TextView right_name, right_brand, right_curr, right_sell_price, right_full_price, right_discount;
@@ -89,6 +91,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder.left_sell_price = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_sell_price);
 			holder.left_full_price = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_full_price);
 			holder.left_discount = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_discount);
+			holder.left_rl_bottom = (RelativeLayout) convertView.findViewById(R.id.list_commodity_two_left_rl_bottom);
 			holder.right_main = (LinearLayout) convertView.findViewById(R.id.list_commodity_two_right_ll_main);
 			holder.right_img = (ImageView) convertView.findViewById(R.id.list_commodity_two_right_iv_img);
 			holder.right_brand = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_brand);
@@ -103,10 +106,10 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder=(ViewHolder)convertView.getTag();
 		}
 		final ListShowTwoEntity data = datas.get(position);
-		if (position == 0) {
-			holder.item_main.setPadding(12, 12, 12, 12);
+		if (position == datas.size()-1) {
+			holder.left_rl_bottom.setVisibility(View.VISIBLE);
 		}else {
-			holder.item_main.setPadding(12, 0, 12, 12);
+			holder.left_rl_bottom.setVisibility(View.GONE);
 		}
 		final ProductListEntity leftEn = (ProductListEntity) data.getLeftEn();
 		if (leftEn != null) {

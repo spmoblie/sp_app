@@ -308,7 +308,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="@string/number_0"
-                                android:textColor="@color/text_color_content"
+                                android:textColor="@color/conte_text_color"
                                 android:textSize="@dimen/text_size_12" />
 
                             <TextView
@@ -319,7 +319,7 @@
                                 android:ellipsize="end"
                                 android:singleLine="true"
                                 android:text="@string/profile_member_order"
-                                android:textColor="@color/text_color_content"
+                                android:textColor="@color/conte_text_color"
                                 android:textSize="@dimen/text_size_11" />
                         </LinearLayout>
 
@@ -337,7 +337,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="@string/number_0"
-                                android:textColor="@color/text_color_content"
+                                android:textColor="@color/conte_text_color"
                                 android:textSize="@dimen/text_size_12"
                                 android:visibility="gone" />
 
@@ -347,7 +347,7 @@
                                 android:layout_marginTop="5dp"
                                 android:gravity="center"
                                 android:text="@string/profile_member_list"
-                                android:textColor="@color/text_color_content"
+                                android:textColor="@color/conte_text_color"
                                 android:textSize="@dimen/text_size_11"
                                 android:visibility="gone" />
                         </LinearLayout>

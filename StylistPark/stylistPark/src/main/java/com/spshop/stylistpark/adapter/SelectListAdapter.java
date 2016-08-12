@@ -125,7 +125,7 @@ public class SelectListAdapter extends BaseAdapter{
 				holder.tv_select_name.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
 			}else {
 				holder.tv_select_name.setText(R.string.all);
-				holder.tv_select_name.setTextColor(context.getResources().getColor(R.color.text_color_content));
+				holder.tv_select_name.setTextColor(context.getResources().getColor(R.color.conte_text_color));
 			}
 			break;
 		case DATA_TYPE_2: //ScreenListActivity --> SelectListActivity
@@ -192,7 +192,7 @@ public class SelectListAdapter extends BaseAdapter{
 		if (selectData != null && selectData.getChildId() == data.getChildId()) {
 			holder.tv_item_name.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
 		}else {
-			holder.tv_item_name.setTextColor(context.getResources().getColor(R.color.text_color_content));
+			holder.tv_item_name.setTextColor(context.getResources().getColor(R.color.conte_text_color));
 		}
 		holder.tv_item_name.setText(data.getChildShowName());
 		holder.tv_select_name.setVisibility(View.GONE);

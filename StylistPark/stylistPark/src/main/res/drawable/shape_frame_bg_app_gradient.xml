@@ -4,7 +4,7 @@
 
     <!-- 渐变 -->  
      <gradient
-        android:endColor="@color/ui_bg_color_purple"
+        android:endColor="#C769C6"
         android:gradientRadius="0"
         android:startColor="@color/ui_bg_color_bar"
         android:type="linear" />

@@ -43,7 +43,7 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:drawablePadding="5dp"
-                android:textColor="@color/text_color_title"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_14" />
 
             <TextView
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textColor="@color/text_color_assist"
+                android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/text_color_assist"
+                android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12"
                 android:visibility="gone" />
 
@@ -70,7 +70,7 @@
                 android:layout_alignParentBottom="true"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textColor="@color/text_color_assist"
+                android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
     </LinearLayout>

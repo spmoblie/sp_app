@@ -562,7 +562,45 @@
     <string name="txt_color_silver_zh">銀色</string>
     <string name="txt_color_muti_color_zh">彩色</string>
 
-    
+
+    <!-- Generator Template -->
+    <string-array name="array_product_group">
+        <item>0</item>
+        <item>@string/txt_favourite</item>
+        <item>2</item>
+        <item>@string/txt_shirt</item>
+        <item>@string/txt_coat</item>
+        <item>@string/txt_skirt</item>
+        <item>@string/txt_trouser</item>
+        <item>@string/txt_dress</item>
+        <item>@string/txt_perfume</item>
+        <item>@string/txt_skincare</item>
+        <item>@string/txt_haircare</item>
+        <item>@string/txt_nail</item>
+        <item>@string/txt_makeup</item>
+        <item>@string/txt_homefragrance</item>
+        <item>@string/txt_accessorie</item>
+        <item>@string/txt_bag</item>
+        <item>@string/txt_shoes</item>
+        <item>@string/txt_decoration</item>
+    </string-array>
+
+    <string-array name="array_save_draft">
+        <item>@string/save</item>
+        <item>@string/dont_save</item>
+        <item>@string/cancel</item>
+    </string-array>
+
+    <string-array name="array_continue_last_create">
+        <item>@string/confirm</item>
+        <item>@string/collage_start_new_create</item>
+    </string-array>
+
+    <string-array name="array_photo_choose">
+        <item>@string/photo_shoot_upload</item>
+        <item>@string/photo_choose_upload</item>
+    </string-array>
+
     <string-array name="array_wechat">
         <item >分享至聯絡人</item>
         <item >發佈到朋友圈</item>

@@ -308,7 +308,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			tv_collection.setTextColor(getResources().getColor(R.color.text_color_app_bar));
 		}else {
 			tv_collection.setSelected(false);
-			tv_collection.setTextColor(getResources().getColor(R.color.text_color_assist));
+			tv_collection.setTextColor(getResources().getColor(R.color.label_text_color));
 		}
 	}
 
@@ -603,7 +603,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 						tv_popup_select.setText(selectName);
 						if (num == -1) {
 							tv_popup_prompt.setText(getString(R.string.item_select_no));
-							tv_popup_select.setTextColor(getResources().getColor(R.color.text_color_assist));
+							tv_popup_select.setTextColor(getResources().getColor(R.color.label_text_color));
 						}else {
 							tv_popup_prompt.setText(getString(R.string.item_select_ok));
 							tv_popup_select.setTextColor(getResources().getColor(R.color.ui_bg_color_bar));
@@ -633,7 +633,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 						if (isNext) {
 							tv_popup_confirm.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_0));
 						}else {
-							tv_popup_confirm.setBackgroundColor(getResources().getColor(R.color.text_color_thin));
+							tv_popup_confirm.setBackgroundColor(getResources().getColor(R.color.input_text_color));
 						}
 					}
 					
@@ -655,7 +655,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				if (isNext) {
 					tv_popup_confirm.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_0));
 				}else {
-					tv_popup_confirm.setBackgroundColor(getResources().getColor(R.color.text_color_thin));
+					tv_popup_confirm.setBackgroundColor(getResources().getColor(R.color.input_text_color));
 				}
 			}
 			tv_popup_select.setText(attrNameStr);

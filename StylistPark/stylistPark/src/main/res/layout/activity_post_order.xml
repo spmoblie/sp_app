@@ -163,7 +163,7 @@
                     android:focusableInTouchMode="false"
                     android:hint="@string/order_invoice_hint"
                     android:textSize="@dimen/text_size_12"
-                    android:textColor="@color/text_color_title" />
+                    android:textColor="@color/conte_text_color" />
                 
                 <ImageView 
                     android:id="@+id/post_order_iv_invoice_select"
@@ -191,7 +191,7 @@
                     android:paddingBottom="0dp"
                     android:hint="@string/order_buyer_hint"
                     android:textSize="@dimen/text_size_12"
-                    android:textColor="@color/text_color_title" />
+                    android:textColor="@color/conte_text_color" />
             </LinearLayout>
             
             <LinearLayout 

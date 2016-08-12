@@ -47,8 +47,8 @@
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
                 android:singleLine="true"
-                android:textColor="@color/text_color_content"
-                android:textColorHint="@color/text_color_assist"
+                android:textColor="@color/conte_text_color"
+                android:textColorHint="@color/label_text_color"
                 android:textSize="@dimen/text_size_14" />
 
             <ImageView
@@ -85,7 +85,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="@string/product_search"
-                android:textColor="@color/text_color_app_top"
+                android:textColor="@color/title_text_color"
                 android:textSize="@dimen/title_text_size_right" />
         </RelativeLayout>
     </LinearLayout>

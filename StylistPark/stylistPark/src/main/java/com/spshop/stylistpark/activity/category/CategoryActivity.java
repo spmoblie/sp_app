@@ -296,10 +296,10 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 		switch (index) {
 			case 0:
 				tv_title_1.setTextColor(getResources().getColor(R.color.text_color_app_bar));
-				tv_title_2.setTextColor(getResources().getColor(R.color.text_color_assist));
+				tv_title_2.setTextColor(getResources().getColor(R.color.conte_text_color));
 				break;
 			case 1:
-				tv_title_1.setTextColor(getResources().getColor(R.color.text_color_assist));
+				tv_title_1.setTextColor(getResources().getColor(R.color.conte_text_color));
 				tv_title_2.setTextColor(getResources().getColor(R.color.text_color_app_bar));
 				break;
 		}

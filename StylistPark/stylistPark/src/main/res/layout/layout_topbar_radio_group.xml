@@ -62,7 +62,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:ellipsize="end"
-                android:textColor="@color/text_color_assist"
+                android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_14" >
             </Button>
             
@@ -72,7 +72,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:drawablePadding="5dp"
-                android:textColor="@color/text_color_assist"
+                android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_14"
                 android:visibility="gone" />
         </RelativeLayout>

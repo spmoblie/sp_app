@@ -43,7 +43,7 @@
         android:id="@+id/item_goods_horizontal_tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_color_title"
+        android:textColor="@color/conte_text_color"
         android:textSize="@dimen/text_size_10" />
 
 </LinearLayout>

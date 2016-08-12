@@ -47,7 +47,7 @@
                 <TextView
                     android:id="@+id/top_three_title_tv_title_2"
                     style="@style/top_center_title"
-                    android:textColor="@color/text_color_assist"
+                    android:textColor="@color/conte_text_color"
                     android:textSize="@dimen/title_text_size_right" />
 
                 <ImageView
@@ -58,7 +58,7 @@
                 <TextView
                     android:id="@+id/top_three_title_tv_title_3"
                     style="@style/top_center_title"
-                    android:textColor="@color/text_color_assist"
+                    android:textColor="@color/conte_text_color"
                     android:textSize="@dimen/title_text_size_right" />
             </LinearLayout>
         </RelativeLayout>

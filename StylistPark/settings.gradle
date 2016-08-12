@@ -1,6 +1,5 @@
 include ':gPUImageLib', ':PushSDK'
 include ':rangeBar'
 include ':weiboSDK'
-include ':facebook3220'
 include ':main'
 include ':stylistPark'

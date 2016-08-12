@@ -27,7 +27,7 @@
             android:layout_centerInParent="true"
             android:text="@string/loading_no_more"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/text_color_assist"
+            android:textColor="@color/label_text_color"
             android:textSize="@dimen/text_size_12" />
     </RelativeLayout>
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="@string/cart_no_goods"
-            android:textColor="@color/text_color_assist"
+            android:textColor="@color/label_text_color"
             android:textSize="@dimen/text_size_14" />
 
         <TextView
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:text="@string/cart_go_add"
-            android:textColor="@color/text_color_assist"
+            android:textColor="@color/label_text_color"
             android:textSize="@dimen/text_size_12" />
 
         <ImageView

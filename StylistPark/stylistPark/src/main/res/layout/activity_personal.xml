@@ -162,7 +162,7 @@
             android:layout_centerVertical="true"
             android:text="@string/money_auth_ok"
             android:textSize="@dimen/text_size_13"
-            android:textColor="@color/text_color_assist"
+            android:textColor="@color/label_text_color"
             android:visibility="gone" />
 
         <ImageView

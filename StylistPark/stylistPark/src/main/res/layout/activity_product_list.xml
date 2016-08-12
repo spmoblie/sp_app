@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="@string/product_search_hot"
-                android:textColor="@color/text_color_title"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_13" />
 
             <TextView
@@ -113,7 +113,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:text="@string/product_search_no_data"
-                android:textColor="@color/text_color_assist"
+                android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_14" />
         </RelativeLayout>
 

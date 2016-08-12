@@ -14,10 +14,12 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.widget.FacebookDialog;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
@@ -58,10 +60,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 
-public class ShareView{
+public class ShareView {
 
+	private static final String TAG = "ShareView";
 	private static final int animationDuration = 400;
-	
+
 	Context mContext;
 	Activity mActivity;
 	ShareEntity mShareEn;
@@ -97,7 +100,8 @@ public class ShareView{
 	private static final String WB_REDIRECT_URL = AppConfig.WB_REDIRECT_URL;
 	private static final String WB_SCOPE = AppConfig.WB_SCOPE;
 	// FB
-	private UiLifecycleHelper uiHelper;
+	private CallbackManager callbackManager;
+	private ShareDialog shareDialog;
 
 	
 	public ShareView(Bundle savedInstanceState, Context context, Activity activity,
@@ -115,13 +119,9 @@ public class ShareView{
 		mWXApi = WXAPIFactory.createWXAPI(activity, WX_APP_ID, false);
 		mWXApi.registerApp(WX_APP_ID);
 		// FB
-		uiHelper = new UiLifecycleHelper(mActivity, new Session.StatusCallback() {
-			@Override
-			public void call(Session session, SessionState state, Exception exception) {
-				facebookShare();
-			}
-		});
-		uiHelper.onCreate(savedInstanceState);
+		callbackManager = CallbackManager.Factory.create();
+		shareDialog = new ShareDialog(activity);
+		shareDialog.registerCallback(callbackManager, new FaceBookCallBackListener());
 
 		initView();
 	}
@@ -164,35 +164,35 @@ public class ShareView{
 	
 	private boolean checkViewIsOk(){
 		if(rootView == null){
-			LogUtil.i("ShareView", "Error! rootView is null");
+			LogUtil.i(TAG, "Error! rootView is null");
 			return false;
 		}
 		if(ll_mainLayout == null){
-			LogUtil.i("ShareView", "Error! ll_mainLayout is null");
+			LogUtil.i(TAG, "Error! ll_mainLayout is null");
 			return false;
 		}
 		if(tv_Share_Facebook == null){
-			LogUtil.i("ShareView", "Error! tv_Share_Facebook is null");
+			LogUtil.i(TAG, "Error! tv_Share_Facebook is null");
 			return false;
 		}
 		if(tv_Share_Friends == null){
-			LogUtil.i("ShareView", "Error! tv_Share_Friends is null");
+			LogUtil.i(TAG, "Error! tv_Share_Friends is null");
 			return false;
 		}
 		if(tv_Share_Wechat == null){
-			LogUtil.i("ShareView", "Error! tv_Share_Wechat is null");
+			LogUtil.i(TAG, "Error! tv_Share_Wechat is null");
 			return false;
 		}
 		if(tv_Share_WhatsApp == null){
-			LogUtil.i("ShareView", "Error! tv_Share_WhatsApp is null");
+			LogUtil.i(TAG, "Error! tv_Share_WhatsApp is null");
 			return false;
 		}
 		if(tv_Share_Weibo == null){
-			LogUtil.i("ShareView", "Error! tv_Share_Weibo is null");
+			LogUtil.i(TAG, "Error! tv_Share_Weibo is null");
 			return false;
 		}
 		if(tv_Share_Line == null){
-			LogUtil.i("ShareView", "Error! tv_Share_Line is null");
+			LogUtil.i(TAG, "Error! tv_Share_Line is null");
 			return false;
 		}
 		return true;
@@ -500,29 +500,37 @@ public class ShareView{
 	}
 
 	private void facebookShare() {
-		// 先判断设备上是否已经安装了Facebook客户端，如果没有则提示用户安装客户端后才能进行分享。
-		if (FacebookDialog.canPresentShareDialog(mContext, FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
-			if (uiHelper != null && mShareEn != null) {
-				//showShareLayer(mContext, false);
-				FacebookDialog.ShareDialogBuilder mBuilder = new FacebookDialog.ShareDialogBuilder(mActivity);
-				mBuilder.setCaption(mContext.getString(R.string.app_name));
-				mBuilder.setApplicationName(mContext.getString(R.string.app_name));
-				if(!TextUtils.isEmpty(mShareEn.getTitle())){
-					mBuilder.setName(mShareEn.getTitle());
-				}
-				if(!TextUtils.isEmpty(mShareEn.getText())){
-					mBuilder.setDescription(mShareEn.getText());
-				}
-				if(!TextUtils.isEmpty(mShareEn.getUrl())){
-					mBuilder.setLink(mShareEn.getUrl());
-				}
-				FacebookDialog shareDialog = mBuilder.build();
-				uiHelper.trackPendingDialogCall(shareDialog.present());
-			}else {
-				showEntityError();
-			}
-		} else {
-			CommonTools.showToast(mContext.getString(R.string.share_msg_no_facebook), 1000);
+		if (shareDialog != null && mShareEn != null) {
+			//showShareLayer(mContext, false);
+			ShareLinkContent linkContent = new ShareLinkContent.Builder()
+					.setContentTitle(mShareEn.getTitle())
+					.setContentDescription(mShareEn.getText())
+					.setContentUrl(Uri.parse(mShareEn.getUrl()))
+					.build();
+			shareDialog.show(linkContent);
+		}else {
+			showEntityError();
+		}
+	}
+
+	private class FaceBookCallBackListener implements FacebookCallback<Sharer.Result>{
+		@Override
+		public void onSuccess(Sharer.Result sharerResult) {
+			LogUtil.i(TAG, "fb share success");
+			showShareSuccess();
+		}
+
+		@Override
+		public void onCancel() {
+			LogUtil.i(TAG, "fb share cancel");
+			showShareCancel();
+		}
+
+		@Override
+		public void onError(FacebookException e) {
+			LogUtil.i(TAG, "fb share error");
+			ExceptionUtil.handle(e);
+			showEntityError();
 		}
 	}
 	
@@ -622,25 +630,8 @@ public class ShareView{
             mSsoHandler.authorizeCallBack(requestCode, resultCode, data);
         }
 		// FB
-		if (uiHelper != null) {
-			uiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
-				
-				@Override
-				public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
-					LogUtil.i("ShareView", String.format("Error: %s", error.toString()));
-				}
-				
-				@Override
-				public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
-					String result = data.getString("com.facebook.platform.extra.COMPLETION_GESTURE");//cancel取消 post成功
-					if ("cancel".equals(result)) {
-						showShareCancel();
-					}else if ("post".equals(result)) {
-						showShareSuccess();
-					}
-				}
-				
-			});
+		if (callbackManager != null) {
+			callbackManager.onActivityResult(requestCode, resultCode, data);
 		}
 	}
 	
@@ -657,43 +648,7 @@ public class ShareView{
 			mWeiboShareAPI.handleWeiboResponse(intent, response);
 		}
 	}
-	
-	/**
-	 * 在Activity中的onResume调用此方法
-	 */
-	public void onResume(){
-		if (uiHelper != null) {
-			uiHelper.onResume();
-		}
-	}
-	
-	/**
-	 * 在Activity中的onPause调用此方法
-	 */
-	public void onPause(){
-		if (uiHelper != null) {
-			uiHelper.onPause();
-		}
-	}
-	
-	/**
-	 * 在Activity中的onDestroy调用此方法
-	 */
-	public void onDestroy(){
-		if (uiHelper != null) {
-			uiHelper.onDestroy();
-		}
-	}
-	
-	/**
-	 * 在Activity中的onSaveInstanceState调用此方法
-	 */
-	public void onSaveInstanceState(Bundle outState){
-		if (uiHelper != null) {
-			uiHelper.onSaveInstanceState(outState);
-		}
-	}
-	
+
 	public static interface ShareVewButtonListener{
 		public void onClick_Dismiss();
 		public void onClick_Share_QQ();

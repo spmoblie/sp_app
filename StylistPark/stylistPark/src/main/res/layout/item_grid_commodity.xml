@@ -45,7 +45,7 @@
                 android:gravity="center_horizontal"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textColor="@color/text_color_content"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_11" />
 
             <TextView
@@ -55,7 +55,7 @@
                 android:gravity="center_horizontal"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textColor="@color/text_color_content"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_11" />
 
             <LinearLayout
@@ -78,7 +78,7 @@
                     android:id="@+id/product_grid_item_tv_full_price"
                     style="@style/common_text_price"
                     android:layout_marginLeft="2dp"
-                    android:textColor="@color/text_color_assist"
+                    android:textColor="@color/label_text_color"
                     android:textSize="@dimen/text_size_09" />
 
                 <TextView

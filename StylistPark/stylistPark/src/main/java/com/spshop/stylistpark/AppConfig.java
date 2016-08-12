@@ -71,11 +71,9 @@ public class AppConfig {
 	// 微信AppID
 	public static final String WX_APP_ID = "wxe75d3ed35d5ec0a3";
 	// 微信AppSecret
-	public static final String WX_APP_SECRET = "df710488027a355d49c41e6b19eb41cf";
+	public static final String WX_APP_SECRET = "6dbb91d8aa799a13237179092ab690c8";
 	// 微信商户号
 	public static final String WX_MCH_ID = "1376997902";
-	// 微信API密钥，在商户平台设置
-	public static final String WX_API_KEY = "a79e4484bb8577618a7c5f11036249f1";
 	// 微博AppID
 	public static final String WB_APP_ID = "2435385654";
 	// 微博授权回调Url

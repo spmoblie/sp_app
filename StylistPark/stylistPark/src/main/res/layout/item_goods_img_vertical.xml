@@ -67,7 +67,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:text=""
-                        android:textColor="@color/text_color_content"
+                        android:textColor="@color/conte_text_color"
                         android:textSize="@dimen/text_size_12" />
                 </RelativeLayout>
             </RelativeLayout>

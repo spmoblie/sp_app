@@ -40,7 +40,6 @@ allprojects {
 }
 
 dependencies {
-    compile project(':facebook3220')
     compile project(':weiboSDK')
     compile project(':rangeBar')
     compile project(':main')
@@ -58,6 +57,7 @@ dependencies {
     compile files('libs/UPPayAssistEx.jar')
     compile files('libs/UPPayPluginExPro.jar')
     compile files('libs/volley.jar')
+    compile 'com.facebook.android:facebook-android-sdk:4.10.1'
     compile 'com.linsea:universalvideoview:1.0.2@aar'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile(name:'PayPalAndroidSDK-2.14.4', ext:'aar')

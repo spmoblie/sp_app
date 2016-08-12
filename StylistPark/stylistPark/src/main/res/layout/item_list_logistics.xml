@@ -35,7 +35,7 @@
             android:lines="2"
             android:maxLines="2"
             android:ellipsize="end"
-            android:textColor="@color/text_color_assist"
+            android:textColor="@color/label_text_color"
             android:textSize="@dimen/text_size_12" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
-            android:textColor="@color/text_color_assist"
+            android:textColor="@color/label_text_color"
             android:textSize="@dimen/text_size_12" />
 
         <ImageView

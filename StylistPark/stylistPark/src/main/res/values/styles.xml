@@ -98,7 +98,7 @@
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/text_color_app_top</item>
+        <item name="android:textColor">@color/title_text_color</item>
         <item name="android:textSize">@dimen/title_text_size</item>
     </style>
 
@@ -113,7 +113,7 @@
         <item name="android:gravity">right|center_vertical</item>
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/text_color_app_top</item>
+        <item name="android:textColor">@color/title_text_color</item>
         <item name="android:textSize">@dimen/title_text_size_right</item>
     </style>
 
@@ -147,7 +147,7 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/text_color_title</item>
+        <item name="android:textColor">@color/conte_text_color</item>
         <item name="android:textSize">@dimen/text_size_14</item>
     </style>
 
@@ -163,7 +163,7 @@
         <item name="android:gravity">right</item>
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/text_color_assist</item>
+        <item name="android:textColor">@color/label_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
     
@@ -196,7 +196,7 @@
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
         <item name="android:background">@drawable/shape_frame_white_dfdfdf_4</item>
-        <item name="android:textColor">@color/text_color_assist</item>
+        <item name="android:textColor">@color/label_text_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
     
@@ -256,7 +256,7 @@
         <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textSize">@dimen/text_size_11</item>
-        <item name="android:textColor">@color/text_color_content</item>
+        <item name="android:textColor">@color/conte_text_color</item>
     </style>
 
     <!-- 购物车商品属性文本样式:灰色 -->
@@ -267,7 +267,7 @@
         <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textSize">@dimen/text_size_11</item>
-        <item name="android:textColor">@color/text_color_assist</item>
+        <item name="android:textColor">@color/label_text_color</item>
     </style>
 
     <!-- 商品详情属性文本样式:灰色 -->
@@ -280,7 +280,7 @@
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/text_size_10</item>
-        <item name="android:textColor">@color/text_color_assist</item>
+        <item name="android:textColor">@color/label_text_color</item>
     </style>
     
     <!-- 订单分类TextView样式 -->
@@ -292,14 +292,14 @@
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/text_size_11</item>
-        <item name="android:textColor">@color/text_color_content</item>
+        <item name="android:textColor">@color/conte_text_color</item>
     </style>
     
     <!-- 订单TextView样式 -->
     <style name="Order_TextView_Title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_color_title</item>
+        <item name="android:textColor">@color/conte_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
     
@@ -311,9 +311,9 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:inputType">textEmailAddress</item>
         <item name="android:background">@drawable/shape_frame_bg_app_hollow_4</item>
-        <item name="android:textColorHint">@color/text_color_assist</item>
+        <item name="android:textColorHint">@color/input_text_color</item>
         <item name="android:textSize">@dimen/text_size_14</item>
-        <item name="android:textColor">@color/text_color_title</item>
+        <item name="android:textColor">@color/conte_text_color</item>
     </style>
     
     <!-- 注册页面Button样式 -->
@@ -331,7 +331,7 @@
     <style name="address_order_text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_color_title</item>
+        <item name="android:textColor">@color/conte_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
     
@@ -340,7 +340,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:textColor">@color/text_color_title</item>
+        <item name="android:textColor">@color/conte_text_color</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/text_size_16</item>
     </style>
@@ -353,8 +353,8 @@
         <item name="android:paddingTop">15dp</item>
         <item name="android:paddingBottom">15dp</item>
         <item name="android:background">@color/ui_bg_color_white</item>
-        <item name="android:textColorHint">@color/text_color_thin</item>
-        <item name="android:textColor">@color/text_color_title</item>
+        <item name="android:textColorHint">@color/input_text_color</item>
+        <item name="android:textColor">@color/conte_text_color</item>
         <item name="android:textSize">@dimen/text_size_14</item>
     </style>
 
@@ -373,7 +373,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/text_color_title</item>
+        <item name="android:textColor">@color/conte_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
     
@@ -386,7 +386,7 @@
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/text_color_assist</item>
+        <item name="android:textColor">@color/label_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
         
@@ -449,7 +449,7 @@
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/text_size_11</item>
-        <item name="android:textColor">@color/text_color_assist</item>
+        <item name="android:textColor">@color/label_text_color</item>
     </style>
     
     <!-- 通用左边的按钮+文字样式 -->

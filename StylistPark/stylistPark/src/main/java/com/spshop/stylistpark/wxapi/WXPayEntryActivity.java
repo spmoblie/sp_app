@@ -129,7 +129,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
         
         AppManager.getInstance().addActivity(this);//添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
-		
+
 		orderSn = getIntent().getExtras().getString("orderSn");
 		orderTotal = getIntent().getExtras().getString("orderTotal");
 		rootPage = getIntent().getExtras().getString("root");
@@ -457,10 +457,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		req.nonceStr = payEntity.getNoncestr();
 		req.timeStamp = payEntity.getTimestamp();
 		req.sign = payEntity.getSign();
-		
-		api.registerApp(AppConfig.WX_API_KEY);
+		// 发起支付
 		api.sendReq(req);
-
 		// 结束加载动画
 		getPayDataSuccess();
 	}

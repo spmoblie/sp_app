@@ -14,7 +14,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text=""
-        android:textColor="@color/text_color_assist"
+        android:textColor="@color/conte_text_color"
         android:textSize="@dimen/text_size_12" />
 
 </RelativeLayout>

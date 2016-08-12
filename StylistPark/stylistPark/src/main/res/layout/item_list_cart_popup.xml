@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/color"
-            android:textColor="@color/text_color_assist"
+            android:textColor="@color/label_text_color"
             android:textSize="@dimen/text_size_12"
             android:visibility="gone" />
     </RelativeLayout>

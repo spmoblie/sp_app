@@ -16,7 +16,7 @@
         android:drawableBottom="@drawable/bg_no_data"
         android:drawablePadding="30dp"
         android:text="@string/loading_no_data"
-        android:textColor="@color/text_color_assist"
+        android:textColor="@color/label_text_color"
         android:textSize="@dimen/text_size_14" />
 
 </FrameLayout>

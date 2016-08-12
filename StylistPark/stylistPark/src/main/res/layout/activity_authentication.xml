@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/photo_clip_upload_hint"
-        android:textColor="@color/text_color_assist"
+        android:textColor="@color/label_text_color"
         android:textSize="@dimen/text_size_12" />
 
     <LinearLayout

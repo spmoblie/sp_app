@@ -15,12 +15,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.model.GraphUser;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
@@ -58,6 +60,7 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -102,8 +105,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	private static final String WB_REDIRECT_URL = AppConfig.WB_REDIRECT_URL;
 	private static final String WB_SCOPE = AppConfig.WB_SCOPE;
 	// FB
-	private UiLifecycleHelper uiHelper;
-	
+	private CallbackManager callbackManager;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -121,9 +124,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		// QQ
 		mTencent = Tencent.createInstance(QQ_APP_ID, mContext);
 		// FB
-		uiHelper = new UiLifecycleHelper(this, facebookCallback);
-		uiHelper.onCreate(savedInstanceState);
-		
+		callbackManager = CallbackManager.Factory.create();
+
 		findViewById();
 		initView();
 	}
@@ -591,45 +593,66 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 * Facebook登录
 	 */
 	private void loginFacebook() {
-		Session.openActiveSession(this, true, Arrays.asList("email","user_likes", "user_status"), facebookCallback);
+		LoginManager loginManager = LoginManager.getInstance();
+		loginManager.registerCallback(callbackManager, new FaceBookCallBackListener());
+		loginManager.logInWithReadPermissions(this, Arrays.asList("public_profile", "email","user_likes", "user_status"));
 	}
-	
-	/**
-	 * Facebook授权回调接口
-	 */
-	private Session.StatusCallback facebookCallback = new Session.StatusCallback() {
+
+	private class FaceBookCallBackListener implements FacebookCallback<LoginResult>{
 		@Override
-		public void call(Session session, SessionState state, Exception exception) {
-			LogUtil.i(TAG, "Facebook session = " + session.isOpened() + " state = " + state.isOpened());
-			if(session.isOpened()) {
-				fbLogin(session, state, exception);
-			}
+		public void onSuccess(LoginResult loginResult) {
+			LogUtil.i(TAG, "fb login success");
+			//获取登录信息
+			getFacebookUserInfo(loginResult.getAccessToken());
 		}
-	};
-	
+
+		@Override
+		public void onCancel() {
+			LogUtil.i(TAG, "fb login cancel");
+		}
+
+		@Override
+		public void onError(FacebookException e) {
+			LogUtil.i(TAG, "fb login error");
+			ExceptionUtil.handle(e);
+			showLoginError();
+		}
+	}
+
 	/**
-	 * 登录成功后获取用户信息
+	 * 获取Facebook登录信息
 	 */
-	protected void fbLogin(final Session session, SessionState state, Exception exception){
-	    Request.newMeRequest(session, new Request.GraphUserCallback() {
-			@Override
-			public void onCompleted(GraphUser user, Response response) {
-				LogUtil.i(TAG, "FB onComplete response = " + response);
-				if (user != null) {
-					String fbId = user.getId();
-					postFacebookLoginRequest(fbId);
-					// 记录用户信息
-					fbOauthEn = new UserInfoEntity();
-					fbOauthEn.setUserName(LOGIN_TYPE_FB);
-					fbOauthEn.setUserId(fbId);
-					fbOauthEn.setUserNick(user.getName());
-					fbOauthEn.setUserIntro(user.asMap().get("gender").toString());
-					fbOauthEn.setHeadImg(user.getProperty("email").toString());
-				} else {
-					showLoginError();
-				}
+	public void getFacebookUserInfo(AccessToken accessToken){
+		GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+			 @Override
+			public void onCompleted(JSONObject object, GraphResponse response) {
+				 if (object != null) {
+					 //获取用户头像
+					 JSONObject object_pic = object.optJSONObject("picture");
+					 JSONObject object_data = object_pic.optJSONObject("data");
+					 String photo = object_data.optString("url");
+					 //获取地域信息
+					 //String locale = object.optString("locale"); //zh_CN 代表中文简体
+					 //获取用户ID
+					 String fbId = object.optString("id");
+					 // 记录用户信息
+					 fbOauthEn = new UserInfoEntity();
+					 fbOauthEn.setUserName(LOGIN_TYPE_FB);
+					 fbOauthEn.setUserId(fbId);
+					 fbOauthEn.setUserNick(object.optString("name"));
+					 fbOauthEn.setUserIntro(object.optString("gender"));
+					 fbOauthEn.setHeadImg(photo);
+					 // 校验用户ID
+					 postFacebookLoginRequest(fbId);
+				 } else {
+					 showLoginError();
+				 }
 			}
-		}).executeAsync();
+		}) ;
+		Bundle parameters = new Bundle();
+		parameters.putString("fields", "id,name,link,gender,birthday,email,picture,locale,updated_time,timezone,age_range,first_name,last_name");
+		request.setParameters(parameters);
+		request.executeAsync() ;
 	}
 
 	/**
@@ -710,8 +733,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			mSsoHandler.authorizeCallBack(requestCode, resultCode, data);
 		}
 		// FB
-		if (uiHelper != null) {
-			uiHelper.onActivityResult(requestCode, resultCode, data);
+		if (callbackManager != null) {
+			callbackManager.onActivityResult(requestCode, resultCode, data);
 		}
     	super.onActivityResult(requestCode, resultCode, data);
     }
@@ -742,9 +765,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
         // FB
-		if(uiHelper != null){
+		/*if(uiHelper != null){
 			uiHelper.onResume();
-		}
+		}*/
 		super.onResume();
 	}
 
@@ -755,9 +778,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		// 页面结束
 		AppApplication.onPageEnd(this, TAG);
         // FB
-        if (uiHelper != null) {
+        /*if (uiHelper != null) {
 			uiHelper.onPause();
-		}
+		}*/
 	}
 
 	@Override
@@ -765,9 +788,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
 		// FB
-		if (uiHelper != null) {
+		/*if (uiHelper != null) {
 			uiHelper.onDestroy();
-		}
+		}*/
 		isStop = true;
 		instance = null;
 	}
@@ -776,9 +799,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 * 在Activity中的onSaveInstanceState调用此方法
 	 */
 	public void onSaveInstanceState(Bundle outState){
-		if (uiHelper != null) {
+		/*if (uiHelper != null) {
 			uiHelper.onSaveInstanceState(outState);
-		}
+		}*/
 	}
 	
 	@Override

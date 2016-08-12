@@ -30,7 +30,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:text=""
-                    android:textColor="@color/text_color_title"
+                    android:textColor="@color/conte_text_color"
                     android:textSize="@dimen/text_size_14" />
                 
                 <ImageView 

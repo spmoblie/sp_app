@@ -12,6 +12,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="3dp"
         android:background="@color/ui_bg_color_app"
         android:orientation="vertical">
 
@@ -19,16 +22,14 @@
             android:id="@+id/list_commodity_two_left_rl_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="10dp">
+            android:gravity="center" >
 
             <ImageView
                 android:id="@+id/list_commodity_two_left_iv_img"
-                android:layout_width="150dp"
-                android:layout_height="190dp"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
                 android:adjustViewBounds="true"
-                android:contentDescription="@string/desc"
-                android:scaleType="fitCenter" />
+                android:contentDescription="@string/desc" />
         </RelativeLayout>
 
         <LinearLayout
@@ -49,7 +50,7 @@
                 android:gravity="center_horizontal"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textColor="@color/text_color_content"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_11" />
 
             <TextView
@@ -59,7 +60,7 @@
                 android:gravity="center_horizontal"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textColor="@color/text_color_content"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_11" />
 
             <LinearLayout
@@ -82,7 +83,7 @@
                     android:id="@+id/list_commodity_two_left_tv_full_price"
                     style="@style/common_text_price"
                     android:layout_marginLeft="2dp"
-                    android:textColor="@color/text_color_assist"
+                    android:textColor="@color/label_text_color"
                     android:textSize="@dimen/text_size_09"/>
 
                 <TextView
@@ -90,14 +91,24 @@
                     style="@style/common_text_discount" />
             </LinearLayout>
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/list_commodity_two_left_rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:background="@color/ui_bg_color_gray"
+            android:visibility="gone" >
+        </RelativeLayout>
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
         android:layout_weight="1"
-        android:background="@color/ui_bg_color_app">
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="6dp"
+        android:background="@color/ui_bg_color_app" >
 
         <LinearLayout
             android:id="@+id/list_commodity_two_right_ll_main"
@@ -109,16 +120,14 @@
                 android:id="@+id/list_commodity_two_right_rl_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="10dp">
+                android:gravity="center" >
 
                 <ImageView
                     android:id="@+id/list_commodity_two_right_iv_img"
-                    android:layout_width="150dp"
-                    android:layout_height="190dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
                     android:adjustViewBounds="true"
-                    android:contentDescription="@string/desc"
-                    android:scaleType="fitCenter" />
+                    android:contentDescription="@string/desc" />
             </RelativeLayout>
 
             <LinearLayout
@@ -139,7 +148,7 @@
                     android:gravity="center_horizontal"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:textColor="@color/text_color_content"
+                    android:textColor="@color/conte_text_color"
                     android:textSize="@dimen/text_size_11" />
 
                 <TextView
@@ -149,7 +158,7 @@
                     android:gravity="center_horizontal"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:textColor="@color/text_color_content"
+                    android:textColor="@color/conte_text_color"
                     android:textSize="@dimen/text_size_11" />
 
                 <LinearLayout
@@ -172,7 +181,7 @@
                         android:id="@+id/list_commodity_two_right_tv_full_price"
                         style="@style/common_text_price"
                         android:layout_marginLeft="2dp"
-                        android:textColor="@color/text_color_assist"
+                        android:textColor="@color/label_text_color"
                         android:textSize="@dimen/text_size_09"/>
 
                     <TextView

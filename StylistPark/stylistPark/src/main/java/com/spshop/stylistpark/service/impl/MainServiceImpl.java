@@ -625,9 +625,9 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public BalanceDetailEntity getBalanceDetailList(int count, int page) throws Exception {
-		String uri = AppConfig.URL_COMMON_USER_URL;
+		String uri = AppConfig.URL_COMMON_MY_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		params.add(new MyNameValuePair("act", "account_detail"));
+		params.add(new MyNameValuePair("app", "account"));
 		params.add(new MyNameValuePair("size", String.valueOf(page)));
 		params.add(new MyNameValuePair("page", String.valueOf(count)));
 		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
@@ -640,7 +640,7 @@ public class MainServiceImpl implements MainService {
 	public BaseEntity postWithdrawalsData(String card, int amount) throws Exception {
 		String uri = AppConfig.URL_COMMON_USER_URL + "?act=act_account";
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		params.add(new MyNameValuePair("card", card));
+		params.add(new MyNameValuePair("user_note", card));
 		params.add(new MyNameValuePair("amount", String.valueOf(amount)));
 		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_POST);
 		String jsonStr = HttpUtil.getString(entity);
@@ -656,8 +656,8 @@ public class MainServiceImpl implements MainService {
 			uri = AppConfig.URL_COMMON_FLOW_URL;
 			params.add(new MyNameValuePair("step", "change_bonus"));
 		}else {
-			uri = AppConfig.URL_COMMON_USER_URL;
-			params.add(new MyNameValuePair("act", "bonus"));
+			uri = AppConfig.URL_COMMON_MY_URL;
+			params.add(new MyNameValuePair("app", "bonus"));
 			params.add(new MyNameValuePair("status", String.valueOf(status)));
 		}
 		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);

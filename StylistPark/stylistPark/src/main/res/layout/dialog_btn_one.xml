@@ -17,7 +17,7 @@
         android:ellipsize="end"
         android:minLines="1"
         android:maxLines="6"
-        android:textColor="@color/text_color_title"
+        android:textColor="@color/conte_text_color"
         android:textSize="@dimen/text_size_16" />
 
     <Button

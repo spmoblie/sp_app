@@ -94,8 +94,8 @@ public class BounsListAdapter extends BaseAdapter {
 			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
 			holder.tv_money.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
 		}else {
-			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.text_color_assist));
-			holder.tv_money.setTextColor(context.getResources().getColor(R.color.text_color_assist));
+			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.label_text_color));
+			holder.tv_money.setTextColor(context.getResources().getColor(R.color.label_text_color));
 		}
 		holder.tv_curr.setText(data.getCurrency());
 		holder.tv_money.setText(data.getBounsMoney());

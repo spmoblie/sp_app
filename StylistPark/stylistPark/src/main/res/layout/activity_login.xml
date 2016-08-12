@@ -50,8 +50,8 @@
                 android:lines="1"
                 android:hint="@string/login_user_name"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/text_color_title"
-                android:textColorHint="@color/text_color_assist"
+                android:textColor="@color/conte_text_color"
+                android:textColorHint="@color/input_text_color"
                 android:textSize="@dimen/text_size_14" />
 
             <ImageView
@@ -94,8 +94,8 @@
                 android:lines="1"
                 android:hint="@string/login_password"
                 android:inputType="textPassword"
-                android:textColor="@color/text_color_title"
-                android:textColorHint="@color/text_color_assist"
+                android:textColor="@color/conte_text_color"
+                android:textColorHint="@color/input_text_color"
                 android:textSize="@dimen/text_size_14" />
 
             <ImageView
@@ -141,7 +141,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/login_new_register"
-                android:textColor="@color/text_color_content"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_12" />
 
             <ImageView
@@ -156,7 +156,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/login_forget_password"
-                android:textColor="@color/text_color_content"
+                android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_12" />
         </LinearLayout>
     </LinearLayout>
@@ -186,7 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_quick"
-                android:textColor="@color/text_color_assist"
+                android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12" />
 
             <ImageView

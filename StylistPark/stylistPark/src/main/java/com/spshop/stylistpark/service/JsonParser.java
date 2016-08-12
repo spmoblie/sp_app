@@ -938,10 +938,10 @@ public class JsonParser {
 					break;
 				case WXPayEntryActivity.PAY_WEIXI: //微信支付
 					JSONObject data = jsonObject.getJSONObject("content");
-					payEn.setPrepayid(data.getString("prepay_id"));
-					payEn.setNoncestr(data.getString("nonceStr"));
-					payEn.setTimestamp(data.getString("timeStamp"));
-					payEn.setSign(data.getString("paySign"));
+					payEn.setPrepayid(data.getString("prepayid"));
+					payEn.setNoncestr(data.getString("noncestr"));
+					payEn.setTimestamp(data.getString("timestamp"));
+					payEn.setSign(data.getString("sign"));
 				break;
 			case WXPayEntryActivity.PAY_UNION: //银联支付
 				payEn.setAlipay(jsonObject.getString("content"));

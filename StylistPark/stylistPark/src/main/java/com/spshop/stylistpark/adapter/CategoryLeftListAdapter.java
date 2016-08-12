@@ -97,7 +97,7 @@ public class CategoryLeftListAdapter extends BaseAdapter{
 			holder.tv_name.setTextColor(context.getResources().getColor(R.color.text_color_app_bar));
 		}else {
 			holder.rl_item.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_gray));
-			holder.tv_name.setTextColor(context.getResources().getColor(R.color.text_color_assist));
+			holder.tv_name.setTextColor(context.getResources().getColor(R.color.conte_text_color));
 		}
 		holder.rl_item.setOnClickListener(new OnClickListener() {
 			

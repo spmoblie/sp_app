@@ -99,7 +99,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
                         android:text=""
-                        android:textColor="@color/text_color_content"
+                        android:textColor="@color/conte_text_color"
                         android:textSize="@dimen/text_size_14" />
 
                     <LinearLayout
@@ -123,7 +123,7 @@
                             android:id="@+id/product_detail_tv_product_price_full"
                             style="@style/common_text_price"
                             android:layout_marginLeft="2dp"
-                            android:textColor="@color/text_color_assist"
+                            android:textColor="@color/label_text_color"
                             android:visibility="gone" />
 
                         <TextView
@@ -249,7 +249,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:textColor="@color/text_color_content"
+                            android:textColor="@color/conte_text_color"
                             android:textSize="@dimen/text_size_14"
                             android:textStyle="bold"/>
 
@@ -259,7 +259,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:textColor="@color/text_color_content"
+                            android:textColor="@color/conte_text_color"
                             android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
 
@@ -355,7 +355,7 @@
                         style="@style/home_tab_text"
                         android:drawableTop="@drawable/topbar_icon_cart"
                         android:text="@string/product_cart"
-                        android:textColor="@color/text_color_assist"
+                        android:textColor="@color/label_text_color"
                         android:textSize="@dimen/text_size_12" />
 
                     <TextView

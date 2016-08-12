@@ -39,7 +39,7 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:lines="1"
-            android:textColor="@color/text_color_content"
+            android:textColor="@color/conte_text_color"
             android:textSize="14sp" />
 
         <RelativeLayout
@@ -61,7 +61,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/text_size_12"
-                android:textColor="@color/text_color_assist" />
+                android:textColor="@color/label_text_color" />
 
             <TextView
                 android:id="@+id/list_special_two_left_tv_click"
@@ -72,7 +72,7 @@
                 android:drawableLeft="@drawable/icon_read"
                 android:drawablePadding="2dp"
                 android:textSize="@dimen/text_size_12"
-                android:textColor="@color/text_color_assist" />
+                android:textColor="@color/label_text_color" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -113,7 +113,7 @@
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textColor="@color/text_color_content"
+                android:textColor="@color/conte_text_color"
                 android:textSize="14sp" />
 
 
@@ -136,7 +136,7 @@
                     android:layout_marginLeft="2dp"
                     android:layout_centerVertical="true"
                     android:textSize="@dimen/text_size_12"
-                    android:textColor="@color/text_color_assist" />
+                    android:textColor="@color/label_text_color" />
 
                 <TextView
                     android:id="@+id/list_special_two_right_tv_click"
@@ -147,7 +147,7 @@
                     android:drawableLeft="@drawable/icon_read"
                     android:drawablePadding="2dp"
                     android:textSize="@dimen/text_size_12"
-                    android:textColor="@color/text_color_assist" />
+                    android:textColor="@color/label_text_color" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

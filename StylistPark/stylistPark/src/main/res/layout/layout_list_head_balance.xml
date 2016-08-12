@@ -53,7 +53,7 @@
             android:lines="1"
             android:text="@string/money_auth_hint"
             android:textSize="@dimen/text_size_12"
-            android:textColor="@color/text_color_assist" />
+            android:textColor="@color/label_text_color" />
         
         <TextView 
             android:id="@+id/balance_list_head_tv_auth"
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/money_balance_detail"
-            android:textColor="@color/text_color_thin"
+            android:textColor="@color/label_text_color"
             android:textSize="@dimen/text_size_12" />
 
         <ImageView
