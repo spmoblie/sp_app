@@ -8,8 +8,7 @@
     <com.spshop.stylistpark.widgets.ScrollListView
         android:id="@+id/ptrsv_cart_scroll_lv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/ui_bg_color_app" />
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:id="@+id/ptrsv_cart_rl_no_more"
@@ -36,7 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="@color/ui_bg_color_app"
         android:orientation="vertical"
         android:visibility="gone" >
 

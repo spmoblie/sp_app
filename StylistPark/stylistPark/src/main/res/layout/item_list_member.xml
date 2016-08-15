@@ -3,7 +3,7 @@
     android:id="@+id/item_list_member_ll_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/ui_bg_color_gray"
+    android:background="@color/ui_bg_color_nut"
     android:orientation="vertical" >
     
     <ImageView 

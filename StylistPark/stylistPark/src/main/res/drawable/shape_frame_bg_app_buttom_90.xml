@@ -8,6 +8,6 @@
 
     <corners android:radius="90dp" />
 
-    <solid android:color="@color/ui_bg_color_bar" />
+    <solid android:color="@color/ui_color_status" />
 
 </shape>

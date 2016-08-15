@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:paddingTop="15dp"
     android:paddingBottom="15dp"
-    android:background="@color/ui_bg_color_gray" >
+    android:background="@color/ui_bg_color_nut" >
 
     <TextView
         android:id="@+id/list_item_category_left_tv"
@@ -14,7 +14,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text=""
-        android:textColor="@color/conte_text_color"
+        android:textColor="@color/tv_color_change"
         android:textSize="@dimen/text_size_12" />
 
 </RelativeLayout>

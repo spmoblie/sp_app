@@ -23,8 +23,9 @@ import com.spshop.stylistpark.R;
  * @since 2013-7-30
  */
 public class RotateLoadingLayout extends LoadingLayout {
+
     /**旋转动画的时间*/
-    static final int ROTATION_ANIMATION_DURATION = 1200;
+    static final int ROTATION_ANIMATION_DURATION = 800;
     /**动画插值*/
     static final Interpolator ANIMATION_INTERPOLATOR = new LinearInterpolator();
     /**Header的容器*/
@@ -74,10 +75,10 @@ public class RotateLoadingLayout extends LoadingLayout {
         mHeaderTimeViewTitle = (TextView) findViewById(R.id.pull_to_refresh_last_update_time_text);
         
         mArrowImageView.setScaleType(ScaleType.CENTER);
-        mArrowImageView.setImageResource(R.drawable.default_ptr_rotate);
+        mArrowImageView.setImageResource(R.drawable.loading_anim_small);
         
         float pivotValue = 0.5f;    // SUPPRESS CHECKSTYLE
-        float toDegree = 720.0f;    // SUPPRESS CHECKSTYLE
+        float toDegree = 360.0f;    // SUPPRESS CHECKSTYLE
         mRotateAnimation = new RotateAnimation(0.0f, toDegree, Animation.RELATIVE_TO_SELF, pivotValue,
                 Animation.RELATIVE_TO_SELF, pivotValue);
         mRotateAnimation.setFillAfter(true);

@@ -29,7 +29,7 @@
         android:id="@+id/dialog_list_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/ui_bg_color_line_tiny"
+        android:divider="@color/ui_bg_color_div_min"
         android:dividerHeight="0.5dp" />
 
 </LinearLayout>

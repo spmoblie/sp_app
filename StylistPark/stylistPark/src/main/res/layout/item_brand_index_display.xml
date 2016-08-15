@@ -20,7 +20,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:textColor="@color/text_color_app_bar"
+            android:textColor="@color/tv_color_status"
             android:textSize="@dimen/brand_cell_header_text_size"
             android:textStyle="bold" />
     </LinearLayout>

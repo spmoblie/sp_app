@@ -3,7 +3,7 @@
     android:id="@+id/show_list_fl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_app">
+    android:background="@color/ui_bg_color_nut">
 
     <com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView
         android:id="@+id/show_list_listView"
@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/ui_bg_color_percent_80"
+                    android:background="@color/ui_bg_color_percent_08"
                     android:visibility="gone" >
 
                     <ImageView
@@ -147,7 +147,7 @@
                         android:id="@+id/show_list_tv_time_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_color_app_bar"
+                        android:textColor="@color/tv_color_status"
                         android:textSize="@dimen/text_size_18" />
 
                     <TextView
@@ -163,7 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/text_color_app_bar"
+                        android:textColor="@color/tv_color_status"
                         android:textSize="@dimen/text_size_18" />
 
                     <TextView
@@ -179,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/text_color_app_bar"
+                        android:textColor="@color/tv_color_status"
                         android:textSize="@dimen/text_size_18" />
 
                     <TextView
@@ -195,7 +195,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/text_color_app_bar"
+                        android:textColor="@color/tv_color_status"
                         android:textSize="@dimen/text_size_18" />
 
                     <TextView

@@ -3,7 +3,8 @@
     android:id="@+id/pull_to_load_footer_ll_main"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center" >
+    android:layout_gravity="center"
+    android:background="@color/ui_bg_color_nut" >
 
     <LinearLayout
         android:id="@+id/pull_to_load_footer_content"

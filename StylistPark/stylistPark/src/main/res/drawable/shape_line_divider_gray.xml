@@ -6,6 +6,6 @@
         android:height="0.5dp"
         android:width="0.5dp" />
 
-    <solid android:color="@color/ui_bg_color_line_tiny" />
+    <solid android:color="@color/ui_bg_color_div_min" />
 
 </shape>

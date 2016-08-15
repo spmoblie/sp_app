@@ -3,7 +3,7 @@
     android:id="@+id/list_commodity_two_ll_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/ui_bg_color_gray"
+    android:background="@color/ui_bg_color_nut"
     android:baselineAligned="false"
     android:orientation="horizontal">
 
@@ -96,7 +96,7 @@
             android:id="@+id/list_commodity_two_left_rl_bottom"
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:background="@color/ui_bg_color_gray"
+            android:background="@color/ui_bg_color_nut"
             android:visibility="gone" >
         </RelativeLayout>
     </LinearLayout>

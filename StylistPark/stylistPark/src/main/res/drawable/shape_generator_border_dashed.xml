@@ -6,9 +6,9 @@
     <stroke
         android:dashGap="5dp"
         android:dashWidth="6dp" 
-        android:width="@dimen/generator_collage_border_width"
-        android:color="@color/generator_collage_border" />
+        android:width="1dp"
+        android:color="#C8C8C8" />
 
-    <solid android:color="@color/ui_bg_color_white" />
+    <solid android:color="#FFFFFF" />
 
 </shape>

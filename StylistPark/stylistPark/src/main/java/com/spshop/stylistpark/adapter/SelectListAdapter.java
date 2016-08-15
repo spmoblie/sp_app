@@ -122,7 +122,7 @@ public class SelectListAdapter extends BaseAdapter{
 			SelectListEntity selectEn = data.getSelectEn();
 			if (selectEn != null) {
 				holder.tv_select_name.setText(selectEn.getChildShowName());
-				holder.tv_select_name.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
+				holder.tv_select_name.setTextColor(context.getResources().getColor(R.color.tv_color_status));
 			}else {
 				holder.tv_select_name.setText(R.string.all);
 				holder.tv_select_name.setTextColor(context.getResources().getColor(R.color.conte_text_color));
@@ -138,7 +138,7 @@ public class SelectListAdapter extends BaseAdapter{
 			holder.tv_select_name.setVisibility(View.GONE);
 			holder.iv_go.setVisibility(View.GONE);
 			holder.iv_logo.setVisibility(View.GONE);
-			holder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_gray));
+			holder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_nut));
 			break;
 		case DATA_TYPE_5: //PersonalActivity --> SelectListActivity
 		case DATA_TYPE_6: //PostOrderActivity --> SelectListActivity
@@ -190,7 +190,7 @@ public class SelectListAdapter extends BaseAdapter{
 	 */
 	private void itemChangeTextColor(ViewHolder holder, final SelectListEntity data) {
 		if (selectData != null && selectData.getChildId() == data.getChildId()) {
-			holder.tv_item_name.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
+			holder.tv_item_name.setTextColor(context.getResources().getColor(R.color.tv_color_status));
 		}else {
 			holder.tv_item_name.setTextColor(context.getResources().getColor(R.color.conte_text_color));
 		}

@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/ui_bg_color_gray"
+            android:background="@color/ui_bg_color_nut"
             android:orientation="vertical" >
 
             <RelativeLayout
@@ -127,7 +127,7 @@
                     android:id="@+id/post_order_tv_bouns_num"
                     style="@style/address_order_text"
                     android:layout_toLeftOf="@+id/post_order_iv_go_bouns"
-                    android:textColor="@color/text_color_red_1" />
+                    android:textColor="@color/tv_color_status" />
                 
                 <ImageView 
                     android:id="@+id/post_order_iv_go_bouns"
@@ -325,7 +325,7 @@
             android:background="@drawable/shape_frame_white_dfdfdf_4"
             android:text="@string/order_pay_now"
             android:textSize="@dimen/text_size_14"
-            android:textColor="@color/ui_bg_color_gray_light_1" />
+            android:textColor="@color/debar_text_color" />
     </RelativeLayout>
 
 </LinearLayout>

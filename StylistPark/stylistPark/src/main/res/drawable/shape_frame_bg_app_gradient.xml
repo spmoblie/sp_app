@@ -6,11 +6,11 @@
      <gradient
         android:endColor="#C769C6"
         android:gradientRadius="0"
-        android:startColor="@color/ui_bg_color_bar"
+        android:startColor="@color/ui_color_status"
         android:type="linear" />
     
     <!-- 填充 --> 
-    <!--<solid android:color="@color/ui_bg_color_bar" />-->
+    <!--<solid android:color="@color/ui_color_status" />-->
 
     <!-- 间隔  -->  
     <!-- <padding  

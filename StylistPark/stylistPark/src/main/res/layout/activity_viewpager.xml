@@ -15,7 +15,7 @@
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/ui_bg_color_bar"
+        android:background="@color/ui_color_status"
         android:text="@string/photo_show_save_image"
         android:textColor="@color/text_color_white"
         android:textSize="@dimen/text_size_14"

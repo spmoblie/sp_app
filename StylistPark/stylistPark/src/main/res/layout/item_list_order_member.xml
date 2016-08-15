@@ -3,7 +3,7 @@
     android:id="@+id/item_list_order_member_ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_gray"
+    android:background="@color/ui_bg_color_nut"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical" >
 
@@ -62,7 +62,7 @@
             style="@style/setting_lay_text_title"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:textColor="@color/text_color_red_1"
+            android:textColor="@color/tv_color_status"
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 

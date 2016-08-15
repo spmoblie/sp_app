@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_app" >
+    android:background="@color/ui_bg_color_nut" >
 
     <LinearLayout
         android:id="@+id/product_ll_anim_top"
@@ -16,9 +16,9 @@
             android:id="@+id/product_ll_search_hot_words"
             android:layout_width="match_parent"
             android:layout_height="@dimen/topbar_group_height"
-            android:background="@color/ui_bg_color_gray"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:background="@color/ui_bg_color_nut"
             android:paddingLeft="15dp"
             android:paddingRight="15dp" >
 
@@ -104,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="15dp"
-            android:background="@color/ui_bg_color_gray"
+            android:background="@color/ui_bg_color_nut"
             android:visibility="gone" >
 
             <TextView

@@ -84,7 +84,7 @@ public class LogisticsListAdapter extends BaseAdapter{
 			holder.tv_content.setTextColor(context.getResources().getColor(R.color.conte_text_color));
 			holder.tv_time.setTextColor(context.getResources().getColor(R.color.conte_text_color));
 		}else {
-			holder.ll_main.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_gray));
+			holder.ll_main.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_nut));
 			holder.iv_node.setImageResource(R.drawable.logistics_line_last);
 			holder.tv_content.setTextColor(context.getResources().getColor(R.color.label_text_color));
 			holder.tv_time.setTextColor(context.getResources().getColor(R.color.label_text_color));

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.spshop.stylistpark.R;
@@ -53,6 +54,7 @@ public class BalanceListAdapter extends BaseAdapter {
 
 	static class ViewHolder {
 
+		LinearLayout ll_type;
 		TextView tv_title, tv_time, tv_money;
 
 	}
@@ -64,6 +66,7 @@ public class BalanceListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = View.inflate(context, R.layout.item_list_balance, null);
 			holder = new ViewHolder();
+			holder.ll_type = (LinearLayout) convertView.findViewById(R.id.item_list_balance_ll_type);
 			holder.tv_title = (TextView) convertView.findViewById(R.id.item_list_balance_tv_title);
 			holder.tv_time = (TextView) convertView.findViewById(R.id.item_list_balance_tv_time);
 			holder.tv_money = (TextView) convertView.findViewById(R.id.item_list_balance_tv_money);
@@ -72,11 +75,18 @@ public class BalanceListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		final BalanceDetailEntity data = datas.get(position);
+
+		if (position == 0) {
+			holder.ll_type.setVisibility(View.VISIBLE);
+		} else {
+			holder.ll_type.setVisibility(View.GONE);
+		}
+
 		holder.tv_title.setText(data.getChangeDesc());
 		holder.tv_time.setText(data.getChangeTime());
 		
 		if (data.getType().equals("-")) {
-			holder.tv_money.setTextColor(context.getResources().getColor(R.color.text_color_red_0));
+			holder.tv_money.setTextColor(context.getResources().getColor(R.color.price_text_color));
 		}else {
 			holder.tv_money.setTextColor(context.getResources().getColor(R.color.conte_text_color));
 		}

@@ -42,8 +42,8 @@ public class SpecialAdapter extends BaseAdapter {
 		options = AppApplication.getDefaultImageOptions();
 		headOptions = AppApplication.getHeadImageOptions();
 		lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		lp.width = (AppApplication.screenWidth - 30) / 2;
-		lp.height = (AppApplication.screenWidth - 30) / 2;
+		lp.width = (AppApplication.screenWidth - 38) / 2;
+		lp.height = (AppApplication.screenWidth - 38) / 2;
 	}
 
 	public void updateAdapter(List<ListShowTwoEntity> datas) {
@@ -106,8 +106,8 @@ public class SpecialAdapter extends BaseAdapter {
 		final ListShowTwoEntity data = datas.get(position);
 
 		final ThemeEntity leftEn = (ThemeEntity) data.getLeftEn();
+		holder.left_logo.setLayoutParams(lp);
 		if (leftEn != null) {
-			holder.left_logo.setLayoutParams(lp);
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + leftEn.getImgUrl(), holder.left_logo, options);
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + leftEn.getMebUrl(), holder.left_head, headOptions);
 			holder.left_title.setText(leftEn.getTitle());
@@ -122,9 +122,9 @@ public class SpecialAdapter extends BaseAdapter {
 			});
 		}
 		final ThemeEntity rightEn = (ThemeEntity) data.getRightEn();
+		holder.right_logo.setLayoutParams(lp);
 		if (rightEn != null) {
 			holder.right_main.setVisibility(View.VISIBLE);
-			holder.right_logo.setLayoutParams(lp);
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getImgUrl(), holder.right_logo, options);
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getMebUrl(), holder.right_head, headOptions);
 			holder.right_title.setText(rightEn.getTitle());

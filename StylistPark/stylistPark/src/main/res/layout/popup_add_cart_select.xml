@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/ui_bg_color_percent_80"
+    android:background="@color/ui_bg_color_percent_08"
     android:orientation="vertical" >
 
     <RelativeLayout

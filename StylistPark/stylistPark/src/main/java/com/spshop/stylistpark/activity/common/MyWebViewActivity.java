@@ -164,7 +164,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 					if (StringUtil.isNull(comStr)) {
 						tv_comment.setTextColor(getResources().getColor(R.color.label_text_color));
 					} else {
-						tv_comment.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+						tv_comment.setTextColor(getResources().getColor(R.color.tv_color_status));
 					}
 				}
 			});
@@ -439,7 +439,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	public void onStart(MediaPlayer mediaPlayer) {
 		isStop = false;
 		if (uvv != null) {
-			uvv.setBackgroundResource(R.color.ui_bg_color_percent_100);
+			uvv.setBackgroundResource(R.color.ui_bg_color_percent_10);
 		}
 		LogUtil.i(TAG, "onStart UniversalVideoView callback");
 	}

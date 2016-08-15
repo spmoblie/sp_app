@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/ui_bg_color_gray"
+            android:background="@color/ui_bg_color_nut"
             android:orientation="vertical" >
 
             <TextView
@@ -73,7 +73,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/ui_bg_color_bar"
+                    android:textColor="@color/tv_color_status"
                     android:textSize="@dimen/text_size_14"
                     android:textStyle="bold" />
             </RelativeLayout>

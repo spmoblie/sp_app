@@ -91,8 +91,8 @@ public class BounsListAdapter extends BaseAdapter {
 		final BounsEntity data = datas.get(position);
 		
 		if (data.getStatusType() == 1) {
-			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
-			holder.tv_money.setTextColor(context.getResources().getColor(R.color.text_color_red_1));
+			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.price_text_color));
+			holder.tv_money.setTextColor(context.getResources().getColor(R.color.price_text_color));
 		}else {
 			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.label_text_color));
 			holder.tv_money.setTextColor(context.getResources().getColor(R.color.label_text_color));

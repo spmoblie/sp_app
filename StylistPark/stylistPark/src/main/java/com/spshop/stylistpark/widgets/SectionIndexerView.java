@@ -191,7 +191,7 @@ public class SectionIndexerView extends View implements OnTouchListener {
         for (int i = 0; i < mSections.length; i++) {
 
             if (mCurrentSection == i)
-                mAlphaPaint.setColor(getResources().getColor(R.color.text_color_app_bar));
+                mAlphaPaint.setColor(getResources().getColor(R.color.tv_color_status));
             else
                 mAlphaPaint.setColor(Color.BLACK);
 

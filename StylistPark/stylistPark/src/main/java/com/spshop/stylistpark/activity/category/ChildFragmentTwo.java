@@ -311,12 +311,12 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	private void changeTitleStatus(int index){
 		switch (index) {
 			case 0:
-				tv_title_1.setTextColor(getResources().getColor(R.color.text_color_app_bar));
-				tv_title_2.setTextColor(getResources().getColor(R.color.conte_text_color));
+				tv_title_1.setTextColor(getResources().getColor(R.color.tv_color_status));
+				tv_title_2.setTextColor(getResources().getColor(R.color.tv_color_change));
 				break;
 			case 1:
-				tv_title_1.setTextColor(getResources().getColor(R.color.conte_text_color));
-				tv_title_2.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+				tv_title_1.setTextColor(getResources().getColor(R.color.tv_color_change));
+				tv_title_2.setTextColor(getResources().getColor(R.color.tv_color_status));
 				break;
 		}
 	}

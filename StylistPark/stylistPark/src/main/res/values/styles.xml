@@ -34,12 +34,17 @@
         <item name="android:taskToBackEnterAnimation">@null</item>
         <item name="android:taskToBackExitAnimation">@null</item>
     </style>
+
+    <!-- 自定义加载动画 -->
+    <style name="myProgressBarStyleLarge">
+        <item name="android:indeterminateDrawable">@anim/loading_anim_large</item>
+    </style>
     
     <!-- 通用对话框样式 -->
     <style name="MyDialog" parent="android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/ui_bg_color_percent_100</item>
+        <item name="android:windowBackground">@color/ui_bg_color_percent_10</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
@@ -54,6 +59,19 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.5</item>
         <item name="android:alpha">0.3</item>
+    </style>
+
+    <!-- 首页倒计时时间文本样式 -->
+    <style name="home_text_time">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:background">@drawable/shape_frame_bg_red_10</item>
+        <item name="android:textColor">@color/text_color_white</item>
+        <item name="android:textSize">@dimen/text_size_22</item>
     </style>
     
     <!-- 主页底部Tab布局样式 -->
@@ -122,19 +140,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@color/ui_bg_color_white</item>
-    </style>
-
-    <!-- 首页倒计时时间文本样式 -->
-    <style name="home_text_time">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingTop">2dp</item>
-        <item name="android:paddingRight">5dp</item>
-        <item name="android:paddingBottom">2dp</item>
-        <item name="android:background">@drawable/shape_frame_bg_red_10</item>
-        <item name="android:textColor">@color/text_color_white</item>
-        <item name="android:textSize">@dimen/text_size_22</item>
     </style>
 
     <!-- 设置页面标题文本样式 -->
@@ -227,7 +232,7 @@
     <style name="common_text_price">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_color_app_bar</item>
+        <item name="android:textColor">@color/price_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
@@ -411,7 +416,7 @@
         <item name="android:paddingRight">15dp</item>
         <item name="android:paddingBottom">5dp</item>
         <item name="android:background">@drawable/shape_frame_bg_app_hollow_4</item>
-        <item name="android:textColor">@color/ui_bg_color_bar</item>
+        <item name="android:textColor">@color/tv_color_status</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
@@ -458,7 +463,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@drawable/shape_frame_bg_app_hollow_4</item>
         <item name="android:text">@string/cancel</item>
-        <item name="android:textColor">@color/text_color_app_bar</item>
+        <item name="android:textColor">@color/tv_color_status</item>
         <item name="android:textSize">@dimen/text_size_16</item>
     </style>
     
@@ -501,19 +506,19 @@
     <style name="set_line_horizontal_bg">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dp</item>
-        <item name="android:background">@color/ui_bg_color_line_tiny</item>
+        <item name="android:background">@color/ui_bg_color_div_min</item>
     </style>
 
     <!-- 垂直分割线 -->
     <style name="set_line_vertical_bg">
         <item name="android:layout_width">0.5dp</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/ui_bg_color_line_tiny</item>
+        <item name="android:background">@color/ui_bg_color_div_min</item>
     </style>
     
     <!-- 权重布局占位通用样式 -->
     <style name="layout_weight_style">
-        <item name="android:background">@color/ui_bg_color_percent_100</item>
+        <item name="android:background">@color/ui_bg_color_percent_10</item>
     </style>
 
     <!-- 动画从右边进来，退出 -->

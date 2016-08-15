@@ -5,12 +5,12 @@
         <shape android:shape="rectangle" >
             <stroke
                 android:width="2dp"
-                android:color="@color/generator_tool_bar_stroke" />
+                android:color="#E6E6E6" />
         </shape>
     </item>
     <item android:bottom="2dp">
         <shape android:shape="rectangle" >
-            <solid android:color="@color/generator_tool_bar_bg" />
+            <solid android:color="#F4F4F4" />
         </shape>
     </item>
 

@@ -569,7 +569,6 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			if (mainEn != null) {
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
-					boolean isOk;
 					int total = mainEn.getOrderTotal();
 					List<OrderEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {

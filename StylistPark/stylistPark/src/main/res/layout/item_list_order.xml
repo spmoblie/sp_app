@@ -3,7 +3,7 @@
     android:id="@+id/item_list_order_ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_gray"
+    android:background="@color/ui_bg_color_nut"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical" >
 
@@ -31,7 +31,7 @@
             android:layout_marginRight="15dp"
             android:textStyle="bold"
             android:textSize="@dimen/text_size_12"
-            android:textColor="@color/ui_bg_color_bar"/>
+            android:textColor="@color/tv_color_status"/>
     </RelativeLayout>
 
     <ImageView

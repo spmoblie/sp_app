@@ -94,10 +94,10 @@ public class CategoryLeftListAdapter extends BaseAdapter{
 		
 		if (index == position) {
 			holder.rl_item.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_white));
-			holder.tv_name.setTextColor(context.getResources().getColor(R.color.text_color_app_bar));
+			holder.tv_name.setTextColor(context.getResources().getColor(R.color.tv_color_status));
 		}else {
-			holder.rl_item.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_gray));
-			holder.tv_name.setTextColor(context.getResources().getColor(R.color.conte_text_color));
+			holder.rl_item.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_nut));
+			holder.tv_name.setTextColor(context.getResources().getColor(R.color.tv_color_change));
 		}
 		holder.rl_item.setOnClickListener(new OnClickListener() {
 			

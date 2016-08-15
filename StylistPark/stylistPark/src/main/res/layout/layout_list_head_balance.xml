@@ -6,6 +6,8 @@
     android:gravity="center_horizontal"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
+    android:paddingBottom="15dp"
+    android:background="@color/ui_bg_color_app"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -65,7 +67,7 @@
             android:lines="1"
             android:text="@string/money_auth_go"
             android:textSize="@dimen/text_size_12"
-            android:textColor="@color/text_color_red_1" />
+            android:textColor="@color/tv_color_status" />
     </LinearLayout>
     
     <Button 
@@ -75,35 +77,8 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/shape_frame_bg_app_hollow_16"
         android:text="@string/money_withdrawals"
-        android:textColor="@color/ui_bg_color_bar"
+        android:textColor="@color/tv_color_status"
         android:textSize="@dimen/text_size_14"
         android:visibility="gone" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/desc" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/money_balance_detail"
-            android:textColor="@color/label_text_color"
-            android:textSize="@dimen/text_size_12" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/desc" />
-    </LinearLayout>
 
 </LinearLayout>

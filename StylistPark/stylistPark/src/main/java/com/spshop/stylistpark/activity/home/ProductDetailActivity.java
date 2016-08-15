@@ -305,7 +305,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private void changeCollectionStatus() {
 		if (isColl) {
 			tv_collection.setSelected(true);
-			tv_collection.setTextColor(getResources().getColor(R.color.text_color_app_bar));
+			tv_collection.setTextColor(getResources().getColor(R.color.tv_color_status));
 		}else {
 			tv_collection.setSelected(false);
 			tv_collection.setTextColor(getResources().getColor(R.color.label_text_color));
@@ -606,7 +606,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 							tv_popup_select.setTextColor(getResources().getColor(R.color.label_text_color));
 						}else {
 							tv_popup_prompt.setText(getString(R.string.item_select_ok));
-							tv_popup_select.setTextColor(getResources().getColor(R.color.ui_bg_color_bar));
+							tv_popup_select.setTextColor(getResources().getColor(R.color.tv_color_status));
 						}
 						// 刷新商品价格及数量
 						selectId_1 = id1;
@@ -1009,7 +1009,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		final TextView tv_name = new TextView(mContext);
 		tv_name.setGravity(Gravity.CENTER);
 		tv_name.setText("+" + addNum);
-		tv_name.setTextColor(mContext.getResources().getColor(R.color.text_color_app_bar));
+		tv_name.setTextColor(mContext.getResources().getColor(R.color.tv_color_status));
 		tv_name.setTextSize(14);
 		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
 				ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

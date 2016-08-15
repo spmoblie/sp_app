@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_gray" >
+    android:background="@color/ui_bg_color_nut" >
 
     <RelativeLayout
         android:id="@+id/personal_rl_head"
@@ -26,8 +26,7 @@
 
         <TextView
             android:id="@+id/personal_tv_head_content"
-            style="@style/setting_lay_text_content"
-            android:textColor="@color/text_color_red_1" />
+            style="@style/setting_lay_text_content" />
 
         <ImageView
             style="@style/set_line_horizontal_bg"
@@ -151,7 +150,7 @@
             android:id="@+id/personal_tv_auth_go"
             style="@style/setting_lay_text_content"
             android:text="@string/money_auth_go"
-            android:textColor="@color/text_color_app_bar" />
+            android:textColor="@color/tv_color_status" />
 
         <TextView
             android:id="@+id/personal_tv_auth_ok"

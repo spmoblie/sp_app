@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="bottom"
+    android:background="@color/ui_bg_color_nut"
     android:orientation="vertical" >
 
     <RelativeLayout

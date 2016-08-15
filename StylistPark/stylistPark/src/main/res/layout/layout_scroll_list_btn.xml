@@ -3,15 +3,14 @@
     android:id="@+id/scroll_list_btn_ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_app"
+    android:background="@color/ui_bg_color_nut"
     android:baselineAligned="false"
     android:orientation="vertical" >
 
     <ScrollView
         android:id="@+id/scroll_list_btn_sv"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/ui_bg_color_gray" >
+        android:layout_height="fill_parent" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -42,16 +41,14 @@
             <com.spshop.stylistpark.widgets.ScrollViewListView
                 android:id="@+id/scroll_list_btn_lv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/ui_bg_color_app" />
+                android:layout_height="wrap_content" />
 
             <RelativeLayout
                 android:id="@+id/scroll_list_btn_rl_clear"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:background="@color/ui_bg_color_gray" >
+                android:gravity="center" >
                 
                 <include 
                     layout="@layout/layout_bottom_button_one" />

@@ -49,7 +49,7 @@
                         android:layout_gravity="bottom"
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="15dp"
-                        android:background="@color/ui_bg_color_percent_50"
+                        android:background="@color/ui_bg_color_percent_05"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text=""
@@ -208,7 +208,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/ui_bg_color_gray" >
+                    android:background="@color/ui_bg_color_nut" >
                 </RelativeLayout>
 
                 <ImageView
@@ -271,7 +271,7 @@
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="@string/product_brand_go"
-                        android:textColor="@color/text_color_app_bar"
+                        android:textColor="@color/tv_color_status"
                         android:textSize="@dimen/text_size_12" />
                 </LinearLayout>
 
@@ -282,7 +282,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/ui_bg_color_gray"></RelativeLayout>
+                    android:background="@color/ui_bg_color_nut">
+                </RelativeLayout>
 
                 <ImageView
                     style="@style/set_line_horizontal_bg"

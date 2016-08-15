@@ -14,7 +14,6 @@
             android:id="@+id/fragment_three_2_refresh_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/ui_bg_color_white"
             android:visibility="invisible" />
     </LinearLayout>
 

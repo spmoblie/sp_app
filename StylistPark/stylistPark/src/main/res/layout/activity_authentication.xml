@@ -29,8 +29,8 @@
 
             <ImageView
                 android:id="@+id/authentication_iv_preview"
-                android:layout_width="@dimen/collage_preview_side"
-                android:layout_height="@dimen/collage_preview_side"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:contentDescription="@string/desc"
                 android:src="@drawable/icon_authentication" />
         </RelativeLayout>

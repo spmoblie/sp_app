@@ -55,6 +55,9 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_capture);
 		//ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
+
+		setHeadVisibility(View.GONE);
+
 		CameraManager.init(getApplication());
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		

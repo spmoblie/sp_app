@@ -187,10 +187,10 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 			CommonTools.setLayoutParams(ll_no_data, AppApplication.screenWidth,
 					AppApplication.screenHeight - AppApplication.statusHeight - 300);
 			ll_no_data.setVisibility(View.VISIBLE);
-			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_white));
+			//ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_white));
 		} else {
 			ll_no_data.setVisibility(View.GONE);
-			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_nut));
+			//ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_nut));
 		}
 	}
 

@@ -136,9 +136,9 @@ public class IndexDisplayFragment extends BaseFragment {
 			@Override
 			public void onSectionChange(int status, int position, Object newSection) {
 				if (status == SectionIndexerView.SectionIndexerListener.STATE_UP) {
-					mSection.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_percent_100));
+					mSection.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_percent_10));
 				} else {
-					mSection.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_percent_50));
+					mSection.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_percent_05));
 				}
 				String keyStr = "";
 				if (position >= 0 && position < indexs.length) {

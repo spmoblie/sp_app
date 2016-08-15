@@ -4,6 +4,6 @@
 
     <corners android:radius="10dp" />
     
-    <solid android:color="@color/text_color_red_0" />
+    <solid android:color="@color/warns_text_color" />
 
 </shape>

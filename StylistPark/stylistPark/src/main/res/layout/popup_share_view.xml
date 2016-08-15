@@ -3,14 +3,14 @@
     android:id="@+id/share_view_fl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_percent_100"
+    android:background="@color/ui_bg_color_percent_10"
     android:gravity="center" >
 
     <View
         android:id="@+id/share_view_dismiss"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/ui_bg_color_percent_80" />
+        android:background="@color/ui_bg_color_percent_08" />
 
     <LinearLayout
         android:id="@+id/share_view_ll_show_main"

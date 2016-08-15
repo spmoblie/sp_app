@@ -168,10 +168,10 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 		if (isShow) {
 			CommonTools.setLayoutParams(ll_no_data, width, height - statusHeight - 300);
 			ll_no_data.setVisibility(View.VISIBLE);
-			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_white));
+			//ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_white));
 		} else {
 			ll_no_data.setVisibility(View.GONE);
-			ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_nut));
+			//ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_nut));
 		}
 	}
 

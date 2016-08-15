@@ -109,19 +109,19 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 			}
 			tv_amount.setText(amountStr);
 			switch (mainEn.getStatus()) {
-			case 0: //未认证
-				ll_auth.setVisibility(View.VISIBLE);
-				btn_withdrawals.setVisibility(View.GONE);
-				break;
-			case 1: //可提现
+			case 0: //可提现
 				ll_auth.setVisibility(View.GONE);
 				btn_withdrawals.setVisibility(View.VISIBLE);
 				break;
-			case 2: //提现中
+			case 1: //提现中
 				btn_withdrawals.setVisibility(View.GONE);
 				ll_auth.setVisibility(View.VISIBLE);
 				tv_auth.setVisibility(View.GONE);
 				tv_hint.setText(mainEn.getStatusHint());
+				break;
+			case 2: //未认证
+				ll_auth.setVisibility(View.VISIBLE);
+				btn_withdrawals.setVisibility(View.GONE);
 				break;
 			}
 		}
@@ -193,7 +193,6 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	 */
 	private void getSVDatas() {
 		current_Page = 1;
-		lv_show.clear();
 		requestProductLists();
 	}
 	
@@ -259,6 +258,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	private void updateAllData() {
 		if (isUpdate) {
         	isUpdate = false;
+			lv_show.clear();
         	refresh_lv.doPullRefreshing(true, 500);
 		}
 	}

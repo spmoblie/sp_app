@@ -3,7 +3,7 @@
     android:id="@+id/item_list_bouns_ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_gray"
+    android:background="@color/ui_bg_color_nut"
     android:orientation="vertical"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
@@ -34,7 +34,7 @@
                     android:layout_alignBottom="@+id/item_list_bouns_tv_money"
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
-                    android:textColor="@color/text_color_red_1"
+                    android:textColor="@color/price_text_color"
                     android:textSize="@dimen/text_size_14" />
 
                 <TextView
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/item_list_bouns_tv_currency"
-                    android:textColor="@color/text_color_red_1"
+                    android:textColor="@color/price_text_color"
                     android:textSize="@dimen/text_size_30"
                     android:textStyle="bold" />
             </RelativeLayout>
