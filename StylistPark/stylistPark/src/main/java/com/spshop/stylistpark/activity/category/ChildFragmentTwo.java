@@ -228,6 +228,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 			getSVCategoryDatas();
 			getSVBrandDatas();
 		}else {
+			startAnimation();
 			getDBDatas();
 		}
 	}
@@ -421,6 +422,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 					if (isLeftShow) {
 						lv_left_Adapter.updateAdapter(lv_lists, index);
 						isLeftShow = false;
+						stopAnimation();
 					}
 					gv_Adapter.updateAdapter(gv_lists);
 				}
@@ -451,11 +453,10 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
+		stopAnimation();
 		if (getActivity() == null) {
-			stopAnimation();
 			return;
 		}
-		stopAnimation();
 		CommonTools.showToast(String.valueOf(result), 1000);
 	}
 	

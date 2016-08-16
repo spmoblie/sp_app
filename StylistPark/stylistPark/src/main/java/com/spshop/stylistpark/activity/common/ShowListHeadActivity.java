@@ -430,8 +430,8 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		loadType = -1;
 		current_Page = 1;
 		countTotal = 0;
-		startAnimation();
 		setLoadMoreData();
+		startAnimation();
 		sendRequestCode();
 	}
 	

@@ -222,8 +222,8 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 	private void getSVDatas() {
 		loadType = 1;
 		current_Page = 1;
-		startAnimation();
 		setLoadMoreData();
+		startAnimation();
 		requestProductLists();
 	}
 

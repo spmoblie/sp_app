@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ui_bg_color_app"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/popup_rl_close"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="right" >
+        android:layout_gravity="right">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -20,10 +20,17 @@
             android:src="@drawable/topbar_icon_clear" />
     </RelativeLayout>
 
-    <VideoView
-        android:id="@+id/popup_videoView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center" />
+        android:layout_height="match_parent">
+
+        <VideoView
+            android:id="@+id/popup_videoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <include layout="@layout/uvv_on_loading_layout" />
+    </FrameLayout>
 
 </LinearLayout>

@@ -744,6 +744,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     	LogUtil.i(TAG, "rootPage = " + rootPage);
     	if (!rootPage.equals("ProductDetailActivity") 
     	 && !rootPage.equals("HomeFragmentActivity")
+    	 && !rootPage.equals("MyWebViewActivity")
     	 && !rootPage.equals("CartActivity")
     	 && !rootPage.equals("SettingActivity"))
     	{

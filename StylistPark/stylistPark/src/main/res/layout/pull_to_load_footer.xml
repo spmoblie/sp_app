@@ -15,8 +15,8 @@
 
         <ProgressBar
             android:id="@+id/pull_to_load_footer_progressbar"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:visibility="visible"
             android:indeterminateDrawable="@anim/pull_loading_anim"
             android:gravity="center"

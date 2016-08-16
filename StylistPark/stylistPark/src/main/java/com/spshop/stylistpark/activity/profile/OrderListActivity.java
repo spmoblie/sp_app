@@ -128,7 +128,6 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		}else { //会员订单
 			setTitle(R.string.profile_member_order);
 		}
-		rl_loading.setVisibility(View.GONE);
 		iv_to_top.setOnClickListener(this);
 		
 		initRaidoGroup();
@@ -327,8 +326,8 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		loadType = 1;
 		current_Page = 1;
 		countTotal = 0;
-		startAnimation();
 		setLoadMoreData();
+		startAnimation();
 		requestProductLists();
 	}
 

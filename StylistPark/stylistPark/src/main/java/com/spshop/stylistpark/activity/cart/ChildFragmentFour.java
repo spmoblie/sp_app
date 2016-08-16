@@ -131,7 +131,6 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	private void initView() {
 		tv_title.setText(getString(R.string.title_fragment_four));
 		iv_left.setVisibility(View.GONE);
-		rl_loading.setVisibility(View.GONE);
 		tv_buy_now.setOnClickListener(this);
 		tv_shopping.setOnClickListener(this);
 		tv_load_again.setOnClickListener(this);

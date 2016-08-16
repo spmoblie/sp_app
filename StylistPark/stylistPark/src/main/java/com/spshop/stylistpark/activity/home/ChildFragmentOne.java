@@ -155,7 +155,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	}
 
 	private void initView() {
-		rl_loading.setVisibility(View.GONE);
 		rl_category.setOnClickListener(this);
 		rl_search.setOnClickListener(this);
 		rl_zxing.setOnClickListener(this);
@@ -722,6 +721,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			setHeadView();
 			if (themeEn != null) {
 				requestListDatas();
+				stopAnimation();
 			} else {
 				getDBDatas(); //加载远程数据失败则获取本地数据
 			}
@@ -745,10 +745,10 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		case AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE:
 			AppApplication.loadDBData = false;
 			setHeadView();
+			stopAnimation();
 			if (themeEn != null) {
 				requestListDatas();
 			} else {
-				stopAnimation();
 				rl_load_fail.setVisibility(View.VISIBLE);
 			}
 			break;

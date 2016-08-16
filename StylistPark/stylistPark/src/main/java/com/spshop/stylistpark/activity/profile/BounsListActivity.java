@@ -114,7 +114,6 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		bounsStr = getString(R.string.bouns_bouns);
 		setTitle(R.string.profile_bonus);
 		setBtnRight(getString(R.string.add));
-		rl_loading.setVisibility(View.GONE);
 		iv_to_top.setOnClickListener(this);
 		
 		initRaidoGroup();
@@ -240,8 +239,8 @@ public class BounsListActivity extends BaseActivity implements OnClickListener{
 		loadType = 1;
 		current_Page = 1;
 		countTotal = 0;
-		startAnimation();
 		setLoadMoreData();
+		startAnimation();
 		requestProductLists();
 	}
 	

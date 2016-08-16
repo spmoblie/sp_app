@@ -2,8 +2,7 @@
 <rotate xmlns:android="http://schemas.android.com/apk/res/android"
     android:drawable="@drawable/loading_anim_large"
     android:fromDegrees="0"
-    android:toDegrees="360"
+    android:toDegrees="720"
     android:pivotX="50%"
     android:pivotY="50%"
-    android:fillAfter="true"
-    android:duration="800" />
+    android:duration="700" />

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.utils.CommonTools;
@@ -46,8 +48,11 @@ public class LoadDialog extends Dialog {
 
 		this.canNotCancel = canNotCancel;
 		this.tipMsg = tipMsg;
-		this.getContext().setTheme(android.R.style.Theme_InputMethod);
+		this.getContext().setTheme(android.R.style.Theme_Light_Panel);
 		setContentView(R.layout.dailog_animation);
+
+		RelativeLayout rl_loading = (RelativeLayout) findViewById(R.id.loading_anim_large_ll_main);
+		rl_loading.setVisibility(View.VISIBLE);
 
 //		// 对话框背景设置
 //		Window window = getWindow();

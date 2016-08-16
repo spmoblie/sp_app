@@ -73,7 +73,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 
 	private int mFirstVisibleItem = 0;
 	private int typeId = 0; //0:搜索页面  非0:商品列表
-	private int loadNum = 0; //记录加载筛选列表数据的次数
 	private int brandId = 0; //筛选的品牌Id
 	private String brandName = ""; //筛选的品牌名称
 	private String attrStr = ""; //筛选的其它类型Value字符串
@@ -191,6 +190,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			initEditText();
 			initWordsHistoryList();
 		}else {
+			isUpdate = true;
 			rl_search_et.setVisibility(View.GONE);
 			rl_search_txt.setVisibility(View.GONE);
 			rl_search_line.setVisibility(View.GONE);
@@ -198,10 +198,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			ll_hot_words.setVisibility(View.GONE);
 			ll_other.setVisibility(View.VISIBLE);
 			ll_search_history.setVisibility(View.GONE);
-			getScreenListDatas();
-			getSVDatas();
 		}
-
 		initViewGroup();
 		initListView();
 		setAdapter();
@@ -426,8 +423,8 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		loadType = 1;
 		current_Page = 1;
 		countTotal = 0;
-		startAnimation();
 		setLoadMoreData();
+		startAnimation();
 		requestProductLists();
 	}
 
@@ -772,17 +769,14 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	public void onSuccess(int requestCode, Object result) {
 		if (instance == null) return;
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_SCREEN_LIST_CODE:
-			if (screen_MainEn == null && loadNum < 3) {
-				loadNum++;
-				getScreenListDatas();
-			}
-			break;
 		case AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE:
 			if (product_MainEn != null && product_MainEn.getMainLists() != null) {
 				ll_other.setVisibility(View.VISIBLE);
 				ll_search_history.setVisibility(View.GONE);
 
+				if (screen_MainEn == null) {
+					getScreenListDatas();
+				}
 				if (typeId != 0 && StringUtil.isNull(titleName)) {
 					titleName = product_MainEn.getCategoryName();
 					tv_title.setText(titleName);

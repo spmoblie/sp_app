@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
@@ -27,6 +28,7 @@ public class VideoActivity extends BaseActivity {
 	private static final String TAG = "VideoActivity";
 	
 	private VideoView videoView;
+	private LinearLayout loading_main;
 	private RelativeLayout rl_close;
 	private String videoUrl;
 	private int old_duration;
@@ -47,11 +49,13 @@ public class VideoActivity extends BaseActivity {
 
 	private void findViewById() {
 		videoView = (VideoView) findViewById(R.id.popup_videoView);
+		loading_main = (LinearLayout) findViewById(R.id.uvv_loading_ll_main);
 		rl_close = (RelativeLayout) findViewById(R.id.popup_rl_close);
 	}
 
 	private void initView() {
 		setHeadVisibility(View.GONE);
+		stopAnimation();
 		
 		rl_close.setOnClickListener(new OnClickListener() {
 			
@@ -208,4 +212,13 @@ public class VideoActivity extends BaseActivity {
 		
 	}
 
+	@Override
+	protected void startAnimation() {
+		loading_main.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	protected void stopAnimation() {
+		loading_main.setVisibility(View.GONE);
+	}
 }

@@ -106,7 +106,6 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 
 	private void initView() {
 		setTitle(R.string.profile_my_member);
-		rl_loading.setVisibility(View.GONE);
 		iv_to_top.setOnClickListener(this);
 		
 		initRaidoGroup();
@@ -206,8 +205,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		loadType = 1;
 		current_Page = 1;
 		countTotal = 0;
-		startAnimation();
 		setLoadMoreData();
+		startAnimation();
 		requestProductLists();
 	}
 	

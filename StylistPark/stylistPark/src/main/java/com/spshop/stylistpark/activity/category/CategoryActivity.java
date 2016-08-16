@@ -209,6 +209,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 			getSVCategoryDatas();
 			getSVBrandDatas();
 		}else {
+			startAnimation();
 			getDBDatas();
 		}
 	}
@@ -402,6 +403,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 				if (isLeftShow) {
 					lv_left_Adapter.updateAdapter(lv_lists, index);
 					isLeftShow = false;
+					stopAnimation();
 				}
 				gv_Adapter.updateAdapter(gv_lists);
 			}

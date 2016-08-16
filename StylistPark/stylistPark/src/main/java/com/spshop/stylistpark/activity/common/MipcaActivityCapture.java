@@ -12,9 +12,6 @@ import android.os.Vibrator;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
@@ -56,19 +53,10 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
 		setContentView(R.layout.activity_capture);
 		//ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
 
-		setHeadVisibility(View.GONE);
+		setTitle(R.string.title_qr_code_scan);
 
 		CameraManager.init(getApplication());
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-		
-		Button mButtonBack = (Button) findViewById(R.id.button_back);
-		mButtonBack.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				MipcaActivityCapture.this.finish();
-			}
-		});
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
 	}

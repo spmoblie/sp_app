@@ -688,7 +688,12 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	 */
 	private void getSVDatas() {
 		startAnimation();
-		request(AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE);
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				request(AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE);
+			}
+		}, 1000);
 	}
 
 	/**
@@ -909,7 +914,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	@Override
 	public void onSuccess(int requestCode, Object result) {
 		if (instance == null) return;
-		stopAnimation();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE:
 			if (mainEn != null) {
@@ -965,6 +969,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			}
 			break;
 		}
+		stopAnimation();
 	}
 
 	@Override
