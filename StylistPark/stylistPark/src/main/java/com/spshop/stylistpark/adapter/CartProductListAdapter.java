@@ -17,6 +17,7 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
+import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.slider.SlideView;
 
@@ -38,6 +39,7 @@ public class CartProductListAdapter extends BaseAdapter{
 	private Context context;
 	private List<ProductDetailEntity> datas;
 	//private SparseArray<ProductDetailEntity> sa_cart;
+	private String currStr;
 	private AdapterCallback apCallback;
     private SlideView slideview;
     private DisplayImageOptions options;
@@ -47,6 +49,7 @@ public class CartProductListAdapter extends BaseAdapter{
 		this.context = context;
 		this.datas = datas;
 		//this.sa_cart = sa_cart;
+		currStr = LangCurrTools.getCurrencyValue();
 		this.apCallback = callback;
         
         options = AppApplication.getDefaultImageOptions();
@@ -81,7 +84,7 @@ public class CartProductListAdapter extends BaseAdapter{
 	static class ViewHolder{
 		RelativeLayout rl_select, rl_minus, rl_add;
 		ImageView iv_select, iv_img, iv_minus, iv_add, iv_delete;
-		TextView tv_brand, tv_name, tv_attr, tv_price, tv_number;
+		TextView tv_brand, tv_name, tv_attr, tv_curr, tv_price, tv_number;
 	}
 	
 	/**代表了ListView中的一个item对象*/
@@ -105,6 +108,7 @@ public class CartProductListAdapter extends BaseAdapter{
 			holder.tv_brand = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_brand);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_name);
 			holder.tv_attr = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_attr);
+			holder.tv_curr = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_curr);
 			holder.tv_price = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_price);
 			holder.tv_number = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_number);
 			
@@ -122,7 +126,8 @@ public class CartProductListAdapter extends BaseAdapter{
 		}
 		holder.tv_brand.setText(data.getBrandName());
 		holder.tv_name.setText(data.getName());
-		holder.tv_price.setText(data.getCurrency() + data.getSellPrice());
+		holder.tv_curr.setText(currStr);
+		holder.tv_price.setText(data.getSellPrice());
 		holder.tv_number.setText(String.valueOf(data.getCartNum()));
 		
 		String attrStr = data.getAttrStr();

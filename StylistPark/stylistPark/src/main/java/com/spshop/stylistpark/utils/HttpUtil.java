@@ -1,9 +1,9 @@
 package com.spshop.stylistpark.utils;
 
+import android.content.Context;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.entity.MyNameValuePair;
 
@@ -79,7 +79,7 @@ public class HttpUtil {
 		String langStr = LangCurrTools.getLanguageHttpUrlValueStr();
 		String curStr = LangCurrTools.getCurrencyHttpUrlValueStr();
 		String cookie = FileManager.readFileSaveString(AppConfig.cookiesFileName, true);
-		LogUtil.i("JsonParser", "read cookie = " + cookie);
+		LogUtil.i("JsonParser", "读取 Cookie = " + cookie);
 		
 		HttpUriRequest request = null;
 		switch (method) {
@@ -121,15 +121,16 @@ public class HttpUtil {
 			HttpResponse response = client.execute(request);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				List<Cookie> cookies = ((AbstractHttpClient) client).getCookieStore().getCookies();
-				if (cookies.size() > 0) {
+				if (cookies.isEmpty()) {
+					LogUtil.i("JsonParser", "cookie is empty");
+				} else {
 					String cookieValue = "";
 					for (int i = 0; i < cookies.size(); i++) {
 						cookieValue += cookies.get(i).getName() + "=" + cookies.get(i).getValue() + "; ";
 					}
 					if (!StringUtil.isNull(cookieValue)) {
-						LogUtil.i("JsonParser", "write cookie = " + cookie);
+						LogUtil.i("JsonParser", "缓存 Cookie = " + cookieValue);
 						FileManager.writeFileSaveString(AppConfig.cookiesFileName, cookieValue, true);
-						cookieValue = "";
 					}
 				}
 				entity = response.getEntity();
@@ -203,23 +204,26 @@ public class HttpUtil {
 	/**
 	 * 同步一下cookie
 	 */
-	public static void synCookies(String url) {
-		CookieSyncManager.createInstance(AppApplication.getInstance().getApplicationContext());
+	public static void synCookies(Context context, String url) {
+		CookieSyncManager.createInstance(context);
 		CookieManager cookieManager = CookieManager.getInstance();
 		cookieManager.setAcceptCookie(true);
-		//cookieManager.removeSessionCookie(); //在初始化FBSDK的时候会导致Webview延迟加载
+		cookieManager.removeSessionCookie(); //移除
         cookieManager.removeAllCookie(); //移除所有Cookie
         String cookies = FileManager.readFileSaveString(AppConfig.cookiesFileName, true);
-        if (!StringUtil.isNull(cookies)) {
+        if (!StringUtil.isNull(cookies)) { // cookies是在HttpClient中获得的cookie
         	String[] cks = cookies.split(";");
         	for (int i = 0; i < cks.length; i++) {
         		String ck = cks[i];
         		ck = ck.replace(" ", "");
         		if (!StringUtil.isNull(ck)) {
-        			cookieManager.setCookie(url, ck); // cookies是在HttpClient中获得的cookie
-        		}
-        	}
-        }
+					cookieManager.setCookie(url, ck);
+					LogUtil.i("JsonParser", "同步 setCookie = " + ck);
+				}
+			}
+		}
+		String newCookie = cookieManager.getCookie(url);
+		LogUtil.i("JsonParser", "同步 getCookie = " + newCookie);
         CookieSyncManager.getInstance().sync();
 	}
 

@@ -15,6 +15,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -82,7 +83,8 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 
 	private RelativeLayout rl_search_et, rl_search_txt, rl_search_line;
 	private RelativeLayout rl_words_clear, rl_search_no_data;
-	private LinearLayout ll_top, ll_bottom, ll_other;
+	private FrameLayout fl_list_head;
+	private LinearLayout ll_top, ll_other;
 	private LinearLayout ll_hot_words, ll_group_main, ll_search_history, ll_words_history;
 	private RelativeLayout rl_top_1, rl_top_2, rl_top_3;
 	private TextView tv_top_1, tv_top_2, tv_top_3;
@@ -155,12 +157,13 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		rl_search_no_data = (RelativeLayout) findViewById(R.id.product_ll_search_no_data);
 		rl_words_clear = (RelativeLayout) findViewById(R.id.scroll_list_btn_rl_clear);
 		ll_top = (LinearLayout) findViewById(R.id.product_ll_anim_top);
-		ll_bottom = (LinearLayout) findViewById(R.id.product_ll_anim_bottom);
 		ll_other = (LinearLayout) findViewById(R.id.product_ll_anim_other);
 		ll_hot_words = (LinearLayout) findViewById(R.id.product_ll_search_hot_words);
 		ll_group_main = (LinearLayout) findViewById(R.id.topbar_group_ll_main);
 		ll_search_history = (LinearLayout) findViewById(R.id.product_ll_search_history);
 		ll_words_history = (LinearLayout) findViewById(R.id.scroll_list_btn_ll_main);
+
+		fl_list_head = (FrameLayout) FrameLayout.inflate(mContext, R.layout.layout_list_head_empty, null);
 		
 		rank_up = getResources().getDrawable(R.drawable.icon_rank_up);
 		rank_down = getResources().getDrawable(R.drawable.icon_rank_down);
@@ -335,6 +338,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	}
 
 	private void initListView() {
+		refresh_lv.setPullRefreshEnabled(false);
 		refresh_lv.setPullLoadEnabled(false);
 		refresh_lv.setScrollLoadEnabled(true);
 		refresh_lv.setOnScrollListener(new OnMyScrollListener());
@@ -342,7 +346,8 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 下拉刷新
-				refreshSVDatas();
+				//refreshSVDatas();
+				refresh_lv.onPullDownRefreshComplete();
 			}
 
 			@Override
@@ -373,6 +378,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			}
 		});
 		mListView = refresh_lv.getRefreshableView();
+		mListView.addHeaderView(fl_list_head);
 		mListView.setDivider(null);
 		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
@@ -694,21 +700,12 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-			if (firstVisibleItem == 0 || mFirstVisibleItem > firstVisibleItem) { //上滑
-				if (firstVisibleItem == 0 || mFirstVisibleItem > firstVisibleItem + 10) {
-					mFirstVisibleItem = firstVisibleItem;
-					upMove(firstVisibleItem);
-				} else {
-					mFirstVisibleItem++;
-				}
-			} else if (firstVisibleItem == totalItemCount - visibleItemCount || mFirstVisibleItem < firstVisibleItem) { //下滑
-				if (firstVisibleItem == totalItemCount - visibleItemCount || mFirstVisibleItem < firstVisibleItem - 80) {
-					mFirstVisibleItem = firstVisibleItem;
-					downMove(firstVisibleItem);
-				} else {
-					mFirstVisibleItem--;
-				}
+			if (mFirstVisibleItem > firstVisibleItem) { //上滑
+				upMove(firstVisibleItem);
+			} else if (mFirstVisibleItem < firstVisibleItem) { //下滑
+				downMove(firstVisibleItem);
 			}
+			mFirstVisibleItem = firstVisibleItem;
 		}
 	}
 
@@ -716,13 +713,10 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 * 向上滑动效果
 	 */
 	private void upMove(int firstVisibleItem) {
-		if (headStatus && firstVisibleItem < countTotal - Page_Count / 2) {
-			createAnimation(ll_top, ll_bottom, ll_other);
+		if (headStatus) {
+			createAnimation(ll_top);
 			ll_top.clearAnimation();
 			ll_top.startAnimation(headVISIBLE);
-			ll_other.clearAnimation();
-			ll_other.startAnimation(headVISIBLE);
-			headStatus = false;
 		}
 		if (firstVisibleItem > 5) {
 			iv_to_top.setVisibility(View.VISIBLE);
@@ -735,14 +729,10 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 * 向下滑动效果
 	 */
 	private void downMove(int firstVisibleItem) {
-		if (countTotal > Page_Count && !headStatus && firstVisibleItem > 3
-				&& firstVisibleItem < countTotal - Page_Count / 2) {
-			createAnimation(ll_top, ll_bottom, ll_other);
+		if (countTotal > Page_Count && !headStatus) {
+			createAnimation(ll_top);
 			ll_top.clearAnimation();
 			ll_top.startAnimation(headGONE);
-			ll_other.clearAnimation();
-			ll_other.startAnimation(headGONE);
-			headStatus = true;
 		}
 		if (firstVisibleItem > 5) {
 			iv_to_top.setVisibility(View.VISIBLE);

@@ -29,7 +29,7 @@ public class ProductAttrEntity extends BaseEntity {
 	/**
 	 * 商品属性价值
 	 */
-	private int attrPrice;
+	private double attrPrice;
 	
 	/**
 	 * 商品属性图片
@@ -111,12 +111,12 @@ public class ProductAttrEntity extends BaseEntity {
 	}
 
 
-	public int getAttrPrice() {
+	public double getAttrPrice() {
 		return attrPrice;
 	}
 
 
-	public void setAttrPrice(int attrPrice) {
+	public void setAttrPrice(double attrPrice) {
 		this.attrPrice = attrPrice;
 	}
 

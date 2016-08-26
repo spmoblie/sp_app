@@ -36,6 +36,7 @@ import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
@@ -63,9 +64,9 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	private RelativeLayout rl_no_more, rl_loading, rl_load_fail;
 	private ImageView iv_left, iv_billing_line;
 	private TextView tv_title, tv_shopping, tv_load_again;
-	private TextView tv_total, tv_buy_now;
+	private TextView tv_curr, tv_total, tv_buy_now;
 	
-	private String curStr, amountStr;
+	private String currStr, amountStr;
 	private int updateNum = 1;
 	private int mPosition = 0;
 	private boolean isLogined;
@@ -94,6 +95,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 
 		LogUtil.i(TAG, "onCreate");
 		mContext = getActivity();
+		currStr = LangCurrTools.getCurrencyValue();
 		dm = DialogManager.getInstance(mContext);
 		atm = AsyncTaskManager.getInstance(mContext);
 
@@ -111,6 +113,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	private void findViewById(View view) {
 		iv_left = (ImageView) view.findViewById(R.id.top_commom_iv_left);
 		tv_title = (TextView) view.findViewById(R.id.top_commom_tv_title);
+		tv_curr = (TextView) view.findViewById(R.id.fragment_four_tv_curr);
 		tv_total = (TextView) view.findViewById(R.id.fragment_four_tv_total);
 		tv_buy_now = (TextView) view.findViewById(R.id.fragment_four_tv_buy_now);
 		ptrsv = (PullToRefreshScrollView) view.findViewById(R.id.fragment_four_ptrsv);
@@ -276,7 +279,8 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	 */
 	private void updatePriceTotal() {
 		lv_Adapter.updateAdapter(lv_datas, sa_cart);
-		tv_total.setText(getString(R.string.order_total_name) + curStr + amountStr);
+		tv_curr.setText(currStr);
+		tv_total.setText(amountStr);
 	}
 
 	/**
@@ -413,7 +417,6 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 						sa_cart.clear();
 					}*/
 					lv_datas.addAll(mainEn.getChildLists());
-					curStr = mainEn.getCurrency();
 					loadSuccessHandle(mainEn);
 				}
 				else 

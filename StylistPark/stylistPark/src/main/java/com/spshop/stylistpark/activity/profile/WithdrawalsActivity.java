@@ -16,7 +16,6 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.utils.CommonTools;
-import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 
@@ -31,7 +30,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	private TextView tv_amount_max;
 	private Button btn_confirm;
 	private String cardStr;
-	private int amountTotal, inputAmount;
+	private double amountTotal, inputAmount;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 		
-		amountTotal = getIntent().getExtras().getInt("amountTotal", 0);
+		amountTotal = getIntent().getExtras().getDouble("amountTotal", 0);
 		
 		findViewById();
 		initView();
@@ -57,12 +56,45 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	private void initView() {
 		setTitle(R.string.money_withdrawals_confirm);
 		btn_confirm.setOnClickListener(this);
-		et_amount.setHint(getString(R.string.money_max_amount_hint, LangCurrTools.getCurrencyValue() + amountTotal));
+		et_amount.setHint(getString(R.string.money_max_amount_hint, currStr + decimalFormat.format(amountTotal)));
 		et_amount.addTextChangedListener(new TextWatcher() {
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				
+				String input = s.toString();
+				// 以“.”开头
+				if (input.startsWith(".")) {
+					input = "0" + input;
+					et_amount.setText(input);
+					et_amount.setSelection(input.length());
+					return;
+				}
+				if (input.contains(".")) {
+					// 存在两个以上“.”
+					String beStr = input.substring(0, input.lastIndexOf("."));
+					if (beStr.contains(".")) {
+						input = beStr;
+						et_amount.setText(input);
+						et_amount.setSelection(input.length());
+						return;
+					}
+					// 取“.”后两位数
+					if (input.length() - 1 - input.indexOf(".") > 2) {
+						input = input.substring(0, input.indexOf(".") + 3);
+						et_amount.setText(input);
+						et_amount.setSelection(input.length());
+						return;
+					}
+				}
+				// 以“0”开头
+				if (input.startsWith("0") && input.trim().length() > 1) {
+					if (!input.substring(1, 2).equals(".")) {
+						input = input.substring(1, input.length());
+						et_amount.setText(input);
+						et_amount.setSelection(input.length());
+						return;
+					}
+				}
 			}
 			
 			@Override
@@ -72,21 +104,11 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 			
 			@Override
 			public void afterTextChanged(Editable s) {
-				String intputStr = s.toString();
-				if (StringUtil.isNull(intputStr)) return;
-				int amount = StringUtil.getInteger(intputStr);
-				if (amount > amountTotal) {
-					et_amount.setText(String.valueOf(amountTotal));
+				inputAmount = StringUtil.getDouble(et_amount.getText().toString());
+				if (inputAmount > amountTotal) {
+					inputAmount = amountTotal;
+					et_amount.setText(decimalFormat.format(inputAmount));
 					et_amount.setSelection(et_amount.length());
-				}
-				char first = intputStr.charAt(0);
-				if (String.valueOf(first).equals("0")) {
-					if (amount > 0) {
-						et_amount.setText(String.valueOf(amount));
-						et_amount.setSelection(et_amount.length());
-					}else {
-						et_amount.setText("");
-					}
 				}
 			}
 		});
@@ -100,8 +122,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 			return;
 		}
 		// 金额校验
-		inputAmount = StringUtil.getInteger(et_amount.getText().toString());
-		if (inputAmount <= 0 || inputAmount > amountTotal) {
+		if (inputAmount <= 0) {
 			CommonTools.showToast(getString(R.string.money_input_amount_hint), 1000);
 			return;
 		}

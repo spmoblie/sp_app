@@ -72,10 +72,18 @@
                         android:visibility="gone" />
 
                     <TextView
+                        android:id="@+id/popup_add_cart_tv_curr"
+                        style="@style/common_text_price"
+                        android:layout_alignBottom="@+id/popup_add_cart_tv_price"
+                        android:layout_marginBottom="2dp"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
                         android:id="@+id/popup_add_cart_tv_price"
                         style="@style/common_text_price"
+                        android:layout_toRightOf="@+id/popup_add_cart_tv_curr"
                         android:layout_marginTop="10dp"
-                        android:textSize="@dimen/text_size_26"
+                        android:textSize="@dimen/text_size_22"
                         android:textStyle="bold" />
 
                     <TextView

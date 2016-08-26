@@ -34,8 +34,6 @@ import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
-import com.spshop.stylistpark.utils.StringUtil;
-import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 
@@ -179,11 +177,10 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 				if (entity == null) return;
 				ThemeEntity selectEn = (ThemeEntity) entity;
 				// 创建分享数据
-				int uid = StringUtil.getInteger(UserManager.getInstance().getUserId());
 				ShareEntity shareEn = new ShareEntity();
 				shareEn.setTitle(selectEn.getTitle());
 				shareEn.setText(selectEn.getTitle());
-				shareEn.setUrl(AppConfig.URL_COMMON_ARTICLE_SHARE_URL + "?id=" + selectEn.getId() + "&uid=" + uid);
+				shareEn.setUrl(AppConfig.URL_COMMON_ARTICLE_SHARE_URL + "?id=" + selectEn.getId());
 				shareEn.setImageUrl(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + selectEn.getImgUrl());
 				// 跳转至WebView
 				Intent intent = new Intent(getActivity(), MyWebViewActivity.class);

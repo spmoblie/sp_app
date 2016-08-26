@@ -299,6 +299,13 @@ public class ServiceContext {
 	}
 
 	/**
+	 * 提交实名认证信息
+	 */
+	public BaseEntity postAuthData(String name, String number) throws Exception {
+		return ms.postAuthData(name, number);
+	}
+
+	/**
 	 * 获取“收藏商品”或“浏览记录”商品列表
 	 */
 	public ProductListEntity getCollectionOrHistoryList(int count, int page, String typeKey) throws Exception {
@@ -371,7 +378,7 @@ public class ServiceContext {
 	/**
 	 * 申请提现
 	 */
-	public BaseEntity postWithdrawalsData(String card, int amount) throws Exception {
+	public BaseEntity postWithdrawalsData(String card, double amount) throws Exception {
 		return ms.postWithdrawalsData(card, amount);
 	}
 

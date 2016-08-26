@@ -19,35 +19,31 @@ public class StringUtil {
 	public static int getInteger(String str) {
 		if (isNull(str) || !isNumeric(str)) {
 			return 0;
-		} else {
-			return Integer.valueOf(str);
 		}
+		return Integer.parseInt(str);
 	}
 
 	public static double getDouble(String str) {
-		if (isNull(str) || !isNumeric(str)) {
+		if (isNull(str) || str.startsWith(".") ||
+				str.contains(".") && str.substring(0, str.lastIndexOf(".")).contains(".")) {
 			return 0.00;
-		} else {
-			return Double.valueOf(str);
 		}
+		return Double.parseDouble(str);
 	}
 
 	public static long getLong(String str) {
-		if (isNull(str) || !isNumeric(str)) {
+		if (isNull(str)) {
 			return 0;
-		} else {
-			return Long.valueOf(str);
 		}
+		return Long.parseLong(str);
 	}
 
 	/**
 	 * 判断手机格式是否正确
 	 */
 	public static boolean isMobileNO(String mobiles) {
-		Pattern p = Pattern
-				.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+		Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
 		Matcher m = p.matcher(mobiles);
-
 		return m.matches();
 	}
 

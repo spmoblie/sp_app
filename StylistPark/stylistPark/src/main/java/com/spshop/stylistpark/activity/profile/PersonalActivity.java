@@ -191,6 +191,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 						
 					});
 					Map<String, String> postData = new HashMap<String, String>();
+					postData.put("userId", UserManager.getInstance().getUserId());
 					postData.put("fileName", UserManager.getInstance().getUserId());
 					asyncImageUpload.uploadImage(AppConfig.API_UPDATE_PROFILE, postData, headUrl);
 				}

@@ -272,7 +272,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	}
 
 	private void myLoadUrl(String url) {
-		HttpUtil.synCookies(url); //同步Cookies
+		HttpUtil.synCookies(this, url); //同步Cookies
 		webview.loadUrl(url);
 	}
 
@@ -480,12 +480,14 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 
 	private void showShareView(){
 		if (mShareView != null && shareEn != null) {
-			if (mShareView.isShowing()) {
-				mShareView.showShareLayer(mContext, false);
-				return;
+			if (mShareView.getShareEntity() == null) {
+				mShareView.setShareEntity(shareEn);
 			}
-			mShareView.setShareEntity(shareEn);
-			mShareView.showShareLayer(mContext, true);
+			if (mShareView.isShowing()) {
+				mShareView.showShareLayer(false);
+			} else {
+				mShareView.showShareLayer(true);
+			}
 		}else {
 			showShareError();
 		}

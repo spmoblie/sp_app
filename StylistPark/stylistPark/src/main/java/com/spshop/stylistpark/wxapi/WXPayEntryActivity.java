@@ -78,7 +78,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			.merchantPrivacyPolicyUri(Uri.parse("https://www.example.com/privacy"))
 			.merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"));
 
-	private TextView tv_pay_result, tv_pay_amount;
+	private TextView tv_pay_result, tv_curr, tv_pay_amount;
 	private ImageView iv_select_zfb, iv_select_weixi, iv_select_union, iv_select_pal;
 	private RelativeLayout rl_select_zfb, rl_select_weixi, rl_select_union;
 	private Button btn_confirm, btn_done_left, btn_done_right;
@@ -140,6 +140,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
     
 	private void findViewById() {
 		tv_pay_result = (TextView) findViewById(R.id.payment_tv_pay_result);
+		tv_curr = (TextView) findViewById(R.id.payment_tv_curr);
 		tv_pay_amount = (TextView) findViewById(R.id.payment_tv_pay_amount);
 		iv_select_zfb = (ImageView) findViewById(R.id.payment_iv_select_zfb);
 		iv_select_weixi = (ImageView) findViewById(R.id.payment_iv_select_weixi);
@@ -160,6 +161,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	private void initView() {
 		setTitle(R.string.pay_title);  //设置标题
 		tv_pay_amount.setText(orderTotal); //支付金额
+		tv_curr.setText(currStr);
 		rl_select_zfb.setOnClickListener(this);
 		rl_select_weixi.setOnClickListener(this);
 		rl_select_union.setOnClickListener(this);
@@ -357,8 +359,10 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		LogUtil.i(TAG, "onPayFinish, errCode = " + resp.errCode);
 
 		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX ) {
-			if (resp.errCode == 0) {
+			if (resp.errCode == 0) { //(0:成功/-1:失败/-2:取消)
 				checkPayResult();
+			} else if (resp.errCode == -1) {
+				tv_pay_result.setText(getString(R.string.pay_fail));
 			}
 		}else {
 			tv_pay_result.setText(getString(R.string.pay_result_abnormal));
@@ -403,21 +407,9 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			break;
 		case AppConfig.REQUEST_SV_GET_PAY_RESULT_CODE:
 			isPayOk = true;
-			if (payResultEntity != null && payResultEntity.getErrCode() == 15) {
-				switch (payType) {
-				case PAY_ZFB: //支付宝支付
-					tv_pay_result.setText(payResultStr);
-					updateViewStatus();
-					break;
-				case PAY_WEIXI: //微信支付
-					if (payResultEntity.getTrade_state().equals("SUCCESS")) {
-						tv_pay_result.setText(R.string.pay_success);
-						updateViewStatus();
-					}else {
-						tv_pay_result.setText(payResultEntity.getTrade_state_desc());
-					}
-					break;
-				}
+			if (payResultEntity != null && payResultEntity.getErrCode() == 1) {
+				tv_pay_result.setText(R.string.pay_success);
+				updateViewStatus();
 			}else {
 				tv_pay_result.setText(R.string.pay_result_abnormal);
 			}

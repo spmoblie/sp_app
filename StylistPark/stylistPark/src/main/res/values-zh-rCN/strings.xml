@@ -46,6 +46,7 @@
     <string name="send">发送</string>
     <string name="submit">提交</string>
     <string name="submit_success">提交成功</string>
+    <string name="not_empty">不能为空</string>
     <string name="setting">设置</string>
     <string name="other">其它</string>
     <string name="error">错误</string>
@@ -278,7 +279,7 @@
     <string name="photo_ID_photo">身份证明相片</string>
     <string name="photo_ID_photo_null">身份证明相片不能为空</string>
     <string name="photo_upload_ID_fail">上传身份证明相片失败！请重新提交审核！</string>
-    <string name="photo_clip_upload_hint">请拍摄或选择一张真实的身份证明相片并提交审核，相片审核通过即实名认证通过，此操作直接影响到账户余额的提现功能，请谨慎操作。</string>
+    <string name="photo_clip_upload_hint">&#160;&#160;&#160;&#160;&#160;请填写您的真实信息，通过后将不能修改，此身份信息直接影响您账户余额的提现功能，请务必认真核对。</string>
     <string name="photo_show_save_one">保存1张</string>
     <string name="photo_show_save_more">保存%1$d张</string>
     <string name="photo_show_save_image">保存到手机</string>
@@ -434,11 +435,12 @@
     <string name="money_auth_ok">已实名认证</string>
     <string name="money_auth_hint">余额提现功能仅对实名认证用户开放，</string>
     <string name="money_auth_go">立即实名认证</string>
-    <string name="money_auth_input_name_hint">请输入您的真实姓名</string>
+    <string name="money_auth_input_name_hint">真实姓名</string>
+    <string name="money_auth_input_number_hint">身份证号</string>
     <string name="money_withdrawals_confirm">确认提现</string>
     <string name="money_withdrawals_success">提现申请已提交</string>
     <string name="money_input_card_hint">请输入您本人名下的银行卡卡号</string>
-    <string name="money_input_amount_hint">请输入提现金额</string>
+    <string name="money_input_amount_hint">提现金额不能为0</string>
     <string name="money_max_amount_hint">当前可提现金额：%1$s</string>
     <string name="money_withdrawals_reminder">温馨提示：\n1、确认提现成功后，我们会在七个工作日内将提现金额打款至您输入的银行卡；\n2、输入的银行卡持卡人姓名必须与实名认证的姓名保持一致，如有疑问请联系官方客服；</string>
         

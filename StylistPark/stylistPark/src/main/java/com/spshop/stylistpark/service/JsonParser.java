@@ -356,10 +356,9 @@ public class JsonParser {
 		//mainEn.setStockNum(StringUtil.getInteger(goods.getString("goods_number")));
 		//mainEn.setMailCountry(goods.getString("suppliers_country"));
 		//mainEn.setPromoteTime(StringUtil.getLong(goods.getString("promote_time")));
-		//mainEn.setCurrency(goods.getString("currency"));
 		mainEn.setFullPrice(goods.getString("prices"));
 		mainEn.setSellPrice(goods.getString("price"));
-		mainEn.setComputePrice(StringUtil.getInteger(goods.getString("bag_price")));
+		mainEn.setComputePrice(StringUtil.getDouble(goods.getString("bag_price")));
 		mainEn.setDiscount(goods.getString("sale"));
 		mainEn.setIsCollection(goods.getString("collect"));
 		mainEn.setIsVideo(StringUtil.getInteger(goods.getString("is_video")));
@@ -417,7 +416,7 @@ public class JsonParser {
 					asEn.setAttrId(StringUtil.getInteger(ls.getString("id")));
 					asEn.setSkuNum(StringUtil.getInteger(ls.getString("number")));
 					asEn.setAttrName(ls.getString("label"));
-					asEn.setAttrPrice(StringUtil.getInteger(ls.getString("price")));
+					asEn.setAttrPrice(StringUtil.getDouble(ls.getString("price")));
 					asEn.setAttrImg(ls.getString("thumb_url"));
 					asLists.add(asEn);
 				}
@@ -524,13 +523,12 @@ public class JsonParser {
 		}
 		GoodsCartEntity cartEn = new GoodsCartEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			JSONArray carts = jsonObject.getJSONArray("cart");
+			JSONArray carts = jsonObject.getJSONArray("goods_list");
 			cartEn.setChildLists(getCartProductLists(carts));
 			
 			JSONObject total = jsonObject.getJSONObject("total");
-			cartEn.setCurrency(total.getString("currency"));
-			cartEn.setGoodsTotal(StringUtil.getInteger(total.getString("number")));
-			cartEn.setAmount(total.getString("amount"));
+			cartEn.setGoodsTotal(StringUtil.getInteger(total.getString("goods_number")));
+			cartEn.setAmount(total.getString("goods_amount"));
 		}
 		return cartEn;
 	}
@@ -586,7 +584,7 @@ public class JsonParser {
 			orderEn.setPayId(StringUtil.getInteger(data.getString("pay_id")));
 			orderEn.setPayTypeCode(StringUtil.getInteger(data.getString("shipping_id")));
 			orderEn.setGoodsTotal(StringUtil.getInteger(data.getString("real_goods_count")));
-			orderEn.setPriceTotal(data.getString("goods_price_formated"));
+			orderEn.setPriceTotal(data.getString("formated_goods_price"));
 			orderEn.setPriceFee(data.getString("shipping_fee_formated"));
 			orderEn.setPriceCharges(data.getString("pay_fee_formated"));
 			orderEn.setPriceBonus(data.getString("bonus_formated"));
@@ -696,6 +694,7 @@ public class JsonParser {
 			if (!StringUtil.isNull(jsonObject, "data")) {
 				JSONObject data = jsonObject.getJSONObject("data");
 				infoEn.setUserId(data.getString("user_id"));
+				infoEn.setShareId(data.getString("share"));
 				infoEn.setUserName(data.getString("user_name"));
 				infoEn.setUserNick(data.getString("nickname"));
 				infoEn.setHeadImg(data.getString("avatar"));
@@ -818,7 +817,7 @@ public class JsonParser {
 					en = new OrderEntity();
 					en.setOrderId(item.getString("order_id"));
 					en.setOrderNo(item.getString("order_sn"));
-					//en.setStatus(StringUtil.getInteger(item.getString("status")));
+					en.setStatus(StringUtil.getInteger(item.getString("status")));
 					en.setStatusName(item.getString("handler"));
 					en.setPriceTotal(item.getString("total_fee"));
 					en.setGoodsTotalStr(item.getString("count"));
@@ -856,7 +855,6 @@ public class JsonParser {
 				orderEn.setLogisticsName(data.getString("shipping_name"));
 				orderEn.setLogisticsNo(data.getString("invoice_no"));
 				orderEn.setGoodsTotalStr(data.getString("count"));
-				orderEn.setCurrency(data.getString("currencys"));
 				orderEn.setPriceTotalName(data.getString("goods_amount_name"));
 				orderEn.setPriceTotal(data.getString("goods_amount"));
 				orderEn.setPriceFeeName(data.getString("shipping_fee_name"));
@@ -959,14 +957,11 @@ public class JsonParser {
 	 */
 	public static PaymentEntity checkPaymentResult(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = Integer.parseInt(jsonObject.getString("errCode"));
-		PaymentEntity payEn = new PaymentEntity(errCode, "");
-		if (errCode == 0) {
-			JSONObject data = jsonObject.getJSONObject("data");
-			payEn = new PaymentEntity(errCode, "", "", "", "", "",
-					data.getString("trade_state"), data.getString("trade_state_desc"));
+		int errCode = -1;
+		if (jsonObject.has("error")) {
+			errCode = Integer.valueOf(jsonObject.getString("error"));
 		}
-		return payEn;
+		return new PaymentEntity(errCode, "");
 	}
 
 	/**
@@ -981,7 +976,7 @@ public class JsonParser {
 		BalanceDetailEntity mainEn = new BalanceDetailEntity(errCode, "");
 		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
 			mainEn.setCountTotal(StringUtil.getInteger(jsonObject.getString("count")));
-			mainEn.setAmount(StringUtil.getInteger(jsonObject.getString("amount")));
+			mainEn.setAmount(StringUtil.getDouble(jsonObject.getString("amount")));
 			mainEn.setStatus(StringUtil.getInteger(jsonObject.getString("content")));
 			mainEn.setStatusHint(jsonObject.getString("message"));
 			if (!StringUtil.isNull(jsonObject, "account")) {
@@ -1128,7 +1123,6 @@ public class JsonParser {
 				proEn.setBrandName(item.getString("brand"));
 				proEn.setImgMinUrl(item.getString("thumb"));
 				proEn.setAttrStr(item.getString("goods_attr"));
-				proEn.setCurrency(item.getString("currency"));
 				proEn.setSellPrice(item.getString("goods_price"));
 				proEn.setRecId(StringUtil.getInteger(item.getString("rec_id")));
 				proEn.setCartNum(StringUtil.getInteger(item.getString("goods_number")));

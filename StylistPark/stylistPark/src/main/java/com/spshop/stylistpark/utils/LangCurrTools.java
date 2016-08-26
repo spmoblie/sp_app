@@ -178,7 +178,7 @@ public class LangCurrTools {
 			currencyValue = ctx.getString(R.string.currency_rmb_sign);
 			break;
 		}
-		return currencyValue;
+		return currencyValue + " ";
 	}
 
 	public static String getCurrencyHttpUrlValueStr(){

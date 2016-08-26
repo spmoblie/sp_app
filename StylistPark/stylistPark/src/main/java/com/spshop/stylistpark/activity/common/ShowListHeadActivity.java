@@ -39,7 +39,6 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.spshop.stylistpark.widgets.stikkyheader.AnimatorBuilder;
@@ -540,19 +539,20 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private void showShareView() {
 		if (mShareView != null && brandEn != null) {
-			if (mShareView.isShowing()) {
-				mShareView.showShareLayer(mContext, false);
-				return;
+			if (mShareView.getShareEntity() == null) {
+				ShareEntity shareEn = new ShareEntity();
+				shareEn.setTitle(brandEn.getName());
+				shareEn.setText(brandEn.getDesc());
+				shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "brand.php?id=" + brandEn.getBrandId());
+				shareEn.setImageUrl(logoImgUrl);
+				shareEn.setImagePath(logoImgPath);
+				mShareView.setShareEntity(shareEn);
 			}
-			int uid = StringUtil.getInteger(UserManager.getInstance().getUserId());
-			ShareEntity shareEn = new ShareEntity();
-			shareEn.setTitle(brandEn.getName());
-			shareEn.setText(brandEn.getDesc());
-			shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "brand.php?id=" + brandEn.getBrandId() + "&uid=" + uid);
-			shareEn.setImageUrl(logoImgUrl);
-			shareEn.setImagePath(logoImgPath);
-			mShareView.setShareEntity(shareEn);
-			mShareView.showShareLayer(mContext, true);
+			if (mShareView.isShowing()) {
+				mShareView.showShareLayer(false);
+			} else {
+				mShareView.showShareLayer(true);
+			}
 		}else {
 			showShareError();
 		}

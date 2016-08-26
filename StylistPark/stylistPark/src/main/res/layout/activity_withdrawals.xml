@@ -32,6 +32,7 @@
             android:id="@+id/withdrawals_et_amount"
             style="@style/Register_EditText"
             android:inputType="number"
+            android:digits="0123456789."
             android:hint="@string/money_max_amount_hint" />
 
         <Button

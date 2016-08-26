@@ -9,10 +9,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -44,6 +48,8 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.StringUtil;
+import com.spshop.stylistpark.utils.UserManager;
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
@@ -63,13 +69,15 @@ import java.net.URLEncoder;
 public class ShareView {
 
 	private static final String TAG = "ShareView";
-	private static final int animationDuration = 400;
+	private static final int animationDuration = 500;
 
 	Context mContext;
 	Activity mActivity;
 	ShareEntity mShareEn;
-	ObjectAnimator mover;
+	Animation animShow, animDsms;
+	ObjectAnimator moverShow, moverDsms;
 	ShareVewButtonListener listener;
+	int animHeight;
 
 	View rootView;
 	View viewDim;
@@ -110,7 +118,8 @@ public class ShareView {
 		this.mActivity = activity;
 		this.rootView = rootView;
 		this.listener = listener;
-		
+		this.animHeight = AppApplication.screenHeight * 13/32;
+
 		// QQ
 		if (mTencent == null) {
             mTencent = Tencent.createInstance(QQ_APP_ID, context);
@@ -124,6 +133,17 @@ public class ShareView {
 		shareDialog.registerCallback(callbackManager, new FaceBookCallBackListener());
 
 		initView();
+		createAnimation();
+	}
+
+	private void createAnimation(){
+		animShow = AnimationUtils.loadAnimation(mContext, R.anim.anim_popup_show);
+		animDsms = AnimationUtils.loadAnimation(mContext, R.anim.anim_popup_dsms);
+
+		moverShow = ObjectAnimator.ofFloat(ll_mainLayout, "translationY", animHeight, 0f);
+		moverShow.setDuration(animationDuration);
+		moverDsms = ObjectAnimator.ofFloat(ll_mainLayout, "translationY", 0f, animHeight);
+		moverDsms.setDuration(animationDuration);
 	}
 	
 	public void setRootView(View rootView){
@@ -133,27 +153,37 @@ public class ShareView {
 	
 	public void setShareEntity(ShareEntity entity){
 		this.mShareEn = entity;
+		if (mShareEn != null) {
+			String newUrl = mShareEn.getUrl() + "&uid=" + StringUtil.getInteger(UserManager.getInstance().getShareId());
+			mShareEn.setUrl(newUrl);
+		}
+	}
+
+	public ShareEntity getShareEntity(){
+		return mShareEn;
 	}
 	
 	public void setListener(ShareVewButtonListener listener){
 		this.listener = listener;
 	}
 
-	public void showShareLayer(Context ctx, boolean show){
+	public void showShareLayer(boolean show){
 		if(checkViewIsOk()){
 			if(show){
+				viewDim.startAnimation(animShow);
+				moverShow.start();
 				viewDim.setVisibility(View.VISIBLE);
 				ll_mainLayout.setVisibility(View.VISIBLE);
-				Animation anim = AnimationUtils.loadAnimation(ctx, R.anim.anim_popup_dismiss);
-				viewDim.startAnimation(anim);
-				int height = ll_mainLayout.getHeight();
-				mover = ObjectAnimator.ofFloat(ll_mainLayout, "translationY", height, 0f);
-		        mover.setDuration(animationDuration);
-		        mover.start();
 			}else{
-				viewDim.setVisibility(View.GONE);
-				ll_mainLayout.setVisibility(View.GONE);
-				ll_mainLayout.clearAnimation();
+				viewDim.startAnimation(animDsms);
+				moverDsms.start();
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						viewDim.setVisibility(View.GONE);
+						ll_mainLayout.setVisibility(View.GONE);
+					}
+				}, animationDuration);
 			}
 		}
 	}
@@ -204,13 +234,17 @@ public class ShareView {
 		viewDim.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				showShareLayer(null, false);
+				showShareLayer(false);
 				if(listener != null){
 					listener.onClick_Dismiss();
 				}
 			}
 		});
 		ll_mainLayout = rootView.findViewById(R.id.share_view_ll_show_main);
+		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.height = animHeight;
+		lp.gravity = Gravity.BOTTOM;
+		ll_mainLayout.setLayoutParams(lp);
 		ll_mainLayout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -310,7 +344,7 @@ public class ShareView {
 
 	private void qqShare() {
 		if (mShareEn != null) {
-			//showShareLayer(mContext, false);
+			//showShareLayer(false);
 			Bundle params = new Bundle();
 			params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
 			params.putString(QQShare.SHARE_TO_QQ_TITLE, mShareEn.getTitle());
@@ -352,7 +386,7 @@ public class ShareView {
 			return;
 		}
 		if (mShareEn != null) {
-			//showShareLayer(mContext, false);
+			//showShareLayer(false);
 			WXWebpageObject webpage = new WXWebpageObject();
 			webpage.webpageUrl = mShareEn.getUrl();
 			WXMediaMessage msg = new WXMediaMessage(webpage);
@@ -389,7 +423,7 @@ public class ShareView {
 	}
 	
 	private void weiboShare1(){
-		//showShareLayer(mContext, false);
+		//showShareLayer(false);
 		mAccessToken = AccessTokenKeeper.readAccessToken(mContext);
 		if (mAccessToken != null  && mAccessToken.isSessionValid()) {
 			weiboShare2();
@@ -501,7 +535,7 @@ public class ShareView {
 
 	private void facebookShare() {
 		if (shareDialog != null && mShareEn != null) {
-			//showShareLayer(mContext, false);
+			//showShareLayer(false);
 			ShareLinkContent linkContent = new ShareLinkContent.Builder()
 					.setContentTitle(mShareEn.getTitle())
 					.setContentDescription(mShareEn.getText())
@@ -540,7 +574,7 @@ public class ShareView {
 			return;
 		}
 		if (mShareEn != null) {
-			//showShareLayer(mContext, false);
+			//showShareLayer(false);
 			Intent sendIntent = new Intent();
 			sendIntent.setAction(Intent.ACTION_SEND);
 			sendIntent.setPackage("com.whatsapp");
@@ -558,7 +592,7 @@ public class ShareView {
 			return;
 		}
 		if (mShareEn != null) {
-			//showShareLayer(mContext, false);
+			//showShareLayer(false);
 			String share_Msg_For_Line = mShareEn.getTitle() + "\n" + mShareEn.getText() + "\n" + mShareEn.getUrl();
 			try {
                 share_Msg_For_Line = URLEncoder.encode(share_Msg_For_Line, "UTF-8");

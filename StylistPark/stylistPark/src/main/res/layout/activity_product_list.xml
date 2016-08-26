@@ -5,6 +5,64 @@
     android:background="@color/ui_bg_color_nut" >
 
     <LinearLayout
+        android:id="@+id/product_ll_anim_other"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView
+            android:id="@+id/product_refresh_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/product_ll_search_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/product_top_anim_height"
+        android:background="@color/ui_bg_color_white"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <RelativeLayout
+            android:id="@+id/product_rl_search_line"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" >
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:contentDescription="@string/desc" />
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:layout_alignParentBottom="true"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/product_ll_search_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:background="@color/ui_bg_color_nut"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/product_search_no_data"
+                android:textColor="@color/label_text_color"
+                android:textSize="@dimen/text_size_14" />
+        </RelativeLayout>
+
+        <include layout="@layout/layout_scroll_list_btn" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/product_ll_anim_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/product_top_anim_height"
@@ -52,72 +110,6 @@
         </LinearLayout>
 
         <include layout="@layout/layout_topbar_view_group" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/product_ll_anim_other"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <LinearLayout
-            android:id="@+id/product_ll_anim_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/product_top_anim_height"
-            android:orientation="vertical" >
-        </LinearLayout>
-
-        <com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView
-            android:id="@+id/product_refresh_lv"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/product_ll_search_history"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/product_top_anim_height"
-        android:background="@color/ui_bg_color_white"
-        android:orientation="vertical"
-        android:visibility="visible" >
-
-        <RelativeLayout
-            android:id="@+id/product_rl_search_line"
-            android:layout_width="match_parent"
-            android:layout_height="10dp" >
-
-            <ImageView
-                style="@style/set_line_horizontal_bg"
-                android:contentDescription="@string/desc" />
-
-            <ImageView
-                style="@style/set_line_horizontal_bg"
-                android:layout_alignParentBottom="true"
-                android:contentDescription="@string/desc" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/product_ll_search_no_data"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="15dp"
-            android:background="@color/ui_bg_color_nut"
-            android:visibility="gone" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text="@string/product_search_no_data"
-                android:textColor="@color/label_text_color"
-                android:textSize="@dimen/text_size_14" />
-        </RelativeLayout>
-
-        <include layout="@layout/layout_scroll_list_btn" />
     </LinearLayout>
 
     <ImageView

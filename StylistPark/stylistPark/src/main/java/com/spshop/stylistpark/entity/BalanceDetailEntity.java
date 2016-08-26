@@ -24,7 +24,7 @@ public class BalanceDetailEntity extends BaseEntity {
 	/**
 	 * 账户余额
 	 */
-	private int amount;
+	private double amount;
 	
 	/**
 	 * 交易描述
@@ -101,12 +101,12 @@ public class BalanceDetailEntity extends BaseEntity {
 	}
 
 
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
 
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 

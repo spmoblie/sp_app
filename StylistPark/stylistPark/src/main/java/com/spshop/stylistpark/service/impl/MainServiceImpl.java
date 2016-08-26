@@ -509,6 +509,18 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
+	public BaseEntity postAuthData(String name, String number) throws Exception {
+		String uri = AppConfig.URL_COMMON_USER_URL + "?act=auth";
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("name", name));
+		params.add(new MyNameValuePair("number", number));
+		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_POST);
+		String jsonStr = HttpUtil.getString(entity);
+		LogUtil.i("JsonParser", jsonStr);
+		return JsonParser.getCommonResult(jsonStr);
+	}
+
+	@Override
 	public ProductListEntity getCollectionOrHistoryList(int count, int page, String typeKey) throws Exception {
 		String uri = AppConfig.URL_COMMON_MY_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
@@ -613,10 +625,10 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public PaymentEntity checkPaymentResult(int payType, String orderSn) throws Exception {
-		String uri = AppConfig.URL_COMMON_MY_URL + "?app=pay_result";
+		String uri = AppConfig.URL_COMMON_MY_URL + "?app=pay_log";
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		params.add(new MyNameValuePair("payType", String.valueOf(payType)));
-		params.add(new MyNameValuePair("orderSn", orderSn));
+		//params.add(new MyNameValuePair("payType", String.valueOf(payType)));
+		params.add(new MyNameValuePair("id", orderSn));
 		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_POST);
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);
@@ -637,7 +649,7 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public BaseEntity postWithdrawalsData(String card, int amount) throws Exception {
+	public BaseEntity postWithdrawalsData(String card, double amount) throws Exception {
 		String uri = AppConfig.URL_COMMON_USER_URL + "?act=act_account";
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		params.add(new MyNameValuePair("user_note", card));

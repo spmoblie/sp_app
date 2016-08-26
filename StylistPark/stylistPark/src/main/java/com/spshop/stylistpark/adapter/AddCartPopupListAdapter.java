@@ -35,7 +35,8 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 	private HashMap<String, Integer> skuHashMap = new HashMap<String, Integer>();
 	private HashMap<Integer, ProductAttrEntity> attrHashMap = new HashMap<Integer, ProductAttrEntity>();;
 	private AddCartCallback callback;
-	private int mgWidth, pdWidth, vvWidth, size;
+	private int txtSize, pdLeft, pdTop, mgRight;
+	private int mgWidth, pdWidth, size;
 	private int select_id_1, select_id_2;
 	private String attr_name_1, attr_name_2, select_name_1, select_name_2;
 	private View[] views_1, views_2;
@@ -43,10 +44,13 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 	public AddCartPopupListAdapter(Context context, ProductAttrEntity attrEn, AddCartCallback callback) {
 		this.context = context;
 		this.callback = callback;
-		
-		pdWidth = CommonTools.dip2px(context, 15);
-		mgWidth = CommonTools.dip2px(context, 10);
-		vvWidth = CommonTools.dip2px(context, 2);
+
+		txtSize = 12;
+		pdLeft = 15;
+		pdTop = 10;
+		mgRight = 15;
+		mgWidth = CommonTools.dip2px(context, 15) * 2;
+		pdWidth = (pdLeft + 2) * 2;
 
 		getAttrDatas(attrEn);
 		if (datas == null) {
@@ -113,7 +117,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 		TextView tv_name = new TextView(context);
 		tv_name.setText(data.getAttrName() + ":");
 		tv_name.setTextColor(context.getResources().getColor(R.color.label_text_color));
-		tv_name.setTextSize(12);
+		tv_name.setTextSize(txtSize);
 		tv_name.setId(attrId);
 		rl_main.addView(tv_name);
 		
@@ -122,7 +126,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 //		final TextView tv_name_show = new TextView(context);
 //		tv_name_show.setText("");
 //		tv_name_show.setTextColor(context.getResources().getColor(R.color.text_color_lialic));
-//		tv_name_show.setTextSize(12);
+//		tv_name_show.setTextSize(txtSize);
 //		tv_name_show.setId(showId);
 //		LayoutParams params1 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 //		params1.addRule(RelativeLayout.RIGHT_OF, attrId);
@@ -138,7 +142,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 		Rect rect = new Rect();
 		String str = "";
 		int viewId = 0;
-		int strWidth = 0;
+		int childWidth = 0;
 		int widthTotal = mgWidth;
 		int fristId = 0;
 		int beforeId = 0;
@@ -158,8 +162,8 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			str = nameLists.get(i).getAttrName();
 			// 计算str的宽度
 			pFont.getTextBounds(str, 0, str.length(), rect);
-			strWidth = CommonTools.dip2px(context, rect.width());
-			widthTotal += (strWidth*1.5 + pdWidth + vvWidth);
+			childWidth = (CommonTools.dip2px(context, rect.width()) + pdWidth + mgRight);
+			widthTotal += childWidth;
 			
 			viewId = nameLists.get(i).getAttrId();
 			if (i > 0) {
@@ -179,10 +183,10 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			// 记录库存数
 			skuHashMap.put(String.valueOf(viewId), skuNum);
 			attrHashMap.put(viewId, nameLists.get(i));
-			tv.setPadding(15, 8, 15, 8);
+			tv.setPadding(pdLeft, pdTop, pdLeft, pdTop);
 			tv.setGravity(Gravity.CENTER);
 			tv.setText(str);
-			tv.setTextSize(12);
+			tv.setTextSize(txtSize);
 			tv.setId(viewId);
 			tv.setOnClickListener(new OnClickListener() {
 				
@@ -289,28 +293,11 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 				}else {
 					params.addRule(RelativeLayout.BELOW, fristId); //在控件的下边
 					fristId = viewId;
-					widthTotal = strWidth + mgWidth;
+					widthTotal = mgWidth + childWidth;
 				}
 			}
-			params.setMargins(0, 10, 10, 0);
+			params.setMargins(0, mgRight, mgRight, 0);
 			rl_main.addView(tv,params);
-		}
-	}
-
-	private void defaultViewStatus(View[] views) {
-		int num = 0;
-		for (int i = 0; i < views.length; i++) {
-			TextView tv_item = (TextView)views[i];
-			num = getSkuNum(String.valueOf(views[i].getId()));
-			if (num == 0) {
-				tv_item.setTextColor(context.getResources().getColor(R.color.input_text_color));
-				views[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
-			}else {
-				tv_item.setTextColor(context.getResources().getColor(R.color.ui_color_status));
-				views[i].setBackground(context.getResources().getDrawable(R.drawable.selector_btn_small));
-				views[i].setSelected(false);
-			}
-			views[i].setPadding(15, 8, 15, 8);
 		}
 	}
 
@@ -345,21 +332,38 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			break;
 		}
 	}
+
+	private void defaultViewStatus(View[] views) {
+		int num = 0;
+		for (int i = 0; i < views.length; i++) {
+			TextView tv_item = (TextView)views[i];
+			num = getSkuNum(String.valueOf(views[i].getId()));
+			if (num > 0) {
+				tv_item.setTextColor(context.getResources().getColor(R.color.ui_color_status));
+				views[i].setBackground(context.getResources().getDrawable(R.drawable.selector_btn_small));
+				views[i].setSelected(false);
+			}else {
+				tv_item.setTextColor(context.getResources().getColor(R.color.debar_text_color));
+				views[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
+			}
+			views[i].setPadding(pdLeft, pdTop, pdLeft, pdTop);
+		}
+	}
 	
 	private void updateViewStatus(int selectId) {
 		int num = 0;
 		for (int i = 0; i < views_2.length; i++) {
-			TextView tv_item = (TextView)views_2[i];
+			TextView tv_item = (TextView) views_2[i];
 			num = getSkuNum(String.valueOf(selectId) + "|" + String.valueOf(views_2[i].getId()));
-			if (num == 0) {
-				tv_item.setTextColor(context.getResources().getColor(R.color.debar_text_color));
-				views_2[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
-			}else {
+			if (num > 0) {
 				tv_item.setTextColor(context.getResources().getColor(R.color.ui_color_status));
 				views_2[i].setBackground(context.getResources().getDrawable(R.drawable.selector_btn_small));
 				views_2[i].setSelected(false);
+			}else {
+				tv_item.setTextColor(context.getResources().getColor(R.color.debar_text_color));
+				views_2[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
 			}
-			views_2[i].setPadding(15, 8, 15, 8);
+			views_2[i].setPadding(pdLeft, pdTop, pdLeft, pdTop);
 		}
 	}
 	
@@ -367,10 +371,10 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 		if (skuHashMap.containsKey(keyStr)) {
 			return skuHashMap.get(keyStr);
 		}
-		return -1;
+		return 0;
 	}
 	
-	private int getAttrPrice(int key) {
+	private double getAttrPrice(int key) {
 		if (attrHashMap.containsKey(key)) {
 			return attrHashMap.get(key).getAttrPrice();
 		}
@@ -420,7 +424,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 	
 	public interface AddCartCallback {
 		
-		void setOnClick(Object entity, int position, int num, int attrPrice, 
+		void setOnClick(Object entity, int position, int num, double attrPrice,
 				int id1, int id2, String selectName, String selectImg);
 
 	}

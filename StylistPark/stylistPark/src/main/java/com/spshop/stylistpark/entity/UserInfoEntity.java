@@ -9,6 +9,11 @@ public class UserInfoEntity extends BaseEntity {
 	 * 用户Id
 	 */
 	private String userId;
+
+	/**
+	 * 推广Id
+	 */
+	private String shareId;
 	
 	/**
 	 * 用户名称
@@ -139,6 +144,13 @@ public class UserInfoEntity extends BaseEntity {
 		this.userId = userId;
 	}
 
+	public String getShareId() {
+		return shareId;
+	}
+
+	public void setShareId(String shareId) {
+		this.shareId = shareId;
+	}
 
 	public String getUserName() {
 		return userName;

@@ -46,6 +46,7 @@
     <string name="send">Send</string>
     <string name="submit">Submit</string>
     <string name="submit_success">Submit success</string>
+    <string name="not_empty">&#160;can not be empty</string>
     <string name="setting">Setting</string>
     <string name="other">Other</string>
     <string name="error">Error</string>
@@ -278,7 +279,7 @@
     <string name="photo_ID_photo">ID photo</string>
     <string name="photo_ID_photo_null">ID photo can not be empty</string>
     <string name="photo_upload_ID_fail">Upload ID photo failed! Please re submit the audit!</string>
-    <string name="photo_clip_upload_hint">Please shoot or choose a real ID photos and submit the audit, audit through real name authentication through photos, this operation directly affects the function of cash account balance, please be careful.</string>
+    <string name="photo_clip_upload_hint">&#160;&#160;&#160;&#160;&#160;Please fill in your real information, can not be modified by the will, this identity information directly affect the function of your withdrawals account balance, be sure to carefully check.</string>
     <string name="photo_show_save_one">Save 1 sheets</string>
     <string name="photo_show_save_more">Save %1$d sheets</string>
     <string name="photo_show_save_image">Save to phone</string>
@@ -434,11 +435,12 @@
     <string name="money_auth_ok">Authentication OK</string>
     <string name="money_auth_hint">Withdrawals requires Authentication，</string>
     <string name="money_auth_go">Go authentication</string>
-    <string name="money_auth_input_name_hint">Please input your real name</string>
+    <string name="money_auth_input_name_hint">Real name</string>
+    <string name="money_auth_input_number_hint">ID number</string>
     <string name="money_withdrawals_confirm">Confirm withdrawals</string>
     <string name="money_withdrawals_success">Apply success</string>
     <string name="money_input_card_hint">Input the bank card number in your own</string>
-    <string name="money_input_amount_hint">Input the withdrawals amount</string>
+    <string name="money_input_amount_hint">Withdrawal amount can not be 0</string>
     <string name="money_max_amount_hint">Max of withdrawals: %1$s</string>
     <string name="money_withdrawals_reminder">Reminder: \n1.Confirm withdrawals after, We will present the amount of play money to input your bank card in seven days;\n2.Input the bank card the cardholder name and the name must be consistent with the real name authentication, If you have any questions please contact the official customer;</string>
     

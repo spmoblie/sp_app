@@ -32,6 +32,8 @@
 
     <!-- AppTV切换色 -->
     <color name="tv_color_change">@color/text_color_greys</color>
+    <!-- HomeB切换色 -->
+    <color name="tv_color_bottom">@color/conte_text_color</color>
     <!-- AppTV状态色 -->
     <color name="tv_color_status">@color/style_text_color</color>
     <!-- AppUI状态色 -->

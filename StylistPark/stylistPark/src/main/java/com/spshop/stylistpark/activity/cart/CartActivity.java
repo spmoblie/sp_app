@@ -59,9 +59,9 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	private RelativeLayout rl_no_more, rl_loading, rl_load_fail;
 	private ImageView iv_billing_line;
 	private TextView tv_shopping, tv_load_again;
-	private TextView tv_total, tv_buy_now;
+	private TextView tv_curr, tv_total, tv_buy_now;
 	
-	private String curStr, amountStr;
+	private String amountStr;
 	private int updateNum = 1;
 	private int mPosition = 0;
 	private boolean isLogined;
@@ -82,13 +82,14 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 		LogUtil.i(TAG, "onCreate");
 		
 		instance = this;
-		
+
 		findViewById();
 		initView();
 	}
 	
 	private void findViewById() {
 		ll_top = (LinearLayout) findViewById(R.id.top_commom_ll_main);
+		tv_curr = (TextView) findViewById(R.id.fragment_four_tv_curr);
 		tv_total = (TextView) findViewById(R.id.fragment_four_tv_total);
 		tv_buy_now = (TextView) findViewById(R.id.fragment_four_tv_buy_now);
 		ptrsv = (PullToRefreshScrollView) findViewById(R.id.fragment_four_ptrsv);
@@ -256,7 +257,8 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void updatePriceTotal() {
 		lv_Adapter.updateAdapter(lv_datas, sa_cart);
-		tv_total.setText(getString(R.string.order_total_name) + curStr + amountStr);
+		tv_curr.setText(currStr);
+		tv_total.setText(amountStr);
 	}
 
 	/**
@@ -389,7 +391,6 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 						sa_cart.clear();
 					}*/
 					lv_datas.addAll(mainEn.getChildLists());
-					curStr = mainEn.getCurrency();
 					loadSuccessHandle(mainEn);
 				}
 				else 

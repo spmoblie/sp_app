@@ -96,6 +96,8 @@ public interface MainService {
 
 	BaseEntity sendEmailToUser() throws Exception;
 
+	BaseEntity postAuthData(String name, String number) throws Exception;
+
 	ProductListEntity getCollectionOrHistoryList(int count, int page, String typeKey) throws Exception;
 
 	MemberEntity getMemberLists(int status, int count, int page) throws Exception;
@@ -116,7 +118,7 @@ public interface MainService {
 
 	BalanceDetailEntity getBalanceDetailList(int count, int page) throws Exception;
 
-	BaseEntity postWithdrawalsData(String card, int amount) throws Exception;
+	BaseEntity postWithdrawalsData(String card, double amount) throws Exception;
 
 	BounsEntity getBounsLists(int status, int count, int page, String rootStr) throws Exception;
 

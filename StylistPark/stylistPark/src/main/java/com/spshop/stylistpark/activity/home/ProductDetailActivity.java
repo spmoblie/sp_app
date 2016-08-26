@@ -59,7 +59,6 @@ import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
-import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -89,7 +88,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private TextView tv_title, tv_timer, tv_page, tv_name, tv_curr, tv_price_sell, tv_price_full, tv_discount;
 	private TextView tv_property_1, tv_property_2, tv_property_3, tv_brand_name, tv_brand_country, tv_brand_go;
 	private TextView tv_collection, tv_cart, tv_cart_total, tv_add_cart, tv_call, tv_home;
-	private TextView tv_popup_name, tv_popup_price, tv_popup_prompt, tv_popup_select, tv_popup_number, tv_popup_confirm;
+	private TextView tv_popup_name, tv_popup_curr, tv_popup_price;
+	private TextView tv_popup_prompt, tv_popup_select, tv_popup_number, tv_popup_confirm;
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
 	private Button btn_share;
 	private PopupWindow popupWindow;
@@ -120,8 +120,9 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private int buyNumber = 1;
 	private int skuNum = 1;
 	private int propertyNum = 3;
-	private int selectId_1, selectId_2, attrNum, price, mathPrice;
-	private String currStr, attrNameStr, fristGoodsImgUrl, fristGoodsImgPath, fristPromotionName;
+	private int selectId_1, selectId_2, attrNum;
+	private double price, mathPrice;
+	private String attrNameStr, fristGoodsImgUrl, fristGoodsImgPath, fristPromotionName;
 	private ArrayList<ImageView> viewLists = new ArrayList<ImageView>();
 	private ArrayList<String> urlLists = new ArrayList<String>();
 	private ArrayList<ProductDetailEntity> imgEns = new ArrayList<ProductDetailEntity>();
@@ -138,8 +139,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		instance = this;
 		goodsId = getIntent().getIntExtra("goodsId", 0);
 		options = AppApplication.getDefaultImageOptions();
-		currStr = LangCurrTools.getCurrencyValue();
-		
+
 		findViewById();
 		initView();
 	}
@@ -574,6 +574,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			tv_popup_number = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_number);
 			tv_popup_number.setText(String.valueOf(buyNumber));
 			tv_popup_name = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_name);
+			tv_popup_curr = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_curr);
 			tv_popup_price = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_price);
 			tv_popup_prompt = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_prompt);
 			tv_popup_select = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_select);
@@ -583,7 +584,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			if (mainEn != null) {
 				ImageLoader.getInstance().displayImage(fristGoodsImgUrl, iv_goods_img, options);
 				tv_popup_name.setText(mainEn.getName());
-				tv_popup_price.setText(currStr + String.valueOf(mathPrice));
+				tv_popup_curr.setText(currStr);
+				tv_popup_price.setText(decimalFormat.format(mathPrice));
 			}
 			
 			if (attrNum > 0) {
@@ -591,7 +593,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				apCallback = new AddCartCallback() {
 					
 					@Override
-					public void setOnClick(Object entity, int position, int num, int attrPrice, 
+					public void setOnClick(Object entity, int position, int num, double attrPrice,
 							int id1, int id2, String selectName, String selectImg) {
 						// 图片替换
 						if (!StringUtil.isNull(selectImg)) {
@@ -612,7 +614,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 						selectId_1 = id1;
 						selectId_2 = id2;
 						mathPrice = price + attrPrice;
-						tv_popup_price.setText(currStr + String.valueOf(mathPrice));
+						tv_popup_curr.setText(currStr);
+						tv_popup_price.setText(decimalFormat.format(mathPrice));
 						skuNum = 1; //默认库存数量
 						buyNumber = 1; //默认购买数量
 						iv_num_add.setSelected(false); //不可+
@@ -726,7 +729,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		case R.id.topbar_radio_rb_1:
 			String loadingUrl = AppConfig.URL_COMMON_GOODS_DETAIL_URL + "?id=" + goodsId + AppApplication.getHttpUrlLangCurValueStr();
 			// 同步Cookies
-			HttpUtil.synCookies(loadingUrl);
+			HttpUtil.synCookies(this, loadingUrl);
 			webview.loadUrl(loadingUrl);
 			break;
 		case R.id.topbar_radio_rb_2:
@@ -810,21 +813,22 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 	private void showShareView() {
 		if (mShareView != null && mainEn != null) {
-			if (mShareView.isShowing()) {
-				mShareView.showShareLayer(mContext, false);
-				return;
+			if (mShareView.getShareEntity() == null) {
+				String genuine = getString(R.string.product_genuine_safeguard);
+				ShareEntity shareEn = new ShareEntity();
+				shareEn.setTitle(mainEn.getName());
+				shareEn.setText(mainEn.getBrandCountry() + " " + mainEn.getBrandName()
+						+ genuine + " " + mainEn.getName() + " " + fristPromotionName);
+				shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "goods.php?id=" + mainEn.getId());
+				shareEn.setImageUrl(fristGoodsImgUrl);
+				shareEn.setImagePath(fristGoodsImgPath);
+				mShareView.setShareEntity(shareEn);
 			}
-			String genuine = getString(R.string.product_genuine_safeguard);
-			int uid = StringUtil.getInteger(UserManager.getInstance().getUserId());
-			ShareEntity shareEn = new ShareEntity();
-			shareEn.setTitle(mainEn.getName());
-			shareEn.setText(mainEn.getBrandCountry() + " " + mainEn.getBrandName()
-					+ genuine + " " + mainEn.getName() + " " + fristPromotionName);
-			shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "goods.php?id=" + mainEn.getId() + "&uid=" + uid);
-			shareEn.setImageUrl(fristGoodsImgUrl);
-			shareEn.setImagePath(fristGoodsImgPath);
-			mShareView.setShareEntity(shareEn);
-			mShareView.showShareLayer(mContext, true);
+			if (mShareView.isShowing()) {
+				mShareView.showShareLayer(false);
+			} else {
+				mShareView.showShareLayer(true);
+			}
 		}else {
 			showShareError();
 		}

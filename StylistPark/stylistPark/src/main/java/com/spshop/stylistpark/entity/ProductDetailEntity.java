@@ -94,7 +94,7 @@ public class ProductDetailEntity extends BaseEntity{
 	/**
 	 * 商品结算价
 	 */
-	private int computePrice;
+	private double computePrice;
 	
 	/**
 	 * 商品折扣
@@ -321,12 +321,12 @@ public class ProductDetailEntity extends BaseEntity{
 	}
 
 
-	public int getComputePrice() {
+	public double getComputePrice() {
 		return computePrice;
 	}
 
 
-	public void setComputePrice(int computePrice) {
+	public void setComputePrice(double computePrice) {
 		this.computePrice = computePrice;
 	}
 

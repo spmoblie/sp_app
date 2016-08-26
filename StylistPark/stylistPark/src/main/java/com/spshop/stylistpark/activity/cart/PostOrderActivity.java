@@ -52,7 +52,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	public boolean isUpdate = false;
 	
 	private TextView tv_name, tv_phone, tv_address, tv_address_hint;
-	private TextView tv_pay_type, tv_bouns_use, tv_goods_total, tv_pay_total;
+	private TextView tv_pay_type, tv_bouns_use, tv_goods_total, tv_total_curr, tv_pay_total;
 	private TextView tv_total, tv_fee, tv_charges, tv_bonus, tv_discount, tv_pay, tv_pay_now;
 	private ImageView iv_go_pay_select, iv_invoice_select;
 	private EditText et_invoice, et_buyer;
@@ -103,6 +103,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		tv_bonus = (TextView) findViewById(R.id.post_order_tv_price_bonus);
 		tv_discount = (TextView) findViewById(R.id.post_order_tv_price_discount);
 		tv_pay = (TextView) findViewById(R.id.post_order_tv_price_pay);
+		tv_total_curr = (TextView) findViewById(R.id.post_order_tv_curr);
 		tv_pay_total = (TextView) findViewById(R.id.post_order_tv_pay_total);
 		tv_pay_now = (TextView) findViewById(R.id.post_order_tv_pay_now);
 		iv_go_pay_select = (ImageView) findViewById(R.id.post_order_iv_go_pay_select);
@@ -136,7 +137,8 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			orderAmount = orderEn.getOrderAmount();
 			pricePay = orderEn.getPricePay();
 			tv_pay.setText(pricePay);
-			tv_pay_total.setText(getString(R.string.order_pay_name) + pricePay);
+			tv_total_curr.setText(currStr);
+			tv_pay_total.setText(pricePay);
 			// 商品列表
 			addGoodsLists();
 			// 物流信息
@@ -242,6 +244,8 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				
 				TextView tv_brand = (TextView) view.findViewById(R.id.item_goods_vertical_tv_brand);
 				tv_brand.setText(goodsLists.get(i).getBrand());
+				TextView tv_curr = (TextView) view.findViewById(R.id.item_goods_vertical_tv_curr);
+				tv_curr.setText(currStr);
 				TextView tv_price = (TextView) view.findViewById(R.id.item_goods_vertical_tv_price);
 				tv_price.setText(goodsLists.get(i).getSellPrice());
 				TextView tv_name = (TextView) view.findViewById(R.id.item_goods_vertical_tv_name);

@@ -38,7 +38,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	private static final int Page_Count = 20;  //每页加载条数
 	private int current_Page = 1;  //当前列表加载页
 	private int countTotal = 0; //数集总数量
-	private int amountTotal = 0; //账号余额
+	private double amountTotal = 0; //账号余额
 	private boolean isLogined, isSuccess;
 
 	private PullToRefreshListView refresh_lv;
@@ -107,7 +107,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 			}else {
 				tv_amount.setTextSize(18);
 			}
-			tv_amount.setText(amountStr);
+			tv_amount.setText(decimalFormat.format(amountTotal));
 			switch (mainEn.getStatus()) {
 			case 0: //可提现
 				ll_auth.setVisibility(View.GONE);

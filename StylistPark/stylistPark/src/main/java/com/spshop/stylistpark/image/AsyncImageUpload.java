@@ -68,7 +68,7 @@ public class AsyncImageUpload {
 							URL url = new URL(task.url);
 							HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 							String cookie = FileManager.readFileSaveString(AppConfig.cookiesFileName, true);
-							LogUtil.i("JsonParser", "read cookie = " + cookie);
+							LogUtil.i("JsonParser", "读取 Cookie = " + cookie);
 
 							String end = "\r\n";
 							String twoHyphens = "--";
@@ -88,11 +88,20 @@ public class AsyncImageUpload {
 							conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 							conn.setRequestProperty("Cookie", cookie);
 
+							String userId = "";
 							String fileName = "";
 							if (task.postData != null) {
+								userId = task.postData.get("userId");
 								fileName = task.postData.get("fileName") + ".png";
 							}
 							DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+							// 发送参数
+							dos.writeBytes(twoHyphens + boundary + end);
+							dos.writeBytes("Content-Disposition: form-data; name=\"userid\"" + end);
+							dos.writeBytes(end);
+							dos.writeBytes(userId);
+							dos.writeBytes(end);
+							// 发送图片
 							dos.writeBytes(twoHyphens + boundary + end);
 							dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"" + fileName + "\"" + end);
 							dos.writeBytes(end);

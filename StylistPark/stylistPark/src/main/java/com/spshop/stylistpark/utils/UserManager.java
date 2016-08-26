@@ -22,6 +22,7 @@ public class UserManager {
 	private Editor editor;
 	
 	private String mUserId = null;
+	private String shareId = null;
 	private String mLoginName = null;
 	private String mUserNickName = null;
 	private String mUserHeadImg = null;
@@ -31,7 +32,7 @@ public class UserManager {
 	private String mUserPhone = null;
 	private String mUserRank = null;
 	private String mUserLevel = null;
-	
+
 	private String wxAccessToken = null;
 	private String wxOpenid = null;
 	private String wxUnionid = null;
@@ -63,7 +64,21 @@ public class UserManager {
 		mUserId = userId;
 		LogUtil.i("isLogined", "saveUserId = " + userId);
 	}
-	
+
+	public String getShareId(){
+		if(StringUtil.isNull(shareId)){
+			shareId = sp.getString(AppConfig.KEY_SHARE_ID, null);
+		}
+		LogUtil.i("isLogined", "getShareId = " + shareId);
+		return shareId;
+	}
+
+	private void saveShareId(String id){
+		editor.putString(AppConfig.KEY_SHARE_ID, id).apply();
+		shareId = id;
+		LogUtil.i("isLogined", "saveShareId = " + shareId);
+	}
+
 	public String getLoginName(){
 		if(StringUtil.isNull(mLoginName)){
 			mLoginName = sp.getString(AppConfig.KEY_USER_LOGIN_NAME, "");
@@ -232,14 +247,14 @@ public class UserManager {
 		return sp.getBoolean(AppConfig.KEY_USER_AUTH, false);
 	}
 	
-	public void saveUserAuth(boolean isAuth){
-		editor.putBoolean(AppConfig.KEY_USER_AUTH, isAuth).apply();
-	}
-	
 	public int getUserAddressId(){
 		return sp.getInt(AppConfig.KEY_USER_ADDRESS, 0);
 	}
-	
+
+	public void saveUserAuth(boolean isAuth){
+		editor.putBoolean(AppConfig.KEY_USER_AUTH, isAuth).apply();
+	}
+
 	public void saveUserAddressId(int addressId){
 		editor.putInt(AppConfig.KEY_USER_ADDRESS, addressId).apply();
 	}
@@ -269,6 +284,7 @@ public class UserManager {
 	public void saveUserInfo(UserInfoEntity infoEn) {
 		if (infoEn != null) {
 			saveUserId(infoEn.getUserId());
+			saveShareId(infoEn.getShareId());
 			saveUserNickName(infoEn.getUserNick());
 			saveUserHeadImg(infoEn.getHeadImg());
 			saveUserIntro(infoEn.getUserIntro());
@@ -332,30 +348,29 @@ public class UserManager {
 		// 清空微博授权信息
 		AccessTokenKeeper.clear(ctx);
 		// 清空缓存的用户信息
-		updateUserLoginInfo(null, null, null, null, 0, null, null, null, null, null, false, 0, 0);
+		clearUserLoginInfo();
 		// 刷新所有登录状态下的数据
 		changeAllDataStatus();
 	}
 
 	/**
-	 * 更新用户个人资料
+	 * 清空缓存的用户信息
 	 */
-	private void updateUserLoginInfo(String userId, String nickName, String userHeadImg, String userIntro,
-			int sexCode, String userBirthday, String userEmail, String userPhone, String userRank, 
-			String userLevel, boolean isAuth, int addressId, int cartTotal){
-		saveUserId(userId);
-		saveUserNickName(nickName);
-		saveUserHeadImg(userHeadImg);
-		saveUserIntro(userIntro);
-		saveUserSex(sexCode);
-		saveUserBirthday(userBirthday);
-		saveUserEmail(userEmail);
-		saveUserPhone(userPhone);
-		saveUserRank(userRank);
-		saveUserLevel(userLevel);
-		saveUserAuth(isAuth);
-		saveUserAddressId(addressId);
-		saveCartTotal(cartTotal);
+	private void clearUserLoginInfo(){
+		saveUserId(null);
+		saveShareId(null);
+		saveUserNickName(null);
+		saveUserHeadImg(null);
+		saveUserIntro(null);
+		saveUserSex(0);
+		saveUserBirthday(null);
+		saveUserEmail(null);
+		saveUserPhone(null);
+		saveUserRank(null);
+		saveUserLevel(null);
+		saveUserAuth(false);
+		saveUserAddressId(0);
+		saveCartTotal(0);
 	}
 	
 	/**

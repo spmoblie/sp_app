@@ -61,7 +61,8 @@
         android:background="@color/ui_bg_color_white"
         android:paddingBottom="10dp"
         android:paddingRight="15dp"
-        android:paddingTop="10dp" >
+        android:paddingTop="10dp"
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/item_list_order_tv_total_num"
@@ -77,7 +78,8 @@
     
     <ImageView
         style="@style/set_line_horizontal_bg"
-        android:contentDescription="@string/desc" />
+        android:contentDescription="@string/desc"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/item_list_order_rl_edit"
@@ -85,7 +87,8 @@
         android:layout_height="wrap_content"
         android:background="@color/ui_bg_color_white"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
+        android:paddingTop="10dp"
+        android:visibility="gone" >
         
         <RelativeLayout 
             android:id="@+id/item_list_order_rl_valid_time"
@@ -112,6 +115,7 @@
     <ImageView
         android:id="@+id/item_list_order_iv_edit_line"
         style="@style/set_line_horizontal_bg"
-        android:contentDescription="@string/desc" />
+        android:contentDescription="@string/desc"
+        android:visibility="gone" />
 
 </LinearLayout>

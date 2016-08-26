@@ -112,7 +112,6 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	private void setView() {
 		if (orderEn != null) {
 			String signStr = getString(R.string.sign_semicolon);
-			String currStr = orderEn.getCurrency();
 			tv_order_no.setText(getString(R.string.order_order_no, orderEn.getOrderNo()));
 			tv_order_date.setText(getString(R.string.order_order_date, 
 					TimeUtil.getFormatedDateTime("yyyy-MM-dd HH:mm:ss", orderEn.getCreateTime())));
@@ -132,10 +131,10 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			tv_bonus.setText("-" + currStr + orderEn.getPriceBonus());
 			tv_discount_name.setText(orderEn.getPriceDiscountName() + signStr);
 			tv_discount.setText("-" + currStr + orderEn.getPriceDiscount());
-			tv_pay_name.setText(orderEn.getPricePayName() + signStr);
-			tv_pay.setText(currStr + orderEn.getPricePay());
+			tv_pay_name.setText(orderEn.getPricePaidName() + signStr);
+			tv_pay.setText(currStr + orderEn.getPricePaid());
 			// 商品列表
-			addGoodsLists(currStr);
+			addGoodsLists();
 			// 物流信息
 			AddressEntity addrEn = orderEn.getAddressEn();
 			if (addrEn != null) {
@@ -147,6 +146,9 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			ll_logistics.setVisibility(View.GONE);
 			rl_pay_type.setVisibility(View.VISIBLE);
 			if (orderEn.getStatus() == 1) { //待支付
+				tv_pay_name.setText(orderEn.getPricePayName() + signStr);
+				tv_pay.setText(currStr + orderEn.getPricePay());
+
 				ll_order_edit.setVisibility(View.VISIBLE);
 				rl_pay_type.setVisibility(View.GONE);
 				tv_pay_now.setVisibility(View.VISIBLE);
@@ -188,7 +190,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	/**
 	 * 动态添加商品列表
 	 */
-	private void addGoodsLists(String currStr) {
+	private void addGoodsLists() {
 		List<ProductListEntity> goodsLists = orderEn.getGoodsLists();
 		if (goodsLists != null) {
 			ll_goods_lists.removeAllViews(); //移除之前添加的所有View
@@ -201,6 +203,8 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 				
 				TextView tv_brand = (TextView) view.findViewById(R.id.item_goods_vertical_tv_brand);
 				tv_brand.setText(itemEn.getBrand());
+				TextView tv_curr = (TextView) view.findViewById(R.id.item_goods_vertical_tv_curr);
+				tv_curr.setText(currStr);
 				TextView tv_price = (TextView) view.findViewById(R.id.item_goods_vertical_tv_price);
 				tv_price.setText(itemEn.getSellPrice());
 				TextView tv_name = (TextView) view.findViewById(R.id.item_goods_vertical_tv_name);
@@ -305,7 +309,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		if (orderEn != null) {
 			Intent intent =new Intent(mContext, WXPayEntryActivity.class);
 			intent.putExtra("orderSn", orderEn.getOrderId());
-			intent.putExtra("orderTotal", orderEn.getCurrency() + orderEn.getPricePay());
+			intent.putExtra("orderTotal", orderEn.getPricePay());
 			intent.putExtra("root", TAG);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);

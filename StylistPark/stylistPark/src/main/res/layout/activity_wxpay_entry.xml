@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:gravity="center"
             android:text="@string/pay_wait"
             android:textColor="@color/conte_text_color"
             android:textSize="@dimen/text_size_16"
@@ -48,13 +49,20 @@
             android:textColor="@color/label_text_color"
             android:textSize="@dimen/text_size_14" />
 
+
+        <TextView
+            android:id="@+id/payment_tv_curr"
+            style="@style/common_text_price"
+            android:layout_toLeftOf="@+id/payment_tv_pay_amount"
+            android:layout_alignBottom="@+id/payment_tv_pay_amount"
+            android:layout_marginBottom="2dp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/payment_tv_pay_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/common_text_price"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:textColor="@color/tv_color_status"
             android:textSize="@dimen/text_size_18"
             android:textStyle="bold" />
     </RelativeLayout>

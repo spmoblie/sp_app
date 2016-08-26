@@ -20,7 +20,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +44,7 @@ import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -53,6 +53,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +75,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected IWXAPI api;
 	protected Boolean isInitShare = false;
 	protected ShareView mShareView;
+	protected DecimalFormat decimalFormat;
 
 	private LinearLayout ll_head;
 	private ImageView iv_left, iv_title_logo;
@@ -81,10 +83,10 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	private Button btn_right;
 	private ViewFlipper mLayoutBase;
 	private Animation inAnim, outAnim;
-	
-	protected boolean headStatus = false; //记录头部组件显示的状态
-	protected int headAnimHeight;
-	protected TranslateAnimation headGONE, headVISIBLE;
+
+	protected String currStr;
+	protected boolean headStatus = false;
+	protected Animation headGONE, headVISIBLE;
 	protected ServiceContext sc = ServiceContext.getServiceContext();
 
 	public static final int DIALOG_CONFIRM_CLICK = 456; //全局对话框“确定”
@@ -102,6 +104,8 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		shared = AppApplication.getSharedPreferences();
 		editor = shared.edit();
 		editor.apply();
+		currStr = LangCurrTools.getCurrencyValue();
+		decimalFormat = new DecimalFormat("0.00");
 		dm = DialogManager.getInstance(mContext);
 		atm = AsyncTaskManager.getInstance(mContext);
 		api = WXAPIFactory.createWXAPI(mContext, AppConfig.WX_APP_ID);
@@ -125,7 +129,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 			try { //初始化ShareView
 				View view = getLayoutInflater().inflate(R.layout.popup_share_view, (ViewGroup) findViewById(R.id.base_fl_main));
 				mShareView = new ShareView(savedInstanceState, mContext, this, view, null);
-				mShareView.showShareLayer(mContext, false);
+				mShareView.showShareLayer(false);
 			} catch (Exception e) {
 				ExceptionUtil.handle(e);
 			}
@@ -276,7 +280,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	@Override
 	public void onBackPressed() {
 		if (mShareView != null && mShareView.isShowing()) {
-			mShareView.showShareLayer(mContext, false);
+			mShareView.showShareLayer(false);
 		} else {
 			super.onBackPressed();
 		}
@@ -287,7 +291,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 */
 	public void OnListenerLeft(){
 		if (mShareView != null && mShareView.isShowing()) {
-			mShareView.showShareLayer(mContext, false);
+			mShareView.showShareLayer(false);
 		} else {
 			finish();
 		}
@@ -554,90 +558,6 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	}
 
 	/**
-	 * 创建向上缩进、向下拉出的动画效果
-	 * 
-	 * @param topView 缩进、拉出的顶层View
-	 * @param bottomView 缩进、拉出的底层View
-	 * @param otherView 其它跟随动画的View
-	 */
-	protected void createAnimation(final View topView, final View bottomView, final View otherView) {
-		headAnimHeight = topView.getHeight();
-		if (headGONE == null) {
-			headGONE = new TranslateAnimation(0, 0, 0, -headAnimHeight);
-			headGONE.setDuration(500);
-			headGONE.setFillAfter(true);
-			headGONE.setAnimationListener(new AnimationListener() {
-				
-				@Override
-				public void onAnimationStart(Animation animation) {
-					
-				}
-				
-				@Override
-				public void onAnimationRepeat(Animation animation) {
-					
-				}
-				
-				@Override
-				public void onAnimationEnd(Animation animation) {
-					topView.setVisibility(View.GONE);
-					int headLeft = topView.getLeft();
-					int headTop = topView.getTop()-headAnimHeight;
-					int headWidth = topView.getWidth();
-					int headHeight = topView.getHeight();
-					topView.clearAnimation();
-					topView.layout(headLeft, headTop, headWidth+headLeft, headHeight+headTop);
-					int listLeft = otherView.getLeft();
-					int listTop = otherView.getTop()-headAnimHeight;
-					int listWidth = otherView.getWidth();
-					int listHeight = otherView.getHeight();
-					otherView.clearAnimation();
-					otherView.layout(listLeft, listTop, listWidth+listLeft, listHeight+listTop);
-					headStatus = true;
-					bottomView.setVisibility(View.GONE);
-				}
-			});
-		}
-		if (headVISIBLE == null) {
-			headVISIBLE = new TranslateAnimation(0, 0, 0, headAnimHeight);
-			headVISIBLE.setDuration(500);
-			headVISIBLE.setFillAfter(true);
-			headVISIBLE.setAnimationListener(new AnimationListener() {
-				
-				@Override
-				public void onAnimationStart(Animation animation) {
-					
-				}
-				
-				@Override
-				public void onAnimationRepeat(Animation animation) {
-					
-				}
-				
-				@Override
-				public void onAnimationEnd(Animation animation) {
-					topView.setVisibility(View.VISIBLE);
-					bottomView.setVisibility(View.VISIBLE);
-					int headLeft = topView.getLeft();
-					int headTop = topView.getTop()+headAnimHeight;
-					int headWidth = topView.getWidth();
-					int headHeight = topView.getHeight();
-					topView.clearAnimation();
-					topView.layout(headLeft, headTop, headWidth+headLeft, headHeight+headTop);
-					int listLeft = otherView.getLeft();
-					int listTop = otherView.getTop()+headAnimHeight;
-					int listWidth = otherView.getWidth();
-					int listHeight = otherView.getHeight();
-					otherView.clearAnimation();
-					otherView.layout(listLeft, listTop, listWidth+listLeft, listHeight+listTop);
-					headStatus = false;
-				}
-			});
-		}
-	}
-
-
-	/**
 	 * 数据刷新函数
 	 */
 	public static List<BaseEntity> updNewEntity(int newTotal, int oldTotal, List<? extends BaseEntity> newDatas,
@@ -703,6 +623,56 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 */
 	public static boolean isStopLoadMore(int showCount, int countTotal) {
 		return showCount > 0 && showCount == countTotal;
+	}
+
+	/**
+	 * 创建向上缩进、向下拉出的动画效果
+	 */
+	protected void createAnimation(final View animView) {
+		if (headGONE == null) {
+			headGONE = AnimationUtils.loadAnimation(mContext, R.anim.out_to_top);
+			headGONE.setDuration(1000);
+			headGONE.setAnimationListener(new AnimationListener() {
+
+				@Override
+				public void onAnimationStart(Animation animation) {
+					animView.setVisibility(View.GONE);
+					headStatus = true;
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+
+				}
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+
+				}
+			});
+		}
+		if (headVISIBLE == null) {
+			headVISIBLE = AnimationUtils.loadAnimation(mContext, R.anim.in_from_top);
+			headVISIBLE.setDuration(0);
+			headVISIBLE.setAnimationListener(new AnimationListener() {
+
+				@Override
+				public void onAnimationStart(Animation animation) {
+					animView.setVisibility(View.VISIBLE);
+					headStatus = false;
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+
+				}
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+
+				}
+			});
+		}
 	}
 
 }

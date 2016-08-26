@@ -36,7 +36,7 @@ public class OrderListAdapter extends BaseAdapter {
 	private List<OrderEntity> datas;
 	private AdapterCallback adapterCallback;
 	private LayoutInflater mInflater;
-	private String currencyStr;
+	private String currStr;
 	private DisplayImageOptions options;
 
 	public OrderListAdapter(Context context, List<OrderEntity> datas, AdapterCallback adapterCallback) {
@@ -44,7 +44,7 @@ public class OrderListAdapter extends BaseAdapter {
 		this.datas = datas;
 		this.adapterCallback = adapterCallback;
 		this.mInflater = LayoutInflater.from(context);
-		currencyStr = LangCurrTools.getCurrencyValue();
+		currStr = LangCurrTools.getCurrencyValue();
 		options = AppApplication.getDefaultImageOptions();
 	}
 
@@ -121,6 +121,8 @@ public class OrderListAdapter extends BaseAdapter {
 				
 				TextView tv_brand = (TextView) view.findViewById(R.id.item_goods_vertical_tv_brand);
 				tv_brand.setText(goodsLists.get(i).getBrand());
+				TextView tv_curr = (TextView) view.findViewById(R.id.item_goods_vertical_tv_curr);
+				tv_curr.setText(currStr);
 				TextView tv_price = (TextView) view.findViewById(R.id.item_goods_vertical_tv_price);
 				tv_price.setText(goodsLists.get(i).getSellPrice());
 				TextView tv_name = (TextView) view.findViewById(R.id.item_goods_vertical_tv_name);
@@ -148,23 +150,21 @@ public class OrderListAdapter extends BaseAdapter {
 		}
 		/*holder.tv_total_num.setText(context.getString(R.string.cart_goods_num, data.getGoodsTotal()));
 		holder.tv_total_price.setText(context.getString(R.string.order_pay, currencyStr + data.getPriceTotal()));*/
-		holder.tv_total_num.setText(data.getGoodsTotalStr());
-		holder.tv_total_price.setText(data.getPriceTotal());
 
 		if (position == datas.size()-1) {
 			holder.ll_main.setPadding(0, 0, 0, 20);
 		}
 		
-		if (data.getStatus() == 1) { //待支付
-			holder.rl_edit.setVisibility(View.VISIBLE);
-			holder.iv_edit_line.setVisibility(View.VISIBLE);
-			holder.tv_pay.setVisibility(View.VISIBLE);
-			holder.tv_pay.setText(context.getString(R.string.order_pay_now));
-			holder.tv_delete.setText(context.getString(R.string.order_cacel));
-		}else {
-			holder.rl_edit.setVisibility(View.GONE);
-			holder.iv_edit_line.setVisibility(View.GONE);
-		}
+//		if (data.getStatus() == 1) { //待支付
+//			holder.rl_edit.setVisibility(View.VISIBLE);
+//			holder.iv_edit_line.setVisibility(View.VISIBLE);
+//			holder.tv_pay.setVisibility(View.VISIBLE);
+//			holder.tv_pay.setText(context.getString(R.string.order_pay_now));
+//			holder.tv_delete.setText(context.getString(R.string.order_cacel));
+//		}else {
+//			holder.rl_edit.setVisibility(View.GONE);
+//			holder.iv_edit_line.setVisibility(View.GONE);
+//		}
 		
 //		holder.rl_valid_time.removeAllViews();
 //		if (data.getStatus() == 1) { //待付款

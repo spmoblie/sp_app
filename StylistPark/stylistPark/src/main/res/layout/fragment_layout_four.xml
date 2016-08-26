@@ -67,10 +67,22 @@
                 android:paddingLeft="15dp" >
 
                 <TextView
+                    style="@style/common_text_price"
+                    android:text="@string/order_total_name"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fragment_four_tv_curr"
+                    style="@style/common_text_price"
+                    android:layout_marginTop="2dp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/fragment_four_tv_total"
                     style="@style/common_text_price"
                     android:text="@string/number_0"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_18"
                     android:textStyle="bold" />
             </LinearLayout>
 

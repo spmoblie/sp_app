@@ -235,6 +235,8 @@ public class AppConfig {
 	
 	// 偏好设置Key-记录用户ID
 	public static final String KEY_USER_ID = "user_id";
+	// 偏好设置Key-记录分享ID
+	public static final String KEY_SHARE_ID = "share_id";
 	// 偏好设置Key-记录用户登录名
 	public static final String KEY_USER_LOGIN_NAME = "user_login_name";
 	// 偏好设置Key-记录用户昵称

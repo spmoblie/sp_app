@@ -208,7 +208,7 @@
         <item name="android:background">@drawable/btn_checked_bg_line</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/selector_text_home_bottom</item>
+        <item name="android:textColor">@color/selector_text_group_change</item>
         <item name="android:textSize">@dimen/text_size_14</item>
     </style>
 
@@ -219,7 +219,7 @@
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/selector_text_home_bottom</item>
+        <item name="android:textColor">@color/selector_text_group_change</item>
         <item name="android:textSize">@dimen/text_size_14</item>
     </style>
 
