@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/layout_full"
+    android:background="@color/ui_bg_color_app">
+
+    <LinearLayout
+        style="@style/layout_full"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp" >
+
+            <RelativeLayout
+                android:id="@+id/fragment_one_topbar_rl_zxing"
+                style="@style/layout_weight_style"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/desc"
+                    android:paddingLeft="15dp"
+                    android:src="@drawable/btn_icon_scan" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/fragment_one_topbar_rl_search"
+                android:layout_width="0dp"
+                android:layout_height="31dp"
+                android:layout_weight="7"
+                android:background="@drawable/shape_frame_white_dfdfdf_4" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/btn_icon_search_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="35dp"
+                    android:text="@string/product_search_et_hint"
+                    android:textColor="@color/label_text_color"
+                    android:textSize="@dimen/text_size_14" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/fragment_one_topbar_rl_category"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/fragment_one_topbar_iv_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/btn_icon_search" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+
+        <com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView
+            android:id="@+id/fragment_one_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/ui_bg_color_nut" />
+    </LinearLayout>
+
+    <include layout="@layout/layout_loading_anim_large" />
+
+    <include layout="@layout/layout_loading_fail" />
+    
+    <ImageView
+        android:id="@+id/fragment_one_iv_to_top"
+        style="@style/common_to_top"
+        android:contentDescription="@string/desc" />
+
+</FrameLayout>

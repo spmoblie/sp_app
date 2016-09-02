@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_list_head_ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ui_bg_color_app"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/home_list_head_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/ui_bg_color_white" />
+        
+        <LinearLayout
+            android:id="@+id/home_list_head_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </FrameLayout>
+
+    <include
+        android:id="@+id/home_list_head_ll_goods_title"
+        layout="@layout/layout_text_two_line"/>
+
+    <HorizontalScrollView
+        android:id="@+id/home_list_head_sv_goods_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:scrollbars="none"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:id="@+id/home_list_head_ll_goods_main"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <include
+        android:id="@+id/home_list_head_ll_peida_title"
+        layout="@layout/layout_text_two_line"/>
+
+    <HorizontalScrollView
+        android:id="@+id/home_list_head_sv_peida_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:scrollbars="none"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:id="@+id/home_list_head_ll_peida_main"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <include
+        android:id="@+id/home_list_head_ll_sale_title"
+        layout="@layout/layout_text_two_line"/>
+
+    <LinearLayout
+        android:id="@+id/home_list_head_ll_sale_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+</LinearLayout>

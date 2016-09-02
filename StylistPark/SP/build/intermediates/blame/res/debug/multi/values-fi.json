@@ -1,0 +1,349 @@
+[
+    {
+        "outputFile": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\values-fi\\values-fi.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 145,
+                    "endOffset": 196
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 170,
+                        "endColumn": 145,
+                        "endOffset": 311
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 201,
+                    "endColumn": 125,
+                    "endOffset": 322
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 316,
+                        "endColumn": 125,
+                        "endOffset": 437
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 327,
+                    "endColumn": 131,
+                    "endOffset": 454
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 442,
+                        "endColumn": 131,
+                        "endOffset": 569
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 459,
+                    "endColumn": 94,
+                    "endOffset": 549
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 574,
+                        "endColumn": 94,
+                        "endOffset": 664
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 554,
+                    "endColumn": 66,
+                    "endOffset": 616
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 669,
+                        "endColumn": 66,
+                        "endOffset": 731
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 621,
+                    "endColumn": 69,
+                    "endOffset": 686
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 736,
+                        "endColumn": 69,
+                        "endOffset": 801
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 691,
+                    "endColumn": 60,
+                    "endOffset": 747
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 806,
+                        "endColumn": 60,
+                        "endOffset": 862
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 752,
+                    "endColumn": 72,
+                    "endOffset": 820
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 867,
+                        "endColumn": 72,
+                        "endOffset": 935
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 825,
+                    "endColumn": 80,
+                    "endOffset": 901
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 940,
+                        "endColumn": 80,
+                        "endOffset": 1016
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 906,
+                    "endColumn": 103,
+                    "endOffset": 1005
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 1021,
+                        "endColumn": 103,
+                        "endOffset": 1120
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 1010,
+                    "endColumn": 79,
+                    "endOffset": 1085
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 1125,
+                        "endColumn": 79,
+                        "endOffset": 1200
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 1090,
+                    "endColumn": 79,
+                    "endOffset": 1165
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 1205,
+                        "endColumn": 79,
+                        "endOffset": 1280
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 1170,
+                    "endColumn": 95,
+                    "endOffset": 1261
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 1285,
+                        "endColumn": 95,
+                        "endOffset": 1376
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 1266,
+                    "endColumn": 111,
+                    "endOffset": 1373
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 1381,
+                        "endColumn": 111,
+                        "endOffset": 1488
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 1378,
+                    "endColumn": 64,
+                    "endOffset": 1438
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 18,
+                        "startColumn": 4,
+                        "startOffset": 1493,
+                        "endColumn": 64,
+                        "endOffset": 1553
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 17,
+                    "startColumn": 4,
+                    "startOffset": 1443,
+                    "endColumn": 62,
+                    "endOffset": 1501
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 1558,
+                        "endColumn": 62,
+                        "endOffset": 1616
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 1506,
+                    "endColumn": 124,
+                    "endOffset": 1626
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 1621,
+                        "endColumn": 124,
+                        "endOffset": 1741
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 19,
+                    "startColumn": 4,
+                    "startOffset": 1631,
+                    "endColumn": 61,
+                    "endOffset": 1688
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-fi\\values-fi.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 1878,
+                        "endColumn": 61,
+                        "endOffset": 1935
+                    }
+                }
+            }
+        ]
+    }
+]

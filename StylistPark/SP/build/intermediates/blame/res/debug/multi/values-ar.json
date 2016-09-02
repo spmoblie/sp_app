@@ -1,0 +1,349 @@
+[
+    {
+        "outputFile": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\values-ar\\values-ar.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 119,
+                    "endOffset": 170
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 170,
+                        "endColumn": 119,
+                        "endOffset": 285
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 175,
+                    "endColumn": 105,
+                    "endOffset": 276
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 290,
+                        "endColumn": 105,
+                        "endOffset": 391
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 281,
+                    "endColumn": 127,
+                    "endOffset": 404
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 396,
+                        "endColumn": 127,
+                        "endOffset": 519
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 409,
+                    "endColumn": 92,
+                    "endOffset": 497
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 524,
+                        "endColumn": 92,
+                        "endOffset": 612
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 502,
+                    "endColumn": 65,
+                    "endOffset": 563
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 617,
+                        "endColumn": 65,
+                        "endOffset": 678
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 568,
+                    "endColumn": 68,
+                    "endOffset": 632
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 683,
+                        "endColumn": 68,
+                        "endOffset": 747
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 637,
+                    "endColumn": 64,
+                    "endOffset": 697
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 752,
+                        "endColumn": 64,
+                        "endOffset": 812
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 702,
+                    "endColumn": 70,
+                    "endOffset": 768
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 817,
+                        "endColumn": 70,
+                        "endOffset": 883
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 773,
+                    "endColumn": 77,
+                    "endOffset": 846
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 888,
+                        "endColumn": 77,
+                        "endOffset": 961
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 851,
+                    "endColumn": 95,
+                    "endOffset": 942
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 966,
+                        "endColumn": 95,
+                        "endOffset": 1057
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 947,
+                    "endColumn": 78,
+                    "endOffset": 1021
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 1062,
+                        "endColumn": 78,
+                        "endOffset": 1136
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 1026,
+                    "endColumn": 78,
+                    "endOffset": 1100
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 1141,
+                        "endColumn": 78,
+                        "endOffset": 1215
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 1105,
+                    "endColumn": 90,
+                    "endOffset": 1191
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 1220,
+                        "endColumn": 90,
+                        "endOffset": 1306
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 1196,
+                    "endColumn": 104,
+                    "endOffset": 1296
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 1311,
+                        "endColumn": 104,
+                        "endOffset": 1411
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 1301,
+                    "endColumn": 63,
+                    "endOffset": 1360
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 18,
+                        "startColumn": 4,
+                        "startOffset": 1416,
+                        "endColumn": 63,
+                        "endOffset": 1475
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 17,
+                    "startColumn": 4,
+                    "startOffset": 1365,
+                    "endColumn": 65,
+                    "endOffset": 1426
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 1480,
+                        "endColumn": 65,
+                        "endOffset": 1541
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 1431,
+                    "endColumn": 124,
+                    "endOffset": 1551
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 1546,
+                        "endColumn": 124,
+                        "endOffset": 1666
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 19,
+                    "startColumn": 4,
+                    "startOffset": 1556,
+                    "endColumn": 60,
+                    "endOffset": 1612
+                },
+                "from": {
+                    "file": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\values-ar\\values-ar.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 1803,
+                        "endColumn": 60,
+                        "endOffset": 1859
+                    }
+                }
+            }
+        ]
+    }
+]

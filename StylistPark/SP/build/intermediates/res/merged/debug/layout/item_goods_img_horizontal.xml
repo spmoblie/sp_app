@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/ui_bg_color_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <RelativeLayout
+        android:layout_width="71dp"
+        android:layout_height="71dp" >
+
+        <ImageView
+            style="@style/set_line_vertical_bg"
+            android:contentDescription="@string/desc" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+
+        <ImageView
+            android:id="@+id/item_goods_horizontal_iv_img"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/desc"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_img_white" />
+
+        <ImageView
+            style="@style/set_line_vertical_bg"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/desc" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_goods_horizontal_tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/conte_text_color"
+        android:textSize="@dimen/text_size_10" />
+
+</LinearLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ui_bg_color_white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp" >
+
+            <ImageView
+                android:id="@+id/item_goods_vertical_iv_img"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_img_white"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="15dp" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_goods_vertical_tv_brand"
+                    style="@style/cart_product_text_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="50dp" />
+
+                <TextView
+                    android:id="@+id/item_goods_vertical_tv_name"
+                    style="@style/cart_product_text_content"
+                    android:layout_below="@id/item_goods_vertical_tv_brand"
+                    android:layout_marginRight="50dp" />
+
+                <RelativeLayout
+                    android:id="@+id/item_list_cart_product_rl_delete"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+
+                    <TextView
+                        android:id="@+id/item_goods_vertical_tv_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text=""
+                        android:textColor="@color/conte_text_color"
+                        android:textSize="@dimen/text_size_12" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_goods_vertical_tv_curr"
+                    style="@style/common_text_price"
+                    android:layout_alignBottom="@+id/item_goods_vertical_tv_price"
+                    android:layout_marginBottom="1dp"
+                    android:textSize="@dimen/text_size_09" />
+
+                <TextView
+                    android:id="@+id/item_goods_vertical_tv_price"
+                    style="@style/common_text_price"
+                    android:layout_toRightOf="@+id/item_goods_vertical_tv_curr"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/item_goods_vertical_tv_attr"
+                    style="@style/cart_product_text_assist"
+                    android:layout_below="@id/item_goods_vertical_tv_price" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/item_goods_vertical_iv_line"
+        style="@style/set_line_horizontal_bg"
+        android:layout_marginLeft="15dp"
+        android:contentDescription="@string/desc" />
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_app"
+    android:padding="15dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_bound_reminder"
+        android:textColor="@color/label_text_color"
+        android:textSize="@dimen/text_size_12" />
+
+    <EditText
+        android:id="@+id/register_oauth_et_account"
+        style="@style/Register_EditText"
+        android:layout_marginTop="15dp"
+        android:hint="@string/login_input_user_name" />
+
+    <EditText
+        android:id="@+id/register_oauth_et_passwords"
+        style="@style/Register_EditText"
+        android:inputType="textPassword"
+        android:hint="@string/login_input_password" />
+
+    <Button
+        android:id="@+id/register_oauth_btn_oath"
+        style="@style/Register_Button"
+        android:text="@string/login_immediately_bound"
+        android:textSize="@dimen/text_size_16" />
+
+    <Button
+        android:id="@+id/register_oauth_btn_register"
+        style="@style/Register_Button"
+        android:layout_marginTop="15dp"
+        android:text="@string/login_no_account"
+        android:textSize="@dimen/text_size_16" />
+
+</LinearLayout>

@@ -1,0 +1,250 @@
+[
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\wheel_bg.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\wheel_bg.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_auth_dialog_header_background.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\com_facebook_auth_dialog_header_background.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_app_hollow_4.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_app_hollow_4.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_btn_small.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_btn_small.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_send_button_icon.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\com_facebook_send_button_icon.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_btn_hook_circle.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_btn_hook_circle.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_button_like_background.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\com_facebook_button_like_background.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_red_10.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_red_10.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_img_home_bottom_5.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_img_home_bottom_5.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_app_buttom_90.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_app_buttom_90.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_white_dfdfdf_4.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_white_dfdfdf_4.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\uvv_progress_rotate.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\uvv_progress_rotate.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_button_send_background.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\com_facebook_button_send_background.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_img_select_hook.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_img_select_hook.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_button_background.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\com_facebook_button_background.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_app_buttom_4.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_app_buttom_4.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\uvv_star_play_progress_seek.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\uvv_star_play_progress_seek.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_checked_checkbox_circle.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\btn_checked_checkbox_circle.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_pressed_back.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\btn_pressed_back.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_trans.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_trans.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_white_999999_2.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_white_999999_2.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_img_home_bottom_4.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_img_home_bottom_4.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_button_icon.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\com_facebook_button_icon.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_btn_screen.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_btn_screen.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_empty_000000_0.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_empty_000000_0.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_btn_password_check.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_btn_password_check.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_button_login_silver_background.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\com_facebook_button_login_silver_background.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\messenger_button_blue_bg_round.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\messenger_button_blue_bg_round.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_sina_weibo_sdk_login_button_with_frame_logo.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable\\com_sina_weibo_sdk_login_button_with_frame_logo.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_app_hollow_2.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_app_hollow_2.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_generator_top_bt_bg_lf_up.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_generator_top_bt_bg_lf_up.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\messenger_button_white_bg_selector.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\messenger_button_white_bg_selector.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_generator_top_bt_bg_rg_up.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_generator_top_bt_bg_rg_up.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_btn_push_control.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_btn_push_control.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_app_gradient.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_app_gradient.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_sina_weibo_sdk_login_button_with_account_text.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable\\com_sina_weibo_sdk_login_button_with_account_text.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_line_divider_gray.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_line_divider_gray.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_btn_num_minus.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_btn_num_minus.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_generator_top_bt_bg_lf_dn.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_generator_top_bt_bg_lf_dn.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_sina_weibo_sdk_button_grey.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable\\com_sina_weibo_sdk_button_grey.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_generator_border_dashed.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_generator_border_dashed.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_img_collection.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_img_collection.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_btn_num_add.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_btn_num_add.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_generator_top_bt_bg_rg_dn.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_generator_top_bt_bg_rg_dn.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_red_90.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_red_90.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_auth_dialog_cancel_background.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\com_facebook_auth_dialog_cancel_background.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_img_home_bottom_3.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_img_home_bottom_3.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\messenger_button_white_bg_round.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\messenger_button_white_bg_round.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_img_home_bottom_2.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_img_home_bottom_2.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_sina_weibo_sdk_login_button_with_original_logo.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable\\com_sina_weibo_sdk_login_button_with_original_logo.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_app_buttom_0.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_app_buttom_0.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_sina_weibo_sdk_button_blue.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable\\com_sina_weibo_sdk_button_blue.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_app_buttom_20.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_app_buttom_20.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_img_home_bottom_1.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\selector_img_home_bottom_1.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_app_buttom_2.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_app_buttom_2.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_auth_dialog_background.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\com_facebook_auth_dialog_background.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_app_hollow_16.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_bg_app_hollow_16.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\wheel_val.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\wheel_val.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_checked_bg_line.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\btn_checked_bg_line.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_white_dfdfdf_2.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_frame_white_dfdfdf_2.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_generator_tool_bar.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\shape_generator_tool_bar.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\messenger_button_blue_bg_selector.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\messenger_button_blue_bg_selector.xml"
+    }
+]

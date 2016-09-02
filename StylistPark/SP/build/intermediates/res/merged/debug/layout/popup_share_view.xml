@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/share_view_fl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_percent_10"
+    android:gravity="center" >
+
+    <View
+        android:id="@+id/share_view_dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ui_bg_color_percent_08"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/share_view_ll_show_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/ui_bg_color_white"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/share"
+            android:textColor="@color/conte_text_color"
+            android:textSize="@dimen/text_size_18" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:contentDescription="@string/desc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:baselineAligned="false" >
+
+            <TextView
+                android:id="@+id/share_view_tv_share_QQ"
+                style="@style/commom_mean_tab_text_assist"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/share_icon_qq"
+                android:text="@string/share_qq"
+                android:textColor="@color/conte_text_color" />
+            
+            <TextView
+                android:id="@+id/share_view_tv_share_Friends"
+                style="@style/commom_mean_tab_text_assist"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/share_icon_friends"
+                android:text="@string/share_friends"
+                android:textColor="@color/conte_text_color" />
+            
+            <TextView
+                android:id="@+id/share_view_tv_share_Wechat"
+                style="@style/commom_mean_tab_text_assist"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/share_icon_wechat"
+                android:text="@string/share_wechat"
+                android:textColor="@color/conte_text_color" />
+            
+            <TextView
+                android:id="@+id/share_view_tv_share_Weibo"
+                style="@style/commom_mean_tab_text_assist"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/share_icon_weibo"
+                android:text="@string/share_weibo"
+                android:textColor="@color/conte_text_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:baselineAligned="false" >
+
+            <TextView
+                android:id="@+id/share_view_tv_share_Facebook"
+                style="@style/commom_mean_tab_text_assist"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/share_icon_fb"
+                android:text="@string/share_fb"
+                android:textColor="@color/conte_text_color" />
+
+            <TextView
+                android:id="@+id/share_view_tv_share_WhatsApp"
+                style="@style/commom_mean_tab_text_assist"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/share_icon_whatsapp"
+                android:text="@string/share_whatsapp"
+                android:textColor="@color/conte_text_color" />
+
+            <TextView
+                android:id="@+id/share_view_tv_share_Line"
+                style="@style/commom_mean_tab_text_assist"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/share_icon_line"
+                android:text="@string/share_line"
+                android:textColor="@color/conte_text_color" />
+
+            <TextView
+                android:id="@+id/share_view_tv_share_Copy"
+                style="@style/commom_mean_tab_text_assist"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/share_icon_copy"
+                android:text="@string/share_copy"
+                android:textColor="@color/conte_text_color" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

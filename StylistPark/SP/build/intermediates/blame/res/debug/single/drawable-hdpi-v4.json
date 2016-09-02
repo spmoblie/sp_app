@@ -1,0 +1,530 @@
+[
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_locading_horizontal_06.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_locading_horizontal_06.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_tooltip_blue_bottomnub.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_tooltip_blue_bottomnub.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\loading_anim_large.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\loading_anim_large.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_locading_horizontal_07.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_locading_horizontal_07.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_love.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_love.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\profile_icon_order_pay.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\profile_icon_order_pay.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_locading_horizontal_01.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_locading_horizontal_01.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_logo.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_logo.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_grey_pressed.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_grey_pressed.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_login_password.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_login_password.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_grey_focused.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_grey_focused.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_num_add_focused.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_num_add_focused.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\logistics_line_first.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\logistics_line_first.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\profile_icon_address.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\profile_icon_address.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_rank_up.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_rank_up.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\messenger_bubble_large_blue.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\messenger_bubble_large_blue.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\language_flag_hk.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\language_flag_hk.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\messenger_bubble_small_blue.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\messenger_bubble_small_blue.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\home_bottom_tab_3_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\home_bottom_tab_3_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_num_minus_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_num_minus_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\topbar_icon_tick.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\topbar_icon_tick.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_rank_down.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_rank_down.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_locading_horizontal_03.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_locading_horizontal_03.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\topbar_icon_home.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\topbar_icon_home.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\profile_icon_coupon.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\profile_icon_coupon.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_delete.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_delete.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_top_item_focused.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\bg_top_item_focused.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_button_with_frame_logo_pressed.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_button_with_frame_logo_pressed.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\arrow_down.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\arrow_down.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_toast.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\bg_toast.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_photo_camera.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_photo_camera.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_locading_horizontal_05.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_locading_horizontal_05.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_rank_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_rank_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_with_account_text_pressed.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_with_account_text_pressed.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_blue_pressed.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_blue_pressed.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\home_bottom_tab_1_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\home_bottom_tab_1_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_tooltip_black_bottomnub.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_tooltip_black_bottomnub.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_with_text.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_with_text.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_screen_focused.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_screen_focused.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_img_gray.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\bg_img_gray.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_tooltip_black_xout.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_tooltip_black_xout.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\topbar_icon_brand.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\topbar_icon_brand.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_button_icon_white.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_button_icon_white.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\topbar_icon_share.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\topbar_icon_share.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_grey_normal.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_grey_normal.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\arrow_up.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\arrow_up.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_no_data.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\bg_no_data.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_tooltip_blue_topnub.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_tooltip_blue_topnub.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_button_with_frame_logo_focused.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_button_with_frame_logo_focused.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_with_account_text_focused.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_with_account_text_focused.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_tooltip_black_topnub.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_tooltip_black_topnub.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\messenger_bubble_small_white.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\messenger_bubble_small_white.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_tooltip_black_background.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_tooltip_black_background.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_with_account_text_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_with_account_text_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\profile_icon_wallet.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\profile_icon_wallet.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_num_add_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_num_add_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\indicators_default.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\indicators_default.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_locading_horizontal_02.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_locading_horizontal_02.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\profile_icon_order_receive.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\profile_icon_order_receive.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\logistics_line_last.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\logistics_line_last.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_push_open.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_push_open.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\profile_icon_order_delivery.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\profile_icon_order_delivery.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_favicon_white.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_favicon_white.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_read.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_read.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_locading_horizontal_04.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_locading_horizontal_04.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\home_bottom_tab_4_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\home_bottom_tab_4_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\topbar_icon_collection_focus.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\topbar_icon_collection_focus.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_select_hook_yes.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_select_hook_yes.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\loading_anim_small.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\loading_anim_small.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_locading_horizontal_08.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_locading_horizontal_08.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\topbar_icon_back_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\topbar_icon_back_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_wexin_loading.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\bg_wexin_loading.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_num_minus_focused.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_num_minus_focused.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_icon_to_top.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_icon_to_top.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\messenger_bubble_large_white.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\messenger_bubble_large_white.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\home_bottom_tab_2_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\home_bottom_tab_2_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\head_portrait.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\head_portrait.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_button_send_icon_white.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_button_send_icon_white.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\language_flag_us.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\language_flag_us.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_img_default.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\bg_img_default.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\home_bottom_tab_5_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\home_bottom_tab_5_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\common_go_left.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\common_go_left.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_support.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_support.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_clear.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_clear.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_locading_horizontal_09.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_locading_horizontal_09.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_select_single_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_select_single_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_screen_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_screen_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_button_send_icon_blue.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_button_send_icon_blue.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\indicators_now.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\indicators_now.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_blue_focused.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_blue_focused.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_locading_horizontal_10.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_locading_horizontal_10.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_button_like_icon_selected.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_button_like_icon_selected.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_top_text_btn_short.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_top_text_btn_short.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_select_single_focused.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_select_single_focused.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\topbar_icon_cart.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\topbar_icon_cart.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\home_bottom_tab_4_focus.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\home_bottom_tab_4_focus.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_close.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_close.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_tooltip_blue_background.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_tooltip_blue_background.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_select_hook_no.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_select_hook_no.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_tooltip_blue_xout.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_tooltip_blue_xout.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\com_facebook_button_icon_blue.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\com_facebook_button_icon_blue.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\messenger_button_send_round_shadow.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable-hdpi\\messenger_button_send_round_shadow.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\profile_icon_member.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\profile_icon_member.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_icon_setting.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_icon_setting.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\language_flag_cn.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\language_flag_cn.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_img_qr_code.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\bg_img_qr_code.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_top_item_normal.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\bg_top_item_normal.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\common_go_right.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\common_go_right.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\home_bottom_tab_2_focus.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\home_bottom_tab_2_focus.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\home_bottom_tab_1_focus.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\home_bottom_tab_1_focus.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_video.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_video.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\topbar_icon_back_focused.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\topbar_icon_back_focused.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_icon_search.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_icon_search.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_icon_search_small.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_icon_search_small.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\profile_icon_order.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\profile_icon_order.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_photo_select.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_photo_select.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\home_bottom_tab_5_focus.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\home_bottom_tab_5_focus.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_launcher.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\topbar_icon_collection_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\topbar_icon_collection_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_login_password_check.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_login_password_check.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\profile_icon_order_return.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\profile_icon_order_return.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\topbar_icon_call.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\topbar_icon_call.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\home_bottom_tab_3_focus.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\home_bottom_tab_3_focus.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_icon_scan.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_icon_scan.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_login_password_gone.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_login_password_gone.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_edit.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_edit.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_blue_normal.9.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_button_blue_normal.9.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_push_close.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\btn_push_close.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_button_with_frame_logo_normal.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\StylistPark\\weiboSDK\\unspecified\\res\\drawable-hdpi-v4\\ic_com_sina_weibo_sdk_login_button_with_frame_logo_normal.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_login_user.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_login_user.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_img_white.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\bg_img_white.png"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_list_delete.png",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable-hdpi\\icon_list_delete.png"
+    }
+]

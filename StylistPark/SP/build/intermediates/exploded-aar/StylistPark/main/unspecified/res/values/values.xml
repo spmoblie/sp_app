@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CropOverlayView"><attr format="boolean" name="guideLines"/><attr format="boolean" name="drawCircle"/><attr format="dimension" name="marginTop"/><attr format="dimension" name="marginSide"/><attr format="dimension" name="minWidth"/><attr format="dimension" name="maxWidth"/><attr format="color" name="borderColor"/></declare-styleable>
+    <string name="app_name">PhotoCrop</string>
+</resources>

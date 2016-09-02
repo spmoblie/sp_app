@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_app"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/photo_clip_upload_hint"
+            android:textColor="@color/label_text_color"
+            android:textSize="@dimen/text_size_12" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/icon_warning" />
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/authentication_et_name"
+        style="@style/Register_EditText"
+        android:layout_marginTop="30dp"
+        android:hint="@string/money_auth_input_name_hint" />
+
+    <EditText
+        android:id="@+id/authentication_et_number"
+        style="@style/Register_EditText"
+        android:layout_marginTop="30dp"
+        android:inputType="number"
+        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRTSUVWXYZ"
+        android:hint="@string/money_auth_input_number_hint" />
+
+    <Button
+        android:id="@+id/authentication_btn_submit"
+        style="@style/Register_Button"
+        android:layout_marginTop="30dp"
+        android:text="@string/profile_submit_audit" />
+
+</LinearLayout>

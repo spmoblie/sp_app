@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="armeabi-v7a,armeabi"
+    api-level="17"
+    density="xhdpi"
+    format="7"
+    timestamp="26134271720608"
+    token="-68763585952444085" >
+
+    <task
+        name="javac"
+        duration="4823" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="56" />
+    <task
+        name="verifier"
+        duration="55" />
+
+    <artifact
+        location="D:\evan\git\Code\sp_app\StylistPark\SP\build\outputs\apk\SP-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="26134271720608" >
+        <artifact
+            location="D:\evan\git\Code\sp_app\StylistPark\SP\build\outputs\apk\SP-debug.apk"
+            type="MAIN" />
+    </build>
+
+</instant-run>

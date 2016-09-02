@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_ll_promotion_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ui_bg_color_app"
+    android:orientation="horizontal"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp" >
+
+    <TextView
+        android:id="@+id/item_tv_promotion_type"
+        style="@style/common_text_discount"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:text="@string/product_full_minus"
+        android:textSize="@dimen/text_size_09"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/item_tv_promotion_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text=""
+        android:textColor="@color/conte_text_color"
+        android:textSize="@dimen/text_size_11" />
+
+</LinearLayout>

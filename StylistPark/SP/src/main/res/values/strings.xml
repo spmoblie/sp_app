@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- testing version -->
+    <string name="app_name">StylistPark</string>
+
+    <!-- General -->
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="proceed">Proceed</string>
+    <string name="being_not">Being not</string>
+    <string name="retry">Retry</string>
+    <string name="back">Back</string>
+    <string name="save">Save</string>
+    <string name="dont_save">Not save</string>
+    <string name="save_ok">Save OK</string>
+    <string name="my_new">New</string>
+    <string name="add">Add</string>
+    <string name="all">All</string>
+    <string name="select_all">All</string>
+    <string name="total">Total：</string>
+    <string name="item_price">Price：</string>
+    <string name="item_number">Number：</string>
+    <string name="item_select_no">Select：</string>
+    <string name="item_select_ok">Selected：</string>
+    <string name="color">Color</string>
+    <string name="size">Size</string>
+    <string name="clean">Clear</string>
+    <string name="done">Done</string>
+    <string name="desc">""</string>
+    <string name="dot">・</string>
+    <string name="sign_semicolon">：</string>
+    <string name="time_divided">:</string>
+    <string name="number_0">0</string>
+    <string name="num_total">Total %1$d piece</string>
+    <string name="prompt">Operation Prompt</string>
+    <string name="delete">Delete</string>
+    <string name="delete_pain">Delete</string>
+    <string name="delete_think">Cancel</string>
+    <string name="delete_confirm">&#160;Sure to delete？</string>
+    <string name="leave_confirm">Leave</string>
+    <string name="abandon_confirm">Sure to abandon？</string>
+    <string name="send_confirm">Confirm send</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="send">Send</string>
+    <string name="submit">Submit</string>
+    <string name="submit_success">Submit success</string>
+    <string name="not_empty">&#160;can not be empty</string>
+    <string name="setting">Setting</string>
+    <string name="other">Other</string>
+    <string name="error">Error</string>
+    <string name="post">Post</string>
+    <string name="title">Title</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="edit">Edit</string>
+    <string name="unfold">Unfold</string>
+    <string name="put_away">Put away</string>
+    <string name="day">d&#160;</string>
+    <string name="hour">h&#160;</string>
+    <string name="minute">m&#160;</string>
+    <string name="second">s</string>
+    <string name="viewpager_indicator">%1$d/%2$d</string>
+    
+    <!-- Toast -->
+    <string name="toast_exit_prompt">Click again to exit the program</string>
+    <string name="toast_server_busy">Server busy! Please try again later!</string>
+    <string name="toast_error_data_null">Data error! Please reload the page!</string>
+        
+    <!-- Dialog -->
+    <string name="dialog_leave_app">Leave STYLISTPARK ?</string>
+    <string name="dialog_version_new">Your current version is the latest version</string>
+    <string name="dialog_version_update">Detected a new version, click OK to start the update.</string>
+    <string name="dialog_version_update_force">Your current version is below the minimum version! Need to be upgraded to normal use!</string>
+    <string name="dialog_error_msg">Error. Please Try Again.</string>
+    <string name="dialog_error_video_url">Video error can not be played</string>
+    
+    <!-- network -->
+    <string name="network">Network</string>
+    <string name="network_closed">Cannot connect to Stylistpark.</string>
+    <string name="network_fault">Please check your internet connection.</string>
+    <string name="network_no_wifi">I recommend you watch the video in the Wifi network</string>
+    
+    <!-- loading -->
+    <string name="loading">Loading&#8230;</string>
+    <string name="loading_pull_refresh">Pull down refresh</string>
+    <string name="loading_release_refresh">Release refreshed</string>
+    <string name="loading_loading">Loading&#8230;</string>
+    <string name="loading_update_time">Last update time </string>
+    <string name="loading_load_more">Load more</string>
+    <string name="loading_strive_loading">Strive loading&#8230;</string>
+    <string name="loading_no_more">No more ~</string>
+    <string name="loading_no_data">You have not %1$s !</string>
+    <string name="loading_click_load">Click load</string>
+    <string name="loading_submit_fail">Upload failed</string>
+    
+    <!-- home -->
+    <string name="home_tab_text_one">Home</string>
+    <string name="home_tab_text_two">@string/title_category</string>
+    <string name="home_tab_text_three">Find</string>
+    <string name="home_tab_text_four">Cart</string>
+    <string name="home_tab_text_five">Profile</string>
+    <string name="home_txt_hot_goods">Hot goods</string>
+    <string name="home_txt_today_topics">Today topics</string>
+    <string name="home_txt_limit_events">Limit events</string>
+    
+    <!-- title -->
+    <string name="title_category">Category</string>
+    <string name="title_screen">Screen</string>
+    <string name="title_qr_code_scan">QR Code Scan</string>
+    <string name="title_fragment_three">Special Events</string>
+    <string name="title_fragment_four">My Cart</string>
+    <string name="title_product_detail">Product Detail</string>
+    <string name="title_login">User Login</string>
+    <string name="title_register">Email Register</string>
+    <string name="title_reset">Reset Password</string>
+    <string name="title_my_address">My Address</string>
+    <string name="title_delivery_info">Delivery Information</string>
+    <string name="title_order_confirm">Confirm Order</string>
+    <string name="title_order_detail">Order Details</string>
+    
+    <!-- Product Page-->
+    <string name="product_top_tab_1">Default</string>
+    <string name="product_top_tab_2">Sales</string>
+    <string name="product_top_tab_3">Price</string>
+    <string name="product_top_tab_4">Brands</string>
+    <string name="product_detail_tab_1">Detail</string>
+    <string name="product_detail_tab_2">Comment</string>
+    <string name="product_detail_tab_3">Collages</string>
+    <string name="product_clear_options">Clear options</string>
+    <string name="product_stock">Stock</string>
+    <string name="product_search">Go</string>
+    <string name="product_search_hot">Hot</string>
+    <string name="product_search_hot_words_1">Cosmetic</string>
+    <string name="product_search_hot_words_2">Skirt</string>
+    <string name="product_search_hot_words_3">Shoe</string>
+    <string name="product_search_hot_words_4">Bag</string>
+    <string name="product_search_et_hint">Keyword input goods</string>
+    <string name="product_search_history">Historical Search</string>
+    <string name="product_search_history_no">No search records</string>
+    <string name="product_search_history_clear">Clear history</string>
+    <string name="product_search_no_data">Could not find the specified goods</string>
+    <string name="product_price_fell">Price</string>
+    <string name="product_price_full">Full price : </string>
+    <string name="product_full_minus">Minus</string>
+    <string name="product_mail"> Mail</string>
+    <string name="product_genuine_safeguard">Safeguard</string>
+    <string name="product_carefree_return">Exchanged</string>
+    <string name="product_cash_delivery">Cash Pay</string>
+    <string name="product_brand_go">Go Brand</string>
+    <string name="product_play_video">Video</string>
+    <string name="product_collection">Concerns</string>
+    <string name="product_cart">Cart</string>
+    <string name="product_call">Call</string>
+    <string name="product_add_cart">Add Cart</string>
+    <string name="product_buy_number">Buy Number</string>
+    <string name="product_color_size">Color Size</string>
+    <string name="product_drag_up">Continue to drag, Check the graphic details</string>
+    <string name="product_drag_down">Continue to drag, Check the product introduction</string>
+    
+    <!-- Cart page -->
+    <string name="cart_no_goods">Shopping cart is not goods</string>
+    <string name="cart_go_add">To add goods</string>
+    <string name="cart_go_shopping">Shopping</string>
+    <string name="cart_goods_num">Total %1$d piece</string>
+    <string name="cart_buy_now">Buy now</string>
+    <string name="cart_error_data_null">Data synchronization exception! Please pull down to refresh the shopping cart data!</string>
+
+    <!-- Events -->
+    <string name="events_top_tab_1">@string/all</string>
+    <string name="events_top_tab_2">Video</string>
+    <string name="events_top_tab_3">Special</string>
+    <string name="events_no_data">No found, \n Maybe topics error!</string>
+    <string name="events_comment">Comment</string>
+    <string name="events_comment_participate">Participate comment</string>
+    <string name="events_comment_ok">Comment posted</string>
+    <string name="events_comment_input">Input your comment</string>
+    
+    <!-- Member page -->
+    <string name="member_top_tab_1">@string/all</string>
+    <string name="member_top_tab_2">Revenue</string>
+    <string name="member_top_tab_3">Orders</string>
+    <string name="member_top_tab_4">Active</string>
+    <string name="member_no_order">Your members is no %1$s ~</string>
+    <string name="member_no_member">You have no members, \nInvite your friend to be your member.</string>
+        
+    <!-- Coupon page -->
+    <string name="coupon_coupon">&#160;Coupon</string>
+    <string name="coupon_top_tab_1">Usable</string>
+    <string name="coupon_top_tab_2">Used</string>
+    <string name="coupon_top_tab_3">Expired</string>
+    <string name="coupon_usable">Usable</string>
+    <string name="coupon_used_sum">Used %1$s</string>
+    <string name="coupon_add_ok">Add OK</string>
+    <string name="coupon_input_hint">Coupon sequence No.</string>
+    <string name="coupon_input_error">Please input your coupon sequence No.</string>
+    
+    <!-- Order page -->
+    <string name="order_order">&#160;Order</string>
+    <string name="order_list">Order list</string>
+    <string name="order_order_no">Order No ：%1$s</string>
+    <string name="order_order_date">Date ：%1$s</string>
+    <string name="order_logistics_name">Company：%1$s</string>
+    <string name="order_logistics_no">Logistic No：%1$s</string>
+    <string name="order_goods_lists">Goods lists</string>
+    <string name="order_support_pay">Support pay type</string>
+    <string name="order_use_coupon">Use coupon arrived with</string>
+    <string name="order_invoice_name">Invoice:</string>
+    <string name="order_invoice_hint">Invoice Head</string>
+    <string name="order_buyer_name">Remark:</string>
+    <string name="order_buyer_hint">Remark Info</string>
+    <string name="order_total_name">Total price:</string>
+    <string name="order_fee_name">Postage:</string>
+    <string name="order_charges_name">Charges:</string>
+    <string name="order_coupon_name">Deduction:</string>
+    <string name="order_discount_name">Discount:</string>
+    <string name="order_pay_name">Pay price：</string>
+    <string name="order_pay_type">Pay type：%1$s</string>
+    <string name="order_sn">Order No ：%1$s</string>
+    <string name="order_time_close">%1$s after&#160;closing</string>
+    <string name="order_close">Closing</string>
+    <string name="order_valid_time">Please complete the payment in %1$s，Timeout orders automatically closed.</string>
+    <string name="order_pay">Payable：%1$s</string>
+    <string name="order_pay_now">Pay now</string>
+    <string name="order_cacel">Cacel</string>
+    <string name="order_cacel_confirm">Confirm cacel order？</string>
+    <string name="order_delete">Delete</string>
+    <string name="order_confirm_receive">Receive</string>
+    <string name="order_check_logistic">Logistic</string>
+    <string name="order_logistic_title">Logistic Information</string>
+    <string name="order_logistic_no_data">No Logistic Information</string>
+    <string name="order_logistic_expired">Logistic Information expired</string>
+    <string name="order_top_tab_1">@string/all</string>
+    <string name="order_top_tab_2">Pay</string>
+    <string name="order_top_tab_3">Delivery</string>
+    <string name="order_top_tab_4">Receive</string>
+    <string name="order_top_tab_5">Return</string>
+    
+    <!-- Pay page -->
+    <string name="pay_title">Online Payment</string>
+    <string name="pay_wait">Wait to payment</string>
+    <string name="pay_amount">Payment amount</string>
+    <string name="pay_type">Payment method</string>
+    <string name="pay_confirm">Confirm pay</string>
+    <string name="pay_wechat">WeChat pay</string>
+    <string name="pay_wechat_hint">WeChat safe payment</string>
+    <string name="pay_alipay">Alipay pay</string>
+    <string name="pay_alipay_hint">Alipay easy payment</string>
+    <string name="pay_union">Union Pay</string>
+    <string name="pay_union_hint">UnionPay online payment</string>
+    <string name="pay_pal">PayPal</string>
+    <string name="pay_pal_hint">PayPal global payment</string>
+    <string name="pay_abandon">Determined to abandon payment?</string>
+    <string name="pay_select_null">Please select a payment method</string>
+    <string name="pay_continue">Continue</string>
+    <string name="pay_success">Payment success</string>
+    <string name="pay_fail">Payment failed</string>
+    <string name="pay_cancel">Cancel payment</string>
+    <string name="pay_wait_notice">Wait for payment notice</string>
+    <string name="pay_result_abnormal">Get paid results abnormal, please confirm with the merchants!</string>
+    <string name="pay_info_error">Not obtain payment information, please confirm with the merchants!</string>
+    <string name="pay_order_error">Payment order data error! Please refresh order information!</string>
+
+    <!-- Photo page -->
+    <string name="photo_select_title">Select album</string>
+    <string name="photo_select_one_title">Select a photo</string>
+    <string name="photo_select_no_data">No photo detected</string>
+    <string name="photo_editor_title">Photo Editor</string>
+    <string name="photo_clip_head_title">Shear head</string>
+    <string name="photo_change_head">Change Avatar</string>
+    <string name="photo_shoot_upload">Shoot upload</string>
+    <string name="photo_choose_upload">Photo upload</string>
+    <string name="photo_upload_img">Uploading %1$s, please wait&#8230;</string>
+    <string name="photo_upload_img_ok">Upload %1$s success</string>
+    <string name="photo_img_url_error">%1$s error! Please re edit the avatar!</string>
+    <string name="photo_upload_head_fail">Upload Avatar failed! Please click on the avatar to re upload!</string>
+    <string name="photo_clip_error">Error occurred when shear photo! Please select a photo!</string>
+    <string name="photo_ID_photo">ID photo</string>
+    <string name="photo_ID_photo_null">ID photo can not be empty</string>
+    <string name="photo_upload_ID_fail">Upload ID photo failed! Please re submit the audit!</string>
+    <string name="photo_clip_upload_hint">&#160;&#160;&#160;&#160;&#160;Please fill in your real information, can not be modified by the will, this identity information directly affect the function of your withdrawals account balance, be sure to carefully check.</string>
+    <string name="photo_show_save_one">Save 1 sheets</string>
+    <string name="photo_show_save_more">Save %1$d sheets</string>
+    <string name="photo_show_save_image">Save to phone</string>
+    <string name="photo_show_save_ok">Save OK</string>
+    <string name="photo_show_save_fail">Save Image Error! Check the SD card is installed correctly, or try again!</string>
+    <string name="photo_save_sd_error">No storage card</string>
+    <string name="photo_save_directory_error">Storage directory not found</string>
+    <string name="photo_scan_text_hint">The QR code align, Automatic scan</string>
+    <string name="photo_crop_image_instru">Move and scale the image to fit the frame size</string>
+    <string name="photo_camera_authority">You have disabled the camera permissions, please go to set up the permissions management to reconfigure the permissions.</string>
+
+    <!-- Setting Page -->
+    <string name="setting_language">Language</string>
+    <string name="setting_currency">Currency</string>
+    <string name="setting_feedback">Feedback</string>
+    <string name="setting_about_us">About Us</string>
+    <string name="setting_version">Check update</string>
+    <string name="setting_notification">Push Message</string>
+    <string name="setting_logout">Log Out</string>
+    <string name="setting_logout_confirm">&#160;Confirm logout?</string>
+    <string name="setting_input_hint_feedback">Write down your comments or advice</string>
+    <string name="setting_input_error_feedback">Comments or advice can not be empty ~</string>
+    
+    <!-- language currency -->
+    <string name="currency_rmb_sign">¥</string>
+    <string name="currency_hkd_sign">$</string>
+    <string name="currency_usd_sign">$</string>
+    <string name="currency_hkd">HKD($)</string>
+    <string name="currency_rmb">RMB(¥)</string>
+    <string name="currency_usd">USD($)</string>
+    <string name="language_zh">香港(繁體)</string>
+    <string name="language_cn">中国(简体)</string>
+    <string name="language_en">English(US)</string>
+    
+    <!-- Login Register -->
+    <string name="login_login">Login</string>
+    <string name="login_register">Register</string>
+    <string name="login_user_name">E-mail/Card</string>
+    <string name="login_input_user_name">Please input your E-mail/Card</string>
+    <string name="login_password">Password</string>
+    <string name="login_input_password">Please input password</string>
+    <string name="login_input_password_again">Please input password again</string>
+    <string name="login_password_error">Two input password inconsistent! Please re-enter!</string>
+    <string name="login_input_email">Please input your email</string>
+    <string name="login_email_format_error">Please check the email format is correct?</string>
+    <string name="login_input_verify_code">Please input verify code</string>
+    <string name="login_error_verify_code">Verify code error! Please re-enter!</string>
+    <string name="login_new_register">New user register</string>
+    <string name="login_forget_password">Forgot password?</string>
+    <string name="login_quick">Third party account quick login</string>
+    <string name="login_oauth_cancel">Login cancel</string>
+    <string name="login_error_oauth">Authorized login error Please try again!</string>
+    <string name="login_bound">Bound account</string>
+    <string name="login_immediately_bound">Immediately bound</string>
+    <string name="login_no_account">No account？Go register.</string>
+    <string name="login_bound_reminder">Reminder：If you have SP account, Please bound account. Skip will default to a new SP account for you and automatically bound, Please be careful.</string>
+    <string name="login_timeout">Login timeout！Please login again！</string>
+    
+    <!-- Share -->
+    <string name="share">Share</string>
+    <string name="share_qq">QQ</string>
+    <string name="share_friends">Friends</string>
+    <string name="share_wechat">WeChat</string>
+    <string name="share_weibo">Weibo</string>
+    <string name="share_fb">Facebook</string>
+    <string name="share_whatsapp">Whatsapp</string>
+    <string name="share_line">Line</string>
+    <string name="share_alipay">Alipay</string>
+    <string name="share_copy">Copy link</string>
+    <string name="share_msg_no_wechat">Please install WeChat first.</string>
+    <string name="share_msg_no_facebook">Please install Facebook first.</string>
+    <string name="share_msg_no_whatsapp">Please install Whatsapp first.</string>
+    <string name="share_msg_no_line">Please install Line first.</string>
+    <string name="share_msg_error_license">License failed, please try again!</string>
+    <string name="share_msg_error_oauth">获取授权信息异常，请关闭页面后重新授权。</string>
+    <string name="share_msg_success">Success</string>
+    <string name="share_msg_error">Error</string>
+    <string name="share_msg_cancel">Cancel</string>
+    <string name="share_msg_copy_link_ok">Link has been copied</string>
+    <string name="share_msg_entity_error">Share parameter error, please re open page.</string>
+    
+    <!-- Address -->
+    <string name="address_default">Default address</string>
+    <string name="address_consignee">Consignee</string>
+    <string name="address_phone_number">Mobile Phone</string>
+    <string name="address_email_address">E-mail</string>
+	<string name="address_china">China</string>
+	<string name="address_area">Area</string>
+	<string name="address_province">Province</string>
+	<string name="address_city">City</string>
+	<string name="address_district">District</string>
+	<string name="address_detailed_address">Detailed address</string>
+	<string name="address_input_full_address">Input full address</string>
+	<string name="address_error_name_empty">Input addressee name</string>
+	<string name="address_error_phone_empty">Input phone number</string>
+	<string name="address_error_area_empty">Please select area</string>
+	<string name="address_error_address_empty">Input detailed address</string>
+	<string name="address_error_load_area">Error of loading area lists！Please close the page and try again！</string>
+	<string name="address_error_no_select">Please fill shipping address</string>
+	<string name="address_error_data_null">No delivery address, go to add address.</string>
+
+    <!-- Profile Page -->
+    <string name="profile_page">My Profile</string>
+    <string name="profile_head">Avatar</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_nickname">Nick</string>
+    <string name="profile_intro">Introduction</string>
+    <string name="profile_gender">Gender</string>
+    <string name="profile_gender_male">Male</string>
+    <string name="profile_gender_female">Female</string>
+    <string name="profile_gender_confidential">Confidential</string>
+    <string name="profile_birthday">Birthday</string>
+    <string name="profile_collection">My Concerns</string>
+    <string name="profile_concerns_goods">Concerns goods</string>
+    <string name="profile_history">Browse History</string>
+    <string name="profile_history_no_data">Browse History</string>
+    <string name="profile_my_order">My Order</string>
+    <string name="profile_check_all_order">Check All Order</string>
+    <string name="profile_done">Done</string>
+    <string name="profile_wait_commission">Commission</string>
+    <string name="profile_wait_pay">Wait Pay</string>
+    <string name="profile_wait_delivery">Delivery</string>
+    <string name="profile_wait_receive">Receive</string>
+    <string name="profile_repair_return">Return</string>
+    <string name="profile_my_address">My Address</string>
+    <string name="profile_account_money">My wallet</string>
+    <string name="profile_coupon">My Coupon</string>
+    <string name="profile_my_member">My Member</string>
+    <string name="profile_check_my_member">Check My Member</string>
+    <string name="profile_member_list">Member List</string>
+    <string name="profile_member_order">Member Order</string>
+    <string name="profile_customer_list">Customer List</string>
+    <string name="profile_customer_order">Customer Order</string>
+    <string name="profile_my_collages">My Collage</string>
+    <string name="profile_my_favorite">My Favorite</string>
+    <string name="profile_submit_audit">Submit Audit</string>
+    <string name="profile_change_nick">Nickname</string>
+    <string name="profile_input_nick">Please input nickname</string>
+    <string name="profile_change_sex">Gender</string>
+    <string name="profile_change_email">Email</string>
+    <string name="profile_email_verify">Email verification</string>
+    <string name="profile_send_email_ok">Send mail success</string>
+    <string name="profile_send_email_hint">Confirmation send a email to %1$s? Change your E-mail after verification. If you have any questions please contact the official customer.</string>
+    <string name="profile_change_email_notice">Notice: Change the mailbox will no longer send confirmation email, Be sure to carefully check the input mailbox is your and no input error, If you have any questions please contact the official customer.</string>
+    <string name="profile_set_banner_photo">Set cover photo</string>
+    
+    <!-- Money -->
+    <string name="money_balance_burrency">Balance(%1$s)</string>
+    <string name="money_balance_detail">Balance Detail</string>
+    <string name="money_no_detail">No detail</string>
+    <string name="money_withdrawals">Withdrawals</string>
+    <string name="money_auth">Authentication</string>
+    <string name="money_auth_ok">Authentication OK</string>
+    <string name="money_auth_hint">Withdrawals requires Authentication，</string>
+    <string name="money_auth_go">Go authentication</string>
+    <string name="money_auth_input_name_hint">Real name</string>
+    <string name="money_auth_input_number_hint">ID number</string>
+    <string name="money_withdrawals_confirm">Confirm withdrawals</string>
+    <string name="money_withdrawals_success">Apply success</string>
+    <string name="money_input_card_hint">Input the bank card number in your own</string>
+    <string name="money_input_amount_hint">Withdrawal amount can not be 0</string>
+    <string name="money_max_amount_hint">Max of withdrawals: %1$s</string>
+    <string name="money_withdrawals_reminder">Reminder: \n1.Confirm withdrawals after, We will present the amount of play money to input your bank card in seven days;\n2.Input the bank card the cardholder name and the name must be consistent with the real name authentication, If you have any questions please contact the official customer;</string>
+    
+    <!-- Collage -->
+    <string name="collage_video_title">Stylish Selfie</string>
+    <string name="collage_video_desc">Upload the photos you took within stylistpark.</string>
+    <string name="collage_collage_title">Style Remixes</string>
+    <string name="collage_collage_desc">Create different style remixes with your fashion inspiration.</string>
+    <string name="collage_multiangle_title">Multiple Angles</string>
+    <string name="collage_multiangle_desc">View the item dressed by model in different angles.</string>
+    <string name="collage_upload">Upload</string>
+    <string name="collage_create">Create</string>
+    <string name="collage_create_multiangle">Multiangle create</string>
+    <string name="collage_create_free">Blank template</string>
+    <string name="collage_create_template">Default template</string>
+    <string name="collage_select_template">Select template</string>
+    <string name="collage_select_product">Select product</string>
+    <string name="collage_items">Goods Collage Items</string>
+    <string name="collage_no_item">Please select from the following items</string>
+    <string name="collage_creation_edit">Edit collage profile</string>
+    <string name="collage_creation_delete">Delete collage</string>
+    <string name="collage_creation_report">Report content issues</string>
+    <string name="collage_info">Collage info</string>
+    <string name="collage_description">Collage description</string>
+    <string name="collage_msg_product_too_many">Exceed the upper limit of products</string>
+    <string name="collage_msg_decor_too_many">Exceed the upper limit of stickers</string>
+    <string name="collage_msg_over_word_max">Exceed word count limit</string>
+    <string name="collage_msg_fill_title_comment">Please enter title and content</string>
+    <string name="collage_error_load_draft">Error occurs during loading draft, the raft has been deleted</string>
+    <string name="collage_move_upward">Move front</string>
+    <string name="collage_move_downward">Move back</string>
+    <string name="collage_leave_create">Leave creation</string>
+    <string name="collage_msg_leave_create">Do you want to save the changes before you leave ?</string>
+    <string name="collage_msg_leave_confirm">Are you sure that you want to leave this page?</string>
+    <string name="collage_continue_last_create">Continue Last Collage</string>
+    <string name="collage_start_new_create">Start New Collage</string>
+    <string name="collage_select_photo">Select photo</string>
+    <string name="collage_change_item">Change item</string>
+    <string name="collage_items_select_product">Please select from the following items</string>
+    <string name="collage_need_choose_template">Please choose your template</string>
+    <string name="collage_select_4_image">Please select 4 images</string>
+    <string name="collage_instru_add_photo">Click the box below to add photo</string>
+    <string name="collage_instru_photo_added_1">You may rotate or scale the image.</string>
+    <string name="collage_instru_photo_added_2">Click empty boxes to add more images.</string>
+    
+    <!-- product menu fragment -->
+    <string name="txt_start">Promotion</string>
+    <string name="txt_new">New</string>
+    <string name="txt_favourite">Favourite</string>
+    <string name="txt_shirt">Shirt</string>
+    <string name="txt_coat">Coat</string>
+    <string name="txt_skirt">Skirt</string>
+    <string name="txt_trouser">Trousers</string>
+    <string name="txt_dress">Dress</string>
+    <string name="txt_nail">Nail</string>
+    <string name="txt_perfume">Perfume</string>
+    <string name="txt_skincare">Skincare</string>
+    <string name="txt_makeup">Makeup</string>
+    <string name="txt_haircare">Haircare</string>
+    <string name="txt_homefragrance">Home\nFragrance</string>
+    <string name="txt_accessorie">Accessorie</string>
+    <string name="txt_bag">Bag</string>
+    <string name="txt_shoes">Shoes</string>
+    <string name="txt_decoration">Decoration</string>
+    
+    <!-- Filter -->
+    <string name="filter">Filter</string>
+    <string name="filter_color">Filter color</string>
+    <string name="filter_item_brand">Brands</string>
+    <string name="filter_item_color">Colour</string>
+    <string name="filter_item_price">Price</string>
+    <string name="filter_item_above"> or Above</string>
+    <string name="filter_select_color">Select Color</string>
+    <string name="filter_select_brand">Select Brand</string>
+    <string name="filter_search_brand">Search Brands</string>
+    <string name="filter_stroke">Row</string>
+    <string name="filter_stroke_more">Row above</string>
+    
+    <!-- Color CN -->
+    <string name="txt_color_grid">格纹</string>
+    <string name="txt_color_dot">波点</string>
+    <string name="txt_color_print">印花</string>
+    <string name="txt_color_line">条纹</string>
+    <string name="txt_color_red">红色</string>
+    <string name="txt_color_pink">粉红</string>
+    <string name="txt_color_orange">橙色</string>
+    <string name="txt_color_yellow">黄色</string>
+    <string name="txt_color_green">绿色</string>
+    <string name="txt_color_deep_blue">深蓝</string>
+    <string name="txt_color_blue">蓝色</string>
+    <string name="txt_color_purple">紫色</string>
+    <string name="txt_color_brown">棕色</string>
+    <string name="txt_color_light_brown">杏色</string>
+    <string name="txt_color_light_yellow">米色</string>
+    <string name="txt_color_white">白色</string>
+    <string name="txt_color_black">黑色</string>
+    <string name="txt_color_grey">灰色</string>
+    <string name="txt_color_gold">金色</string>
+    <string name="txt_color_silver">银色</string>
+    <string name="txt_color_muti_color">彩色</string>
+    <!-- Color ZH -->
+    <string name="txt_color_grid_zh">格紋</string>
+    <string name="txt_color_dot_zh">波點</string>
+    <string name="txt_color_print_zh">印花</string>
+    <string name="txt_color_line_zh">條紋</string>
+    <string name="txt_color_red_zh">紅色</string>
+    <string name="txt_color_pink_zh">粉紅</string>
+    <string name="txt_color_orange_zh">橙色</string>
+    <string name="txt_color_yellow_zh">黃色</string>
+    <string name="txt_color_green_zh">綠色</string>
+    <string name="txt_color_deep_blue_zh">深藍</string>
+    <string name="txt_color_blue_zh">藍色</string>
+    <string name="txt_color_purple_zh">紫色</string>
+    <string name="txt_color_brown_zh">棕色</string>
+    <string name="txt_color_light_brown_zh">杏色</string>
+    <string name="txt_color_light_yellow_zh">米色</string>
+    <string name="txt_color_white_zh">白色</string>
+    <string name="txt_color_black_zh">黑色</string>
+    <string name="txt_color_grey_zh">灰色</string>
+    <string name="txt_color_gold_zh">金色</string>
+    <string name="txt_color_silver_zh">銀色</string>
+    <string name="txt_color_muti_color_zh">彩色</string>
+    
+        
+    <!-- Generator Template -->
+    <string-array name="array_product_group">
+        <item>0</item>
+        <item>@string/txt_favourite</item>
+        <item>2</item>
+        <item>@string/txt_shirt</item>
+        <item>@string/txt_coat</item>
+        <item>@string/txt_skirt</item>
+        <item>@string/txt_trouser</item>
+        <item>@string/txt_dress</item>
+        <item>@string/txt_perfume</item>
+        <item>@string/txt_skincare</item>
+        <item>@string/txt_haircare</item>
+        <item>@string/txt_nail</item>
+        <item>@string/txt_makeup</item>
+        <item>@string/txt_homefragrance</item>
+        <item>@string/txt_accessorie</item>
+        <item>@string/txt_bag</item>
+        <item>@string/txt_shoes</item>
+        <item>@string/txt_decoration</item>
+    </string-array>
+
+    <string-array name="array_save_draft">
+        <item>@string/save</item>
+        <item>@string/dont_save</item>
+        <item>@string/cancel</item>
+    </string-array>
+
+    <string-array name="array_continue_last_create">
+        <item>@string/confirm</item>
+        <item>@string/collage_start_new_create</item>
+    </string-array>
+
+    <string-array name="array_photo_choose">
+        <item>@string/photo_shoot_upload</item>
+        <item>@string/photo_choose_upload</item>
+    </string-array>
+
+    <string-array name="array_wechat">
+        <item>Share to contact</item>
+        <item>Publish to the circle of friends</item>
+    </string-array>
+    
+    <string-array name="collage_array_share_comment">
+        <item>Whether at work or appointments are very suitable.</item>
+        <item>Whether or banquet PARTY decent dress is perfect.</item>
+        <item>Girls wardrobe must match.</item>
+        <item>Clothes were thin, fashion match.</item>
+    </string-array>
+
+</resources>

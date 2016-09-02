@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_nut" >
+
+    <RelativeLayout
+        android:id="@+id/personal_rl_head"
+        android:layout_width="match_parent"
+        android:background="@color/ui_bg_color_white"
+        android:layout_height="80dp" >
+
+        <TextView
+            android:id="@+id/personal_tv_head_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/profile_head" />
+        
+        <ImageView 
+            android:id="@+id/personal_iv_head_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_toLeftOf="@+id/personal_tv_head_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/head_portrait"
+            android:contentDescription="@string/desc" />
+
+        <TextView
+            android:id="@+id/personal_tv_head_content"
+            style="@style/setting_lay_text_content" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/personal_rl_nick"
+        style="@style/setting_lay_item"
+        android:layout_below="@id/personal_rl_head" >
+
+        <TextView
+            android:id="@+id/personal_tv_nick_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/profile_nickname" />
+
+        <TextView
+            android:id="@+id/personal_tv_nick_content"
+            style="@style/setting_lay_text_content" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/personal_rl_sex"
+        style="@style/setting_lay_item"
+        android:layout_below="@id/personal_rl_nick" >
+
+        <TextView
+            android:id="@+id/personal_tv_sex_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/profile_gender" />
+
+        <TextView
+            android:id="@+id/personal_tv_sex_content"
+            style="@style/setting_lay_text_content" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/personal_rl_birthday"
+        style="@style/setting_lay_item"
+        android:layout_below="@id/personal_rl_sex" >
+
+        <TextView
+            android:id="@+id/personal_tv_birthday_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/profile_birthday" />
+
+        <TextView
+            android:id="@+id/personal_tv_birthday_content"
+            style="@style/setting_lay_text_content" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/personal_rl_phone"
+        style="@style/setting_lay_item"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/personal_rl_birthday"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/personal_tv_phone_title"
+            style="@style/setting_lay_text_title" />
+
+        <TextView
+            android:id="@+id/personal_tv_phone_content"
+            style="@style/setting_lay_text_content" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/personal_rl_email"
+        style="@style/setting_lay_item"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/personal_rl_birthday" >
+
+        <TextView
+            android:id="@+id/personal_tv_email_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/address_email_address" />
+
+        <TextView
+            android:id="@+id/personal_tv_email_content"
+            style="@style/setting_lay_text_content" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/personal_rl_auth"
+        style="@style/setting_lay_item"
+        android:layout_below="@id/personal_rl_email" >
+
+        <TextView
+            android:id="@+id/personal_tv_auth_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/money_auth" />
+
+        <TextView
+            android:id="@+id/personal_tv_auth_go"
+            style="@style/setting_lay_text_content"
+            android:text="@string/money_auth_go"
+            android:textColor="@color/tv_color_status" />
+
+        <TextView
+            android:id="@+id/personal_tv_auth_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:text="@string/money_auth_ok"
+            android:textSize="@dimen/text_size_13"
+            android:textColor="@color/label_text_color"
+            android:visibility="gone" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+</RelativeLayout>

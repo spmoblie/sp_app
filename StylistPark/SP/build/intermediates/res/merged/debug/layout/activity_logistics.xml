@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_app" >
+
+    <ListView
+        android:id="@+id/logistics_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:scrollbars="none" >
+    </ListView>
+
+    <include layout="@layout/layout_loading_no_data" />
+
+</FrameLayout>
