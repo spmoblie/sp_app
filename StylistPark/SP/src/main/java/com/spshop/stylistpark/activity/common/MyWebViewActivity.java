@@ -209,9 +209,10 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		if (webview != null){
 			//WebView属性设置
 			WebSettings webSettings = webview.getSettings();
-			String user_agent = webSettings.getUserAgentString();
 			webSettings.setDefaultTextEncodingName("UTF-8");
-			webSettings.setUserAgentString(user_agent+"_SP"); //设置UserAgent
+			//String user_agent = webSettings.getUserAgentString();
+			//webSettings.setUserAgentString(user_agent+"_SP"); //设置UserAgent
+			webSettings.setUserAgentString(" "); //设置UserAgent
 			webSettings.setJavaScriptEnabled(true); //设置支持javascript脚本
 			webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
 			webSettings.setCacheMode(WebSettings.LOAD_DEFAULT); //设置缓冲的模式

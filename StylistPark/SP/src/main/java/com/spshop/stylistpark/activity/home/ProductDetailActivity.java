@@ -516,8 +516,9 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		if (webview != null){
 			//WebView属性设置
 			WebSettings webSettings= webview.getSettings();
-			String user_agent = webSettings.getUserAgentString();
-			webSettings.setUserAgentString(user_agent+"_SP"); 
+			//String user_agent = webSettings.getUserAgentString();
+			//webSettings.setUserAgentString(user_agent+"_SP");
+			webSettings.setUserAgentString(" "); //设置UserAgent
 			webSettings.setUseWideViewPort(true); 
 			webSettings.setLoadWithOverviewMode(true); 
 			webSettings.setJavaScriptEnabled(true);

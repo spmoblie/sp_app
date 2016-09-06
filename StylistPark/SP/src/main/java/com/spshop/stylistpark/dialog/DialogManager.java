@@ -47,9 +47,40 @@ public class DialogManager {
 		instance = null;
 	}
 
+	public void dismiss(){
+		if (mDialog != null) {
+			mDialog.dismiss();
+			mDialog = null;
+		}
+	}
+
+	/**
+	 * 弹出下载缓冲对话框
+	 * 
+	 * @param width 对话框宽度
+	 * @param keylistener 物理键盘监听器
+	 */
+	public void showLoadDialog(int width, OnKeyListener keylistener){
+		// 销毁旧对话框
+		dismiss();
+		// 创建新对话框
+		mDialog = new Dialog(mContext, R.style.MyDialog);
+		mDialog.setCanceledOnTouchOutside(false);
+		if (keylistener != null) {
+			mDialog.setOnKeyListener(keylistener);
+		}
+		mDialog.setContentView(R.layout.dialog_download);
+		// 设置对话框的坐标及宽高
+        LayoutParams lp = mDialog.getWindow().getAttributes();
+        lp.width = width;
+        mDialog.getWindow().setAttributes(lp);
+		// 显示对话框
+		mDialog.show();
+	}
+
 	/**
 	 * 弹出一个按钮的通用对话框
-	 * 
+	 *
 	 * @param contentStr 提示内容
 	 * @param width 对话框宽度
 	 * @param isCenter 提示内容是否居中
@@ -59,10 +90,7 @@ public class DialogManager {
 	public void showOneBtnDialog(String contentStr, int width, boolean isCenter,
 				 boolean isVanish, final Handler handler, OnKeyListener keylistener){
 		// 销毁旧对话框
-		if (mDialog != null) {
-			mDialog.dismiss();
-			mDialog = null;
-		}
+		dismiss();
 		// 创建新对话框
 		mDialog =  new Dialog(mContext, R.style.MyDialog);
 		mDialog.setCanceledOnTouchOutside(isVanish);
@@ -93,7 +121,7 @@ public class DialogManager {
 		// 显示对话框
 		mDialog.show();
 	}
-	
+
 	/**
 	 * 弹出两个按钮的通用对话框
 	 * 
@@ -108,10 +136,7 @@ public class DialogManager {
 	public void showTwoBtnDialog(String titleStr, String contentStr, String leftStr, String rightStr,
 								 int width, boolean isCenter, boolean isVanish, final Handler handler){
 		// 销毁旧对话框
-		if (mDialog != null) {
-			mDialog.dismiss();
-			mDialog = null;
-		}
+		dismiss();
 		// 创建新对话框
 		mDialog =  new Dialog(mContext, R.style.MyDialog);
 		mDialog.setCanceledOnTouchOutside(isVanish);
@@ -166,10 +191,7 @@ public class DialogManager {
 	 */
 	public void showListItemDialog(String title, CharSequence[] items, int width, final boolean isCenter, final Handler handler){
 		// 销毁旧对话框
-		if (mDialog != null) {
-			mDialog.dismiss();
-			mDialog = null;
-		}
+		dismiss();
 		// 创建新对话框
 		mDialog =  new Dialog(mContext, R.style.MyDialog);
 		mDialog.setContentView(R.layout.dialog_listview);

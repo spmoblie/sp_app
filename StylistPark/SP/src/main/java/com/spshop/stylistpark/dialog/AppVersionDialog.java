@@ -36,7 +36,9 @@ public class AppVersionDialog {
 	private static final int DIALOG_WIDTH = AppApplication.screenWidth * 2/3;
 	private Context mContext;
 	private DialogManager dm;
-	
+	private String apkLoadAddress;
+	private boolean isForce = false;
+
 	public AppVersionDialog(Context context, DialogManager dialogManager) {
 		this.mContext = context;
 		this.dm = dialogManager;
@@ -55,19 +57,21 @@ public class AppVersionDialog {
 	 * @param address Apk下载地址
 	 * @param description 更新描述
 	 */
-	public void foundNewVersion(final String address, String description){
+	public void foundNewVersion(String address, String description){
+		isForce = false;
+		apkLoadAddress = address;
 		if (StringUtil.isNull(description)) {
 			description = mContext.getString(R.string.dialog_version_update);
 		} else {
 			description = Html.fromHtml(description).toString();
 		}
-		dm.showTwoBtnDialog(null, description, mContext.getString(R.string.cancel),
+		dm.showTwoBtnDialog(null, description, mContext.getString(R.string.ignore),
 				mContext.getString(R.string.confirm), DIALOG_WIDTH, true, true, new Handler() {
 					@Override
 					public void handleMessage(Message msg) {
 						switch (msg.what) {
 							case BaseActivity.DIALOG_CONFIRM_CLICK:
-								startLoadApk(address);
+								startLoadApk(apkLoadAddress);
 								break;
 						}
 					}
@@ -80,7 +84,9 @@ public class AppVersionDialog {
 	 * @param address Apk下载地址
 	 * @param description 更新描述
 	 */
-	public void forceUpdateVersion(final String address, String description) {
+	public void forceUpdateVersion(String address, String description) {
+		isForce = true;
+		apkLoadAddress = address;
 		if (StringUtil.isNull(description)) {
 			description = mContext.getString(R.string.dialog_version_update_force);
 		} else {
@@ -92,7 +98,7 @@ public class AppVersionDialog {
 					public void handleMessage(Message msg) {
 						switch (msg.what) {
 							case BaseActivity.DIALOG_CONFIRM_CLICK:
-								startLoadApk(address);
+								startLoadApk(apkLoadAddress);
 								break;
 						}
 					}
@@ -100,26 +106,28 @@ public class AppVersionDialog {
 	}
 
 	/**
-	 * 提示有新版本需要强制更新
-	 */
-	public void loadApkDialog() {
-
-	}
-
-	/**
 	 * 开始下载apk程序
 	 */
 	private void startLoadApk(final String address) {
+		loadApkDialog();
 		new UpdateAppHttpTask().execute(address);
+	}
+
+	/**
+	 * 弹出下载缓冲对话框
+	 */
+	public void loadApkDialog() {
+		dm.showLoadDialog(DIALOG_WIDTH, keylistener);
 	}
 	
 	/**
 	 * 开始安装apk程序
 	 */
-	public static void startInstallApk(Context context) {  
-		 Intent intent = new Intent(Intent.ACTION_VIEW);  
-		 intent.setDataAndType(Uri.fromFile(new File(APK_PATH)),"application/vnd.android.package-archive");  
-		 context.startActivity(intent);
+	private void startInstallApk() {
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setDataAndType(Uri.fromFile(new File(APK_PATH)), "application/vnd.android.package-archive");
+		mContext.startActivity(intent);
+		dm.dismiss();
 	} 
 
 	/**
@@ -130,7 +138,7 @@ public class AppVersionDialog {
 		private boolean exit = false;
 
 		public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-			if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 				if (exit) {
 					AppManager.getInstance().AppExit(mContext);
 				} else {
@@ -154,23 +162,35 @@ public class AppVersionDialog {
 	class UpdateAppHttpTask extends AsyncTask<String, Void, String> {
 
 		protected String doInBackground(String... url) {
-			String result = "ok";
 			List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 			try {
 				HttpEntity entity = HttpUtil.getEntity(url[0], params, HttpUtil.METHOD_POST);
-				result = FileManager.writeFileSaveHttpEntity(APK_PATH, entity);
+				return FileManager.writeFileSaveHttpEntity(APK_PATH, entity);
 			} catch (Exception e) {
 				ExceptionUtil.handle(e);
-				result = null;
 			}
-			return result;
+			return null;
 		}
 
 		protected void onPostExecute(String result) {
 			if (result != null) {
-				startInstallApk(mContext);
+				startInstallApk();
 			} else {
-				showStatus(mContext.getString(R.string.toast_server_busy));
+				if (isForce) {
+					dm.showOneBtnDialog(mContext.getString(R.string.toast_server_busy),
+							DIALOG_WIDTH, true, false, new Handler() {
+								@Override
+								public void handleMessage(Message msg) {
+									switch (msg.what) {
+										case BaseActivity.DIALOG_CONFIRM_CLICK:
+											startLoadApk(apkLoadAddress);
+											break;
+									}
+								}
+							}, keylistener);
+				} else {
+					showStatus(mContext.getString(R.string.toast_server_busy));
+				}
 			}
 		}
 

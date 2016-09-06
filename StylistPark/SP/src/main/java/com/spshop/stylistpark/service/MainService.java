@@ -1,6 +1,7 @@
 package com.spshop.stylistpark.service;
 
 import com.spshop.stylistpark.entity.AddressEntity;
+import com.spshop.stylistpark.entity.AuthResult;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.CouponEntity;
@@ -59,6 +60,10 @@ public interface MainService {
 	UserInfoEntity postAccountLoginData(String userStr, String passWordStr) throws Exception;
 	
 	UserInfoEntity postThirdPartiesLogin(String loginType, String postUid) throws Exception;
+
+	AuthResult getAlipayAuthInfo() throws Exception;
+
+	UserInfoEntity getAlipayUserInfo(String authCode) throws Exception;
 
 	BaseEntity postLogoutRequest() throws Exception;
 	

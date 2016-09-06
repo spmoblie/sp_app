@@ -6,7 +6,8 @@
 
     <RelativeLayout
         android:id="@+id/setting_rl_language"
-        style="@style/setting_lay_item" >
+        style="@style/setting_lay_item"
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/setting_tv_language_title"
@@ -27,7 +28,8 @@
     <RelativeLayout
         android:id="@+id/setting_rl_currency"
         style="@style/setting_lay_item"
-        android:layout_below="@id/setting_rl_language" >
+        android:layout_below="@id/setting_rl_language"
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/setting_tv_currency_title"
@@ -48,7 +50,8 @@
     <RelativeLayout
         android:id="@+id/setting_rl_feedback"
         style="@style/setting_lay_item"
-        android:layout_below="@id/setting_rl_currency" >
+        android:layout_below="@id/setting_rl_currency"
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/setting_tv_feedback_title"

@@ -1,5 +1,6 @@
 package com.spshop.stylistpark.service;
 
+import com.spshop.stylistpark.entity.AuthResult;
 import com.spshop.stylistpark.entity.QQEntity;
 import com.spshop.stylistpark.entity.QQUserInfoEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
@@ -116,6 +117,24 @@ public class LoginJsonParser {
 		}else {
 			userInfo = new QQUserInfoEntity(ret, msg);
 		}
+		return userInfo;
+	}
+
+	/**
+	 * 获取支付宝授权信息
+	 */
+	public static AuthResult getAlipayAuthInfo(Object jsonObject) throws JSONException {
+		JSONObject jsonObj = (JSONObject) jsonObject;
+		AuthResult authResult = null;
+		return authResult;
+	}
+
+	/**
+	 * 获取支付宝用户信息
+	 */
+	public static UserInfoEntity getAlipayUserInfo(Object jsonObject) throws JSONException {
+		JSONObject jsonObj = (JSONObject) jsonObject;
+		UserInfoEntity userInfo = null;
 		return userInfo;
 	}
 

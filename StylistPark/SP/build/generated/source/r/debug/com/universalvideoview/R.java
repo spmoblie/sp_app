@@ -61,12 +61,12 @@ public final class R {
 	public static final class integer {
 	}
 	public static final class layout {
-		public static final int uvv_on_error_layout = 0x7f030072;
-		public static final int uvv_on_loading_layout = 0x7f030073;
-		public static final int uvv_player_controller = 0x7f030074;
+		public static final int uvv_on_error_layout = 0x7f030073;
+		public static final int uvv_on_loading_layout = 0x7f030074;
+		public static final int uvv_player_controller = 0x7f030075;
 	}
 	public static final class string {
-		public static final int action_settings = 0x7f060211;
+		public static final int action_settings = 0x7f060213;
 		public static final int app_name = 0x7f06002a;
 	}
 	public static final class style {

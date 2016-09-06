@@ -182,12 +182,16 @@ public class AppConfig {
 	public static final int REQUEST_SV_POST_ACCOUNT_LOGIN_CODE = 0X5004;
 	// 提交第三方授权登入信息
 	public static final int REQUEST_SV_POST_THIRD_PARTIES_LOGIN = 0X5005;
-	// 刷新或续期access_token
-	public static final int REQUEST_SV_GET_REFRESH_TOKEN_CODE = 0X5006;
+	// 获取支付宝授权信息
+	public static final int REQUEST_SV_GET_ALIPAY_AUTHINFO_CODE = 0X5006;
+	// 获取支付宝用户信息
+	public static final int REQUEST_SV_GET_ALIPAY_USERINFO_CODE = 0X5007;
+	// 刷新或续期微信access_token
+	public static final int REQUEST_SV_GET_WX_ACCESS_TOKEN_CODE = 0X5008;
 	// 提交登出请求
-	public static final int REQUEST_SV_POST_LOGOUT_CODE = 0X5007;
+	public static final int REQUEST_SV_POST_LOGOUT_CODE = 0X5009;
 	// 提交重置密码请求
-	public static final int REQUEST_SV_POST_RESET_PASSWORD_CODE = 0X5008;
+	public static final int REQUEST_SV_POST_RESET_PASSWORD_CODE = 0X5010;
 	// 获取用户信息汇总
 	public static final int REQUEST_SV_GET_USERINFO_SUMMARY_CODE = 0X5101;
 	// 提交修改用户信息

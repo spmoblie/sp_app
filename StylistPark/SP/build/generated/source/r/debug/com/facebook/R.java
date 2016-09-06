@@ -160,12 +160,12 @@ public final class R {
 		public static final int com_facebook_device_auth_dialog_fragment = 0x7f030029;
 		public static final int com_facebook_login_fragment = 0x7f03002a;
 		public static final int com_facebook_tooltip_bubble = 0x7f03002b;
-		public static final int messenger_button_send_blue_large = 0x7f030067;
-		public static final int messenger_button_send_blue_round = 0x7f030068;
-		public static final int messenger_button_send_blue_small = 0x7f030069;
-		public static final int messenger_button_send_white_large = 0x7f03006a;
-		public static final int messenger_button_send_white_round = 0x7f03006b;
-		public static final int messenger_button_send_white_small = 0x7f03006c;
+		public static final int messenger_button_send_blue_large = 0x7f030068;
+		public static final int messenger_button_send_blue_round = 0x7f030069;
+		public static final int messenger_button_send_blue_small = 0x7f03006a;
+		public static final int messenger_button_send_white_large = 0x7f03006b;
+		public static final int messenger_button_send_white_round = 0x7f03006c;
+		public static final int messenger_button_send_white_small = 0x7f03006d;
 	}
 	public static final class string {
 		public static final int com_facebook_device_auth_instructions = 0x7f060000;

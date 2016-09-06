@@ -1,6 +1,7 @@
 package com.spshop.stylistpark.service;
 
 import com.spshop.stylistpark.entity.AddressEntity;
+import com.spshop.stylistpark.entity.AuthResult;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.CouponEntity;
@@ -174,6 +175,20 @@ public class ServiceContext {
 	 */
 	public UserInfoEntity postThirdPartiesLogin(String loginType, String postUid) throws Exception {
 		return ms.postThirdPartiesLogin(loginType, postUid);
+	}
+
+	/**
+	 * 获取支付宝授权信息
+	 */
+	public AuthResult getAlipayAuthInfo() throws Exception {
+		return ms.getAlipayAuthInfo();
+	}
+
+	/**
+	 * 获取支付宝用户信息
+	 */
+	public UserInfoEntity getAlipayUserInfo(String authCode) throws Exception {
+		return ms.getAlipayUserInfo(authCode);
 	}
 
 	/**

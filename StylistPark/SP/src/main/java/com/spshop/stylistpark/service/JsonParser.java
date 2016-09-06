@@ -49,10 +49,9 @@ public class JsonParser {
 	 * 检查版本更新
 	 */
 	public static UpdateVersionEntity checkVersionUpdate(String jsonStr) throws JSONException {
-		//JSONObject jsonObject = new JSONObject(jsonStr);
-		//int errCode = Integer.parseInt(jsonObject.getString("error"));
-		//JSONObject item = jsonObject.getJSONObject("data");
-		return new UpdateVersionEntity(0, "", "desc", jsonStr, "url", false);
+		JSONObject jsonObject = new JSONObject(jsonStr);
+		return new UpdateVersionEntity(0, "success", jsonObject.getString("desc"),
+				jsonObject.getString("version"), jsonObject.getString("url"), jsonObject.getBoolean("force"));
 	}
 
 	/**
@@ -702,7 +701,7 @@ public class JsonParser {
 				infoEn.setSexCode(StringUtil.getInteger(data.getString("sex")));
 				infoEn.setBirthday(data.getString("birthday"));
 				infoEn.setUserEmail(data.getString("email"));
-				infoEn.setUserPhone(data.getString("mobile_phone"));
+				//infoEn.setUserPhone(data.getString("mobile_phone"));
 				infoEn.setAuth(StringUtil.isNull(data.getString("name")) ? false : true);
 				infoEn.setUserRankCode(StringUtil.getInteger(data.getString("user_rank")));
 				infoEn.setUserRankName(data.getString("user_rank_name"));

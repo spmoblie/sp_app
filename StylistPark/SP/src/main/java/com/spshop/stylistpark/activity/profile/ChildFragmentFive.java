@@ -180,10 +180,12 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 				tv_return_num.setVisibility(View.GONE);
 			}
 			if (infoEn.getUserRankCode() == 4) { //达人展示会员信息
+				rl_my_wallet.setVisibility(View.VISIBLE);
 				ll_member_main.setVisibility(View.VISIBLE);
 				tv_member_list.setText(infoEn.getMemberNum());
 				tv_member_order.setText(infoEn.getMemberOrder());
 			}else {
+				rl_my_wallet.setVisibility(View.GONE);
 				ll_member_main.setVisibility(View.GONE);
 			}
 			updateCartTotal(infoEn.getCartTotal());
@@ -199,9 +201,10 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			tv_return_num.setText(num);
 			tv_return_num.setVisibility(View.GONE);
 			tv_money.setText(LangCurrTools.getCurrencyValue() + num);
-			tv_coupon.setText(num);
+			tv_coupon.setText("");
 			tv_member_list.setText(num);
 			tv_member_order.setText(num);
+			rl_my_wallet.setVisibility(View.GONE);
 			ll_member_main.setVisibility(View.GONE);
 		}
 	}

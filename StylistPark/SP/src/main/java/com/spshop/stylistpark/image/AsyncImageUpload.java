@@ -86,6 +86,7 @@ public class AsyncImageUpload {
 							conn.setRequestProperty("Connection", "Keep-Alive");
 							conn.setRequestProperty("Charset", "UTF-8");
 							conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+							conn.setRequestProperty("User-agent"," ");
 							conn.setRequestProperty("Cookie", cookie);
 
 							String userId = "";

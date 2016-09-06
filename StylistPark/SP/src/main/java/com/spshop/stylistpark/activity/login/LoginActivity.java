@@ -108,7 +108,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	private static final String WB_REDIRECT_URL = AppConfig.WB_REDIRECT_URL;
 	private static final String WB_SCOPE = AppConfig.WB_SCOPE;
 	// ZF
-	private AuthResult alipayAuthResult;
+	private String alipayOpenId;
+	private String alipayAuthCode;
+	private UserInfoEntity alipayUserInfo;
 	// FB
 	private CallbackManager callbackManager;
 
@@ -598,6 +600,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void loginAlipay() {
 		// 从服务器获取授权参数
+		startAnimation();
+		request(AppConfig.REQUEST_SV_GET_ALIPAY_AUTHINFO_CODE);
 	}
 
 	/**
@@ -613,7 +617,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 				// 调用授权接口，获取授权结果
 				Map<String, String> result = authTask.authV2(authInfo, true);
 				// 处理授权结果
-				alipayAuthResult = new AuthResult(result, true);
+				AuthResult alipayAuthResult = new AuthResult(result, true);
+				alipayOpenId = alipayAuthResult.getAlipayOpenId();
+				alipayAuthCode = alipayAuthResult.getAuthCode();
 				String resultStatus = alipayAuthResult.getResultStatus();
 				// 判断resultStatus 为“9000”且result_code为“200”则代表授权成功，具体状态码代表含义可参考授权接口文档
 				if (TextUtils.equals(resultStatus, "9000") && TextUtils.equals(alipayAuthResult.getResultCode(), "200")) {
@@ -632,9 +638,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 * 提交支付宝授权登录请求
 	 */
 	private void postAlipayLoginRequest() {
-		if (alipayAuthResult != null) {
+		if (!StringUtil.isNull(alipayOpenId)) {
 			loginType = LOGIN_TYPE_ZF;
-			postUid = alipayAuthResult.getAlipayOpenId();
+			postUid = alipayOpenId;
 			requestThirdPartiesLogin();
 		} else {
 			showLoginError();
@@ -645,9 +651,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 * 获取支付宝用户信息
 	 */
 	private void getAlipayUserInfo() {
-		if (alipayAuthResult != null) {
+		if (!StringUtil.isNull(alipayAuthCode)) {
 			// 使用auth_code从服务器获取用户信息
-			String authCode = alipayAuthResult.getAuthCode();
+			request(AppConfig.REQUEST_SV_GET_ALIPAY_USERINFO_CODE);
 		} else {
 			showLoginError();
 		}
@@ -656,9 +662,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	/**
 	 * 注册支付宝用户信息
 	 */
-	private void registAlipayUserInfo() {
-		if (alipayAuthResult != null) {
-			
+	private void registAlipayUserInfo(UserInfoEntity oauthEn) {
+		if (oauthEn != null && !StringUtil.isNull(alipayOpenId)) {
+			oauthEn.setUserName(LOGIN_TYPE_ZF);
+			oauthEn.setUserId(alipayOpenId);
+			startRegisterOauthActivity(oauthEn);
 		} else {
 			showLoginError();
 		}
@@ -840,10 +848,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
-        // FB
-		/*if(uiHelper != null){
-			uiHelper.onResume();
-		}*/
 		super.onResume();
 	}
 
@@ -853,94 +857,104 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
 		AppApplication.onPageEnd(this, TAG);
-        // FB
-        /*if (uiHelper != null) {
-			uiHelper.onPause();
-		}*/
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
-		// FB
-		/*if (uiHelper != null) {
-			uiHelper.onDestroy();
-		}*/
 		isStop = true;
 		instance = null;
 	}
-	
-	/**
-	 * 在Activity中的onSaveInstanceState调用此方法
-	 */
-	public void onSaveInstanceState(Bundle outState){
-		/*if (uiHelper != null) {
-			uiHelper.onSaveInstanceState(outState);
-		}*/
-	}
-	
+
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
 		infoEn = null;
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_POST_ACCOUNT_LOGIN_CODE: //账号密码登入
 			infoEn = sc.postAccountLoginData(userStr, passWordStr);
-			break;
+			return infoEn;
 		case AppConfig.REQUEST_SV_POST_THIRD_PARTIES_LOGIN: //第三方授权登入
 			infoEn = sc.postThirdPartiesLogin(loginType, postUid);
-			break;
+			return infoEn;
+		case AppConfig.REQUEST_SV_GET_ALIPAY_AUTHINFO_CODE: //获取支付宝授权信息
+			return sc.getAlipayAuthInfo();
+		case AppConfig.REQUEST_SV_GET_ALIPAY_USERINFO_CODE: //获取支付宝用户信息
+			alipayUserInfo = sc.getAlipayUserInfo(alipayAuthCode);
+			return alipayUserInfo;
 		}
-		return infoEn;
+		return null;
 	}
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
 		if (instance == null) return;
 		super.onSuccess(requestCode, result);
-		if (infoEn != null) {
-			if (infoEn.getErrCode() == 1) //校验通过
-			{ 
-				um.saveUserLoginSuccess(infoEn.getUserId());
-				um.saveLoginName(userStr);
-				stopAnimation();
-				finish();
-			}
-			else if (infoEn.getErrCode() == 2) //校验不通过
-			{ 
-				if (requestCode == AppConfig.REQUEST_SV_POST_THIRD_PARTIES_LOGIN) { //第三方授权登入
-					if (loginType == LOGIN_TYPE_WX) {
-						getWechatUserInfo();
-					}else if (loginType == LOGIN_TYPE_QQ) {
-						getQQUserInfo();
-					}else if (loginType == LOGIN_TYPE_WB) {
-						getWeiboUserInfo();
-					}else if (loginType == LOGIN_TYPE_ZF) {
-						getAlipayUserInfo();
-					}else if (loginType == LOGIN_TYPE_FB) {
-						getFacebookUserInfo();
+		switch (requestCode) {
+			case AppConfig.REQUEST_SV_POST_ACCOUNT_LOGIN_CODE: //账号密码登入
+			case AppConfig.REQUEST_SV_POST_THIRD_PARTIES_LOGIN: //第三方授权登入
+				if (infoEn != null) {
+					if (infoEn.getErrCode() == 1) //校验通过
+					{
+						um.saveUserLoginSuccess(infoEn.getUserId());
+						um.saveLoginName(userStr);
+						stopAnimation();
+						finish();
+					}
+					else if (infoEn.getErrCode() == 2) //校验不通过
+					{
+						if (requestCode == AppConfig.REQUEST_SV_POST_THIRD_PARTIES_LOGIN) { //第三方授权登入
+							if (loginType == LOGIN_TYPE_WX) {
+								getWechatUserInfo();
+							}else if (loginType == LOGIN_TYPE_QQ) {
+								getQQUserInfo();
+							}else if (loginType == LOGIN_TYPE_WB) {
+								getWeiboUserInfo();
+							}else if (loginType == LOGIN_TYPE_ZF) {
+								getAlipayUserInfo();
+							}else if (loginType == LOGIN_TYPE_FB) {
+								getFacebookUserInfo();
+							}
+						}else {
+							stopAnimation();
+							if (StringUtil.isNull(infoEn.getErrInfo())) {
+								showServerBusy();
+							}else {
+								CommonTools.showToast(infoEn.getErrInfo(), 2000);
+							}
+						}
+					}
+					else
+					{
+						stopAnimation();
+						if (StringUtil.isNull(infoEn.getErrInfo())) {
+							showServerBusy();
+						}else {
+							CommonTools.showToast(infoEn.getErrInfo(), 2000);
+						}
 					}
 				}else {
 					stopAnimation();
-					if (StringUtil.isNull(infoEn.getErrInfo())) {
-						showServerBusy();
-					}else {
-						CommonTools.showToast(infoEn.getErrInfo(), 2000);
-					}
-				}
-			}
-			else 
-			{
-				stopAnimation();
-				if (StringUtil.isNull(infoEn.getErrInfo())) {
 					showServerBusy();
-				}else {
-					CommonTools.showToast(infoEn.getErrInfo(), 2000);
 				}
-			}
-		}else {
-			stopAnimation();
-			showServerBusy();
+				break;
+			case AppConfig.REQUEST_SV_GET_ALIPAY_AUTHINFO_CODE: //获取支付宝授权信息
+				if (result != null) {
+					AuthResult authResult = (AuthResult) result;
+					getAlipayOpenId(authResult.getAuthCode());
+				} else {
+					showLoginError();
+				}
+				stopAnimation();
+				break;
+			case AppConfig.REQUEST_SV_GET_ALIPAY_USERINFO_CODE: //获取支付宝用户信息
+				if (alipayUserInfo != null) {
+					registAlipayUserInfo(alipayUserInfo);
+				} else {
+					showLoginError();
+				}
+				stopAnimation();
+				break;
 		}
 	}
 

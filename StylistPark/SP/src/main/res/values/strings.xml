@@ -7,6 +7,7 @@
     <!-- General -->
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="ignore">Ignore</string>
     <string name="proceed">Proceed</string>
     <string name="being_not">Being not</string>
     <string name="retry">Retry</string>
@@ -70,9 +71,9 @@
         
     <!-- Dialog -->
     <string name="dialog_leave_app">Leave STYLISTPARK ?</string>
-    <string name="dialog_version_new">Your current version is the latest version</string>
-    <string name="dialog_version_update">Detected a new version, click OK to start the update.</string>
-    <string name="dialog_version_update_force">Your current version is below the minimum version! Need to be upgraded to normal use!</string>
+    <string name="dialog_version_new">Current version is the latest version</string>
+    <string name="dialog_version_update">Detected a new version \nConfirm to start the update</string>
+    <string name="dialog_version_update_force">Your current version is too low! You need to be upgraded to work properly!</string>
     <string name="dialog_error_msg">Error. Please Try Again.</string>
     <string name="dialog_error_video_url">Video error can not be played</string>
     
@@ -90,6 +91,7 @@
     <string name="loading_update_time">Last update time </string>
     <string name="loading_load_more">Load more</string>
     <string name="loading_strive_loading">Strive loading&#8230;</string>
+    <string name="loading_downloading">Downloading&#8230;&#8230;</string>
     <string name="loading_no_more">No more ~</string>
     <string name="loading_no_data">You have not %1$s !</string>
     <string name="loading_click_load">Click load</string>

@@ -4,27 +4,27 @@
     api-level="17"
     density="xhdpi"
     format="7"
-    timestamp="26134271720608"
+    timestamp="32266058928349"
     token="-68763585952444085" >
 
     <task
         name="javac"
-        duration="4823" />
+        duration="0" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="56" />
+        duration="0" />
     <task
         name="verifier"
-        duration="55" />
+        duration="0" />
 
     <artifact
         location="D:\evan\git\Code\sp_app\StylistPark\SP\build\outputs\apk\SP-debug.apk"
         type="MAIN" />
 
-    <build timestamp="26134271720608" >
+    <build timestamp="32266058928349" >
         <artifact
             location="D:\evan\git\Code\sp_app\StylistPark\SP\build\outputs\apk\SP-debug.apk"
             type="MAIN" />

@@ -3,6 +3,7 @@ package com.spshop.stylistpark.service.impl;
 
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.entity.AddressEntity;
+import com.spshop.stylistpark.entity.AuthResult;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.CouponEntity;
@@ -49,14 +50,12 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public UpdateVersionEntity checkVersionUpdate(int type, String version) throws Exception {
-		String uri = AppConfig.URL_COMMON_MY_URL;
+		String uri = AppConfig.URL_COMMON_INDEX_URL + "?app=app";
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		params.add(new MyNameValuePair("app", "checkVersion"));
-		params.add(new MyNameValuePair("type", String.valueOf(type)));
+		params.add(new MyNameValuePair("id", String.valueOf(type)));
 		params.add(new MyNameValuePair("version", version));
-		//HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
-		//String jsonStr = HttpUtil.getString(entity);
-		String jsonStr = version;
+		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_POST);
+		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);
 		return JsonParser.checkVersionUpdate(jsonStr);
 	}
@@ -303,6 +302,27 @@ public class MainServiceImpl implements MainService {
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);
 		return LoginJsonParser.postAccountLoginData(jsonStr);
+	}
+
+	@Override
+	public AuthResult getAlipayAuthInfo() throws Exception {
+		String uri = AppConfig.URL_COMMON_USER_URL + "?act=oath_api";
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_GET);
+		String jsonStr = HttpUtil.getString(entity);
+		LogUtil.i("JsonParser", jsonStr);
+		return LoginJsonParser.getAlipayAuthInfo(jsonStr);
+	}
+
+	@Override
+	public UserInfoEntity getAlipayUserInfo(String authCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_USER_URL + "?act=oath_api";
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("authCode", authCode));
+		HttpEntity entity = HttpUtil.getEntity(uri, params, HttpUtil.METHOD_POST);
+		String jsonStr = HttpUtil.getString(entity);
+		LogUtil.i("JsonParser", jsonStr);
+		return LoginJsonParser.getAlipayUserInfo(jsonStr);
 	}
 
 	@Override

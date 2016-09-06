@@ -139,7 +139,8 @@
     <RelativeLayout
         android:id="@+id/personal_rl_auth"
         style="@style/setting_lay_item"
-        android:layout_below="@id/personal_rl_email" >
+        android:layout_below="@id/personal_rl_email"
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/personal_tv_auth_title"

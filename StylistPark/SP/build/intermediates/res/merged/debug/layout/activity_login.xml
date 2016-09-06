@@ -232,15 +232,15 @@
                 style="@style/commom_mean_tab_text_assist"
                 android:drawablePadding="10dp"
                 android:drawableTop="@drawable/login_icon_logo_alipay"
-                android:text="@string/share_alipay"
-                android:visibility="gone" />
+                android:text="@string/share_alipay" />
 
             <TextView
                 android:id="@+id/login_tv_facebook"
                 style="@style/commom_mean_tab_text_assist"
                 android:drawablePadding="10dp"
                 android:drawableTop="@drawable/login_icon_logo_facebook"
-                android:text="@string/share_fb" />
+                android:text="@string/share_fb"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 

@@ -75,7 +75,7 @@ public class HttpUtil {
 		HttpConnectionParams.setConnectionTimeout(httpParams, 10000);
 		HttpConnectionParams.setSoTimeout(httpParams, 10000);
 		HttpClient client = new DefaultHttpClient(httpParams);
-		
+
 		String langStr = LangCurrTools.getLanguageHttpUrlValueStr();
 		String curStr = LangCurrTools.getCurrencyHttpUrlValueStr();
 		String cookie = FileManager.readFileSaveString(AppConfig.cookiesFileName, true);
@@ -208,10 +208,9 @@ public class HttpUtil {
 		CookieSyncManager.createInstance(AppApplication.getInstance().getApplicationContext());
 		CookieManager cookieManager = CookieManager.getInstance();
 		cookieManager.setAcceptCookie(true);
-		cookieManager.removeSessionCookie(); //移除
         cookieManager.removeAllCookie(); //移除所有Cookie
-        String cookies = FileManager.readFileSaveString(AppConfig.cookiesFileName, true);
-        if (!StringUtil.isNull(cookies)) { // cookies是在HttpClient中获得的cookie
+		String cookies = FileManager.readFileSaveString(AppConfig.cookiesFileName, true);
+		if (!StringUtil.isNull(cookies)) { // cookies是在HttpClient中获得的cookie
         	String[] cks = cookies.split(";");
         	for (int i = 0; i < cks.length; i++) {
         		String ck = cks[i];
