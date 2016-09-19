@@ -4,12 +4,13 @@ import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.AuthResult;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
-import com.spshop.stylistpark.entity.CouponEntity;
 import com.spshop.stylistpark.entity.BrandEntity;
 import com.spshop.stylistpark.entity.CategoryListEntity;
+import com.spshop.stylistpark.entity.CouponEntity;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
 import com.spshop.stylistpark.entity.LogisticsEntity;
 import com.spshop.stylistpark.entity.MemberEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.PaymentEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
@@ -19,7 +20,11 @@ import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 
+import java.util.List;
+
 public interface MainService {
+
+	BaseEntity loadServerDatas(int requestCode, String uri, List<MyNameValuePair> params, int method) throws Exception;
 
 	BaseEntity checkLoginSession() throws Exception;
 
@@ -35,8 +40,8 @@ public interface MainService {
 
 	CategoryListEntity getCategoryBrandDatas() throws Exception;
 
-	ProductListEntity getProductListDatas(int typeId, int dataType, int brandId, 
-			int count, int page, String searchStr, String attrStr, int isStock) throws Exception;
+	ProductListEntity getProductListDatas(int typeId, int dataType, int brandId,
+										  int count, int page, String searchStr, String attrStr, int isStock) throws Exception;
 
 	SelectListEntity getScreenlistDatas(int typeId, String allStr) throws Exception;
 
@@ -55,7 +60,7 @@ public interface MainService {
 	BaseEntity postRegisterData(String emailStr, String passwordStr) throws Exception;
 	
 	UserInfoEntity postRegisterOauthData(String accountStr, String passwordStr, String loginType,
-			String uid, String nickname, String sex, String headUrl) throws Exception;
+										 String uid, String nickname, String sex, String headUrl) throws Exception;
 
 	UserInfoEntity postAccountLoginData(String userStr, String passWordStr) throws Exception;
 	

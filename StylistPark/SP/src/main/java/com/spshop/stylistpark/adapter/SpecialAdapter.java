@@ -109,7 +109,7 @@ public class SpecialAdapter extends BaseAdapter {
 		holder.left_logo.setLayoutParams(lp);
 		if (leftEn != null) {
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + leftEn.getImgUrl(), holder.left_logo, options);
-			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + leftEn.getMebUrl(), holder.left_head, headOptions);
+			ImageLoader.getInstance().displayImage(leftEn.getMebUrl(), holder.left_head, headOptions);
 			holder.left_title.setText(leftEn.getTitle());
 			holder.left_nick.setText(leftEn.getMebName());
 			holder.left_click.setText(String.valueOf(leftEn.getClickNum()));
@@ -126,7 +126,7 @@ public class SpecialAdapter extends BaseAdapter {
 		if (rightEn != null) {
 			holder.right_main.setVisibility(View.VISIBLE);
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getImgUrl(), holder.right_logo, options);
-			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getMebUrl(), holder.right_head, headOptions);
+			ImageLoader.getInstance().displayImage(rightEn.getMebUrl(), holder.right_head, headOptions);
 			holder.right_title.setText(rightEn.getTitle());
 			holder.right_nick.setText(rightEn.getMebName());
 			holder.right_click.setText(String.valueOf(rightEn.getClickNum()));

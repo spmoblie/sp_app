@@ -306,14 +306,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			api.isWXAppSupportAPI();
 //		}
 	}
-	
+
 	/**
 	 * 异步校验微信access_token
 	 */
 	class HttpWechatAuthTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			return http.HttpGet(params[0]);
+			return http.myHttpGet(params[0]);
 		}
 		
 		@Override
@@ -339,7 +339,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	class HttpWechatRefreshTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			return http.HttpGet(params[0]);
+			return http.myHttpGet(params[0]);
 		}
 		
 		@Override
@@ -386,7 +386,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	class HttpWechatUserTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			return http.HttpGet(params[0]);
+			return http.myHttpGet(params[0]);
 		}
 
 		@Override

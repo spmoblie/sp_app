@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
-import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
@@ -25,7 +24,7 @@ import java.util.List;
  */
 public class MemberOrderListAdapter extends BaseAdapter {
 	
-	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
+	private static final String IMAGE_URL_HTTP = "";
 
 	private Context context;
 	private List<OrderEntity> datas;

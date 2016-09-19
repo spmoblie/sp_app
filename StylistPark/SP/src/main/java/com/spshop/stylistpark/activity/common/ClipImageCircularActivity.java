@@ -57,7 +57,7 @@ public class ClipImageCircularActivity extends BaseActivity{
 		// 此处获取剪裁后的bitmap
 		Bitmap bm = imageView.clip();
 		if (bm != null) {
-			File file = BitmapUtil.createPath("user_head" + System.currentTimeMillis() + ".jpg", true);
+			File file = BitmapUtil.createPath("user_head.png", true);
 			if (file == null) {
             	showErrorDialog(R.string.photo_show_save_fail);
     			return;

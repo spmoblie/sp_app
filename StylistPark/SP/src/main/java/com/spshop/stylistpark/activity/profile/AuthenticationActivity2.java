@@ -183,7 +183,6 @@ public class AuthenticationActivity2 extends BaseActivity implements OnClickList
 						
 					});
 					Map<String, String> postData = new HashMap<String, String>();
-					postData.put("userId", UserManager.getInstance().getUserId());
 					postData.put("fileName", UserManager.getInstance().getUserId());
 					asyncImageUpload.uploadImage("", postData, clipPhotoPath);
 				}

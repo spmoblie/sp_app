@@ -375,7 +375,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	public void onSuccess(int requestCode, Object result) {
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_POST_PAY_INFO_CODE:
-			if (payEntity != null && payEntity.getErrCode() == 15) {
+			if (payEntity != null) {
 				switch (payType) {
 				case PAY_ZFB: //支付宝支付
 					sendZFBPayReq(payEntity);

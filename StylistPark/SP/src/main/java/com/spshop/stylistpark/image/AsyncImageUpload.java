@@ -89,22 +89,20 @@ public class AsyncImageUpload {
 							conn.setRequestProperty("User-agent"," ");
 							conn.setRequestProperty("Cookie", cookie);
 
-							String userId = "";
 							String fileName = "";
 							if (task.postData != null) {
-								userId = task.postData.get("userId");
-								fileName = task.postData.get("fileName") + ".png";
+								fileName = task.postData.get("fileName");
 							}
 							DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 							// 发送参数
-							dos.writeBytes(twoHyphens + boundary + end);
+							/*dos.writeBytes(twoHyphens + boundary + end);
 							dos.writeBytes("Content-Disposition: form-data; name=\"userid\"" + end);
 							dos.writeBytes(end);
 							dos.writeBytes(userId);
-							dos.writeBytes(end);
+							dos.writeBytes(end);*/
 							// 发送图片
 							dos.writeBytes(twoHyphens + boundary + end);
-							dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"" + fileName + "\"" + end);
+							dos.writeBytes("Content-Disposition: form-data; name=\"file\"; filename=\"" + fileName + "\"" + end);
 							dos.writeBytes(end);
 
 							FileInputStream fis = new FileInputStream(sourceFile);

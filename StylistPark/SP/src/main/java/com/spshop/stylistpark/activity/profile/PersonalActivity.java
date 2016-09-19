@@ -151,7 +151,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			tv_auth_go.setVisibility(View.VISIBLE);
 			tv_auth_ok.setVisibility(View.GONE);
 		}
-		ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + headUrl, iv_head, AppApplication.getHeadImageOptions());
+		ImageLoader.getInstance().displayImage(headUrl, iv_head, AppApplication.getHeadImageOptions());
 	}
 
 	private void uploadImage() {
@@ -181,7 +181,11 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 									ImageLoader.getInstance().clearMemoryCache();
 									CommonTools.showToast(getString(R.string.photo_upload_img_ok, getString(R.string.profile_head)), 1000);
 								} else {
-									CommonTools.showToast(getString(R.string.photo_upload_head_fail), 2000);
+									if (!StringUtil.isNull(baseEn.getErrInfo())) {
+										CommonTools.showToast(baseEn.getErrInfo(), 2000);
+									} else {
+										CommonTools.showToast(getString(R.string.photo_upload_head_fail), 2000);
+									}
 								}
 							}else {
 								CommonTools.showToast(getString(R.string.photo_upload_head_fail), 2000);
@@ -191,8 +195,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 						
 					});
 					Map<String, String> postData = new HashMap<String, String>();
-					postData.put("userId", UserManager.getInstance().getUserId());
-					postData.put("fileName", UserManager.getInstance().getUserId());
+					postData.put("fileName", headUrl);
 					asyncImageUpload.uploadImage(AppConfig.API_UPDATE_PROFILE, postData, headUrl);
 				}
 			}, 2000);

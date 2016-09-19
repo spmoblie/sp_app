@@ -38,6 +38,18 @@ import java.util.List;
 public class MainServiceImpl implements MainService {
 
 	@Override
+	public BaseEntity loadServerDatas(int requestCode, String uri, List<MyNameValuePair> params, int method) throws Exception {
+		HttpEntity entity = HttpUtil.getEntity(uri, params, method);
+		String jsonStr = HttpUtil.getString(entity);
+		LogUtil.i("JsonParser", jsonStr);
+		switch (requestCode) {
+			case AppConfig.REQUEST_SV_GET_SESSIONS_CODE:
+				return JsonParser.getCommonResult(jsonStr);
+		}
+		return null;
+	}
+
+	@Override
 	public BaseEntity checkLoginSession() throws Exception {
 		String uri = AppConfig.URL_COMMON_MY_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();

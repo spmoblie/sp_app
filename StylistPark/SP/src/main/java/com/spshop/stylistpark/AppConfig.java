@@ -85,10 +85,8 @@ public class AppConfig {
 	// 微博授权接口参数：Scope权限
 	public static final String WB_SCOPE = "email,direct_messages_read,direct_messages_write,friendships_groups_read," 
 			+ "friendships_groups_write,statuses_to_me_read,follow_app_official_microblog,invitation_write";
-	// 支付宝AppID
-	public static final String ZFB_APP_ID = "2088701914652108";
 	// PayPal ClientID
-	public static final String PAYPAL_CLIENT_ID = "credentials from developer.paypal.com";
+	public static final String PAYPAL_CLIENT_ID = "";
 
 
 	// 缓存Cookies文件名

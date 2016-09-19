@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
-import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.MemberEntity;
 
@@ -23,7 +22,7 @@ import java.util.List;
  */
 public class MemberListAdapter extends BaseAdapter {
 	
-	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
+	private static final String IMAGE_URL_HTTP = "";
 	public static final int TYPE_CHECK = 1;
 	public static final int TYPE_PAY = 2;
 	public static final int TYPE_CACEL = 3;

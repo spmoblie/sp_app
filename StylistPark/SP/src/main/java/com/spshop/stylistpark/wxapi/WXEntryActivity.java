@@ -100,7 +100,7 @@ public class WXEntryActivity extends BaseActivity {
 
 		@Override
 		protected String doInBackground(String... params) {
-			return http.HttpGet(params[0]);
+			return http.myHttpGet(params[0]);
 		}
 
 		@Override

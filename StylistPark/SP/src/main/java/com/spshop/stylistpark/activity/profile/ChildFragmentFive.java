@@ -135,8 +135,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 
 	private void setView() {
 		if (infoEn != null) {
-			ImageLoader.getInstance().displayImage(AppConfig.ENVIRONMENT_PRESENT_IMG_APP
-					+ infoEn.getHeadImg(), iv_info, AppApplication.getHeadImageOptions());
+			ImageLoader.getInstance().displayImage(infoEn.getHeadImg(), iv_info, AppApplication.getHeadImageOptions());
 			tv_money.setText(infoEn.getMoney());
 			tv_coupon.setText(infoEn.getCoupon());
 			int order_1 = infoEn.getOrder_1();

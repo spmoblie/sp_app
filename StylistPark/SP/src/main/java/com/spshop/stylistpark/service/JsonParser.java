@@ -928,17 +928,16 @@ public class JsonParser {
 			errCode = Integer.valueOf(jsonObject.getString("error"));
 		}
 		PaymentEntity payEn = new PaymentEntity(errCode, "");
-		if (errCode == 15) {
-			switch (payType) {
-				case WXPayEntryActivity.PAY_ZFB: //支付宝支付
-					payEn.setAlipay(jsonObject.getString("content"));
-					break;
-				case WXPayEntryActivity.PAY_WEIXI: //微信支付
-					JSONObject data = jsonObject.getJSONObject("content");
-					payEn.setPrepayid(data.getString("prepayid"));
-					payEn.setNoncestr(data.getString("noncestr"));
-					payEn.setTimestamp(data.getString("timestamp"));
-					payEn.setSign(data.getString("sign"));
+		switch (payType) {
+			case WXPayEntryActivity.PAY_ZFB: //支付宝支付
+				payEn.setAlipay(jsonObject.getString("content"));
+				break;
+			case WXPayEntryActivity.PAY_WEIXI: //微信支付
+				JSONObject data = jsonObject.getJSONObject("content");
+				payEn.setPrepayid(data.getString("prepayid"));
+				payEn.setNoncestr(data.getString("noncestr"));
+				payEn.setTimestamp(data.getString("timestamp"));
+				payEn.setSign(data.getString("sign"));
 				break;
 			case WXPayEntryActivity.PAY_UNION: //银联支付
 				payEn.setAlipay(jsonObject.getString("content"));
@@ -946,7 +945,6 @@ public class JsonParser {
 			case WXPayEntryActivity.PAY_PAL: //PayPal支付
 				payEn.setAlipay(jsonObject.getString("content"));
 				break;
-			}
 		}
 		return payEn;
 	}

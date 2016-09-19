@@ -10,7 +10,6 @@ import com.spshop.stylistpark.entity.MyNameValuePair;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -28,7 +27,6 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HttpUtil {
@@ -36,30 +34,6 @@ public class HttpUtil {
 	/* 请求方式 */
 	public static final int METHOD_GET = 1;
 	public static final int METHOD_POST = 2;
-
-	/**
-	 * httpGet请求，返回一个Json字符串
-	 * 
-	 * @param url
-	 * @param params
-	 * @return
-	 */
-	public String httpGet(String url, ArrayList<NameValuePair> params) {
-
-		return null;
-	}
-
-	/**
-	 * httpPost请求，返回一个Json字符串
-	 * 
-	 * @param url
-	 * @param params
-	 * @return
-	 */
-	public String httpPost(String url, ArrayList<NameValuePair> params) {
-
-		return null;
-	}
 
 	/**
 	 * 返回响应实体
@@ -172,17 +146,15 @@ public class HttpUtil {
 		return in;
 	}
 
-	public String HttpGet(String httpUrl) {
+	public String myHttpGet(String httpUrl) {
 		// HttpGet连接对象
 		HttpGet httpRequest = new HttpGet(httpUrl);
 		// 取得HttpClient对象
 		HttpClient httpclient = new DefaultHttpClient();
 		// 请求超时
-		httpclient.getParams().setParameter(
-				CoreConnectionPNames.CONNECTION_TIMEOUT, 1500);
+		httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1500);
 		// 读取超时
-		httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT,
-				1500);
+		httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 1500);
 		HttpResponse httpResponse;
 		try {
 			// 请求HttpClient，取得HttpResponse

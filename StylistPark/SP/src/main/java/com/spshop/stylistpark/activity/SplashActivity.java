@@ -10,10 +10,15 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.utils.DeviceUtil;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UserManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * App首页欢迎界面
@@ -85,7 +90,10 @@ public class SplashActivity extends BaseActivity {
 	public Object doInBackground(int requsetCode) throws Exception {
 		switch (requsetCode) {
 		case AppConfig.REQUEST_SV_GET_SESSIONS_CODE:
-			return sc.checkLoginSession();
+			String uri = AppConfig.URL_COMMON_MY_URL;
+			List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+			params.add(new MyNameValuePair("app", "sessions"));
+			return sc.loadServerDatas(AppConfig.REQUEST_SV_GET_SESSIONS_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
