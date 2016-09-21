@@ -16,9 +16,14 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditUserInfoActivity extends BaseActivity {
 	
@@ -163,7 +168,10 @@ public class EditUserInfoActivity extends BaseActivity {
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
-		return sc.postChangeUserInfo(showStr, changeTypeKey);
+		String uri = AppConfig.URL_COMMON_USER_URL + "?act=edit_profile";
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair(changeTypeKey, showStr));
+		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_EDIT_USER_INFO_CODE, uri, params, HttpUtil.METHOD_POST);
 	}
 
 	@Override

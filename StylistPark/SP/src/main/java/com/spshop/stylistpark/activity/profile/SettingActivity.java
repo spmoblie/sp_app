@@ -18,12 +18,17 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.HomeFragmentActivity;
 import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LangCurrTools.Currency;
 import com.spshop.stylistpark.utils.LangCurrTools.Language;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UpdateAppVersion;
 import com.spshop.stylistpark.utils.UserManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SettingActivity extends BaseActivity implements OnClickListener{
 	
@@ -257,7 +262,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	public Object doInBackground(int requestCode) throws Exception {
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_POST_LOGOUT_CODE:
-			return sc.postLogoutRequest();
+			String uri = AppConfig.URL_COMMON_INDEX_URL;
+			List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+			params.add(new MyNameValuePair("app", "logout"));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_LOGOUT_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}

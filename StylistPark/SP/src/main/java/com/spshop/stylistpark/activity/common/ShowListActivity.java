@@ -22,7 +22,9 @@ import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.ProductListEntity;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
@@ -59,7 +61,6 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 	private AdapterCallback lv_callback;
 	private ProductList2ItemAdapter lv_two_adapter;
 	
-	private ProductListEntity product_MainEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all_1 = new ArrayList<ProductListEntity>();
@@ -237,30 +238,34 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
-		product_MainEn = null;
+		String uri = AppConfig.URL_COMMON_MY_URL;;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_USER_PRODUCT_LIST:
 			switch (pageCode) {
 			case PAGE_ROOT_CODE_1: //收藏商品
-				product_MainEn = sc.getCollectionOrHistoryList(Page_Count, current_Page, "collection");
+				params.add(new MyNameValuePair("app", "collection"));
 				break;
 			case PAGE_ROOT_CODE_2: //浏览记录
-				product_MainEn = sc.getCollectionOrHistoryList(Page_Count, current_Page, "history");
+				params.add(new MyNameValuePair("app", "history"));
 				break;
 			}
-			break;
+			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
+			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_USER_PRODUCT_LIST, uri, params, HttpUtil.METHOD_GET);
 		}
-		return product_MainEn;
+		return null;
 	}
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
 		if (instance == null) return;
 		super.onSuccess(requestCode, result);
-		if (product_MainEn != null && product_MainEn.getMainLists() != null) {
-			countTotal = product_MainEn.getTotal();
-			List<ProductListEntity> lists = product_MainEn.getMainLists();
-			if (lists.size() > 0) {
+		if (result != null) {
+			ProductListEntity mainEn = (ProductListEntity) result;
+			countTotal = mainEn.getTotal();
+			List<ProductListEntity> lists = mainEn.getMainLists();
+			if (lists!= null && lists.size() > 0) {
 				List<BaseEntity> newLists = addNewEntity(lv_all_1, lists, am_all_1);
 				if (newLists != null) {
 					addNewShowLists(newLists);

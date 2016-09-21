@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,8 +32,10 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.cart.PostOrderActivity;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 
@@ -91,8 +93,8 @@ public class AddressEditActivity extends BaseActivity implements
 	private ArrayAdapter<String> ap_country, ap_province, ap_city, ap_district;
 	private EditText et_name, et_phone, et_email, et_address;
 	private LinearLayout ll_select_area, ll_province_main, ll_city_main, ll_district_main;
-	private TextView tv_province, tv_city, tv_district;
-	private AddressEntity mainEn, data;
+	private TextView tv_country_show, tv_province_show, tv_city_show, tv_district_show, tv_province, tv_city, tv_district;
+	private AddressEntity data;
 	private List<String> ls_country = new ArrayList<String>();
 	private List<String> ls_province = new ArrayList<String>();
 	private List<String> ls_city = new ArrayList<String>();
@@ -107,6 +109,7 @@ public class AddressEditActivity extends BaseActivity implements
 	private SparseArray<AddressEntity> sa_ae_district = new SparseArray<AddressEntity>(); 
 	private int postId = 0;
 	private int addressId = 0;
+	private int countryPos, provincePos, cityPos, districtPos;
 	private int countryId, provinceId, cityId, districtId;
 	private int id_country, id_province, id_city, id_district;
 	private int typeCode = TYPE_CODE_COUNTRY;
@@ -127,6 +130,10 @@ public class AddressEditActivity extends BaseActivity implements
 		et_name = (EditText) findViewById(R.id.new_address_et_name);
 		et_phone = (EditText) findViewById(R.id.new_address_et_phone);
 		et_email = (EditText) findViewById(R.id.new_address_et_email);
+		tv_country_show = (TextView) findViewById(R.id.new_address_tv_country_show);
+		tv_province_show = (TextView) findViewById(R.id.new_address_tv_province_show);
+		tv_city_show = (TextView) findViewById(R.id.new_address_tv_city_show);
+		tv_district_show = (TextView) findViewById(R.id.new_address_tv_district_show);
 		tv_province = (TextView) findViewById(R.id.new_address_tv_province);
 		tv_city = (TextView) findViewById(R.id.new_address_tv_city);
 		tv_district = (TextView) findViewById(R.id.new_address_tv_district);
@@ -148,12 +155,13 @@ public class AddressEditActivity extends BaseActivity implements
 	private void initView() {
 		setTitle(R.string.title_delivery_info);
 		setBtnRight(getString(R.string.save));
-		
+
 //		btn_confirm.setOnClickListener(this);
 //		mViewProvince.addChangingListener(this);
 //		mViewCity.addChangingListener(this);
 //		mViewDistrict.addChangingListener(this);
 //		setUpData();
+		addTextChangedListener();
 		getSVDatas();
 		
 		if (data != null) {
@@ -169,9 +177,76 @@ public class AddressEditActivity extends BaseActivity implements
 		}
 	}
 
+	private void addTextChangedListener() {
+		tv_country_show.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				selectCountryData(countryPos);
+			}
+		});
+		tv_province_show.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				selectProvinceData(provincePos);
+			}
+		});
+		tv_city_show.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				selectCityData(cityPos);
+			}
+		});
+		tv_district_show.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				selectDistrictData(districtPos);
+			}
+		});
+	}
+
 	private void initCountrySpinner() {
 		if (ls_country.size() > 0) {
-			ap_country = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, ls_country);
+			/*ap_country = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, ls_country);
 			ap_country.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			sp_country.setAdapter(ap_country);
 			sp_country.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -187,11 +262,12 @@ public class AddressEditActivity extends BaseActivity implements
 					
 				}
 				
-			});
+			});*/
 			// 编辑地址时定位域
-			int position = sa_id_country.get(id_country);
-			if (position >= 0 && position < ls_country.size()) {
-				sp_country.setSelection(position);
+			countryPos = sa_id_country.get(id_country);
+			if (countryPos >= 0 && countryPos < ls_country.size()) {
+				//sp_country.setSelection(position);
+				tv_country_show.setText(ls_country.get(countryPos));
 			}
 		}else {
 			clearTypeDatas(ap_province, ls_province, sa_ae_province, sa_id_province);
@@ -202,7 +278,7 @@ public class AddressEditActivity extends BaseActivity implements
 	private void initProvinceSpinner() {
 		if (ls_province.size() > 0) {
 			ll_province_main.setVisibility(View.VISIBLE);
-			ArrayAdapter<String> sp_adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, ls_province);
+			/*ArrayAdapter<String> sp_adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, ls_province);
 			sp_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			sp_province.setAdapter(sp_adapter);
 			sp_province.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -218,11 +294,12 @@ public class AddressEditActivity extends BaseActivity implements
 					
 				}
 				
-			});
+			});*/
 			// 编辑地址时定位省
-			int position = sa_id_province.get(id_province);
-			if (position >= 0 && position < ls_province.size()) {
-				sp_province.setSelection(position);
+			provincePos = sa_id_province.get(id_province);
+			if (provincePos >= 0 && provincePos < ls_province.size()) {
+				//sp_province.setSelection(position);
+				tv_province_show.setText(ls_province.get(provincePos));
 			}
 		}else {
 			ll_province_main.setVisibility(View.GONE);
@@ -235,7 +312,7 @@ public class AddressEditActivity extends BaseActivity implements
 	private void initCitySpinner() {
 		if (ls_city.size() > 0) {
 			ll_city_main.setVisibility(View.VISIBLE);
-			ArrayAdapter<String> sp_adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, ls_city);
+			/*ArrayAdapter<String> sp_adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, ls_city);
 			sp_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			sp_city.setAdapter(sp_adapter);
 			sp_city.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -251,11 +328,12 @@ public class AddressEditActivity extends BaseActivity implements
 					
 				}
 				
-			});
+			});*/
 			// 编辑地址时定位市
-			int position = sa_id_city.get(id_city);
-			if (position >= 0 && position < ls_city.size()) {
-				sp_city.setSelection(position);
+			cityPos = sa_id_city.get(id_city);
+			if (cityPos >= 0 && cityPos < ls_city.size()) {
+				//sp_city.setSelection(position);
+				tv_city_show.setText(ls_city.get(cityPos));
 			}
 		}else {
 			ll_city_main.setVisibility(View.GONE);
@@ -268,7 +346,7 @@ public class AddressEditActivity extends BaseActivity implements
 	private void initDistrictSpinner() {
 		if (ls_district.size() > 0) {
 			ll_district_main.setVisibility(View.VISIBLE);
-			ap_district = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, ls_district);
+			/*ap_district = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, ls_district);
 			ap_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			sp_district.setAdapter(ap_district);
 			sp_district.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -284,11 +362,12 @@ public class AddressEditActivity extends BaseActivity implements
 					
 				}
 				
-			});
+			});*/
 			// 编辑地址时定位区
-			int position = sa_id_district.get(id_district);
-			if (position >= 0 && position < ls_district.size()) {
-				sp_district.setSelection(position);
+			districtPos = sa_id_district.get(id_district);
+			if (districtPos >= 0 && districtPos < ls_district.size()) {
+				//sp_district.setSelection(position);
+				tv_district_show.setText(ls_district.get(districtPos));
 			}
 		}else {
 			ll_district_main.setVisibility(View.GONE);
@@ -458,12 +537,26 @@ public class AddressEditActivity extends BaseActivity implements
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_INDEX_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_COUNTRY_LIST_CODE:
-			mainEn = sc.getCountryLists(postId);
-			return mainEn;
+			params.add(new MyNameValuePair("app", "regions"));
+			params.add(new MyNameValuePair("parent", String.valueOf(postId)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_COUNTRY_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_POST_EDIT_ADDRESS_CODE:
-			return sc.postEditAddress(addressId, countryId, provinceId, cityId, districtId, addressStr, nameStr, phoneStr, emailStr);
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=edit_address";
+			params.add(new MyNameValuePair("address_id", String.valueOf(addressId)));
+			params.add(new MyNameValuePair("country", String.valueOf(countryId)));
+			params.add(new MyNameValuePair("province", String.valueOf(provinceId)));
+			params.add(new MyNameValuePair("city", String.valueOf(cityId)));
+			params.add(new MyNameValuePair("district", String.valueOf(districtId)));
+			params.add(new MyNameValuePair("address", addressStr));
+			params.add(new MyNameValuePair("consignee", nameStr));
+			params.add(new MyNameValuePair("mobile", phoneStr));
+			params.add(new MyNameValuePair("email", emailStr));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_EDIT_ADDRESS_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -473,8 +566,8 @@ public class AddressEditActivity extends BaseActivity implements
 		super.onSuccess(requestCode, result);
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_COUNTRY_LIST_CODE:
-			if (mainEn != null && mainEn.getMainLists() != null) {
-				List<AddressEntity> ae_lists = mainEn.getMainLists();
+			if (result != null) {
+				List<AddressEntity> ae_lists = ((AddressEntity) result).getMainLists();
 				switch (typeCode) {
 				case TYPE_CODE_COUNTRY:
 					getSpinnerDatas(ae_lists, ls_country, sa_ae_country, sa_id_country);
@@ -540,8 +633,9 @@ public class AddressEditActivity extends BaseActivity implements
 
 	private void getSpinnerDatas(List<AddressEntity> ae_lists, List<String> lists,
 			SparseArray<AddressEntity> sa_ae, SparseIntArray sa_id) {
+		if (ae_lists == null) return;
 		clearTypeDatas(null, lists, sa_ae, sa_id);
-		AddressEntity ae = null;
+		AddressEntity ae;
 		for (int i = 0; i < ae_lists.size(); i++) {
 			ae = ae_lists.get(i);
 			lists.add(ae.getCountry());

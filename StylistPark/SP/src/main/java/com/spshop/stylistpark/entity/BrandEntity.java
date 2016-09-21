@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class BrandEntity implements IndexDisplay, Parcelable, Serializable {
+public class BrandEntity extends BaseEntity implements IndexDisplay, Parcelable, Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -74,7 +74,7 @@
     <color name="price_text_color">@color/style_text_color</color>
     <color name="product_menu_bg_color_dn">@color/ui_color_status</color>
     <color name="product_menu_bg_color_up">@color/ui_bg_color_percent_10</color>
-    <color name="style_text_color">#F383B6</color>
+    <color name="style_text_color">#FE6C90</color>
     <color name="text_color_black">#000000</color>
     <color name="text_color_greys">#999999</color>
     <color name="text_color_white">#FFFFFF</color>
@@ -85,7 +85,7 @@
     <color name="ui_bg_color_app">#FFFFFF</color>
     <color name="ui_bg_color_black">#000000</color>
     <color name="ui_bg_color_div_min">#E0E0E0</color>
-    <color name="ui_bg_color_nut">#EEEEEE</color>
+    <color name="ui_bg_color_nut">#F7F7F7</color>
     <color name="ui_bg_color_percent_05">#7F000000</color>
     <color name="ui_bg_color_percent_08">#33000000</color>
     <color name="ui_bg_color_percent_10">#00000000</color>
@@ -482,6 +482,7 @@
     <string name="pay_pal">PayPal</string>
     <string name="pay_pal_hint">PayPal global payment</string>
     <string name="pay_result_abnormal">Get paid results abnormal, please confirm with the merchants!</string>
+    <string name="pay_result_ok">The payment is complete! Do not re-pay!</string>
     <string name="pay_select_null">Please select a payment method</string>
     <string name="pay_success">Payment success</string>
     <string name="pay_title">Online Payment</string>

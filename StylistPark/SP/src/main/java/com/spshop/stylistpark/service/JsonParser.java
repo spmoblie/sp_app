@@ -1,6 +1,8 @@
 package com.spshop.stylistpark.service;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
+import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
@@ -283,7 +285,7 @@ public class JsonParser {
 	/**
 	 * 解析筛选列表数据
 	 */
-	public static SelectListEntity getScreenlistDatas(String jsonStr, String allStr) throws JSONException{
+	public static SelectListEntity getScreenlistDatas(String jsonStr) throws JSONException{
 		SelectListEntity mainEn, brandEn, childEn;
 		List<SelectListEntity> childLists = null;
 		List<SelectListEntity> mainLists = null;
@@ -294,7 +296,7 @@ public class JsonParser {
 
 		mainLists = new ArrayList<SelectListEntity>();
 		childLists = new ArrayList<SelectListEntity>();
-		childLists.add(new SelectListEntity(0, allStr, ""));
+		childLists.add(new SelectListEntity(0, AppApplication.getInstance().getString(R.string.all), ""));
 		if (!StringUtil.isNull(jsonObject, "list")) {
 			JSONArray brandLists = jsonObject.getJSONArray("list");
 			for (int i = 0; i < brandLists.length(); i++) {
@@ -445,7 +447,7 @@ public class JsonParser {
 	/**
 	 * 解析指定品牌相关信息
 	 */
-	public static BrandEntity getBrandProfile(String jsonStr, String allStr) throws JSONException {
+	public static BrandEntity getBrandProfile(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		JSONObject data = jsonObject.getJSONObject("data");
 		BrandEntity brandEn = new BrandEntity();
@@ -463,7 +465,7 @@ public class JsonParser {
 			SelectListEntity childEn;
 			List<SelectListEntity> childLists = new ArrayList<SelectListEntity>();
 			// 获取筛选分类
-			childLists.add(new SelectListEntity(0, allStr, ""));
+			childLists.add(new SelectListEntity(0, AppApplication.getInstance().getString(R.string.all), ""));
 			for (int i = 0; i < cats.length(); i++) {
 				JSONObject item = cats.getJSONObject(i);
 				childEn = new SelectListEntity();

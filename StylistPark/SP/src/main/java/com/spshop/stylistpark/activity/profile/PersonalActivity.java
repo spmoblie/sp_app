@@ -28,12 +28,14 @@ import com.spshop.stylistpark.activity.common.ClipPhotoGridActivity;
 import com.spshop.stylistpark.activity.common.SelectListActivity;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.image.AsyncImageUpload;
 import com.spshop.stylistpark.image.AsyncImageUpload.AsyncImageUploadCallback;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -43,6 +45,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PersonalActivity extends BaseActivity implements OnClickListener{
@@ -501,13 +504,21 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_MY_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_CHECK_USER_EMAIL_STATUS:
-			return sc.checkUserEmailStatus();
+			params.add(new MyNameValuePair("app", "is_validated"));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_CHECK_USER_EMAIL_STATUS, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_SEND_EMAIL_TO_USER:
-			return sc.sendEmailToUser();
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=send_hash_mail";
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_SEND_EMAIL_TO_USER, uri, params, HttpUtil.METHOD_POST);
+
 		case AppConfig.REQUEST_SV_POST_EDIT_USER_INFO_CODE:
-			return sc.postChangeUserInfo(changeStr, changeTypeKey);
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=edit_profile";
+			params.add(new MyNameValuePair(changeTypeKey, changeStr));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_EDIT_USER_INFO_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}

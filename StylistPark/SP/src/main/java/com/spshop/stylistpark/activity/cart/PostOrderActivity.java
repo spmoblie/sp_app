@@ -31,9 +31,11 @@ import com.spshop.stylistpark.activity.profile.OrderListActivity;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
@@ -67,7 +69,6 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	private int payType = PAY_TYPE_1;
 	private int selectPayType = PAY_TYPE_1;
 	private String couponId, invoiceStr, buyerStr, pricePay, orderAmount;
-	private OrderEntity orderEn, payOrderEn;
 	private DisplayImageOptions options;
 	
 	@Override
@@ -122,7 +123,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		tv_pay_now.setOnClickListener(this);
 	}
 
-	private void setView() {
+	private void setView(OrderEntity orderEn) {
 		if (orderEn != null) {
 			ll_main.setVisibility(View.VISIBLE);
 			tv_goods_total.setText(getString(R.string.num_total, orderEn.getGoodsTotal()));
@@ -140,7 +141,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			tv_total_curr.setText(currStr);
 			tv_pay_total.setText(pricePay);
 			// 商品列表
-			addGoodsLists();
+			addGoodsLists(orderEn);
 			// 物流信息
 			AddressEntity addrEn = orderEn.getAddressEn();
 			if (addrEn != null && !StringUtil.isNull(addrEn.getName())
@@ -232,7 +233,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	/**
 	 * 动态添加商品列表
 	 */
-	private void addGoodsLists() {
+	private void addGoodsLists(OrderEntity orderEn) {
 		List<ProductListEntity> goodsLists = orderEn.getGoodsLists();
 		if (goodsLists != null) {
 			ll_goods_lists.removeAllViews(); //移除之前添加的所有View
@@ -250,12 +251,12 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				tv_price.setText(goodsLists.get(i).getSellPrice());
 				TextView tv_name = (TextView) view.findViewById(R.id.item_goods_vertical_tv_name);
 				tv_name.setText(goodsLists.get(i).getName());
-				TextView tv_number = (TextView) view.findViewById(R.id.item_goods_vertical_tv_number);
-				tv_number.setText("x"+goodsLists.get(i).getTotal());
 				TextView tv_attr = (TextView) view.findViewById(R.id.item_goods_vertical_tv_attr);
 				String attrStr = goodsLists.get(i).getAttr();
 				attrStr = attrStr.replace("\n", " ");
 				tv_attr.setText(attrStr);
+				TextView tv_number = (TextView) view.findViewById(R.id.item_goods_vertical_tv_number);
+				tv_number.setText("x"+goodsLists.get(i).getTotal());
 				
 				if (i == goodsLists.size()-1) {
 					ImageView iv_line = (ImageView) view.findViewById(R.id.item_goods_vertical_iv_line);
@@ -469,17 +470,26 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_INDEX_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ORDER_CONFIRM_CODE:
-			orderEn = sc.getConfirmOrderData();
-			return orderEn;
-			
+			params.add(new MyNameValuePair("app", "checkout"));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_ORDER_CONFIRM_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE:
-			return sc.postSelectPayment(selectPayType);
-			
+			uri = AppConfig.URL_COMMON_INDEX_URL + "?app=update_payment";
+			params.add(new MyNameValuePair("payment", String.valueOf(selectPayType)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE, uri, params, HttpUtil.METHOD_POST);
+
 		case AppConfig.REQUEST_SV_POST_CONFIRM_ORDER_CODE:
-			payOrderEn = sc.postConfirmOrderData(payTypeCode, payType, couponId, invoiceStr, buyerStr, orderAmount);
-			return payOrderEn;
+			uri = AppConfig.URL_COMMON_FLOW_URL + "?step=done";
+			params.add(new MyNameValuePair("shipping", String.valueOf(payTypeCode)));
+			params.add(new MyNameValuePair("payment", String.valueOf(payType)));
+			params.add(new MyNameValuePair("bonus", couponId));
+			params.add(new MyNameValuePair("postscript", buyerStr));
+			params.add(new MyNameValuePair("order_amount", orderAmount));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_CONFIRM_ORDER_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -492,11 +502,11 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ORDER_CONFIRM_CODE:
 			if (result != null) {
-				BaseEntity baseEn = (BaseEntity) result;
-				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
+				OrderEntity orderEn = (OrderEntity) result;
+				if (orderEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
-					setView();
-				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
+					setView(orderEn);
+				}else if (orderEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
 				}else {
 					showErrorDialog();
@@ -507,7 +517,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			break;
 		case AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE:
 			if (result != null) {
-				BaseEntity baseEn = (BaseEntity)result;
+				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					payType = selectPayType;
 					isUpdate = true;
@@ -522,7 +532,8 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case AppConfig.REQUEST_SV_POST_CONFIRM_ORDER_CODE:
-			if (payOrderEn != null) {
+			if (result != null) {
+				OrderEntity payOrderEn = (OrderEntity) result;
 				if (payOrderEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					UserManager.getInstance().saveCartTotal(0);
 					switch (payType) {

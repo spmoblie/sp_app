@@ -13,8 +13,13 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.dialog.AppVersionDialog;
 import com.spshop.stylistpark.dialog.DialogManager;
 import com.spshop.stylistpark.dialog.LoadDialog;
+import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
 import com.spshop.stylistpark.service.ServiceContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UpdateAppVersion {
 
@@ -86,7 +91,15 @@ public class UpdateAppVersion {
 		protected UpdateVersionEntity doInBackground(String... url) {
 			UpdateVersionEntity versionEn = null;
 			try {
-				versionEn = ServiceContext.getServiceContext().checkVersionUpdate(1, curVersionName);
+				String uri = AppConfig.URL_COMMON_INDEX_URL + "?app=app";
+				List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+				params.add(new MyNameValuePair("id", "1"));
+				params.add(new MyNameValuePair("version", curVersionName));
+				BaseEntity baseEn = ServiceContext.getServiceContext().loadServerDatas(
+						"UpdateAppVersion", AppConfig.REQUEST_SV_POST_VERSION_CODE, uri, params, HttpUtil.METHOD_POST);
+				if (baseEn != null) {
+					versionEn = (UpdateVersionEntity) baseEn;
+				}
 			} catch (Exception e) {
 				ExceptionUtil.handle(e);
 				clearInstance();

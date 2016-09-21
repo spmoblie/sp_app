@@ -265,7 +265,6 @@ public class AuthenticationActivity2 extends BaseActivity implements OnClickList
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
-		//return sc.postAuthName(nameStr);
 		return null;
 	}
 

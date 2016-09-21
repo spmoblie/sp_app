@@ -260,6 +260,7 @@
     <string name="pay_fail">Payment failed</string>
     <string name="pay_cancel">Cancel payment</string>
     <string name="pay_wait_notice">Wait for payment notice</string>
+    <string name="pay_result_ok">The payment is complete! Do not re-pay!</string>
     <string name="pay_result_abnormal">Get paid results abnormal, please confirm with the merchants!</string>
     <string name="pay_info_error">Not obtain payment information, please confirm with the merchants!</string>
     <string name="pay_order_error">Payment order data error! Please refresh order information!</string>

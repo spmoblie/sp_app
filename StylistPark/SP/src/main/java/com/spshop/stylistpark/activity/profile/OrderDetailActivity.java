@@ -24,22 +24,25 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.TimeUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.wxapi.WXPayEntryActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetailActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "OrderDetailActivity";
 	public static OrderDetailActivity instance = null;
-	public boolean isUpdate = false;
+	private boolean isUpdate = false;
 	
 	private TextView tv_name, tv_phone, tv_address, tv_order_no, tv_order_date, tv_order_status;
 	private TextView tv_logistics_name, tv_logistics_no;
@@ -234,6 +237,23 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		}
 	}
 
+	/**
+	 * 刷新订单数据状态
+	 */
+	public void updateOrderStatus() {
+		isUpdate = true;
+		updateOrderList();
+	}
+
+	/**
+	 * 刷新订单列表数据
+	 */
+	private void updateOrderList() {
+		if (OrderListActivity.instance != null) {
+			OrderListActivity.instance.isUpdate = true;
+		}
+	}
+
 	private void getSVData() {
 		isSuccess = false;
 		startAnimation();
@@ -333,9 +353,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 
 		@Override
 		public void onFinish() {
-			if (OrderListActivity.instance != null) { //刷新订单列表
-				OrderListActivity.instance.isUpdate = true;
-			}
+			updateOrderList();
 			getSVData();
 		}
 		
@@ -395,12 +413,18 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_MY_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ORDER_DETAIL_CODE:
-			orderEn = sc.getOrderDetails(orderId);
-			return orderEn;
+			params.add(new MyNameValuePair("app", "order_detail"));
+			params.add(new MyNameValuePair("order_id", orderId));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_ORDER_DETAIL_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_POST_CACEL_ORDER_CODE:
-			return sc.postCacelOrder(orderId);
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=cancel_order";
+			params.add(new MyNameValuePair("order_id", orderId));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_CACEL_ORDER_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -413,16 +437,17 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ORDER_DETAIL_CODE:
 			if (result != null) {
-				BaseEntity baseEn = (BaseEntity) result;
-				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
+				orderEn = (OrderEntity) result;
+				if (orderEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
 					setView();
-				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
+				}else if (orderEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
 				}else {
 					showErrorDialog();
 				}
 			}else {
+				orderEn = null;
 				showErrorDialog();
 			}
 			break;
@@ -430,10 +455,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			if (result != null) {
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					if (OrderListActivity.instance != null) {
-						OrderListActivity.instance.isUpdate = true;
-					}
-					isUpdate = true;
+					updateOrderStatus();
 					updateAllData();
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理

@@ -27,8 +27,10 @@ import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.CartProductListAdapter;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
@@ -68,7 +70,6 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	private boolean isChange = true;
 	private boolean selectAll = false;
 	private boolean pullUpdate = false;
-	private GoodsCartEntity mainEn;
 	private ProductDetailEntity changeData;
 	private List<ProductDetailEntity> lv_datas = new ArrayList<ProductDetailEntity>();
 	private SparseArray<ProductDetailEntity> sa_cart = new SparseArray<ProductDetailEntity>();
@@ -185,6 +186,9 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 				changeData = (ProductDetailEntity) entity;
 				if (changeData != null) {
 					switch (type) {
+					case CartProductListAdapter.TYPE_SCROLL: //滚动
+						lv_Adapter.reset(mPosition);
+						break;
 					case CartProductListAdapter.TYPE_SELECT: //选择或取消
 						if (sa_cart.indexOfKey(changeData.getRecId()) > 0) {
 							sa_cart.remove(changeData.getRecId());
@@ -361,14 +365,24 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_INDEX_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_CART_LIST_CODE:
-			mainEn = sc.getCartListDatas();
-			return mainEn;
+			params.add(new MyNameValuePair("app", "cart"));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_CART_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_POST_DELETE_GOODS_CODE:
-			return sc.postDeleteGoods(changeData.getRecId());
+			uri = AppConfig.URL_COMMON_INDEX_URL + "?app=delete_cart";
+			params.add(new MyNameValuePair("id", String.valueOf(changeData.getRecId())));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_DELETE_GOODS_CODE, uri, params, HttpUtil.METHOD_POST);
+
 		case AppConfig.REQUEST_SV_POST_CHANGE_GOODS_CODE:
-			return sc.postChangeGoods(changeData.getRecId(), updateNum, changeData.getId());
+			uri = AppConfig.URL_COMMON_INDEX_URL + "?app=update_cart";
+			params.add(new MyNameValuePair("rec_id", String.valueOf(changeData.getRecId())));
+			params.add(new MyNameValuePair("number", String.valueOf(updateNum)));
+			params.add(new MyNameValuePair("goods_id", String.valueOf(changeData.getId())));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_CHANGE_GOODS_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -379,7 +393,8 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_CART_LIST_CODE:
 			lv_datas.clear();
-			if (mainEn != null) {
+			if (result != null) {
+				GoodsCartEntity mainEn = (GoodsCartEntity) result;
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) //登入超时
 				{
 					loginTimeoutHandle();

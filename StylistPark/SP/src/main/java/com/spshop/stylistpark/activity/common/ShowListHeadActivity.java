@@ -30,12 +30,14 @@ import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.BrandEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
 import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -106,7 +108,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private BrandEntity brandEn;
 	private SelectListEntity selectEn;
-	private ProductListEntity product_MainEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all_1 = new ArrayList<ProductListEntity>();
@@ -503,7 +504,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	}
 	
 	private void getBrandProductLists(){
-		request(AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE);
+		request(AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE);
 	}
 
 	/**
@@ -722,14 +723,22 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_PRODUCT_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_BRAND_PROFILE_CODE:
-			brandEn = sc.getBrandProfile(brandId, mContext.getString(R.string.all));
-			return brandEn;
-		case AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE:
-			product_MainEn = null;
-			product_MainEn = sc.getBrandProductLists(brandId, sortType, selectId, Page_Count, current_Page);
-			return product_MainEn;
+			params.add(new MyNameValuePair("app", "brand"));
+			params.add(new MyNameValuePair("id", String.valueOf(brandId)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BRAND_PROFILE_CODE, uri, params, HttpUtil.METHOD_GET);
+
+		case AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE:
+			params.add(new MyNameValuePair("app", "brand_goods"));
+			params.add(new MyNameValuePair("id", String.valueOf(brandId)));
+			params.add(new MyNameValuePair("order", String.valueOf(sortType)));
+			params.add(new MyNameValuePair("cat_id", String.valueOf(selectId)));
+			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
+			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -739,13 +748,17 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		if (instance == null) return;
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_BRAND_PROFILE_CODE:
+			if (result != null) {
+				brandEn = (BrandEntity) result;
+			}
 			getBrandProductLists();
 			break;
-		case AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE:
-			if (product_MainEn != null && product_MainEn.getMainLists() != null) {
+		case AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE:
+			if (result != null) {
+				ProductListEntity product_MainEn = (ProductListEntity) result;
 				int total = product_MainEn.getTotal();
 				List<ProductListEntity> lists = product_MainEn.getMainLists();
-				if (lists.size() > 0) {
+				if (lists != null && lists.size() > 0) {
 					List<BaseEntity> newLists = null;
 					switch (topType) {
 					case TYPE_1: //默认

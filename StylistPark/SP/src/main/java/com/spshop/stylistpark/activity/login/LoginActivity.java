@@ -41,6 +41,7 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.HomeFragmentActivity;
 import com.spshop.stylistpark.activity.cart.CartActivity;
 import com.spshop.stylistpark.entity.AuthResult;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.QQEntity;
 import com.spshop.stylistpark.entity.QQUserInfoEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
@@ -64,7 +65,9 @@ import com.tencent.tauth.UiError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class LoginActivity extends BaseActivity implements OnClickListener{
@@ -86,7 +89,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	
 	private HttpUtil http;
 	private UserManager um;
-	private UserInfoEntity infoEn, fbOauthEn;
+	private UserInfoEntity fbOauthEn;
 	private boolean isStop = false;
 	private String rootPage, loginType, postUid, userStr, passWordStr;
 	// WX
@@ -110,7 +113,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	// ZF
 	private String alipayOpenId;
 	private String alipayAuthCode;
-	private UserInfoEntity alipayUserInfo;
 	// FB
 	private CallbackManager callbackManager;
 
@@ -869,19 +871,26 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
-		infoEn = null;
+		String uri = AppConfig.URL_COMMON_USER_URL + "?act=oath_api";
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_POST_ACCOUNT_LOGIN_CODE: //账号密码登入
-			infoEn = sc.postAccountLoginData(userStr, passWordStr);
-			return infoEn;
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=signin";
+			params.add(new MyNameValuePair("username", userStr));
+			params.add(new MyNameValuePair("password", passWordStr));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_ACCOUNT_LOGIN_CODE, uri, params, HttpUtil.METHOD_POST);
+
 		case AppConfig.REQUEST_SV_POST_THIRD_PARTIES_LOGIN: //第三方授权登入
-			infoEn = sc.postThirdPartiesLogin(loginType, postUid);
-			return infoEn;
+			params.add(new MyNameValuePair("type", loginType));
+			params.add(new MyNameValuePair("userid", postUid));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_THIRD_PARTIES_LOGIN, uri, params, HttpUtil.METHOD_POST);
+
 		case AppConfig.REQUEST_SV_GET_ALIPAY_AUTHINFO_CODE: //获取支付宝授权信息
-			return sc.getAlipayAuthInfo();
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_ALIPAY_AUTHINFO_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_GET_ALIPAY_USERINFO_CODE: //获取支付宝用户信息
-			alipayUserInfo = sc.getAlipayUserInfo(alipayAuthCode);
-			return alipayUserInfo;
+			params.add(new MyNameValuePair("authCode", alipayAuthCode));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_ALIPAY_USERINFO_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -893,7 +902,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		switch (requestCode) {
 			case AppConfig.REQUEST_SV_POST_ACCOUNT_LOGIN_CODE: //账号密码登入
 			case AppConfig.REQUEST_SV_POST_THIRD_PARTIES_LOGIN: //第三方授权登入
-				if (infoEn != null) {
+				if (result != null) {
+					UserInfoEntity infoEn = (UserInfoEntity) result;
 					if (infoEn.getErrCode() == 1) //校验通过
 					{
 						um.saveUserLoginSuccess(infoEn.getUserId());
@@ -948,8 +958,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 				stopAnimation();
 				break;
 			case AppConfig.REQUEST_SV_GET_ALIPAY_USERINFO_CODE: //获取支付宝用户信息
-				if (alipayUserInfo != null) {
-					registAlipayUserInfo(alipayUserInfo);
+				if (result != null) {
+					registAlipayUserInfo((UserInfoEntity) result);
 				} else {
 					showLoginError();
 				}

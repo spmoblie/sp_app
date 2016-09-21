@@ -122,7 +122,9 @@ public class AppConfig {
 	
 	// 校验Sessions
 	public static final int REQUEST_SV_GET_SESSIONS_CODE = 0X0001;
-	
+	// 检测版本更新
+	public static final int REQUEST_SV_POST_VERSION_CODE = 0X0002;
+
 	// 加载远程首页推广数据
 	public static final int REQUEST_SV_GET_HOME_SHOW_HEAD_CODE = 0X1010;
 	// 加载本地首页推广数据
@@ -135,6 +137,8 @@ public class AppConfig {
 	public static final int REQUEST_SV_GET_CATEGORY_LIST_CODE = 0X1031;
 	// 加载分类商品列表数据
 	public static final int REQUEST_SV_GET_PRODUCT_LIST_CODE = 0X1040;
+	// 加载品牌商品列表数据
+	public static final int REQUEST_SV_GET_BRAND_PRODUCT_CODE = 0X1041;
 	// 加载所有品牌列表数据
 	public static final int REQUEST_SV_GET_BRANDS_LIST_CODE = 0X1050;
 	// 加载筛选品牌列表数据
@@ -210,6 +214,8 @@ public class AppConfig {
 	public static final int REQUEST_SV_GET_ORDER_DETAIL_CODE = 0X5231;
 	// 提交取消订单
 	public static final int REQUEST_SV_POST_CACEL_ORDER_CODE = 0X5232;
+	// 查看物流信息
+	public static final int REQUEST_SV_GET_LOGISTICS_DATA_CODE = 0X5233;
 	// 获取账户余额明细列表
 	public static final int REQUEST_SV_GET_BALANCE_DETAIL_LIST_CODE = 0X5240;
 	// 提交提现申请
@@ -305,13 +311,11 @@ public class AppConfig {
 	public static final String ACTIVITY_SELECT_PHOTO_LIST = "select_photo_list";
 	public static final String ACTIVITY_SHOW_PHOTO_LIST = "show_photo_list";
 	public static final String ACTIVITY_CLIP_PHOTO_PATH = "clip_photo_path";
-	public static final String ACTIVITY_KEY_COLLAGE_URI = "key_collage_uri";
 	public static final String ACTIVITY_CHANGE_USER_CONTENT = "change_user_content";
 	public static final String ACTIVITY_SELECT_PAY_TYPE = "select_pay_type";
 	public static final int ACTIVITY_SELECT_PHOTO_PICKER = 0X9001;
 	public static final int ACTIVITY_SHOW_PHOTO_PICKER = 0X9002;
 	public static final int ACTIVITY_GET_IMAGE_VIA_CAMERA = 0X9003;
-	public static final int ACTIVITY_RELEASE_ON_SHELVES = 0X9004;
 	public static final int ACTIVITY_GALLERY_CHOOSE_PHOTO = 0X9005;
 	public static final int ACTIVITY_CHANGE_USER_NICK = 0X9006;
 	public static final int ACTIVITY_CHANGE_USER_SEX = 0X9007;

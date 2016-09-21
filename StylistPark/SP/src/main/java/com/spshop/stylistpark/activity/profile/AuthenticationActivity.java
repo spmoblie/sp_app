@@ -11,10 +11,15 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AuthenticationActivity extends BaseActivity implements OnClickListener{
 	
@@ -100,7 +105,11 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
-		return sc.postAuthData(nameStr, numberStr);
+		String uri = AppConfig.URL_COMMON_USER_URL + "?act=auth";
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("name", nameStr));
+		params.add(new MyNameValuePair("number", numberStr));
+		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_AUTH_NAME, uri, params, HttpUtil.METHOD_POST);
 	}
 
 	@Override

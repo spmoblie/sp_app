@@ -35,9 +35,11 @@ import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.ScrollViewListView;
@@ -104,7 +106,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private ProductList2ItemAdapter lv_two_adapter;
 	
 	private SelectListEntity screen_MainEn;
-	private ProductListEntity product_MainEn;
 	private List<SelectListEntity> lv_words = new ArrayList<SelectListEntity>();
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
@@ -282,7 +283,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		lv_words_adapter = new SelectListAdapter(mContext, lv_words, apCallback, SelectListAdapter.DATA_TYPE_3);
 		lv_words_history.setAdapter(lv_words_adapter);
 		lv_words_history.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
-		
 		sv_words_history.post(new Runnable() {
 
 			@Override
@@ -743,14 +743,24 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_PRODUCT_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_SCREEN_LIST_CODE:
-			screen_MainEn = sc.getScreenlistDatas(typeId, mContext.getString(R.string.all));
-			return screen_MainEn;
+			params.add(new MyNameValuePair("app", "key"));
+			params.add(new MyNameValuePair("cat_id", String.valueOf(typeId)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_SCREEN_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE:
-			product_MainEn = null;
-			product_MainEn = sc.getProductListDatas(typeId, sortType, brandId, Page_Count, current_Page, searchStr, attrStr, 0);
-			return product_MainEn;
+			params.add(new MyNameValuePair("app", "list"));
+			params.add(new MyNameValuePair("cat_id", String.valueOf(typeId)));
+			params.add(new MyNameValuePair("price", String.valueOf(sortType)));
+			params.add(new MyNameValuePair("brand", String.valueOf(brandId)));
+			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
+			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
+			params.add(new MyNameValuePair("keyword", searchStr));
+			params.add(new MyNameValuePair("number", "0"));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -759,21 +769,26 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	public void onSuccess(int requestCode, Object result) {
 		if (instance == null) return;
 		switch (requestCode) {
+		case AppConfig.REQUEST_SV_GET_SCREEN_LIST_CODE:
+			if (result != null) {
+				screen_MainEn = (SelectListEntity) result;
+			}
+			break;
 		case AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE:
-			if (product_MainEn != null && product_MainEn.getMainLists() != null) {
+			if (result != null) {
 				ll_other.setVisibility(View.VISIBLE);
 				ll_search_history.setVisibility(View.GONE);
-
 				if (screen_MainEn == null) {
 					getScreenListDatas();
 				}
+				ProductListEntity mainEn = (ProductListEntity) result;
 				if (typeId != 0 && StringUtil.isNull(titleName)) {
-					titleName = product_MainEn.getCategoryName();
+					titleName = mainEn.getCategoryName();
 					tv_title.setText(titleName);
 				}
-				int total = product_MainEn.getTotal();
-				List<ProductListEntity> lists = product_MainEn.getMainLists();
-				if (lists.size() > 0) {
+				int total = mainEn.getTotal();
+				List<ProductListEntity> lists = mainEn.getMainLists();
+				if (lists != null && lists.size() > 0) {
 					List<BaseEntity> newLists = null;
 					switch (topType) {
 					case TYPE_1: //默认

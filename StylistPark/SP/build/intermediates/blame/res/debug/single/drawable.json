@@ -1,11 +1,11 @@
 [
     {
-        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\wheel_bg.xml",
-        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\wheel_bg.xml"
-    },
-    {
         "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_auth_dialog_header_background.xml",
         "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.10.1\\res\\drawable\\com_facebook_auth_dialog_header_background.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\wheel_bg.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\drawable\\wheel_bg.xml"
     },
     {
         "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_frame_bg_app_hollow_4.xml",

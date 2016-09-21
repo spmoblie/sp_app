@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Text字体常用颜色值 -->
-    <color name="style_text_color">#F383B6</color><!-- 风格 -->
+    <color name="style_text_color">#FE6C90</color><!-- 风格 -->
     <color name="text_color_white">#FFFFFF</color><!-- 白色 -->
     <color name="text_color_black">#000000</color><!-- 黑色 -->
     <color name="text_color_greys">#999999</color><!-- 灰色 -->
@@ -41,7 +41,7 @@
     <!-- AppUI背景色 -->
     <color name="ui_bg_color_app">#FFFFFF</color>
     <!-- AppUI区域色 -->
-    <color name="ui_bg_color_nut">#EEEEEE</color>
+    <color name="ui_bg_color_nut">#F7F7F7</color>
     <!-- 分割线颜色值:细 -->
     <color name="ui_bg_color_div_min">#E0E0E0</color>
 

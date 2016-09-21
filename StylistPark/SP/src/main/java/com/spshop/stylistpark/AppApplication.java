@@ -21,6 +21,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.spshop.stylistpark.config.SharedConfig;
 import com.spshop.stylistpark.db.CategoryDBService;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
@@ -28,6 +29,7 @@ import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.PushManager;
@@ -35,7 +37,9 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @SuppressLint({ "NewApi", "UseSparseArrays" })
 public class AppApplication extends Application implements OnDataListener{
@@ -126,6 +130,14 @@ public class AppApplication extends Application implements OnDataListener{
 			}
 		}).start();
 		shared.edit().putBoolean(AppConfig.KEY_LOAD_CATEGORY_DATA, true).apply();
+	}
+
+	/**
+	 * 获取HttpUrl语言、货币参数
+	 */
+	public static String getHttpUrlLangCurValueStr() {
+		return "&lang=" + LangCurrTools.getLanguageHttpUrlValueStr()
+				+ "&currency=" + LangCurrTools.getCurrencyHttpUrlValueStr();
 	}
 
 	/**
@@ -232,18 +244,18 @@ public class AppApplication extends Application implements OnDataListener{
 	}
 
 	/**
-	 * 应用数据统计之页面启动
+	 * 应用数据统计之页面启动1
+	 */
+	public static void onPageStart(String pageName) {
+		MobclickAgent.onPageStart(pageName);
+	}
+
+	/**
+	 * 应用数据统计之页面启动2
 	 */
 	public static void onPageStart(Activity activity, String pageName) {
 		MobclickAgent.onPageStart(pageName);
 		MobclickAgent.onResume(activity);
-	}
-
-	/**
-	 * 应用数据统计之页面启动
-	 */
-	public static void onPageStart(String pageName) {
-		MobclickAgent.onPageStart(pageName);
 	}
 
 	/**
@@ -302,20 +314,15 @@ public class AppApplication extends Application implements OnDataListener{
 			atm.request(AppConfig.REQUEST_SV_POST_LOGOUT_CODE, spApp); //通知服务器登出
 		}
 	}
-	
-	/**
-	 * 获取HttpUrl语言、货币参数
-	 */
-	public static String getHttpUrlLangCurValueStr() {
-		return "&lang=" + LangCurrTools.getLanguageHttpUrlValueStr()
-			 + "&currency=" + LangCurrTools.getCurrencyHttpUrlValueStr();
-	}
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_POST_LOGOUT_CODE:
-			return sc.postLogoutRequest();
+			String uri = AppConfig.URL_COMMON_INDEX_URL;
+			List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+			params.add(new MyNameValuePair("app", "logout"));
+			return sc.loadServerDatas("AppApplication", AppConfig.REQUEST_SV_POST_LOGOUT_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}

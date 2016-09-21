@@ -88,12 +88,12 @@ public class SplashActivity extends BaseActivity {
 
 	@Override
 	public Object doInBackground(int requsetCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_MY_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requsetCode) {
-		case AppConfig.REQUEST_SV_GET_SESSIONS_CODE:
-			String uri = AppConfig.URL_COMMON_MY_URL;
-			List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+			case AppConfig.REQUEST_SV_GET_SESSIONS_CODE:
 			params.add(new MyNameValuePair("app", "sessions"));
-			return sc.loadServerDatas(AppConfig.REQUEST_SV_GET_SESSIONS_CODE, uri, params, HttpUtil.METHOD_GET);
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_SESSIONS_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}

@@ -260,6 +260,7 @@
     <string name="pay_fail">支付失敗</string>
     <string name="pay_cancel">支付取消</string>
     <string name="pay_wait_notice">等待支付通知</string>
+    <string name="pay_result_ok">支付已完成！請勿重複支付！</string>
     <string name="pay_result_abnormal">獲取支付結果異常，請與商家確認是否已支付成功！</string>
     <string name="pay_info_error">獲取不到支付信息，請與商家確認是否已支付此訂單?</string>
     <string name="pay_order_error">支付訂單數據出現錯誤！請刷新訂單信息！</string>

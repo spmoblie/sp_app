@@ -21,6 +21,8 @@ import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.MemberListAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.MemberEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
@@ -65,7 +67,6 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private AdapterCallback lv_callback;
 	private MemberListAdapter lv_adapter;
 	
-	private MemberEntity mainEn;
 	private List<MemberEntity> lv_show = new ArrayList<MemberEntity>();
 	private List<MemberEntity> lv_all_1 = new ArrayList<MemberEntity>();
 	private List<MemberEntity> lv_all_2 = new ArrayList<MemberEntity>();
@@ -390,11 +391,15 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_MY_URL;;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_MEMBER_LIST_CODE:
-			mainEn = null;
-			mainEn = sc.getMemberLists(topType, Page_Count, current_Page);
-			return mainEn;
+			params.add(new MyNameValuePair("app", "member"));
+			params.add(new MyNameValuePair("status", String.valueOf(topType)));
+			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
+			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_MEMBER_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -404,10 +409,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		super.onSuccess(requestCode, result);
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_MEMBER_LIST_CODE:
-			if (mainEn != null) {
+			if (result != null) {
+				MemberEntity mainEn = (MemberEntity) result;
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
-					boolean isOk;
 					int total = mainEn.getCountTotal();
 					List<MemberEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {

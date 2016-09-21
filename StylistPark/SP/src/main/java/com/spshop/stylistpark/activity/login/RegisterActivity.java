@@ -14,10 +14,15 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.VerifyCode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterActivity extends BaseActivity implements OnClickListener{
 	
@@ -151,7 +156,11 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
-		return sc.postRegisterData(emailStr, passwordStr);
+		String uri = AppConfig.URL_COMMON_INDEX_URL + "?app=register";
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("email", emailStr));
+		params.add(new MyNameValuePair("password", passwordStr));
+		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_REGISTER_CODE, uri, params, HttpUtil.METHOD_POST);
 	}
 
 	@Override

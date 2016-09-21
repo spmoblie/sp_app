@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_list_cart_product_ll_main"
+<com.spshop.stylistpark.widgets.MyHorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_list_cart_product_hsv_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/ui_bg_color_nut"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,109 +13,92 @@
         android:background="@color/ui_bg_color_white"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:id="@+id/item_list_cart_product_rl_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/item_list_cart_product_iv_select"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/desc"
-                android:src="@drawable/btn_select_hook_no" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/item_list_cart_product_rl_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp" >
-
-            <ImageView
-                android:id="@+id/item_list_cart_product_iv_img"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/bg_img_white"
-                android:contentDescription="@string/desc" />
-        </RelativeLayout>
-
         <LinearLayout
+            android:id="@+id/item_list_cart_product_ll_left_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingRight="10dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:id="@+id/item_list_cart_product_rl_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/item_list_cart_product_tv_brand"
-                    style="@style/cart_product_text_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="50dp" />
+                <ImageView
+                    android:id="@+id/item_list_cart_product_iv_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/btn_select_hook_no" />
+            </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/item_list_cart_product_tv_name"
-                    style="@style/cart_product_text_content"
-                    android:layout_below="@id/item_list_cart_product_tv_brand"
-                    android:layout_marginRight="50dp" />
+            <RelativeLayout
+                android:id="@+id/item_list_cart_product_rl_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp">
 
-                <RelativeLayout
-                    android:id="@+id/item_list_cart_product_rl_delete"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true">
-
-                    <ImageView
-                        android:id="@+id/item_list_cart_product_iv_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/icon_delete"
-                        android:contentDescription="@string/desc" />
-                </RelativeLayout>
-
+                <ImageView
+                    android:id="@+id/item_list_cart_product_iv_img"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:contentDescription="@string/desc"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bg_img_white" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/item_list_cart_product_tv_brand"
+                    style="@style/cart_product_text_content"
+                    android:layout_width="match_parent"
+                    android:gravity="left"
+                    android:layout_toLeftOf="@+id/item_list_cart_product_tv_curr"
+                    android:layout_alignParentTop="true" />
+
+                <TextView
+                    android:id="@+id/item_list_cart_product_tv_name"
+                    style="@style/cart_product_text_content"
+                    android:lines="2"
+                    android:layout_below="@id/item_list_cart_product_tv_brand" />
+
 
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_curr"
                     style="@style/common_text_price"
                     android:layout_alignBottom="@+id/item_list_cart_product_tv_price"
                     android:layout_marginBottom="1dp"
+                    android:layout_toLeftOf="@+id/item_list_cart_product_tv_price"
                     android:textSize="@dimen/text_size_09" />
 
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_price"
                     style="@style/common_text_price"
-                    android:layout_toRightOf="@+id/item_list_cart_product_tv_curr"
+                    android:layout_alignParentRight="true"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_attr"
                     style="@style/cart_product_text_assist"
-                    android:layout_marginRight="100dp"
-                    android:layout_below="@id/item_list_cart_product_tv_price" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="5dp"
                     android:background="@drawable/shape_frame_white_dfdfdf_4"
                     android:orientation="horizontal">
 
@@ -165,6 +149,14 @@
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/item_list_cart_product_iv_delect"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/desc"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_list_delete" />
     </LinearLayout>
 
-</RelativeLayout>
+</com.spshop.stylistpark.widgets.MyHorizontalScrollView>

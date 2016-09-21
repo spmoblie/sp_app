@@ -12,11 +12,16 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 第三方账号绑定页面
@@ -135,7 +140,21 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
-		return sc.postRegisterOauthData(accountStr, passwordStr, loginType, uidStr, nickname, sex, headUrl);
+		String uri = "";
+		if (StringUtil.isNull(accountStr) || StringUtil.isNull(passwordStr)) {
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=oath_register";
+		}else {
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=signin";
+		}
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("username", accountStr));
+		params.add(new MyNameValuePair("password", passwordStr));
+		params.add(new MyNameValuePair("type", loginType));
+		params.add(new MyNameValuePair("userid", uidStr));
+		params.add(new MyNameValuePair("nickname", nickname));
+		params.add(new MyNameValuePair("sex", sex));
+		params.add(new MyNameValuePair("avatar", headUrl));
+		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_REGISTER_OAUTH_CODE, uri, params, HttpUtil.METHOD_POST);
 	}
 
 	@Override

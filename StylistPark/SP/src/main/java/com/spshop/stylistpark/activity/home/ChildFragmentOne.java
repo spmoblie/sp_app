@@ -39,7 +39,9 @@ import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
+import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.service.ServiceContext;
@@ -48,6 +50,7 @@ import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.FileManager;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
@@ -93,7 +96,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private DisplayImageOptions options;
 
 	private ThemeEntity themeEn;
-	private ProductListEntity mainEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all = new ArrayList<ProductListEntity>();
@@ -689,24 +691,36 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception{
+		String uri = AppConfig.URL_COMMON_INDEX_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
-			themeEn = null;
-			themeEn = sc.getHomeHeadDatas();
-			if (themeEn != null) {
+			params.add(new MyNameValuePair("app", "home"));
+			BaseEntity baseEn = sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE, uri, params, HttpUtil.METHOD_GET);
+			if (baseEn != null) {
+				themeEn = (ThemeEntity) baseEn;
 				FileManager.writeFileSaveObject(AppConfig.homeAdsFileName, themeEn, true);
 			}
-			return themeEn;
+			return baseEn;
+
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
-			mainEn = null;
-			mainEn = sc.getProductListDatas(0, 0, 1, Page_Count, current_Page, "", "", 0);
-			return mainEn;
+			uri = AppConfig.URL_COMMON_PRODUCT_URL;
+			params.add(new MyNameValuePair("app", "list"));
+			params.add(new MyNameValuePair("cat_id", "0"));
+			params.add(new MyNameValuePair("price", "0"));
+			params.add(new MyNameValuePair("brand", "1"));
+			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
+			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
+			params.add(new MyNameValuePair("keyword", ""));
+			params.add(new MyNameValuePair("number", "0"));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE:
 			Object obj = FileManager.readFileSaveObject(AppConfig.homeAdsFileName, true);
 			if (obj != null) {
 				themeEn = (ThemeEntity) obj;
 			}
-			return themeEn;
+			return obj;
 		}
 		return null;
 	}
@@ -728,8 +742,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			}
 			break;
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
-			if (mainEn != null) {
-				List<ProductListEntity> lists = mainEn.getMainLists();
+			if (result != null) {
+				List<ProductListEntity> lists = ((ProductListEntity) result).getMainLists();
 				if (lists != null && lists.size() > 0) {
 					rl_load_fail.setVisibility(View.GONE);
 					lv_all.addAll(lists);

@@ -17,7 +17,9 @@ import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.AddressListAdapter;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
@@ -39,7 +41,7 @@ public class MyAddressActivity extends BaseActivity {
 	private AdapterCallback ap_callback;
 	private AddressListAdapter lv_adapter;
 
-	private AddressEntity mainEn, data;
+	private AddressEntity data;
 	private List<AddressEntity> lv_show = new ArrayList<AddressEntity>();
 	
 	@Override
@@ -173,14 +175,22 @@ public class MyAddressActivity extends BaseActivity {
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_USER_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE:
-			mainEn = sc.getAddressLists();
-			return mainEn;
+			params.add(new MyNameValuePair("act", "address_list"));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_POST_SELECT_ADDRESS_CODE:
-			return sc.postSelectAddress(String.valueOf(data.getAddressId()));
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=is_address";
+			params.add(new MyNameValuePair("id", String.valueOf(data.getAddressId())));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_SELECT_ADDRESS_CODE, uri, params, HttpUtil.METHOD_POST);
+
 		case AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE:
-			return sc.postDeleteAddress(String.valueOf(data.getAddressId()));
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=drop_address";
+			params.add(new MyNameValuePair("id", String.valueOf(data.getAddressId())));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -192,7 +202,8 @@ public class MyAddressActivity extends BaseActivity {
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE:
 			stopAnimation();
-			if (mainEn != null) {
+			if (result != null) {
+				AddressEntity mainEn = (AddressEntity) result;
 				if (mainEn.getMainLists() != null) {
 					isSuccess = true;
 					lv_show.clear();

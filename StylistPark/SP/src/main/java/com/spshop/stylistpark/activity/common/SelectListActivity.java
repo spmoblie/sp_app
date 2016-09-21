@@ -15,9 +15,12 @@ import com.spshop.stylistpark.activity.home.ScreenListActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -190,9 +193,12 @@ public class SelectListActivity extends BaseActivity {
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_USER_URL + "?act=edit_profile";
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_POST_EDIT_USER_INFO_CODE:
-			return sc.postChangeUserInfo(String.valueOf(selectEn.getChildId()), "sex");
+			params.add(new MyNameValuePair("sex", String.valueOf(selectEn.getChildId())));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_EDIT_USER_INFO_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}

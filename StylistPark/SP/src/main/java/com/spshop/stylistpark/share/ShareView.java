@@ -156,7 +156,7 @@ public class ShareView {
 		this.mShareEn = entity;
 		if (mShareEn != null) {
 			// 添加Uid
-			String newUrl = mShareEn.getUrl() + "&uid=" + StringUtil.getInteger(UserManager.getInstance().getShareId());
+			String newUrl = mShareEn.getUrl() + "&uid=" + StringUtil.getInteger(UserManager.getInstance().getUserId());
 			mShareEn.setUrl(newUrl);
 			if (UserManager.getInstance().getUserRankCode() == 4) { //达人
 				// 生成二维码

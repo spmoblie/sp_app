@@ -50,6 +50,7 @@ import com.spshop.stylistpark.adapter.AddCartPopupListAdapter;
 import com.spshop.stylistpark.adapter.AddCartPopupListAdapter.AddCartCallback;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.ProductAttrEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ShareEntity;
@@ -66,6 +67,9 @@ import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.ObservableScrollView;
 import com.spshop.stylistpark.widgets.ObservableScrollView.ScrollViewListener;
 import com.spshop.stylistpark.widgets.ScrollViewListView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +111,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 	private ProductDetailEntity mainEn;
 	private ProductAttrEntity attrEn;
-	private GoodsCartEntity cartEn;
 	private DisplayImageOptions options;
 	private MyCountDownTimer mcdt;
 	private boolean isShow = false;
@@ -813,7 +816,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			}
 			break;
 		case R.id.product_detail_iv_to_top:
-			mScrollView.scrollTo(0, 0);
+			mScrollView.smoothScrollTo(0, 0);
 			break;
 		}
 	}
@@ -907,17 +910,38 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_PRODUCT_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE:
-			mainEn = null;
-			mainEn = sc.getProductDetailDatas(goodsId);
-			return mainEn;
+			params.add(new MyNameValuePair("app", "goods"));
+			params.add(new MyNameValuePair("id", String.valueOf(goodsId)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_POST_CART_PRODUCT_CODE:
-			cartEn = null;
-			cartEn = sc.postCartProductData(1, goodsId, selectId_1, selectId_2, buyNumber, 0);
-			return cartEn;
+			uri = AppConfig.URL_COMMON_FLOW_URL + "?step=add_to_cart";
+			JSONObject jsonObject = new JSONObject();
+			JSONArray jsonArray = new JSONArray();
+			if (selectId_1 > 0) {
+				jsonArray.put(String.valueOf(selectId_1));
+				if (selectId_2 > 0) {
+					jsonArray.put(String.valueOf(selectId_2));
+				}
+			}
+			jsonObject.put("quick", "1");
+			jsonObject.put("spec", jsonArray);
+			jsonObject.put("goods_id", goodsId);
+			jsonObject.put("number", buyNumber);
+			jsonObject.put("parent", "0");
+			String jsonStrValue = jsonObject.toString();
+
+			params.add(new MyNameValuePair("goods", jsonStrValue));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_CART_PRODUCT_CODE, uri, params, HttpUtil.METHOD_POST);
+
 		case AppConfig.REQUEST_SV_POST_COLLECITON_CODE:
-			return sc.postCollectionProduct(goodsId);
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=collect";
+			params.add(new MyNameValuePair("id", String.valueOf(goodsId)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_COLLECITON_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -927,7 +951,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		if (instance == null) return;
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE:
-			if (mainEn != null) {
+			if (result != null) {
+				mainEn = (ProductDetailEntity) result;
 				if (mainEn.getIsVideo() == 1 && !StringUtil.isNull(mainEn.getVideoUrl())) {
 					iv_video.setVisibility(View.VISIBLE);
 				}else {
@@ -937,8 +962,9 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			}
 			break;
 		case AppConfig.REQUEST_SV_POST_CART_PRODUCT_CODE:
-			if (cartEn != null) {
+			if (result != null) {
 				catrPopupDismiss(); //关闭弹层
+				GoodsCartEntity cartEn = (GoodsCartEntity) result;
 				if (cartEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					cartNumTotal = cartEn.getGoodsTotal();
 					UserManager.getInstance().saveCartTotal(cartNumTotal);

@@ -24,7 +24,9 @@ import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.CouponListAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.CouponEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
@@ -71,7 +73,6 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 	private AdapterCallback lv_callback;
 	private CouponListAdapter lv_adapter;
 	
-	private CouponEntity mainEn;
 	private List<CouponEntity> lv_show = new ArrayList<CouponEntity>();
 	private List<CouponEntity> lv_all_1 = new ArrayList<CouponEntity>();
 	private List<CouponEntity> lv_all_2 = new ArrayList<CouponEntity>();
@@ -418,13 +419,21 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_INDEX_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_COUPON_LIST_CODE:
-			mainEn = null;
-			mainEn = sc.getCouponLists(topType, Page_Count, current_Page, rootStr);
-			return mainEn;
+			params.add(new MyNameValuePair("app", "bonus"));
+			if (!"PostOrderActivity".equals(rootStr)) {
+				uri = AppConfig.URL_COMMON_MY_URL;
+				params.add(new MyNameValuePair("status", String.valueOf(topType)));
+			}
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_COUPON_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_POST_CHOOSE_COUPON_CODE:
-			return sc.postChooseCoupon(couponId);
+			uri = AppConfig.URL_COMMON_INDEX_URL + "?app=is_bonus";
+			params.add(new MyNameValuePair("bonus", couponId));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_CHOOSE_COUPON_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -435,7 +444,8 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 		super.onSuccess(requestCode, result);
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_COUPON_LIST_CODE:
-			if (mainEn != null) {
+			if (result != null) {
+				CouponEntity mainEn = (CouponEntity) result;
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
 					int total = mainEn.getCountTotal();

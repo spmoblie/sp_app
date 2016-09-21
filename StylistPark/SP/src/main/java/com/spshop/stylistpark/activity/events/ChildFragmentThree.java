@@ -26,6 +26,7 @@ import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.SpecialAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.service.ServiceContext;
@@ -33,6 +34,7 @@ import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
@@ -71,7 +73,6 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 	private AdapterCallback lv_callback;
 	private SpecialAdapter lv_adapter;
 
-	private ThemeEntity mainEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ThemeEntity> lv_show = new ArrayList<ThemeEntity>();
 	private List<ThemeEntity> lv_all_1 = new ArrayList<ThemeEntity>();
@@ -397,11 +398,15 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception{
+		String uri = AppConfig.URL_COMMON_INDEX_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 			case AppConfig.REQUEST_SV_GET_SPECIAL_LIST_CODE:
-				mainEn = null;
-				mainEn = sc.getSpecialListDatas(topType, current_Page, Page_Count);
-				return mainEn;
+				params.add(new MyNameValuePair("app", "articles"));
+				params.add(new MyNameValuePair("cat_id", String.valueOf(topType)));
+				params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
+				params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
+				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_SPECIAL_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -414,55 +419,52 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 		}
 		switch (requestCode) {
 			case AppConfig.REQUEST_SV_GET_SPECIAL_LIST_CODE:
-				if (mainEn != null) {
-					if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-						int total = mainEn.getCountTotal();
-						List<ThemeEntity> lists = mainEn.getMainLists();
-						if (lists != null && lists.size() > 0) {
-							List<BaseEntity> newLists = null;
-							switch (topType) {
-								case TYPE_1:
-									if (loadType == 0) { //下拉
-										newLists = BaseActivity.updNewEntity(total, total_1, lists, lv_all_1, am_all_1);
-									}else {
-										newLists = BaseActivity.addNewEntity(lv_all_1, lists, am_all_1);
-										if (newLists != null) {
-											page_type_1++;
-										}
+				if (result != null) {
+					ThemeEntity mainEn = (ThemeEntity) result;
+					int total = mainEn.getCountTotal();
+					List<ThemeEntity> lists = mainEn.getMainLists();
+					if (lists != null && lists.size() > 0) {
+						List<BaseEntity> newLists = null;
+						switch (topType) {
+							case TYPE_1:
+								if (loadType == 0) { //下拉
+									newLists = BaseActivity.updNewEntity(total, total_1, lists, lv_all_1, am_all_1);
+								}else {
+									newLists = BaseActivity.addNewEntity(lv_all_1, lists, am_all_1);
+									if (newLists != null) {
+										page_type_1++;
 									}
-									total_1 = total;
-									break;
-								case TYPE_2:
-									if (loadType == 0) { //下拉
-										newLists = BaseActivity.updNewEntity(total, total_2, lists, lv_all_2, am_all_2);
-									}else {
-										newLists = BaseActivity.addNewEntity(lv_all_2, lists, am_all_2);
-										if (newLists != null) {
-											page_type_2++;
-										}
+								}
+								total_1 = total;
+								break;
+							case TYPE_2:
+								if (loadType == 0) { //下拉
+									newLists = BaseActivity.updNewEntity(total, total_2, lists, lv_all_2, am_all_2);
+								}else {
+									newLists = BaseActivity.addNewEntity(lv_all_2, lists, am_all_2);
+									if (newLists != null) {
+										page_type_2++;
 									}
-									total_2 = total;
-									break;
-								case TYPE_3:
-									if (loadType == 0) { //下拉
-										newLists = BaseActivity.updNewEntity(total, total_3, lists, lv_all_3, am_all_3);
-									}else {
-										newLists = BaseActivity.addNewEntity(lv_all_3, lists, am_all_3);
-										if (newLists != null) {
-											page_type_3++;
-										}
+								}
+								total_2 = total;
+								break;
+							case TYPE_3:
+								if (loadType == 0) { //下拉
+									newLists = BaseActivity.updNewEntity(total, total_3, lists, lv_all_3, am_all_3);
+								}else {
+									newLists = BaseActivity.addNewEntity(lv_all_3, lists, am_all_3);
+									if (newLists != null) {
+										page_type_3++;
 									}
-									total_3 = total;
-									break;
-							}
-							if (newLists != null) {
-								addNewShowLists(newLists);
-							}
-							countTotal = total;
-							myUpdateAdapter();
-						}else {
-							loadFailHandle();
+								}
+								total_3 = total;
+								break;
 						}
+						if (newLists != null) {
+							addNewShowLists(newLists);
+						}
+						countTotal = total;
+						myUpdateAdapter();
 					}else {
 						loadFailHandle();
 					}

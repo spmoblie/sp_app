@@ -22,15 +22,20 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.common.ShowListActivity;
 import com.spshop.stylistpark.activity.login.LoginActivity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UserManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressLint("NewApi")
 public class ChildFragmentFive extends Fragment implements OnClickListener, OnDataListener {
@@ -43,7 +48,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	private SharedPreferences shared;
 	private boolean isLogined, isSuccess;
 	private UserInfoEntity infoEn;
-	
+
 	private LinearLayout ll_member_main, ll_member_list, ll_member_order;
 	private RelativeLayout rl_top_login, rl_member_all, rl_order_all, rl_my_address;
 	private RelativeLayout rl_my_wallet, rl_my_coupon, rl_collection, rl_history;
@@ -367,10 +372,12 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception{
+		String uri = AppConfig.URL_COMMON_MY_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_USERINFO_SUMMARY_CODE:
-			infoEn = sc.getUserInfoSummary();
-			return infoEn;
+			params.add(new MyNameValuePair("app", "my"));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_USERINFO_SUMMARY_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -380,7 +387,8 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		if (getActivity() == null) return;
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_USERINFO_SUMMARY_CODE:
-			if (infoEn != null) {
+			if (result != null) {
+				infoEn = (UserInfoEntity) result;
 				if (infoEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
 					setView();
@@ -392,6 +400,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 					loadFailHandle(getString(R.string.toast_server_busy));
 				}
 			}else {
+				infoEn = null;
 				loadFailHandle(getString(R.string.toast_server_busy));
 			}
 			break;

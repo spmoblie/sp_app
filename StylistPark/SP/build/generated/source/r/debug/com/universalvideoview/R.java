@@ -42,31 +42,31 @@ public final class R {
 		public static final int uvv_volume_btn = 0x7f0200eb;
 	}
 	public static final class id {
-		public static final int back_btn = 0x7f0b02e0;
-		public static final int center_play_btn = 0x7f0b02e2;
-		public static final int control_layout = 0x7f0b02e3;
-		public static final int duration = 0x7f0b02e8;
-		public static final int error_layout = 0x7f0b02de;
-		public static final int error_text = 0x7f0b02da;
-		public static final int has_played = 0x7f0b02e6;
-		public static final int loading_layout = 0x7f0b02dd;
-		public static final int loading_text = 0x7f0b02dc;
+		public static final int back_btn = 0x7f0b02e1;
+		public static final int center_play_btn = 0x7f0b02e3;
+		public static final int control_layout = 0x7f0b02e4;
+		public static final int duration = 0x7f0b02e9;
+		public static final int error_layout = 0x7f0b02df;
+		public static final int error_text = 0x7f0b02db;
+		public static final int has_played = 0x7f0b02e7;
+		public static final int loading_layout = 0x7f0b02de;
+		public static final int loading_text = 0x7f0b02dd;
 		public static final int normal = 0x7f0b0020;
-		public static final int scale_button = 0x7f0b02e5;
-		public static final int seekbar = 0x7f0b02e7;
-		public static final int title = 0x7f0b02e1;
-		public static final int title_part = 0x7f0b02df;
-		public static final int turn_button = 0x7f0b02e4;
+		public static final int scale_button = 0x7f0b02e6;
+		public static final int seekbar = 0x7f0b02e8;
+		public static final int title = 0x7f0b02e2;
+		public static final int title_part = 0x7f0b02e0;
+		public static final int turn_button = 0x7f0b02e5;
 	}
 	public static final class integer {
 	}
 	public static final class layout {
-		public static final int uvv_on_error_layout = 0x7f030073;
-		public static final int uvv_on_loading_layout = 0x7f030074;
-		public static final int uvv_player_controller = 0x7f030075;
+		public static final int uvv_on_error_layout = 0x7f030072;
+		public static final int uvv_on_loading_layout = 0x7f030073;
+		public static final int uvv_player_controller = 0x7f030074;
 	}
 	public static final class string {
-		public static final int action_settings = 0x7f060213;
+		public static final int action_settings = 0x7f060214;
 		public static final int app_name = 0x7f06002a;
 	}
 	public static final class style {

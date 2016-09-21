@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,7 +20,9 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.spshop.stylistpark.widgets.slider.SlideView;
+import com.spshop.stylistpark.widgets.MyHorizontalScrollView;
+import com.spshop.stylistpark.widgets.MyHorizontalScrollView.ScrollType;
+import com.spshop.stylistpark.widgets.MyHorizontalScrollView.ScrollViewListener;
 
 import java.util.List;
 
@@ -35,14 +38,16 @@ public class CartProductListAdapter extends BaseAdapter{
 	public static final int TYPE_MINUS = 3;
 	public static final int TYPE_ADD = 4;
 	public static final int TYPE_DELETE = 5;
-	
+	public static final int TYPE_SCROLL = 6;
+
 	private Context context;
 	private List<ProductDetailEntity> datas;
+	private int scrollPos = -1;
 	//private SparseArray<ProductDetailEntity> sa_cart;
 	private String currStr;
 	private AdapterCallback apCallback;
-    private SlideView slideview;
     private DisplayImageOptions options;
+	private LinearLayout.LayoutParams lp;
 	
 	public CartProductListAdapter(Context context, List<ProductDetailEntity> datas,
 					SparseArray<ProductDetailEntity> sa_cart, AdapterCallback callback) {
@@ -53,14 +58,23 @@ public class CartProductListAdapter extends BaseAdapter{
 		this.apCallback = callback;
         
         options = AppApplication.getDefaultImageOptions();
+
+		lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.width = AppApplication.screenWidth;
 	}
 	
 	public void updateAdapter(List<ProductDetailEntity> datas, SparseArray<ProductDetailEntity> sa_cart){
 		if (datas != null) {
 			this.datas = datas;
 			//this.sa_cart = sa_cart;
+			this.scrollPos = -1;
 			notifyDataSetChanged();
 		}
+	}
+
+	public void reset(int scrollPos){
+		this.scrollPos = scrollPos;
+		notifyDataSetChanged();
 	}
 
 	/**获得总共有多少条数据*/
@@ -82,6 +96,8 @@ public class CartProductListAdapter extends BaseAdapter{
 	}
 
 	static class ViewHolder{
+		MyHorizontalScrollView scroll_hsv;
+		LinearLayout ll_left_main;
 		RelativeLayout rl_select, rl_minus, rl_add;
 		ImageView iv_select, iv_img, iv_minus, iv_add, iv_delete;
 		TextView tv_brand, tv_name, tv_attr, tv_curr, tv_price, tv_number;
@@ -93,10 +109,10 @@ public class CartProductListAdapter extends BaseAdapter{
 		ViewHolder holder = null;
 		if(convertView == null){
 			holder = new ViewHolder();
-			View view = LayoutInflater.from(context).inflate(R.layout.item_list_cart_product, null);
-			slideview = new SlideView(context, context.getResources(), view);
-			convertView = slideview;
-			
+			convertView = LayoutInflater.from(context).inflate(R.layout.item_list_cart_product, null);
+
+			holder.scroll_hsv = (MyHorizontalScrollView) convertView.findViewById(R.id.item_list_cart_product_hsv_main);
+			holder.ll_left_main = (LinearLayout) convertView.findViewById(R.id.item_list_cart_product_ll_left_main);
 			holder.rl_select = (RelativeLayout) convertView.findViewById(R.id.item_list_cart_product_rl_select);
 			holder.rl_minus = (RelativeLayout) convertView.findViewById(R.id.item_list_cart_product_rl_num_minus);
 			holder.rl_add = (RelativeLayout) convertView.findViewById(R.id.item_list_cart_product_rl_num_add);
@@ -104,20 +120,41 @@ public class CartProductListAdapter extends BaseAdapter{
 			holder.iv_img = (ImageView) convertView.findViewById(R.id.item_list_cart_product_iv_img);
 			holder.iv_minus = (ImageView) convertView.findViewById(R.id.item_list_cart_product_iv_num_minus);
 			holder.iv_add = (ImageView) convertView.findViewById(R.id.item_list_cart_product_iv_num_add);
-			holder.iv_delete = (ImageView) convertView.findViewById(R.id.item_list_cart_product_iv_delete);
 			holder.tv_brand = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_brand);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_name);
 			holder.tv_attr = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_attr);
 			holder.tv_curr = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_curr);
 			holder.tv_price = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_price);
 			holder.tv_number = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_number);
-			
+			holder.iv_delete = (ImageView) convertView.findViewById(R.id.item_list_cart_product_iv_delect);
+
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder)convertView.getTag();
 		}
 		final ProductDetailEntity data = datas.get(position);
-		
+
+		holder.ll_left_main.setLayoutParams(lp); //适配屏幕宽度
+		if (scrollPos != position) { //对非当前滚动项进行复位
+			holder.scroll_hsv.smoothScrollTo(0, holder.scroll_hsv.getScrollY());
+		}
+		holder.scroll_hsv.setOnScrollStateChangedListener(new ScrollViewListener() {
+			@Override
+			public void onScrollChanged(ScrollType scrollType) {
+				switch (scrollType) {
+					case TOUCH_SCROLL: //手指拖动滚动
+						break;
+					case FLING: //滚动
+						break;
+					case IDLE: //滚动停止
+						if (scrollPos != position) { //非同一滚动项
+							apCallback.setOnClick(data, position, TYPE_SCROLL); //滚动
+						}
+						break;
+				}
+			}
+		});
+
 		String imgUrl = data.getImgMinUrl();
 		if (!StringUtil.isNull(imgUrl)) {
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + imgUrl, holder.iv_img, options);

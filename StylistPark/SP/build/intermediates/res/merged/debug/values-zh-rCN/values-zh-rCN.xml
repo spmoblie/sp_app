@@ -326,6 +326,7 @@
     <string name="pay_pal">PayPal</string>
     <string name="pay_pal_hint">PayPal全球支付</string>
     <string name="pay_result_abnormal">获取支付结果异常，请与商家确认是否已支付成功！</string>
+    <string name="pay_result_ok">支付已完成！请勿重复支付！</string>
     <string name="pay_select_null">请选择一种支付方式</string>
     <string name="pay_success">支付成功</string>
     <string name="pay_title">在线支付</string>

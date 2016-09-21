@@ -32,10 +32,13 @@ import com.spshop.stylistpark.adapter.CategoryGridAdapter;
 import com.spshop.stylistpark.adapter.CategoryLeftListAdapter;
 import com.spshop.stylistpark.adapter.IndexDisplayAdapter.OnIndexDisplayItemClick;
 import com.spshop.stylistpark.db.CategoryDBService;
+import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.BrandEntity;
 import com.spshop.stylistpark.entity.CategoryListEntity;
 import com.spshop.stylistpark.entity.IndexDisplay;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.utils.FileManager;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.IndexDisplayTool;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -59,7 +62,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	private GridView gv_right;
 	private CategoryLeftListAdapter lv_left_Adapter;
 	private CategoryGridAdapter gv_Adapter;
-	private CategoryListEntity mainEn, brandsEn;
+	private CategoryListEntity brandsEn;
 	private CategoryDBService dbs;
 
 	private int index = 0;
@@ -330,6 +333,9 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_PRODUCT_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		BaseEntity baseEn;
 		switch (requestCode) {
 		case AppConfig.REQUEST_DB_GET_CATEGORY_LIST_CODE:
 			List<CategoryListEntity> lvs = dbs.getListData(dataType); 
@@ -346,32 +352,37 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 			if (obj != null) {
 				brandsEn = (CategoryListEntity) obj;
 			}
-			return lvs;
+			return obj;
 		case AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE:
-			mainEn = null;
-			mainEn = sc.getCategoryListDatas();
-			if (mainEn != null && mainEn.getMainLists() != null) {
-				lv_lists.addAll(mainEn.getMainLists());
-				gv_lists.addAll(lv_lists.get(0).getChildLists());
-				CategoryListEntity fEn = null;
-				CategoryListEntity cEn = null;
-				List<CategoryListEntity> lists = null;
-				for (int i = 0; i < lv_lists.size(); i++) {
-					fEn = lv_lists.get(i);
-					dbs.update(fEn, 0); //更新父级分类
-					
-					lists = fEn.getChildLists();
-					for (int j = 0; j < lists.size(); j++) {
-						cEn = lists.get(j);
-						dbs.update(cEn, fEn.getTypeId()); //更新子级分类
+			params.add(new MyNameValuePair("app", "menu"));
+			baseEn = sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+			if (baseEn != null) {
+				CategoryListEntity mainEn = (CategoryListEntity) baseEn;
+				if (mainEn.getMainLists() != null && mainEn.getMainLists().size() > 0) {
+					lv_lists.addAll(mainEn.getMainLists());
+					gv_lists.addAll(lv_lists.get(0).getChildLists());
+					CategoryListEntity fEn;
+					CategoryListEntity cEn;
+					List<CategoryListEntity> lists;
+					for (int i = 0; i < lv_lists.size(); i++) {
+						fEn = lv_lists.get(i);
+						dbs.update(fEn, 0); //更新父级分类
+
+						lists = fEn.getChildLists();
+						for (int j = 0; j < lists.size(); j++) {
+							cEn = lists.get(j);
+							dbs.update(cEn, fEn.getTypeId()); //更新子级分类
+						}
 					}
 				}
 			}
-			return mainEn;
+			return baseEn;
 		case AppConfig.REQUEST_SV_GET_BRANDS_LIST_CODE:
-			brandsEn = null;
-			brandsEn = sc.getCategoryBrandDatas();
-			if (brandsEn != null) {
+			params.add(new MyNameValuePair("app", "key"));
+			params.add(new MyNameValuePair("cat_id", "0"));
+			baseEn = sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BRANDS_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+			if (baseEn != null) {
+				brandsEn = (CategoryListEntity) baseEn;
 				FileManager.writeFileSaveObject(AppConfig.brandsFileName, brandsEn, true);
 			}
 			return brandsEn;
@@ -409,7 +420,7 @@ public class CategoryActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE:
-			if (lv_lists.size() > 0) {
+			if (lv_lists != null && lv_lists.size() > 0) {
 				lv_left_Adapter.updateAdapter(lv_lists, 0);
 				gv_Adapter.updateAdapter(gv_lists);
 				dataType = lv_lists.get(index).getTypeId();

@@ -32,6 +32,7 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
 import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
@@ -47,6 +48,11 @@ import com.spshop.stylistpark.widgets.ObservableWebView;
 import com.spshop.stylistpark.widgets.WebViewLoadingBar;
 import com.spshop.stylistpark.widgets.video.UniversalMediaController;
 import com.spshop.stylistpark.widgets.video.UniversalVideoView;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -604,9 +610,18 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_COMMENT_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 			case AppConfig.REQUEST_SV_POST_COMMENT_CODE:
-				return sc.postComment(postId, commentStr);
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("id", String.valueOf(postId));
+				jsonObject.put("type", "1");
+				jsonObject.put("content", commentStr);
+				String jsonStrValue = jsonObject.toString();
+
+				params.add(new MyNameValuePair("cmt", jsonStrValue));
+				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_COMMENT_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}

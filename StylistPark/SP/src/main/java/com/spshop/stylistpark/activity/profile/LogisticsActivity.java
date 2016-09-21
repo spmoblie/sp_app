@@ -12,6 +12,8 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.adapter.LogisticsListAdapter;
 import com.spshop.stylistpark.entity.LogisticsEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UserManager;
 
@@ -30,7 +32,6 @@ public class LogisticsActivity extends BaseActivity {
 	private LogisticsListAdapter lv_adapter;
 	private boolean isLogined, isSuccess;
 	private String typeStr, postId;
-	private LogisticsEntity mainEn;
 	private List<LogisticsEntity> logLists = new ArrayList<LogisticsEntity>();
 	
 	@Override
@@ -66,7 +67,7 @@ public class LogisticsActivity extends BaseActivity {
 		isSuccess = false;
 		startAnimation();
 		rl_no_data.setVisibility(View.GONE);
-		request(AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE);
+		request(AppConfig.REQUEST_SV_GET_LOGISTICS_DATA_CODE);
 	}
 
 	@Override
@@ -113,10 +114,13 @@ public class LogisticsActivity extends BaseActivity {
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = "http://www.kuaidi100.com/query";
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE:
-			mainEn = sc.getLogisticsDatas(typeStr, postId);
-			return mainEn;
+		case AppConfig.REQUEST_SV_GET_LOGISTICS_DATA_CODE:
+			params.add(new MyNameValuePair("type", typeStr));
+			params.add(new MyNameValuePair("postid", postId));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_LOGISTICS_DATA_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -125,9 +129,10 @@ public class LogisticsActivity extends BaseActivity {
 	public void onSuccess(int requestCode, Object result) {
 		super.onSuccess(requestCode, result);
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE:
+		case AppConfig.REQUEST_SV_GET_LOGISTICS_DATA_CODE:
 			stopAnimation();
-			if (mainEn != null) {
+			if (result != null) {
+				LogisticsEntity mainEn = (LogisticsEntity) result;
 				if (mainEn.getErrCode() == 200) {
 					if (mainEn.getMainLists() != null) {
 						isSuccess = true;

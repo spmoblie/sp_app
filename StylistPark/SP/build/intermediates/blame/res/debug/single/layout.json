@@ -288,12 +288,12 @@
         "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\layout\\activity_personal.xml"
     },
     {
-        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\layout_category_viewpager_1.xml",
-        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\layout\\layout_category_viewpager_1.xml"
-    },
-    {
         "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\activity_authentication.xml",
         "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\layout\\activity_authentication.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\layout_category_viewpager_1.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\layout\\layout_category_viewpager_1.xml"
     },
     {
         "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\com_facebook_login_fragment.xml",
@@ -326,10 +326,6 @@
     {
         "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\layout_loading_fail.xml",
         "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\layout\\layout_loading_fail.xml"
-    },
-    {
-        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\item_list_slider_view_merge.xml",
-        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\layout\\item_list_slider_view_merge.xml"
     },
     {
         "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\activity_setting.xml",
@@ -380,12 +376,12 @@
         "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\layout\\item_grid_photo.xml"
     },
     {
-        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\activity_language_currency.xml",
-        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\layout\\activity_language_currency.xml"
-    },
-    {
         "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\item_list_category_left.xml",
         "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\layout\\item_list_category_left.xml"
+    },
+    {
+        "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\activity_language_currency.xml",
+        "source": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\src\\main\\res\\layout\\activity_language_currency.xml"
     },
     {
         "merged": "D:\\evan\\git\\Code\\sp_app\\StylistPark\\SP\\build\\intermediates\\res\\merged\\debug\\layout\\activity_splash.xml",

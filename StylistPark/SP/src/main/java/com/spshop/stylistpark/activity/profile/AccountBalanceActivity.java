@@ -18,6 +18,8 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.BalanceListAdapter;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -49,7 +51,6 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	private LinearLayout ll_auth;
 	private TextView tv_amount_title, tv_amount, tv_hint, tv_auth, tv_no_data;
 
-	private BalanceDetailEntity mainEn;
 	private List<BalanceDetailEntity> lv_show = new ArrayList<BalanceDetailEntity>();
 	
 	@Override
@@ -84,10 +85,10 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 		
 		initListView();
 		setAdapter();
-		setHeadView();
+		setHeadView(null);
 	}
 
-	private void setHeadView() {
+	private void setHeadView(BalanceDetailEntity mainEn) {
 		if (mainEn != null) {
 			amountTotal = mainEn.getAmount();
 			String amountStr = String.valueOf(amountTotal);
@@ -286,11 +287,14 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_MY_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_BALANCE_DETAIL_LIST_CODE:
-			mainEn = null;
-			mainEn = sc.getBalanceDetailList(current_Page, Page_Count);
-			return mainEn;
+			params.add(new MyNameValuePair("app", "account"));
+			params.add(new MyNameValuePair("size", String.valueOf(current_Page)));
+			params.add(new MyNameValuePair("page", String.valueOf(Page_Count)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BALANCE_DETAIL_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -302,11 +306,12 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 		stopAnimation();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_BALANCE_DETAIL_LIST_CODE:
-			if (mainEn != null) {
+			if (result != null) {
+				BalanceDetailEntity mainEn = (BalanceDetailEntity) result;
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
 					if (current_Page == 1) {
-						setHeadView();
+						setHeadView(mainEn);
 					}
 					countTotal = mainEn.getCountTotal();
 					List<BalanceDetailEntity> lists = mainEn.getMainLists();

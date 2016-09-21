@@ -23,8 +23,10 @@ import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.MemberOrderListAdapter;
 import com.spshop.stylistpark.adapter.OrderListAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -79,7 +81,6 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private OrderListAdapter lv_adapter;
 	private MemberOrderListAdapter lv_adapter_member;
 	
-	private OrderEntity mainEn;
 	private List<OrderEntity> lv_show = new ArrayList<OrderEntity>();
 	private List<OrderEntity> lv_all_1 = new ArrayList<OrderEntity>();
 	private List<OrderEntity> lv_all_2 = new ArrayList<OrderEntity>();
@@ -544,17 +545,24 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_MY_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ORDER_LIST_CODE:
-			mainEn = null;
 			if (rootCode == 0) {
-				mainEn = sc.getOrderLists(topType, Page_Count, current_Page);
+				params.add(new MyNameValuePair("app", "order_list"));
 			}else { //会员订单
-				mainEn = sc.getMemberOrderLists(topType, Page_Count, current_Page);
+				params.add(new MyNameValuePair("app", "member_order"));
 			}
-			return mainEn;
+			params.add(new MyNameValuePair("status", String.valueOf(topType)));
+			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
+			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_ORDER_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+
 		case AppConfig.REQUEST_SV_POST_CACEL_ORDER_CODE:
-			return sc.postCacelOrder(orderId);
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=cancel_order";
+			params.add(new MyNameValuePair("order_id", orderId));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_CACEL_ORDER_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -565,7 +573,8 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		super.onSuccess(requestCode, result);
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ORDER_LIST_CODE:
-			if (mainEn != null) {
+			if (result != null) {
+				OrderEntity mainEn = (OrderEntity) result;
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
 					int total = mainEn.getOrderTotal();
