@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -38,8 +39,10 @@ import com.sina.weibo.sdk.exception.WeiboException;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
+import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.BitmapCache;
+import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.share.weibo.AccessTokenKeeper;
 import com.spshop.stylistpark.share.weixi.WXShareUtil;
 import com.spshop.stylistpark.utils.BitmapUtil;
@@ -47,7 +50,6 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
-import com.spshop.stylistpark.utils.QRCodeUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.tencent.connect.common.Constants;
@@ -64,7 +66,6 @@ import com.tencent.tauth.UiError;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 
 
 public class ShareView {
@@ -156,9 +157,9 @@ public class ShareView {
 		this.mShareEn = entity;
 		if (mShareEn != null) {
 			// 添加Uid
-			String newUrl = mShareEn.getUrl() + "&uid=" + StringUtil.getInteger(UserManager.getInstance().getUserId());
+			String newUrl = mShareEn.getUrl() + "&u=" + StringUtil.getInteger(UserManager.getInstance().getUserId());
 			mShareEn.setUrl(newUrl);
-			if (UserManager.getInstance().getUserRankCode() == 4) { //达人
+			/*if (UserManager.getInstance().isTalent()) { //达人
 				// 生成二维码
 				Bitmap dropBm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.bg_img_qr_code);
 				String qrPath = BitmapUtil.createPath("qr_code.png", false).getPath();
@@ -171,7 +172,7 @@ public class ShareView {
 				if (!StringUtil.isNull(longImgPath)) {
 					mShareEn.setImagePath(longImgPath);
 				}
-			}
+			}*/
 		}
 	}
 
@@ -498,7 +499,7 @@ public class ShareView {
 			// 1. 初始化微博的分享消息
 			WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
 			TextObject textObject = new TextObject();
-			textObject.text = mShareEn.getTitle() + " " + mShareEn.getUrl();
+			textObject.text = "【" + mShareEn.getTitle() + "】 " + mShareEn.getUrl();
 			weiboMessage.textObject = textObject;
 			ImageObject imageObject = new ImageObject();
 			Bitmap bitmap = BitmapCache.getInstance().getBitmap(mShareEn.getImagePath());
@@ -634,6 +635,7 @@ public class ShareView {
 	 */
 	private void showShareSuccess() {
 		CommonTools.showToast(mContext.getString(R.string.share_msg_success), 1000);
+		shareFeedback();
 	}
 
 	/**
@@ -662,6 +664,33 @@ public class ShareView {
 	 */
 	private void showAuthFail() {
 		CommonTools.showToast(mContext.getString(R.string.share_msg_error_license), 1000);
+	}
+
+	private void shareFeedback() {
+		new Share_Feedback_Task().execute(AppConfig.URL_COMMON_USER_URL + "?act=share");
+	}
+
+	/**
+	 * 分享结果反馈
+	 */
+	class Share_Feedback_Task extends AsyncTask<String, Void, String> {
+
+		@Override
+		protected String doInBackground(String... params) {
+			try {
+				return ServiceContext.getServiceContext().getServerJSONString(params[0]);
+			} catch (Exception e) {
+				ExceptionUtil.handle(e);
+				return "";
+			}
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (!StringUtil.isNull(result)) {
+				BaseActivity.updateActivityData(5);
+			}
+		}
 	}
 	
 	/**

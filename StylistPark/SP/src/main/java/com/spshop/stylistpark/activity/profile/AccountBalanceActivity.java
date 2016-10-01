@@ -3,9 +3,10 @@ package com.spshop.stylistpark.activity.profile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,7 +19,9 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.BalanceListAdapter;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
+import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -36,10 +39,11 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	private static final String TAG = "AccountBalanceActivity";
 	public static AccountBalanceActivity instance = null;
 	public boolean isUpdate = false;
-	
-	private static final int Page_Count = 20;  //每页加载条数
+
+	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
-	private int countTotal = 0; //数集总数量
+	private int overStatus = 0; //余额状态
+	private String overHintStr; //余额状态描述
 	private double amountTotal = 0; //账号余额
 	private boolean isLogined, isSuccess;
 
@@ -47,11 +51,12 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	private ListView mListView;
 	private AdapterCallback lv_callback;
 	private BalanceListAdapter lv_adapter;
-	private Button btn_withdrawals;
-	private LinearLayout ll_auth;
+	private LinearLayout ll_auth_main;
 	private TextView tv_amount_title, tv_amount, tv_hint, tv_auth, tv_no_data;
 
 	private List<BalanceDetailEntity> lv_show = new ArrayList<BalanceDetailEntity>();
+	private List<BalanceDetailEntity> lv_all_1 = new ArrayList<BalanceDetailEntity>();
+	private ArrayMap<String, Boolean> am_all_1 = new ArrayMap<String, Boolean>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,24 +76,24 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 		refresh_lv = (PullToRefreshListView) findViewById(R.id.account_balance_refresh_lv);
 		tv_amount_title = (TextView) findViewById(R.id.balance_list_head_tv_amount_title);
 		tv_amount = (TextView) findViewById(R.id.balance_list_head_tv_amount);
+		ll_auth_main = (LinearLayout) findViewById(R.id.balance_list_head_ll_auth);
 		tv_hint = (TextView) findViewById(R.id.balance_list_head_tv_withdrawals_hint);
 		tv_auth = (TextView) findViewById(R.id.balance_list_head_tv_auth);
 		tv_no_data = (TextView) findViewById(R.id.account_balance_tv_no_data);
-		ll_auth = (LinearLayout) findViewById(R.id.balance_list_head_ll_auth);
-		btn_withdrawals = (Button) findViewById(R.id.balance_list_head_btn_withdrawals);
 	}
 
 	private void initView() {
 		setTitle(R.string.profile_account_money);
+		setBtnRight(getString(R.string.money_withdrawals));
 		tv_auth.setOnClickListener(this);
-		btn_withdrawals.setOnClickListener(this);
-		
+
 		initListView();
 		setAdapter();
 		setHeadView(null);
 	}
 
 	private void setHeadView(BalanceDetailEntity mainEn) {
+		ll_auth_main.setVisibility(View.GONE);
 		if (mainEn != null) {
 			amountTotal = mainEn.getAmount();
 			String amountStr = String.valueOf(amountTotal);
@@ -97,33 +102,39 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 			}
 			if (amountStr.length() <= 1) {
 				tv_amount.setTextSize(24);
-			}else if (amountStr.length() == 2) {
+			} else if (amountStr.length() == 2) {
 				tv_amount.setTextSize(23);
-			}else if (amountStr.length() == 3) {
+			} else if (amountStr.length() == 3) {
 				tv_amount.setTextSize(22);
-			}else if (amountStr.length() == 4) {
+			} else if (amountStr.length() == 4) {
 				tv_amount.setTextSize(21);
-			}else if (amountStr.length() == 5) {
+			} else if (amountStr.length() == 5) {
 				tv_amount.setTextSize(20);
-			}else {
+			} else {
 				tv_amount.setTextSize(18);
 			}
 			tv_amount.setText(decimalFormat.format(amountTotal));
-			switch (mainEn.getStatus()) {
-			case 0: //可提现
-				ll_auth.setVisibility(View.GONE);
-				btn_withdrawals.setVisibility(View.VISIBLE);
-				break;
-			case 1: //提现中
-				btn_withdrawals.setVisibility(View.GONE);
-				ll_auth.setVisibility(View.VISIBLE);
-				tv_auth.setVisibility(View.GONE);
-				tv_hint.setText(mainEn.getStatusHint());
-				break;
-			case 2: //未认证
-				ll_auth.setVisibility(View.VISIBLE);
-				btn_withdrawals.setVisibility(View.GONE);
-				break;
+
+			ll_auth_main.setVisibility(View.VISIBLE);
+			tv_auth.setVisibility(View.GONE);
+			tv_hint.setVisibility(View.VISIBLE);
+			overStatus = mainEn.getStatus();
+			switch (overStatus) {
+				case 1: //提现中
+					overHintStr = mainEn.getStatusHint();
+					tv_hint.setText(overHintStr);
+					break;
+				case 2: //未认证
+					overHintStr = getString(R.string.money_auth_explain);
+					tv_hint.setText(overHintStr + "，");
+					tv_auth.setVisibility(View.VISIBLE);
+					break;
+				case 3: //非达人
+					tv_hint.setText(R.string.money_over_hint);
+					break;
+				default: //可提现
+					ll_auth_main.setVisibility(View.GONE);
+					break;
 			}
 		}
 		tv_amount_title.setText(getString(R.string.money_balance_burrency, LangCurrTools.getCurrencyValue()));
@@ -152,7 +163,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 加载更多
-            	if (!isStopLoadMore(lv_show.size(), countTotal)) {
+            	if (!isStopLoadMore(lv_show.size(), dataTotal, 0)) {
             		loadMoreDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -225,16 +236,45 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 		case R.id.balance_list_head_tv_auth:
 			intent = new Intent(mContext, AuthenticationActivity.class);
 			break;
-		case R.id.balance_list_head_btn_withdrawals:
-			intent = new Intent(mContext, WithdrawalsActivity.class);
-			intent.putExtra("amountTotal", amountTotal);
-			break;
 		}
 		if (intent != null) {
 			startActivity(intent);
 		}
 	}
-	
+
+	@Override
+	public void OnListenerRight() {
+		switch (overStatus) {
+			case 1: //提现中
+			case 2: //未认证
+				CommonTools.showToast(overHintStr, 2000);
+				break;
+			case 3: //非达人
+				showConfirmDialog(R.string.money_over_hint, getString(R.string.cancel),
+						getString(R.string.money_upgrade), true, true, new Handler() {
+							@Override
+							public void handleMessage(Message msg) {
+								switch (msg.what) {
+									case DIALOG_CANCEL_CLICK:
+										toUpgradeDaren();
+										break;
+								}
+							}
+						});
+				break;
+			default: //可提现
+				if (isSuccess) {
+					Intent intent = new Intent(mContext, WithdrawalsActivity.class);
+					intent.putExtra("amountTotal", amountTotal);
+					startActivity(intent);
+				}
+				break;
+		}
+	}
+
+	private void toUpgradeDaren() {
+	}
+
 	@Override
 	protected void onResume() {
 		LogUtil.i(TAG, "onResume");
@@ -292,8 +332,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_BALANCE_DETAIL_LIST_CODE:
 			params.add(new MyNameValuePair("app", "account"));
-			params.add(new MyNameValuePair("size", String.valueOf(current_Page)));
-			params.add(new MyNameValuePair("page", String.valueOf(Page_Count)));
+			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BALANCE_DETAIL_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
@@ -313,11 +352,14 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 					if (current_Page == 1) {
 						setHeadView(mainEn);
 					}
-					countTotal = mainEn.getCountTotal();
+					dataTotal = mainEn.getDataTotal();
 					List<BalanceDetailEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {
-						lv_show.addAll(lists);
-						current_Page++;
+						List<BaseEntity> newLists = addNewEntity(lv_all_1, lists, am_all_1);
+						if (newLists != null) {
+							current_Page++;
+							addNewShowLists(newLists);
+						}
 					}
 				}else if (mainEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
@@ -343,6 +385,15 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 			tv_no_data.setText(R.string.money_no_detail);
 		}
 		lv_adapter.updateAdapter(lv_show);
+	}
+
+	private void addNewShowLists(List<BaseEntity> showLists) {
+		lv_show.clear();
+		for (int i = 0; i < showLists.size(); i++) {
+			lv_show.add((BalanceDetailEntity) showLists.get(i));
+		}
+		lv_all_1.clear();
+		lv_all_1.addAll(lv_show);
 	}
 	
 	@Override

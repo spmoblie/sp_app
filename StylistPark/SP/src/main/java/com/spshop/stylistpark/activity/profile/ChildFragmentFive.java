@@ -12,7 +12,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
+import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.activity.common.ShowListActivity;
 import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
@@ -49,13 +49,12 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	private boolean isLogined, isSuccess;
 	private UserInfoEntity infoEn;
 
-	private LinearLayout ll_member_main, ll_member_list, ll_member_order;
-	private RelativeLayout rl_top_login, rl_member_all, rl_order_all, rl_my_address;
-	private RelativeLayout rl_my_wallet, rl_my_coupon, rl_collection, rl_history;
+	private RelativeLayout rl_my_member, rl_member_order, rl_order_all, rl_my_address;
+	private RelativeLayout rl_my_wallet, rl_my_coupon, rl_collection, rl_history, rl_call;
 	private FrameLayout fl_order_pay, fl_order_delivery, fl_order_receive, fl_order_return;
 	private ImageView iv_setting, iv_info;
 	private TextView tv_pay_num, tv_delivery_num, tv_receive_num, tv_return_num;
-	private TextView tv_money, tv_coupon, tv_member_list, tv_member_order;
+	private TextView tv_my_member, tv_member_order, tv_money, tv_coupon, tv_collection, tv_history;
 	
 	private AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
@@ -93,41 +92,38 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	}
 
 	private void findViewById(View view) {
-		rl_top_login = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_top_login);
-		rl_collection = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_collection);
-		rl_history = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_history);
-		rl_member_all = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_member);
-		ll_member_main = (LinearLayout) view.findViewById(R.id.fragment_five_ll_member_main);
-		ll_member_list = (LinearLayout) view.findViewById(R.id.fragment_five_ll_member_list);
-		ll_member_order = (LinearLayout) view.findViewById(R.id.fragment_five_ll_member_order);
+		iv_setting = (ImageView) view.findViewById(R.id.fragment_five_iv_top_left);
+		iv_info = (ImageView) view.findViewById(R.id.fragment_five_iv_info);
+		rl_my_member = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_my_member);
+		rl_member_order = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_member_order);
 		rl_order_all = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_order);
 		fl_order_pay = (FrameLayout) view.findViewById(R.id.fragment_five_fl_wait_pay);
 		fl_order_delivery = (FrameLayout) view.findViewById(R.id.fragment_five_fl_wait_delivery);
 		fl_order_receive = (FrameLayout) view.findViewById(R.id.fragment_five_fl_wait_receive);
 		fl_order_return = (FrameLayout) view.findViewById(R.id.fragment_five_fl_wait_return);
-		iv_setting = (ImageView) view.findViewById(R.id.fragment_five_iv_top_left);
-		iv_info = (ImageView) view.findViewById(R.id.fragment_five_iv_info);
 		tv_pay_num = (TextView) view.findViewById(R.id.fragment_five_tv_wait_pay_num);
 		tv_receive_num = (TextView) view.findViewById(R.id.fragment_five_tv_wait_receive_num);
 		tv_delivery_num = (TextView) view.findViewById(R.id.fragment_five_tv_wait_delivery_num);
 		tv_return_num = (TextView) view.findViewById(R.id.fragment_five_tv_wait_return_num);
+		tv_my_member = (TextView) view.findViewById(R.id.fragment_five_tv_my_member);
+		tv_member_order = (TextView) view.findViewById(R.id.fragment_five_tv_member_order);
 		tv_money = (TextView) view.findViewById(R.id.fragment_five_tv_money);
 		tv_coupon = (TextView) view.findViewById(R.id.fragment_five_tv_coupon);
-		tv_member_list = (TextView) view.findViewById(R.id.fragment_five_tv_member_list);
-		tv_member_order = (TextView) view.findViewById(R.id.fragment_five_tv_member_order);
+		tv_collection = (TextView) view.findViewById(R.id.fragment_five_tv_collection);
+		tv_history = (TextView) view.findViewById(R.id.fragment_five_tv_history);
 		rl_my_address = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_address);
 		rl_my_wallet = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_wallet);
 		rl_my_coupon = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_coupon);
+		rl_collection = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_collection);
+		rl_history = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_history);
+		rl_call = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_call);
 	}
 
 	private void initView() {
 		iv_setting.setOnClickListener(this);
 		iv_info.setOnClickListener(this);
-		rl_collection.setOnClickListener(this);
-		rl_history.setOnClickListener(this);
-		rl_member_all.setOnClickListener(this);
-		ll_member_list.setOnClickListener(this);
-		ll_member_order.setOnClickListener(this);
+		rl_my_member.setOnClickListener(this);
+		rl_member_order.setOnClickListener(this);
 		rl_order_all.setOnClickListener(this);
 		fl_order_pay.setOnClickListener(this);
 		fl_order_delivery.setOnClickListener(this);
@@ -136,11 +132,22 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		rl_my_address.setOnClickListener(this);
 		rl_my_wallet.setOnClickListener(this);
 		rl_my_coupon.setOnClickListener(this);
+		rl_collection.setOnClickListener(this);
+		rl_history.setOnClickListener(this);
+		rl_call.setOnClickListener(this);
 	}
 
 	private void setView() {
+		String memberType = getString(R.string.profile_member);
+		if (UserManager.getInstance().isTalent()) { //达人
+			memberType = getString(R.string.profile_customer);
+		}
+		tv_my_member.setText(getString(R.string.profile_my_member, memberType));
+		tv_member_order.setText(getString(R.string.profile_member_order, memberType));
+
+		String headImgUrl = "";
 		if (infoEn != null) {
-			ImageLoader.getInstance().displayImage(infoEn.getHeadImg(), iv_info, AppApplication.getHeadImageOptions());
+			headImgUrl = infoEn.getHeadImg();
 			tv_money.setText(infoEn.getMoney());
 			tv_coupon.setText(infoEn.getCoupon());
 			int order_1 = infoEn.getOrder_1();
@@ -183,18 +190,8 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			}else {
 				tv_return_num.setVisibility(View.GONE);
 			}
-			if (infoEn.getUserRankCode() == 4) { //达人展示会员信息
-				rl_my_wallet.setVisibility(View.VISIBLE);
-				ll_member_main.setVisibility(View.VISIBLE);
-				tv_member_list.setText(infoEn.getMemberNum());
-				tv_member_order.setText(infoEn.getMemberOrder());
-			}else {
-				rl_my_wallet.setVisibility(View.GONE);
-				ll_member_main.setVisibility(View.GONE);
-			}
 			updateCartTotal(infoEn.getCartTotal());
 		}else {
-			iv_info.setImageDrawable(getResources().getDrawable(R.drawable.head_portrait));
 			String num = getString(R.string.number_0);
 			tv_pay_num.setText(num);
 			tv_pay_num.setVisibility(View.GONE);
@@ -206,11 +203,8 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			tv_return_num.setVisibility(View.GONE);
 			tv_money.setText(LangCurrTools.getCurrencyValue() + num);
 			tv_coupon.setText("");
-			tv_member_list.setText(num);
-			tv_member_order.setText(num);
-			rl_my_wallet.setVisibility(View.GONE);
-			ll_member_main.setVisibility(View.GONE);
 		}
+		ImageLoader.getInstance().displayImage(headImgUrl, iv_info, AppApplication.getHeadImageOptions());
 	}
 
 	/**
@@ -243,6 +237,12 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		if (v.getId() == R.id.fragment_five_iv_top_left) {
 			startActivity(new Intent(mContext, SettingActivity.class));
 			return;
+		} else if (v.getId() == R.id.fragment_five_rl_call) {
+			Intent intent = new Intent(mContext, MyWebViewActivity.class);
+			intent.putExtra("title", getString(R.string.profile_call));
+			intent.putExtra("lodUrl", AppConfig.API_CUSTOMER_SERVICE);
+			startActivity(intent);
+			return;
 		}
 		if (!isLogined) { //未登入
 			Intent intent = new Intent(mContext, LoginActivity.class);
@@ -252,48 +252,45 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			return;
 		}
 		switch (v.getId()) {
-		case R.id.fragment_five_iv_info:
-			startPersonalActivity();
-			break;
-		case R.id.fragment_five_rl_collection:
-			startShowListActivity(ShowListActivity.PAGE_ROOT_CODE_1, getString(R.string.profile_collection));
-			break;
-		case R.id.fragment_five_rl_history:
-			startShowListActivity(ShowListActivity.PAGE_ROOT_CODE_2, getString(R.string.profile_history));
-			break;
-		case R.id.fragment_five_rl_member:
-			startMemberListActivity(MemberListActivity.TYPE_1);
-			break;
-		case R.id.fragment_five_ll_member_list:
-			startMemberListActivity(MemberListActivity.TYPE_1);
-			break;
-		case R.id.fragment_five_ll_member_order:
-			startOrderListActivity(1, OrderListActivity.TYPE_1);
-			break;
-		case R.id.fragment_five_rl_order:
-			startOrderListActivity(0, OrderListActivity.TYPE_1);
-			break;
-		case R.id.fragment_five_fl_wait_pay:
-			startOrderListActivity(0, OrderListActivity.TYPE_2);
-			break;
-		case R.id.fragment_five_fl_wait_delivery:
-			startOrderListActivity(0, OrderListActivity.TYPE_3);
-			break;
-		case R.id.fragment_five_fl_wait_receive:
-			startOrderListActivity(0, OrderListActivity.TYPE_4);
-			break;
-		case R.id.fragment_five_fl_wait_return:
-			startOrderListActivity(0, OrderListActivity.TYPE_5);
-			break;
-		case R.id.fragment_five_rl_address:
-			startActivity(new Intent(mContext, MyAddressActivity.class));
-			break;
-		case R.id.fragment_five_rl_wallet:
-			startActivity(new Intent(mContext, AccountBalanceActivity.class));
-			break;
-		case R.id.fragment_five_rl_coupon:
-			startCouponListActivity(CouponListActivity.TYPE_1);
-			break;
+			case R.id.fragment_five_iv_info:
+				startPersonalActivity();
+				break;
+			case R.id.fragment_five_rl_my_member:
+				startMemberListActivity(MemberListActivity.TYPE_1);
+				break;
+			case R.id.fragment_five_rl_member_order:
+				startOrderListActivity(1, OrderListActivity.TYPE_1);
+				break;
+			case R.id.fragment_five_rl_order:
+				startOrderListActivity(0, OrderListActivity.TYPE_1);
+				break;
+			case R.id.fragment_five_fl_wait_pay:
+				startOrderListActivity(0, OrderListActivity.TYPE_2);
+				break;
+			case R.id.fragment_five_fl_wait_delivery:
+				startOrderListActivity(0, OrderListActivity.TYPE_3);
+				break;
+			case R.id.fragment_five_fl_wait_receive:
+				startOrderListActivity(0, OrderListActivity.TYPE_4);
+				break;
+			case R.id.fragment_five_fl_wait_return:
+				startOrderListActivity(0, OrderListActivity.TYPE_5);
+				break;
+			case R.id.fragment_five_rl_address:
+				startActivity(new Intent(mContext, MyAddressActivity.class));
+				break;
+			case R.id.fragment_five_rl_wallet:
+				startActivity(new Intent(mContext, AccountBalanceActivity.class));
+				break;
+			case R.id.fragment_five_rl_coupon:
+				startCouponListActivity(CouponListActivity.TYPE_1);
+				break;
+			case R.id.fragment_five_rl_collection:
+				startShowListActivity(ShowListActivity.PAGE_ROOT_CODE_1, getString(R.string.profile_collection));
+				break;
+			case R.id.fragment_five_rl_history:
+				startShowListActivity(ShowListActivity.PAGE_ROOT_CODE_2, getString(R.string.profile_history));
+				break;
 		}
 	}
 
@@ -391,8 +388,8 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 				infoEn = (UserInfoEntity) result;
 				if (infoEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
-					setView();
 					UserManager.getInstance().saveUserInfo(infoEn);
+					setView();
 				}else if (infoEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) { //登录失效
 					AppApplication.AppLogout(false);
 					checkLogin();

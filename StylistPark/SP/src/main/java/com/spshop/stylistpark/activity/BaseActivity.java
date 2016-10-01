@@ -35,6 +35,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.login.LoginActivity;
+import com.spshop.stylistpark.activity.profile.ChildFragmentFive;
 import com.spshop.stylistpark.dialog.DialogManager;
 import com.spshop.stylistpark.dialog.LoadDialog;
 import com.spshop.stylistpark.entity.BaseEntity;
@@ -68,7 +69,6 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	
 	protected Context mContext;
 	protected AsyncTaskManager atm;
-	protected int width, height, statusHeight;
 	protected SharedPreferences shared;
 	protected Editor editor;
 	protected DialogManager dm;
@@ -76,16 +76,17 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected Boolean isInitShare = false;
 	protected ShareView mShareView;
 	protected DecimalFormat decimalFormat;
-
 	private LinearLayout ll_head;
+
 	private ImageView iv_left, iv_title_logo;
 	private TextView tv_title;
 	private Button btn_right;
 	private ViewFlipper mLayoutBase;
 	private Animation inAnim, outAnim;
-
 	protected String currStr;
+
 	protected boolean headStatus = false;
+	protected int width, height, statusHeight;
 	protected Animation headGONE, headVISIBLE;
 	protected ServiceContext sc = ServiceContext.getServiceContext();
 
@@ -621,8 +622,25 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	/**
 	 * 判定是否停止加载更多
 	 */
-	public static boolean isStopLoadMore(int showCount, int countTotal) {
+	public static boolean isStopLoadMore(int showCount, int countTotal, int pageSize) {
+		showPageNum(showCount, countTotal, pageSize);
 		return showCount > 0 && showCount == countTotal;
+	}
+
+	/**
+	 * 提示当前页数
+	 */
+	public static void showPageNum(int showCount, int countTotal, int pageSize) {
+		if (pageSize <= 0) return;
+		int page_num = showCount / pageSize;
+		if (showCount % pageSize > 0) {
+			page_num++;
+		}
+		int page_total = countTotal / pageSize;
+		if (countTotal % pageSize > 0) {
+			page_total++;
+		}
+		CommonTools.showPageNum(page_num + "/" + page_total, 1000);
 	}
 
 	/**
@@ -672,6 +690,16 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 				}
 			});
+		}
+	}
+
+	public static void updateActivityData(int type) {
+		switch (type) {
+			case 5: //刷新个人页数据
+				if (ChildFragmentFive.instance != null) {
+					ChildFragmentFive.instance.isUpdate = true;
+				}
+				break;
 		}
 	}
 

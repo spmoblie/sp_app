@@ -54,6 +54,8 @@ public class AppConfig {
 
 	// 上传头像URL
 	public static final String API_UPDATE_PROFILE = URL_COMMON_USER_URL + "?act=act_edit_profile";
+	// 联系客服URL
+	public static final String API_CUSTOMER_SERVICE = "http://webim.qiao.baidu.com/im/gateway?siteid=3888057&type=n&ucid=6374202";
 
 	/**
 	 ******************************************* URL设置结束 ******************************************
@@ -124,6 +126,8 @@ public class AppConfig {
 	public static final int REQUEST_SV_GET_SESSIONS_CODE = 0X0001;
 	// 检测版本更新
 	public static final int REQUEST_SV_POST_VERSION_CODE = 0X0002;
+	// 微信分享反馈
+	public static final int REQUEST_SV_GET_WX_SHARE_CODE = 0X0003;
 
 	// 加载远程首页推广数据
 	public static final int REQUEST_SV_GET_HOME_SHOW_HEAD_CODE = 0X1010;
@@ -154,8 +158,10 @@ public class AppConfig {
 
 	// 加载专题列表请求
 	public static final int REQUEST_SV_GET_SPECIAL_LIST_CODE = 0X3001;
+	// 加载专题评论列表
+	public static final int REQUEST_SV_GET_COMMENT_LIST_CODE = 0X3020;
 	// 提交专题评论请求
-	public static final int REQUEST_SV_POST_COMMENT_CODE = 0X3020;
+	public static final int REQUEST_SV_POST_COMMENT_CODE = 0X3021;
 
 	// 加载购物车商品列表
 	public static final int REQUEST_SV_GET_CART_LIST_CODE = 0X4010;
@@ -249,10 +255,12 @@ public class AppConfig {
 	public static final String KEY_USER_ID = "user_id";
 	// 偏好设置Key-记录分享ID
 	public static final String KEY_SHARE_ID = "share_id";
-	// 偏好设置Key-记录用户登录名
-	public static final String KEY_USER_LOGIN_NAME = "user_login_name";
+	// 偏好设置Key-记录用户姓名
+	public static final String KEY_USER_NAME = "user_name";
+	// 偏好设置Key-记录用户身份ID
+	public static final String KEY_USER_NAME_ID = "user_name_id";
 	// 偏好设置Key-记录用户昵称
-	public static final String KEY_USER_NICK_NAME = "user_nick_name";
+	public static final String KEY_USER_NICK = "user_nick";
 	// 偏好设置Key-记录用户头像Url
 	public static final String KEY_USER_HEAD_IMG_URL = "user_head_img_url";
 	// 偏好设置Key-记录用户简介
@@ -269,8 +277,6 @@ public class AppConfig {
 	public static final String KEY_USER_RANK_CODE = "user_rank_code";
 	// 偏好设置Key-记录用户等级名称
 	public static final String KEY_USER_RANK_NAME = "user_rank_name";
-	// 偏好设置Key-记录用户身份认证状态
-	public static final String KEY_USER_AUTH = "user_auth";
 	// 偏好设置Key-记录用户购物车中商品数量
 	public static final String KEY_CART_NUM = "cart_num";
 	// 偏好设置Key-记录用户的微信授权码
@@ -312,16 +318,21 @@ public class AppConfig {
 	public static final String ACTIVITY_SHOW_PHOTO_LIST = "show_photo_list";
 	public static final String ACTIVITY_CLIP_PHOTO_PATH = "clip_photo_path";
 	public static final String ACTIVITY_CHANGE_USER_CONTENT = "change_user_content";
-	public static final String ACTIVITY_SELECT_PAY_TYPE = "select_pay_type";
+	public static final String ACTIVITY_SELECT_LIST_POSITION = "select_list_position";
 	public static final int ACTIVITY_SELECT_PHOTO_PICKER = 0X9001;
 	public static final int ACTIVITY_SHOW_PHOTO_PICKER = 0X9002;
 	public static final int ACTIVITY_GET_IMAGE_VIA_CAMERA = 0X9003;
-	public static final int ACTIVITY_GALLERY_CHOOSE_PHOTO = 0X9005;
-	public static final int ACTIVITY_CHANGE_USER_NICK = 0X9006;
-	public static final int ACTIVITY_CHANGE_USER_SEX = 0X9007;
+	public static final int ACTIVITY_GALLERY_CHOOSE_PHOTO = 0X9004;
+	public static final int ACTIVITY_CHANGE_USER_NICK = 0X9005;
+	public static final int ACTIVITY_CHANGE_USER_SEX = 0X9006;
+	public static final int ACTIVITY_CHANGE_USER_INTRO = 0X9007;
 	public static final int ACTIVITY_CHANGE_USER_EMAIL = 0X9008;
 	public static final int ACTIVITY_CHOOSE_PAY_TYPE = 0X9009;
-	
+	public static final int ACTIVITY_CHOOSE_ADD_COUNTRY = 0X9010;
+	public static final int ACTIVITY_CHOOSE_ADD_PROVINCE = 0X9011;
+	public static final int ACTIVITY_CHOOSE_ADD_CITY = 0X9012;
+	public static final int ACTIVITY_CHOOSE_ADD_DISTRICT = 0X9013;
+
 	/**
 	 ******************************************* Activity传参设置结束 ******************************************
 	 */

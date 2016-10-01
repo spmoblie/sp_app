@@ -53,10 +53,10 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	private static final String TAG = "PersonalActivity";
 	private static final String LOCAL_TEMP_IMG_DIR = "StylistPark/MicroMsg/Camera/SP";
 
-	private RelativeLayout rl_head, rl_nick, rl_sex, rl_birthday, rl_email, rl_phone, rl_identity;
+	private RelativeLayout rl_head, rl_nick, rl_sex, rl_birthday, rl_intro, rl_email, rl_identity;
 	private ImageView iv_head;
-	private TextView tv_nick, tv_sex, tv_birthday, tv_email, tv_phone, tv_auth_go, tv_auth_ok;
-	private String headUrl, nickStr, sexStr, birthdayStr, emailStr, phoneStr;
+	private TextView tv_nick, tv_sex, tv_birthday, tv_rank, tv_intro, tv_email, tv_auth_go, tv_auth_ok;
+	private String headUrl, nickStr, sexStr, birthdayStr, rankStr, introStr, emailStr;
 	private String changeStr, changeTypeKey;
 	private String localTempImgFileName = "";
 	private int sexCode = 0;
@@ -88,15 +88,16 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		rl_nick = (RelativeLayout) findViewById(R.id.personal_rl_nick);
 		rl_sex = (RelativeLayout) findViewById(R.id.personal_rl_sex);
 		rl_birthday = (RelativeLayout) findViewById(R.id.personal_rl_birthday);
+		rl_intro = (RelativeLayout) findViewById(R.id.personal_rl_intro);
 		rl_email = (RelativeLayout) findViewById(R.id.personal_rl_email);
-		rl_phone = (RelativeLayout) findViewById(R.id.personal_rl_phone);
 		rl_identity = (RelativeLayout) findViewById(R.id.personal_rl_auth);
 		iv_head = (ImageView) findViewById(R.id.personal_iv_head_img);
 		tv_nick = (TextView) findViewById(R.id.personal_tv_nick_content);
 		tv_sex = (TextView) findViewById(R.id.personal_tv_sex_content);
 		tv_birthday = (TextView) findViewById(R.id.personal_tv_birthday_content);
+		tv_rank = (TextView) findViewById(R.id.personal_tv_rank_content);
+		tv_intro = (TextView) findViewById(R.id.personal_tv_intro_content);
 		tv_email = (TextView) findViewById(R.id.personal_tv_email_content);
-		tv_phone = (TextView) findViewById(R.id.personal_tv_phone_content);
 		tv_auth_go = (TextView) findViewById(R.id.personal_tv_auth_go);
 		tv_auth_ok = (TextView) findViewById(R.id.personal_tv_auth_ok);
 	}
@@ -107,8 +108,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		rl_nick.setOnClickListener(this);
 		rl_sex.setOnClickListener(this);
 		rl_birthday.setOnClickListener(this);
+		rl_intro.setOnClickListener(this);
 		rl_email.setOnClickListener(this);
-		rl_phone.setOnClickListener(this);
 		rl_identity.setOnClickListener(this);
 		setView();
 	}
@@ -118,18 +119,18 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			headUrl = infoEn.getHeadImg();
 			nickStr = infoEn.getUserNick();
 			birthdayStr = infoEn.getBirthday();
+			rankStr = infoEn.getUserRankName();
+			introStr = infoEn.getUserIntro();
 			emailStr = infoEn.getUserEmail();
-			phoneStr = infoEn.getUserPhone();
-			isAuth = infoEn.isAuth();
 			sexCode = infoEn.getSexCode();
 		}else {
 			headUrl = userManager.getUserHeadImg();
-			nickStr = userManager.getUserNickName();
+			nickStr = userManager.getUserNick();
 			sexCode = userManager.getUserSex();
 			birthdayStr = userManager.getUserBirthday();
+			rankStr = userManager.getUserRankName();
+			introStr = userManager.getUserIntro();
 			emailStr = userManager.getUserEmail();
-			phoneStr = userManager.getUserPhone();
-			isAuth = userManager.getUserAuth();
 		}
 		switch (sexCode) { //定义性别
 		case 1:
@@ -145,8 +146,9 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		tv_sex.setText(sexStr);
 		tv_nick.setText(nickStr);
 		tv_birthday.setText(birthdayStr);
+		tv_rank.setText(rankStr);
+		tv_intro.setText(introStr);
 		tv_email.setText(emailStr);
-		tv_phone.setText(phoneStr);
 		if (isAuth) {
 			tv_auth_go.setVisibility(View.GONE);
 			tv_auth_ok.setVisibility(View.VISIBLE);
@@ -210,8 +212,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public void OnListenerLeft() {
-		if (update_fragment && ChildFragmentFive.instance != null) {
-			ChildFragmentFive.instance.isUpdate = true; //刷新个人页数据
+		if (update_fragment) {
+			updateActivityData(5);
 		}
 		super.OnListenerLeft();
 	}
@@ -246,14 +248,21 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		case R.id.personal_rl_birthday:
 			showDateDialog();
 			break;
+		case R.id.personal_rl_intro:
+			intent = new Intent(mContext, EditUserInfoActivity.class);
+			intent.putExtra("titleStr", getString(R.string.profile_change_intro));
+			intent.putExtra("showStr", introStr);
+			intent.putExtra("hintStr", getString(R.string.profile_input_intro));
+			intent.putExtra("reminderStr", "");
+			intent.putExtra("changeTypeKey", "intro");
+			startActivityForResult(intent,AppConfig.ACTIVITY_CHANGE_USER_INTRO);
+			return;
 		case R.id.personal_rl_email:
 			checkEmailStatus();
 			return;
-		case R.id.personal_rl_phone:
-			break;
 		case R.id.personal_rl_auth:
 			if (!isAuth) {
-				intent = new Intent(mContext, AuthenticationActivity.class);
+				//intent = new Intent(mContext, AuthenticationActivity.class);
 			}
 			break;
 		}
@@ -422,25 +431,26 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == AppConfig.ACTIVITY_GET_IMAGE_VIA_CAMERA) { //拍照
-			if(resultCode == RESULT_OK ) { 
+		if (resultCode == RESULT_OK) {
+			if (requestCode == AppConfig.ACTIVITY_GET_IMAGE_VIA_CAMERA) //拍照
+			{
 				String path = Environment.getExternalStorageDirectory()+"/"+LOCAL_TEMP_IMG_DIR+"/"+localTempImgFileName;
 				AppApplication.updatePhoto(new File(path));
 				startClipImageActivity(path);
-			} 
-		}else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_NICK) { //修改昵称
-			if (resultCode == RESULT_OK) {
+			}
+			else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_NICK) //修改昵称
+			{
 				nickStr = data.getExtras().getString(AppConfig.ACTIVITY_CHANGE_USER_CONTENT);
 				if (infoEn != null) {
 					infoEn.setUserNick(nickStr);
 				}
-				userManager.saveUserNickName(nickStr);
+				userManager.saveUserNick(nickStr);
 				setView();
 				update_fragment = true;
 			}
-		}else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_SEX) { //修改性别
-			if (resultCode == RESULT_OK) {
-				sexCode = data.getExtras().getInt(AppConfig.ACTIVITY_CHANGE_USER_CONTENT, 1);
+			else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_SEX) //修改性别
+			{
+				sexCode = data.getExtras().getInt(AppConfig.ACTIVITY_SELECT_LIST_POSITION, 1);
 				if (infoEn != null) {
 					infoEn.setSexCode(sexCode);
 				}
@@ -448,8 +458,18 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 				setView();
 				update_fragment = true;
 			}
-		}else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_EMAIL) { //修改邮箱
-			if (resultCode == RESULT_OK) {
+			else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_INTRO) //修改简介
+			{
+				introStr = data.getExtras().getString(AppConfig.ACTIVITY_CHANGE_USER_CONTENT);
+				if (infoEn != null) {
+					infoEn.setUserIntro(introStr);
+				}
+				userManager.saveUserIntro(introStr);
+				setView();
+				update_fragment = true;
+			}
+			else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_EMAIL) //修改邮箱
+			{
 				emailStr = data.getExtras().getString(AppConfig.ACTIVITY_CHANGE_USER_CONTENT);
 				if (infoEn != null) {
 					infoEn.setUserEmail(emailStr);
@@ -599,10 +619,10 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		childEn2.setChildId(2);
 		childEn2.setChildShowName(getString(R.string.profile_gender_female));
 		childLists.add(childEn2);
-		SelectListEntity childEn3 = new SelectListEntity();
+		/*SelectListEntity childEn3 = new SelectListEntity();
 		childEn3.setChildId(3);
 		childEn3.setChildShowName(getString(R.string.profile_gender_confidential));
-		childLists.add(childEn3);
+		childLists.add(childEn3);*/
 		switch (sexCode) {
 		case 1:
 			selectEn.setSelectEn(childEn1);
@@ -610,9 +630,9 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		case 2:
 			selectEn.setSelectEn(childEn2);
 			break;
-		case 3:
+		/*case 3:
 			selectEn.setSelectEn(childEn3);
-			break;
+			break;*/
 		}
 		selectEn.setChildLists(childLists);
 		return selectEn;

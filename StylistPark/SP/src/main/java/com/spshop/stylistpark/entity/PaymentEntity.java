@@ -40,7 +40,10 @@ public class PaymentEntity extends BaseEntity {
 	private String alipay;
 
 	
-	
+	public PaymentEntity() {
+
+	}
+
 	public PaymentEntity(int errCode, String errInfo) {
 		super(errCode, errInfo);
 	}

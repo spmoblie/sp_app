@@ -10,12 +10,12 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.login.LoginActivity;
+import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.WXEntity;
 import com.spshop.stylistpark.service.LoginJsonParser;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
-import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -23,22 +23,22 @@ import com.tencent.mm.sdk.modelmsg.SendAuth;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WXEntryActivity extends BaseActivity {
 
 	private static final String TAG = "WXEntryActivity";
 	private static final String APP_ID = AppConfig.WX_APP_ID;
 	private static final String SECRET = AppConfig.WX_APP_SECRET;
 	
-	private HttpUtil http;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wx_loading);
 
 		setHeadVisibility(View.GONE);
-		http = new HttpUtil();
-		
+
 		handleIntent(getIntent());
 	}
 
@@ -57,6 +57,7 @@ public class WXEntryActivity extends BaseActivity {
 		if (resp.errCode == BaseResp.ErrCode.ERR_OK) 
 		{
 			if (AppApplication.isWXShare) {
+				request(AppConfig.REQUEST_SV_GET_WX_SHARE_CODE); //微信分享反馈
 				showWechatResult(getString(R.string.share_msg_success));
 			}else {
 				if (NetworkUtil.isNetworkAvailable()) {
@@ -100,12 +101,16 @@ public class WXEntryActivity extends BaseActivity {
 
 		@Override
 		protected String doInBackground(String... params) {
-			return http.myHttpGet(params[0]);
+			try {
+				return sc.getServerJSONString(params[0]);
+			} catch (Exception e) {
+				ExceptionUtil.handle(e);
+				return "";
+			}
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			LogUtil.i(TAG, result);
 			WXEntity wxEn = null;
 			if (result != null) {
 				try {
@@ -128,6 +133,32 @@ public class WXEntryActivity extends BaseActivity {
 				showWechatResult(getString(R.string.share_msg_error_license));
 			}
 		}
+	}
+
+	@Override
+	public Object doInBackground(int requestCode) throws Exception {
+		String uri = AppConfig.URL_COMMON_USER_URL;
+		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		switch (requestCode) {
+			case AppConfig.REQUEST_SV_GET_WX_SHARE_CODE:
+				params.add(new MyNameValuePair("act", "share"));
+				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_WX_SHARE_CODE, uri, params, HttpUtil.METHOD_GET);
+		}
+		return null;
+	}
+
+	@Override
+	public void onSuccess(int requestCode, Object result) {
+		switch (requestCode) {
+			case AppConfig.REQUEST_SV_GET_WX_SHARE_CODE:
+				updateActivityData(5);
+				break;
+		}
+	}
+
+	@Override
+	public void onFailure(int requestCode, int state, Object result) {
+
 	}
 
 }

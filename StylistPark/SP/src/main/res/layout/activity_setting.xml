@@ -111,7 +111,8 @@
     <RelativeLayout
         android:id="@+id/setting_rl_push_control"
         style="@style/setting_lay_item"
-        android:layout_below="@id/setting_rl_version" >
+        android:layout_below="@id/setting_rl_version"
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/setting_tv_push_control_title"

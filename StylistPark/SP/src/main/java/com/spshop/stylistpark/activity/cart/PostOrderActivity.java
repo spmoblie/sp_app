@@ -25,7 +25,6 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.common.SelectListActivity;
 import com.spshop.stylistpark.activity.profile.CouponListActivity;
-import com.spshop.stylistpark.activity.profile.ChildFragmentFive;
 import com.spshop.stylistpark.activity.profile.MyAddressActivity;
 import com.spshop.stylistpark.activity.profile.OrderListActivity;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
@@ -209,14 +208,12 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 					if (isInvoice) {
 						iv_invoice_select.setSelected(false);
 						et_invoice.setText("");
-						et_invoice.setFocusable(false);
-						et_invoice.setFocusableInTouchMode(false);
+						et_invoice.setEnabled(false);
 						//隐藏软键盘
 						imm.hideSoftInputFromWindow(et_invoice.getWindowToken(), 0);
 					}else {
 						iv_invoice_select.setSelected(true);
-						et_invoice.setFocusable(true);
-						et_invoice.setFocusableInTouchMode(true);
+						et_invoice.setEnabled(true);
 						et_invoice.requestFocus();
 						et_invoice.findFocus();
 						//弹出软键盘
@@ -366,9 +363,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		intent.putExtra("rootType", rootType);
 		intent.putExtra("topType", topType);
 		startActivity(intent);
-		if (ChildFragmentFive.instance != null) {
-			ChildFragmentFive.instance.isUpdate = true; //创建新订单刷新个人页订单数据
-		}
+		updateActivityData(5);
 		finish();
 	}
 
@@ -376,7 +371,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == AppConfig.ACTIVITY_CHOOSE_PAY_TYPE) { //选择支付方式
 			if (resultCode == RESULT_OK) {
-				selectPayType = data.getExtras().getInt(AppConfig.ACTIVITY_SELECT_PAY_TYPE, 1);
+				selectPayType = data.getExtras().getInt(AppConfig.ACTIVITY_SELECT_LIST_POSITION, 1);
 				if (selectPayType != payType) {
 					postSelectPayment();
 				}

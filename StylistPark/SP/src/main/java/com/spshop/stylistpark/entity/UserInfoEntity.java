@@ -16,10 +16,15 @@ public class UserInfoEntity extends BaseEntity {
 	private String shareId;
 	
 	/**
-	 * 用户名称
+	 * 用户姓名
 	 */
 	private String userName;
-	
+
+	/**
+	 * 用户身份ID
+	 */
+	private String userNameID;
+
 	/**
 	 * 用户昵称
 	 */
@@ -54,11 +59,6 @@ public class UserInfoEntity extends BaseEntity {
 	 * 用户手机号码
 	 */
 	private String userPhone;
-	
-	/**
-	 * 是否实名认证
-	 */
-	private boolean isAuth;
 	
 	/**
 	 * 用户等级编号（4 == 达人）
@@ -161,6 +161,13 @@ public class UserInfoEntity extends BaseEntity {
 		this.userName = userName;
 	}
 
+	public String getUserNameID() {
+		return userNameID;
+	}
+
+	public void setUserNameID(String userNameID) {
+		this.userNameID = userNameID;
+	}
 
 	public String getUserNick() {
 		return userNick;
@@ -229,16 +236,6 @@ public class UserInfoEntity extends BaseEntity {
 
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
-	}
-
-
-	public boolean isAuth() {
-		return isAuth;
-	}
-
-
-	public void setAuth(boolean isAuth) {
-		this.isAuth = isAuth;
 	}
 
 

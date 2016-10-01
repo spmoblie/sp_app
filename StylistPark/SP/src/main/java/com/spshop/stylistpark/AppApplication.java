@@ -88,7 +88,7 @@ public class AppApplication extends Application implements OnDataListener{
 		screenHeight = DeviceUtil.getDeviceHeight(spApp);
 		model = DeviceUtil.getModel();
 		// 判定是否为Pad
-		LogUtil.i("device", "手机型号："+ model + "宽："+screenWidth + " / 高："+screenHeight);
+		LogUtil.i("device", "手机型号："+ model + " 宽："+screenWidth + " / 高："+screenHeight);
 
 		// 设置每天第一次启动App时清除与日期关联的缓存标志
 		long newDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -203,7 +203,7 @@ public class AppApplication extends Application implements OnDataListener{
 	public static DisplayImageOptions getHeadImageOptions() {
 		if (headOptions == null) {
 			headOptions = new DisplayImageOptions.Builder()
-					.displayer(new RoundedBitmapDisplayer(90))
+					.displayer(new RoundedBitmapDisplayer(360))
 					.showImageForEmptyUri(R.drawable.head_portrait)
 					.showImageOnFail(R.drawable.head_portrait)
 					.cacheInMemory(true) // 内存缓存

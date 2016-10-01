@@ -17,9 +17,9 @@ public class MemberEntity extends BaseEntity {
 	private String headImg;
 	
 	/**
-	 * 会员名称
+	 * 会员昵称
 	 */
-	private String userName;
+	private String memberNick;
 
 	/**
 	 * 会员性别
@@ -91,13 +91,13 @@ public class MemberEntity extends BaseEntity {
 	}
 
 
-	public String getUserName() {
-		return userName;
+	public String getMemberNick() {
+		return memberNick;
 	}
 
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setMemberNick(String memberNick) {
+		this.memberNick = memberNick;
 	}
 
 	public String getUserSex() {

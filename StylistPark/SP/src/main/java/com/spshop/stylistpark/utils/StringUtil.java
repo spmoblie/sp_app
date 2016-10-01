@@ -12,8 +12,8 @@ public class StringUtil {
 		return str == null || str.length() == 0 || "".equals(str) || "null".equals(str);
 	}
 
-	public static boolean isNull(JSONObject jsonObj, String key) throws JSONException{
-		return !jsonObj.has(key) || jsonObj.isNull(key) || jsonObj.get(key).equals("");
+	public static boolean notNull(JSONObject jsonObj, String key) throws JSONException{
+		return jsonObj.has(key) && !jsonObj.isNull(key) && !jsonObj.get(key).equals("");
 	}
 
 	public static int getInteger(String str) {

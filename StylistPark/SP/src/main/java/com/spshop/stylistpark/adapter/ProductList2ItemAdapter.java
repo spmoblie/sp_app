@@ -147,7 +147,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder.right_main.setVisibility(View.VISIBLE);
 			// 网络图片地址
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getImageUrl(), holder.right_img, options);
-			holder.right_brand.setText(leftEn.getBrand()); //商品品牌
+			holder.right_brand.setText(rightEn.getBrand()); //商品品牌
 			holder.right_name.setText(rightEn.getName()); //商品名称
 			holder.right_curr.setText(currStr);
 			holder.right_sell_price.setText(rightEn.getSellPrice()); //商品卖价

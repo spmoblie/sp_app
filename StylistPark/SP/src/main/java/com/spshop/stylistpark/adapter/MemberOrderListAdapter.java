@@ -119,7 +119,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_0));
 				break;
 			}
-			holder.tv_user_name.setText(infoEn.getUserName());
+			holder.tv_user_name.setText(infoEn.getUserNick());
 		}
 		holder.tv_add_time.setText(data.getBuyer());
 		holder.tv_order_status.setText(data.getStatusName());

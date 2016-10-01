@@ -99,8 +99,8 @@ public class CartProductListAdapter extends BaseAdapter{
 		MyHorizontalScrollView scroll_hsv;
 		LinearLayout ll_left_main;
 		RelativeLayout rl_select, rl_minus, rl_add;
-		ImageView iv_select, iv_img, iv_minus, iv_add, iv_delete;
-		TextView tv_brand, tv_name, tv_attr, tv_curr, tv_price, tv_number;
+		ImageView iv_select, iv_img, iv_minus, iv_add;
+		TextView tv_brand, tv_name, tv_attr, tv_curr, tv_price, tv_number, tv_delete;
 	}
 	
 	/**代表了ListView中的一个item对象*/
@@ -126,7 +126,7 @@ public class CartProductListAdapter extends BaseAdapter{
 			holder.tv_curr = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_curr);
 			holder.tv_price = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_price);
 			holder.tv_number = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_number);
-			holder.iv_delete = (ImageView) convertView.findViewById(R.id.item_list_cart_product_iv_delect);
+			holder.tv_delete = (TextView) convertView.findViewById(R.id.item_list_cart_product_tv_delect);
 
 			convertView.setTag(holder);
 		}else{
@@ -210,7 +210,7 @@ public class CartProductListAdapter extends BaseAdapter{
 				apCallback.setOnClick(data, position, TYPE_ADD); //加
 			}
 		});
-		holder.iv_delete.setOnClickListener(new OnClickListener() {
+		holder.tv_delete.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

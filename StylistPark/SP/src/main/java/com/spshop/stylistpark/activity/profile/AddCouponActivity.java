@@ -116,9 +116,7 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 				if (CouponListActivity.instance != null) {
 					CouponListActivity.instance.addCouponOk();
 				}
-				if (ChildFragmentFive.instance != null) { //刷新个人页数据
-					ChildFragmentFive.instance.isUpdate = true;
-				}
+				updateActivityData(5);
 				finish();
 			}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 				// 登入超时，交BaseActivity处理

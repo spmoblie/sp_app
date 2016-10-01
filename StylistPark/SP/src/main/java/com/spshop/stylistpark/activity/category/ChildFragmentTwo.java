@@ -465,9 +465,7 @@ public class ChildFragmentTwo extends Fragment implements OnClickListener, OnDat
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
 		stopAnimation();
-		if (getActivity() == null) {
-			return;
-		}
+		if (getActivity() == null) return;
 		CommonTools.showToast(String.valueOf(result), 1000);
 	}
 	

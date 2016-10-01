@@ -152,7 +152,7 @@ public class CategoryGridAdapter extends BaseAdapter{
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
         } else {
-            imageView.setImageResource(R.drawable.ic_launcher);
+            imageView.setImageResource(R.drawable.icon_goods_default);
         }
     }
 

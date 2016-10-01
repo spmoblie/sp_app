@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
@@ -31,10 +30,8 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	
 	private static final String TAG = "WithdrawalsActivity";
 
-	private EditText et_card, et_amount;
-	private TextView tv_amount_max;
+	private EditText et_amount;
 	private Button btn_confirm;
-	private String cardStr;
 	private double amountTotal, inputAmount;
 	
 	@Override
@@ -52,15 +49,14 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	}
 	
 	private void findViewById() {
-		et_card = (EditText) findViewById(R.id.withdrawals_et_card);
 		et_amount = (EditText) findViewById(R.id.withdrawals_et_amount);
-		tv_amount_max = (TextView) findViewById(R.id.withdrawals_tv_amount_max);
 		btn_confirm = (Button) findViewById(R.id.withdrawals_btn_confirm);
 	}
 
 	private void initView() {
 		setTitle(R.string.money_withdrawals_confirm);
 		btn_confirm.setOnClickListener(this);
+
 		et_amount.setHint(getString(R.string.money_max_amount_hint, currStr + decimalFormat.format(amountTotal)));
 		et_amount.addTextChangedListener(new TextWatcher() {
 			
@@ -120,12 +116,6 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	}
 
 	private void confirmWithdrawals() {
-		cardStr = et_card.getText().toString();
-		// 卡号非空
-		if (cardStr.isEmpty()) {
-			CommonTools.showToast(getString(R.string.money_input_card_hint), 1000);
-			return;
-		}
 		// 金额校验
 		if (inputAmount <= 0) {
 			CommonTools.showToast(getString(R.string.money_input_amount_hint), 1000);
@@ -174,7 +164,6 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	public Object doInBackground(int requestCode) throws Exception {
 		String uri = AppConfig.URL_COMMON_USER_URL + "?act=act_account";
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		params.add(new MyNameValuePair("user_note", cardStr));
 		params.add(new MyNameValuePair("amount", String.valueOf(inputAmount)));
 		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_WITHDRAWALS_CODE, uri, params, HttpUtil.METHOD_POST);
 	}
@@ -186,10 +175,10 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		if (result != null) {
 			BaseEntity baseEn = (BaseEntity) result;
 			if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS){ //确认提现OK
+				CommonTools.showToast(getString(R.string.money_withdrawals_success), 2000);
 				if (AccountBalanceActivity.instance != null) {
 					AccountBalanceActivity.instance.isUpdate = true;
 				}
-				CommonTools.showToast(getString(R.string.money_withdrawals_success), 2000);
 				finish();
 			}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 				// 登入超时，交BaseActivity处理

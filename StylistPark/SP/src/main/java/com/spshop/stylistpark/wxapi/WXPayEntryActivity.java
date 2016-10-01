@@ -32,7 +32,6 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.cart.PostOrderActivity;
 import com.spshop.stylistpark.activity.category.CategoryActivity;
-import com.spshop.stylistpark.activity.profile.ChildFragmentFive;
 import com.spshop.stylistpark.activity.profile.OrderDetailActivity;
 import com.spshop.stylistpark.activity.profile.OrderListActivity;
 import com.spshop.stylistpark.entity.BaseEntity;
@@ -335,9 +334,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	public void finish() {
 		if ("PostOrderActivity".equals(rootPage) && PostOrderActivity.instance != null) {
 			PostOrderActivity.instance.finish(); //销毁确认订单页面
-			if (ChildFragmentFive.instance != null) {
-				ChildFragmentFive.instance.isUpdate = true; //创建新订单刷新个人页订单数据
-			}
+			updateActivityData(5);
 		}
 		if (isPayOk) {
 			if (OrderDetailActivity.instance != null) {

@@ -34,6 +34,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
+import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.common.MipcaActivityCapture;
 import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
@@ -54,7 +55,6 @@ import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
-import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
@@ -70,7 +70,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	public boolean isUpdate = true;
 
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
-	private static final int Page_Count = 40;  //每页加载条数
+	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
 	private String currStr;
 	private Context mContext;
@@ -189,18 +189,15 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 加载更多
-				if (lv_show.size() > 0) {
+				if (!BaseActivity.isStopLoadMore(lv_show.size(), dataTotal, 0)) {
 					loadSVDatas();
 				} else {
 					new Handler().postDelayed(new Runnable() {
 
 						@Override
 						public void run() {
-							if (NetworkUtil.isNetworkAvailable()) {
-								requestListDatas();
-							} else {
-								refresh_lv.onPullUpRefreshComplete();
-							}
+							refresh_lv.onPullUpRefreshComplete();
+							refresh_lv.setHasMoreData(false);
 						}
 					}, 1000);
 				}
@@ -266,7 +263,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 						Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
 						intent.putExtra("title", items.getTitle());
 						intent.putExtra("lodUrl", AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + items.getId());
-						intent.putExtra("vdoUrl", "");
 						startActivity(intent);
 					}
 				});
@@ -479,7 +475,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 							Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
 							intent.putExtra("title", items.getTitle());
 							intent.putExtra("lodUrl", AppConfig.URL_COMMON_ARTICLE_URL + "?id=" + items.getId());
-							intent.putExtra("vdoUrl", "");
 							startActivity(intent);
 						}
 					});
@@ -705,14 +700,11 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
 			uri = AppConfig.URL_COMMON_PRODUCT_URL;
-			params.add(new MyNameValuePair("app", "list"));
+			params.add(new MyNameValuePair("app", "category"));
 			params.add(new MyNameValuePair("cat_id", "0"));
-			params.add(new MyNameValuePair("price", "0"));
-			params.add(new MyNameValuePair("brand", "1"));
-			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
+			params.add(new MyNameValuePair("brand", "0"));
+			params.add(new MyNameValuePair("order", "0"));
 			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
-			params.add(new MyNameValuePair("keyword", ""));
-			params.add(new MyNameValuePair("number", "0"));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 
 		case AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE:
@@ -727,10 +719,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
-		if (getActivity() == null) {
-			stopAnimation();
-			return;
-		}
+		if (getActivity() == null) return;
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
 			setHeadView();
@@ -743,7 +732,9 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			break;
 		case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
 			if (result != null) {
-				List<ProductListEntity> lists = ((ProductListEntity) result).getMainLists();
+				ProductListEntity mainEn = (ProductListEntity) result;
+				dataTotal = mainEn.getDataTotal();
+				List<ProductListEntity> lists = mainEn.getMainLists();
 				if (lists != null && lists.size() > 0) {
 					rl_load_fail.setVisibility(View.GONE);
 					lv_all.addAll(lists);
@@ -772,10 +763,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
-		if (getActivity() == null) {
-			stopAnimation();
-			return;
-		}
+		if (getActivity() == null) return;
 		CommonTools.showToast(String.valueOf(result), 1000);
 		if (themeEn == null) {
 			getDBDatas(); //加载远程数据失败则获取本地数据

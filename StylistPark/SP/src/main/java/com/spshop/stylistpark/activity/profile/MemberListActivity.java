@@ -43,8 +43,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	public static final int TYPE_2 = 1;  //活跃排名
 	public static final int TYPE_3 = 2;  //订单排名
 	public static final int TYPE_4 = 3;  //收入排名
-	
-	private static final int Page_Count = 20;  //每页加载条数
+
+	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
 	private int page_type_1 = 1;  //最新客户加载页
 	private int page_type_2 = 1;  //活跃排名加载页
@@ -52,11 +52,11 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private int page_type_4 = 1;  //收入排名加载页
 	private int topType = TYPE_1; //Top标记
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
-	private int countTotal = 0; //数集总数量
 	private int total_1, total_2, total_3, total_4;
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean isLogined, isSuccess;
-	
+	private String noDataShowStr;
+
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
 	private RelativeLayout rl_top_screen, rl_loading;
 	private FrameLayout rl_no_data;
@@ -106,7 +106,12 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initView() {
-		setTitle(R.string.profile_my_member);
+		if (UserManager.getInstance().isTalent()) { //达人
+			noDataShowStr = getString(R.string.profile_customer);
+		} else {
+			noDataShowStr = getString(R.string.profile_member);
+		}
+		setTitle(getString(R.string.profile_my_member, noDataShowStr));
 		iv_to_top.setOnClickListener(this);
 		
 		initRaidoGroup();
@@ -140,7 +145,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 加载更多
-            	if (!isStopLoadMore(lv_show.size(), countTotal)) {
+            	if (!isStopLoadMore(lv_show.size(), dataTotal, 0)) {
             		loadSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -205,7 +210,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		isSuccess = false;
 		loadType = 1;
 		current_Page = 1;
-		countTotal = 0;
+		dataTotal = 0;
 		setLoadMoreData();
 		startAnimation();
 		requestProductLists();
@@ -330,7 +335,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private void addOldListDatas(List<MemberEntity> oldLists, int oldPage, int oldTotal) {
 		addAllShow(oldLists);
 		current_Page = oldPage;
-		countTotal = oldTotal;
+		dataTotal = oldTotal;
 		myUpdateAdapter();
 		if (current_Page != 1) {
 			toTop();
@@ -397,7 +402,6 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		case AppConfig.REQUEST_SV_GET_MEMBER_LIST_CODE:
 			params.add(new MyNameValuePair("app", "member"));
 			params.add(new MyNameValuePair("status", String.valueOf(topType)));
-			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
 			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_MEMBER_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
@@ -413,60 +417,60 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 				MemberEntity mainEn = (MemberEntity) result;
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
-					int total = mainEn.getCountTotal();
+					int newTotal = mainEn.getDataTotal();
 					List<MemberEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {
 						List<BaseEntity> newLists = null;
 						switch (topType) {
 						case TYPE_1:
 							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, total_1, lists, lv_all_1, am_all_1);
+								newLists = updNewEntity(newTotal, total_1, lists, lv_all_1, am_all_1);
 							}else {
 								newLists = addNewEntity(lv_all_1, lists, am_all_1);
 								if (newLists != null) {
 									page_type_1++;
 								}
 							}
-							total_1 = total;
+							total_1 = newTotal;
 							break;
 						case TYPE_2:
 							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, total_2, lists, lv_all_2, am_all_2);
+								newLists = updNewEntity(newTotal, total_2, lists, lv_all_2, am_all_2);
 							}else {
 								newLists = addNewEntity(lv_all_2, lists, am_all_2);
 								if (newLists != null) {
 									page_type_2++;
 								}
 							}
-							total_2 = total;
+							total_2 = newTotal;
 							break;
 						case TYPE_3:
 							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, total_3, lists, lv_all_3, am_all_3);
+								newLists = updNewEntity(newTotal, total_3, lists, lv_all_3, am_all_3);
 							}else {
 								newLists = addNewEntity(lv_all_3, lists, am_all_3);
 								if (newLists != null) {
 									page_type_3++;
 								}
 							}
-							total_3 = total;
+							total_3 = newTotal;
 							break;
 						case TYPE_4:
 							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, total_4, lists, lv_all_4, am_all_4);
+								newLists = updNewEntity(newTotal, total_4, lists, lv_all_4, am_all_4);
 							}else {
 								newLists = addNewEntity(lv_all_4, lists, am_all_4);
 								if (newLists != null) {
 									page_type_4++;
 								}
 							}
-							total_4 = total;
+							total_4 = newTotal;
 							break;
 						}
 						if (newLists != null) {
 							addNewShowLists(newLists);
 						}
-						countTotal = total;
+						dataTotal = newTotal;
 						myUpdateAdapter();
 					}else {
 						loadFailHandle();
@@ -557,16 +561,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	protected void stopAnimation() {
 		isLoadOk = true;
 		rl_loading.setVisibility(View.GONE);
-		switch (loadType) {
-			case 0: //下拉刷新
-				refresh_lv.onPullDownRefreshComplete();
-				break;
-			case 1: //加载更多
-				refresh_lv.onPullUpRefreshComplete();
-				break;
-		}
+		refresh_lv.onPullDownRefreshComplete();
+		refresh_lv.onPullUpRefreshComplete();
 		if (lv_show.size() == 0) {
-			tv_no_data.setText(getString(R.string.member_no_member));
+			tv_no_data.setText(getString(R.string.loading_no_data, noDataShowStr));
 			rl_no_data.setVisibility(View.VISIBLE);
 			refresh_lv.setVisibility(View.GONE);
 		}else {

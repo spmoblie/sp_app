@@ -23,8 +23,9 @@ public class UserManager {
 	
 	private String mUserId = null;
 	private String shareId = null;
-	private String mLoginName = null;
-	private String mUserNickName = null;
+	private String mUserName = null;
+	private String mUserNameID = null;
+	private String mUserNick = null;
 	private String mUserHeadImg = null;
 	private String mUserIntro = null;
 	private String mUserBirthday = null;
@@ -78,28 +79,40 @@ public class UserManager {
 		LogUtil.i("isLogined", "saveShareId = " + shareId);
 	}
 
-	public String getLoginName(){
-		if(StringUtil.isNull(mLoginName)){
-			mLoginName = sp.getString(AppConfig.KEY_USER_LOGIN_NAME, "");
+	public String getUserName(){
+		if(StringUtil.isNull(mUserName)){
+			mUserName = sp.getString(AppConfig.KEY_USER_NAME, "");
 		}
-		return mLoginName;
+		return mUserName;
 	}
 	
-	public void saveLoginName(String loginName){
-		editor.putString(AppConfig.KEY_USER_LOGIN_NAME, loginName).apply();
-	    mLoginName = loginName;
+	public void saveUserName(String userName){
+		editor.putString(AppConfig.KEY_USER_NAME, userName).apply();
+		mUserName = userName;
 	}
-	
-	public String getUserNickName(){
-		if(StringUtil.isNull(mUserNickName)){
-			mUserNickName = sp.getString(AppConfig.KEY_USER_NICK_NAME, "");
+
+	public String getUserNameID(){
+		if(StringUtil.isNull(mUserNameID)){
+			mUserNameID = sp.getString(AppConfig.KEY_USER_NAME_ID, "");
 		}
-		return mUserNickName;
+		return mUserNameID;
+	}
+
+	public void saveUserNameID(String userNameID){
+		editor.putString(AppConfig.KEY_USER_NAME_ID, userNameID).apply();
+		mUserNameID = userNameID;
+	}
+
+	public String getUserNick(){
+		if(StringUtil.isNull(mUserNick)){
+			mUserNick = sp.getString(AppConfig.KEY_USER_NICK, "");
+		}
+		return mUserNick;
 	}
 	
-	public void saveUserNickName(String nickName){
-		editor.putString(AppConfig.KEY_USER_NICK_NAME, nickName).apply();
-		mUserNickName = nickName;
+	public void saveUserNick(String userNick){
+		editor.putString(AppConfig.KEY_USER_NICK, userNick).apply();
+		mUserNick = userNick;
 	}
 	
 	public String getUserHeadImg(){
@@ -173,6 +186,10 @@ public class UserManager {
 	public int getUserRankCode(){
 		return sp.getInt(AppConfig.KEY_USER_RANK_CODE, 0);
 	}
+
+	public boolean isTalent() { //判定是否达人
+		return getUserRankCode() == 4;
+	}
 	
 	public void saveUserRankCode(int userRankCode){
 		editor.putInt(AppConfig.KEY_USER_RANK_CODE, userRankCode).apply();
@@ -237,14 +254,6 @@ public class UserManager {
 		editor.putString(AppConfig.KEY_WX_REFRESH_TOKEN, refreshToken).apply();
 		wxRefreshToken = refreshToken;
 	}
-	
-	public boolean getUserAuth(){
-		return sp.getBoolean(AppConfig.KEY_USER_AUTH, false);
-	}
-
-	public void saveUserAuth(boolean isAuth){
-		editor.putBoolean(AppConfig.KEY_USER_AUTH, isAuth).apply();
-	}
 
 	public int getCartTotal(){
 		return sp.getInt(AppConfig.KEY_CART_NUM, 0);
@@ -265,40 +274,6 @@ public class UserManager {
 		return !StringUtil.isNull(getUserId()) && !getUserId().equals("0");
 	}
 
-	/**
-	 * 保存用户信息
-	 */
-	public void saveUserInfo(UserInfoEntity infoEn) {
-		if (infoEn != null) {
-			saveUserId(infoEn.getUserId());
-			saveShareId(infoEn.getShareId());
-			saveUserNickName(infoEn.getUserNick());
-			saveUserHeadImg(infoEn.getHeadImg());
-			saveUserIntro(infoEn.getUserIntro());
-			saveUserSex(infoEn.getSexCode());
-			saveUserBirthday(infoEn.getBirthday());
-			saveUserEmail(infoEn.getUserEmail());
-			saveUserPhone(infoEn.getUserPhone());
-			saveUserAuth(infoEn.isAuth());
-			saveUserRankCode(infoEn.getUserRankCode());
-			saveUserRankName(infoEn.getUserRankName());
-			// 绑定用户信息至推送服务
-			AppApplication.onPushRegister(true);
-		}
-	}
-	
-	/**
-	 * 保存微信授权信息
-	 */
-	public void saveWechatUserInfo(WXEntity wxEn) {
-		if (wxEn != null) {
-			saveWXAccessToken(wxEn.getAccess_token());
-			saveWXOpenid(wxEn.getOpenid());
-			saveWXUnionid(wxEn.getUnionid());
-			saveWXRefreshToken(wxEn.getRefresh_token());
-		}
-	}
-	
 	/**
 	 * 登入成功保存状态
 	 */
@@ -342,24 +317,60 @@ public class UserManager {
 	}
 
 	/**
+	 * 保存用户信息
+	 */
+	public void saveUserInfo(UserInfoEntity infoEn) {
+		if (infoEn != null) {
+			saveUserId(infoEn.getUserId());
+			saveShareId(infoEn.getShareId());
+			saveUserName(infoEn.getUserName());
+			saveUserNameID(infoEn.getUserNameID());
+			saveUserNick(infoEn.getUserNick());
+			saveUserHeadImg(infoEn.getHeadImg());
+			saveUserIntro(infoEn.getUserIntro());
+			saveUserSex(infoEn.getSexCode());
+			saveUserBirthday(infoEn.getBirthday());
+			saveUserEmail(infoEn.getUserEmail());
+			saveUserPhone(infoEn.getUserPhone());
+			saveUserRankCode(infoEn.getUserRankCode());
+			saveUserRankName(infoEn.getUserRankName());
+			// 绑定用户信息至推送服务
+			AppApplication.onPushRegister(true);
+		}
+	}
+
+	/**
 	 * 清空缓存的用户信息
 	 */
 	private void clearUserLoginInfo(){
 		saveUserId(null);
 		saveShareId(null);
-		saveUserNickName(null);
+		saveUserName(null);
+		saveUserNameID(null);
+		saveUserNick(null);
 		saveUserHeadImg(null);
 		saveUserIntro(null);
 		saveUserSex(0);
 		saveUserBirthday(null);
 		saveUserEmail(null);
 		saveUserPhone(null);
-		saveUserAuth(false);
 		saveUserRankCode(0);
 		saveUserRankName(null);
 		saveCartTotal(0); //购物车商品数
 	}
-	
+
+	/**
+	 * 保存微信授权信息
+	 */
+	public void saveWechatUserInfo(WXEntity wxEn) {
+		if (wxEn != null) {
+			saveWXAccessToken(wxEn.getAccess_token());
+			saveWXOpenid(wxEn.getOpenid());
+			saveWXUnionid(wxEn.getUnionid());
+			saveWXRefreshToken(wxEn.getRefresh_token());
+		}
+	}
+
 	/**
 	 * 清除微信授权信息
 	 */

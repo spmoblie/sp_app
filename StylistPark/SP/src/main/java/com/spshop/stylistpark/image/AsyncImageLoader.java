@@ -122,8 +122,8 @@ public class AsyncImageLoader {
 	 *            图片类型（0:普通相片/1:头像）
 	 */
 	public ImageLoadTask loadImage(String oldPath, int type) {
-		ImageLoadTask task = null;
-		String newPath = "";
+		ImageLoadTask task;
+		String newPath;
 		if (oldPath.contains(":")) {
 			newPath = oldPath.toString().replace(":", "");
 		} else {

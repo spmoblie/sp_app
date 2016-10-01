@@ -27,16 +27,12 @@
         <TextView
             android:id="@+id/personal_tv_head_content"
             style="@style/setting_lay_text_content" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/personal_rl_nick"
         style="@style/setting_lay_item"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/personal_rl_head" >
 
         <TextView
@@ -77,7 +73,8 @@
     <RelativeLayout
         android:id="@+id/personal_rl_birthday"
         style="@style/setting_lay_item"
-        android:layout_below="@id/personal_rl_sex" >
+        android:layout_below="@id/personal_rl_sex"
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/personal_tv_birthday_title"
@@ -95,31 +92,57 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/personal_rl_phone"
+        android:id="@+id/personal_rl_rank"
         style="@style/setting_lay_item"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/personal_rl_birthday"
-        android:visibility="gone" >
+        android:layout_below="@id/personal_rl_sex" >
 
         <TextView
-            android:id="@+id/personal_tv_phone_title"
-            style="@style/setting_lay_text_title" />
+            android:id="@+id/personal_tv_rank_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/profile_rank" />
 
         <TextView
-            android:id="@+id/personal_tv_phone_content"
-            style="@style/setting_lay_text_content" />
+            android:id="@+id/personal_tv_rank_content"
+            style="@style/setting_lay_text_content"
+            android:drawableRight="@null"
+            android:layout_marginRight="35dp"
+            android:textColor="@color/tv_color_status" />
 
         <ImageView
             style="@style/set_line_horizontal_bg"
             android:layout_alignParentBottom="true"
             android:contentDescription="@string/desc" />
     </RelativeLayout>
-    
+
+    <RelativeLayout
+        android:id="@+id/personal_rl_intro"
+        style="@style/setting_lay_item"
+        android:layout_below="@id/personal_rl_rank" >
+
+        <TextView
+            android:id="@+id/personal_tv_intro_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/profile_intro" />
+
+        <TextView
+            android:id="@+id/personal_tv_intro_content"
+            style="@style/setting_lay_text_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/personal_tv_intro_title"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+            android:marqueeRepeatLimit="marquee_forever" />
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/personal_rl_email"
         style="@style/setting_lay_item"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/personal_rl_birthday" >
+        android:layout_below="@id/personal_rl_intro" >
 
         <TextView
             android:id="@+id/personal_tv_email_title"
@@ -129,11 +152,6 @@
         <TextView
             android:id="@+id/personal_tv_email_content"
             style="@style/setting_lay_text_content" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -164,11 +182,6 @@
             android:textSize="@dimen/text_size_13"
             android:textColor="@color/label_text_color"
             android:visibility="gone" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
     </RelativeLayout>
 
 </RelativeLayout>

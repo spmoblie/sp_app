@@ -87,7 +87,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	private TextView tv_register, tv_forger;
 	private TextView tv_wechat, tv_qq, tv_weibo, tv_alipay, tv_facebook;
 	
-	private HttpUtil http;
 	private UserManager um;
 	private UserInfoEntity fbOauthEn;
 	private boolean isStop = false;
@@ -126,9 +125,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		
 		instance = this;
 		rootPage = getIntent().getExtras().getString("rootPage");
-		http = new HttpUtil();
 		um = UserManager.getInstance();
-		userStr = um.getLoginName();
+		userStr = um.getUserNick();
 
 		// QQ
 		mTencent = Tencent.createInstance(QQ_APP_ID, mContext);
@@ -315,7 +313,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	class HttpWechatAuthTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			return http.myHttpGet(params[0]);
+			try {
+				return sc.getServerJSONString(params[0]);
+			} catch (Exception e) {
+				ExceptionUtil.handle(e);
+				return "";
+			}
 		}
 		
 		@Override
@@ -341,7 +344,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	class HttpWechatRefreshTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			return http.myHttpGet(params[0]);
+			try {
+				return sc.getServerJSONString(params[0]);
+			} catch (Exception e) {
+				ExceptionUtil.handle(e);
+				return "";
+			}
 		}
 		
 		@Override
@@ -388,7 +396,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	class HttpWechatUserTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			return http.myHttpGet(params[0]);
+			try {
+				return sc.getServerJSONString(params[0]);
+			} catch (Exception e) {
+				ExceptionUtil.handle(e);
+				return "";
+			}
 		}
 
 		@Override
@@ -397,7 +410,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 				WXUserInfoEntity userInfo = LoginJsonParser.getWexiUserInfo(result);
 				if (userInfo != null) {
 					UserInfoEntity oauthEn = new UserInfoEntity();
-					oauthEn.setUserName(LOGIN_TYPE_WX);
+					oauthEn.setUserRankName(LOGIN_TYPE_WX);
 					oauthEn.setUserId(userInfo.getUnionid());
 					oauthEn.setUserNick(userInfo.getNickname());
 					oauthEn.setUserIntro(userInfo.getSex());
@@ -478,7 +491,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					QQUserInfoEntity userInfo = LoginJsonParser.getQQUserInfo(jsonObject);
 					if (userInfo != null && userInfo.getErrcode() == 0) { //获取用户信息成功
 						UserInfoEntity oauthEn = new UserInfoEntity();
-						oauthEn.setUserName(LOGIN_TYPE_QQ);
+						oauthEn.setUserRankName(LOGIN_TYPE_QQ);
 						oauthEn.setUserId(mTencent.getOpenId());
 						oauthEn.setUserNick(userInfo.getNickname());
 						oauthEn.setUserIntro(userInfo.getGender());
@@ -577,7 +590,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 if (user != null) {
                     Oauth2AccessToken token =  AccessTokenKeeper.readAccessToken(getApplicationContext());
                     UserInfoEntity oauthEn = new UserInfoEntity();
-                    oauthEn.setUserName(LOGIN_TYPE_WB);
+                    oauthEn.setUserRankName(LOGIN_TYPE_WB);
                     oauthEn.setUserId(token.getUid());
                     oauthEn.setUserNick(user.name);
                     oauthEn.setUserIntro(user.gender);
@@ -666,7 +679,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void registAlipayUserInfo(UserInfoEntity oauthEn) {
 		if (oauthEn != null && !StringUtil.isNull(alipayOpenId)) {
-			oauthEn.setUserName(LOGIN_TYPE_ZF);
+			oauthEn.setUserRankName(LOGIN_TYPE_ZF);
 			oauthEn.setUserId(alipayOpenId);
 			startRegisterOauthActivity(oauthEn);
 		} else {
@@ -722,7 +735,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					 String fbId = object.optString("id");
 					 // 记录用户信息
 					 fbOauthEn = new UserInfoEntity();
-					 fbOauthEn.setUserName(LOGIN_TYPE_FB);
+					 fbOauthEn.setUserRankName(LOGIN_TYPE_FB);
 					 fbOauthEn.setUserId(fbId);
 					 fbOauthEn.setUserNick(object.optString("name"));
 					 fbOauthEn.setUserIntro(object.optString("gender"));
@@ -907,7 +920,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					if (infoEn.getErrCode() == 1) //校验通过
 					{
 						um.saveUserLoginSuccess(infoEn.getUserId());
-						um.saveLoginName(userStr);
+						um.saveUserNick(userStr);
 						stopAnimation();
 						finish();
 					}

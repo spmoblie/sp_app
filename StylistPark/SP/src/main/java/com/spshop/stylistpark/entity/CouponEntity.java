@@ -52,11 +52,6 @@ public class CouponEntity extends BaseEntity {
 	private String endDate;
 	
 	/**
-	 * 数集总数量
-	 */
-	private int countTotal;
-	
-	/**
 	 * 传输数据集
 	 */
 	private List<CouponEntity> mainLists;
@@ -163,16 +158,6 @@ public class CouponEntity extends BaseEntity {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
-	}
-
-
-	public int getCountTotal() {
-		return countTotal;
-	}
-
-
-	public void setCountTotal(int countTotal) {
-		this.countTotal = countTotal;
 	}
 
 

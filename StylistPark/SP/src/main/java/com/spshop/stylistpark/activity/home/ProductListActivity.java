@@ -61,15 +61,15 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	public static final int TYPE_1 = 1;  //默认
 	public static final int TYPE_2 = 2;  //价格
 
-	private static final int Page_Count = 20;  //每页加载条数
+	private int pageCount = 0; //每页数量
+	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
 	private int page_type_1 = 1;  //默认列表加载页
 	private int page_type_2_ASC = 1;  //价格升序列表加载页
 	private int page_type_2_DSC = 1;  //价格降序列表加载页
 	private int topType = TYPE_1; //Top标记
-	private int sortType = 0; //排序标记(0:默认排序/1:价格降序/2:价格升序)
+	private int sortType = 0; //排序标记(0:默认排序/1:价格升序/2:价格降序)
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
-	private int countTotal = 0; //数集总数量
 	private int total_1, total_2_ASC, total_2_DSC;
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean flag_type_2 = true; //价格排序控制符(true:价格升序/false:价格降序)
@@ -353,17 +353,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 加载更多
-				int page_num = lv_show.size() / Page_Count;
-				if (lv_show.size() % Page_Count > 0) {
-					page_num++;
-				}
-				int page_total = countTotal / Page_Count;
-				if (countTotal % Page_Count > 0) {
-					page_total++;
-				}
-				CommonTools.showPageNum(page_num + "/" + page_total, 1000);
-
-				if (!isStopLoadMore(lv_show.size(), countTotal)) {
+				if (!isStopLoadMore(lv_show.size(), dataTotal, pageCount)) {
 					loadSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -428,7 +418,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private void getSVDatas() {
 		loadType = 1;
 		current_Page = 1;
-		countTotal = 0;
+		dataTotal = 0;
 		setLoadMoreData();
 		startAnimation();
 		requestProductLists();
@@ -445,11 +435,11 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			break;
 		case TYPE_2: //价格
 			switch (sortType) {
-			case 1: //降序
-				current_Page = page_type_2_DSC;
-				break;
-			case 2: //升序
+			case 1: //升序
 				current_Page = page_type_2_ASC;
+				break;
+			case 2: //降序
+				current_Page = page_type_2_DSC;
 				break;
 			}
 			break;
@@ -551,7 +541,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			{
 				updateViewGroupStatus();
 				flag_type_2 = false;
-				sortType = 2;
+				sortType = 1;
 				if (lv_all_2_ASC != null && lv_all_2_ASC.size() > 0) {
 					addOldListDatas(lv_all_2_ASC, page_type_2_ASC, total_2_ASC);
 				}else {
@@ -563,7 +553,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			{
 				updateViewGroupStatus();
 				flag_type_2 = true;
-				sortType = 1;
+				sortType = 2;
 				if (lv_all_2_DSC != null && lv_all_2_DSC.size() > 0) {
 					addOldListDatas(lv_all_2_DSC, page_type_2_DSC, total_2_DSC);
 				} else {
@@ -631,7 +621,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private void addOldListDatas(List<ProductListEntity> oldLists, int oldPage, int oldTotal) {
 		addAllShow(oldLists);
 		current_Page = oldPage;
-		countTotal = oldTotal;
+		dataTotal = oldTotal;
 		myUpdateAdapter();
 		if (current_Page != 1) {
 			toTop();
@@ -729,7 +719,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 * 向下滑动效果
 	 */
 	private void downMove(int firstVisibleItem) {
-		if (countTotal > Page_Count && !headStatus) {
+		if (dataTotal > pageCount && !headStatus) {
 			createAnimation(ll_top);
 			ll_top.clearAnimation();
 			ll_top.startAnimation(headGONE);
@@ -756,7 +746,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			params.add(new MyNameValuePair("cat_id", String.valueOf(typeId)));
 			params.add(new MyNameValuePair("price", String.valueOf(sortType)));
 			params.add(new MyNameValuePair("brand", String.valueOf(brandId)));
-			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
 			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
 			params.add(new MyNameValuePair("keyword", searchStr));
 			params.add(new MyNameValuePair("number", "0"));
@@ -786,45 +775,46 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 					titleName = mainEn.getCategoryName();
 					tv_title.setText(titleName);
 				}
-				int total = mainEn.getTotal();
+				pageCount = mainEn.getPageSize();
+				int newTotal = mainEn.getDataTotal();
 				List<ProductListEntity> lists = mainEn.getMainLists();
 				if (lists != null && lists.size() > 0) {
 					List<BaseEntity> newLists = null;
 					switch (topType) {
 					case TYPE_1: //默认
 						if (loadType == 0) { //下拉
-							newLists = updNewEntity(total, countTotal, lists, lv_all_1, am_all_1);
+							newLists = updNewEntity(newTotal, total_1, lists, lv_all_1, am_all_1);
 						}else {
 							newLists = addNewEntity(lv_all_1, lists, am_all_1);
 							if (newLists != null) {
 								page_type_1++;
 							}
 						}
-						total_1 = total;
+						total_1 = newTotal;
 						break;
 					case TYPE_2: //价格
 						switch (sortType) {
-						case 1: //降序
+						case 1: //升序
 							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, countTotal, lists, lv_all_2_DSC, am_all_2_dsc);
-							}else {
-								newLists = addNewEntity(lv_all_2_DSC, lists, am_all_2_dsc);
-								if (newLists != null) {
-									page_type_2_DSC++;
-								}
-							}
-							total_2_DSC = total;
-							break;
-						case 2: //升序
-							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, countTotal, lists, lv_all_2_ASC, am_all_2_asc);
+								newLists = updNewEntity(newTotal, total_2_ASC, lists, lv_all_2_ASC, am_all_2_asc);
 							}else {
 								newLists = addNewEntity(lv_all_2_ASC, lists, am_all_2_asc);
 								if (newLists != null) {
 									page_type_2_ASC++;
 								}
 							}
-							total_2_ASC = total;
+							total_2_ASC = newTotal;
+							break;
+						case 2: //降序
+							if (loadType == 0) { //下拉
+								newLists = updNewEntity(newTotal, total_2_DSC, lists, lv_all_2_DSC, am_all_2_dsc);
+							}else {
+								newLists = addNewEntity(lv_all_2_DSC, lists, am_all_2_dsc);
+								if (newLists != null) {
+									page_type_2_DSC++;
+								}
+							}
+							total_2_DSC = newTotal;
 							break;
 						}
 						break;
@@ -836,7 +826,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 					if (newLists != null) {
 						addNewShowLists(newLists);
 					}
-					countTotal = total;
+					dataTotal = newTotal;
 					myUpdateAdapter();
 				}else {
 					loadFailHandle();
@@ -865,11 +855,11 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			break;
 		case TYPE_2: //价格
 			switch (sortType) {
-			case 1: //降序
-				addAllShow(lv_all_2_DSC);
-				break;
-			case 2: //升序
+			case 1: //升序
 				addAllShow(lv_all_2_ASC);
+				break;
+			case 2: //降序
+				addAllShow(lv_all_2_DSC);
 				break;
 			}
 			break;
@@ -923,13 +913,13 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				break;
 			case TYPE_2: //价格
 				switch (sortType) {
-					case 1: //降序
-						lv_all_2_DSC.clear();
-						lv_all_2_DSC.addAll(lv_show);
-						break;
-					case 2: //升序
+					case 1: //升序
 						lv_all_2_ASC.clear();
 						lv_all_2_ASC.addAll(lv_show);
+						break;
+					case 2: //降序
+						lv_all_2_DSC.clear();
+						lv_all_2_DSC.addAll(lv_show);
 						break;
 				}
 				break;
@@ -943,14 +933,8 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	protected void stopAnimation() {
 		super.stopAnimation();
 		isLoadOk = true;
-		switch (loadType) {
-		case 0: //下拉刷新
-			refresh_lv.onPullDownRefreshComplete();
-			break;
-		case 1: //加载更多
-			refresh_lv.onPullUpRefreshComplete();
-			break;
-		}
+		refresh_lv.onPullDownRefreshComplete();
+		refresh_lv.onPullUpRefreshComplete();
 		if (lv_show.size() == 0) {
 			refresh_lv.setVisibility(View.GONE);
 			ll_other.setVisibility(View.GONE);
@@ -986,7 +970,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		wordsHistoryStr = shared.getString(AppConfig.KEY_SEARCH_WORDS_HISTORY, "");
 		String[] strs = wordsHistoryStr.split("_");
 		lv_words.clear();
-		SelectListEntity en = null;
+		SelectListEntity en;
 		for (int i = 0; i < strs.length; i++) {
 			if (!StringUtil.isNull(strs[i])) {
 				en = new SelectListEntity();
@@ -1005,7 +989,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		
 		List<SelectListEntity> lists = new ArrayList<SelectListEntity>();
 		lists.addAll(lv_words);
-		SelectListEntity wordsEn = null;
+		SelectListEntity wordsEn;
 		for (int i = 0; i < lists.size(); i++) {
 			wordsEn = lists.get(i);
 			if (wordsEn == null) continue;

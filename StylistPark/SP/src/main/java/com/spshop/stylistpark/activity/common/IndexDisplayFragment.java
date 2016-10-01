@@ -29,12 +29,14 @@ import java.util.List;
 public class IndexDisplayFragment extends BaseFragment {
 
 	private static final String TAG = "IndexDisplayFragment";
+
 	private static final String[] indexs = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I",
 			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"};
 	public static final long LIST_POSITION_DIALOG_DELAY_TIME = 1000;
 
-	ListView indexDisplay_ListView;
+	List<String> indexLists;
 	SectionIndexerView mSection;
+	ListView indexDisplay_ListView;
 	View headerView;
 	IndexDisplayAdapter indexAdapter;
 	OnItemClickListener onItemClickListener;
@@ -122,15 +124,15 @@ public class IndexDisplayFragment extends BaseFragment {
 			indexDisplay_ListView.setOnItemClickListener(onItemClickListener);
 		}
 		mSection = (SectionIndexerView) view.findViewById(R.id.indexDisplay_section_indexer);
-		initSection();
+		initSection(); //初始化索引View
 		indexTextView = (TextView) getActivity().getLayoutInflater().inflate(R.layout.item_list_position, null);
 		indexTextView.setVisibility(View.INVISIBLE);
 		return view;
 	}
 
 	private void initSection() {
-		List<String> rightList = Arrays.asList(indexs);
-		ContentAdapter adapter = new ContentAdapter(getActivity(), android.R.layout.simple_list_item_1, rightList);
+		indexLists = Arrays.asList(indexs);
+		ContentAdapter adapter = new ContentAdapter(getActivity(), android.R.layout.simple_list_item_1, indexLists);
 		mSection.setSectionIndexer(adapter);
 		mSection.setSectionListener(new SectionIndexerView.SectionIndexerListener() {
 			@Override
@@ -152,10 +154,10 @@ public class IndexDisplayFragment extends BaseFragment {
 					mShowing = true;
 					indexTextView.setVisibility(View.VISIBLE);
 				}
+				mPrevString = keyStr;
 				indexTextView.setText(keyStr);
 				mHandler.removeCallbacks(mRemoveWindow);
 				mHandler.postDelayed(mRemoveWindow, LIST_POSITION_DIALOG_DELAY_TIME);
-				mPrevString = keyStr;
 			}
 		});
 	}
@@ -203,18 +205,20 @@ public class IndexDisplayFragment extends BaseFragment {
 							return;
 						if (indexAdapter == null)
 							return;
-						// String groupTitle=dataList.get(firstVisibleItem).getRouteNo().substring(0,1);
-						// String groupTitle=adapter.getFirstChar(firstVisibleItem);
+						// String groupTitle = dataList.get(firstVisibleItem).getRouteNo().substring(0,1);
+						// String groupTitle = adapter.getFirstChar(firstVisibleItem);
 						String groupTitle = indexAdapter.getIndexChar(firstVisibleItem);
-						if (!isShowRight && groupTitle != null && !groupTitle.equals("")) {
+						if (groupTitle != null && !groupTitle.equals("")) {
+							mSection.changeStatus(indexLists.indexOf(groupTitle)); //更新索引
+							if (isShowRight) return; //有索引时滑动不弹幕
 							if (!mShowing && !groupTitle.equalsIgnoreCase(mPrevString)) {
 								mShowing = true;
 								indexTextView.setVisibility(View.VISIBLE);
 							}
+							mPrevString = groupTitle;
 							indexTextView.setText(groupTitle);
 							mHandler.removeCallbacks(mRemoveWindow);
 							mHandler.postDelayed(mRemoveWindow, LIST_POSITION_DIALOG_DELAY_TIME);
-							mPrevString = groupTitle;
 						}
 					}
 

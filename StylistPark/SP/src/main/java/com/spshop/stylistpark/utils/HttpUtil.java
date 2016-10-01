@@ -20,7 +20,6 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
@@ -144,33 +143,6 @@ public class HttpUtil {
 			in = entity.getContent();
 		}
 		return in;
-	}
-
-	public String myHttpGet(String httpUrl) {
-		// HttpGet连接对象
-		HttpGet httpRequest = new HttpGet(httpUrl);
-		// 取得HttpClient对象
-		HttpClient httpclient = new DefaultHttpClient();
-		// 请求超时
-		httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1500);
-		// 读取超时
-		httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 1500);
-		HttpResponse httpResponse;
-		try {
-			// 请求HttpClient，取得HttpResponse
-			httpResponse = httpclient.execute(httpRequest);
-			// 请求成功
-			int returnCode = httpResponse.getStatusLine().getStatusCode();
-			String strResult = "";
-			if (returnCode == HttpStatus.SC_OK) {
-				// 取得返回的字符串
-				strResult = getString(httpResponse.getEntity());
-				return strResult;
-			}
-		} catch (Exception e) {
-			return "";
-		}
-		return "";
 	}
 
 	/**

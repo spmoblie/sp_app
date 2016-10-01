@@ -106,7 +106,7 @@ public class MemberListAdapter extends BaseAdapter {
 			holder.iv_top_line.setVisibility(View.GONE);
 		}
 		
-		holder.tv_name.setText(data.getUserName());
+		holder.tv_name.setText(data.getMemberNick());
 		/*switch (data.getMemberRank()) {
 		case 0:
 			holder.tv_name.setCompoundDrawables(null, null, rank_1, null);

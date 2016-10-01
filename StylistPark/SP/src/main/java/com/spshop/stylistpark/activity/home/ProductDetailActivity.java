@@ -40,8 +40,8 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.HomeFragmentActivity;
 import com.spshop.stylistpark.activity.cart.CartActivity;
+import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.activity.common.ShowListActivity;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
 import com.spshop.stylistpark.activity.common.VideoActivity;
@@ -91,7 +91,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private ImageView iv_left, iv_goods_img, iv_video, iv_brang_logo, iv_num_minus, iv_num_add, iv_to_top;
 	private TextView tv_title, tv_timer, tv_page, tv_name, tv_curr, tv_price_sell, tv_price_full, tv_discount;
 	private TextView tv_property_1, tv_property_2, tv_property_3, tv_brand_name, tv_brand_country, tv_brand_go;
-	private TextView tv_collection, tv_cart, tv_cart_total, tv_add_cart, tv_call, tv_home;
+	private TextView tv_collection, tv_cart, tv_cart_total, tv_add_cart, tv_call;
 	private TextView tv_popup_name, tv_popup_curr, tv_popup_price;
 	private TextView tv_popup_prompt, tv_popup_select, tv_popup_number, tv_popup_confirm;
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
@@ -116,6 +116,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private boolean isShow = false;
 	private boolean isNext = false;
 	private boolean isColl = false;
+	private boolean isAddOr = true;
 	private boolean vprStop = true;
 	private int idsSize, idsPosition, vprPosition;
 	private int goodsId = 0;
@@ -188,7 +189,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		tv_cart_total = (TextView) findViewById(R.id.product_detail_tv_cart_total);
 		tv_add_cart = (TextView) findViewById(R.id.product_detail_tv_add_cart);
 		tv_call = (TextView) findViewById(R.id.product_detail_tv_call);
-		tv_home = (TextView) findViewById(R.id.product_detail_tv_home);
 	}
 
 	private void initView() {
@@ -205,7 +205,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		tv_cart.setOnClickListener(this);
 		tv_add_cart.setOnClickListener(this);
 		tv_call.setOnClickListener(this);
-		tv_home.setOnClickListener(this);
 
 		initRaidoGroup();
 		initWebView();
@@ -222,6 +221,11 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			}
 			attrEn = mainEn.getAttrEn();
 			attrNameStr = getSelectShowStr(attrEn);
+			if (attrEn.getSkuLists() == null || attrEn.getSkuLists().size() == 0) {
+				isAddOr = false; //库存为“null”或“0”不可加入购物车
+				tv_add_cart.setText(R.string.product_sku_null);
+				tv_add_cart.setBackgroundColor(getResources().getColor(R.color.debar_text_color));
+			}
 			price = mainEn.getComputePrice();
 			mathPrice = mainEn.getComputePrice();
 			tv_name.setText(mainEn.getBrandName() + mainEn.getName());
@@ -349,7 +353,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		for (int i = 0; i < imgEns.size(); i++) {
 			if (i == 0) {
 				fristGoodsImgUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMinUrl();
-				if (UserManager.getInstance().getUserRankCode() == 4) { //达人
+				if (UserManager.getInstance().isTalent()) { //达人
 					shareImgUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMaxUrl();
 				} else {
 					shareImgUrl = fristGoodsImgUrl;
@@ -771,13 +775,14 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			startActivity(new Intent(mContext, CartActivity.class));
 			break;
 		case R.id.product_detail_tv_add_cart:
+			if (!isAddOr) return;
 			initCartPopup();
 			break;
 		case R.id.product_detail_tv_call:
-			
-			break;
-		case R.id.product_detail_tv_home:
-			startActivity(new Intent(mContext, HomeFragmentActivity.class));
+			Intent intent = new Intent(mContext, MyWebViewActivity.class);
+			intent.putExtra("title", getString(R.string.profile_call));
+			intent.putExtra("lodUrl", AppConfig.API_CUSTOMER_SERVICE);
+			startActivity(intent);
 			break;
 		case R.id.popup_add_cart_rl_finish:
 			catrPopupDismiss();
@@ -1056,7 +1061,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
 				ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp.gravity = Gravity.BOTTOM;
-		lp.setMargins(tv_collection.getRight()+tv_cart.getRight()/2+8, 
+		lp.setMargins(tv_collection.getRight()+tv_cart.getRight()/2+5,
 				0, 0, (ll_bottom_bar.getBottom()-ll_bottom_bar.getTop())-10);
 		fl_main.addView(tv_name, lp);
 		

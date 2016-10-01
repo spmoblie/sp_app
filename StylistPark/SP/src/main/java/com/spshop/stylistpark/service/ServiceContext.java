@@ -29,4 +29,11 @@ public class ServiceContext {
 		return ms.loadServerDatas(tag, requestCode, uri, params, method);
 	}
 
+	/**
+	 * Get返回JSON格式字符串
+	 */
+	public String getServerJSONString(String uri) throws Exception {
+		return ms.getServerJSONString(uri);
+	}
+
 }

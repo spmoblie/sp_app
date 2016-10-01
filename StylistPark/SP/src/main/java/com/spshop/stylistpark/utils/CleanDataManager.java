@@ -115,7 +115,7 @@ public class CleanDataManager {
     }
   
     /** 
-     * 清除本应用所有的数据 
+     * 清除本应用所有缓存的数据
      *  
      * @param context 
      * @param filepath 

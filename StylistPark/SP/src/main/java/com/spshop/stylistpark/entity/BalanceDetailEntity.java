@@ -9,8 +9,13 @@ public class BalanceDetailEntity extends BaseEntity {
 	/**
 	 * 明细总数目
 	 */
+	private String logId;
+
+	/**
+	 * 明细总数目
+	 */
 	private int countTotal;
-	
+
 	/**
 	 * 提现状态
 	 */
@@ -68,7 +73,15 @@ public class BalanceDetailEntity extends BaseEntity {
 
 	@Override
 	public String getEntityId() {
-		return "";
+		return logId;
+	}
+
+	public String getLogId() {
+		return logId;
+	}
+
+	public void setLogId(String logId) {
+		this.logId = logId;
 	}
 
 	public int getCountTotal() {

@@ -334,14 +334,7 @@
                     android:id="@+id/product_detail_tv_call"
                     style="@style/commom_mean_tab_text_assist"
                     android:drawableTop="@drawable/topbar_icon_call"
-                    android:text="@string/product_call"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/product_detail_tv_home"
-                    style="@style/commom_mean_tab_text_assist"
-                    android:drawableTop="@drawable/topbar_icon_home"
-                    android:text="@string/home_tab_text_one" />
+                    android:text="@string/product_call" />
 
                 <TextView
                     android:id="@+id/product_detail_tv_collection"

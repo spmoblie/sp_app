@@ -66,15 +66,15 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	public static final int TYPE_1 = 1;  //默认
 	public static final int TYPE_2 = 2;  //价格
 
-	private static final int Page_Count = 40;  //每页加载条数
+	private int pageCount = 0; //每页数量
+	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
 	private int page_type_1 = 1;  //默认列表加载页
 	private int page_type_2_ASC = 1;  //价格升序列表加载页
 	private int page_type_2_DSC = 1;  //价格降序列表加载页
 	private int topType = TYPE_1; //Top标记
-	private int sortType = 0; //排序标记(0:默认排序/1:价格降序/2:价格升序)
+	private int sortType = 0; //排序标记(0:默认排序/1:价格升序/2:价格降序)
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
-	private int countTotal = 0; //数集总数量
 	private int total_1, total_2_ASC, total_2_DSC;
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean flag_type_2 = true; //价格排序控制符(true:价格升序/false:价格降序)
@@ -200,17 +200,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 加载更多
-				int page_num = lv_show.size()/Page_Count;
-				if (lv_show.size()%Page_Count > 0) {
-					page_num++;
-				}
-				int page_total = countTotal/Page_Count;
-				if (countTotal%Page_Count > 0) {
-					page_total++;
-				}
-				CommonTools.showPageNum(page_num + "/" + page_total, 1000);
-
-				if (!isStopLoadMore(lv_show.size(), countTotal)) {
+				if (!isStopLoadMore(lv_show.size(), dataTotal, pageCount)) {
 					loadSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -244,7 +234,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private void initViewGroup() {
 		tv_top_1.setText(getString(R.string.product_top_tab_1));
 		rl_top_1.setOnClickListener(this);
-		tv_top_2.setText(getString(R.string.product_top_tab_2));
+		tv_top_2.setText(getString(R.string.product_top_tab_3));
 		rl_top_2.setOnClickListener(this);
 		tv_top_3.setText(R.string.filter);
 		rl_top_3.setOnClickListener(this);
@@ -322,7 +312,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		if (!StringUtil.isNull(brandEn.getDefineUrl())) {
 			logoImgUrl = IMAGE_URL_HTTP + brandEn.getDefineUrl();
 			ImageLoader.getInstance().displayImage(logoImgUrl, iv_brand_img, options);
-			if (UserManager.getInstance().getUserRankCode() == 4) { //达人
+			if (UserManager.getInstance().isTalent()) { //达人
 				shareImgUrl = IMAGE_URL_HTTP + brandEn.getDefineUrl();
 			} else {
 				shareImgUrl = logoImgUrl;
@@ -435,7 +425,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private void getSVDatas() {
 		loadType = -1;
 		current_Page = 1;
-		countTotal = 0;
+		dataTotal = 0;
 		setLoadMoreData();
 		startAnimation();
 		sendRequestCode();
@@ -452,11 +442,11 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			break;
 		case TYPE_2: //价格
 			switch (sortType) {
-			case 1: //降序
-				current_Page = page_type_2_DSC;
-				break;
-			case 2: //升序
+			case 1: //升序
 				current_Page = page_type_2_ASC;
+				break;
+			case 2: //降序
+				current_Page = page_type_2_DSC;
 				break;
 			}
 			break;
@@ -589,7 +579,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			{
 				updateViewGroupStatus();
 				flag_type_2 = false;
-				sortType = 2;
+				sortType = 1;
 				if (lv_all_2_ASC != null && lv_all_2_ASC.size() > 0) {
 					addOldListDatas(lv_all_2_ASC, page_type_2_ASC, total_2_ASC);
 				}else {
@@ -601,7 +591,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			{
 				updateViewGroupStatus();
 				flag_type_2 = true;
-				sortType = 1;
+				sortType = 2;
 				if (lv_all_2_DSC != null && lv_all_2_DSC.size() > 0) {
 					addOldListDatas(lv_all_2_DSC, page_type_2_DSC, total_2_DSC);
 				} else {
@@ -634,7 +624,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private void addOldListDatas(List<ProductListEntity> oldLists, int oldPage, int oldTotal) {
 		addAllShow(oldLists);
 		current_Page = oldPage;
-		countTotal = oldTotal;
+		dataTotal = oldTotal;
 		myUpdateAdapter();
 		if (current_Page != 1) {
 			toTop();
@@ -736,7 +726,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			params.add(new MyNameValuePair("id", String.valueOf(brandId)));
 			params.add(new MyNameValuePair("order", String.valueOf(sortType)));
 			params.add(new MyNameValuePair("cat_id", String.valueOf(selectId)));
-			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
 			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
@@ -755,9 +744,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			break;
 		case AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE:
 			if (result != null) {
-				ProductListEntity product_MainEn = (ProductListEntity) result;
-				int total = product_MainEn.getTotal();
-				List<ProductListEntity> lists = product_MainEn.getMainLists();
+				ProductListEntity mainEn = (ProductListEntity) result;
+				pageCount = mainEn.getPageSize();
+				int newTotal = mainEn.getDataTotal();
+				List<ProductListEntity> lists = mainEn.getMainLists();
 				if (lists != null && lists.size() > 0) {
 					List<BaseEntity> newLists = null;
 					switch (topType) {
@@ -766,23 +756,23 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 						if (newLists != null) {
 							page_type_1++;
 						}
-						total_1 = total;
+						total_1 = newTotal;
 						break;
 					case TYPE_2: //价格
 						switch (sortType) {
-						case 1: //降序
-							newLists = addNewEntity(lv_all_2_DSC, lists, am_all_2_dsc);
-							if (newLists != null) {
-								page_type_2_DSC++;
-							}
-							total_2_DSC = total;
-							break;
-						case 2: //升序
+						case 1: //升序
 							newLists = addNewEntity(lv_all_2_ASC, lists, am_all_2_asc);
 							if (newLists != null) {
 								page_type_2_ASC++;
 							}
-							total_2_ASC = total;
+							total_2_ASC = newTotal;
+							break;
+						case 2: //降序
+							newLists = addNewEntity(lv_all_2_DSC, lists, am_all_2_dsc);
+							if (newLists != null) {
+								page_type_2_DSC++;
+							}
+							total_2_DSC = newTotal;
 							break;
 						}
 						break;
@@ -790,7 +780,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 					if (newLists != null) {
 						addNewShowLists(newLists);
 					}
-					countTotal = total;
+					dataTotal = newTotal;
 					myUpdateAdapter();
 				}else {
 					loadFailHandle();
@@ -819,11 +809,11 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			break;
 		case TYPE_2: //价格
 			switch (sortType) {
-			case 1: //降序
-				addAllShow(lv_all_2_DSC);
-				break;
-			case 2: //升序
+			case 1: //升序
 				addAllShow(lv_all_2_ASC);
+				break;
+			case 2: //降序
+				addAllShow(lv_all_2_DSC);
 				break;
 			}
 			break;
@@ -873,13 +863,13 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 				break;
 			case TYPE_2: //价格
 				switch (sortType) {
-					case 1: //降序
-						lv_all_2_DSC.clear();
-						lv_all_2_DSC.addAll(lv_show);
-						break;
-					case 2: //升序
+					case 1: //升序
 						lv_all_2_ASC.clear();
 						lv_all_2_ASC.addAll(lv_show);
+						break;
+					case 2: //降序
+						lv_all_2_DSC.clear();
+						lv_all_2_DSC.addAll(lv_show);
 						break;
 				}
 				break;
@@ -899,14 +889,8 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	protected void stopAnimation() {
 		super.stopAnimation();
 		isLoadOk = true;
-		switch (loadType) {
-			case 0: //下拉刷新
-				refresh_lv.onPullDownRefreshComplete();
-				break;
-			case 1: //加载更多
-				refresh_lv.onPullUpRefreshComplete();
-				break;
-		}
+		refresh_lv.onPullDownRefreshComplete();
+		refresh_lv.onPullUpRefreshComplete();
 		if (lv_show.size() == 0) {
 			tv_no_data.setVisibility(View.VISIBLE);
 			refresh_lv.setVisibility(View.GONE);

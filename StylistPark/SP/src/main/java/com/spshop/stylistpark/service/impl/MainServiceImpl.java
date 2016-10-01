@@ -19,6 +19,14 @@ import java.util.List;
 public class MainServiceImpl implements MainService {
 
 	@Override
+	public String getServerJSONString(String uri) throws Exception {
+		HttpEntity entity = HttpUtil.getEntity(uri, null, HttpUtil.METHOD_GET);
+		String jsonStr = HttpUtil.getString(entity);
+		LogUtil.i("JsonParser", jsonStr);
+		return null;
+	}
+
+	@Override
 	public BaseEntity loadServerDatas(String tag, int requestCode,
 		String uri, List<MyNameValuePair> params, int method) throws Exception {
 		HttpEntity entity = HttpUtil.getEntity(uri, params, method);
@@ -26,6 +34,7 @@ public class MainServiceImpl implements MainService {
 		LogUtil.i("JsonParser", jsonStr);
 		switch (requestCode) {
 			case AppConfig.REQUEST_SV_GET_SESSIONS_CODE:
+			case AppConfig.REQUEST_SV_GET_WX_SHARE_CODE:
 			case AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE:
 			case AppConfig.REQUEST_SV_POST_COLLECITON_CODE:
 			case AppConfig.REQUEST_SV_POST_COMMENT_CODE:
@@ -80,6 +89,9 @@ public class MainServiceImpl implements MainService {
 
 			case AppConfig.REQUEST_SV_GET_SPECIAL_LIST_CODE:
 				return JsonParser.getSpecialListDatas(jsonStr);
+
+			case AppConfig.REQUEST_SV_GET_COMMENT_LIST_CODE:
+				return JsonParser.getCommentListDatas(jsonStr);
 
 			case AppConfig.REQUEST_SV_GET_CART_LIST_CODE:
 				return JsonParser.getCartListDatas(jsonStr);

@@ -451,7 +451,21 @@
         <item name="android:textSize">@dimen/text_size_11</item>
         <item name="android:textColor">@color/label_text_color</item>
     </style>
-    
+
+    <!-- 通用均分复选框样式:小 -->
+    <style name="commom_checkbox_min">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawableLeft">@drawable/selector_img_select_hook</item>
+        <item name="android:drawablePadding">3dp</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/conte_text_color</item>
+    </style>
+
     <!-- 通用左边的按钮+文字样式 -->
     <style name="common_btn_text_left">
         <item name="android:layout_width">match_parent</item>

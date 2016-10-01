@@ -63,7 +63,7 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 		btn_register.setOnClickListener(this);
 		
 		if (infoEn != null) {
-			loginType = infoEn.getUserName();
+			loginType = infoEn.getUserRankName();
 			uidStr = infoEn.getUserId();
 			nickname = infoEn.getUserNick();
 			sex = infoEn.getUserIntro();

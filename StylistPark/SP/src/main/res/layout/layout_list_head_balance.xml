@@ -44,20 +44,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:visibility="gone" >
+        android:orientation="horizontal" >
         
         <TextView 
             android:id="@+id/balance_list_head_tv_withdrawals_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:ellipsize="end"
-            android:lines="1"
-            android:text="@string/money_auth_hint"
+            android:lines="2"
+            android:text="@string/money_over_hint"
             android:textSize="@dimen/text_size_12"
             android:textColor="@color/label_text_color" />
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/balance_list_head_tv_auth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,16 +69,5 @@
             android:textSize="@dimen/text_size_12"
             android:textColor="@color/tv_color_status" />
     </LinearLayout>
-    
-    <Button 
-        android:id="@+id/balance_list_head_btn_withdrawals"
-        android:layout_width="80dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/shape_frame_bg_app_hollow_16"
-        android:text="@string/money_withdrawals"
-        android:textColor="@color/tv_color_status"
-        android:textSize="@dimen/text_size_14"
-        android:visibility="gone" />
 
 </LinearLayout>

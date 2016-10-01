@@ -18,21 +18,21 @@
 
         <FrameLayout
             android:id="@+id/my_webview_fl_video_main"
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/ui_bg_color_black"
             android:visibility="gone">
 
             <com.spshop.stylistpark.widgets.video.UniversalVideoView
                 android:id="@+id/my_webview_uvv"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center" />
 
             <com.spshop.stylistpark.widgets.video.UniversalMediaController
                 android:id="@+id/my_webview_umc"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </FrameLayout>
 
@@ -51,22 +51,20 @@
             android:padding="10dp"
             android:orientation="horizontal" >
 
-            <EditText
-                android:id="@+id/my_webview_et_comment"
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:background="@drawable/shape_frame_white_dfdfdf_4"
-                android:hint="@string/events_comment_participate"
-                android:imeOptions="actionSearch"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:hint="@string/events_comment_participate"
                 android:textColor="@color/conte_text_color"
                 android:textColorHint="@color/input_text_color"
                 android:textSize="@dimen/text_size_14" />
 
             <TextView
-                android:id="@+id/my_webview_tv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="right|center_vertical"
@@ -74,7 +72,6 @@
                 android:text="@string/events_comment"
                 android:textSize="@dimen/text_size_16"
                 android:textColor="@color/label_text_color"/>
-
         </LinearLayout>
 
     </LinearLayout>

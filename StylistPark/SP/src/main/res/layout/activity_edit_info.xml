@@ -15,12 +15,11 @@
         <EditText
             android:id="@+id/edit_info_et_content"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="15dp"
             android:background="@color/ui_bg_color_white"
             android:hint="@string/desc"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
             android:textColor="@color/conte_text_color"
             android:textColorHint="@color/input_text_color"
             android:textSize="@dimen/text_size_14" />

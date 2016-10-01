@@ -16,7 +16,7 @@
                 android:id="@+id/fragment_five_rl_top_login"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@drawable/shape_frame_bg_app_gradient" >
+                android:background="@drawable/bg_img_profile_top" >
 
                 <ImageView
                     android:id="@+id/fragment_five_iv_info"
@@ -34,23 +34,23 @@
                     android:orientation="horizontal" >
 
                     <RelativeLayout
-                        android:id="@+id/fragment_five_rl_collection"
+                        android:id="@+id/fragment_five_rl_my_member"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/ui_bg_color_percent_08" >
 
                         <TextView
+                            android:id="@+id/fragment_five_tv_my_member"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="@string/profile_collection"
                             android:textColor="@color/text_color_white"
                             android:textSize="@dimen/text_size_14" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/fragment_five_rl_history"
+                        android:id="@+id/fragment_five_rl_member_order"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="0.5dp"
@@ -58,10 +58,10 @@
                         android:background="@color/ui_bg_color_percent_08" >
 
                         <TextView
+                            android:id="@+id/fragment_five_tv_member_order"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="@string/profile_history"
                             android:textColor="@color/text_color_white"
                             android:textSize="@dimen/text_size_14" />
                     </RelativeLayout>
@@ -182,58 +182,9 @@
                     android:contentDescription="@string/desc" />
 
                 <RelativeLayout
-                    android:id="@+id/fragment_five_rl_address"
-                    style="@style/setting_lay_item"
-                    android:layout_marginTop="10dp" >
-
-                    <ImageView
-                        style="@style/set_line_horizontal_bg"
-                        android:contentDescription="@string/desc" />
-
-                    <TextView
-                        style="@style/setting_lay_text_title"
-                        android:drawableLeft="@drawable/profile_icon_address"
-                        android:text="@string/profile_my_address" />
-
-                    <TextView
-                        android:id="@+id/fragment_five_tv_address"
-                        style="@style/setting_lay_text_content" />
-
-                    <ImageView
-                        style="@style/set_line_horizontal_bg"
-                        android:layout_alignParentBottom="true"
-                        android:contentDescription="@string/desc" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/fragment_five_rl_coupon"
-                    style="@style/setting_lay_item"
-                    android:layout_marginTop="10dp" >
-
-                    <ImageView
-                        style="@style/set_line_horizontal_bg"
-                        android:contentDescription="@string/desc" />
-
-                    <TextView
-                        style="@style/setting_lay_text_title"
-                        android:drawableLeft="@drawable/profile_icon_coupon"
-                        android:text="@string/profile_coupon" />
-
-                    <TextView
-                        android:id="@+id/fragment_five_tv_coupon"
-                        style="@style/setting_lay_text_content" />
-
-                    <ImageView
-                        style="@style/set_line_horizontal_bg"
-                        android:layout_alignParentBottom="true"
-                        android:contentDescription="@string/desc" />
-                </RelativeLayout>
-
-                <RelativeLayout
                     android:id="@+id/fragment_five_rl_wallet"
                     style="@style/setting_lay_item"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone" >
+                    android:layout_marginTop="10dp" >
 
                     <ImageView
                         style="@style/set_line_horizontal_bg"
@@ -249,115 +200,102 @@
                         style="@style/setting_lay_text_content"
                         android:text="@string/number_0"
                         android:textColor="@color/price_text_color" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_five_rl_coupon"
+                    style="@style/setting_lay_item" >
+
+                    <ImageView
+                        style="@style/set_line_horizontal_bg"
+                        android:contentDescription="@string/desc" />
+
+                    <TextView
+                        style="@style/setting_lay_text_title"
+                        android:drawableLeft="@drawable/profile_icon_coupon"
+                        android:text="@string/profile_coupon" />
+
+                    <TextView
+                        android:id="@+id/fragment_five_tv_coupon"
+                        style="@style/setting_lay_text_content" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_five_rl_address"
+                    style="@style/setting_lay_item" >
+
+                    <ImageView
+                        style="@style/set_line_horizontal_bg"
+                        android:contentDescription="@string/desc" />
+
+                    <TextView
+                        style="@style/setting_lay_text_title"
+                        android:drawableLeft="@drawable/profile_icon_address"
+                        android:text="@string/profile_my_address" />
+
+                    <TextView
+                        android:id="@+id/fragment_five_tv_address"
+                        style="@style/setting_lay_text_content" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_five_rl_collection"
+                    style="@style/setting_lay_item" >
+
+                    <ImageView
+                        style="@style/set_line_horizontal_bg"
+                        android:contentDescription="@string/desc" />
+
+                    <TextView
+                        style="@style/setting_lay_text_title"
+                        android:drawableLeft="@drawable/profile_icon_collection"
+                        android:text="@string/profile_collection" />
+
+                    <TextView
+                        android:id="@+id/fragment_five_tv_collection"
+                        style="@style/setting_lay_text_content" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_five_rl_history"
+                    style="@style/setting_lay_item" >
+
+                    <ImageView
+                        style="@style/set_line_horizontal_bg"
+                        android:contentDescription="@string/desc" />
+
+                    <TextView
+                        style="@style/setting_lay_text_title"
+                        android:drawableLeft="@drawable/profile_icon_history"
+                        android:text="@string/profile_history" />
+
+                    <TextView
+                        android:id="@+id/fragment_five_tv_history"
+                        style="@style/setting_lay_text_content" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_five_rl_call"
+                    style="@style/setting_lay_item" >
+
+                    <ImageView
+                        style="@style/set_line_horizontal_bg"
+                        android:contentDescription="@string/desc" />
+
+                    <TextView
+                        style="@style/setting_lay_text_title"
+                        android:drawableLeft="@drawable/profile_icon_call"
+                        android:text="@string/profile_call" />
+
+                    <TextView
+                        android:id="@+id/fragment_five_tv_call"
+                        style="@style/setting_lay_text_content" />
 
                     <ImageView
                         style="@style/set_line_horizontal_bg"
                         android:layout_alignParentBottom="true"
                         android:contentDescription="@string/desc" />
                 </RelativeLayout>
-                
-                <LinearLayout
-                    android:id="@+id/fragment_five_ll_member_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone" >
-
-                    <ImageView
-                        style="@style/set_line_horizontal_bg"
-                        android:layout_marginTop="10dp"
-                        android:contentDescription="@string/desc" />
-
-                    <RelativeLayout
-                        android:id="@+id/fragment_five_rl_member"
-                        style="@style/setting_lay_item" >
-
-                        <TextView
-                            style="@style/setting_lay_text_title"
-                            android:drawableLeft="@drawable/profile_icon_member"
-                            android:text="@string/profile_my_member" />
-
-                        <TextView
-                            style="@style/setting_lay_text_content"
-                            android:text="@string/profile_check_my_member" />
-
-                        <ImageView
-                            style="@style/set_line_horizontal_bg"
-                            android:layout_alignParentBottom="true"
-                            android:contentDescription="@string/desc" />
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        style="@style/setting_lay_item"
-                        android:baselineAligned="false"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:orientation="horizontal" >
-                        
-                        <LinearLayout
-                            android:id="@+id/fragment_five_ll_member_order"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:id="@+id/fragment_five_tv_member_order"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/number_0"
-                                android:textColor="@color/conte_text_color"
-                                android:textSize="@dimen/text_size_12" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:gravity="center"
-                                android:ellipsize="end"
-                                android:singleLine="true"
-                                android:text="@string/profile_member_order"
-                                android:textColor="@color/conte_text_color"
-                                android:textSize="@dimen/text_size_11" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/fragment_five_ll_member_list"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:id="@+id/fragment_five_tv_member_list"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/number_0"
-                                android:textColor="@color/conte_text_color"
-                                android:textSize="@dimen/text_size_12"
-                                android:visibility="gone" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:gravity="center"
-                                android:text="@string/profile_member_list"
-                                android:textColor="@color/conte_text_color"
-                                android:textSize="@dimen/text_size_11"
-                                android:visibility="gone" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <ImageView
-                        style="@style/set_line_horizontal_bg"
-                        android:contentDescription="@string/desc" />
-                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

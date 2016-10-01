@@ -6,21 +6,20 @@ public class ThemeEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	int id;
-	int type;
-	int clickNum;
-	int countTotal;
-	long endTime;
-	String title;
-	String mebName;
-	String mebUrl;
-	String imgUrl;
-	String vdoUrl;
-	ThemeEntity adEn; //广告
-	ProductListEntity goodsEn; //热销商品
-	ThemeEntity peidaEn; //今日专题
-	ThemeEntity saleEn; //限时活动
-	List<ThemeEntity> mainLists;
+	private int id;
+	private int type;
+	private int clickNum;
+	private long endTime;
+	private String title;
+	private String mebName;
+	private String mebUrl;
+	private String imgUrl;
+	private String vdoUrl;
+	private ThemeEntity adEn; //广告
+	private ProductListEntity goodsEn; //热销商品
+	private ThemeEntity peidaEn; //今日专题
+	private ThemeEntity saleEn; //限时活动
+	private List<ThemeEntity> mainLists;
 
 	public ThemeEntity() {
 		super();
@@ -73,14 +72,6 @@ public class ThemeEntity extends BaseEntity {
 
 	public void setType(int type) {
 		this.type = type;
-	}
-
-	public int getCountTotal() {
-		return countTotal;
-	}
-
-	public void setCountTotal(int countTotal) {
-		this.countTotal = countTotal;
 	}
 
 	public int getClickNum() {

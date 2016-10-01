@@ -2,9 +2,9 @@ package com.spshop.stylistpark.activity.profile;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseArray;
@@ -30,9 +30,12 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.cart.PostOrderActivity;
+import com.spshop.stylistpark.activity.common.SelectListActivity;
+import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
@@ -92,8 +95,8 @@ public class AddressEditActivity extends BaseActivity implements
 	private Spinner sp_country, sp_province, sp_city, sp_district;
 	private ArrayAdapter<String> ap_country, ap_province, ap_city, ap_district;
 	private EditText et_name, et_phone, et_email, et_address;
-	private LinearLayout ll_select_area, ll_province_main, ll_city_main, ll_district_main;
-	private TextView tv_country_show, tv_province_show, tv_city_show, tv_district_show, tv_province, tv_city, tv_district;
+	private LinearLayout ll_select_area, ll_country_main, ll_province_main, ll_city_main, ll_district_main;
+	private TextView tv_country, tv_province, tv_city, tv_district;
 	private AddressEntity data;
 	private List<String> ls_country = new ArrayList<String>();
 	private List<String> ls_province = new ArrayList<String>();
@@ -109,9 +112,9 @@ public class AddressEditActivity extends BaseActivity implements
 	private SparseArray<AddressEntity> sa_ae_district = new SparseArray<AddressEntity>(); 
 	private int postId = 0;
 	private int addressId = 0;
-	private int countryPos, provincePos, cityPos, districtPos;
-	private int countryId, provinceId, cityId, districtId;
 	private int id_country, id_province, id_city, id_district;
+	private int countryId, provinceId, cityId, districtId;
+	private int countryPos, provincePos, cityPos, districtPos;
 	private int typeCode = TYPE_CODE_COUNTRY;
 	private String nameStr, phoneStr, emailStr, addressStr;
 
@@ -130,10 +133,7 @@ public class AddressEditActivity extends BaseActivity implements
 		et_name = (EditText) findViewById(R.id.new_address_et_name);
 		et_phone = (EditText) findViewById(R.id.new_address_et_phone);
 		et_email = (EditText) findViewById(R.id.new_address_et_email);
-		tv_country_show = (TextView) findViewById(R.id.new_address_tv_country_show);
-		tv_province_show = (TextView) findViewById(R.id.new_address_tv_province_show);
-		tv_city_show = (TextView) findViewById(R.id.new_address_tv_city_show);
-		tv_district_show = (TextView) findViewById(R.id.new_address_tv_district_show);
+		tv_country = (TextView) findViewById(R.id.new_address_tv_country);
 		tv_province = (TextView) findViewById(R.id.new_address_tv_province);
 		tv_city = (TextView) findViewById(R.id.new_address_tv_city);
 		tv_district = (TextView) findViewById(R.id.new_address_tv_district);
@@ -142,6 +142,7 @@ public class AddressEditActivity extends BaseActivity implements
 		sp_province = (Spinner) findViewById(R.id.new_address_sp_province);
 		sp_city = (Spinner) findViewById(R.id.new_address_sp_city);
 		sp_district = (Spinner) findViewById(R.id.new_address_sp_district);
+		ll_country_main = (LinearLayout) findViewById(R.id.new_address_ll_country_main);
 		ll_province_main = (LinearLayout) findViewById(R.id.new_address_ll_province_main);
 		ll_city_main = (LinearLayout) findViewById(R.id.new_address_ll_city_main);
 		ll_district_main = (LinearLayout) findViewById(R.id.new_address_ll_district_main);
@@ -156,12 +157,7 @@ public class AddressEditActivity extends BaseActivity implements
 		setTitle(R.string.title_delivery_info);
 		setBtnRight(getString(R.string.save));
 
-//		btn_confirm.setOnClickListener(this);
-//		mViewProvince.addChangingListener(this);
-//		mViewCity.addChangingListener(this);
-//		mViewDistrict.addChangingListener(this);
-//		setUpData();
-		addTextChangedListener();
+		initViewListener();
 		getSVDatas();
 		
 		if (data != null) {
@@ -177,8 +173,19 @@ public class AddressEditActivity extends BaseActivity implements
 		}
 	}
 
-	private void addTextChangedListener() {
-		tv_country_show.addTextChangedListener(new TextWatcher() {
+	private void initViewListener() {
+		//btn_confirm.setOnClickListener(this);
+		//mViewProvince.addChangingListener(this);
+		//mViewCity.addChangingListener(this);
+		//mViewDistrict.addChangingListener(this);
+		//setUpData();
+
+		ll_country_main.setOnClickListener(this);
+		ll_province_main.setOnClickListener(this);
+		ll_city_main.setOnClickListener(this);
+		ll_district_main.setOnClickListener(this);
+
+		tv_country.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -194,7 +201,7 @@ public class AddressEditActivity extends BaseActivity implements
 				selectCountryData(countryPos);
 			}
 		});
-		tv_province_show.addTextChangedListener(new TextWatcher() {
+		tv_province.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -210,7 +217,7 @@ public class AddressEditActivity extends BaseActivity implements
 				selectProvinceData(provincePos);
 			}
 		});
-		tv_city_show.addTextChangedListener(new TextWatcher() {
+		tv_city.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -226,7 +233,7 @@ public class AddressEditActivity extends BaseActivity implements
 				selectCityData(cityPos);
 			}
 		});
-		tv_district_show.addTextChangedListener(new TextWatcher() {
+		tv_district.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -265,10 +272,7 @@ public class AddressEditActivity extends BaseActivity implements
 			});*/
 			// 编辑地址时定位域
 			countryPos = sa_id_country.get(id_country);
-			if (countryPos >= 0 && countryPos < ls_country.size()) {
-				//sp_country.setSelection(position);
-				tv_country_show.setText(ls_country.get(countryPos));
-			}
+			changeTextViewShow(tv_country, countryPos, ls_country);
 		}else {
 			clearTypeDatas(ap_province, ls_province, sa_ae_province, sa_id_province);
 			initProvinceSpinner();
@@ -297,10 +301,7 @@ public class AddressEditActivity extends BaseActivity implements
 			});*/
 			// 编辑地址时定位省
 			provincePos = sa_id_province.get(id_province);
-			if (provincePos >= 0 && provincePos < ls_province.size()) {
-				//sp_province.setSelection(position);
-				tv_province_show.setText(ls_province.get(provincePos));
-			}
+			changeTextViewShow(tv_province, provincePos, ls_province);
 		}else {
 			ll_province_main.setVisibility(View.GONE);
 			provinceId = 0;
@@ -331,10 +332,7 @@ public class AddressEditActivity extends BaseActivity implements
 			});*/
 			// 编辑地址时定位市
 			cityPos = sa_id_city.get(id_city);
-			if (cityPos >= 0 && cityPos < ls_city.size()) {
-				//sp_city.setSelection(position);
-				tv_city_show.setText(ls_city.get(cityPos));
-			}
+			changeTextViewShow(tv_city, cityPos, ls_city);
 		}else {
 			ll_city_main.setVisibility(View.GONE);
 			cityId = 0;
@@ -365,10 +363,7 @@ public class AddressEditActivity extends BaseActivity implements
 			});*/
 			// 编辑地址时定位区
 			districtPos = sa_id_district.get(id_district);
-			if (districtPos >= 0 && districtPos < ls_district.size()) {
-				//sp_district.setSelection(position);
-				tv_district_show.setText(ls_district.get(districtPos));
-			}
+			changeTextViewShow(tv_district, districtPos, ls_district);
 		}else {
 			ll_district_main.setVisibility(View.GONE);
 			districtId = 0;
@@ -378,6 +373,12 @@ public class AddressEditActivity extends BaseActivity implements
 	private void changeTextViewStyle(View view) {
 		TextView tv_show = (TextView) view;
 		tv_show.setTextSize(14);
+	}
+
+	private void changeTextViewShow(TextView showView, int showPos, List<String> ls_datas) {
+		if (showPos >= 0 && showPos < ls_datas.size()) {
+			showView.setText(ls_datas.get(showPos));
+		}
 	}
 
 	private void selectCountryData(int position) {
@@ -490,6 +491,18 @@ public class AddressEditActivity extends BaseActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.new_address_ll_country_main: //选择国
+			startSelectListActivity(AppConfig.ACTIVITY_CHOOSE_ADD_COUNTRY);
+			break;
+		case R.id.new_address_ll_province_main: //选择省
+			startSelectListActivity(AppConfig.ACTIVITY_CHOOSE_ADD_PROVINCE);
+			break;
+		case R.id.new_address_ll_city_main: //选择市
+			startSelectListActivity(AppConfig.ACTIVITY_CHOOSE_ADD_CITY);
+			break;
+		case R.id.new_address_ll_district_main: //选择区
+			startSelectListActivity(AppConfig.ACTIVITY_CHOOSE_ADD_DISTRICT);
+			break;
 		case R.id.new_address_ll_area: //省、市、区View
 			if (ll_select_area.getVisibility() == View.GONE) {
 				ll_select_area.setVisibility(View.VISIBLE);
@@ -511,6 +524,85 @@ public class AddressEditActivity extends BaseActivity implements
 		default:
 			break;
 		}
+	}
+
+	private void startSelectListActivity(int typeCode) {
+		Intent intent = new Intent(mContext, SelectListActivity.class);
+		SelectListEntity selectEn = getAreaListEntity(typeCode);
+		intent.putExtra("data", selectEn);
+		intent.putExtra("dataType", SelectListAdapter.DATA_TYPE_8);
+		startActivityForResult(intent, typeCode);
+	}
+
+	private SelectListEntity getAreaListEntity(int typeCode) {
+		SelectListEntity selectEn = new SelectListEntity();
+		List<String> ls_datas = null;
+		int currentPos = 0;
+		switch (typeCode) {
+			case AppConfig.ACTIVITY_CHOOSE_ADD_COUNTRY:
+				ls_datas = ls_country;
+				currentPos = countryPos;
+				selectEn.setTypeName(getString(R.string.address_choose_country));
+				break;
+			case AppConfig.ACTIVITY_CHOOSE_ADD_PROVINCE:
+				ls_datas = ls_province;
+				currentPos = provincePos;
+				selectEn.setTypeName(getString(R.string.address_choose_province));
+				break;
+			case AppConfig.ACTIVITY_CHOOSE_ADD_CITY:
+				ls_datas = ls_city;
+				currentPos = cityPos;
+				selectEn.setTypeName(getString(R.string.address_choose_city));
+				break;
+			case AppConfig.ACTIVITY_CHOOSE_ADD_DISTRICT:
+				ls_datas = ls_district;
+				currentPos = districtPos;
+				selectEn.setTypeName(getString(R.string.address_choose_district));
+				break;
+		}
+		if (ls_datas != null) {
+			List<SelectListEntity> childLists = new ArrayList<SelectListEntity>();
+			for (int i = 0; i < ls_datas.size(); i++) {
+				SelectListEntity childEn = new SelectListEntity();
+				childEn.setChildId(i);
+				childEn.setChildShowName(ls_datas.get(i));
+				childLists.add(childEn);
+				if (currentPos == i) { //标记选中项
+					selectEn.setSelectEn(childEn);
+				}
+			}
+			selectEn.setChildLists(childLists);
+		}
+		return selectEn;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			int selectId = data.getExtras().getInt(AppConfig.ACTIVITY_SELECT_LIST_POSITION, 0);
+			if (requestCode == AppConfig.ACTIVITY_CHOOSE_ADD_COUNTRY) { //选择国
+				if (countryPos != selectId) {
+					countryPos = selectId;
+					changeTextViewShow(tv_country, countryPos, ls_country);
+				}
+			} else if (requestCode == AppConfig.ACTIVITY_CHOOSE_ADD_PROVINCE) { //选择省
+				if (provincePos != selectId) {
+					provincePos = selectId;
+					changeTextViewShow(tv_province, provincePos, ls_province);
+				}
+			} else if (requestCode == AppConfig.ACTIVITY_CHOOSE_ADD_CITY) { //选择市
+				if (cityPos != selectId) {
+					cityPos = selectId;
+					changeTextViewShow(tv_city, cityPos, ls_city);
+				}
+			} else if (requestCode == AppConfig.ACTIVITY_CHOOSE_ADD_DISTRICT) { //选择区
+				if (districtPos != selectId) {
+					districtPos = selectId;
+					changeTextViewShow(tv_district, districtPos, ls_district);
+				}
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
@@ -584,19 +676,16 @@ public class AddressEditActivity extends BaseActivity implements
 				case TYPE_CODE_DISTRICT:
 					getSpinnerDatas(ae_lists, ls_district, sa_ae_district, sa_id_district);
 					initDistrictSpinner();
+					stopAnimation();
 					break;
 				default:
 					getSpinnerDatas(ae_lists, ls_country, sa_ae_country, sa_id_country);
 					initCountrySpinner();
 					break;
 				}
-				new Handler().postDelayed(new Runnable() {
-					
-					@Override
-					public void run() {
-						stopAnimation();
-					}
-				}, 1000);
+				if (ae_lists == null || ae_lists.size() == 0) {
+					stopAnimation();
+				}
 			}else {
 				stopAnimation();
 				CommonTools.showToast(getString(R.string.address_error_load_area), 3000);

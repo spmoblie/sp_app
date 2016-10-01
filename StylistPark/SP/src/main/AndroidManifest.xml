@@ -160,7 +160,7 @@
         <activity android:name=".activity.home.ScreenListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        
+
         <activity android:name=".activity.common.ClipImageCircularActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
@@ -207,6 +207,11 @@
             android:screenOrientation="portrait" />
         
         <activity android:name=".activity.common.MyWebViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity android:name=".activity.events.CommentActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />

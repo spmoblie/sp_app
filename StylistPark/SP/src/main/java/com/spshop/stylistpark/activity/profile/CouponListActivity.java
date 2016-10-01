@@ -48,15 +48,14 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 	public static final int TYPE_1 = 0;  //可使用
 	public static final int TYPE_2 = 1;  //已使用
 	public static final int TYPE_3 = 2;  //已过期
-	
-	private static final int Page_Count = 20;  //每页加载条数
+
+	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
 	private int page_type_1 = 1;  //未使用加载页
 	private int page_type_2 = 1;  //已过期加载页
 	private int page_type_3 = 1;  //已使用加载页
 	private int topType = TYPE_2; //Top标记
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
-	private int countTotal = 0; //数集总数量
 	private int total_1, total_2, total_3;
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean isLogined, isSuccess;
@@ -149,7 +148,7 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 加载更多
-            	if (!isStopLoadMore(lv_show.size(), countTotal)) {
+            	if (!isStopLoadMore(lv_show.size(), dataTotal, 0)) {
             		loadSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -239,7 +238,7 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 	private void getSVDatas() {
 		loadType = 1;
 		current_Page = 1;
-		countTotal = 0;
+		dataTotal = 0;
 		setLoadMoreData();
 		startAnimation();
 		requestProductLists();
@@ -359,7 +358,7 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 	private void addOldListDatas(List<CouponEntity> oldLists, int oldPage, int oldTotal) {
 		addAllShow(oldLists);
 		current_Page = oldPage;
-		countTotal = oldTotal;
+		dataTotal = oldTotal;
 		myUpdateAdapter();
 		if (current_Page != 1) {
 			toTop();
@@ -448,49 +447,49 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 				CouponEntity mainEn = (CouponEntity) result;
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
-					int total = mainEn.getCountTotal();
+					int newTotal = mainEn.getDataTotal();
 					List<CouponEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {
 						List<BaseEntity> newLists = null;
 						switch (topType) {
 						case TYPE_1:
 							if (loadType == 0) {
-								newLists = updNewEntity(total, total_1, lists, lv_all_1, am_all_1);
+								newLists = updNewEntity(newTotal, total_1, lists, lv_all_1, am_all_1);
 							} else {
 								newLists = addNewEntity(lv_all_1, lists, am_all_1);
 								if (newLists != null) {
 									page_type_1++;
 								}
 							}
-							total_1 = total;
+							total_1 = newTotal;
 							break;
 						case TYPE_2:
 							if (loadType == 0) {
-								newLists = updNewEntity(total, total_2, lists, lv_all_2, am_all_2);
+								newLists = updNewEntity(newTotal, total_2, lists, lv_all_2, am_all_2);
 							} else {
 								newLists = addNewEntity(lv_all_2, lists, am_all_2);
 								if (newLists != null) {
 									page_type_2++;
 								}
 							}
-							total_2 = total;
+							total_2 = newTotal;
 							break;
 						case TYPE_3:
 							if (loadType == 0) {
-								newLists = updNewEntity(total, total_3, lists, lv_all_3, am_all_3);
+								newLists = updNewEntity(newTotal, total_3, lists, lv_all_3, am_all_3);
 							} else {
 								newLists = addNewEntity(lv_all_3, lists, am_all_3);
 								if (newLists != null) {
 									page_type_3++;
 								}
 							}
-							total_3 = total;
+							total_3 = newTotal;
 							break;
 						}
 						if (newLists != null) {
 							addNewShowLists(newLists);
 						}
-						countTotal = total;
+						dataTotal = newTotal;
 						myUpdateAdapter();
 					}else {
 						loadFailHandle();
@@ -597,14 +596,8 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 	protected void stopAnimation() {
 		isLoadOk = true;
 		rl_loading.setVisibility(View.GONE);
-		switch (loadType) {
-			case 0: //下拉刷新
-				refresh_lv.onPullDownRefreshComplete();
-				break;
-			case 1: //加载更多
-				refresh_lv.onPullUpRefreshComplete();
-				break;
-		}
+		refresh_lv.onPullDownRefreshComplete();
+		refresh_lv.onPullUpRefreshComplete();
 		if (lv_show.size() == 0) {
 			tv_no_data.setText(getString(R.string.loading_no_data, noDataShowStr));
 			rl_no_data.setVisibility(View.VISIBLE);

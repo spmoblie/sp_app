@@ -127,6 +127,7 @@ public class SelectListActivity extends BaseActivity {
 					}
 					break;
 				case SelectListAdapter.DATA_TYPE_6: //PostOrderActivity --> SelectListActivity
+				case SelectListAdapter.DATA_TYPE_8: //AddressEditActivity --> SelectListActivity
 					isChange = true;
 					finish();
 					break;
@@ -178,14 +179,7 @@ public class SelectListActivity extends BaseActivity {
 	public void finish() {
 		if (isChange && selectEn != null) { 
 			Intent returnIntent = new Intent();
-			if (dataType == SelectListAdapter.DATA_TYPE_5) //PersonalActivity --> SelectListActivity
-			{ 
-				returnIntent.putExtra(AppConfig.ACTIVITY_CHANGE_USER_CONTENT, selectEn.getChildId());
-			}
-			else if (dataType == SelectListAdapter.DATA_TYPE_6) //PostOrderActivity --> SelectListActivity
-			{
-				returnIntent.putExtra(AppConfig.ACTIVITY_SELECT_PAY_TYPE, selectEn.getChildId());
-			}
+			returnIntent.putExtra(AppConfig.ACTIVITY_SELECT_LIST_POSITION, selectEn.getChildId());
 			setResult(RESULT_OK, returnIntent);
 		}
 		super.finish();

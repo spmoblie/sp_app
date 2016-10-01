@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/top_three_title_rl_main"
+    android:id="@+id/top_three_title_ll_main"
     style="@style/top_main_layout"
     android:orientation="vertical">
 

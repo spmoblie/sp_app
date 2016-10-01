@@ -6,9 +6,10 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
-import com.spshop.stylistpark.entity.CouponEntity;
 import com.spshop.stylistpark.entity.BrandEntity;
 import com.spshop.stylistpark.entity.CategoryListEntity;
+import com.spshop.stylistpark.entity.CommentEntity;
+import com.spshop.stylistpark.entity.CouponEntity;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
 import com.spshop.stylistpark.entity.LogisticsEntity;
 import com.spshop.stylistpark.entity.MemberEntity;
@@ -36,15 +37,9 @@ public class JsonParser {
 
 	public static BaseEntity getCommonResult(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		String message = "";
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		if (jsonObject.has("message")) {
-			message = jsonObject.getString("message");
-		}
-		return new BaseEntity(errCode, message);
+		BaseEntity baseEn = new BaseEntity();
+		getCommonKeyValue(baseEn, jsonObject);
+		return baseEn;
 	}
 
 	/**
@@ -60,16 +55,14 @@ public class JsonParser {
 	 * 解析首页展示数据
 	 */
 	public static ThemeEntity getHomeHeadDatas(String jsonStr) throws JSONException {
-		JSONObject jsonObj = new JSONObject(jsonStr);
+		JSONObject jsonObject = new JSONObject(jsonStr);
 		ThemeEntity mainEn = new ThemeEntity();
-		if (jsonObj.has("error")) {
-			mainEn.setErrCode(Integer.parseInt(jsonObj.getString("error")));
-		}
+		getCommonKeyValue(mainEn, jsonObject);
 		// 解析广告
-		if (!StringUtil.isNull(jsonObj, "ad")) {
-			JSONArray datas = jsonObj.getJSONArray("ad");
+		if (StringUtil.notNull(jsonObject, "ad")) {
+			JSONArray datas = jsonObject.getJSONArray("ad");
 			ThemeEntity adEn = new ThemeEntity();
-			ThemeEntity childEn = null;
+			ThemeEntity childEn;
 			List<ThemeEntity> adLists = new ArrayList<ThemeEntity>();
 			for (int j = 0; j < datas.length(); j++) {
 				JSONObject item = datas.getJSONObject(j);
@@ -83,13 +76,13 @@ public class JsonParser {
 			mainEn.setAdEn(adEn);
 		}
 		// 解析热销商品
-		if (!StringUtil.isNull(jsonObj, "best")) {
+		if (StringUtil.notNull(jsonObject, "best")) {
 			ProductListEntity goodsEn = new ProductListEntity();
-			goodsEn.setMainLists(getProductListsFormJson(jsonObj, "best"));
+			goodsEn.setMainLists(getProductListsFormJson(jsonObject, "best"));
 			mainEn.setGoodsEn(goodsEn);
 		}
 		// 解析今日专题
-		/*if (!StringUtil.isNull(jsonObj, "paida")) {
+		/*if (StringUtil.notNull(jsonObj, "paida")) {
 			JSONArray datas = jsonObj.getJSONArray("paida");
 			ThemeEntity peidaEn = new ThemeEntity();
 			ThemeEntity childEn = null;
@@ -106,8 +99,8 @@ public class JsonParser {
 			mainEn.setPeidaEn(peidaEn);
 		}*/
 		// 限时活动
-		if (!StringUtil.isNull(jsonObj, "activity")) {
-			JSONArray datas = jsonObj.getJSONArray("activity");
+		if (StringUtil.notNull(jsonObject, "activity")) {
+			JSONArray datas = jsonObject.getJSONArray("activity");
 			ThemeEntity saleEn = new ThemeEntity();
 			ThemeEntity childEn = null;
 			List<ThemeEntity> saleLists = new ArrayList<ThemeEntity>();
@@ -131,17 +124,12 @@ public class JsonParser {
 	 * 解析专题列表数据
 	 */
 	public static ThemeEntity getSpecialListDatas(String jsonStr) throws JSONException {
-		JSONObject jsonObj = new JSONObject(jsonStr);
-		ThemeEntity eventEn = new ThemeEntity();
-		if (jsonObj.has("error")) {
-			eventEn.setErrCode(Integer.parseInt(jsonObj.getString("error")));
-		}
-		if (jsonObj.has("count")) {
-			eventEn.setCountTotal(StringUtil.getInteger(jsonObj.getString("count")));
-		}
-		if (!StringUtil.isNull(jsonObj, "data")) {
-			JSONArray datas = jsonObj.getJSONArray("data");
-			ThemeEntity childEn = null;
+		JSONObject jsonObject = new JSONObject(jsonStr);
+		ThemeEntity mainEn = new ThemeEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+		if (StringUtil.notNull(jsonObject, "data")) {
+			JSONArray datas = jsonObject.getJSONArray("data");
+			ThemeEntity childEn;
 			List<ThemeEntity> peidaLists = new ArrayList<ThemeEntity>();
 			for (int j = 0; j < datas.length(); j++) {
 				JSONObject item = datas.getJSONObject(j);
@@ -149,32 +137,62 @@ public class JsonParser {
 				childEn.setId(StringUtil.getInteger(item.getString("article_id")));
 				childEn.setType(StringUtil.getInteger(item.getString("open_type")));
 				childEn.setClickNum(StringUtil.getInteger(item.getString("click_count")));
-				childEn.setTitle(item.getString("title"));
+				childEn.setTitle(item.getString("description"));
 				childEn.setMebName(item.getString("nickname"));
 				childEn.setMebUrl(item.getString("avatar"));
 				childEn.setImgUrl(item.getString("file_url"));
 				childEn.setVdoUrl(item.getString("keywords"));
 				peidaLists.add(childEn);
 			}
-			eventEn.setMainLists(peidaLists);
+			mainEn.setMainLists(peidaLists);
 		}
-		return eventEn;
+		return mainEn;
+	}
+
+	/**
+	 * 解析专题列表数据
+	 */
+	public static CommentEntity getCommentListDatas(String jsonStr) throws JSONException {
+		JSONObject jsonObject = new JSONObject(jsonStr);
+		CommentEntity mainEn = new CommentEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+		if (StringUtil.notNull(jsonObject, "pager")) {
+			JSONObject data = jsonObject.getJSONObject("pager");
+			mainEn.setErrInfo(data.getString("title"));
+			mainEn.setPageSize(StringUtil.getInteger(data.getString("size")));
+			mainEn.setDataTotal(StringUtil.getInteger(data.getString("page_count")));
+		}
+		if (StringUtil.notNull(jsonObject, "comments")) {
+			JSONArray datas = jsonObject.getJSONArray("comments");
+			CommentEntity childEn;
+			List<CommentEntity> peidaLists = new ArrayList<CommentEntity>();
+			for (int j = 0; j < datas.length(); j++) {
+				JSONObject item = datas.getJSONObject(j);
+				childEn = new CommentEntity();
+				childEn.setCommentId(item.getString("id"));
+				childEn.setHeadImg(item.getString("avatar"));
+				childEn.setUserNick(item.getString("nickname"));
+				childEn.setContent(item.getString("content"));
+				childEn.setAddTime(item.getString("add_time"));
+				peidaLists.add(childEn);
+			}
+			mainEn.setMainLists(peidaLists);
+		}
+		return mainEn;
 	}
 
 	/**
 	 * 解析商品分类数据
 	 */
 	public static CategoryListEntity getCategoryListDatas(String jsonStr) throws JSONException{
-		CategoryListEntity mainEn = null;
-		CategoryListEntity en = null;
-		CategoryListEntity child1, child2;
-		List<CategoryListEntity> childLists1 = null;
-		//List<CategoryListEntity> childLists2 = null;
-		List<CategoryListEntity> mainLists = null;
 		JSONObject jsonObject = new JSONObject(jsonStr);
+		CategoryListEntity mainEn = new CategoryListEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+		CategoryListEntity en, child1, child2;
+		List<CategoryListEntity> childLists1, mainLists;
 		// 解析父分类
 		mainLists = new ArrayList<CategoryListEntity>();
-		if (!StringUtil.isNull(jsonObject, "data")) {
+		if (StringUtil.notNull(jsonObject, "data")) {
 			JSONArray datas = jsonObject.getJSONArray("data");
 			for (int i = 0; i < datas.length(); i++) {
 				JSONObject item = datas.getJSONObject(i);
@@ -184,7 +202,7 @@ public class JsonParser {
 				en.setName(item.getString("name"));
 				// 解析第一子分类
 				childLists1 = new ArrayList<CategoryListEntity>();
-				if (!StringUtil.isNull(item, "list")) {
+				if (StringUtil.notNull(item, "list")) {
 					JSONArray data1 = item.getJSONArray("list");
 					int show = 0;
 					for (int j = 0; j < data1.length(); j++) {
@@ -199,7 +217,7 @@ public class JsonParser {
 						}
 						// 解析第二子分类
 						//childLists2 = new ArrayList<CategoryListEntity>();
-						if (!StringUtil.isNull(item1, "list")) {
+						if (StringUtil.notNull(item1, "list")) {
 							JSONArray data2 = item1.getJSONArray("list");
 							for (int k = 0; k < data2.length(); k++) {
 								JSONObject item2 = data2.getJSONObject(k);
@@ -222,7 +240,7 @@ public class JsonParser {
 				mainLists.add(en);
 			}
 		}
-		mainEn = new CategoryListEntity(0, "su", mainLists);
+		mainEn.setMainLists(mainLists);
 		return mainEn;
 	}
 
@@ -230,18 +248,17 @@ public class JsonParser {
 	 * 解析分类品牌数据
 	 */
 	public static CategoryListEntity getCategoryBrandDatas(String jsonStr) throws JSONException {
-		CategoryListEntity mainEn;
-		BrandEntity brandEn;
-		List<BrandEntity> brandLists;
-		JSONObject brand = new JSONObject(jsonStr);
+		JSONObject jsonObject = new JSONObject(jsonStr);
+		CategoryListEntity mainEn = new CategoryListEntity();
+		getCommonKeyValue(mainEn, jsonObject);
 		// 解析父分类
-		mainEn = new CategoryListEntity();
-		mainEn.setTypeId(StringUtil.getInteger(brand.getString("id")));
-		mainEn.setName(brand.getString("title"));
+		mainEn.setTypeId(StringUtil.getInteger(jsonObject.getString("id")));
+		mainEn.setName(jsonObject.getString("title"));
 		// 解析子分类
-		brandLists = new ArrayList<BrandEntity>();
-		if (!StringUtil.isNull(brand, "list")) {
-			JSONArray datas = brand.getJSONArray("list");
+		List<BrandEntity> brandLists = new ArrayList<BrandEntity>();
+		if (StringUtil.notNull(jsonObject, "list")) {
+			BrandEntity brandEn;
+			JSONArray datas = jsonObject.getJSONArray("list");
 			for (int j = 0; j < datas.length(); j++) {
 				JSONObject item = datas.getJSONObject(j);
 				brandEn = new BrandEntity();
@@ -260,25 +277,12 @@ public class JsonParser {
 	 */
 	public static ProductListEntity getProductListDatas(String jsonStr) throws JSONException{
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		ProductListEntity mainEn = new ProductListEntity(1, "");
-		if (jsonObject.has("error")) {
-			int errCode  = Integer.valueOf(jsonObject.getString("error"));
-			mainEn.setErrCode(errCode);
-			if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-				if (jsonObject.has("count")) {
-					mainEn.setTotal(StringUtil.getInteger(jsonObject.getString("count")));
-				}
-				mainEn.setMainLists(getProductListsFormJson(jsonObject, "data"));
-			}
-		}else {
-			if (jsonObject.has("count")) {
-				mainEn.setTotal(StringUtil.getInteger(jsonObject.getString("count")));
-			}
-			if (jsonObject.has("name")) {
-				mainEn.setCategoryName(jsonObject.getString("name"));
-			}
-			mainEn.setMainLists(getProductListsFormJson(jsonObject, "data"));
+		ProductListEntity mainEn = new ProductListEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+		if (jsonObject.has("name")) {
+			mainEn.setCategoryName(jsonObject.getString("name"));
 		}
+		mainEn.setMainLists(getProductListsFormJson(jsonObject, "data"));
 		return mainEn;
 	}
 
@@ -286,18 +290,18 @@ public class JsonParser {
 	 * 解析筛选列表数据
 	 */
 	public static SelectListEntity getScreenlistDatas(String jsonStr) throws JSONException{
-		SelectListEntity mainEn, brandEn, childEn;
-		List<SelectListEntity> childLists = null;
-		List<SelectListEntity> mainLists = null;
 		JSONObject jsonObject = new JSONObject(jsonStr);
+		SelectListEntity mainEn = new SelectListEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+		List<SelectListEntity> mainLists = new ArrayList<SelectListEntity>();
 		// 获取品牌分类
-		brandEn = new SelectListEntity();
+		SelectListEntity brandEn = new SelectListEntity();
 		brandEn.setTypeName(jsonObject.getString("title"));
 
-		mainLists = new ArrayList<SelectListEntity>();
-		childLists = new ArrayList<SelectListEntity>();
+		SelectListEntity childEn;
+		List<SelectListEntity> childLists = new ArrayList<SelectListEntity>();
 		childLists.add(new SelectListEntity(0, AppApplication.getInstance().getString(R.string.all), ""));
-		if (!StringUtil.isNull(jsonObject, "list")) {
+		if (StringUtil.notNull(jsonObject, "list")) {
 			JSONArray brandLists = jsonObject.getJSONArray("list");
 			for (int i = 0; i < brandLists.length(); i++) {
 				JSONObject item = brandLists.getJSONObject(i);
@@ -310,10 +314,9 @@ public class JsonParser {
 		}
 		brandEn.setChildLists(childLists);
 		mainLists.add(brandEn);
-		// 获取其它分类
 		/*childEn = null;
 		childLists = null;
-		if (!StringUtil.isNull(jsonObject, "attr_list")) {
+		if (StringUtil.notNull(jsonObject, "attr_list")) {
 			JSONArray otherDatas = jsonObject.getJSONArray("attr_list");
 			for (int i = 0; i < otherDatas.length(); i++) {
 				JSONObject items = otherDatas.getJSONObject(i);
@@ -336,7 +339,8 @@ public class JsonParser {
 				mainLists.add(otherEn);
 			}
 		}*/
-		mainEn = new SelectListEntity(0, "su", mainLists);
+		// 获取其它分类
+		mainEn.setMainLists(mainLists);
 		return mainEn;
 	}
 
@@ -344,36 +348,38 @@ public class JsonParser {
 	 * 解析商品详情数据
 	 */
 	public static ProductDetailEntity getProductDetailDatas(String jsonStr) throws JSONException {
-		ProductDetailEntity mainEn = null;
-		ProductDetailEntity en = null;
-		List<ProductDetailEntity> imgLists = null;
-		List<ProductDetailEntity> promotionLists = null;
-		ProductAttrEntity attrEn = new ProductAttrEntity();
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		JSONObject goods = jsonObject.getJSONObject("data");
-		mainEn = new ProductDetailEntity();
-		mainEn.setId(StringUtil.getInteger(goods.getString("goods_id")));
-		mainEn.setName(goods.getString("goods_name"));
-		//mainEn.setStockNum(StringUtil.getInteger(goods.getString("goods_number")));
-		//mainEn.setMailCountry(goods.getString("suppliers_country"));
-		//mainEn.setPromoteTime(StringUtil.getLong(goods.getString("promote_time")));
-		mainEn.setFullPrice(goods.getString("prices"));
-		mainEn.setSellPrice(goods.getString("price"));
-		mainEn.setComputePrice(StringUtil.getDouble(goods.getString("bag_price")));
-		mainEn.setDiscount(goods.getString("sale"));
-		mainEn.setIsCollection(goods.getString("collect"));
-		mainEn.setIsVideo(StringUtil.getInteger(goods.getString("is_video")));
-		mainEn.setVideoUrl(goods.getString("goods_sn"));
-		
-		JSONObject brands = jsonObject.getJSONObject("brand");
-		mainEn.setBrandId(brands.getString("id"));
-		mainEn.setBrandLogo(brands.getString("logo"));
-		mainEn.setBrandName(brands.getString("name"));
-		mainEn.setBrandCountry(brands.getString("country"));
-		
-		promotionLists = new ArrayList<ProductDetailEntity>();
-		if (!StringUtil.isNull(jsonObject, "promotion")) {
+		ProductDetailEntity mainEn = new ProductDetailEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (StringUtil.notNull(jsonObject, "data")) {
+			JSONObject goods = jsonObject.getJSONObject("data");
+			mainEn.setId(StringUtil.getInteger(goods.getString("goods_id")));
+			mainEn.setName(goods.getString("goods_name"));
+			//mainEn.setStockNum(StringUtil.getInteger(goods.getString("goods_number")));
+			//mainEn.setMailCountry(goods.getString("suppliers_country"));
+			//mainEn.setPromoteTime(StringUtil.getLong(goods.getString("promote_time")));
+			mainEn.setFullPrice(goods.getString("prices"));
+			mainEn.setSellPrice(goods.getString("price"));
+			mainEn.setComputePrice(StringUtil.getDouble(goods.getString("bag_price")));
+			mainEn.setDiscount(goods.getString("sale"));
+			mainEn.setIsCollection(goods.getString("collect"));
+			mainEn.setIsVideo(StringUtil.getInteger(goods.getString("is_video")));
+			mainEn.setVideoUrl(goods.getString("goods_sn"));
+		}
+
+		if (StringUtil.notNull(jsonObject, "brand")) {
+			JSONObject brands = jsonObject.getJSONObject("brand");
+			mainEn.setBrandId(brands.getString("id"));
+			mainEn.setBrandLogo(brands.getString("logo"));
+			mainEn.setBrandName(brands.getString("name"));
+			mainEn.setBrandCountry(brands.getString("country"));
+		}
+
+		ProductDetailEntity en;
+		if (StringUtil.notNull(jsonObject, "promotion")) {
 			JSONArray pros = jsonObject.getJSONArray("promotion");
+			List<ProductDetailEntity> promotionLists = new ArrayList<ProductDetailEntity>();
 			for (int i = 0; i < pros.length(); i++) {
 				JSONObject ps = pros.getJSONObject(i);
 				en = new ProductDetailEntity();
@@ -381,11 +387,11 @@ public class JsonParser {
 				en.setPromotionName(ps.getString("act_name"));
 				promotionLists.add(en);
 			}
+			mainEn.setPromotionLists(promotionLists);
 		}
-		mainEn.setPromotionLists(promotionLists);
-		
-		imgLists = new ArrayList<ProductDetailEntity>();
-		if (!StringUtil.isNull(jsonObject, "image")) {
+
+		if (StringUtil.notNull(jsonObject, "image")) {
+			List<ProductDetailEntity> imgLists = new ArrayList<ProductDetailEntity>();
 			JSONArray datas = jsonObject.getJSONArray("image");
 			for (int i = 0; i < datas.length(); i++) {
 				JSONObject item = datas.getJSONObject(i);
@@ -395,11 +401,13 @@ public class JsonParser {
 				en.setImgMaxUrl(item.getString("img_url"));
 				imgLists.add(en);
 			}
+			mainEn.setImgLists(imgLists);
 		}
-		mainEn.setImgLists(imgLists);
+
+		ProductAttrEntity attrEn = new ProductAttrEntity();
 		// 解析商品attr
 		ArrayList<ProductAttrEntity> attrLists = new ArrayList<ProductAttrEntity>();
-		if (!StringUtil.isNull(jsonObject, "type")) {
+		if (StringUtil.notNull(jsonObject, "type")) {
 			JSONArray attr = jsonObject.getJSONArray("type");
 			ProductAttrEntity listEn = null;
 			for (int i = 0; i < attr.length(); i++) {
@@ -407,7 +415,7 @@ public class JsonParser {
 				listEn = new ProductAttrEntity();
 				listEn.setAttrId(StringUtil.getInteger(as.getString("attr_id")));
 				listEn.setAttrName(as.getString("name"));
-				
+
 				ArrayList<ProductAttrEntity> asLists = new ArrayList<ProductAttrEntity>();
 				ProductAttrEntity asEn = null;
 				JSONArray list = as.getJSONArray("values");
@@ -428,9 +436,9 @@ public class JsonParser {
 		attrEn.setAttrLists(attrLists);
 		// 解析商品sku
 		ArrayList<ProductAttrEntity> skuLists = new ArrayList<ProductAttrEntity>();
-		if (!StringUtil.isNull(jsonObject, "sku")) {
+		if (StringUtil.notNull(jsonObject, "sku")) {
 			JSONArray sku = jsonObject.getJSONArray("sku");
-			ProductAttrEntity skuEn = null;
+			ProductAttrEntity skuEn;
 			for (int i = 0; i < sku.length(); i++) {
 				JSONObject ks = sku.getJSONObject(i);
 				skuEn = new ProductAttrEntity();
@@ -449,17 +457,21 @@ public class JsonParser {
 	 */
 	public static BrandEntity getBrandProfile(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		JSONObject data = jsonObject.getJSONObject("data");
-		BrandEntity brandEn = new BrandEntity();
-		brandEn.setBrandId(data.getString("id"));
-		brandEn.setName(data.getString("name"));
-		brandEn.setDefineURL(data.getString("banner"));
-		brandEn.setLogoUrl(data.getString("logo"));
-		brandEn.setDesc(data.getString("desc"));
-		brandEn.setFavourable(data.getString("favourable"));
-		brandEn.setEndTime(StringUtil.getLong(data.getString("time")));
+		BrandEntity mainEn = new BrandEntity();
+		getCommonKeyValue(mainEn, jsonObject);
 
-		if (!StringUtil.isNull(jsonObject, "cat")) {
+		if (StringUtil.notNull(jsonObject, "data")) {
+			JSONObject data = jsonObject.getJSONObject("data");
+			mainEn.setBrandId(data.getString("id"));
+			mainEn.setName(data.getString("name"));
+			mainEn.setDefineURL(data.getString("banner"));
+			mainEn.setLogoUrl(data.getString("logo"));
+			mainEn.setDesc(data.getString("desc"));
+			mainEn.setFavourable(data.getString("favourable"));
+			mainEn.setEndTime(StringUtil.getLong(data.getString("time")));
+		}
+
+		if (StringUtil.notNull(jsonObject, "cat")) {
 			JSONArray cats = jsonObject.getJSONArray("cat");
 			SelectListEntity selectEn = new SelectListEntity();
 			SelectListEntity childEn;
@@ -475,9 +487,9 @@ public class JsonParser {
 				childLists.add(childEn);
 			}
 			selectEn.setChildLists(childLists);
-			brandEn.setSelectEn(selectEn);
+			mainEn.setSelectEn(selectEn);
 		}
-		return brandEn;
+		return mainEn;
 	}
 
 	/**
@@ -485,10 +497,8 @@ public class JsonParser {
 	 */
 	public static ProductListEntity getBrandProductLists(String jsonStr) throws JSONException{
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		ProductListEntity mainEn = new ProductListEntity(1, "");
-		if (jsonObject.has("total")) {
-			mainEn.setTotal(StringUtil.getInteger(jsonObject.getString("total")));
-		}
+		ProductListEntity mainEn = new ProductListEntity();
+		getCommonKeyValue(mainEn, jsonObject);
 		mainEn.setMainLists(getProductListsFormJson(jsonObject, "goods"));
 		return mainEn;
 	}
@@ -498,19 +508,12 @@ public class JsonParser {
 	 */
 	public static GoodsCartEntity postCartProductData(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
+		GoodsCartEntity mainEn = new GoodsCartEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+		if (StringUtil.notNull(jsonObject, "content")) {
+			mainEn.setGoodsTotal(StringUtil.getInteger(jsonObject.getString("content")));
 		}
-		String errInfo = "";
-		if (jsonObject.has("message")) {
-			errInfo = jsonObject.getString("message");
-		}
-		GoodsCartEntity cartEn = new GoodsCartEntity(errCode, errInfo);
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			cartEn.setGoodsTotal(StringUtil.getInteger(jsonObject.getString("content")));
-		}
-		return cartEn;
+		return mainEn;
 	}
 
 	/**
@@ -518,20 +521,20 @@ public class JsonParser {
 	 */
 	public static GoodsCartEntity getCartListDatas(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		GoodsCartEntity cartEn = new GoodsCartEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
+		GoodsCartEntity mainEn = new GoodsCartEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (StringUtil.notNull(jsonObject, "goods_list")) {
 			JSONArray carts = jsonObject.getJSONArray("goods_list");
-			cartEn.setChildLists(getCartProductLists(carts));
-			
-			JSONObject total = jsonObject.getJSONObject("total");
-			cartEn.setGoodsTotal(StringUtil.getInteger(total.getString("goods_number")));
-			cartEn.setAmount(total.getString("goods_amount"));
+			mainEn.setChildLists(getCartProductLists(carts));
 		}
-		return cartEn;
+
+		if (StringUtil.notNull(jsonObject, "total")) {
+			JSONObject total = jsonObject.getJSONObject("total");
+			mainEn.setGoodsTotal(StringUtil.getInteger(total.getString("goods_number")));
+			mainEn.setAmount(total.getString("goods_amount"));
+		}
+		return mainEn;
 	}
 
 	/**
@@ -539,23 +542,16 @@ public class JsonParser {
 	 */
 	public static GoodsCartEntity postChangeGoods(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		String msg = "";
-		if (jsonObject.has("message")) {
-			msg = jsonObject.getString("message");
-		}
-		GoodsCartEntity cartEn = new GoodsCartEntity(errCode, msg);
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			cartEn.setGoodsTotal(StringUtil.getInteger(jsonObject.getString("order_number")));
-			cartEn.setAmount(jsonObject.getString("order_amount"));
+		GoodsCartEntity mainEn = new GoodsCartEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+		if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
+			mainEn.setGoodsTotal(StringUtil.getInteger(jsonObject.getString("order_number")));
+			mainEn.setAmount(jsonObject.getString("order_amount"));
 			if (jsonObject.has("number")) {
-				cartEn.setSkuNum(StringUtil.getInteger(jsonObject.getString("number")));
+				mainEn.setSkuNum(StringUtil.getInteger(jsonObject.getString("number")));
 			}
 		}
-		return cartEn;
+		return mainEn;
 	}
 
 	/**
@@ -563,38 +559,36 @@ public class JsonParser {
 	 */
 	public static OrderEntity getConfirmOrderData(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = 1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
+		OrderEntity mainEn = new OrderEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		mainEn.setGoodsLists(getConfirmGoodsFormJson(jsonObject, "cart"));
+
+		if (StringUtil.notNull(jsonObject, "address")) {
+			JSONObject addObj = jsonObject.getJSONObject("address");
+			AddressEntity addressEn = new AddressEntity();
+			addressEn.setAddressId(StringUtil.getInteger(addObj.getString("address_id")));
+			addressEn.setName(addObj.getString("consignee"));
+			addressEn.setPhone(addObj.getString("mobile"));
+			addressEn.setAddress(addObj.getString("address"));
+			mainEn.setAddressEn(addressEn);
 		}
-		OrderEntity orderEn = new OrderEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			orderEn.setGoodsLists(getConfirmGoodsFormJson(jsonObject, "cart"));
 
-			if (!StringUtil.isNull(jsonObject, "address")) {
-				JSONObject addObj = jsonObject.getJSONObject("address");
-				AddressEntity addressEn = new AddressEntity();
-				addressEn.setAddressId(StringUtil.getInteger(addObj.getString("address_id")));
-				addressEn.setName(addObj.getString("consignee"));
-				addressEn.setPhone(addObj.getString("mobile"));
-				addressEn.setAddress(addObj.getString("address"));
-				orderEn.setAddressEn(addressEn);
-			}
-
+		if (StringUtil.notNull(jsonObject, "total")) {
 			JSONObject data = jsonObject.getJSONObject("total");
-			orderEn.setPayId(StringUtil.getInteger(data.getString("pay_id")));
-			orderEn.setPayTypeCode(StringUtil.getInteger(data.getString("shipping_id")));
-			orderEn.setGoodsTotal(StringUtil.getInteger(data.getString("real_goods_count")));
-			orderEn.setPriceTotal(data.getString("formated_goods_price"));
-			orderEn.setPriceFee(data.getString("shipping_fee_formated"));
-			orderEn.setPriceCharges(data.getString("pay_fee_formated"));
-			orderEn.setPriceCoupon(data.getString("bonus_formated"));
-			orderEn.setCouponId(data.getString("bonus_id"));
-			orderEn.setPriceDiscount(data.getString("discount_formated"));
-			orderEn.setPricePay(data.getString("amount_formated"));
-			orderEn.setOrderAmount(data.getString("amount"));
+			mainEn.setPayId(StringUtil.getInteger(data.getString("pay_id")));
+			mainEn.setPayTypeCode(StringUtil.getInteger(data.getString("shipping_id")));
+			mainEn.setGoodsTotal(StringUtil.getInteger(data.getString("real_goods_count")));
+			mainEn.setPriceTotal(data.getString("formated_goods_price"));
+			mainEn.setPriceFee(data.getString("shipping_fee_formated"));
+			mainEn.setPriceCharges(data.getString("pay_fee_formated"));
+			mainEn.setPriceCoupon(data.getString("bonus_formated"));
+			mainEn.setCouponId(data.getString("bonus_id"));
+			mainEn.setPriceDiscount(data.getString("discount_formated"));
+			mainEn.setPricePay(data.getString("amount_formated"));
+			mainEn.setOrderAmount(data.getString("amount"));
 		}
-		return orderEn;
+		return mainEn;
 	}
 
 	/**
@@ -602,18 +596,12 @@ public class JsonParser {
 	 */
 	public static OrderEntity postConfirmOrderData(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = 1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
+		OrderEntity mainEn = new OrderEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+		if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
+			mainEn.setOrderNo(jsonObject.getString("content"));
 		}
-		OrderEntity orderEn = new OrderEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			if (jsonObject.has("message")) {
-				orderEn.setErrInfo(jsonObject.getString("message"));
-			}
-			orderEn.setOrderNo(jsonObject.getString("content"));
-		}
-		return orderEn;
+		return mainEn;
 	}
 
 	/**
@@ -621,62 +609,54 @@ public class JsonParser {
 	 */
 	public static AddressEntity getAddressLists(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		AddressEntity mainEn = new AddressEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			if (!StringUtil.isNull(jsonObject, "data")) {
-				JSONArray data = jsonObject.getJSONArray("data");
-				AddressEntity addrEn = null;
-				List<AddressEntity> mainLists = new ArrayList<AddressEntity>();
-				for (int i = 0; i < data.length(); i++) {
-					JSONObject item = data.getJSONObject(i);
-					addrEn = new AddressEntity();
-					addrEn.setAddressId(StringUtil.getInteger(item.getString("address_id")));
-					addrEn.setDefaultId(StringUtil.getInteger(item.getString("user_address")));
-					addrEn.setName(item.getString("consignee"));
-					addrEn.setPhone(item.getString("mobile"));
-					addrEn.setEmail(item.getString("email"));
-					addrEn.setCountryId(StringUtil.getInteger(item.getString("country")));
-					addrEn.setProviceId(StringUtil.getInteger(item.getString("province")));
-					addrEn.setCityId(StringUtil.getInteger(item.getString("city")));
-					addrEn.setDistrictId(StringUtil.getInteger(item.getString("district")));
-					addrEn.setEditAdd(item.getString("address1"));
-					addrEn.setAddress(item.getString("address"));
-					mainLists.add(addrEn);
-				}
-				mainEn.setMainLists(mainLists);
+		AddressEntity mainEn = new AddressEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (StringUtil.notNull(jsonObject, "data")) {
+			JSONArray data = jsonObject.getJSONArray("data");
+			AddressEntity addrEn;
+			List<AddressEntity> mainLists = new ArrayList<AddressEntity>();
+			for (int i = 0; i < data.length(); i++) {
+				JSONObject item = data.getJSONObject(i);
+				addrEn = new AddressEntity();
+				addrEn.setAddressId(StringUtil.getInteger(item.getString("address_id")));
+				addrEn.setDefaultId(StringUtil.getInteger(item.getString("user_address")));
+				addrEn.setName(item.getString("consignee"));
+				addrEn.setPhone(item.getString("mobile"));
+				addrEn.setEmail(item.getString("email"));
+				addrEn.setCountryId(StringUtil.getInteger(item.getString("country")));
+				addrEn.setProviceId(StringUtil.getInteger(item.getString("province")));
+				addrEn.setCityId(StringUtil.getInteger(item.getString("city")));
+				addrEn.setDistrictId(StringUtil.getInteger(item.getString("district")));
+				addrEn.setEditAdd(item.getString("address1"));
+				addrEn.setAddress(item.getString("address"));
+				mainLists.add(addrEn);
 			}
+			mainEn.setMainLists(mainLists);
 		}
 		return mainEn;
 	}
 
 	/**
-	 * 解析国家列表
+	 * 解析区域列表
 	 */
 	public static AddressEntity getCountryLists(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		AddressEntity mainEn = new AddressEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			if (!StringUtil.isNull(jsonObject, "regions")) {
-				JSONArray data = jsonObject.getJSONArray("regions");
-				AddressEntity addrEn = null;
-				List<AddressEntity> mainLists = new ArrayList<AddressEntity>();
-				for (int i = 0; i < data.length(); i++) {
-					JSONObject item = data.getJSONObject(i);
-					addrEn = new AddressEntity();
-					addrEn.setCountryId(StringUtil.getInteger(item.getString("region_id")));
-					addrEn.setCountry(item.getString("region_name"));
-					mainLists.add(addrEn);
-				}
-				mainEn.setMainLists(mainLists);
+		AddressEntity mainEn = new AddressEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (StringUtil.notNull(jsonObject, "regions")) {
+			JSONArray data = jsonObject.getJSONArray("regions");
+			AddressEntity addrEn;
+			List<AddressEntity> mainLists = new ArrayList<AddressEntity>();
+			for (int i = 0; i < data.length(); i++) {
+				JSONObject item = data.getJSONObject(i);
+				addrEn = new AddressEntity();
+				addrEn.setCountryId(StringUtil.getInteger(item.getString("region_id")));
+				addrEn.setCountry(item.getString("region_name"));
+				mainLists.add(addrEn);
 			}
+			mainEn.setMainLists(mainLists);
 		}
 		return mainEn;
 	}
@@ -686,39 +666,34 @@ public class JsonParser {
 	 */
 	public static UserInfoEntity getUserInfoSummary(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
+		UserInfoEntity mainEn = new UserInfoEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (StringUtil.notNull(jsonObject, "data")) {
+			JSONObject data = jsonObject.getJSONObject("data");
+			mainEn.setUserId(data.getString("user_id"));
+			mainEn.setShareId(data.getString("share"));
+			mainEn.setUserName(data.getString("name"));
+			mainEn.setUserNameID(data.getString("name_id"));
+			mainEn.setUserNick(data.getString("nickname"));
+			mainEn.setHeadImg(data.getString("avatar"));
+			mainEn.setUserIntro(data.getString("intro"));
+			mainEn.setSexCode(StringUtil.getInteger(data.getString("sex")));
+			mainEn.setBirthday(data.getString("birthday"));
+			mainEn.setUserEmail(data.getString("email"));
+			mainEn.setUserRankCode(StringUtil.getInteger(data.getString("user_rank")));
+			mainEn.setUserRankName(data.getString("user_rank_name"));
+			mainEn.setOrder_1(StringUtil.getInteger(data.getString("order_1")));
+			mainEn.setOrder_2(StringUtil.getInteger(data.getString("order_2")));
+			mainEn.setOrder_3(StringUtil.getInteger(data.getString("order_3")));
+			mainEn.setOrder_4(StringUtil.getInteger(data.getString("order_4")));
+			mainEn.setCartTotal(StringUtil.getInteger(data.getString("cart")));
+			mainEn.setMoney(data.getString("money"));
+			mainEn.setCoupon(data.getString("bonus"));
+			mainEn.setMemberNum(data.getString("member"));
+			mainEn.setMemberOrder(data.getString("share"));
 		}
-		UserInfoEntity infoEn = new UserInfoEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			if (!StringUtil.isNull(jsonObject, "data")) {
-				JSONObject data = jsonObject.getJSONObject("data");
-				infoEn.setUserId(data.getString("user_id"));
-				infoEn.setShareId(data.getString("share"));
-				infoEn.setUserName(data.getString("user_name"));
-				infoEn.setUserNick(data.getString("nickname"));
-				infoEn.setHeadImg(data.getString("avatar"));
-				infoEn.setUserIntro(data.getString("intro"));
-				infoEn.setSexCode(StringUtil.getInteger(data.getString("sex")));
-				infoEn.setBirthday(data.getString("birthday"));
-				infoEn.setUserEmail(data.getString("email"));
-				//infoEn.setUserPhone(data.getString("mobile_phone"));
-				infoEn.setAuth(StringUtil.isNull(data.getString("name")) ? false : true);
-				infoEn.setUserRankCode(StringUtil.getInteger(data.getString("user_rank")));
-				infoEn.setUserRankName(data.getString("user_rank_name"));
-				infoEn.setOrder_1(StringUtil.getInteger(data.getString("order_1")));
-				infoEn.setOrder_2(StringUtil.getInteger(data.getString("order_2")));
-				infoEn.setOrder_3(StringUtil.getInteger(data.getString("order_3")));
-				infoEn.setOrder_4(StringUtil.getInteger(data.getString("order_4")));
-				infoEn.setCartTotal(StringUtil.getInteger(data.getString("cart")));
-				infoEn.setMoney(data.getString("money"));
-				infoEn.setCoupon(data.getString("bonus"));
-				infoEn.setMemberNum(data.getString("member"));
-				infoEn.setMemberOrder(data.getString("share"));
-			}
-		}
-		return infoEn;
+		return mainEn;
 	}
 
 	/**
@@ -726,73 +701,63 @@ public class JsonParser {
 	 */
 	public static MemberEntity getMemberLists(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		MemberEntity mainEn = new MemberEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			mainEn.setCountTotal(StringUtil.getInteger(jsonObject.getString("count")));
-			if (!StringUtil.isNull(jsonObject, "data")) {
-				JSONArray data = jsonObject.getJSONArray("data");
-				MemberEntity en = null;
-				List<MemberEntity> mainLists = new ArrayList<MemberEntity>();
-				for (int i = 0; i < data.length(); i++) {
-					JSONObject item = data.getJSONObject(i);
-					en = new MemberEntity();
-					en.setUserId(item.getString("user_id"));
-					en.setUserName(item.getString("nickname"));
-					en.setUserSex(item.getString("sex"));
-					en.setHeadImg(item.getString("avatar"));
-					//en.setMemberRank(StringUtil.getInteger(item.getString("user_rank")));
-					//en.setOrderCount(item.getString("affiliate_count"));
-					en.setOrderMoney(item.getString("affiliate_money"));
-					en.setLastLogin(item.getString("last_login"));
-					mainLists.add(en);
-				}
-				mainEn.setMainLists(mainLists);
+		MemberEntity mainEn = new MemberEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (StringUtil.notNull(jsonObject, "data")) {
+			JSONArray data = jsonObject.getJSONArray("data");
+			MemberEntity en;
+			List<MemberEntity> mainLists = new ArrayList<MemberEntity>();
+			for (int i = 0; i < data.length(); i++) {
+				JSONObject item = data.getJSONObject(i);
+				en = new MemberEntity();
+				en.setUserId(item.getString("user_id"));
+				en.setMemberNick(item.getString("nickname"));
+				en.setUserSex(item.getString("sex"));
+				en.setHeadImg(item.getString("avatar"));
+				//en.setMemberRank(StringUtil.getInteger(item.getString("user_rank")));
+				//en.setOrderCount(item.getString("affiliate_count"));
+				en.setOrderMoney(item.getString("affiliate_money"));
+				en.setLastLogin(item.getString("last_login"));
+				mainLists.add(en);
 			}
+			mainEn.setMainLists(mainLists);
 		}
 		return mainEn;
 	}
-	
+
 	/**
 	 * 解析会员订单列表
 	 */
 	public static OrderEntity getMemberOrderLists(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		OrderEntity mainEn = new OrderEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			mainEn.setOrderTotal(StringUtil.getInteger(jsonObject.getString("count")));
-			if (!StringUtil.isNull(jsonObject, "data")) {
-				JSONArray data = jsonObject.getJSONArray("data");
-				OrderEntity en = null;
-				UserInfoEntity infoEn = null;
-				List<OrderEntity> mainLists = new ArrayList<OrderEntity>();
-				for (int i = 0; i < data.length(); i++) {
-					JSONObject item = data.getJSONObject(i);
-					en = new OrderEntity();
-					
-					infoEn = new UserInfoEntity();
-					infoEn.setUserName(item.getString("user_name"));
-					infoEn.setHeadImg(item.getString("avatar"));
-					infoEn.setUserRankCode(StringUtil.getInteger(item.getString("user_rank")));
-					en.setUserInfo(infoEn);
-					
-					en.setOrderId(item.getString("order_id"));
-					en.setStatusName(item.getString("handler"));
-					en.setPriceTotal(item.getString("goods_amount"));
-					en.setPricePaid(item.getString("user_amount"));
-					en.setBuyer(item.getString("order_time"));
-					en.setGoodsLists(getProductListsFormJson2(item, "goods_list"));
-					mainLists.add(en);
-				}
-				mainEn.setMainLists(mainLists);
+		OrderEntity mainEn = new OrderEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (StringUtil.notNull(jsonObject, "data")) {
+			JSONArray data = jsonObject.getJSONArray("data");
+			OrderEntity en;
+			UserInfoEntity infoEn;
+			List<OrderEntity> mainLists = new ArrayList<OrderEntity>();
+			for (int i = 0; i < data.length(); i++) {
+				JSONObject item = data.getJSONObject(i);
+				en = new OrderEntity();
+
+				infoEn = new UserInfoEntity();
+				infoEn.setUserNick(item.getString("user_name"));
+				infoEn.setHeadImg(item.getString("avatar"));
+				infoEn.setUserRankCode(StringUtil.getInteger(item.getString("user_rank")));
+				en.setUserInfo(infoEn);
+
+				en.setOrderId(item.getString("order_id"));
+				en.setStatusName(item.getString("handler"));
+				en.setPriceTotal(item.getString("goods_amount"));
+				en.setPricePaid(item.getString("user_amount"));
+				en.setBuyer(item.getString("order_time"));
+				en.setGoodsLists(getProductListsFormJson2(item, "goods_list"));
+				mainLists.add(en);
 			}
+			mainEn.setMainLists(mainLists);
 		}
 		return mainEn;
 	}
@@ -802,35 +767,30 @@ public class JsonParser {
 	 */
 	public static OrderEntity getOrderLists(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		OrderEntity mainEn = new OrderEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			mainEn.setOrderTotal(StringUtil.getInteger(jsonObject.getString("count")));
-			if (!StringUtil.isNull(jsonObject, "orders")) {
-				JSONArray data = jsonObject.getJSONArray("orders");
-				OrderEntity en = null;
-				List<OrderEntity> mainLists = new ArrayList<OrderEntity>();
-				for (int i = 0; i < data.length(); i++) {
-					JSONObject item = data.getJSONObject(i);
-					en = new OrderEntity();
-					en.setOrderId(item.getString("order_id"));
-					en.setOrderNo(item.getString("order_sn"));
-					en.setStatus(StringUtil.getInteger(item.getString("status")));
-					en.setStatusName(item.getString("handler"));
-					en.setPriceTotal(item.getString("total_fee"));
-					en.setGoodsTotalStr(item.getString("count"));
+		OrderEntity mainEn = new OrderEntity();
+		getCommonKeyValue(mainEn, jsonObject);
 
-					/*long createTime = StringUtil.getLong(item.getString("add_time"))*1000;
-					en.setCreateTime(createTime);
-					en.setValidTime(createTime + 1800000); //有效时间30分钟*/
-					en.setGoodsLists(getProductListsFormJson2(item, "goods"));
-					mainLists.add(en);
-				}
-				mainEn.setMainLists(mainLists);
+		if (StringUtil.notNull(jsonObject, "orders")) {
+			JSONArray data = jsonObject.getJSONArray("orders");
+			OrderEntity en;
+			List<OrderEntity> mainLists = new ArrayList<OrderEntity>();
+			for (int i = 0; i < data.length(); i++) {
+				JSONObject item = data.getJSONObject(i);
+				en = new OrderEntity();
+				en.setOrderId(item.getString("order_id"));
+				en.setOrderNo(item.getString("order_sn"));
+				//en.setStatus(StringUtil.getInteger(item.getString("status")));
+				en.setStatusName(item.getString("handler"));
+				//en.setPriceTotal(item.getString("total_fee"));
+				//en.setGoodsTotalStr(item.getString("count"));
+
+				/*long createTime = StringUtil.getLong(item.getString("add_time"))*1000;
+				en.setCreateTime(createTime);
+				en.setValidTime(createTime + 1800000); //有效时间30分钟*/
+				en.setGoodsLists(getProductListsFormJson2(item, "goods"));
+				mainLists.add(en);
 			}
+			mainEn.setMainLists(mainLists);
 		}
 		return mainEn;
 	}
@@ -840,56 +800,52 @@ public class JsonParser {
 	 */
 	public static OrderEntity getOrderDetails(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
+		OrderEntity mainEn = new OrderEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (StringUtil.notNull(jsonObject, "data")) {
+			JSONArray datas = jsonObject.getJSONArray("data");
+			JSONObject data = datas.getJSONObject(0);
+			mainEn.setOrderId(data.getString("order_id"));
+			mainEn.setOrderNo(data.getString("order_sn"));
+			mainEn.setStatus(StringUtil.getInteger(data.getString("status")));
+			mainEn.setStatusName(data.getString("handler"));
+			mainEn.setLogisticsName(data.getString("shipping_name"));
+			mainEn.setLogisticsNo(data.getString("invoice_no"));
+			mainEn.setGoodsTotalStr(data.getString("count"));
+			mainEn.setPriceTotalName(data.getString("goods_amount_name"));
+			mainEn.setPriceTotal(data.getString("goods_amount"));
+			mainEn.setPriceFeeName(data.getString("shipping_fee_name"));
+			mainEn.setPriceFee(data.getString("shipping_fee"));
+			mainEn.setPriceCouponName(data.getString("bonus_name"));
+			mainEn.setPriceCoupon(data.getString("bonus"));
+			mainEn.setPriceDiscountName(data.getString("discount_name"));
+			mainEn.setPriceDiscount(data.getString("discount"));
+			mainEn.setPricePaidName(data.getString("money_paid_name"));
+			mainEn.setPricePaid(data.getString("money_paid"));
+			mainEn.setPricePayName(data.getString("order_amount_name"));
+			mainEn.setPricePay(data.getString("order_amount"));
+			mainEn.setPayId(StringUtil.getInteger(data.getString("pay_id")));
+			mainEn.setPayType(data.getString("pay_name"));
+			//mainEn.setInvoiceName(data.getString("inv_name"));
+			//mainEn.setInvoiceType(data.getString("inv_type"));
+			//mainEn.setInvoicePayee(data.getString("inv_payee"));
+			//mainEn.setBuyerName(data.getString("postscript_name"));
+			//mainEn.setBuyer(data.getString("postscript"));
+
+			long createTime = StringUtil.getLong(data.getString("add_time"))*1000;
+			mainEn.setCreateTime(createTime);
+			mainEn.setValidTime(createTime + 1800000); //有效时间30分钟
+
+			AddressEntity addrEn = new AddressEntity();
+			addrEn.setName(data.getString("consignee"));
+			addrEn.setPhone(data.getString("mobile"));
+			addrEn.setCountry(data.getString("address_name"));
+			addrEn.setAddress(data.getString("address"));
+			mainEn.setAddressEn(addrEn);
+			mainEn.setGoodsLists(getProductListsFormJson2(data, "goods_list"));
 		}
-		OrderEntity orderEn = new OrderEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			if (!StringUtil.isNull(jsonObject, "data")) {
-				JSONArray datas = jsonObject.getJSONArray("data");
-				JSONObject data = datas.getJSONObject(0);
-				orderEn.setOrderId(data.getString("order_id"));
-				orderEn.setOrderNo(data.getString("order_sn"));
-				orderEn.setStatus(StringUtil.getInteger(data.getString("status")));
-				orderEn.setStatusName(data.getString("handler"));
-				orderEn.setLogisticsName(data.getString("shipping_name"));
-				orderEn.setLogisticsNo(data.getString("invoice_no"));
-				orderEn.setGoodsTotalStr(data.getString("count"));
-				orderEn.setPriceTotalName(data.getString("goods_amount_name"));
-				orderEn.setPriceTotal(data.getString("goods_amount"));
-				orderEn.setPriceFeeName(data.getString("shipping_fee_name"));
-				orderEn.setPriceFee(data.getString("shipping_fee"));
-				orderEn.setPriceCouponName(data.getString("bonus_name"));
-				orderEn.setPriceCoupon(data.getString("bonus"));
-				orderEn.setPriceDiscountName(data.getString("discount_name"));
-				orderEn.setPriceDiscount(data.getString("discount"));
-				orderEn.setPricePaidName(data.getString("money_paid_name"));
-				orderEn.setPricePaid(data.getString("money_paid"));
-				orderEn.setPricePayName(data.getString("order_amount_name"));
-				orderEn.setPricePay(data.getString("order_amount"));
-				orderEn.setPayId(StringUtil.getInteger(data.getString("pay_id")));
-				orderEn.setPayType(data.getString("pay_name"));
-				//orderEn.setInvoiceName(data.getString("inv_name"));
-				//orderEn.setInvoiceType(data.getString("inv_type"));
-				//orderEn.setInvoicePayee(data.getString("inv_payee"));
-				//orderEn.setBuyerName(data.getString("postscript_name"));
-				//orderEn.setBuyer(data.getString("postscript"));
-				
-				long createTime = StringUtil.getLong(data.getString("add_time"))*1000;
-				orderEn.setCreateTime(createTime);
-				orderEn.setValidTime(createTime + 1800000); //有效时间30分钟
-				
-				AddressEntity addrEn = new AddressEntity();
-				addrEn.setName(data.getString("consignee"));
-				addrEn.setPhone(data.getString("mobile"));
-				addrEn.setCountry(data.getString("address_name"));
-				addrEn.setAddress(data.getString("address"));
-				orderEn.setAddressEn(addrEn);
-				orderEn.setGoodsLists(getProductListsFormJson2(data, "goods_list"));
-			}
-		}
-		return orderEn;
+		return mainEn;
 	}
 
 	/**
@@ -897,15 +853,14 @@ public class JsonParser {
 	 */
 	public static LogisticsEntity getLogisticsDatas(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errorCode = -1;
+		LogisticsEntity mainEn = new LogisticsEntity();
 		if (jsonObject.has("status")) {
-			errorCode = Integer.valueOf(jsonObject.getString("status"));
+			mainEn.setErrCode(Integer.valueOf(jsonObject.getString("status")));
 		}
-		LogisticsEntity mainEn = new LogisticsEntity(errorCode, "");
-		if (errorCode == 200) {
-			if (!StringUtil.isNull(jsonObject, "data")) {
+		if (mainEn.getErrCode() == 200) {
+			if (StringUtil.notNull(jsonObject, "data")) {
 				JSONArray datas = jsonObject.getJSONArray("data");
-				LogisticsEntity en = null;
+				LogisticsEntity en;
 				ArrayList<LogisticsEntity> mainLists = new ArrayList<LogisticsEntity>();
 				for (int i = 0; i < datas.length(); i++) {
 					JSONObject item = datas.getJSONObject(i);
@@ -925,30 +880,27 @@ public class JsonParser {
 	 */
 	public static PaymentEntity postPayment(int payType, String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		PaymentEntity payEn = new PaymentEntity(errCode, "");
+		PaymentEntity mainEn = new PaymentEntity();
+		getCommonKeyValue(mainEn, jsonObject);
 		switch (payType) {
 			case WXPayEntryActivity.PAY_ZFB: //支付宝支付
-				payEn.setAlipay(jsonObject.getString("content"));
+				mainEn.setAlipay(jsonObject.getString("content"));
 				break;
 			case WXPayEntryActivity.PAY_WEIXI: //微信支付
 				JSONObject data = jsonObject.getJSONObject("content");
-				payEn.setPrepayid(data.getString("prepayid"));
-				payEn.setNoncestr(data.getString("noncestr"));
-				payEn.setTimestamp(data.getString("timestamp"));
-				payEn.setSign(data.getString("sign"));
+				mainEn.setPrepayid(data.getString("prepayid"));
+				mainEn.setNoncestr(data.getString("noncestr"));
+				mainEn.setTimestamp(data.getString("timestamp"));
+				mainEn.setSign(data.getString("sign"));
 				break;
 			case WXPayEntryActivity.PAY_UNION: //银联支付
-				payEn.setAlipay(jsonObject.getString("content"));
+				mainEn.setAlipay(jsonObject.getString("content"));
 				break;
 			case WXPayEntryActivity.PAY_PAL: //PayPal支付
-				payEn.setAlipay(jsonObject.getString("content"));
+				mainEn.setAlipay(jsonObject.getString("content"));
 				break;
 		}
-		return payEn;
+		return mainEn;
 	}
 
 	/**
@@ -956,11 +908,9 @@ public class JsonParser {
 	 */
 	public static PaymentEntity checkPaymentResult(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		return new PaymentEntity(errCode, "");
+		PaymentEntity mainEn = new PaymentEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+		return mainEn;
 	}
 
 	/**
@@ -968,26 +918,25 @@ public class JsonParser {
 	 */
 	public static BalanceDetailEntity getBalanceDetailList(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		BalanceDetailEntity mainEn = new BalanceDetailEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			mainEn.setCountTotal(StringUtil.getInteger(jsonObject.getString("count")));
+		BalanceDetailEntity mainEn = new BalanceDetailEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 			mainEn.setAmount(StringUtil.getDouble(jsonObject.getString("amount")));
 			mainEn.setStatus(StringUtil.getInteger(jsonObject.getString("content")));
 			mainEn.setStatusHint(jsonObject.getString("message"));
-			if (!StringUtil.isNull(jsonObject, "account")) {
+
+			if (StringUtil.notNull(jsonObject, "account")) {
 				JSONArray data = jsonObject.getJSONArray("account");
-				BalanceDetailEntity en = null;
+				BalanceDetailEntity en;
 				List<BalanceDetailEntity> mainLists = new ArrayList<BalanceDetailEntity>();
 				for (int i = 0; i < data.length(); i++) {
 					JSONObject item = data.getJSONObject(i);
 					en = new BalanceDetailEntity();
+					en.setLogId(item.getString("log_id"));
 					en.setChangeDesc(item.getString("change_desc"));
 					en.setChangeTime(item.getString("change_time"));
-					en.setType(item.getString("type"));
+					en.setType(item.getString("change_type"));
 					en.setChangeMoney(item.getString("amount"));
 					mainLists.add(en);
 				}
@@ -1002,35 +951,28 @@ public class JsonParser {
 	 */
 	public static CouponEntity getCouponLists(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		int errCode = -1;
-		if (jsonObject.has("error")) {
-			errCode = Integer.valueOf(jsonObject.getString("error"));
-		}
-		CouponEntity mainEn = new CouponEntity(errCode, "");
-		if (errCode == AppConfig.ERROR_CODE_SUCCESS) {
-			if (jsonObject.has("count")) {
-				mainEn.setCountTotal(StringUtil.getInteger(jsonObject.getString("count")));
+		CouponEntity mainEn = new CouponEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (StringUtil.notNull(jsonObject, "data")) {
+			JSONArray data = jsonObject.getJSONArray("data");
+			CouponEntity en;
+			List<CouponEntity> mainLists = new ArrayList<CouponEntity>();
+			for (int i = 0; i < data.length(); i++) {
+				JSONObject item = data.getJSONObject(i);
+				en = new CouponEntity();
+				en.setCouponId(item.getString("bonus_id"));
+				en.setTypeName(item.getString("type_name"));
+				en.setCurrency(item.getString("currency"));
+				en.setCouponMoney(item.getString("type_money"));
+				en.setCouponLimit(item.getString("min_goods_amount"));
+				en.setStatusType(StringUtil.getInteger(item.getString("class")));
+				en.setStatusName(item.getString("status"));
+				en.setStartDate(item.getString("use_start_date"));
+				en.setEndDate(item.getString("use_end_date"));
+				mainLists.add(en);
 			}
-			if (!StringUtil.isNull(jsonObject, "data")) {
-				JSONArray data = jsonObject.getJSONArray("data");
-				CouponEntity en = null;
-				List<CouponEntity> mainLists = new ArrayList<CouponEntity>();
-				for (int i = 0; i < data.length(); i++) {
-					JSONObject item = data.getJSONObject(i);
-					en = new CouponEntity();
-					en.setCouponId(item.getString("bonus_id"));
-					en.setTypeName(item.getString("type_name"));
-					en.setCurrency(item.getString("currency"));
-					en.setCouponMoney(item.getString("type_money"));
-					en.setCouponLimit(item.getString("min_goods_amount"));
-					en.setStatusType(StringUtil.getInteger(item.getString("class")));
-					en.setStatusName(item.getString("status"));
-					en.setStartDate(item.getString("use_start_date"));
-					en.setEndDate(item.getString("use_end_date"));
-					mainLists.add(en);
-				}
-				mainEn.setMainLists(mainLists);
-			}
+			mainEn.setMainLists(mainLists);
 		}
 		return mainEn;
 	}
@@ -1040,9 +982,9 @@ public class JsonParser {
 	 */
 	private static ArrayList<ProductListEntity> getProductListsFormJson(JSONObject jsonObj, String key) throws JSONException {
 		ArrayList<ProductListEntity> mainLists = new ArrayList<ProductListEntity>();
-		if (!StringUtil.isNull(jsonObj, key)) {
+		if (StringUtil.notNull(jsonObj, key)) {
 			JSONArray datas = jsonObj.getJSONArray(key);
-			ProductListEntity en = null;
+			ProductListEntity en;
 			for (int i = 0; i < datas.length(); i++) {
 				JSONObject item = datas.getJSONObject(i);
 				en = new ProductListEntity();
@@ -1064,9 +1006,9 @@ public class JsonParser {
 	 */
 	private static ArrayList<ProductListEntity> getProductListsFormJson2(JSONObject jsonObj, String key) throws JSONException {
 		ArrayList<ProductListEntity> mainLists = new ArrayList<ProductListEntity>();
-		if (!StringUtil.isNull(jsonObj, key)) {
+		if (StringUtil.notNull(jsonObj, key)) {
 			JSONArray datas = jsonObj.getJSONArray(key);
-			ProductListEntity en = null;
+			ProductListEntity en;
 			for (int i = 0; i < datas.length(); i++) {
 				JSONObject item = datas.getJSONObject(i);
 				en = new ProductListEntity();
@@ -1088,9 +1030,9 @@ public class JsonParser {
 	 */
 	private static ArrayList<ProductListEntity> getConfirmGoodsFormJson(JSONObject jsonObj, String key) throws JSONException {
 		ArrayList<ProductListEntity> mainLists = new ArrayList<ProductListEntity>();
-		if (!StringUtil.isNull(jsonObj, key)) {
+		if (StringUtil.notNull(jsonObj, key)) {
 			JSONArray datas = jsonObj.getJSONArray(key);
-			ProductListEntity en = null;
+			ProductListEntity en;
 			for (int i = 0; i < datas.length(); i++) {
 				JSONObject item = datas.getJSONObject(i);
 				en = new ProductListEntity();
@@ -1113,7 +1055,7 @@ public class JsonParser {
 	private static ArrayList<ProductDetailEntity> getCartProductLists(JSONArray carts) throws JSONException {
 		ArrayList<ProductDetailEntity> childLists = new ArrayList<ProductDetailEntity>();
 		if (carts != null && !carts.equals("")) {
-			ProductDetailEntity proEn = null;
+			ProductDetailEntity proEn;
 			for (int i = 0; i < carts.length(); i++) {
 				JSONObject item = carts.getJSONObject(i);
 				proEn = new ProductDetailEntity();
@@ -1130,6 +1072,21 @@ public class JsonParser {
 			}
 		}
 		return childLists;
+	}
+
+	private static void getCommonKeyValue(BaseEntity baseEn, JSONObject jsonObj) throws JSONException{
+		if (jsonObj.has("error")) {
+			baseEn.setErrCode(StringUtil.getInteger(jsonObj.getString("error")));
+		}
+		if (jsonObj.has("message")) {
+			baseEn.setErrInfo(jsonObj.getString("message"));
+		}
+		if (jsonObj.has("size")) {
+			baseEn.setPageSize(StringUtil.getInteger(jsonObj.getString("size")));
+		}
+		if (jsonObj.has("count")) {
+			baseEn.setDataTotal(StringUtil.getInteger(jsonObj.getString("count")));
+		}
 	}
 
 }

@@ -53,7 +53,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	public static final int TYPE_4 = 3;  //待收货
 	public static final int TYPE_5 = 4;  //退换货
 
-	private static final int Page_Count = 20;  //每页加载条数
+	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
 	private int page_type_1 = 1;  //全部列表加载页
 	private int page_type_2 = 1;  //待付款或已完成列表加载页
@@ -62,7 +62,6 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private int page_type_5 = 1;  //退换货列表加载页
 	private int topType = TYPE_1; //Top标记
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
-	private int countTotal = 0; //数集总数量
 	private int total_1, total_2, total_3, total_4, total_5;
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean isLogined, isSuccess;
@@ -127,7 +126,11 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		if (rootCode == 0) {
 			setTitle(R.string.profile_my_order);
 		}else { //会员订单
-			setTitle(R.string.profile_member_order);
+			String memberType = getString(R.string.profile_member);
+			if (UserManager.getInstance().isTalent()) { //达人
+				memberType = getString(R.string.profile_customer);
+			}
+			setTitle(getString(R.string.profile_member_order, memberType));
 		}
 		iv_to_top.setOnClickListener(this);
 		
@@ -173,7 +176,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 加载更多
-            	if (!isStopLoadMore(lv_show.size(), countTotal)) {
+            	if (!isStopLoadMore(lv_show.size(), dataTotal, 0)) {
             		loadSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -326,7 +329,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		isSuccess = false;
 		loadType = 1;
 		current_Page = 1;
-		countTotal = 0;
+		dataTotal = 0;
 		setLoadMoreData();
 		startAnimation();
 		requestProductLists();
@@ -478,7 +481,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private void addOldListDatas(List<OrderEntity> oldLists, int oldPage, int oldTotal) {
 		addAllShow(oldLists);
 		current_Page = oldPage;
-		countTotal = oldTotal;
+		dataTotal = oldTotal;
 		myUpdateAdapter();
 		if (current_Page != 1) {
 			toTop();
@@ -555,7 +558,6 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 				params.add(new MyNameValuePair("app", "member_order"));
 			}
 			params.add(new MyNameValuePair("status", String.valueOf(topType)));
-			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
 			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_ORDER_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 
@@ -577,36 +579,36 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 				OrderEntity mainEn = (OrderEntity) result;
 				if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isSuccess = true;
-					int total = mainEn.getOrderTotal();
+					int newTotal = mainEn.getDataTotal();
 					List<OrderEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {
 						List<BaseEntity> newLists = null;
 						switch (topType) {
 						case TYPE_1: 
 							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, total_1, lists, lv_all_1, am_all_1);
+								newLists = updNewEntity(newTotal, total_1, lists, lv_all_1, am_all_1);
 							}else {
 								newLists = addNewEntity(lv_all_1, lists, am_all_1);
 								if (newLists != null) {
 									page_type_1++;
 								}
 							}
-							total_1 = total;
+							total_1 = newTotal;
 							break;
 						case TYPE_2: 
 							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, total_2, lists, lv_all_2, am_all_2);
+								newLists = updNewEntity(newTotal, total_2, lists, lv_all_2, am_all_2);
 							}else {
 								newLists = addNewEntity(lv_all_2, lists, am_all_2);
 								if (newLists != null) {
 									page_type_2++;
 								}
 							}
-							total_2 = total;
+							total_2 = newTotal;
 							break;
 						case TYPE_3: 
 							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, total_3, lists, lv_all_3, am_all_3);
+								newLists = updNewEntity(newTotal, total_3, lists, lv_all_3, am_all_3);
 								page_type_3 = 2;
 							}else {
 								newLists = addNewEntity(lv_all_3, lists, am_all_3);
@@ -614,11 +616,11 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 									page_type_3++;
 								}
 							}
-							total_3 = total;
+							total_3 = newTotal;
 							break;
 						case TYPE_4: 
 							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, total_4, lists, lv_all_4, am_all_4);
+								newLists = updNewEntity(newTotal, total_4, lists, lv_all_4, am_all_4);
 								page_type_4 = 2;
 							}else {
 								newLists = addNewEntity(lv_all_4, lists, am_all_4);
@@ -626,11 +628,11 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 									page_type_4++;
 								}
 							}
-							total_4 = total;
+							total_4 = newTotal;
 							break;
 						case TYPE_5: 
 							if (loadType == 0) { //下拉
-								newLists = updNewEntity(total, total_5, lists, lv_all_5, am_all_5);
+								newLists = updNewEntity(newTotal, total_5, lists, lv_all_5, am_all_5);
 								page_type_5 = 2;
 							}else {
 								newLists = addNewEntity(lv_all_5, lists, am_all_5);
@@ -638,13 +640,13 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 									page_type_5++;
 								}
 							}
-							total_5 = total;
+							total_5 = newTotal;
 							break;
 						}
 						if (newLists != null) {
 							addNewShowLists(newLists);
 						}
-						countTotal = total;
+						dataTotal = newTotal;
 						myUpdateAdapter();
 					}else {
 						loadFailHandle();
@@ -664,9 +666,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					isUpdate = true;
 					updateAllData();
-					if (ChildFragmentFive.instance != null) {
-						ChildFragmentFive.instance.isUpdate = true;
-					}
+					updateActivityData(5);
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
 				}else {
@@ -770,20 +770,10 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	protected void stopAnimation() {
 		isLoadOk = true;
 		rl_loading.setVisibility(View.GONE);
-		switch (loadType) {
-		case 0: //下拉刷新
-			refresh_lv.onPullDownRefreshComplete();
-			break;
-		case 1: //加载更多
-			refresh_lv.onPullUpRefreshComplete();
-			break;
-		}
+		refresh_lv.onPullDownRefreshComplete();
+		refresh_lv.onPullUpRefreshComplete();
 		if (lv_show.size() == 0) {
-			if (rootCode == 0) {
-				tv_no_data.setText(getString(R.string.loading_no_data, noDataShowStr));
-			}else { //会员订单
-				tv_no_data.setText(getString(R.string.member_no_order, noDataShowStr));
-			}
+			tv_no_data.setText(getString(R.string.loading_no_data, noDataShowStr));
 			rl_no_data.setVisibility(View.VISIBLE);
 			refresh_lv.setVisibility(View.GONE);
 		}else {

@@ -32,6 +32,7 @@ public class SelectListAdapter extends BaseAdapter{
 	public static final int DATA_TYPE_5 = 5; //PersonalActivity --> SelectListActivity
 	public static final int DATA_TYPE_6 = 6; //PostOrderActivity --> SelectListActivity
 	public static final int DATA_TYPE_7 = 7; //ShowListHeadActivity --> SelectListActivity
+	public static final int DATA_TYPE_8 = 8; //AddressEditActivity --> SelectListActivity
 
 	private Context context;
 	private SelectListEntity selectData;
@@ -117,7 +118,7 @@ public class SelectListAdapter extends BaseAdapter{
 		case DATA_TYPE_1: //ScreenListActivity
 			holder.tv_item_name.setText(data.getTypeName());
 			holder.iv_logo.setVisibility(View.GONE);
-			holder.iv_go.setVisibility(View.VISIBLE);
+			holder.iv_go.setVisibility(View.VISIBLE); //多层次筛选,选中项标记“状态色”
 			holder.tv_select_name.setVisibility(View.VISIBLE);
 			SelectListEntity selectEn = data.getSelectEn();
 			if (selectEn != null) {
@@ -131,18 +132,19 @@ public class SelectListAdapter extends BaseAdapter{
 		case DATA_TYPE_2: //ScreenListActivity --> SelectListActivity
 		case DATA_TYPE_4: //ProductListActivity --> SelectListActivity
 		case DATA_TYPE_7: //ShowListHeadActivity --> SelectListActivity
-			itemChangeTextColor(holder, data);
+			itemChangeTextColor(holder, data); //选中项标记“状态色”
 			break;
 		case DATA_TYPE_3: //ProductListActivity
-			holder.tv_item_name.setText(data.getChildShowName());
-			holder.tv_select_name.setVisibility(View.GONE);
-			holder.iv_go.setVisibility(View.GONE);
+			holder.tv_item_name.setText(data.getChildShowName()); //选中项无标记
 			holder.iv_logo.setVisibility(View.GONE);
+			holder.iv_go.setVisibility(View.GONE);
+			holder.tv_select_name.setVisibility(View.GONE);
 			holder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.ui_bg_color_nut));
 			break;
 		case DATA_TYPE_5: //PersonalActivity --> SelectListActivity
 		case DATA_TYPE_6: //PostOrderActivity --> SelectListActivity
-			itemChangeImgTick(holder, data);
+		case DATA_TYPE_8: //AddressEditActivity --> SelectListActivity
+			itemChangeImgTick(holder, data); //选中项标记“√”
 			break;
 		}
 		if (position == getCount() - 1) {
@@ -165,7 +167,7 @@ public class SelectListAdapter extends BaseAdapter{
 	}
 
 	/**
-	 * Item选中后显示勾选
+	 * Item选中后标记“√”
 	 */
 	private void itemChangeImgTick(ViewHolder holder, final SelectListEntity data) {
 		holder.iv_go.setImageDrawable(context.getResources().getDrawable(R.drawable.topbar_icon_tick));
@@ -186,7 +188,7 @@ public class SelectListAdapter extends BaseAdapter{
 	}
 
 	/**
-	 * Item选中后字体变红色
+	 * Item选中后标记“状态色”
 	 */
 	private void itemChangeTextColor(ViewHolder holder, final SelectListEntity data) {
 		if (selectData != null && selectData.getChildId() == data.getChildId()) {

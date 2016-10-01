@@ -80,10 +80,11 @@
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/new_address_tv_country_show"
+                    android:id="@+id/new_address_tv_country"
                     style="@style/Address_EditText"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="18dp" />
+                    android:layout_marginLeft="18dp"
+                    android:hint="@string/address_choose_country" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -117,10 +118,11 @@
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/new_address_tv_province_show"
+                    android:id="@+id/new_address_tv_province"
                     style="@style/Address_EditText"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="18dp" />
+                    android:layout_marginLeft="18dp"
+                    android:hint="@string/address_choose_province" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -154,10 +156,11 @@
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/new_address_tv_city_show"
+                    android:id="@+id/new_address_tv_city"
                     style="@style/Address_EditText"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="18dp" />
+                    android:layout_marginLeft="18dp"
+                    android:hint="@string/address_choose_city" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -191,10 +194,11 @@
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/new_address_tv_district_show"
+                    android:id="@+id/new_address_tv_district"
                     style="@style/Address_EditText"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="18dp" />
+                    android:layout_marginLeft="18dp"
+                    android:hint="@string/address_choose_district" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -222,7 +226,6 @@
                 android:text="@string/address_area" />
 
             <TextView
-                android:id="@+id/new_address_tv_province"
                 style="@style/Address_EditText"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -230,7 +233,6 @@
                 android:singleLine="true" />
 
             <TextView
-                android:id="@+id/new_address_tv_city"
                 style="@style/Address_EditText"
                 android:layout_width="0dp"
                 android:layout_marginLeft="0dp"
@@ -239,7 +241,6 @@
                 android:singleLine="true" />
 
             <TextView
-                android:id="@+id/new_address_tv_district"
                 style="@style/Address_EditText"
                 android:layout_width="0dp"
                 android:layout_marginLeft="0dp"

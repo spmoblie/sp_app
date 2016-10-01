@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Text字体常用颜色值 -->
-    <color name="style_text_color">#FE6C90</color><!-- 风格 -->
+    <color name="style_text_color">#FF4E00</color><!-- 风格 -->
     <color name="text_color_white">#FFFFFF</color><!-- 白色 -->
     <color name="text_color_black">#000000</color><!-- 黑色 -->
     <color name="text_color_greys">#999999</color><!-- 灰色 -->
@@ -25,6 +25,8 @@
     <color name="input_text_color">#cccccc</color>
     <!-- 禁操作文字颜色 -->
     <color name="debar_text_color">#cccccc</color>
+    <!-- 负金额文字颜色 -->
+    <color name="lower_text_color">#10AF9A</color>
     <!-- 红点提醒颜色值 -->
     <color name="warns_text_color">@color/style_text_color</color>
     <!-- 商品价格颜色值 -->

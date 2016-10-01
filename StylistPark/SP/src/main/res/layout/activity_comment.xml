@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_nut">
+
+    <com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView
+        android:id="@+id/comment_refresh_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp" />
+
+    <include layout="@layout/layout_loading_no_data" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="@color/ui_bg_color_app"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <EditText
+            android:id="@+id/comment_et_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_frame_white_dfdfdf_4"
+            android:hint="@string/events_comment_participate"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/conte_text_color"
+            android:textColorHint="@color/input_text_color"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/comment_tv_post"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/events_comment"
+            android:textColor="@color/label_text_color"
+            android:textSize="@dimen/text_size_16" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/comment_iv_to_top"
+        style="@style/common_to_top"
+        android:contentDescription="@string/desc" />
+
+</FrameLayout>

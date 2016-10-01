@@ -33,7 +33,7 @@
         <RelativeLayout
             android:id="@+id/search_rl_search_et"
             android:layout_width="0dp"
-            android:layout_height="31dp"
+            android:layout_height="28dp"
             android:layout_weight="7">
 
             <EditText

@@ -86,9 +86,9 @@ public class BalanceListAdapter extends BaseAdapter {
 		holder.tv_time.setText(data.getChangeTime());
 		
 		if (data.getType().equals("-")) {
-			holder.tv_money.setTextColor(context.getResources().getColor(R.color.price_text_color));
+			holder.tv_money.setTextColor(context.getResources().getColor(R.color.lower_text_color));
 		}else {
-			holder.tv_money.setTextColor(context.getResources().getColor(R.color.conte_text_color));
+			holder.tv_money.setTextColor(context.getResources().getColor(R.color.price_text_color));
 		}
 		holder.tv_money.setText(data.getType() + data.getChangeMoney());
 		

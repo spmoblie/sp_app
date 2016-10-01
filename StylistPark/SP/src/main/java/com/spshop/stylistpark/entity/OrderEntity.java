@@ -174,11 +174,6 @@ public class OrderEntity extends BaseEntity {
 	private String goodsTotalStr;
 
 	/**
-	 * 订单总数量
-	 */
-	private int orderTotal;
-	
-	/**
 	 * 订单生成时间
 	 */
 	private long createTime;
@@ -548,15 +543,6 @@ public class OrderEntity extends BaseEntity {
 
 	public void setGoodsTotalStr(String goodsTotalStr) {
 		this.goodsTotalStr = goodsTotalStr;
-	}
-
-	public int getOrderTotal() {
-		return orderTotal;
-	}
-
-
-	public void setOrderTotal(int orderTotal) {
-		this.orderTotal = orderTotal;
 	}
 
 

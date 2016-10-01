@@ -44,10 +44,9 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 	public static final int PAGE_ROOT_CODE_2 = 1002; //ChildFragmentFive：浏览记录
 	public static ShowListActivity instance = null;
 	public boolean isUpdate = false;
-	
-	private static final int Page_Count = 20;  //每页加载条数
+
+	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
-	private int countTotal = 0; //商品总数量
 	private boolean isLoadOk = true;
 
 	private int pageCode = PAGE_ROOT_CODE_1;
@@ -119,7 +118,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 加载更多
-            	if (!isStopLoadMore(lv_show.size(), countTotal)) {
+            	if (!isStopLoadMore(lv_show.size(), dataTotal, 0)) {
             		loadSVDatas();
 				}else {
 					new Handler().postDelayed(new Runnable() {
@@ -250,7 +249,6 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 				params.add(new MyNameValuePair("app", "history"));
 				break;
 			}
-			params.add(new MyNameValuePair("size", String.valueOf(Page_Count)));
 			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_USER_PRODUCT_LIST, uri, params, HttpUtil.METHOD_GET);
 		}
@@ -263,7 +261,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 		super.onSuccess(requestCode, result);
 		if (result != null) {
 			ProductListEntity mainEn = (ProductListEntity) result;
-			countTotal = mainEn.getTotal();
+			dataTotal = mainEn.getDataTotal();
 			List<ProductListEntity> lists = mainEn.getMainLists();
 			if (lists!= null && lists.size() > 0) {
 				List<BaseEntity> newLists = addNewEntity(lv_all_1, lists, am_all_1);

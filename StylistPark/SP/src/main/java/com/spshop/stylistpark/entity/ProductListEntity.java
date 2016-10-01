@@ -55,9 +55,9 @@ public class ProductListEntity extends BaseEntity {
 	 * 会员佣金
 	 */
 	private String commission;
-	
+
 	/**
-	 * 商品总数量
+	 * 已选商品数量
 	 */
 	private int total;
 

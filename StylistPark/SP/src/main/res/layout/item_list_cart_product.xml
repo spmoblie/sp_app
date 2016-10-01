@@ -150,13 +150,15 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/item_list_cart_product_iv_delect"
+        <TextView
+            android:id="@+id/item_list_cart_product_tv_delect"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:contentDescription="@string/desc"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_list_delete" />
+            android:background="@color/ui_color_status"
+            android:gravity="center"
+            android:text="@string/multiplication"
+            android:textSize="@dimen/text_size_28"
+            android:textColor="@color/text_color_white" />
     </LinearLayout>
 
 </com.spshop.stylistpark.widgets.MyHorizontalScrollView>

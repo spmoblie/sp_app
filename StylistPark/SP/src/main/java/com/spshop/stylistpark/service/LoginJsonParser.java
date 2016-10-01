@@ -1,12 +1,12 @@
 package com.spshop.stylistpark.service;
 
+import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.entity.AuthResult;
 import com.spshop.stylistpark.entity.QQEntity;
 import com.spshop.stylistpark.entity.QQUserInfoEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.entity.WXEntity;
 import com.spshop.stylistpark.entity.WXUserInfoEntity;
-import com.spshop.stylistpark.utils.LogUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +23,7 @@ public class LoginJsonParser {
 		int errCode = Integer.valueOf(jsonObject.getString("error"));
 		String errInfo = jsonObject.getString("message");
 		UserInfoEntity infoEn = new UserInfoEntity(errCode, errInfo);
-		if (errCode == 1) { //校验通过
+		if (errCode == AppConfig.ERROR_CODE_SUCCESS) { //校验通过
 			infoEn.setUserId(jsonObject.getString("user_id"));
 		}
 		return infoEn;
@@ -33,7 +33,6 @@ public class LoginJsonParser {
 	 * 获取微信AccessToken
 	 */
 	public static WXEntity getWexiAccessToken(String jsonStr) throws JSONException {
-		LogUtil.i("JsonParser", "getWexiAccessToken\n" + jsonStr);
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		return new WXEntity(jsonObject.getString("access_token"), 
 				jsonObject.getString("expires_in"), jsonObject.getString("refresh_token"), 
@@ -44,7 +43,6 @@ public class LoginJsonParser {
 	 * 校验微信AccessToken
 	 */
 	public static WXEntity authWexiAccessToken(String jsonStr) throws JSONException {
-		LogUtil.i("JsonParser", "authWexiAccessToken\n" + jsonStr);
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		return new WXEntity(Integer.parseInt(jsonObject.getString("errcode")), jsonObject.getString("errmsg"));
 	}
@@ -53,7 +51,6 @@ public class LoginJsonParser {
 	 * 微信刷新AccessToken结果
 	 */
 	public static WXEntity getWexiAccessAuth(String jsonStr) throws JSONException {
-		LogUtil.i("JsonParser", "getWexiAccessAuth\n" + jsonStr);
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		return new WXEntity(jsonObject.getString("access_token"), 
 				jsonObject.getString("expires_in"), jsonObject.getString("refresh_token"),
@@ -64,7 +61,6 @@ public class LoginJsonParser {
 	 * 获取微信用户信息
 	 */
 	public static WXUserInfoEntity getWexiUserInfo(String jsonStr) throws JSONException {
-		LogUtil.i("JsonParser", "getWexiUserInfo\n" + jsonStr);
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		return new WXUserInfoEntity(
 				jsonObject.getString("openid"), jsonObject.getString("nickname"), 
@@ -78,7 +74,6 @@ public class LoginJsonParser {
 	 * 微信校验AccessToken有效性
 	 */
 	public static WXEntity getWexiAccessTokenAuto(String jsonStr) throws JSONException {
-		LogUtil.i("JsonParser", "getWexiAccessTokenAuto\n" + jsonStr);
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		return new WXEntity(Integer.parseInt(jsonObject.getString("errcode")), jsonObject.getString("errmsg"));
 	}
@@ -87,9 +82,8 @@ public class LoginJsonParser {
 	 * 获取QQ登录结果
 	 */
 	public static QQEntity getQQLoginResult(Object jsonObject) throws JSONException {
-		LogUtil.i("JsonParser", "getQQLoginResult" + jsonObject.toString());
 		JSONObject jsonObj = (JSONObject) jsonObject;
-		QQEntity qqEn = null;
+		QQEntity qqEn;
 		int ret = jsonObj.getInt("ret");
 		String msg = jsonObj.getString("msg");
 		if (ret == 0) {
@@ -106,9 +100,8 @@ public class LoginJsonParser {
 	 * 获取QQ用户资料
 	 */
 	public static QQUserInfoEntity getQQUserInfo(Object jsonObject) throws JSONException {
-		LogUtil.i("JsonParser", "getQQUserInfo\n" + jsonObject.toString());
 		JSONObject jsonObj = (JSONObject) jsonObject;
-		QQUserInfoEntity userInfo = null;
+		QQUserInfoEntity userInfo;
 		int ret = jsonObj.getInt("ret");
 		String msg = jsonObj.getString("msg");
 		if (ret == 0) {

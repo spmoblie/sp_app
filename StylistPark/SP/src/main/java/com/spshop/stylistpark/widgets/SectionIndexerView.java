@@ -90,6 +90,11 @@ public class SectionIndexerView extends View implements OnTouchListener {
         mListener = list;
     }
 
+    public void changeStatus(int indexPos) {
+        mCurrentSection = indexPos;
+        invalidate();
+    }
+
 
     private void init() {
 

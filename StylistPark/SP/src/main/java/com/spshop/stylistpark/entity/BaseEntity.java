@@ -6,9 +6,11 @@ public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 2980439304361030908L;
 
-    private int errCode;
-    private String errInfo;
-    private String data;
+    private int errCode; //响应状态码
+    private String errInfo; //状态码描述
+
+    private int pageSize; //每页加载数量
+    private int dataTotal; //加载数据总量
 
 
     public BaseEntity() {
@@ -42,12 +44,29 @@ public class BaseEntity implements Serializable {
         this.errInfo = errInfo;
     }
 
-    public String getData() {
-        return data;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
+    public int getDataTotal() {
+        return dataTotal;
+    }
+
+    public void setDataTotal(int dataTotal) {
+        this.dataTotal = dataTotal;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseEntity{" +
+                "errCode=" + errCode +
+                ", errInfo='" + errInfo + '\'' +
+                ", pageSize=" + pageSize +
+                ", dataTotal=" + dataTotal +
+                '}';
+    }
 }
