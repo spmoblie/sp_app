@@ -7,7 +7,7 @@
     android:padding="15dp" >
 
     <ImageView
-        android:id="@+id/item_list_comment_iv_head"
+        android:id="@+id/item_list_comment_iv_avatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerVertical="true"
@@ -17,7 +17,7 @@
         android:id="@+id/item_list_comment_tv_nick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/item_list_comment_iv_head"
+        android:layout_toRightOf="@id/item_list_comment_iv_avatar"
         android:layout_marginLeft="10dp"
         android:textSize="@dimen/text_size_14"
         android:textColor="@color/conte_text_color" />
@@ -27,8 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_alignBottom="@+id/item_list_comment_iv_head"
-        android:layout_toRightOf="@+id/item_list_comment_iv_head"
+        android:layout_alignBottom="@+id/item_list_comment_iv_avatar"
+        android:layout_toRightOf="@+id/item_list_comment_iv_avatar"
         android:ellipsize="end"
         android:maxLines="2"
         android:textSize="@dimen/text_size_14"

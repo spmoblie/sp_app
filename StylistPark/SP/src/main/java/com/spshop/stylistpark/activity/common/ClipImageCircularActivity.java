@@ -39,7 +39,7 @@ public class ClipImageCircularActivity extends BaseActivity{
 	}
 	
 	private void initView() {
-		setTitle(R.string.photo_clip_head_title);
+		setTitle(R.string.photo_clip_avatar_title);
 		setBtnRight(getString(R.string.confirm));
 		// 设置需要裁剪的图片
 		Bitmap bm =BitmapFactory.decodeFile(photoPath);
@@ -57,7 +57,7 @@ public class ClipImageCircularActivity extends BaseActivity{
 		// 此处获取剪裁后的bitmap
 		Bitmap bm = imageView.clip();
 		if (bm != null) {
-			File file = BitmapUtil.createPath("user_head.png", false);
+			File file = BitmapUtil.createPath("user_avatar.png", false);
 			if (file == null) {
             	showErrorDialog(R.string.photo_show_save_fail);
     			return;

@@ -6,7 +6,7 @@ public class QQUserInfoEntity {
 	private String errmsg; 
 	private String nickname	; //用户昵称
 	private String gender; //用户性别(1为男性，2为女性)
-	private String headUrl; //用户头像，用户没有头像时该项为空
+	private String avatar; //用户头像，用户没有头像时该项为空
     
     
     public QQUserInfoEntity(int errcode, String errmsg) {
@@ -17,13 +17,13 @@ public class QQUserInfoEntity {
 
 
 	public QQUserInfoEntity(int errcode, String errmsg, String nickname,
-			String gender, String headUrl) {
+			String gender, String avatar) {
 		super();
 		this.errcode = errcode;
 		this.errmsg = errmsg;
 		this.nickname = nickname;
 		this.gender = gender;
-		this.headUrl = headUrl;
+		this.avatar = avatar;
 	}
 
 
@@ -67,13 +67,13 @@ public class QQUserInfoEntity {
 	}
 
 
-	public String getHeadUrl() {
-		return headUrl;
+	public String getAvatar() {
+		return avatar;
 	}
 
 
-	public void setHeadUrl(String headUrl) {
-		this.headUrl = headUrl;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 }

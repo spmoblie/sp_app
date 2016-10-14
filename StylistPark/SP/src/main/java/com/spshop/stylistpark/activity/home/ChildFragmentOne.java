@@ -81,7 +81,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private ConnectivityManager cm;
 	private AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
-	private RelativeLayout rl_category, rl_search, rl_zxing;
+	private RelativeLayout rl_zxing, rl_search, rl_right;
 
 	private LinearLayout ll_head_main, ll_indicator, ll_goods_main, ll_peida_main, ll_sale_main;
 	private View sv_goods_main, vw_goods_title, sv_peida_main, vw_peida_title, vw_sale_title;
@@ -146,7 +146,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	}
 
 	private void findViewById(View view) {
-		rl_category = (RelativeLayout) view.findViewById(R.id.fragment_one_topbar_rl_category);
+		rl_right = (RelativeLayout) view.findViewById(R.id.fragment_one_topbar_rl_right);
 		rl_search = (RelativeLayout) view.findViewById(R.id.fragment_one_topbar_rl_search);
 		rl_zxing = (RelativeLayout) view.findViewById(R.id.fragment_one_topbar_rl_zxing);
 		refresh_lv = (PullToRefreshListView) view.findViewById(R.id.fragment_one_listview);
@@ -159,7 +159,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	}
 
 	private void initView() {
-		rl_category.setOnClickListener(this);
+		rl_right.setOnClickListener(this);
 		rl_search.setOnClickListener(this);
 		rl_zxing.setOnClickListener(this);
 		iv_to_top.setOnClickListener(this);
@@ -612,8 +612,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	public void onClick(View v) {
 		Intent intent = null;
 		switch (v.getId()) {
-		case R.id.fragment_one_topbar_rl_category:
-			//intent = new Intent(getActivity(), CategoryActivity.class);
+		case R.id.fragment_one_topbar_rl_right:
 			intent = new Intent(mContext, ProductListActivity.class);
 			intent.putExtra("typeId", "0");
 			intent.putExtra("typeName", getString(R.string.product_search));

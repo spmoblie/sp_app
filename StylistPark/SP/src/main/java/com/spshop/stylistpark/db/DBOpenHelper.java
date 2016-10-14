@@ -13,7 +13,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 	//删除备用的表
 	//private String DROP_MESSAGE = "drop table _temp_message";
 	//如果表不存在则创建表
-	private String CREATE_CATEGORY = "create table if not exists category("
+	private String CREATE_SORT = "create table if not exists sort("
 			+ " _id integer primary key autoincrement," 
 			+ " type_id integer,"
 			+ " image_url text," 
@@ -28,7 +28,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		//商品分类数据库表
-		db.execSQL(CREATE_CATEGORY);
+		db.execSQL(CREATE_SORT);
 	}
 
 	@Override

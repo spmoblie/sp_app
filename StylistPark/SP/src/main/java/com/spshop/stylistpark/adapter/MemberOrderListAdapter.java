@@ -33,7 +33,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 	private String currStr;
 	//private AdapterCallback adapterCallback;
 	private LayoutInflater mInflater;
-	private DisplayImageOptions options, headOptions;
+	private DisplayImageOptions options, avatarOptions;
 
 	public MemberOrderListAdapter(Context context, List<OrderEntity> datas, AdapterCallback adapterCallback) {
 		this.context = context;
@@ -42,7 +42,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 		//this.adapterCallback = adapterCallback;
 		this.mInflater = LayoutInflater.from(context);
 		options = AppApplication.getDefaultImageOptions();
-		headOptions = AppApplication.getHeadImageOptions();
+		avatarOptions = AppApplication.getAvatarOptions();
 	}
 
 	public void updateAdapter(List<OrderEntity> datas) {
@@ -73,8 +73,8 @@ public class MemberOrderListAdapter extends BaseAdapter {
 	static class ViewHolder {
 
 		LinearLayout ll_main, ll_goods_lists;
-		ImageView iv_head, iv_rank;
-		TextView tv_user_name, tv_add_time, tv_order_status, tv_total_goods, tv_total_user;
+		ImageView iv_avatar, iv_rank;
+		TextView tv_nick, tv_add_time, tv_order_status, tv_total_goods, tv_total_user;
 
 	}
 
@@ -87,9 +87,9 @@ public class MemberOrderListAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.ll_main = (LinearLayout) convertView.findViewById(R.id.item_list_order_member_ll_main);
 			holder.ll_goods_lists = (LinearLayout) convertView.findViewById(R.id.member_order_lsit_ll_goods_lists);
-			holder.iv_head = (ImageView) convertView.findViewById(R.id.item_list_order_member_iv_head);
+			holder.iv_avatar = (ImageView) convertView.findViewById(R.id.item_list_order_member_iv_avatar);
 			holder.iv_rank = (ImageView) convertView.findViewById(R.id.item_list_order_member_iv_rank);
-			holder.tv_user_name = (TextView) convertView.findViewById(R.id.item_list_order_member_tv_user_name);
+			holder.tv_nick = (TextView) convertView.findViewById(R.id.item_list_order_member_tv_nick);
 			holder.tv_add_time = (TextView) convertView.findViewById(R.id.item_list_order_member_tv_add_time);
 			holder.tv_order_status = (TextView) convertView.findViewById(R.id.item_list_order_member_tv_order_status);
 			holder.tv_total_goods = (TextView) convertView.findViewById(R.id.item_list_order_member_tv_total_goods);
@@ -102,7 +102,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 		
 		UserInfoEntity infoEn = data.getUserInfo();
 		if (infoEn != null) {
-			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + infoEn.getHeadImg(), holder.iv_head, headOptions);
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + infoEn.getUserAvatar(), holder.iv_avatar, avatarOptions);
 			switch (infoEn.getUserRankCode()) {
 			case 0:
 				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_0));
@@ -123,7 +123,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 				holder.iv_rank.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_rank_0));
 				break;
 			}
-			holder.tv_user_name.setText(infoEn.getUserNick());
+			holder.tv_nick.setText(infoEn.getUserNick());
 		}
 		holder.tv_add_time.setText(data.getBuyer());
 		holder.tv_order_status.setText(data.getStatusName());

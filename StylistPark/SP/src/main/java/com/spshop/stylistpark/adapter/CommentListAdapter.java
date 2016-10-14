@@ -22,12 +22,12 @@ public class CommentListAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<CommentEntity> datas;
-	private DisplayImageOptions headOptions;
+	private DisplayImageOptions avatarOptions;
 
 	public CommentListAdapter(Context context, List<CommentEntity> datas) {
 		this.context = context;
 		this.datas = datas;
-		this.headOptions = AppApplication.getHeadImageOptions();
+		this.avatarOptions = AppApplication.getAvatarOptions();
 	}
 
 	public void updateAdapter(List<CommentEntity> datas) {
@@ -57,7 +57,7 @@ public class CommentListAdapter extends BaseAdapter {
 
 	static class ViewHolder {
 
-		ImageView iv_head;
+		ImageView iv_avatar;
 		TextView tv_nick, tv_content, tv_time;
 
 	}
@@ -69,7 +69,7 @@ public class CommentListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = View.inflate(context, R.layout.item_list_comment, null);
 			holder = new ViewHolder();
-			holder.iv_head = (ImageView) convertView.findViewById(R.id.item_list_comment_iv_head);
+			holder.iv_avatar = (ImageView) convertView.findViewById(R.id.item_list_comment_iv_avatar);
 			holder.tv_nick = (TextView) convertView.findViewById(R.id.item_list_comment_tv_nick);
 			holder.tv_content = (TextView) convertView.findViewById(R.id.item_list_comment_tv_content);
 			holder.tv_time = (TextView) convertView.findViewById(R.id.item_list_comment_tv_time);
@@ -79,7 +79,7 @@ public class CommentListAdapter extends BaseAdapter {
 		}
 		final CommentEntity data = datas.get(position);
 
-		ImageLoader.getInstance().displayImage(data.getHeadImg(), holder.iv_head, headOptions);
+		ImageLoader.getInstance().displayImage(data.getAvatar(), holder.iv_avatar, avatarOptions);
 		holder.tv_nick.setText(data.getUserNick());
 		holder.tv_content.setText(data.getContent());
 		holder.tv_time.setText(data.getAddTime());

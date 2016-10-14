@@ -69,17 +69,17 @@ public class MainServiceImpl implements MainService {
 			case AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE:
 				return JsonParser.getBrandProductLists(jsonStr);
 
-			case AppConfig.REQUEST_SV_GET_CATEGORY_LIST_CODE:
-				return JsonParser.getCategoryListDatas(jsonStr);
+			case AppConfig.REQUEST_SV_GET_SORT_LIST_CODE:
+				return JsonParser.getSortListDatas(jsonStr);
 
 			case AppConfig.REQUEST_SV_GET_BRANDS_LIST_CODE:
-				return JsonParser.getCategoryBrandDatas(jsonStr);
+				return JsonParser.getSortBrandDatas(jsonStr);
 
 			case AppConfig.REQUEST_SV_GET_SCREEN_LIST_CODE:
 				return JsonParser.getScreenlistDatas(jsonStr);
 
-			case AppConfig.REQUEST_SV_GET_BRAND_PROFILE_CODE:
-				return JsonParser.getBrandProfile(jsonStr);
+			case AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE:
+				return JsonParser.getBrandInfo(jsonStr);
 
 			case AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE:
 				return JsonParser.getProductDetailDatas(jsonStr);
@@ -90,8 +90,8 @@ public class MainServiceImpl implements MainService {
 			case AppConfig.REQUEST_SV_POST_CART_PRODUCT_CODE:
 				return JsonParser.postCartProductData(jsonStr);
 
-			case AppConfig.REQUEST_SV_GET_SPECIAL_LIST_CODE:
-				return JsonParser.getSpecialListDatas(jsonStr);
+			case AppConfig.REQUEST_SV_GET_FIND_LIST_CODE:
+				return JsonParser.getFindListDatas(jsonStr);
 
 			case AppConfig.REQUEST_SV_GET_COMMENT_LIST_CODE:
 				return JsonParser.getCommentListDatas(jsonStr);

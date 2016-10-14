@@ -60,7 +60,7 @@
                 android:background="@drawable/shape_frame_white_dfdfdf_4"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:hint="@string/events_comment_participate"
+                android:hint="@string/find_comment_participate"
                 android:textColor="@color/conte_text_color"
                 android:textColorHint="@color/input_text_color"
                 android:textSize="@dimen/text_size_14" />
@@ -70,7 +70,7 @@
                 android:layout_height="match_parent"
                 android:gravity="right|center_vertical"
                 android:paddingLeft="10dp"
-                android:text="@string/events_comment"
+                android:text="@string/find_comment"
                 android:textSize="@dimen/text_size_16"
                 android:textColor="@color/label_text_color"/>
         </LinearLayout>

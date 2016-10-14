@@ -20,7 +20,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.spshop.stylistpark.config.SharedConfig;
-import com.spshop.stylistpark.db.CategoryDBService;
+import com.spshop.stylistpark.db.SortDBService;
 import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
@@ -60,7 +60,7 @@ public class AppApplication extends Application implements OnDataListener{
 	public static boolean isWXShare = false; //记录是否微信分享
 	public static boolean isStartHome = true; //记录是否允许重新启动HomeFragmentActivity
 
-	private static DisplayImageOptions defaultOptions, headOptions;
+	private static DisplayImageOptions defaultOptions, avatarOptions;
 	private static SharedPreferences shared;
 	private static AsyncTaskManager atm;
 	private static PushManager pushManager;
@@ -127,13 +127,13 @@ public class AppApplication extends Application implements OnDataListener{
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				CategoryDBService.getInstance(spApp).deleteAll(); //清空数据库
+				SortDBService.getInstance(spApp).deleteAll(); //清空数据库
 				clearImageLoaderCache(); //清除图片缓存
 				CleanDataManager.cleanAppTemporaryData(spApp); //清除临时缓存
 				CleanDataManager.cleanCustomCache(AppConfig.SAVE_PATH_MEDIA_DICE); //清除视频缓存
 			}
 		}).start();
-		shared.edit().putBoolean(AppConfig.KEY_LOAD_CATEGORY_DATA, true).apply();
+		shared.edit().putBoolean(AppConfig.KEY_LOAD_SORT_DATA, true).apply();
 	}
 
 	/**
@@ -212,19 +212,19 @@ public class AppApplication extends Application implements OnDataListener{
 	/**
 	 * 获取头像图片加载器对象
 	 */
-	public static DisplayImageOptions getHeadImageOptions() {
-		if (headOptions == null) {
-			headOptions = new DisplayImageOptions.Builder()
+	public static DisplayImageOptions getAvatarOptions() {
+		if (avatarOptions == null) {
+			avatarOptions = new DisplayImageOptions.Builder()
 					.displayer(new RoundedBitmapDisplayer(360))
-					.showImageForEmptyUri(R.drawable.head_portrait)
-					.showImageOnFail(R.drawable.head_portrait)
+					.showImageForEmptyUri(R.drawable.default_avatar)
+					.showImageOnFail(R.drawable.default_avatar)
 					.cacheInMemory(true) // 内存缓存
 					.cacheOnDisc(true) // sdcard缓存
 					.resetViewBeforeLoading(true)//设置图片下载前复位
 					.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 					.bitmapConfig(Bitmap.Config.RGB_565).build();
 		}
-		return headOptions;
+		return avatarOptions;
 	}
 
 	/**

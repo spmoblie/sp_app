@@ -775,7 +775,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				}
 				ProductListEntity mainEn = (ProductListEntity) result;
 				if (typeId != 0 && StringUtil.isNull(titleName)) {
-					titleName = mainEn.getCategoryName();
+					titleName = mainEn.getSortName();
 					tv_title.setText(titleName);
 				}
 				pageCount = mainEn.getPageSize();

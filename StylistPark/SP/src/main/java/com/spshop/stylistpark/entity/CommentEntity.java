@@ -14,7 +14,7 @@ public class CommentEntity extends BaseEntity {
 	/**
 	 * 头像
 	 */
-	private String headImg;
+	private String avatar;
 
 	/**
 	 * 昵称
@@ -59,12 +59,12 @@ public class CommentEntity extends BaseEntity {
 		this.commentId = commentId;
 	}
 
-	public String getHeadImg() {
-		return headImg;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setHeadImg(String headImg) {
-		this.headImg = headImg;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public String getUserNick() {

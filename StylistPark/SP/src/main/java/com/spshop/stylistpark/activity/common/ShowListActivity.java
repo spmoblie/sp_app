@@ -326,10 +326,10 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 		if (lv_show.size() == 0) {
 			switch (pageCode) {
 				case PAGE_ROOT_CODE_1: //收藏商品
-					tv_no_data.setText(getString(R.string.loading_no_data, getString(R.string.profile_concerns_goods)));
+					tv_no_data.setText(getString(R.string.loading_no_data, getString(R.string.mine_concerns_goods)));
 					break;
 				case PAGE_ROOT_CODE_2: //浏览记录
-					tv_no_data.setText(getString(R.string.loading_no_data, getString(R.string.profile_history_no_data)));
+					tv_no_data.setText(getString(R.string.loading_no_data, getString(R.string.mine_history_no_data)));
 					break;
 			}
 			rl_no_data.setVisibility(View.VISIBLE);

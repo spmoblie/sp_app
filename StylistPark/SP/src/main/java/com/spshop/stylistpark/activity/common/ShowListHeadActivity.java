@@ -61,7 +61,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	public static ShowListHeadActivity instance = null;
 
-	public static final int PAGE_ROOT_CODE_1 = 1001; //CategoryActivity 或 ProductDetailActivity 或 ChildFragmentOne
+	public static final int PAGE_ROOT_CODE_1 = 1001; //SortActivity 或 ProductDetailActivity 或 ChildFragmentOne
 	public static final int TYPE_1 = 1;  //默认
 	public static final int TYPE_2 = 2;  //价格
 
@@ -392,7 +392,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private void goneDesc() {
 		isGone = true;
-		//tv_unfold.setText(R.string.profile_intro);
+		//tv_unfold.setText(R.string.mine_intro);
 		//tv_brand_desc.setVisibility(View.GONE);
 		//tv_brand_desc.setLines(2);
 		lv_header.setHeightHeader(logo_height + desc_min_height +  other_height);
@@ -493,7 +493,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	}
 	
 	private void getBrandProfile(){
-		request(AppConfig.REQUEST_SV_GET_BRAND_PROFILE_CODE);
+		request(AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE);
 	}
 	
 	private void getBrandProductLists(){
@@ -712,10 +712,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		String uri = AppConfig.URL_COMMON_PRODUCT_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_BRAND_PROFILE_CODE:
+		case AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE:
 			params.add(new MyNameValuePair("app", "brand"));
 			params.add(new MyNameValuePair("id", String.valueOf(brandId)));
-			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BRAND_PROFILE_CODE, uri, params, HttpUtil.METHOD_GET);
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE, uri, params, HttpUtil.METHOD_GET);
 
 		case AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE:
 			params.add(new MyNameValuePair("app", "brand_goods"));
@@ -732,7 +732,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	public void onSuccess(int requestCode, Object result) {
 		if (instance == null) return;
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_BRAND_PROFILE_CODE:
+		case AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE:
 			if (result != null) {
 				brandEn = (BrandEntity) result;
 			}

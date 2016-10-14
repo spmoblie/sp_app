@@ -11,8 +11,8 @@ public class ThemeEntity extends BaseEntity {
 	private int clickNum;
 	private long endTime;
 	private String title;
-	private String mebName;
-	private String mebUrl;
+	private String nick;
+	private String avatar;
 	private String imgUrl;
 	private String vdoUrl;
 	private ThemeEntity adEn; //广告
@@ -82,20 +82,20 @@ public class ThemeEntity extends BaseEntity {
 		this.clickNum = clickNum;
 	}
 
-	public String getMebName() {
-		return mebName;
+	public String getNick() {
+		return nick;
 	}
 
-	public void setMebName(String mebName) {
-		this.mebName = mebName;
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
 
-	public String getMebUrl() {
-		return mebUrl;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setMebUrl(String mebUrl) {
-		this.mebUrl = mebUrl;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public long getEndTime() {

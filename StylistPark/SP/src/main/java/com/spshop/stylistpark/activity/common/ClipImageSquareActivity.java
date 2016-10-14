@@ -40,7 +40,7 @@ public class ClipImageSquareActivity extends BaseActivity{
 	}
 	
 	private void initView() {
-		setTitle(R.string.photo_clip_head_title);
+		setTitle(R.string.photo_clip_avatar_title);
 		setBtnRight(getString(R.string.confirm));
 		// 设置需要裁剪的图片
 		Bitmap bm = BitmapFactory.decodeFile(photoPath);

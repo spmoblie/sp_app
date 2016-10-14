@@ -139,9 +139,9 @@ public class AppConfig {
 	// 加载首页展示列表数据
 	public static final int REQUEST_SV_GET_HOME_SHOW_LIST_CODE = 0X1012;
 	// 加载本地商品分类数据
-	public static final int REQUEST_DB_GET_CATEGORY_LIST_CODE = 0X1030;
+	public static final int REQUEST_DB_GET_SORT_LIST_CODE = 0X1030;
 	// 加载服务器商品分类数据
-	public static final int REQUEST_SV_GET_CATEGORY_LIST_CODE = 0X1031;
+	public static final int REQUEST_SV_GET_SORT_LIST_CODE = 0X1031;
 	// 加载分类商品列表数据
 	public static final int REQUEST_SV_GET_PRODUCT_LIST_CODE = 0X1040;
 	// 加载品牌商品列表数据
@@ -151,7 +151,7 @@ public class AppConfig {
 	// 加载筛选品牌列表数据
 	public static final int REQUEST_SV_GET_SCREEN_LIST_CODE = 0X1051;
 	// 加载指定品牌相关数据
-	public static final int REQUEST_SV_GET_BRAND_PROFILE_CODE = 0X1052;
+	public static final int REQUEST_SV_GET_BRAND_INFO_CODE = 0X1052;
 	// 加载商品详情数据
 	public static final int REQUEST_SV_GET_PRODUCT_DETAIL_CODE = 0X1060;
 	// 加载商品属性数据
@@ -162,7 +162,7 @@ public class AppConfig {
 	public static final int REQUEST_SV_POST_COLLECITON_CODE = 0X1080;
 
 	// 加载专题列表请求
-	public static final int REQUEST_SV_GET_SPECIAL_LIST_CODE = 0X3001;
+	public static final int REQUEST_SV_GET_FIND_LIST_CODE = 0X3001;
 	// 加载专题评论列表
 	public static final int REQUEST_SV_GET_COMMENT_LIST_CODE = 0X3020;
 	// 提交专题评论请求
@@ -268,12 +268,12 @@ public class AppConfig {
 	public static final String KEY_USER_NAME_ID = "user_name_id";
 	// 偏好设置Key-记录用户昵称
 	public static final String KEY_USER_NICK = "user_nick";
-	// 偏好设置Key-记录用户头像Url
-	public static final String KEY_USER_HEAD_IMG_URL = "user_head_img_url";
+	// 偏好设置Key-记录用户头像
+	public static final String KEY_USER_AVATAR_URL = "user_avatar_url";
 	// 偏好设置Key-记录用户简介
 	public static final String KEY_USER_INTRO = "user_intro";
 	// 偏好设置Key-记录用户性别
-	public static final String KEY_USER_SEX = "user_sex";
+	public static final String KEY_USER_GENDER = "user_gender";
 	// 偏好设置Key-记录用户生日
 	public static final String KEY_USER_BIRTHDAY = "user_birthday";
 	// 偏好设置Key-记录用户邮箱
@@ -301,7 +301,7 @@ public class AppConfig {
 	// 偏好设置Key-记录同步远程服务器数据的日期
 	public static final String KEY_LOAD_SV_DATA_DAY = "load_sv_data_day";
 	// 偏好设置Key-记录是否重加载分类数据
-	public static final String KEY_LOAD_CATEGORY_DATA = "load_category_data";
+	public static final String KEY_LOAD_SORT_DATA = "load_sort_data";
 	// 偏好设置Key-记录推送服务的开关状态
 	public static final String KEY_PUSH_STATUS = "push_status";
 	// 偏好设置Key-记录商品搜索的历史记录
@@ -329,7 +329,7 @@ public class AppConfig {
 	public static final int ACTIVITY_GET_IMAGE_VIA_CAMERA = 0X9003;
 	public static final int ACTIVITY_GALLERY_CHOOSE_PHOTO = 0X9004;
 	public static final int ACTIVITY_CHANGE_USER_NICK = 0X9005;
-	public static final int ACTIVITY_CHANGE_USER_SEX = 0X9006;
+	public static final int ACTIVITY_CHANGE_USER_GENDER = 0X9006;
 	public static final int ACTIVITY_CHANGE_USER_INTRO = 0X9007;
 	public static final int ACTIVITY_CHANGE_USER_EMAIL = 0X9008;
 	public static final int ACTIVITY_CHOOSE_PAY_TYPE = 0X9009;

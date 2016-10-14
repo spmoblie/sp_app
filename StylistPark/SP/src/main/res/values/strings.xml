@@ -100,7 +100,7 @@
     
     <!-- home -->
     <string name="home_tab_text_one">Home</string>
-    <string name="home_tab_text_two">@string/title_category</string>
+    <string name="home_tab_text_two">@string/title_sort</string>
     <string name="home_tab_text_three">Find</string>
     <string name="home_tab_text_four">Cart</string>
     <string name="home_tab_text_five">Profile</string>
@@ -109,10 +109,9 @@
     <string name="home_txt_limit_events">Limit events</string>
     
     <!-- title -->
-    <string name="title_category">Category</string>
+    <string name="title_sort">Sort</string>
     <string name="title_screen">Screen</string>
     <string name="title_qr_code_scan">QR Code Scan</string>
-    <string name="title_fragment_three">Special Events</string>
     <string name="title_fragment_four">My Cart</string>
     <string name="title_product_detail">Product Detail</string>
     <string name="title_login">User Login</string>
@@ -172,16 +171,16 @@
     <string name="cart_buy_now">Buy now</string>
     <string name="cart_error_data_null">Data synchronization exception! Please pull down to refresh the shopping cart data!</string>
 
-    <!-- Events -->
-    <string name="events_top_tab_1">@string/all</string>
-    <string name="events_top_tab_2">Video</string>
-    <string name="events_top_tab_3">Special</string>
-    <string name="events_no_data">No found, \n Maybe topics error!</string>
-    <string name="events_comment">Comment</string>
-    <string name="events_comment_participate">Participate comment</string>
-    <string name="events_comment_total">Total %1$d comments</string>
-    <string name="events_comment_ok">Comment posted</string>
-    <string name="events_comment_input">Input your comment</string>
+    <!-- Find-->
+    <string name="find_top_tab_1">@string/all</string>
+    <string name="find_top_tab_2">Video</string>
+    <string name="find_top_tab_3">Special</string>
+    <string name="find_no_data">No found, \n Maybe topics error!</string>
+    <string name="find_comment">Comment</string>
+    <string name="find_comment_participate">Participate comment</string>
+    <string name="find_comment_total">Total %1$d comments</string>
+    <string name="find_comment_ok">Comment posted</string>
+    <string name="find_comment_input">Input your comment</string>
     
     <!-- Member page -->
     <string name="member_top_tab_1">@string/all</string>
@@ -274,14 +273,14 @@
     <string name="photo_select_one_title">Select a photo</string>
     <string name="photo_select_no_data">No photo detected</string>
     <string name="photo_editor_title">Photo Editor</string>
-    <string name="photo_clip_head_title">Shear head</string>
-    <string name="photo_change_head">Change Avatar</string>
+    <string name="photo_clip_avatar_title">Shear avatar</string>
+    <string name="photo_change_avatar">Change Avatar</string>
     <string name="photo_shoot_upload">Shoot upload</string>
     <string name="photo_choose_upload">Photo upload</string>
     <string name="photo_upload_img">Uploading %1$s, please wait&#8230;</string>
     <string name="photo_upload_img_ok">Upload %1$s success</string>
     <string name="photo_img_url_error">%1$s error! Please re edit the avatar!</string>
-    <string name="photo_upload_head_fail">Upload Avatar failed! Please click on the avatar to re upload!</string>
+    <string name="photo_upload_avatar_fail">Upload Avatar failed! Please click on the avatar to re upload!</string>
     <string name="photo_clip_error">Error occurred when shear photo! Please select a photo!</string>
     <string name="photo_ID_photo">ID photo</string>
     <string name="photo_ID_photo_null">ID photo can not be empty</string>
@@ -392,52 +391,50 @@
 	<string name="address_error_data_null">No delivery address, go to add address.</string>
 
     <!-- Profile Page -->
-    <string name="profile_page">My Profile</string>
-    <string name="profile_head">Avatar</string>
-    <string name="profile_name">Name</string>
-    <string name="profile_nickname">Nick</string>
-    <string name="profile_gender">Gender</string>
-    <string name="profile_gender_male">Male</string>
-    <string name="profile_gender_female">Female</string>
-    <string name="profile_gender_confidential">Confidential</string>
-    <string name="profile_birthday">Birthday</string>
-    <string name="profile_rank">Rank</string>
-    <string name="profile_intro">Intro</string>
-    <string name="profile_customer">Customer</string>
-    <string name="profile_member">Fans</string>
-    <string name="profile_my_member">My %1$s</string>
-    <string name="profile_member_order">%1$s Order</string>
-    <string name="profile_my_order">My Order</string>
-    <string name="profile_check_all_order">Check All Order</string>
-    <string name="profile_done">Done</string>
-    <string name="profile_wait_commission">Commission</string>
-    <string name="profile_wait_pay">Wait Pay</string>
-    <string name="profile_wait_delivery">Delivery</string>
-    <string name="profile_wait_receive">Receive</string>
-    <string name="profile_repair_return">Return</string>
-    <string name="profile_my_address">My Address</string>
-    <string name="profile_account_money">My wallet</string>
-    <string name="profile_coupon">My Coupon</string>
-    <string name="profile_collection">My Concerns</string>
-    <string name="profile_concerns_goods">Concerns goods</string>
-    <string name="profile_history">Browse History</string>
-    <string name="profile_history_no_data">Browse History</string>
-    <string name="profile_call">Contact Customer Service</string>
-    <string name="profile_my_collages">My Collage</string>
-    <string name="profile_my_favorite">My Favorite</string>
-    <string name="profile_submit_audit">Submit Audit</string>
-    <string name="profile_change_nick">Change Nickname</string>
-    <string name="profile_input_nick">Please input nickname</string>
-    <string name="profile_change_sex">Change Gender</string>
-    <string name="profile_change_intro">Change Intro</string>
-    <string name="profile_input_intro">Please input intro</string>
-    <string name="profile_change_email">Email</string>
-    <string name="profile_email_verify">Email verification</string>
-    <string name="profile_send_email_ok">Send mail success</string>
-    <string name="profile_send_email_hint">Confirmation send a email to %1$s? Change your E-mail after verification. If you have any questions please contact the official customer.</string>
-    <string name="profile_change_email_notice">Notice: Please enter your email address correctly, If you have any questions please contact the official customer.</string>
-    <string name="profile_set_banner_photo">Set cover photo</string>
-    
+    <string name="mine_page">Personal page</string>
+    <string name="mine_avatar">Avatar</string>
+    <string name="mine_name">Name</string>
+    <string name="mine_nick">Nick</string>
+    <string name="mine_gender">Gender</string>
+    <string name="mine_gender_male">Male</string>
+    <string name="mine_gender_female">Female</string>
+    <string name="mine_gender_confidential">Confidential</string>
+    <string name="mine_birthday">Birthday</string>
+    <string name="mine_rank">Rank</string>
+    <string name="mine_intro">Intro</string>
+    <string name="mine_customer">Customer</string>
+    <string name="mine_member">Fans</string>
+    <string name="mine_member_order">%1$s Order</string>
+    <string name="mine_my_member">My %1$s</string>
+    <string name="mine_my_order">My Order</string>
+    <string name="mine_my_address">My Address</string>
+    <string name="mine_my_collages">My Collage</string>
+    <string name="mine_my_favorite">My Favorite</string>
+    <string name="mine_check_all_order">Check All Order</string>
+    <string name="mine_done">Done</string>
+    <string name="mine_wait_commission">Commission</string>
+    <string name="mine_wait_pay">Wait Pay</string>
+    <string name="mine_wait_delivery">Delivery</string>
+    <string name="mine_wait_receive">Receive</string>
+    <string name="mine_repair_return">Return</string>
+    <string name="mine_account_money">My wallet</string>
+    <string name="mine_coupon">My Coupon</string>
+    <string name="mine_collection">My Concerns</string>
+    <string name="mine_concerns_goods">Concerns goods</string>
+    <string name="mine_history">Browse History</string>
+    <string name="mine_history_no_data">Browse History</string>
+    <string name="mine_call">Contact Customer Service</string>
+    <string name="mine_submit_audit">Submit Audit</string>
+    <string name="mine_change_nick">Change Nickname</string>
+    <string name="mine_input_nick">Please input nickname</string>
+    <string name="mine_change_gender">Change Gender</string>
+    <string name="mine_change_intro">Change Intro</string>
+    <string name="mine_input_intro">Please input intro</string>
+    <string name="mine_change_email">Email</string>
+    <string name="mine_change_email_notice">Notice: Please enter your email address correctly, If you have any questions please contact the official customer.</string>
+    <string name="mine_send_email_ok">Send mail success</string>
+    <string name="mine_send_email_hint">Confirmation send a email to %1$s? Change your E-mail after verification. If you have any questions please contact the official customer.</string>
+
     <!-- Money -->
     <string name="money_balance_burrency">Balance(%1$s)</string>
     <string name="money_balance_detail">Balance Detail</string>

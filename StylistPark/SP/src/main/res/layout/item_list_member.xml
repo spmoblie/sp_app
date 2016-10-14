@@ -24,11 +24,11 @@
         android:paddingTop="10dp" >
 
         <ImageView
-            android:id="@+id/item_list_member_iv_head"
+            android:id="@+id/item_list_member_iv_avatar"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:contentDescription="@string/desc"
-            android:src="@drawable/head_portrait" />
+            android:src="@drawable/default_avatar" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -36,7 +36,7 @@
             android:layout_marginLeft="10dp" >
 
             <TextView
-                android:id="@+id/item_list_member_tv_name"
+                android:id="@+id/item_list_member_tv_nick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="50dp"
@@ -47,7 +47,7 @@
                 android:textSize="@dimen/text_size_14" />
 
             <TextView
-                android:id="@+id/item_list_member_tv_sex"
+                android:id="@+id/item_list_member_tv_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

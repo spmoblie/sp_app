@@ -32,14 +32,14 @@ public class MemberListAdapter extends BaseAdapter {
 	private Context context;
 	private List<MemberEntity> datas;
 	private AdapterCallback adapterCallback;
-	private DisplayImageOptions headOptions;
+	private DisplayImageOptions avatarOptions;
 	private Drawable rank_1, rank_2, rank_3;
 
 	public MemberListAdapter(Context context, List<MemberEntity> datas, AdapterCallback adapterCallback) {
 		this.context = context;
 		this.datas = datas;
 		this.adapterCallback = adapterCallback;
-		headOptions = AppApplication.getHeadImageOptions();
+		avatarOptions = AppApplication.getAvatarOptions();
 		
 		/*rank_1 = context.getResources().getDrawable(R.drawable.icon_rank_1);
 		rank_2 = context.getResources().getDrawable(R.drawable.icon_rank_2);
@@ -76,8 +76,8 @@ public class MemberListAdapter extends BaseAdapter {
 
 	static class ViewHolder {
 
-		ImageView iv_top_line, iv_head;
-		TextView tv_name, tv_sex, tv_order_count, tv_order_money;
+		ImageView iv_top_line, iv_avatar;
+		TextView tv_nick, tv_gender, tv_order_count, tv_order_money;
 
 	}
 
@@ -89,9 +89,9 @@ public class MemberListAdapter extends BaseAdapter {
 			convertView = View.inflate(context, R.layout.item_list_member, null);
 			holder = new ViewHolder();
 			holder.iv_top_line = (ImageView) convertView.findViewById(R.id.item_list_member_iv_top_line);
-			holder.iv_head = (ImageView) convertView.findViewById(R.id.item_list_member_iv_head);
-			holder.tv_name = (TextView) convertView.findViewById(R.id.item_list_member_tv_name);
-			holder.tv_sex = (TextView) convertView.findViewById(R.id.item_list_member_tv_sex);
+			holder.iv_avatar = (ImageView) convertView.findViewById(R.id.item_list_member_iv_avatar);
+			holder.tv_nick = (TextView) convertView.findViewById(R.id.item_list_member_tv_nick);
+			holder.tv_gender = (TextView) convertView.findViewById(R.id.item_list_member_tv_gender);
 			holder.tv_order_count = (TextView) convertView.findViewById(R.id.item_list_member_tv_order_count);
 			holder.tv_order_money = (TextView) convertView.findViewById(R.id.item_list_member_tv_order_money);
 			convertView.setTag(holder);
@@ -106,7 +106,7 @@ public class MemberListAdapter extends BaseAdapter {
 			holder.iv_top_line.setVisibility(View.GONE);
 		}
 		
-		holder.tv_name.setText(data.getMemberNick());
+		holder.tv_nick.setText(data.getMemberNick());
 		/*switch (data.getMemberRank()) {
 		case 0:
 			holder.tv_name.setCompoundDrawables(null, null, rank_1, null);
@@ -121,13 +121,13 @@ public class MemberListAdapter extends BaseAdapter {
 			holder.tv_name.setCompoundDrawables(null, null, rank_1, null);
 			break;
 		}*/
-		holder.tv_sex.setText(data.getUserSex());
+		holder.tv_gender.setText(data.getGender());
 		holder.tv_order_count.setText(data.getOrderCount());
 		holder.tv_order_money.setText(data.getOrderMoney());
 
-		holder.iv_head.setImageResource(R.drawable.head_portrait);
-		ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + data.getHeadImg(), holder.iv_head, headOptions);
-		holder.iv_head.setOnClickListener(new OnClickListener() {
+		holder.iv_avatar.setImageResource(R.drawable.default_avatar);
+		ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + data.getAvatar(), holder.iv_avatar, avatarOptions);
+		holder.iv_avatar.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

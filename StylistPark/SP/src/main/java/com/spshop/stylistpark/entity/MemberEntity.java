@@ -14,17 +14,17 @@ public class MemberEntity extends BaseEntity {
 	/**
 	 * 会员头像
 	 */
-	private String headImg;
-	
-	/**
-	 * 会员昵称
-	 */
-	private String memberNick;
+	private String avatar;
 
 	/**
 	 * 会员性别
 	 */
-	private String userSex;
+	private String gender;
+
+	/**
+	 * 会员昵称
+	 */
+	private String memberNick;
 
 	/**
 	 * 会员等级
@@ -81,13 +81,13 @@ public class MemberEntity extends BaseEntity {
 	}
 
 
-	public String getHeadImg() {
-		return headImg;
+	public String getAvatar() {
+		return avatar;
 	}
 
 
-	public void setHeadImg(String headImg) {
-		this.headImg = headImg;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 
@@ -100,12 +100,12 @@ public class MemberEntity extends BaseEntity {
 		this.memberNick = memberNick;
 	}
 
-	public String getUserSex() {
-		return userSex;
+	public String getGender() {
+		return gender;
 	}
 
-	public void setUserSex(String userSex) {
-		this.userSex = userSex;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public int getMemberRank() {

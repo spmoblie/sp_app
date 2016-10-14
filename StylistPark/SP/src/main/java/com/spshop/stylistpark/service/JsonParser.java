@@ -7,7 +7,7 @@ import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.BrandEntity;
-import com.spshop.stylistpark.entity.CategoryListEntity;
+import com.spshop.stylistpark.entity.SortListEntity;
 import com.spshop.stylistpark.entity.CommentEntity;
 import com.spshop.stylistpark.entity.CouponEntity;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
@@ -123,7 +123,7 @@ public class JsonParser {
 	/**
 	 * 解析专题列表数据
 	 */
-	public static ThemeEntity getSpecialListDatas(String jsonStr) throws JSONException {
+	public static ThemeEntity getFindListDatas(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		ThemeEntity mainEn = new ThemeEntity();
 		getCommonKeyValue(mainEn, jsonObject);
@@ -138,8 +138,8 @@ public class JsonParser {
 				childEn.setType(StringUtil.getInteger(item.getString("open_type")));
 				childEn.setClickNum(StringUtil.getInteger(item.getString("click_count")));
 				childEn.setTitle(item.getString("description"));
-				childEn.setMebName(item.getString("nickname"));
-				childEn.setMebUrl(item.getString("avatar"));
+				childEn.setNick(item.getString("nickname"));
+				childEn.setAvatar(item.getString("avatar"));
 				childEn.setImgUrl(item.getString("file_url"));
 				childEn.setVdoUrl(item.getString("keywords"));
 				peidaLists.add(childEn);
@@ -167,7 +167,7 @@ public class JsonParser {
 				JSONObject item = datas.getJSONObject(j);
 				childEn = new CommentEntity();
 				childEn.setCommentId(item.getString("id"));
-				childEn.setHeadImg(item.getString("avatar"));
+				childEn.setAvatar(item.getString("avatar"));
 				childEn.setUserNick(item.getString("nickname"));
 				childEn.setContent(item.getString("content"));
 				childEn.setAddTime(item.getString("add_time"));
@@ -181,30 +181,30 @@ public class JsonParser {
 	/**
 	 * 解析商品分类数据
 	 */
-	public static CategoryListEntity getCategoryListDatas(String jsonStr) throws JSONException{
+	public static SortListEntity getSortListDatas(String jsonStr) throws JSONException{
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		CategoryListEntity mainEn = new CategoryListEntity();
+		SortListEntity mainEn = new SortListEntity();
 		getCommonKeyValue(mainEn, jsonObject);
-		CategoryListEntity en, child1, child2;
-		List<CategoryListEntity> childLists1, mainLists;
+		SortListEntity en, child1, child2;
+		List<SortListEntity> childLists1, mainLists;
 		// 解析父分类
-		mainLists = new ArrayList<CategoryListEntity>();
+		mainLists = new ArrayList<SortListEntity>();
 		if (StringUtil.notNull(jsonObject, "data")) {
 			JSONArray datas = jsonObject.getJSONArray("data");
 			for (int i = 0; i < datas.length(); i++) {
 				JSONObject item = datas.getJSONObject(i);
-				en = new CategoryListEntity();
+				en = new SortListEntity();
 				en.setTypeId(StringUtil.getInteger((item.getString("id"))));
 				en.setImageUrl(item.getString("ico"));
 				en.setName(item.getString("name"));
 				// 解析第一子分类
-				childLists1 = new ArrayList<CategoryListEntity>();
+				childLists1 = new ArrayList<SortListEntity>();
 				if (StringUtil.notNull(item, "list")) {
 					JSONArray data1 = item.getJSONArray("list");
 					int show = 0;
 					for (int j = 0; j < data1.length(); j++) {
 						JSONObject item1 = data1.getJSONObject(j);
-						child1 = new CategoryListEntity();
+						child1 = new SortListEntity();
 						child1.setTypeId(StringUtil.getInteger((item1.getString("id"))));
 						child1.setImageUrl(item1.getString("cat_ico"));
 						child1.setName(item1.getString("name"));
@@ -213,12 +213,12 @@ public class JsonParser {
 							childLists1.add(child1);
 						}
 						// 解析第二子分类
-						//childLists2 = new ArrayList<CategoryListEntity>();
+						//childLists2 = new ArrayList<SortListEntity>();
 						if (StringUtil.notNull(item1, "list")) {
 							JSONArray data2 = item1.getJSONArray("list");
 							for (int k = 0; k < data2.length(); k++) {
 								JSONObject item2 = data2.getJSONObject(k);
-								child2 = new CategoryListEntity();
+								child2 = new SortListEntity();
 								child2.setTypeId(StringUtil.getInteger((item2.getString("id"))));
 								child2.setImageUrl(item2.getString("cat_ico"));
 								child2.setName(item2.getString("name"));
@@ -244,9 +244,9 @@ public class JsonParser {
 	/**
 	 * 解析分类品牌数据
 	 */
-	public static CategoryListEntity getCategoryBrandDatas(String jsonStr) throws JSONException {
+	public static SortListEntity getSortBrandDatas(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
-		CategoryListEntity mainEn = new CategoryListEntity();
+		SortListEntity mainEn = new SortListEntity();
 		getCommonKeyValue(mainEn, jsonObject);
 		// 解析父分类
 		mainEn.setTypeId(StringUtil.getInteger(jsonObject.getString("id")));
@@ -277,7 +277,7 @@ public class JsonParser {
 		ProductListEntity mainEn = new ProductListEntity();
 		getCommonKeyValue(mainEn, jsonObject);
 		if (jsonObject.has("name")) {
-			mainEn.setCategoryName(jsonObject.getString("name"));
+			mainEn.setSortName(jsonObject.getString("name"));
 		}
 		mainEn.setMainLists(getProductListsFormJson(jsonObject, "data"));
 		return mainEn;
@@ -427,7 +427,7 @@ public class JsonParser {
 	/**
 	 * 解析指定品牌相关信息
 	 */
-	public static BrandEntity getBrandProfile(String jsonStr) throws JSONException {
+	public static BrandEntity getBrandInfo(String jsonStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		BrandEntity mainEn = new BrandEntity();
 		getCommonKeyValue(mainEn, jsonObject);
@@ -652,9 +652,9 @@ public class JsonParser {
 				mainEn.setUserNameID(data.getString("name_id"));
 			}
 			mainEn.setUserNick(data.getString("nickname"));
-			mainEn.setHeadImg(data.getString("avatar"));
+			mainEn.setUserAvatar(data.getString("avatar"));
 			mainEn.setUserIntro(data.getString("intro"));
-			mainEn.setSexCode(StringUtil.getInteger(data.getString("sex")));
+			mainEn.setGenderCode(StringUtil.getInteger(data.getString("sex")));
 			mainEn.setBirthday(data.getString("birthday"));
 			mainEn.setUserEmail(data.getString("email"));
 			mainEn.setUserRankCode(StringUtil.getInteger(data.getString("user_rank")));
@@ -689,8 +689,8 @@ public class JsonParser {
 				en = new MemberEntity();
 				en.setUserId(item.getString("user_id"));
 				en.setMemberNick(item.getString("nickname"));
-				en.setUserSex(item.getString("sex"));
-				en.setHeadImg(item.getString("avatar"));
+				en.setGender(item.getString("sex"));
+				en.setAvatar(item.getString("avatar"));
 				//en.setMemberRank(StringUtil.getInteger(item.getString("user_rank")));
 				//en.setOrderCount(item.getString("affiliate_count"));
 				en.setOrderMoney(item.getString("affiliate_money"));
@@ -721,7 +721,7 @@ public class JsonParser {
 
 				infoEn = new UserInfoEntity();
 				infoEn.setUserNick(item.getString("user_name"));
-				infoEn.setHeadImg(item.getString("avatar"));
+				infoEn.setUserAvatar(item.getString("avatar"));
 				infoEn.setUserRankCode(StringUtil.getInteger(item.getString("user_rank")));
 				en.setUserInfo(infoEn);
 

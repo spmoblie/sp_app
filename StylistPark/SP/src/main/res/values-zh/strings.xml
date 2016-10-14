@@ -100,7 +100,7 @@
     
     <!-- home -->
     <string name="home_tab_text_one">首頁</string>
-    <string name="home_tab_text_two">@string/title_category</string>
+    <string name="home_tab_text_two">@string/title_sort</string>
     <string name="home_tab_text_three">發現</string>
     <string name="home_tab_text_four">購物車</string>
     <string name="home_tab_text_five">我的</string>
@@ -109,10 +109,9 @@
     <string name="home_txt_limit_events">限時活動</string>
     
     <!-- title -->
-    <string name="title_category">分類</string>
+    <string name="title_sort">分類</string>
     <string name="title_screen">篩選</string>
     <string name="title_qr_code_scan">二維碼掃描</string>
-    <string name="title_fragment_three">專題活動</string>
     <string name="title_fragment_four">我的購物車</string>
     <string name="title_product_detail">商品詳情</string>
     <string name="title_login">用戶登入</string>
@@ -172,16 +171,16 @@
     <string name="cart_buy_now">立即購買</string>
     <string name="cart_error_data_null">數據同步出現異常！請下拉刷新購物車商品！</string>
 
-    <!-- Events -->
-    <string name="events_top_tab_1">全部</string>
-    <string name="events_top_tab_2">視頻</string>
-    <string name="events_top_tab_3">專題</string>
-    <string name="events_no_data">暫無發現，\n可能是欄目出錯啦！</string>
-    <string name="events_comment">評論</string>
-    <string name="events_comment_participate">參與評論</string>
-    <string name="events_comment_total">共%1$d條評論</string>
-    <string name="events_comment_ok">評論已發布</string>
-    <string name="events_comment_input">請輸入評論內容</string>
+    <!-- Find -->
+    <string name="find_top_tab_1">全部</string>
+    <string name="find_top_tab_2">視頻</string>
+    <string name="find_top_tab_3">專題</string>
+    <string name="find_no_data">暫無發現，\n可能是欄目出錯啦！</string>
+    <string name="find_comment">評論</string>
+    <string name="find_comment_participate">參與評論</string>
+    <string name="find_comment_total">共%1$d條評論</string>
+    <string name="find_comment_ok">評論已發布</string>
+    <string name="find_comment_input">請輸入評論內容</string>
     
     <!-- Member page -->
     <string name="member_top_tab_1">@string/all</string>
@@ -238,10 +237,10 @@
     <string name="order_logistic_no_data">暫無物流信息</string>
     <string name="order_logistic_expired">物流信息已過期</string>
     <string name="order_top_tab_1">@string/all</string>
-    <string name="order_top_tab_2">@string/profile_wait_pay</string>
-    <string name="order_top_tab_3">@string/profile_wait_delivery</string>
-    <string name="order_top_tab_4">@string/profile_wait_receive</string>
-    <string name="order_top_tab_5">@string/profile_repair_return</string>
+    <string name="order_top_tab_2">@string/mine_wait_pay</string>
+    <string name="order_top_tab_3">@string/mine_wait_delivery</string>
+    <string name="order_top_tab_4">@string/mine_wait_receive</string>
+    <string name="order_top_tab_5">@string/mine_repair_return</string>
     
     <!-- Pay page -->
     <string name="pay_title">在線支付</string>
@@ -274,14 +273,14 @@
     <string name="photo_select_one_title">選擇壹張照片</string>
     <string name="photo_select_no_data">沒有檢測到相片</string>
     <string name="photo_editor_title">相片編輯</string>
-    <string name="photo_clip_head_title">頭像裁剪</string>
-    <string name="photo_change_head">修改頭像</string>
+    <string name="photo_clip_avatar_title">頭像裁剪</string>
+    <string name="photo_change_avatar">修改頭像</string>
     <string name="photo_shoot_upload">拍照上傳</string>
     <string name="photo_choose_upload">本地上傳</string>
     <string name="photo_upload_img">正在上傳%1$s，請稍後&#8230;</string>
     <string name="photo_upload_img_ok">上傳%1$s成功</string>
     <string name="photo_img_url_error">%1$s出錯！請重新編輯！</string>
-    <string name="photo_upload_head_fail">上傳頭像失敗！請點擊頭像重新上傳！</string>
+    <string name="photo_upload_avatar_fail">上傳頭像失敗！請點擊頭像重新上傳！</string>
     <string name="photo_clip_error">裁剪相片時出現錯誤！請重新選擇相片！</string>
     <string name="photo_ID_photo">身份證明相片</string>
     <string name="photo_ID_photo_null">身份證明相片不能爲空</string>
@@ -392,52 +391,50 @@
 	<string name="address_error_data_null">還沒有收貨地址，去新增收貨地址吧。</string>
     
     <!-- Profile Page -->
-    <string name="profile_page">個人專頁</string>
-    <string name="profile_head">頭像</string>
-   	<string name="profile_name">姓名</string>
-    <string name="profile_nickname">昵稱</string>
-   	<string name="profile_gender">性別</string>
-    <string name="profile_gender_male">男</string>
-    <string name="profile_gender_female">女</string>
-    <string name="profile_gender_confidential">保密</string>
-    <string name="profile_birthday">生日</string>
-    <string name="profile_rank">等級</string>
-    <string name="profile_intro">間介</string>
-    <string name="profile_customer">客戶</string>
-    <string name="profile_member">粉絲</string>
-    <string name="profile_my_member">我的%1$s</string>
-    <string name="profile_member_order">%1$s訂單</string>
-    <string name="profile_my_order">我的訂單</string>
-    <string name="profile_check_all_order">查看全部訂單</string>
-    <string name="profile_done">已完成</string>
-    <string name="profile_wait_commission">待分成</string>
-    <string name="profile_wait_pay">待付款</string>
-    <string name="profile_wait_delivery">配貨中</string>
-    <string name="profile_wait_receive">已發貨</string>
-    <string name="profile_repair_return">退換貨</string>
-    <string name="profile_my_address">收貨地址</string>
-    <string name="profile_account_money">我的錢包</string>
-    <string name="profile_coupon">優惠券</string>
-    <string name="profile_collection">我的關注</string>
-    <string name="profile_concerns_goods">關注的商品</string>
-    <string name="profile_history">浏覽記錄</string>
-    <string name="profile_history_no_data">浏覽商品的記錄</string>
-    <string name="profile_call">聯系客服</string>
-    <string name="profile_my_collages">我的配搭</string>
-    <string name="profile_my_favorite">我的最愛</string>
-    <string name="profile_submit_audit">提交審核</string>
-    <string name="profile_change_nick">修改昵稱</string>
-    <string name="profile_input_nick">請輸入昵稱</string>
-    <string name="profile_change_sex">修改性別</string>
-    <string name="profile_change_intro">修改簡介</string>
-    <string name="profile_input_intro">請輸入個人簡介</string>
-    <string name="profile_change_email">修改郵箱</string>
-    <string name="profile_email_verify">郵箱驗證</string>
-    <string name="profile_send_email_ok">郵件發送成功</string>
-    <string name="profile_send_email_hint">確認發送壹封驗證郵件至%1$s麽？在您驗證此郵件後方可修改郵箱地址。如有疑問請聯系官方客服。</string>
-    <string name="profile_change_email_notice">注意：請正確輸入您本人的郵箱，如有疑問請聯系官方客服。</string>
-    <string name="profile_set_banner_photo">設定封面相片</string>
-    
+    <string name="mine_page">個人專頁</string>
+    <string name="mine_avatar">頭像</string>
+   	<string name="mine_name">姓名</string>
+    <string name="mine_nick">昵稱</string>
+   	<string name="mine_gender">性別</string>
+    <string name="mine_gender_male">男</string>
+    <string name="mine_gender_female">女</string>
+    <string name="mine_gender_confidential">保密</string>
+    <string name="mine_birthday">生日</string>
+    <string name="mine_rank">等級</string>
+    <string name="mine_intro">間介</string>
+    <string name="mine_customer">客戶</string>
+    <string name="mine_member">粉絲</string>
+    <string name="mine_member_order">%1$s訂單</string>
+    <string name="mine_my_member">我的%1$s</string>
+    <string name="mine_my_order">我的訂單</string>
+    <string name="mine_my_address">收貨地址</string>
+    <string name="mine_my_collages">我的配搭</string>
+    <string name="mine_my_favorite">我的最愛</string>
+    <string name="mine_check_all_order">查看全部訂單</string>
+    <string name="mine_done">已完成</string>
+    <string name="mine_wait_commission">待分成</string>
+    <string name="mine_wait_pay">待付款</string>
+    <string name="mine_wait_delivery">配貨中</string>
+    <string name="mine_wait_receive">已發貨</string>
+    <string name="mine_repair_return">退換貨</string>
+    <string name="mine_account_money">我的錢包</string>
+    <string name="mine_coupon">優惠券</string>
+    <string name="mine_collection">我的關注</string>
+    <string name="mine_concerns_goods">關注的商品</string>
+    <string name="mine_history">浏覽記錄</string>
+    <string name="mine_history_no_data">浏覽商品的記錄</string>
+    <string name="mine_call">聯系客服</string>
+    <string name="mine_submit_audit">提交審核</string>
+    <string name="mine_change_nick">修改昵稱</string>
+    <string name="mine_input_nick">請輸入昵稱</string>
+    <string name="mine_change_gender">修改性別</string>
+    <string name="mine_change_intro">修改簡介</string>
+    <string name="mine_input_intro">請輸入個人簡介</string>
+    <string name="mine_change_email">修改郵箱</string>
+    <string name="mine_change_email_notice">注意：請正確輸入您本人的郵箱，如有疑問請聯系官方客服。</string>
+    <string name="mine_send_email_ok">郵件發送成功</string>
+    <string name="mine_send_email_hint">確認發送壹封驗證郵件至%1$s麽？在您驗證此郵件後方可修改郵箱地址。如有疑問請聯系官方客服。</string>
+
     <!-- Money -->
     <string name="money_balance_burrency">余額(%1$s)</string>
     <string name="money_balance_detail">余額明細</string>

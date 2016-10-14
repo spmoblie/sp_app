@@ -100,7 +100,7 @@
     
     <!-- home -->
     <string name="home_tab_text_one">首页</string>
-    <string name="home_tab_text_two">@string/title_category</string>
+    <string name="home_tab_text_two">@string/title_sort</string>
     <string name="home_tab_text_three">发现</string>
     <string name="home_tab_text_four">购物车</string>
     <string name="home_tab_text_five">我的</string>
@@ -109,10 +109,9 @@
     <string name="home_txt_limit_events">限时活动</string>
 
     <!-- title -->
-    <string name="title_category">分类</string>
+    <string name="title_sort">分类</string>
     <string name="title_screen">筛选</string>
     <string name="title_qr_code_scan">二维码扫描</string>
-    <string name="title_fragment_three">专题活动</string>
     <string name="title_fragment_four">我的购物车</string>
     <string name="title_product_detail">商品详情</string>
     <string name="title_login">用户登入</string>
@@ -172,16 +171,16 @@
     <string name="cart_buy_now">立即购买</string>
     <string name="cart_error_data_null">数据同步出现异常！请下拉刷新购物车商品！</string>
 
-    <!-- Events -->
-    <string name="events_top_tab_1">全部</string>
-    <string name="events_top_tab_2">视频</string>
-    <string name="events_top_tab_3">专题</string>
-    <string name="events_no_data">暂无发现，\n可能是栏目出错啦！</string>
-    <string name="events_comment">评论</string>
-    <string name="events_comment_participate">参与评论</string>
-    <string name="events_comment_total">共%1$d条评论</string>
-    <string name="events_comment_ok">评论已发布</string>
-    <string name="events_comment_input">请输入评论内容</string>
+    <!-- Find -->
+    <string name="find_top_tab_1">全部</string>
+    <string name="find_top_tab_2">视频</string>
+    <string name="find_top_tab_3">专题</string>
+    <string name="find_no_data">暂无发现，\n可能是栏目出错啦！</string>
+    <string name="find_comment">评论</string>
+    <string name="find_comment_participate">参与评论</string>
+    <string name="find_comment_total">共%1$d条评论</string>
+    <string name="find_comment_ok">评论已发布</string>
+    <string name="find_comment_input">请输入评论内容</string>
 
     <!-- Member page -->
     <string name="member_top_tab_1">@string/all</string>
@@ -238,10 +237,10 @@
     <string name="order_logistic_no_data">暂无物流信息</string>
     <string name="order_logistic_expired">物流信息已过期</string>
     <string name="order_top_tab_1">@string/all</string>
-    <string name="order_top_tab_2">@string/profile_wait_pay</string>
-    <string name="order_top_tab_3">@string/profile_wait_delivery</string>
-    <string name="order_top_tab_4">@string/profile_wait_receive</string>
-    <string name="order_top_tab_5">@string/profile_repair_return</string>
+    <string name="order_top_tab_2">@string/mine_wait_pay</string>
+    <string name="order_top_tab_3">@string/mine_wait_delivery</string>
+    <string name="order_top_tab_4">@string/mine_wait_receive</string>
+    <string name="order_top_tab_5">@string/mine_repair_return</string>
     
     <!-- Pay page -->
     <string name="pay_title">在线支付</string>
@@ -274,14 +273,14 @@
     <string name="photo_select_one_title">选择一张照片</string>
     <string name="photo_select_no_data">没有检测到相片</string>
     <string name="photo_editor_title">相片编辑</string>
-    <string name="photo_clip_head_title">头像裁剪</string>
-    <string name="photo_change_head">修改头像</string>
+    <string name="photo_clip_avatar_title">头像裁剪</string>
+    <string name="photo_change_avatar">修改头像</string>
     <string name="photo_shoot_upload">拍照上传</string>
     <string name="photo_choose_upload">本地上传</string>
     <string name="photo_upload_img">正在上传%1$s，请稍后&#8230;</string>
     <string name="photo_upload_img_ok">上传%1$s成功</string>
     <string name="photo_img_url_error">%1$s出错！请重新编辑！</string>
-    <string name="photo_upload_head_fail">上传头像失败！请点击头像重新上传！</string>
+    <string name="photo_upload_avatar_fail">上传头像失败！请点击头像重新上传！</string>
     <string name="photo_clip_error">裁剪相片时出现错误！请重新选择相片！</string>
     <string name="photo_ID_photo">身份证明相片</string>
     <string name="photo_ID_photo_null">身份证明相片不能为空</string>
@@ -391,53 +390,51 @@
 	<string name="address_error_no_select">请填写收货地址</string>
 	<string name="address_error_data_null">还没有收货地址，去新增收货地址吧。</string>
     
-    <!-- Profile Page -->
-    <string name="profile_page">个人专页</string>
-    <string name="profile_head">头像</string>
-    <string name="profile_name">姓名</string>
-   	<string name="profile_nickname">昵称</string>
-   	<string name="profile_gender">性别</string>
-    <string name="profile_gender_male">男</string>
-    <string name="profile_gender_female">女</string>
-    <string name="profile_gender_confidential">保密</string>
-    <string name="profile_birthday">生日</string>
-    <string name="profile_rank">等级</string>
-    <string name="profile_intro">简介</string>
-    <string name="profile_customer">客户</string>
-    <string name="profile_member">粉丝</string>
-    <string name="profile_my_member">我的%1$s</string>
-    <string name="profile_member_order">%1$s订单</string>
-    <string name="profile_my_order">我的订单</string>
-    <string name="profile_check_all_order">查看全部订单</string>
-    <string name="profile_done">已完成</string>
-    <string name="profile_wait_commission">待分成</string>
-    <string name="profile_wait_pay">待付款</string>
-    <string name="profile_wait_delivery">配货中</string>
-    <string name="profile_wait_receive">已发货</string>
-    <string name="profile_repair_return">退换货</string>
-    <string name="profile_my_address">收货地址</string>
-    <string name="profile_account_money">我的钱包</string>
-    <string name="profile_coupon">优惠券</string>
-    <string name="profile_collection">我的关注</string>
-    <string name="profile_concerns_goods">关注的商品</string>
-    <string name="profile_history">浏览记录</string>
-    <string name="profile_history_no_data">浏览商品的记录</string>
-    <string name="profile_call">联系客服</string>
-    <string name="profile_my_collages">我的搭配</string>
-    <string name="profile_my_favorite">我的最爱</string>
-    <string name="profile_submit_audit">提交审核</string>
-    <string name="profile_change_nick">修改昵称</string>
-    <string name="profile_input_nick">请输入昵称</string>
-    <string name="profile_change_sex">修改性别</string>
-    <string name="profile_change_intro">修改简介</string>
-    <string name="profile_input_intro">请输入个人简介</string>
-    <string name="profile_change_email">修改邮箱</string>
-    <string name="profile_email_verify">邮箱验证</string>
-    <string name="profile_send_email_ok">邮件发送成功</string>
-    <string name="profile_send_email_hint">确认发送一封验证邮件至%1$s么？在您验证此邮件后方可修改邮箱地址。如有疑问请联系官方客服。</string>
-    <string name="profile_change_email_notice">注意：请正确输入您本人的邮箱，如有疑问请联系官方客服。</string>
-    <string name="profile_set_banner_photo">设定封面相片</string>
-    
+    <!-- Mine Page -->
+    <string name="mine_page">个人专页</string>
+    <string name="mine_avatar">头像</string>
+    <string name="mine_name">姓名</string>
+   	<string name="mine_nick">昵称</string>
+   	<string name="mine_gender">性别</string>
+    <string name="mine_gender_male">男</string>
+    <string name="mine_gender_female">女</string>
+    <string name="mine_gender_confidential">保密</string>
+    <string name="mine_birthday">生日</string>
+    <string name="mine_rank">等级</string>
+    <string name="mine_intro">简介</string>
+    <string name="mine_customer">客户</string>
+    <string name="mine_member">粉丝</string>
+    <string name="mine_member_order">%1$s订单</string>
+    <string name="mine_my_member">我的%1$s</string>
+    <string name="mine_my_order">我的订单</string>
+    <string name="mine_my_address">收货地址</string>
+    <string name="mine_my_collages">我的搭配</string>
+    <string name="mine_my_favorite">我的最爱</string>
+    <string name="mine_check_all_order">查看全部订单</string>
+    <string name="mine_done">已完成</string>
+    <string name="mine_wait_commission">待分成</string>
+    <string name="mine_wait_pay">待付款</string>
+    <string name="mine_wait_delivery">配货中</string>
+    <string name="mine_wait_receive">已发货</string>
+    <string name="mine_repair_return">退换货</string>
+    <string name="mine_account_money">我的钱包</string>
+    <string name="mine_coupon">优惠券</string>
+    <string name="mine_collection">我的关注</string>
+    <string name="mine_concerns_goods">关注的商品</string>
+    <string name="mine_history">浏览记录</string>
+    <string name="mine_history_no_data">浏览商品的记录</string>
+    <string name="mine_call">联系客服</string>
+    <string name="mine_submit_audit">提交审核</string>
+    <string name="mine_change_nick">修改昵称</string>
+    <string name="mine_input_nick">请输入昵称</string>
+    <string name="mine_change_gender">修改性别</string>
+    <string name="mine_change_intro">修改简介</string>
+    <string name="mine_input_intro">请输入个人简介</string>
+    <string name="mine_change_email">修改邮箱</string>
+    <string name="mine_change_email_notice">注意：请正确输入您本人的邮箱，如有疑问请联系官方客服。</string>
+    <string name="mine_send_email_ok">邮件发送成功</string>
+    <string name="mine_send_email_hint">确认发送一封验证邮件至%1$s么？在您验证此邮件后方可修改邮箱地址。如有疑问请联系官方客服。</string>
+
     <!-- Money -->
     <string name="money_balance_burrency">余额(%1$s)</string>
     <string name="money_balance_detail">余额明细</string>

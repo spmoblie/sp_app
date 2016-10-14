@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	
 	private EditText et_user, et_password;
 	private Button btn_login;
-	private ImageView iv_head, iv_clear_user, iv_check_password;
+	private ImageView iv_avatar, iv_clear_user, iv_check_password;
 	private TextView tv_register, tv_forger;
 	private TextView tv_wechat, tv_qq, tv_weibo, tv_alipay, tv_facebook;
 	
@@ -141,7 +141,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		et_user = (EditText) findViewById(R.id.login_et_users);
 		et_password = (EditText) findViewById(R.id.login_et_passwords);
 		btn_login = (Button) findViewById(R.id.login_btn_login);
-		iv_head = (ImageView) findViewById(R.id.login_iv_head);
+		iv_avatar = (ImageView) findViewById(R.id.login_iv_avatar);
 		iv_clear_user = (ImageView) findViewById(R.id.login_iv_clear_user);
 		iv_check_password = (ImageView) findViewById(R.id.login_iv_password_check);
 		tv_register = (TextView) findViewById(R.id.login_tv_register);
@@ -166,7 +166,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		tv_alipay.setOnClickListener(this);
 		tv_facebook.setOnClickListener(this);
 
-		ImageLoader.getInstance().displayImage("", iv_head, AppApplication.getHeadImageOptions());
+		ImageLoader.getInstance().displayImage("", iv_avatar, AppApplication.getAvatarOptions());
 		initEditText();
 	}
 	
@@ -413,8 +413,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					oauthEn.setUserRankName(LOGIN_TYPE_WX);
 					oauthEn.setUserId(userInfo.getUnionid());
 					oauthEn.setUserNick(userInfo.getNickname());
-					oauthEn.setUserIntro(userInfo.getSex());
-					oauthEn.setHeadImg(userInfo.getHeadUrl());
+					oauthEn.setUserIntro(userInfo.getGender());
+					oauthEn.setUserAvatar(userInfo.getAvatar());
 					// 注册微信用户信息
 					startRegisterOauthActivity(oauthEn);
 				} else {
@@ -495,7 +495,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 						oauthEn.setUserId(mTencent.getOpenId());
 						oauthEn.setUserNick(userInfo.getNickname());
 						oauthEn.setUserIntro(userInfo.getGender());
-						oauthEn.setHeadImg(userInfo.getHeadUrl());
+						oauthEn.setUserAvatar(userInfo.getAvatar());
 						// 注册QQ用户信息
 						startRegisterOauthActivity(oauthEn);
 					} else {
@@ -594,7 +594,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                     oauthEn.setUserId(token.getUid());
                     oauthEn.setUserNick(user.name);
                     oauthEn.setUserIntro(user.gender);
-                    oauthEn.setHeadImg(user.profile_image_url);
+                    oauthEn.setUserAvatar(user.profile_image_url);
 					// 注册微博用户信息
                     startRegisterOauthActivity(oauthEn);
                 } else {
@@ -739,7 +739,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					 fbOauthEn.setUserId(fbId);
 					 fbOauthEn.setUserNick(object.optString("name"));
 					 fbOauthEn.setUserIntro(object.optString("gender"));
-					 fbOauthEn.setHeadImg(photo);
+					 fbOauthEn.setUserAvatar(photo);
 					 // 校验用户ID
 					 postFacebookLoginRequest(fbId);
 				 } else {

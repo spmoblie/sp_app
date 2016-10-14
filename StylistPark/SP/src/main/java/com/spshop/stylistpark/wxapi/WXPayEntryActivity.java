@@ -31,9 +31,9 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.cart.PostOrderActivity;
-import com.spshop.stylistpark.activity.category.CategoryActivity;
-import com.spshop.stylistpark.activity.profile.OrderDetailActivity;
-import com.spshop.stylistpark.activity.profile.OrderListActivity;
+import com.spshop.stylistpark.activity.sort.SortActivity;
+import com.spshop.stylistpark.activity.mine.OrderDetailActivity;
+import com.spshop.stylistpark.activity.mine.OrderListActivity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.PayResult;
 import com.spshop.stylistpark.entity.PaymentEntity;
@@ -210,7 +210,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			startOrderListActivity(0, OrderListActivity.TYPE_3);
 			break;
 		case R.id.button_confirm_btn_right: //继续购物
-			startActivity(new Intent(this, CategoryActivity.class));
+			startActivity(new Intent(this, SortActivity.class));
 			finish();
 			break;
 		}

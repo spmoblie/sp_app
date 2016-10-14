@@ -33,7 +33,7 @@ public class UserInfoEntity extends BaseEntity {
 	/**
 	 * 用户头像
 	 */
-	private String headImg;
+	private String userAvatar;
 	
 	/**
 	 * 用户简介
@@ -43,7 +43,7 @@ public class UserInfoEntity extends BaseEntity {
 	/**
 	 * 性别代码(0:保密/1:男/2:女)
 	 */
-	private int sexCode;
+	private int genderCode;
 	
 	/**
 	 * 用户生日
@@ -179,13 +179,13 @@ public class UserInfoEntity extends BaseEntity {
 	}
 
 
-	public String getHeadImg() {
-		return headImg;
+	public String getUserAvatar() {
+		return userAvatar;
 	}
 
 
-	public void setHeadImg(String headImg) {
-		this.headImg = headImg;
+	public void setUserAvatar(String userAvatar) {
+		this.userAvatar = userAvatar;
 	}
 
 
@@ -199,13 +199,13 @@ public class UserInfoEntity extends BaseEntity {
 	}
 
 
-	public int getSexCode() {
-		return sexCode;
+	public int getGenderCode() {
+		return genderCode;
 	}
 
 
-	public void setSexCode(int sexCode) {
-		this.sexCode = sexCode;
+	public void setGenderCode(int genderCode) {
+		this.genderCode = genderCode;
 	}
 
 

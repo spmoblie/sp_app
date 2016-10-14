@@ -33,7 +33,7 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 	private EditText et_account, et_password;
 	private Button btn_oauth, btn_register;
 	private UserInfoEntity infoEn;
-	private String accountStr, passwordStr, loginType, uidStr, nickname, sex, headUrl;
+	private String accountStr, passwordStr, loginType, uidStr, nickname, gender, avatar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +66,8 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 			loginType = infoEn.getUserRankName();
 			uidStr = infoEn.getUserId();
 			nickname = infoEn.getUserNick();
-			sex = infoEn.getUserIntro();
-			headUrl = infoEn.getHeadImg();
+			gender = infoEn.getUserIntro(); //属性借用
+			avatar = infoEn.getUserAvatar();
 		}
 	}
 
@@ -152,8 +152,8 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 		params.add(new MyNameValuePair("type", loginType));
 		params.add(new MyNameValuePair("userid", uidStr));
 		params.add(new MyNameValuePair("nickname", nickname));
-		params.add(new MyNameValuePair("sex", sex));
-		params.add(new MyNameValuePair("avatar", headUrl));
+		params.add(new MyNameValuePair("sex", gender));
+		params.add(new MyNameValuePair("avatar", avatar));
 		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_REGISTER_OAUTH_CODE, uri, params, HttpUtil.METHOD_POST);
 	}
 

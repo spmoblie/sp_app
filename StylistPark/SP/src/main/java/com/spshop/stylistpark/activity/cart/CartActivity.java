@@ -22,7 +22,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.category.CategoryActivity;
+import com.spshop.stylistpark.activity.sort.SortActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.CartProductListAdapter;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
@@ -307,7 +307,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 			startActivity(new Intent(this, PostOrderActivity.class));
 			break;
 		case R.id.ptrsv_cart_iv_go_shopping:
-			startActivity(new Intent(this, CategoryActivity.class));
+			startActivity(new Intent(this, SortActivity.class));
 			break;
 		case R.id.loading_fail_tv_update:
 			getSVDatas();

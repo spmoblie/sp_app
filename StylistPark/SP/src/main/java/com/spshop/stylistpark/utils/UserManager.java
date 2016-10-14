@@ -24,7 +24,7 @@ public class UserManager {
 	private String mUserName = null;
 	private String mUserNameID = null;
 	private String mUserNick = null;
-	private String mUserHeadImg = null;
+	private String mUserAvatar = null;
 	private String mUserIntro = null;
 	private String mUserBirthday = null;
 	private String mUserEmail = null;
@@ -126,16 +126,16 @@ public class UserManager {
 		mUserNick = userNick;
 	}
 	
-	public String getUserHeadImg(){
-		if(StringUtil.isNull(mUserHeadImg)){
-			mUserHeadImg = sp.getString(AppConfig.KEY_USER_HEAD_IMG_URL, null);
+	public String getUserAvatar(){
+		if(StringUtil.isNull(mUserAvatar)){
+			mUserAvatar = sp.getString(AppConfig.KEY_USER_AVATAR_URL, null);
 		}
-		return mUserHeadImg;
+		return mUserAvatar;
 	}
 	
-	public void saveUserHeadImg(String userHeadImg){
-		editor.putString(AppConfig.KEY_USER_HEAD_IMG_URL, userHeadImg).apply();
-		mUserHeadImg = userHeadImg;
+	public void saveUserAvatar(String userAvatar){
+		editor.putString(AppConfig.KEY_USER_AVATAR_URL, userAvatar).apply();
+		mUserAvatar = userAvatar;
 	}
 
 	public String getUserIntro(){
@@ -150,12 +150,12 @@ public class UserManager {
 		mUserIntro = userIntro;
 	}
 	
-	public int getUserSex(){
-		return sp.getInt(AppConfig.KEY_USER_SEX, 0);
+	public int getUserGender(){
+		return sp.getInt(AppConfig.KEY_USER_GENDER, 0);
 	}
 	
-	public void saveUserSex(int sexCode){
-		editor.putInt(AppConfig.KEY_USER_SEX, sexCode).apply();
+	public void saveUserGender(int genderCode){
+		editor.putInt(AppConfig.KEY_USER_GENDER, genderCode).apply();
 	}
 	
 	public String getUserBirthday(){
@@ -342,9 +342,9 @@ public class UserManager {
 			saveUserName(infoEn.getUserName());
 			saveUserNameID(infoEn.getUserNameID());
 			saveUserNick(infoEn.getUserNick());
-			saveUserHeadImg(infoEn.getHeadImg());
+			saveUserAvatar(infoEn.getUserAvatar());
 			saveUserIntro(infoEn.getUserIntro());
-			saveUserSex(infoEn.getSexCode());
+			saveUserGender(infoEn.getGenderCode());
 			saveUserBirthday(infoEn.getBirthday());
 			saveUserEmail(infoEn.getUserEmail());
 			saveUserPhone(infoEn.getUserPhone());
@@ -365,9 +365,9 @@ public class UserManager {
 		saveUserName(null);
 		saveUserNameID(null);
 		saveUserNick(null);
-		saveUserHeadImg(null);
+		saveUserAvatar(null);
 		saveUserIntro(null);
-		saveUserSex(0);
+		saveUserGender(0);
 		saveUserBirthday(null);
 		saveUserEmail(null);
 		saveUserPhone(null);

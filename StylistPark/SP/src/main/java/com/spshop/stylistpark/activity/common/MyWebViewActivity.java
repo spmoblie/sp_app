@@ -24,7 +24,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.events.CommentActivity;
+import com.spshop.stylistpark.activity.find.CommentActivity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
 import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;

@@ -49,10 +49,10 @@ import com.spshop.stylistpark.activity.home.ChildFragmentOne;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.activity.home.ProductListActivity;
 import com.spshop.stylistpark.activity.login.LoginActivity;
-import com.spshop.stylistpark.activity.profile.AccountBalanceActivity;
-import com.spshop.stylistpark.activity.profile.ChildFragmentFive;
-import com.spshop.stylistpark.activity.profile.MyAddressActivity;
-import com.spshop.stylistpark.activity.profile.OrderListActivity;
+import com.spshop.stylistpark.activity.mine.AccountBalanceActivity;
+import com.spshop.stylistpark.activity.mine.ChildFragmentFive;
+import com.spshop.stylistpark.activity.mine.MyAddressActivity;
+import com.spshop.stylistpark.activity.mine.OrderListActivity;
 import com.spshop.stylistpark.adapter.AddCartPopupListAdapter;
 import com.spshop.stylistpark.dialog.DialogManager;
 import com.spshop.stylistpark.dialog.LoadDialog;
@@ -254,7 +254,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(mContext, OnlineServiceActivity.class);
-						intent.putExtra("title", getString(R.string.profile_call));
+						intent.putExtra("title", getString(R.string.mine_call));
 						intent.putExtra("lodUrl", AppConfig.API_CUSTOMER_SERVICE);
 						startActivity(intent);
 					}

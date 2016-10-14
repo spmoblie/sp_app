@@ -143,7 +143,7 @@
             android:launchMode="singleTask"
             android:theme="@style/MyTheme_1" />
 
-        <activity android:name=".activity.category.CategoryActivity"
+        <activity android:name=".activity.sort.SortActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
@@ -216,7 +216,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name=".activity.events.CommentActivity"
+        <activity android:name=".activity.find.CommentActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
@@ -248,71 +248,71 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".activity.profile.CouponListActivity"
+        <activity android:name=".activity.mine.CouponListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.EditUserInfoActivity"
+        <activity android:name=".activity.mine.EditUserInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         
-        <activity android:name=".activity.profile.MemberListActivity"
+        <activity android:name=".activity.mine.MemberListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.MyAddressActivity"
+        <activity android:name=".activity.mine.MyAddressActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.AddCouponActivity"
+        <activity android:name=".activity.mine.AddCouponActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.AddressEditActivity"
+        <activity android:name=".activity.mine.AddressEditActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.OrderListActivity"
+        <activity android:name=".activity.mine.OrderListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         
-        <activity android:name=".activity.profile.OrderDetailActivity"
+        <activity android:name=".activity.mine.OrderDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.LogisticsActivity"
+        <activity android:name=".activity.mine.LogisticsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.AccountBalanceActivity"
+        <activity android:name=".activity.mine.AccountBalanceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.AuthenticationActivity"
+        <activity android:name=".activity.mine.AuthenticationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         
-        <activity android:name=".activity.profile.PersonalActivity"
+        <activity android:name=".activity.mine.PersonalActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.WithdrawalsActivity"
+        <activity android:name=".activity.mine.WithdrawalsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.SettingActivity"
+        <activity android:name=".activity.mine.SettingActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         
-        <activity android:name=".activity.profile.LanguageCurrencyActivity"
+        <activity android:name=".activity.mine.LanguageCurrencyActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         
-        <activity android:name=".activity.profile.FeedBackActivity"
+        <activity android:name=".activity.mine.FeedBackActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         

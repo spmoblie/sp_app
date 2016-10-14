@@ -19,12 +19,12 @@
                 android:background="@drawable/bg_img_profile_top" >
 
                 <ImageView
-                    android:id="@+id/fragment_five_iv_info"
+                    android:id="@+id/fragment_five_iv_avatar"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_centerInParent="true"
                     android:contentDescription="@string/desc"
-                    android:src="@drawable/head_portrait" />
+                    android:src="@drawable/default_avatar" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -87,11 +87,11 @@
                     <TextView
                         style="@style/setting_lay_text_title"
                         android:drawableLeft="@drawable/profile_icon_order"
-                        android:text="@string/profile_my_order" />
+                        android:text="@string/mine_my_order" />
 
                     <TextView
                         style="@style/setting_lay_text_content"
-                        android:text="@string/profile_check_all_order" />
+                        android:text="@string/mine_check_all_order" />
 
                     <ImageView
                         style="@style/set_line_horizontal_bg"
@@ -115,7 +115,7 @@
                             android:id="@+id/fragment_five_tv_wait_pay"
                             style="@style/Order_Type_TextView"
                             android:drawableTop="@drawable/profile_icon_order_pay"
-                            android:text="@string/profile_wait_pay" />
+                            android:text="@string/mine_wait_pay" />
 
                         <TextView
                             android:id="@+id/fragment_five_tv_wait_pay_num"
@@ -132,7 +132,7 @@
                             android:id="@+id/fragment_five_tv_wait_delivery"
                             style="@style/Order_Type_TextView"
                             android:drawableTop="@drawable/profile_icon_order_delivery"
-                            android:text="@string/profile_wait_delivery" />
+                            android:text="@string/mine_wait_delivery" />
 
                         <TextView
                             android:id="@+id/fragment_five_tv_wait_delivery_num"
@@ -149,7 +149,7 @@
                             android:id="@+id/fragment_five_tv_wait_receive"
                             style="@style/Order_Type_TextView"
                             android:drawableTop="@drawable/profile_icon_order_receive"
-                            android:text="@string/profile_wait_receive" />
+                            android:text="@string/mine_wait_receive" />
 
                         <TextView
                             android:id="@+id/fragment_five_tv_wait_receive_num"
@@ -169,7 +169,7 @@
                             android:drawableTop="@drawable/profile_icon_order_return"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:text="@string/profile_repair_return" />
+                            android:text="@string/mine_repair_return" />
 
                         <TextView
                             android:id="@+id/fragment_five_tv_wait_return_num"
@@ -193,7 +193,7 @@
                     <TextView
                         style="@style/setting_lay_text_title"
                         android:drawableLeft="@drawable/profile_icon_wallet"
-                        android:text="@string/profile_account_money" />
+                        android:text="@string/mine_account_money" />
 
                     <TextView
                         android:id="@+id/fragment_five_tv_money"
@@ -213,7 +213,7 @@
                     <TextView
                         style="@style/setting_lay_text_title"
                         android:drawableLeft="@drawable/profile_icon_coupon"
-                        android:text="@string/profile_coupon" />
+                        android:text="@string/mine_coupon" />
 
                     <TextView
                         android:id="@+id/fragment_five_tv_coupon"
@@ -231,7 +231,7 @@
                     <TextView
                         style="@style/setting_lay_text_title"
                         android:drawableLeft="@drawable/profile_icon_address"
-                        android:text="@string/profile_my_address" />
+                        android:text="@string/mine_my_address" />
 
                     <TextView
                         android:id="@+id/fragment_five_tv_address"
@@ -249,7 +249,7 @@
                     <TextView
                         style="@style/setting_lay_text_title"
                         android:drawableLeft="@drawable/profile_icon_collection"
-                        android:text="@string/profile_collection" />
+                        android:text="@string/mine_collection" />
 
                     <TextView
                         android:id="@+id/fragment_five_tv_collection"
@@ -267,7 +267,7 @@
                     <TextView
                         style="@style/setting_lay_text_title"
                         android:drawableLeft="@drawable/profile_icon_history"
-                        android:text="@string/profile_history" />
+                        android:text="@string/mine_history" />
 
                     <TextView
                         android:id="@+id/fragment_five_tv_history"
@@ -285,7 +285,7 @@
                     <TextView
                         style="@style/setting_lay_text_title"
                         android:drawableLeft="@drawable/profile_icon_call"
-                        android:text="@string/profile_call" />
+                        android:text="@string/mine_call" />
 
                     <TextView
                         android:id="@+id/fragment_five_tv_call"
