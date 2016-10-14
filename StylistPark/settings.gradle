@@ -1,4 +1,5 @@
-include ':gPUImageLib', ':PushSDK'
+include ':gPUImageLib'
+include ':PushSDK'
 include ':rangeBar'
 include ':weiboSDK'
 include ':main'

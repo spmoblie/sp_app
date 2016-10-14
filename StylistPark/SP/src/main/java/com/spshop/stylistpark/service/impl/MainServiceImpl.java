@@ -23,7 +23,7 @@ public class MainServiceImpl implements MainService {
 		HttpEntity entity = HttpUtil.getEntity(uri, null, HttpUtil.METHOD_GET);
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);
-		return null;
+		return jsonStr;
 	}
 
 	@Override
@@ -83,6 +83,9 @@ public class MainServiceImpl implements MainService {
 
 			case AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE:
 				return JsonParser.getProductDetailDatas(jsonStr);
+
+			case AppConfig.REQUEST_SV_GET_PRODUCT_ATTR_CODE:
+				return JsonParser.getProductAttrDatas(jsonStr);
 
 			case AppConfig.REQUEST_SV_POST_CART_PRODUCT_CODE:
 				return JsonParser.postCartProductData(jsonStr);

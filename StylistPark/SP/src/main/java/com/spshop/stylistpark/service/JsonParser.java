@@ -156,12 +156,9 @@ public class JsonParser {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		CommentEntity mainEn = new CommentEntity();
 		getCommonKeyValue(mainEn, jsonObject);
-		if (StringUtil.notNull(jsonObject, "pager")) {
-			JSONObject data = jsonObject.getJSONObject("pager");
-			mainEn.setErrInfo(data.getString("title"));
-			mainEn.setPageSize(StringUtil.getInteger(data.getString("size")));
-			mainEn.setDataTotal(StringUtil.getInteger(data.getString("page_count")));
-		}
+		mainEn.setPageSize(StringUtil.getInteger(jsonObject.getString("size")));
+		mainEn.setDataTotal(StringUtil.getInteger(jsonObject.getString("count")));
+
 		if (StringUtil.notNull(jsonObject, "comments")) {
 			JSONArray datas = jsonObject.getJSONArray("comments");
 			CommentEntity childEn;
@@ -404,51 +401,26 @@ public class JsonParser {
 			mainEn.setImgLists(imgLists);
 		}
 
-		ProductAttrEntity attrEn = new ProductAttrEntity();
-		// 解析商品attr
-		ArrayList<ProductAttrEntity> attrLists = new ArrayList<ProductAttrEntity>();
-		if (StringUtil.notNull(jsonObject, "type")) {
-			JSONArray attr = jsonObject.getJSONArray("type");
-			ProductAttrEntity listEn = null;
-			for (int i = 0; i < attr.length(); i++) {
-				JSONObject as = attr.getJSONObject(i);
-				listEn = new ProductAttrEntity();
-				listEn.setAttrId(StringUtil.getInteger(as.getString("attr_id")));
-				listEn.setAttrName(as.getString("name"));
+		return mainEn;
+	}
 
-				ArrayList<ProductAttrEntity> asLists = new ArrayList<ProductAttrEntity>();
-				ProductAttrEntity asEn = null;
-				JSONArray list = as.getJSONArray("values");
-				for (int j = 0; j < list.length(); j++) {
-					JSONObject ls = list.getJSONObject(j);
-					asEn = new ProductAttrEntity();
-					asEn.setAttrId(StringUtil.getInteger(ls.getString("id")));
-					asEn.setSkuNum(StringUtil.getInteger(ls.getString("number")));
-					asEn.setAttrName(ls.getString("label"));
-					asEn.setAttrPrice(StringUtil.getDouble(ls.getString("price")));
-					asEn.setAttrImg(ls.getString("thumb_url"));
-					asLists.add(asEn);
-				}
-				listEn.setAttrLists(asLists);
-				attrLists.add(listEn);
-			}
+	/**
+	 * 解析获取商品属性数据
+	 */
+	public static ProductAttrEntity getProductAttrDatas(String jsonStr) throws JSONException {
+		JSONObject jsonObject = new JSONObject(jsonStr);
+		ProductAttrEntity mainEn = new ProductAttrEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (mainEn.getErrCode() == 6) {
+			mainEn.setGoodsId(StringUtil.getInteger(jsonObject.getString("goods_id")));
+			mainEn.setFristImgUrl(jsonObject.getString("goods_thumb"));
+			mainEn.setComputePrice(StringUtil.getDouble(jsonObject.getString("price")));
+			// 解析商品attr
+			mainEn.setAttrLists(getProductAttrLists(jsonObject, "message"));
+			// 解析商品sku
+			mainEn.setSkuLists(getProductSkuLists(jsonObject, "sku"));
 		}
-		attrEn.setAttrLists(attrLists);
-		// 解析商品sku
-		ArrayList<ProductAttrEntity> skuLists = new ArrayList<ProductAttrEntity>();
-		if (StringUtil.notNull(jsonObject, "sku")) {
-			JSONArray sku = jsonObject.getJSONArray("sku");
-			ProductAttrEntity skuEn;
-			for (int i = 0; i < sku.length(); i++) {
-				JSONObject ks = sku.getJSONObject(i);
-				skuEn = new ProductAttrEntity();
-				skuEn.setSku_key(ks.getString("goods_attr"));
-				skuEn.setSku_value(StringUtil.getInteger(ks.getString("product_number")));
-				skuLists.add(skuEn);
-			}
-		}
-		attrEn.setSkuLists(skuLists);
-		mainEn.setAttrEn(attrEn);
 		return mainEn;
 	}
 
@@ -673,8 +645,12 @@ public class JsonParser {
 			JSONObject data = jsonObject.getJSONObject("data");
 			mainEn.setUserId(data.getString("user_id"));
 			mainEn.setShareId(data.getString("share"));
-			mainEn.setUserName(data.getString("name"));
-			mainEn.setUserNameID(data.getString("name_id"));
+			if (StringUtil.notNull(jsonObject, "name")) {
+				mainEn.setUserName(data.getString("name"));
+			}
+			if (StringUtil.notNull(jsonObject, "name_id")) {
+				mainEn.setUserNameID(data.getString("name_id"));
+			}
 			mainEn.setUserNick(data.getString("nickname"));
 			mainEn.setHeadImg(data.getString("avatar"));
 			mainEn.setUserIntro(data.getString("intro"));
@@ -689,7 +665,7 @@ public class JsonParser {
 			mainEn.setOrder_4(StringUtil.getInteger(data.getString("order_4")));
 			mainEn.setCartTotal(StringUtil.getInteger(data.getString("cart")));
 			mainEn.setMoney(data.getString("money"));
-			mainEn.setCoupon(data.getString("bonus"));
+			//mainEn.setCoupon(data.getString("bonus"));
 			mainEn.setMemberNum(data.getString("member"));
 			mainEn.setMemberOrder(data.getString("share"));
 		}
@@ -718,7 +694,7 @@ public class JsonParser {
 				//en.setMemberRank(StringUtil.getInteger(item.getString("user_rank")));
 				//en.setOrderCount(item.getString("affiliate_count"));
 				en.setOrderMoney(item.getString("affiliate_money"));
-				en.setLastLogin(item.getString("last_login"));
+				//en.setLastLogin(item.getString("last_login"));
 				mainLists.add(en);
 			}
 			mainEn.setMainLists(mainLists);
@@ -1072,6 +1048,59 @@ public class JsonParser {
 			}
 		}
 		return childLists;
+	}
+
+	/**
+	 * 解析获取商品属性值
+	 */
+	private static ArrayList<ProductAttrEntity> getProductAttrLists(JSONObject jsonObject, String key) throws JSONException {
+		ArrayList<ProductAttrEntity> attrLists = new ArrayList<ProductAttrEntity>();
+		if (StringUtil.notNull(jsonObject, key)) {
+			JSONArray attr = jsonObject.getJSONArray(key);
+			ProductAttrEntity listEn;
+			for (int i = 0; i < attr.length(); i++) {
+				JSONObject as = attr.getJSONObject(i);
+				listEn = new ProductAttrEntity();
+				listEn.setAttrId(StringUtil.getInteger(as.getString("attr_id")));
+				listEn.setAttrName(as.getString("name"));
+
+				ArrayList<ProductAttrEntity> asLists = new ArrayList<ProductAttrEntity>();
+				ProductAttrEntity asEn;
+				JSONArray list = as.getJSONArray("values");
+				for (int j = 0; j < list.length(); j++) {
+					JSONObject ls = list.getJSONObject(j);
+					asEn = new ProductAttrEntity();
+					asEn.setAttrId(StringUtil.getInteger(ls.getString("goods_attr_id")));
+					asEn.setSkuNum(StringUtil.getInteger(ls.getString("number")));
+					asEn.setAttrName(ls.getString("label"));
+					asEn.setAttrPrice(StringUtil.getDouble(ls.getString("price")));
+					asEn.setAttrImg(ls.getString("thumb_url"));
+					asLists.add(asEn);
+				}
+				listEn.setAttrLists(asLists);
+				attrLists.add(listEn);
+			}
+		}
+		return attrLists;
+	}
+
+	/**
+	 * 解析JSON获取商品SKU
+	 */
+	private static ArrayList<ProductAttrEntity> getProductSkuLists(JSONObject jsonObject, String key) throws JSONException {
+		ArrayList<ProductAttrEntity> skuLists = new ArrayList<ProductAttrEntity>();
+		if (StringUtil.notNull(jsonObject, key)) {
+			JSONArray sku = jsonObject.getJSONArray(key);
+			ProductAttrEntity skuEn;
+			for (int i = 0; i < sku.length(); i++) {
+				JSONObject ks = sku.getJSONObject(i);
+				skuEn = new ProductAttrEntity();
+				skuEn.setSku_key(ks.getString("goods_attr"));
+				skuEn.setSku_value(StringUtil.getInteger(ks.getString("product_number")));
+				skuLists.add(skuEn);
+			}
+		}
+		return skuLists;
 	}
 
 	private static void getCommonKeyValue(BaseEntity baseEn, JSONObject jsonObj) throws JSONException{

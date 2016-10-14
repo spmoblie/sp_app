@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore.Images.ImageColumns;
-import android.text.TextUtils;
 
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
@@ -41,17 +40,17 @@ public class FileManager {
 	 * 
 	 * @param fileName 文件名
 	 * @param writeStr 写入文本对象
-	 * @param longSave 是否长久保存
+	 * @param isSave 是否保存
 	 */
-	public static void writeFileSaveString(String fileName, String writeStr, boolean longSave) {
+	public static void writeFileSaveString(String fileName, String writeStr, boolean isSave) {
 		if (StringUtil.isNull(fileName) || StringUtil.isNull(writeStr)) return;
 		FileOutputStream fout = null;
 		try {
 			String path = "";
-			if (longSave) {
-				path = AppConfig.SAVE_TXT_PATH_LONG + fileName;
+			if (isSave) {
+				path = AppConfig.SAVE_PATH_TXT_SAVE + fileName;
 			}else {
-				path = AppConfig.SAVE_TXT_PATH_TEMPORARY + fileName;
+				path = AppConfig.SAVE_PATH_TXT_DICE + fileName;
 			}
 			checkFilePath(path);
 			fout = new FileOutputStream(path);
@@ -74,17 +73,17 @@ public class FileManager {
 	 * 读取数据（String）
 	 * 
 	 * @param fileName 文件名
-	 * @param longSave 是否长久保存
+	 * @param isSave 是否保存
 	 */
-	public static String readFileSaveString(String fileName, boolean longSave) {
+	public static String readFileSaveString(String fileName, boolean isSave) {
 		FileInputStream fin = null;
 		String path = "";
 		String resu = "";
 		try {
-			if (longSave) {
-				path = AppConfig.SAVE_TXT_PATH_LONG + fileName;
+			if (isSave) {
+				path = AppConfig.SAVE_PATH_TXT_SAVE + fileName;
 			}else {
-				path = AppConfig.SAVE_TXT_PATH_TEMPORARY + fileName;
+				path = AppConfig.SAVE_PATH_TXT_DICE + fileName;
 			}
 			File file = new File(path);
 			if (file.exists()) {
@@ -113,18 +112,18 @@ public class FileManager {
 	 * 
 	 * @param fileName 文件名
 	 * @param obj 写入对象
-	 * @param longSave 是否长久保存
+	 * @param isSave 是否保存
 	 */
-    public static void writeFileSaveObject(String fileName, Object obj, boolean longSave) {
+    public static void writeFileSaveObject(String fileName, Object obj, boolean isSave) {
 		if (StringUtil.isNull(fileName) || obj == null) return;
 		ObjectOutputStream objOut = null;
     	FileOutputStream fos = null;
         try {
         	String path = "";
-        	if (longSave) {
-				path = AppConfig.SAVE_TXT_PATH_LONG + fileName;
+			if (isSave) {
+				path = AppConfig.SAVE_PATH_TXT_SAVE + fileName;
 			}else {
-				path = AppConfig.SAVE_TXT_PATH_TEMPORARY + fileName;
+				path = AppConfig.SAVE_PATH_TXT_DICE + fileName;
 			}
 			checkFilePath(path);
 			fos = new FileOutputStream(new File(path));
@@ -151,18 +150,18 @@ public class FileManager {
 	 * 读取数据（Object）
 	 * 
 	 * @param fileName 文件名
-	 * @param longSave 是否长久保存
+	 * @param isSave 是否保存
 	 */
-    public static Object readFileSaveObject(String fileName, boolean longSave) {
+    public static Object readFileSaveObject(String fileName, boolean isSave) {
         Object temp = null;
         FileInputStream in = null;
         ObjectInputStream objIn = null;
         try {
         	String path = "";
-        	if (longSave) {
-				path = AppConfig.SAVE_TXT_PATH_LONG + fileName;
+        	if (isSave) {
+				path = AppConfig.SAVE_PATH_TXT_SAVE + fileName;
 			}else {
-				path = AppConfig.SAVE_TXT_PATH_TEMPORARY + fileName;
+				path = AppConfig.SAVE_PATH_TXT_DICE + fileName;
 			}
         	File file = new  File(path);
 			if (file.exists()) {
@@ -230,7 +229,7 @@ public class FileManager {
     }
 
 	/**
-	 * 校验文件路径
+	 * 校验文件路径，不存在则创建
 	 */
 	public static void checkFilePath(String path) throws IOException {
 		File file = new File(path);
@@ -246,15 +245,39 @@ public class FileManager {
 	}
 
 	/**
+	 * 校验文件是否存在
+	 */
+	public static boolean checkFileExists(String path) {
+		if (StringUtil.isNull(path)) return false;
+		File file = new File(path);
+		//判定文件所在的目录是否存在
+		File parentFile = file.getParentFile();
+		if(parentFile == null || !parentFile.exists()){
+			return false;
+		}
+		//判断文件是否存在
+		if(!file.exists()){
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * 获取文件夹大小
 	 * 
 	 * @param file File实例
-	 * @return long 单位为M
+	 * @return long 单位为b
 	 * @throws Exception
 	 */
 	public static long getFolderSize(java.io.File file) throws Exception {
 		long size = 0;
+		if (file == null) {
+			return size;
+		}
 		java.io.File[] fileList = file.listFiles();
+		if (fileList == null) {
+			return size;
+		}
 		for (int i = 0; i < fileList.length; i++) {
 			if (fileList[i].isDirectory()) {
 				size = size + getFolderSize(fileList[i]);
@@ -266,29 +289,40 @@ public class FileManager {
 	}
 
 	/**
-	 * 删除指定目录下文件及目录
-	 * @param deleteThisPath
+	 * 获取文件夹文件数目
 	 */
-	public static void deleteFolderFile(String filePath, boolean deleteThisPath)
-			throws IOException {
-		if (!TextUtils.isEmpty(filePath)) {
-			File file = new File(filePath);
+	public static int getFolderNum(java.io.File file) throws Exception {
+		if (file == null) {
+			return 0;
+		}
+		java.io.File[] fileList = file.listFiles();
+		if (fileList == null) {
+			return 0;
+		}
+		return fileList.length;
+	}
 
-			if (file.isDirectory()) {// 处理目录
-				File files[] = file.listFiles();
-				for (int i = 0; i < files.length; i++) {
-					deleteFolderFile(files[i].getAbsolutePath(), true);
-				}
+	/**
+	 * 删除指定目录下文件及目录
+	 */
+	public static void deleteFolderFile(File file) throws IOException {
+		if (file == null) {
+			return;
+		}
+		if(file.isFile()){ //文件
+			file.delete();
+			return;
+		}
+		if(file.isDirectory()){ //文件夹
+			File[] childFile = file.listFiles();
+			if(childFile == null || childFile.length == 0){
+				file.delete();
+				return;
 			}
-			if (deleteThisPath) {
-				if (!file.isDirectory()) {// 如果是文件，删除
-					file.delete();
-				} else {// 目录
-					if (file.listFiles().length == 0) {// 目录下没有文件或者目录，删除
-						file.delete();
-					}
-				}
+			for(File f : childFile){
+				deleteFolderFile(f); //递归
 			}
+			file.delete();
 		}
 	}
 	
@@ -321,18 +355,19 @@ public class FileManager {
 	    }
 	    return data;
 	}
-	
+
 	/**
 	 * 使用当前时间生成文件名
+	 * @param fileType 文件类型(.jpg / .txt / ...)
 	 */
 	@SuppressLint("SimpleDateFormat")
-	public static String getFileName(){
+	public static String getFileName(String fileType){
 	    SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String dateTime = s.format(new Date());
-        String imgFileName = dateTime + ".jpg";
+        String imgFileName = dateTime + fileType;
         return imgFileName;
 	}
-	
+
 	/**
 	 * 读取指定文件中的内容
 	 */
@@ -393,10 +428,9 @@ public class FileManager {
 		InputStream input = null;
 		OutputStream output = null;
 		HttpURLConnection connection = null;
-		URL url = null;
 		int result = FAIL;
 		try {
-			url = new URL(urlStr);
+			URL url = new URL(urlStr);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.connect();
 			if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {

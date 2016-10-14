@@ -4,19 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -25,40 +20,27 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.cart.CartActivity;
-import com.spshop.stylistpark.activity.common.MyWebViewActivity;
-import com.spshop.stylistpark.activity.common.ShowListActivity;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
 import com.spshop.stylistpark.activity.common.VideoActivity;
 import com.spshop.stylistpark.activity.common.ViewPagerActivity;
-import com.spshop.stylistpark.adapter.AddCartPopupListAdapter;
-import com.spshop.stylistpark.adapter.AddCartPopupListAdapter.AddCartCallback;
-import com.spshop.stylistpark.entity.BaseEntity;
-import com.spshop.stylistpark.entity.GoodsCartEntity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
-import com.spshop.stylistpark.entity.ProductAttrEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
 import com.spshop.stylistpark.image.AsyncImageLoader.AsyncImageLoaderCallback;
 import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.task.OnDataListener;
-import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
@@ -66,10 +48,6 @@ import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.ObservableScrollView;
 import com.spshop.stylistpark.widgets.ObservableScrollView.ScrollViewListener;
-import com.spshop.stylistpark.widgets.ScrollViewListView;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,50 +61,33 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private static final String TAG = "ProductDetailActivity";
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	public static ProductDetailActivity instance = null;
-	public boolean isUpdate = false;
+
 	@SuppressWarnings("unused")
-	private LinearLayout ll_other, ll_bottom, ll_head, ll_promotion, ll_show, ll_bottom_bar, ll_radio_main;
-	private RelativeLayout rl_screen, rl_num_minus, rl_num_add;
+	private LinearLayout ll_other, ll_bottom, ll_head, ll_promotion, ll_show, ll_radio_main;
 	private FrameLayout fl_main;
-	private ImageView iv_left, iv_goods_img, iv_video, iv_brang_logo, iv_num_minus, iv_num_add, iv_to_top;
+	private RelativeLayout rl_screen;
+	private ImageView iv_left, iv_video, iv_brang_logo, iv_to_top;
 	private TextView tv_title, tv_timer, tv_page, tv_name, tv_curr, tv_price_sell, tv_price_full, tv_discount;
 	private TextView tv_property_1, tv_property_2, tv_property_3, tv_brand_name, tv_brand_country, tv_brand_go;
-	private TextView tv_collection, tv_cart, tv_cart_total, tv_add_cart, tv_call;
-	private TextView tv_popup_name, tv_popup_curr, tv_popup_price;
-	private TextView tv_popup_prompt, tv_popup_select, tv_popup_number, tv_popup_confirm;
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
 	private Button btn_share;
-	private PopupWindow popupWindow;
-	private View popupView;
-	private Animation popupAnimShow, popupAnimGone, numberAddAnim;
 	private ObservableScrollView mScrollView;
-	private ScrollViewListView svlv;
-	private AddCartCallback apCallback;
-	private AddCartPopupListAdapter svlvAdapter;
 	private ViewPager viewPager;
 	private Runnable mPagerAction;
 	private WebView webview;
 	private ProgressBar progressBar;
 	private AsyncImageLoader asyncImageLoader;
 
+	private ShareEntity shareEn;
 	private ProductDetailEntity mainEn;
-	private ProductAttrEntity attrEn;
-	private DisplayImageOptions options;
 	private MyCountDownTimer mcdt;
 	private boolean isShow = false;
-	private boolean isNext = false;
-	private boolean isColl = false;
-	private boolean isAddOr = true;
 	private boolean vprStop = true;
+	private boolean isUpdate = false;
 	private int idsSize, idsPosition, vprPosition;
 	private int goodsId = 0;
-	private int cartNumTotal = 0;
-	private int buyNumber = 1;
-	private int skuNum = 1;
 	private int propertyNum = 3;
-	private int selectId_1, selectId_2, attrNum;
-	private double price, mathPrice;
-	private String attrNameStr, fristGoodsImgUrl, shareImgUrl, shareImgPath, fristPromotionName;
+	private String fristGoodsImgUrl, shareImgUrl, shareImgPath, fristPromotionName;
 	private ArrayList<ImageView> viewLists = new ArrayList<ImageView>();
 	private ArrayList<String> urlLists = new ArrayList<String>();
 	private ArrayList<ProductDetailEntity> imgEns = new ArrayList<ProductDetailEntity>();
@@ -142,7 +103,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 		instance = this;
 		goodsId = getIntent().getIntExtra("goodsId", 0);
-		options = AppApplication.getDefaultImageOptions();
 
 		findViewById();
 		initView();
@@ -154,7 +114,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		ll_bottom = (LinearLayout) findViewById(R.id.product_detail_ll_anim_bottom);
 		ll_head = (LinearLayout) findViewById(R.id.top_search_ll_main);
 		ll_promotion = (LinearLayout) findViewById(R.id.product_detail_ll_promotion);
-		ll_bottom_bar = (LinearLayout) findViewById(R.id.product_detail_ll_bottom_bar);
 		iv_left = (ImageView) findViewById(R.id.top_commom_iv_left);
 		tv_title = (TextView) findViewById(R.id.top_commom_tv_title);
 		btn_share = (Button) findViewById(R.id.top_commom_btn_right_one);
@@ -184,27 +143,20 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		rl_screen = (RelativeLayout) findViewById(R.id.topbar_radio_rl_screen);
 		webview = (WebView) findViewById(R.id.product_detail_webView);
 		progressBar = (ProgressBar) findViewById(R.id.product_detail_wv_progress);
-		tv_collection = (TextView) findViewById(R.id.product_detail_tv_collection);
-		tv_cart = (TextView) findViewById(R.id.product_detail_tv_cart);
-		tv_cart_total = (TextView) findViewById(R.id.product_detail_tv_cart_total);
-		tv_add_cart = (TextView) findViewById(R.id.product_detail_tv_add_cart);
-		tv_call = (TextView) findViewById(R.id.product_detail_tv_call);
 	}
 
 	private void initView() {
 		setHeadVisibility(View.GONE);
+		setBottomBarVisibility(View.VISIBLE);
 		//tv_title.setText(getString(R.string.title_product_detail));
 		btn_share.setBackground(getResources().getDrawable(R.drawable.topbar_icon_share));
 		mScrollView.setScrollViewListener(this);
 		btn_share.setOnClickListener(this);
+		btn_share.setVisibility(View.GONE);
 		iv_left.setOnClickListener(this);
 		iv_video.setOnClickListener(this);
 		iv_to_top.setOnClickListener(this);
 		tv_brand_go.setOnClickListener(this);
-		tv_collection.setOnClickListener(this);
-		tv_cart.setOnClickListener(this);
-		tv_add_cart.setOnClickListener(this);
-		tv_call.setOnClickListener(this);
 
 		initRaidoGroup();
 		initWebView();
@@ -219,26 +171,24 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			if (mainEn.getImgLists() != null && viewLists.size() == 0) {
 				initViewPager();
 			}
-			attrEn = mainEn.getAttrEn();
-			attrNameStr = getSelectShowStr(attrEn);
-			if (attrEn.getSkuLists() == null || attrEn.getSkuLists().size() == 0) {
-				isAddOr = false; //库存为“null”或“0”不可加入购物车
-				tv_add_cart.setText(R.string.product_sku_null);
-				tv_add_cart.setBackgroundColor(getResources().getColor(R.color.debar_text_color));
-			}
-			price = mainEn.getComputePrice();
-			mathPrice = mainEn.getComputePrice();
 			tv_name.setText(mainEn.getBrandName() + mainEn.getName());
 			tv_curr.setText(currStr);
-			tv_price_sell.setText(mainEn.getSellPrice()); //商品卖价
 
+			String sell_price = mainEn.getSellPrice(); //商品卖价
 			String full_price = mainEn.getFullPrice(); //商品原价
-			if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {
+			if (StringUtil.priceIsNull(full_price) || StringUtil.priceIsNull(sell_price)) {
+				if (!StringUtil.priceIsNull(sell_price)) {
+					tv_price_sell.setText(sell_price);
+				} else {
+					tv_price_sell.setText(full_price);
+				}
+				tv_price_full.getPaint().setFlags(0);
 				tv_price_full.setVisibility(View.GONE);
 				tv_discount.setVisibility(View.GONE);
 			} else {
+				tv_price_sell.setText(sell_price);
+				tv_price_full.setText(currStr + full_price);
 				tv_price_full.setVisibility(View.VISIBLE);
-				tv_price_full.setText(full_price);
 				tv_price_full.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 				if (!StringUtil.isNull(mainEn.getDiscount())) {
 					tv_discount.setVisibility(View.VISIBLE);
@@ -301,21 +251,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			// 判定是否收藏此商品
 			isColl = !StringUtil.isNull(mainEn.getIsCollection());
 			changeCollectionStatus();
-			// 判定购物车商品数
-			updateCartTotalNum();
-		}
-	}
-
-	/**
-	 * 切换收藏此商品的状态
-	 */
-	private void changeCollectionStatus() {
-		if (isColl) {
-			tv_collection.setSelected(true);
-			tv_collection.setTextColor(getResources().getColor(R.color.tv_color_status));
-		}else {
-			tv_collection.setSelected(false);
-			tv_collection.setTextColor(getResources().getColor(R.color.label_text_color));
+			// 显示购物车商品数
+			showCartTotal();
 		}
 	}
 
@@ -493,14 +430,19 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				
 				@Override
 				public void imageLoaded(String path, String cachePath, Bitmap bm) {
-					shareImgPath = cachePath;
+					initShareData(cachePath);
 				}
 			});
 			ImageLoadTask task = asyncImageLoader.loadImage(shareImgUrl, 0);
 			if (task != null && task.getBitmap() != null) {
-				shareImgPath = task.getNewPath();
+				initShareData(task.getNewPath());
 			}
 		}
+	}
+
+	private void initShareData(String cachePath) {
+		shareImgPath = cachePath;
+		btn_share.setVisibility(View.VISIBLE);
 	}
 
 	private void initRaidoGroup() {
@@ -564,141 +506,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		intent.putExtra("videoUrl", mainEn.getVideoUrl());
 		startActivity(intent);
 	}
-	
-	@SuppressWarnings("deprecation")
-	private void initCartPopup() {
-		if (popupWindow == null) {
-			popupView = LayoutInflater.from(mContext).inflate(R.layout.popup_add_cart_select, null);
-			RelativeLayout rl_finish = (RelativeLayout) popupView.findViewById(R.id.popup_add_cart_rl_finish);
-			rl_finish.setOnClickListener(this);
-			popupAnimShow = AnimationUtils.loadAnimation(mContext, R.anim.in_from_bottom);
-			popupAnimGone = AnimationUtils.loadAnimation(mContext, R.anim.out_to_bottom);
-			numberAddAnim = AnimationUtils.loadAnimation(mContext, R.anim.anim_number_add);
-			ll_show = (LinearLayout) popupView.findViewById(R.id.popup_add_cart_ll_show);
-			ll_show.startAnimation(popupAnimShow);
-			
-			iv_goods_img = (ImageView) popupView.findViewById(R.id.popup_add_cart_iv_img);
-			iv_num_minus = (ImageView) popupView.findViewById(R.id.popup_add_cart_iv_num_minus);
-			iv_num_add = (ImageView) popupView.findViewById(R.id.popup_add_cart_iv_num_add);
-			rl_num_minus = (RelativeLayout) popupView.findViewById(R.id.popup_add_cart_rl_num_minus);
-			rl_num_minus.setOnClickListener(this);
-			rl_num_add = (RelativeLayout) popupView.findViewById(R.id.popup_add_cart_rl_num_add);
-			rl_num_add.setOnClickListener(this);
-			
-			tv_popup_number = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_number);
-			tv_popup_number.setText(String.valueOf(buyNumber));
-			tv_popup_name = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_name);
-			tv_popup_curr = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_curr);
-			tv_popup_price = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_price);
-			tv_popup_prompt = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_prompt);
-			tv_popup_select = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_select);
-			tv_popup_confirm = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_confirm);
-			tv_popup_confirm.setOnClickListener(this);
-			
-			if (mainEn != null) {
-				ImageLoader.getInstance().displayImage(fristGoodsImgUrl, iv_goods_img, options);
-				tv_popup_name.setText(mainEn.getName());
-				tv_popup_curr.setText(currStr);
-				tv_popup_price.setText(decimalFormat.format(mathPrice));
-			}
-			
-			if (attrNum > 0) {
-				svlv = (ScrollViewListView) popupView.findViewById(R.id.popup_add_cart_svlv);
-				apCallback = new AddCartCallback() {
-					
-					@Override
-					public void setOnClick(Object entity, int position, int num, double attrPrice,
-							int id1, int id2, String selectName, String selectImg) {
-						// 图片替换
-						if (!StringUtil.isNull(selectImg)) {
-							ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + selectImg, iv_goods_img, options);
-						}else {
-							ImageLoader.getInstance().displayImage(fristGoodsImgUrl, iv_goods_img, options);
-						}
-						// 刷新选择的属性名称
-						tv_popup_select.setText(selectName);
-						if (num == -1) {
-							tv_popup_prompt.setText(getString(R.string.item_select_no));
-							tv_popup_select.setTextColor(getResources().getColor(R.color.label_text_color));
-						}else {
-							tv_popup_prompt.setText(getString(R.string.item_select_ok));
-							tv_popup_select.setTextColor(getResources().getColor(R.color.tv_color_status));
-						}
-						// 刷新商品价格及数量
-						selectId_1 = id1;
-						selectId_2 = id2;
-						mathPrice = price + attrPrice;
-						tv_popup_curr.setText(currStr);
-						tv_popup_price.setText(decimalFormat.format(mathPrice));
-						skuNum = 1; //默认库存数量
-						buyNumber = 1; //默认购买数量
-						iv_num_add.setSelected(false); //不可+
-						iv_num_minus.setSelected(false); //不可-
-						if (num >= 0) {
-							isNext = true;
-							skuNum = num;
-						}else {
-							isNext = false;
-						}
-						if (skuNum > 1) {
-							iv_num_add.setSelected(true); //可+
-						}else if (skuNum == 0) {
-							buyNumber = 0;
-							isNext = false;
-						}
-						updateBuyNumber(buyNumber);
-						if (isNext) {
-							tv_popup_confirm.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_0));
-						}else {
-							tv_popup_confirm.setBackgroundColor(getResources().getColor(R.color.input_text_color));
-						}
-					}
-					
-				};
-				svlvAdapter = new AddCartPopupListAdapter(mContext, attrEn, apCallback);
-				svlv.setAdapter(svlvAdapter);
-				svlv.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
-			}else {
-				attrNameStr = getString(R.string.product_buy_number);
-				isNext = true;
-				skuNum = mainEn.getStockNum();
-				if (skuNum > 1) {
-					iv_num_add.setSelected(true); //可+
-				}else if (skuNum == 0) {
-					buyNumber = 0;
-					isNext = false;
-				}
-				updateBuyNumber(buyNumber);
-				if (isNext) {
-					tv_popup_confirm.setBackground(getResources().getDrawable(R.drawable.shape_frame_bg_app_buttom_0));
-				}else {
-					tv_popup_confirm.setBackgroundColor(getResources().getColor(R.color.input_text_color));
-				}
-			}
-			tv_popup_select.setText(attrNameStr);
-			
-			popupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-			popupWindow.setFocusable(true);
-			popupWindow.update();
-			popupWindow.setBackgroundDrawable(new BitmapDrawable());
-			popupWindow.setOutsideTouchable(true);
-			popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
-		}else {
-			ll_show.startAnimation(popupAnimShow);
-			popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
-		}
-	}
-
-	private void catrPopupDismiss() {
-		ll_show.startAnimation(popupAnimGone);
-		new Handler().postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				popupWindow.dismiss();
-			}
-		}, 500);
-	}
 
 	/**
 	 * 从远程服务器加载数据
@@ -713,26 +520,36 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		}, 1000);
 	}
 
-	/**
-	 * 提交加入购物车商品数据
-	 */
-	private void postCartProductData() {
-		startAnimation();
-		request(AppConfig.REQUEST_SV_POST_CART_PRODUCT_CODE);
+	@Override
+	protected void openLoginActivity() {
+		openLoginActivity(TAG);
 	}
-	
-	/**
-	 * 提交加入购物车商品数据
-	 */
-	private void postCollectionProduct() {
-		request(AppConfig.REQUEST_SV_POST_COLLECITON_CODE);
+
+	@Override
+	protected void postCollectionProduct() {
+		postCollectionProduct(goodsId);
+	}
+
+	@Override
+	protected void requestProductAttrData() {
+		requestProductAttrData(goodsId);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.top_commom_btn_right_one:
-			showShareView();
+			if (shareEn == null && mainEn != null) {
+				String genuine = getString(R.string.product_genuine_safeguard);
+				shareEn = new ShareEntity();
+				shareEn.setTitle(mainEn.getName());
+				shareEn.setText(mainEn.getBrandCountry() + " " + mainEn.getBrandName()
+						+ genuine + " " + mainEn.getName() + " " + fristPromotionName);
+				shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "goods.php?id=" + mainEn.getId());
+				shareEn.setImageUrl(shareImgUrl);
+				shareEn.setImagePath(shareImgPath);
+			}
+			showShareView(shareEn);
 			break;
 		case R.id.top_commom_iv_left:
 			finish();
@@ -760,93 +577,14 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				startActivity(intent);
 			}
 			break;
-		case R.id.product_detail_tv_collection:
-			if (!UserManager.getInstance().checkIsLogined()) {
-				openLoginActivity(TAG);
-				return;
-			}
-			postCollectionProduct();
-			break;
-		case R.id.product_detail_tv_cart:
-			if (!UserManager.getInstance().checkIsLogined()) {
-				openLoginActivity(TAG);
-				return;
-			}
-			startActivity(new Intent(mContext, CartActivity.class));
-			break;
-		case R.id.product_detail_tv_add_cart:
-			if (!isAddOr) return;
-			initCartPopup();
-			break;
-		case R.id.product_detail_tv_call:
-			Intent intent = new Intent(mContext, MyWebViewActivity.class);
-			intent.putExtra("title", getString(R.string.profile_call));
-			intent.putExtra("lodUrl", AppConfig.API_CUSTOMER_SERVICE);
-			startActivity(intent);
-			break;
-		case R.id.popup_add_cart_rl_finish:
-			catrPopupDismiss();
-			break;
-		case R.id.popup_add_cart_rl_num_minus: //-
-			if (buyNumber > 1) {
-				buyNumber--;
-				if (buyNumber == 1) {
-					iv_num_minus.setSelected(false); //不可-
-				}
-				if (buyNumber < skuNum) {
-					iv_num_add.setSelected(true); //可+
-				}
-			}
-			updateBuyNumber(buyNumber);
-			break;
-		case R.id.popup_add_cart_rl_num_add: //+
-			if (skuNum > 1) {
-				if (buyNumber < skuNum) {
-					buyNumber++;
-					iv_num_minus.setSelected(true); //可-
-					iv_num_add.setSelected(true); //可+
-					updateBuyNumber(buyNumber);
-				}else {
-					iv_num_add.setSelected(false); //不可+
-				}
-			}
-			break;
-		case R.id.popup_add_cart_tv_confirm:
-			if (!UserManager.getInstance().checkIsLogined()) {
-				openLoginActivity(TAG);
-				return;
-			}
-			if (isNext) {
-				postCartProductData();
-			}
-			break;
 		case R.id.product_detail_iv_to_top:
 			mScrollView.smoothScrollTo(0, 0);
 			break;
 		}
 	}
 
-	private void showShareView() {
-		if (mShareView != null && mainEn != null) {
-			if (mShareView.getShareEntity() == null) {
-				String genuine = getString(R.string.product_genuine_safeguard);
-				ShareEntity shareEn = new ShareEntity();
-				shareEn.setTitle(mainEn.getName());
-				shareEn.setText(mainEn.getBrandCountry() + " " + mainEn.getBrandName()
-						+ genuine + " " + mainEn.getName() + " " + fristPromotionName);
-				shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "goods.php?id=" + mainEn.getId());
-				shareEn.setImageUrl(shareImgUrl);
-				shareEn.setImagePath(shareImgPath);
-				mShareView.setShareEntity(shareEn);
-			}
-			if (mShareView.isShowing()) {
-				mShareView.showShareLayer(false);
-			} else {
-				mShareView.showShareLayer(true);
-			}
-		}else {
-			showShareError();
-		}
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	@Override
@@ -859,7 +597,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			getSVDatas();
 			onClick(btn_1);
 		}
-		updateCartTotalNum();
+		showCartTotal();
 		super.onResume();
 	}
 
@@ -894,7 +632,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			viewPager.removeAllViews();
 			viewPager = null;
 		}
-		instance = null;
 		super.onDestroy();
 	}
 
@@ -923,37 +660,13 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			params.add(new MyNameValuePair("id", String.valueOf(goodsId)));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE, uri, params, HttpUtil.METHOD_GET);
 
-		case AppConfig.REQUEST_SV_POST_CART_PRODUCT_CODE:
-			uri = AppConfig.URL_COMMON_FLOW_URL + "?step=add_to_cart";
-			JSONObject jsonObject = new JSONObject();
-			JSONArray jsonArray = new JSONArray();
-			if (selectId_1 > 0) {
-				jsonArray.put(String.valueOf(selectId_1));
-				if (selectId_2 > 0) {
-					jsonArray.put(String.valueOf(selectId_2));
-				}
-			}
-			jsonObject.put("quick", "1");
-			jsonObject.put("spec", jsonArray);
-			jsonObject.put("goods_id", goodsId);
-			jsonObject.put("number", buyNumber);
-			jsonObject.put("parent", "0");
-			String jsonStrValue = jsonObject.toString();
-
-			params.add(new MyNameValuePair("goods", jsonStrValue));
-			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_CART_PRODUCT_CODE, uri, params, HttpUtil.METHOD_POST);
-
-		case AppConfig.REQUEST_SV_POST_COLLECITON_CODE:
-			uri = AppConfig.URL_COMMON_USER_URL + "?act=collect";
-			params.add(new MyNameValuePair("id", String.valueOf(goodsId)));
-			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_COLLECITON_CODE, uri, params, HttpUtil.METHOD_POST);
+		default:
+			return super.doInBackground(requestCode);
 		}
-		return null;
 	}
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
-		if (instance == null) return;
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE:
 			if (result != null) {
@@ -966,49 +679,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				setView();
 			}
 			break;
-		case AppConfig.REQUEST_SV_POST_CART_PRODUCT_CODE:
-			if (result != null) {
-				catrPopupDismiss(); //关闭弹层
-				GoodsCartEntity cartEn = (GoodsCartEntity) result;
-				if (cartEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					cartNumTotal = cartEn.getGoodsTotal();
-					UserManager.getInstance().saveCartTotal(cartNumTotal);
-					startNumberAddAnim(buyNumber);
-				}else if (cartEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
-					loginTimeoutHandle();
-				}else {
-					if (StringUtil.isNull(cartEn.getErrInfo())) {
-						showServerBusy();
-					}else {
-						CommonTools.showToast(cartEn.getErrInfo(), 2000);
-					}
-				}
-			}else {
-				showServerBusy();
-			}
-			break;
-		case AppConfig.REQUEST_SV_POST_COLLECITON_CODE:
-			if (result != null) {
-				BaseEntity baseEn = (BaseEntity) result;
-				if (baseEn.getErrCode() == 0 || baseEn.getErrCode() == 1) {
-					isColl = !isColl;
-					changeCollectionStatus();
-					if (ShowListActivity.instance != null) { //收藏打开时刷新数据
-						ShowListActivity.instance.isUpdate = true;
-					}
-					CommonTools.showToast(baseEn.getErrInfo(), 1000);
-				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
-					loginTimeoutHandle();
-				}else {
-					if (StringUtil.isNull(baseEn.getErrInfo())) {
-						showServerBusy();
-					}else {
-						CommonTools.showToast(baseEn.getErrInfo(), 2000);
-					}
-				}
-			}else {
-				showServerBusy();
-			}
+		default:
+			super.onSuccess(requestCode, result);
 			break;
 		}
 		stopAnimation();
@@ -1016,78 +688,12 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
-		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 	}
 
-	private void loginTimeoutHandle() {
+	@Override
+	protected void showTimeOutDialog() {
 		showTimeOutDialog(TAG);
-	}
-
-	private String getSelectShowStr(ProductAttrEntity en){
-		if (en != null && en.getAttrLists() != null) {
-			StringBuilder sb = new StringBuilder();
-			attrNum = en.getAttrLists().size();
-			for (int i = 0; i < attrNum; i++) {
-				sb.append(en.getAttrLists().get(i).getAttrName());
-				sb.append("、");
-			}
-			if (sb.length() > 0) {
-				sb.deleteCharAt(sb.length()-1);
-			}
-			return sb.toString();
-		}
-		return "";
-	}
-
-	/**
-	 * 更新购买数量
-	 */
-	private void updateBuyNumber(int number) {
-		tv_popup_number.setText(String.valueOf(number));
-	}
-
-	/**
-	 * 动态生成一个View实现数量增加的效果
-	 */
-	private void startNumberAddAnim(int addNum) {
-		tv_cart_total.setVisibility(View.VISIBLE);
-		
-		final TextView tv_name = new TextView(mContext);
-		tv_name.setGravity(Gravity.CENTER);
-		tv_name.setText("+" + addNum);
-		tv_name.setTextColor(mContext.getResources().getColor(R.color.tv_color_status));
-		tv_name.setTextSize(14);
-		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		lp.gravity = Gravity.BOTTOM;
-		lp.setMargins(tv_collection.getRight()+tv_cart.getRight()/2+5,
-				0, 0, (ll_bottom_bar.getBottom()-ll_bottom_bar.getTop())-10);
-		fl_main.addView(tv_name, lp);
-		
-		tv_name.startAnimation(numberAddAnim);
-		new Handler().postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				fl_main.removeView(tv_name);
-				updateCartTotalNum();
-			}
-		}, 1000);
-	}
-
-	/**
-	 * 刷新购物车商品总数量
-	 */
-	private void updateCartTotalNum() {
-		cartNumTotal = UserManager.getInstance().getCartTotal();
-		if (cartNumTotal > 0) {
-			tv_cart_total.setVisibility(View.VISIBLE);
-			tv_cart_total.setText(String.valueOf(cartNumTotal));
-		}else {
-			tv_cart_total.setVisibility(View.GONE);
-			tv_cart_total.setText(getString(R.string.number_0));
-		}
 	}
 
 }

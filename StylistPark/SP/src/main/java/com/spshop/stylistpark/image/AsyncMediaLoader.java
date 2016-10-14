@@ -9,6 +9,7 @@ import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.FileManager;
 import com.spshop.stylistpark.utils.HttpUtil;
+import com.spshop.stylistpark.utils.StringUtil;
 
 import org.apache.http.HttpEntity;
 
@@ -65,7 +66,12 @@ public class AsyncMediaLoader {
 						try {
 							HttpEntity entity = HttpUtil.getEntity(task.path, null, HttpUtil.METHOD_GET);
 							// 缓存到内存
-							task.savePath = createCachePath(task.type, task.saveOr);
+							File file = new File(AppConfig.SAVE_PATH_MEDIA_DICE);
+							int fileNum = FileManager.getFolderNum(file);
+							if (fileNum >= 10) { //最多缓存10个视频
+								FileManager.deleteFolderFile(file);
+							}
+							task.savePath = createCachePath(task.type, task.path, task.isSave, true);
 							FileManager.writeFileSaveHttpEntity(task.savePath, entity);
 						} catch (Exception e) {
 							ExceptionUtil.handle(e);
@@ -110,16 +116,16 @@ public class AsyncMediaLoader {
 	/**
 	 * 根据指定的路径下载多媒体对象
 	 * 
-	 * @param saveOr
-	 *            是否长久保存
+	 * @param isSave
+	 *            是否保存
 	 * @param path
 	 *            多媒体路径
 	 * @param type
 	 *            多媒体类型（0:音乐/1:视频）
 	 */
-	public String loadMedia(boolean saveOr, String path, int type) {
+	public String loadMedia(boolean isSave, String path, int type) {
 		// 新建任务加入任务队列
-		MediaLoadTask task = new MediaLoadTask(path, type, saveOr);
+		MediaLoadTask task = new MediaLoadTask(path, type, isSave);
 		if (!tasks.equals(task)) {
 			tasks.add(task);
 			synchronized (workThread) {
@@ -134,31 +140,36 @@ public class AsyncMediaLoader {
 		return "";
 	}
 
-	public static String createCachePath(int type, boolean saveOr) {
-		String savePath = "";
-		String nameStr = "";
+	public static String createCachePath(int type, String path, boolean isSave, boolean isCreate) {
+		if (StringUtil.isNull(path)) return "";
+		String savePath;
+		String nameStr;
 		if (type == TYPE_VIDEO) { //视频
-			nameStr = "sp_play.mp4";
+			nameStr = path.substring(path.lastIndexOf("/"));
 		} else { //音乐
 			nameStr = "sp_play.mp3";
 		}
-		if (saveOr) {
-			savePath = AppConfig.SAVE_MEDIA_PATH_LONG + nameStr;
+		if (isSave) {
+			savePath = AppConfig.SAVE_PATH_MEDIA_SAVE + nameStr;
 		}else {
-			savePath = AppConfig.SAVE_MEDIA_PATH_TEMPORARY + nameStr;
+			savePath = AppConfig.SAVE_PATH_MEDIA_DICE + nameStr;
 		}
-		return BitmapUtil.checkFile(new File(savePath)).getPath();
+		if (isCreate) {
+			return BitmapUtil.checkFile(new File(savePath)).getAbsolutePath();
+		} else {
+			return savePath;
+		}
 	}
 
 	private class MediaLoadTask {
 		private String path, savePath;
 		private int type;
-		private boolean saveOr;
+		private boolean isSave;
 
-		public MediaLoadTask(String path, int type, boolean saveOr) {
+		public MediaLoadTask(String path, int type, boolean isSave) {
 			this.path = path;
 			this.type = type;
-			this.saveOr = saveOr;
+			this.isSave = isSave;
 		}
 
 		@Override

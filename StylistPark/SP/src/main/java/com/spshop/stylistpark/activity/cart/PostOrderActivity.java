@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
@@ -50,8 +49,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	private static final int PAY_TYPE_1 = 2; //在线支付
 	private static final int PAY_TYPE_2 = 1; //货到付款
 	public static PostOrderActivity instance = null;
-	public boolean isUpdate = false;
-	
+
 	private TextView tv_name, tv_phone, tv_address, tv_address_hint;
 	private TextView tv_pay_type, tv_coupon_use, tv_goods_total, tv_total_curr, tv_pay_total;
 	private TextView tv_total, tv_fee, tv_charges, tv_coupon, tv_discount, tv_pay, tv_pay_now;
@@ -60,16 +58,13 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	private LinearLayout ll_main, ll_goods_lists;
 	private RelativeLayout rl_address_main, rl_pay_type, rl_coupon_main, rl_charges_main;
 	
-	private boolean addressOk = false;
-	private boolean isCashPay = false;
-	private boolean isInvoice = false;
-	private boolean isLogined, isSuccess;
+	private boolean addressOk, isCashPay, isInvoice;
+	private boolean isLogined, isUpdate, isSuccess;
 	private int payTypeCode;
 	private int payType = PAY_TYPE_1;
 	private int selectPayType = PAY_TYPE_1;
 	private String couponId, invoiceStr, buyerStr, pricePay, orderAmount;
-	private DisplayImageOptions options;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,8 +74,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		LogUtil.i(TAG, "onCreate");
 		
 		instance = this;
-		options = AppApplication.getDefaultImageOptions();
-		
+
 		findViewById();
 		initView();
 	}
@@ -393,12 +387,16 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdate = true;
+				updateData();
 			}
 			updateAllData();
 		}else {
 			showTimeOutDialog(TAG);
 		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	private void updateAllData() {
@@ -515,7 +513,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					payType = selectPayType;
-					isUpdate = true;
+					updateData();
 					updateAllData();
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
@@ -530,7 +528,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			if (result != null) {
 				OrderEntity payOrderEn = (OrderEntity) result;
 				if (payOrderEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					UserManager.getInstance().saveCartTotal(0);
+					updateCartTotal(0);
 					switch (payType) {
 					case PAY_TYPE_1:
 						payOrderEn.setPricePay(pricePay);

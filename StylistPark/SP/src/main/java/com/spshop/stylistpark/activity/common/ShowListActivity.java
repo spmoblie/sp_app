@@ -1,7 +1,6 @@
 package com.spshop.stylistpark.activity.common;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.util.ArrayMap;
@@ -17,7 +16,6 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
@@ -43,11 +41,11 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 	public static final int PAGE_ROOT_CODE_1 = 1001; //ChildFragmentFive：收藏商品
 	public static final int PAGE_ROOT_CODE_2 = 1002; //ChildFragmentFive：浏览记录
 	public static ShowListActivity instance = null;
-	public boolean isUpdate = false;
 
 	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
 	private boolean isLoadOk = true;
+	private boolean isUpdate = false;
 
 	private int pageCode = PAGE_ROOT_CODE_1;
 	private String pageName = "";
@@ -146,10 +144,8 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void setOnClick(Object entity, int position, int type) {
-				ProductListEntity data = (ProductListEntity) entity;
-				Intent intent = new Intent(mContext, ProductDetailActivity.class);
-				intent.putExtra("goodsId", data.getId());
-				startActivity(intent);
+				if (entity == null) return;
+				openProductDetailActivity(((ProductListEntity) entity).getId());
 			}
 		};
 		lv_two_adapter = new ProductList2ItemAdapter(mContext, lv_show_two, lv_callback);
@@ -201,6 +197,10 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 				toTop();
 				break;
 		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 	
 	@Override

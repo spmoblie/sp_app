@@ -12,7 +12,6 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.cart.PostOrderActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.AddressListAdapter;
 import com.spshop.stylistpark.entity.AddressEntity;
@@ -32,9 +31,6 @@ public class MyAddressActivity extends BaseActivity {
 
 	private static final String TAG = "MyAddressActivity";
 	public static MyAddressActivity instance = null;
-	public boolean isUpdate = false;
-
-	private boolean isLogined, isSuccess;
 
 	private TextView tv_no_data;
 	private ListView mListView;
@@ -43,7 +39,8 @@ public class MyAddressActivity extends BaseActivity {
 
 	private AddressEntity data;
 	private List<AddressEntity> lv_show = new ArrayList<AddressEntity>();
-	
+	private boolean isLogined, isUpdate, isSuccess;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -143,12 +140,16 @@ public class MyAddressActivity extends BaseActivity {
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdate = true;
+				updateData();
 			}
 			updateAllData();
 		}else {
 			showTimeOutDialog(TAG);
 		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	private void updateAllData() {
@@ -220,7 +221,7 @@ public class MyAddressActivity extends BaseActivity {
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					updateListView();
-					updateOtherView();
+					updateActivityData(9);
 					finish();
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
@@ -238,7 +239,7 @@ public class MyAddressActivity extends BaseActivity {
 		case AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE:
 			if (result != null && ((BaseEntity) result).getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 				getSVDatas();
-				updateOtherView();
+				updateActivityData(9);
 			}else {
 				stopAnimation();
 				showServerBusy();
@@ -261,12 +262,6 @@ public class MyAddressActivity extends BaseActivity {
 		}else {
 			mListView.setVisibility(View.GONE);
 			tv_no_data.setVisibility(View.VISIBLE);
-		}
-	}
-
-	private void updateOtherView() {
-		if (PostOrderActivity.instance != null) {
-			PostOrderActivity.instance.isUpdate = true;
 		}
 	}
 

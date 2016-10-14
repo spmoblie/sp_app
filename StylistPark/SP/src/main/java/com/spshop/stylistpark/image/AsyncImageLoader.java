@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
@@ -23,7 +24,6 @@ public class AsyncImageLoader {
 	private Thread workThread;
 	private Handler handler;
 	private boolean isLoop;
-	private BitmapCache caches;
 	private static AsyncImageLoader instance;
 
 	/**
@@ -43,7 +43,6 @@ public class AsyncImageLoader {
 	@SuppressLint("HandlerLeak")
 	private AsyncImageLoader(final AsyncImageLoaderCallback callback) {
 		this.isLoop = true;
-		this.caches = BitmapCache.getInstance();
 		this.tasks = new ArrayList<ImageLoadTask>();
 
 		this.handler = new Handler() {
@@ -64,12 +63,12 @@ public class AsyncImageLoader {
 							HttpEntity entity = HttpUtil.getEntity(task.oldPath, null, HttpUtil.METHOD_GET);
 							byte[] data = EntityUtils.toByteArray(entity);
 							if (task.type == 1) { //下载头像
-								task.bitmap = BitmapUtil.getBitmap(data, 80, 80);
+								task.bitmap = BitmapUtil.getBitmap(data, 120, 120);
 							} else {
-								task.bitmap = BitmapUtil.getBitmap(data, 640, 1280);
+								task.bitmap = BitmapUtil.getBitmap(data, AppApplication.screenWidth, AppApplication.screenHeight);
 							}
 							// 缓存到集合
-							caches.addCacheBitmap(task.bitmap, task.newPath);
+							BitmapCache.getInstance().addCacheBitmap(task.bitmap, task.newPath);
 							// 缓存到内存
 							/*task.cachePath = BitmapUtil.createPath(task.newPath, false).getAbsolutePath();
 							BitmapUtil.save(task.bitmap, new File(task.cachePath), 100);*/
@@ -131,7 +130,7 @@ public class AsyncImageLoader {
 		}
 		try {
 			// 判定缓存集合中是否存在图片,如果存在则直接返回
-			Bitmap bm = caches.getBitmap(newPath);
+			Bitmap bm = BitmapCache.getInstance().getBitmap(newPath);
 			if (bm != null) {
 				task = new ImageLoadTask(oldPath, newPath, bm);
 				return task;

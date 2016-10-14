@@ -118,15 +118,21 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder.left_brand.setText(leftEn.getBrand()); //商品品牌
 			holder.left_name.setText(leftEn.getName()); //商品名称
 			holder.left_curr.setText(currStr);
-			holder.left_sell_price.setText(leftEn.getSellPrice()); //商品卖价
 
+			String sell_price = leftEn.getSellPrice(); //商品卖价
 			String full_price = leftEn.getFullPrice(); //商品原价
-			if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {
+			if (StringUtil.priceIsNull(full_price) || StringUtil.priceIsNull(sell_price)) {
+				if (!StringUtil.priceIsNull(sell_price)) {
+					holder.left_sell_price.setText(sell_price);
+				} else {
+					holder.left_sell_price.setText(full_price);
+				}
 				holder.left_full_price.getPaint().setFlags(0);
 				holder.left_full_price.setVisibility(View.GONE);
 				holder.left_discount.setVisibility(View.GONE);
 			} else {
-				holder.left_full_price.setText(full_price);
+				holder.left_sell_price.setText(sell_price);
+				holder.left_full_price.setText(currStr + full_price);
 				holder.left_full_price.setVisibility(View.VISIBLE);
 				holder.left_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 				if (!StringUtil.isNull(leftEn.getDiscount())) {
@@ -150,15 +156,21 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder.right_brand.setText(rightEn.getBrand()); //商品品牌
 			holder.right_name.setText(rightEn.getName()); //商品名称
 			holder.right_curr.setText(currStr);
-			holder.right_sell_price.setText(rightEn.getSellPrice()); //商品卖价
-			
+
+			String sell_price = rightEn.getSellPrice(); //商品卖价
 			String full_price = rightEn.getFullPrice(); //商品原价
-			if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {
+			if (StringUtil.priceIsNull(full_price) || StringUtil.priceIsNull(sell_price)) {
+				if (!StringUtil.priceIsNull(sell_price)) {
+					holder.right_sell_price.setText(sell_price);
+				} else {
+					holder.right_sell_price.setText(full_price);
+				}
 				holder.right_full_price.getPaint().setFlags(0);
 				holder.right_full_price.setVisibility(View.GONE);
 				holder.right_discount.setVisibility(View.GONE);
 			} else {
-				holder.right_full_price.setText(full_price);
+				holder.right_sell_price.setText(sell_price);
+				holder.right_full_price.setText(currStr + full_price);
 				holder.right_full_price.setVisibility(View.VISIBLE);
 				holder.right_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 				if (!StringUtil.isNull(rightEn.getDiscount())) {

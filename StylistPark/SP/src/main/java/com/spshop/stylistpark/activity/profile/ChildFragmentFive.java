@@ -19,9 +19,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
-import com.spshop.stylistpark.activity.common.MyWebViewActivity;
+import com.spshop.stylistpark.activity.BaseActivity;
+import com.spshop.stylistpark.activity.HomeFragmentActivity;
+import com.spshop.stylistpark.activity.common.OnlineServiceActivity;
 import com.spshop.stylistpark.activity.common.ShowListActivity;
-import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.service.ServiceContext;
@@ -42,12 +43,11 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 
 	private static final String TAG = "ChildFragmentFive";
 	public static ChildFragmentFive instance = null;
-	public boolean isUpdate = false;
-	
+
 	private Context mContext;
 	private SharedPreferences shared;
-	private boolean isLogined, isSuccess;
 	private UserInfoEntity infoEn;
+	private boolean isLogined, isUpdate, isSuccess;
 
 	private RelativeLayout rl_my_member, rl_member_order, rl_order_all, rl_my_address;
 	private RelativeLayout rl_my_wallet, rl_my_coupon, rl_collection, rl_history, rl_call;
@@ -145,11 +145,10 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		tv_my_member.setText(getString(R.string.profile_my_member, memberType));
 		tv_member_order.setText(getString(R.string.profile_member_order, memberType));
 
+		updateUserMoney();
 		String headImgUrl = "";
 		if (infoEn != null) {
 			headImgUrl = infoEn.getHeadImg();
-			tv_money.setText(infoEn.getMoney());
-			tv_coupon.setText(infoEn.getCoupon());
 			int order_1 = infoEn.getOrder_1();
 			if (order_1 > 0) { //待付款
 				if (order_1 > 99) {
@@ -190,7 +189,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			}else {
 				tv_return_num.setVisibility(View.GONE);
 			}
-			updateCartTotal(infoEn.getCartTotal());
+			BaseActivity.updateCartTotal(infoEn.getCartTotal());
 		}else {
 			String num = getString(R.string.number_0);
 			tv_pay_num.setText(num);
@@ -207,11 +206,14 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		ImageLoader.getInstance().displayImage(headImgUrl, iv_info, AppApplication.getHeadImageOptions());
 	}
 
-	/**
-	 * 更新缓存的购物车商品数量
-	 */
-	private void updateCartTotal(int cartTotal) {
-		UserManager.getInstance().saveCartTotal(cartTotal);
+	private void updateUserMoney() {
+		if (tv_money != null) {
+			tv_money.setText(UserManager.getInstance().getUserMoney());
+		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	private void checkLogin() {
@@ -222,6 +224,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 				requestGetUserInfo();
 				isUpdate = false;
 			}
+			updateUserMoney();
 		}else {
 			infoEn = null;
 			setView();
@@ -238,17 +241,14 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			startActivity(new Intent(mContext, SettingActivity.class));
 			return;
 		} else if (v.getId() == R.id.fragment_five_rl_call) {
-			Intent intent = new Intent(mContext, MyWebViewActivity.class);
+			Intent intent = new Intent(mContext, OnlineServiceActivity.class);
 			intent.putExtra("title", getString(R.string.profile_call));
 			intent.putExtra("lodUrl", AppConfig.API_CUSTOMER_SERVICE);
 			startActivity(intent);
 			return;
 		}
 		if (!isLogined) { //未登入
-			Intent intent = new Intent(mContext, LoginActivity.class);
-			intent.putExtra("rootPage", TAG);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
+			HomeFragmentActivity.instance.openLoginActivity(TAG);
 			return;
 		}
 		switch (v.getId()) {

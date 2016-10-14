@@ -158,6 +158,7 @@
     <string name="product_call">Call</string>
     <string name="product_add_cart">Add Cart</string>
     <string name="product_sku_null">Out of stock</string>
+    <string name="product_join_now">Join now</string>
     <string name="product_buy_number">Buy Number</string>
     <string name="product_color_size">Color Size</string>
     <string name="product_drag_up">Continue to drag, Check the graphic details</string>
@@ -178,6 +179,7 @@
     <string name="events_no_data">No found, \n Maybe topics error!</string>
     <string name="events_comment">Comment</string>
     <string name="events_comment_participate">Participate comment</string>
+    <string name="events_comment_total">Total %1$d comments</string>
     <string name="events_comment_ok">Comment posted</string>
     <string name="events_comment_input">Input your comment</string>
     
@@ -186,6 +188,8 @@
     <string name="member_top_tab_2">Revenue</string>
     <string name="member_top_tab_3">Orders</string>
     <string name="member_top_tab_4">Active</string>
+    <string name="member_data_null_2">&#160;income</string>
+    <string name="member_data_null_3">&#160;order</string>
 
     <!-- Coupon page -->
     <string name="coupon_coupon">&#160;Coupon</string>
@@ -261,8 +265,8 @@
     <string name="pay_cancel">Cancel payment</string>
     <string name="pay_wait_notice">Wait for payment notice</string>
     <string name="pay_result_ok">The payment is complete! Do not re-pay!</string>
-    <string name="pay_result_abnormal">Get paid results abnormal, please confirm with the merchants!</string>
-    <string name="pay_info_error">Not obtain payment information, please confirm with the merchants!</string>
+    <string name="pay_result_abnormal">Wait payment results&#8230;</string>
+    <string name="pay_info_error">Abnormal payment information, Check with your business to see if you have paid!</string>
     <string name="pay_order_error">Payment order data error! Please refresh order information!</string>
 
     <!-- Photo page -->
@@ -431,7 +435,7 @@
     <string name="profile_email_verify">Email verification</string>
     <string name="profile_send_email_ok">Send mail success</string>
     <string name="profile_send_email_hint">Confirmation send a email to %1$s? Change your E-mail after verification. If you have any questions please contact the official customer.</string>
-    <string name="profile_change_email_notice">Notice: Change the mailbox will no longer send confirmation email, Be sure to carefully check the input mailbox is your and no input error, If you have any questions please contact the official customer.</string>
+    <string name="profile_change_email_notice">Notice: Please enter your email address correctly, If you have any questions please contact the official customer.</string>
     <string name="profile_set_banner_photo">Set cover photo</string>
     
     <!-- Money -->
@@ -441,9 +445,10 @@
     <string name="money_withdrawals">Withdrawals</string>
     <string name="money_withdrawals_mode">Mode</string>
     <string name="money_bank_card">Bank card</string>
+    <string name="money_upgrade">To upgrade</string>
+    <string name="money_jion_program">SP Jion Program</string>
     <string name="money_auth">Verification</string>
     <string name="money_auth_ok">Verification OK</string>
-    <string name="money_upgrade">To upgrade</string>
     <string name="money_auth_go">Go verification</string>
     <string name="money_auth_explain">Your account info is not verified</string>
     <string name="money_auth_input_name_hint">Real name</string>

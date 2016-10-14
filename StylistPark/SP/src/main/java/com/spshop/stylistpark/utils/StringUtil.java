@@ -12,7 +12,11 @@ public class StringUtil {
 		return str == null || str.length() == 0 || "".equals(str) || "null".equals(str);
 	}
 
-	public static boolean notNull(JSONObject jsonObj, String key) throws JSONException{
+	public static boolean priceIsNull(String price) {
+		return isNull(price) || price.equals("0") || price.equals("0.00");
+	}
+
+	public static boolean notNull(JSONObject jsonObj, String key) throws JSONException {
 		return jsonObj.has(key) && !jsonObj.isNull(key) && !jsonObj.get(key).equals("");
 	}
 

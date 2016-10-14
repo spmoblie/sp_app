@@ -29,7 +29,6 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.cart.PostOrderActivity;
 import com.spshop.stylistpark.activity.common.SelectListActivity;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
 import com.spshop.stylistpark.entity.AddressEntity;
@@ -697,12 +696,8 @@ public class AddressEditActivity extends BaseActivity implements
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					CommonTools.showToast(getString(R.string.save_ok), 1000);
-					if (MyAddressActivity.instance != null) {
-						MyAddressActivity.instance.isUpdate = true;
-					}
-					if (PostOrderActivity.instance != null) {
-						PostOrderActivity.instance.isUpdate = true;
-					}
+					updateActivityData(8);
+					updateActivityData(9);
 					finish();
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理

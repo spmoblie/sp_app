@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -26,13 +25,14 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.events.CommentActivity;
-import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
 import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.image.AsyncMediaLoader;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
+import com.spshop.stylistpark.utils.ExceptionUtil;
+import com.spshop.stylistpark.utils.FileManager;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.NetworkUtil;
@@ -41,6 +41,9 @@ import com.spshop.stylistpark.widgets.ObservableWebView;
 import com.spshop.stylistpark.widgets.WebViewLoadingBar;
 import com.spshop.stylistpark.widgets.video.UniversalMediaController;
 import com.spshop.stylistpark.widgets.video.UniversalVideoView;
+
+import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -57,7 +60,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	private AsyncMediaLoader asyncMediaLoader;
 	// 评论组件
 	private LinearLayout ll_comment_main;
-	private int postId;
+	private int postId, goodsId;
 	// WebView组件
 	private ObservableWebView webview;
 	private WebViewLoadingBar webViewLoadingBar;
@@ -73,8 +76,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	private String vdoUrl;
 	private int mSeekPosition;
 	private int cachedHeight;
-	private boolean isFullscreen;
-	private boolean isload = true;
+	private boolean isComment, isFullscreen;
 	private boolean isStop = false;
 	private boolean isSynCookies = true;
 
@@ -105,9 +107,11 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		mContext = this;
 		Bundle bundle = getIntent().getExtras();
 		postId = bundle.getInt("postId", 0);
+		goodsId = bundle.getInt("goodsId", 0);
 		titleStr = bundle.getString("title");
 		lodUrl = bundle.getString("lodUrl");
 		vdoUrl = bundle.getString("vdoUrl");
+		isComment = bundle.getBoolean("isComment", false);
 		isSynCookies = bundle.getBoolean("isSynCookies", true);
 		shareEn = (ShareEntity) bundle.getSerializable("shareEn");
 
@@ -126,22 +130,28 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 
 	private void initView() {
 		setTitle(titleStr);
+
 		if (!NetworkUtil.isNetworkAvailable()) {
 			showMyErrorDialog(getString(R.string.network_fault));
 			return;
 		}
 		initWebview();
 		initVideo();
-		if (shareEn != null) {
-			if (StringUtil.isNull(shareEn.getImagePath())) {
-				loadShareImg();
-			}
-			setBtnRight(R.drawable.topbar_icon_share);
-			// 初始化评论组件
+		// 初始化分享组件
+		if (shareEn != null && StringUtil.isNull(shareEn.getImagePath())) {
+			loadShareImg();
+		}
+		// 初始化评论组件
+		if (isComment) {
 			ll_comment_main.setVisibility(View.VISIBLE);
 			ll_comment_main.setOnClickListener(this);
-		} else {
-			ll_comment_main.setVisibility(View.GONE);
+		}
+		// 初始化底部购物栏并显示
+		if (goodsId == 1) { //达人计划
+			setBottomBarVisibility(View.VISIBLE);
+			setCollectionVisibility(View.GONE);
+			showCartTotal();
+			setAddCartViewStatus(getString(R.string.product_join_now), true);
 		}
 	}
 
@@ -167,16 +177,21 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 				public void imageLoaded(String path, String cachePath, Bitmap bm) {
 					vdoImg = bm;
 					setVideoViewBackground();
-					shareEn.setImagePath(cachePath);
+					initShareData(cachePath);
 				}
 			});
 			ImageLoadTask task = asyncImageLoader.loadImage(shareEn.getImageUrl(), 0);
 			if (task != null && task.getBitmap() != null) {
 				vdoImg = task.getBitmap();
 				setVideoViewBackground();
-				shareEn.setImagePath(task.getNewPath());
+				initShareData(task.getNewPath());
 			}
 		}
+	}
+
+	private void initShareData(String cachePath) {
+		shareEn.setImagePath(cachePath);
+		setBtnRight(R.drawable.topbar_icon_share);
 	}
 
 	@SuppressWarnings("static-access")
@@ -205,7 +220,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 			//webSettings.setSavePassword(true); //是否允许保存密码
 			webSettings.setUseWideViewPort(true);  //设置webview推荐使用的窗口
 			webSettings.setLoadWithOverviewMode(true);  //设置webview加载的页面的模式
-			webSettings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN); //支持内容重新布局
+			webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); //支持内容重新布局
 
 			//设置不允许外部浏览器打开
 			webview.setWebViewClient(new WebViewClient(){
@@ -282,8 +297,11 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 				@Override
 				public boolean onError(MediaPlayer mp, int what, int extra) {
 					umc.setIsFrist(true);
-					editor.putString(AppConfig.KEY_VIDEO_LOAD_PATH, "").commit();
-					editor.putString(AppConfig.KEY_VIDEO_SAVE_PATH, "").commit();
+					try { //播放出错清除所有缓存视频
+						FileManager.deleteFolderFile(new File(AppConfig.SAVE_PATH_MEDIA_DICE));
+					} catch (IOException e) {
+						ExceptionUtil.handle(e);
+					}
 					LogUtil.i(TAG, "onError");
 					return false;
 				}
@@ -373,35 +391,31 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	}
 
 	private void loadVideo() {
-		String loadPath = shared.getString(AppConfig.KEY_VIDEO_LOAD_PATH, "");
-		String savePath = shared.getString(AppConfig.KEY_VIDEO_SAVE_PATH, "");
-		if (vdoUrl.equals(loadPath) && !StringUtil.isNull(savePath)) {
-			isload = false; // 相同页面加载缓存视频
-		} else {
-			savePath = vdoUrl;
-			editor.putString(AppConfig.KEY_VIDEO_LOAD_PATH, vdoUrl).commit();
-			editor.putString(AppConfig.KEY_VIDEO_SAVE_PATH, "").commit();
+		asyncMediaLoader = AsyncMediaLoader.getInstance(new AsyncMediaLoader.AsyncMediaLoaderCallback() {
+
+			@Override
+			public void mediaLoaded(String path, String savePath) {
+				if (uvv != null && !StringUtil.isNull(savePath)) {
+					if (uvv.isPlaying()) {
+						mSeekPosition = uvv.getCurrentPosition();
+					}
+					uvv.setVideoPath(savePath);
+					uvv.seekTo(mSeekPosition);
+					LogUtil.i(TAG, "change cache path Position = " + mSeekPosition);
+				}
+			}
+		});
+		String videoPath = vdoUrl;
+		String cachePath = asyncMediaLoader.createCachePath(AsyncMediaLoader.TYPE_VIDEO, vdoUrl, false, false);
+		boolean isExists = FileManager.checkFileExists(cachePath);
+		if (isExists) {
+			videoPath = cachePath;
 		}
 		umc.setIsFrist(false);
-		uvv.setVideoPath(savePath);
+		uvv.setVideoPath(videoPath);
 		uvv.requestFocus();
 		uvv.start();
-		if (isload) {
-			asyncMediaLoader = AsyncMediaLoader.getInstance(new AsyncMediaLoader.AsyncMediaLoaderCallback() {
-
-				@Override
-				public void mediaLoaded(String path, String savePath) {
-					if (uvv != null && !StringUtil.isNull(savePath)) {
-						editor.putString(AppConfig.KEY_VIDEO_SAVE_PATH, savePath).commit();
-						if (uvv.isPlaying()) {
-							mSeekPosition = uvv.getCurrentPosition();
-						}
-						uvv.setVideoPath(savePath);
-						uvv.seekTo(mSeekPosition);
-						LogUtil.i(TAG, "change cache path Position = " + mSeekPosition);
-					}
-				}
-			});
+		if (!isExists) {
 			asyncMediaLoader.loadMedia(false, vdoUrl, AsyncMediaLoader.TYPE_VIDEO);
 		}
 	}
@@ -452,7 +466,26 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	@Override
 	public void OnListenerRight() {
 		super.OnListenerRight();
-		showShareView();
+		showShareView(shareEn);
+	}
+
+	@Override
+	protected void openLoginActivity() {
+		openLoginActivity(TAG);
+	}
+
+	@Override
+	protected void postCollectionProduct() {
+		if (goodsId > 0) {
+			postCollectionProduct(goodsId);
+		}
+	}
+
+	@Override
+	protected void requestProductAttrData() {
+		if (goodsId > 0) {
+			requestProductAttrData(goodsId);
+		}
 	}
 
 	@Override
@@ -464,21 +497,6 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 				intent.putExtra("title", titleStr);
 				startActivity(intent);
 				break;
-		}
-	}
-
-	private void showShareView(){
-		if (mShareView != null && shareEn != null) {
-			if (mShareView.getShareEntity() == null) {
-				mShareView.setShareEntity(shareEn);
-			}
-			if (mShareView.isShowing()) {
-				mShareView.showShareLayer(false);
-			} else {
-				mShareView.showShareLayer(true);
-			}
-		}else {
-			showShareError();
 		}
 	}
 
@@ -547,9 +565,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		@JavascriptInterface
 		public void jsMethod(String goodsId) {
 			if (!StringUtil.isNull(goodsId)) {
-				Intent intent = new Intent(mContext, ProductDetailActivity.class);
-				intent.putExtra("goodsId", StringUtil.getInteger(goodsId));
-				startActivity(intent);
+				openProductDetailActivity(StringUtil.getInteger(goodsId));
 			} else {
 				CommonTools.showToast("GoodsId is null", 1000);
 			}
@@ -568,7 +584,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
-		return null;
+		return super.doInBackground(requestCode);
 	}
 
 	@Override

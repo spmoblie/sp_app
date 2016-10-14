@@ -44,6 +44,9 @@ public class SplashActivity extends BaseActivity {
 
 		// 初始化推送服务状态(开启或关闭)
 		AppApplication.onPushDefaultStatus();
+
+		// 强制设置语言为简体
+		LangCurrTools.setLanguage(this, LangCurrTools.Language.Cn);
 	}
 
 	@Override

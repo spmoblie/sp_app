@@ -6,11 +6,8 @@ import android.content.SharedPreferences.Editor;
 
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
+import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.HomeFragmentActivity;
-import com.spshop.stylistpark.activity.home.ChildFragmentOne;
-import com.spshop.stylistpark.activity.home.ProductDetailActivity;
-import com.spshop.stylistpark.activity.home.ProductListActivity;
-import com.spshop.stylistpark.activity.profile.ChildFragmentFive;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.entity.WXEntity;
 import com.spshop.stylistpark.share.weibo.AccessTokenKeeper;
@@ -23,6 +20,7 @@ public class UserManager {
 	
 	private String mUserId = null;
 	private String shareId = null;
+	private String loginAccount = null;
 	private String mUserName = null;
 	private String mUserNameID = null;
 	private String mUserNick = null;
@@ -31,6 +29,7 @@ public class UserManager {
 	private String mUserBirthday = null;
 	private String mUserEmail = null;
 	private String mUserPhone = null;
+	private String mUserMoney = null;
 	private String mUserRankName = null;
 
 	private String wxAccessToken = null;
@@ -79,13 +78,25 @@ public class UserManager {
 		LogUtil.i("isLogined", "saveShareId = " + shareId);
 	}
 
+	public String getLoginAccount(){
+		if(StringUtil.isNull(loginAccount)){
+			loginAccount = sp.getString(AppConfig.KEY_LOGIN_ACCOUNT, "");
+		}
+		return loginAccount;
+	}
+	
+	public void saveLoginAccount(String account){
+		editor.putString(AppConfig.KEY_LOGIN_ACCOUNT, account).apply();
+		loginAccount = account;
+	}
+
 	public String getUserName(){
 		if(StringUtil.isNull(mUserName)){
 			mUserName = sp.getString(AppConfig.KEY_USER_NAME, "");
 		}
 		return mUserName;
 	}
-	
+
 	public void saveUserName(String userName){
 		editor.putString(AppConfig.KEY_USER_NAME, userName).apply();
 		mUserName = userName;
@@ -182,7 +193,19 @@ public class UserManager {
 		editor.putString(AppConfig.KEY_USER_PHONE, userPhone).apply();
 		mUserPhone = userPhone;
 	}
-	
+
+	public String getUserMoney(){
+		if(StringUtil.isNull(mUserMoney)){
+			mUserMoney = sp.getString(AppConfig.KEY_USER_MONEY, null);
+		}
+		return mUserMoney;
+	}
+
+	public void saveUserMoney(String userMoney){
+		editor.putString(AppConfig.KEY_USER_MONEY, userMoney).apply();
+		mUserMoney = userMoney;
+	}
+
 	public int getUserRankCode(){
 		return sp.getInt(AppConfig.KEY_USER_RANK_CODE, 0);
 	}
@@ -286,18 +309,11 @@ public class UserManager {
 	 * 刷新所有登录状态下的数据
 	 */
 	private void changeAllDataStatus() {
-		if (ChildFragmentOne.instance != null) {
-			ChildFragmentOne.instance.isUpdate = true;
-		}
-		if (ChildFragmentFive.instance != null) {
-			ChildFragmentFive.instance.isUpdate = true;
-		}
-		if (ProductDetailActivity.instance != null) {
-			ProductDetailActivity.instance.isUpdate = true;
-		}
-		if (ProductListActivity.instance != null) {
-			ProductListActivity.instance.isUpdate = true;
-		}
+		BaseActivity.updateActivityData(1);
+		BaseActivity.updateActivityData(5);
+		BaseActivity.updateActivityData(20);
+		BaseActivity.updateActivityData(21);
+		BaseActivity.updateActivityData(22);
 	}
 
 	/**
@@ -332,6 +348,7 @@ public class UserManager {
 			saveUserBirthday(infoEn.getBirthday());
 			saveUserEmail(infoEn.getUserEmail());
 			saveUserPhone(infoEn.getUserPhone());
+			saveUserMoney(infoEn.getMoney());
 			saveUserRankCode(infoEn.getUserRankCode());
 			saveUserRankName(infoEn.getUserRankName());
 			// 绑定用户信息至推送服务
@@ -354,6 +371,7 @@ public class UserManager {
 		saveUserBirthday(null);
 		saveUserEmail(null);
 		saveUserPhone(null);
+		saveUserMoney(null);
 		saveUserRankCode(0);
 		saveUserRankName(null);
 		saveCartTotal(0); //购物车商品数

@@ -49,12 +49,12 @@ public class UserInfoEntity extends BaseEntity {
 	 * 用户生日
 	 */
 	private String birthday;
-	
+
 	/**
 	 * 用户邮箱
 	 */
 	private String userEmail;
-	
+
 	/**
 	 * 用户手机号码
 	 */

@@ -1,6 +1,5 @@
 package com.spshop.stylistpark.activity.events;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.util.ArrayMap;
@@ -19,7 +18,6 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.adapter.CommentListAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.CommentEntity;
@@ -42,13 +40,13 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 
 	private static final String TAG = "CommentActivity";
 	public static CommentActivity instance = null;
-	public boolean isUpdate = false;
 
 	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
 	private boolean isLoadOk = true;
+	private boolean isUpdate = false;
 	private int postId;
-	private String titleStr, commentStr;
+	private String commentStr;
 
 	private EditText et_input;
 	private TextView tv_post;
@@ -74,7 +72,6 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 		instance = this;
 		Bundle bundle = getIntent().getExtras();
 		postId = bundle.getInt("postId", 0);
-		titleStr = bundle.getString("title");
 
 		findViewById();
 		initView();
@@ -90,7 +87,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void initView() {
-		setTitle(titleStr);
+		setCommentTitle(0);
 		iv_to_top.setOnClickListener(this);
 		initListView();
 		initEditText();
@@ -105,7 +102,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 下拉刷新
             	if (lv_show.size() == 0) {
-            		getSVDatas();
+            		getSVDatas(1000);
 				}else {
 					new Handler().postDelayed(new Runnable() {
 						
@@ -176,22 +173,22 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 	/**
 	 * 从远程服务器加载数据
 	 */
-	private void getSVDatas() {
+	private void getSVDatas(int time) {
 		current_Page = 1;
-		requestProductLists();
+		requestProductLists(time);
 	}
 	
 	/**
 	 * 加载翻页数据
 	 */
 	private void loadSVDatas() {
-		requestProductLists();
+		requestProductLists(1000);
 	}
 
 	/**
 	 * 发起加载数据的请求
 	 */
-	private void requestProductLists() {
+	private void requestProductLists(int time) {
 		if (!isLoadOk) return; //加载频率控制
 		isLoadOk = false;
 		rl_no_data.setVisibility(View.GONE);
@@ -200,7 +197,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 			public void run() {
 				request(AppConfig.REQUEST_SV_GET_COMMENT_LIST_CODE);
 			}
-		}, 1000);
+		}, time);
 	}
 
 	@Override
@@ -217,7 +214,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 
 	private void sendCommentTxt(){
 		if (!UserManager.getInstance().checkIsLogined()) {
-			openLoginActivity();
+			openLoginActivity(TAG);
 			return;
 		}
 		commentStr = et_input.getText().toString();
@@ -229,13 +226,6 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 		request(AppConfig.REQUEST_SV_POST_COMMENT_CODE);
 	}
 
-	private void openLoginActivity(){
-		Intent intent = new Intent(this, LoginActivity.class);
-		intent.putExtra("rootPage", TAG);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-	}
-	
 	@Override
 	protected void onResume() {
 		LogUtil.i(TAG, "onResume");
@@ -246,13 +236,17 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 		super.onResume();
 	}
 
+	public void updateData() {
+		isUpdate = true;
+	}
+
 	private void updateAllData() {
 		if (isUpdate) {
 			isUpdate = false;
 			lv_show.clear();
 			lv_all_1.clear();
 			am_all_1.clear();
-			refresh_lv.doPullRefreshing(true, 500);
+			getSVDatas(0);
 		}
 	}
 
@@ -284,14 +278,14 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_COMMENT_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 			case AppConfig.REQUEST_SV_POST_COMMENT_CODE:
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("id", String.valueOf(postId));
-				jsonObject.put("type", "1");
+				jsonObject.put("id", postId);
+				jsonObject.put("type", 1);
 				jsonObject.put("content", commentStr);
 				String jsonStrValue = jsonObject.toString();
 
 				//uri = AppConfig.URL_COMMON_COMMENT_URL + "?cmt=" + jsonStrValue;
 				params.add(new MyNameValuePair("cmt", jsonStrValue));
-				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_COMMENT_CODE, uri, params, HttpUtil.METHOD_GET);
+				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_COMMENT_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -305,6 +299,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 				if (result != null) {
 					CommentEntity mainEn = (CommentEntity) result;
 					dataTotal = mainEn.getDataTotal();
+					setCommentTitle(dataTotal);
 					List<CommentEntity> lists = mainEn.getMainLists();
 					if (lists!= null && lists.size() > 0) {
 						List<BaseEntity> newLists = addNewEntity(lv_all_1, lists, am_all_1);
@@ -326,7 +321,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 				if (result != null) {
 					BaseEntity baseEn = (BaseEntity) result;
 					if (baseEn.getErrCode() == 0) {
-						isUpdate = true;
+						updateData();
 						updateAllData();
 						et_input.setText("");
 						if (StringUtil.isNull(baseEn.getErrInfo())) {
@@ -397,6 +392,10 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 	private void toTop() {
 		setAdapter();
 		iv_to_top.setVisibility(View.GONE);
+	}
+
+	private void setCommentTitle(int total) {
+		setTitle(getString(R.string.events_comment_total, total));
 	}
 
 }

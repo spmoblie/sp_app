@@ -19,7 +19,7 @@ android {
     buildTypes {
         release {
             // 代码混淆开关
-            minifyEnabled false
+            minifyEnabled true
             // proguard-rules.pro 是当前使用的混淆文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

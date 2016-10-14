@@ -158,6 +158,7 @@
     <string name="product_call">客服</string>
     <string name="product_add_cart">加入購物車</string>
     <string name="product_sku_null">暫時缺貨</string>
+    <string name="product_join_now">立即加盟</string>
     <string name="product_buy_number">購買數量</string>
     <string name="product_color_size">顔色 尺碼</string>
     <string name="product_drag_up">繼續拖動，查看圖文詳情</string>
@@ -178,6 +179,7 @@
     <string name="events_no_data">暫無發現，\n可能是欄目出錯啦！</string>
     <string name="events_comment">評論</string>
     <string name="events_comment_participate">參與評論</string>
+    <string name="events_comment_total">共%1$d條評論</string>
     <string name="events_comment_ok">評論已發布</string>
     <string name="events_comment_input">請輸入評論內容</string>
     
@@ -186,6 +188,8 @@
     <string name="member_top_tab_2">收入榜</string>
     <string name="member_top_tab_3">訂單榜</string>
     <string name="member_top_tab_4">活躍榜</string>
+    <string name="member_data_null_2">訂單收入</string>
+    <string name="member_data_null_3">成交訂單</string>
 
     <!-- Coupon page -->
     <string name="coupon_coupon">優惠券</string>
@@ -261,8 +265,8 @@
     <string name="pay_cancel">支付取消</string>
     <string name="pay_wait_notice">等待支付通知</string>
     <string name="pay_result_ok">支付已完成！請勿重複支付！</string>
-    <string name="pay_result_abnormal">獲取支付結果異常，請與商家確認是否已支付成功！</string>
-    <string name="pay_info_error">獲取不到支付信息，請與商家確認是否已支付此訂單?</string>
+    <string name="pay_result_abnormal">等待支付結果中&#8230;</string>
+    <string name="pay_info_error">支付信息異常，請與商家確認是否已支付過此訂單?</string>
     <string name="pay_order_error">支付訂單數據出現錯誤！請刷新訂單信息！</string>
     
     <!-- Photo page -->
@@ -431,7 +435,7 @@
     <string name="profile_email_verify">郵箱驗證</string>
     <string name="profile_send_email_ok">郵件發送成功</string>
     <string name="profile_send_email_hint">確認發送壹封驗證郵件至%1$s麽？在您驗證此郵件後方可修改郵箱地址。如有疑問請聯系官方客服。</string>
-    <string name="profile_change_email_notice">注意：修改郵箱將不再發送確認郵件，務必認真檢查輸入的郵箱是您本人的且沒有輸入錯誤，如有疑問請聯系官方客服。</string>
+    <string name="profile_change_email_notice">注意：請正確輸入您本人的郵箱，如有疑問請聯系官方客服。</string>
     <string name="profile_set_banner_photo">設定封面相片</string>
     
     <!-- Money -->
@@ -441,9 +445,10 @@
     <string name="money_withdrawals">提現</string>
     <string name="money_withdrawals_mode">提現方式</string>
     <string name="money_bank_card">銀行卡</string>
+    <string name="money_upgrade">去升級</string>
+    <string name="money_jion_program">SP加盟計劃</string>
     <string name="money_auth">實名驗證</string>
     <string name="money_auth_ok">已實名驗證</string>
-    <string name="money_upgrade">去升級</string>
     <string name="money_auth_go">立即實名驗證</string>
     <string name="money_auth_explain">您的實名賬戶信息未驗證</string>
     <string name="money_auth_input_name_hint">真實姓名</string>

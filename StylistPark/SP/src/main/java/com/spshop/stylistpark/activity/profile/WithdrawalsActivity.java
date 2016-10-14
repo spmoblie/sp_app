@@ -176,9 +176,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 			BaseEntity baseEn = (BaseEntity) result;
 			if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS){ //确认提现OK
 				CommonTools.showToast(getString(R.string.money_withdrawals_success), 2000);
-				if (AccountBalanceActivity.instance != null) {
-					AccountBalanceActivity.instance.isUpdate = true;
-				}
+				updateActivityData(7);
 				finish();
 			}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 				// 登入超时，交BaseActivity处理

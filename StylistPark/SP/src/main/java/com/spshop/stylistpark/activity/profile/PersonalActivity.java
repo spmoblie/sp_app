@@ -33,6 +33,7 @@ import com.spshop.stylistpark.entity.SelectListEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.image.AsyncImageUpload;
 import com.spshop.stylistpark.image.AsyncImageUpload.AsyncImageUploadCallback;
+import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
@@ -51,14 +52,13 @@ import java.util.Map;
 public class PersonalActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "PersonalActivity";
-	private static final String LOCAL_TEMP_IMG_DIR = "StylistPark/MicroMsg/Camera/SP";
 
 	private RelativeLayout rl_head, rl_nick, rl_sex, rl_birthday, rl_intro, rl_email, rl_identity;
 	private ImageView iv_head;
 	private TextView tv_nick, tv_sex, tv_birthday, tv_rank, tv_intro, tv_email, tv_auth_go, tv_auth_ok;
 	private String headUrl, nickStr, sexStr, birthdayStr, rankStr, introStr, emailStr;
 	private String changeStr, changeTypeKey;
-	private String localTempImgFileName = "";
+	private File saveFile;
 	private int sexCode = 0;
 	private boolean isAuth = false;
 	private boolean isUpload = false;
@@ -181,9 +181,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 								if (!isUpload) {
 									// 刷新头像
 									update_fragment = true;
-									// 清除缓存
-									ImageLoader.getInstance().clearDiscCache();
-									ImageLoader.getInstance().clearMemoryCache();
+									// 清除图片缓存
+									AppApplication.clearImageLoaderCache();
 									CommonTools.showToast(getString(R.string.photo_upload_img_ok, getString(R.string.profile_head)), 1000);
 								} else {
 									if (!StringUtil.isNull(baseEn.getErrInfo())) {
@@ -336,13 +335,10 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 								String status = Environment.getExternalStorageState();
 								if (status.equals(Environment.MEDIA_MOUNTED)) { //先验证手机是否有sdcard
 									try {
-										File dir = new File(Environment.getExternalStorageDirectory(), LOCAL_TEMP_IMG_DIR);
-										if (!dir.exists()) dir.mkdirs();
+										saveFile = BitmapUtil.createPath("IMG_" + System.currentTimeMillis() + ".jpg", true);
+										Uri uri = Uri.fromFile(saveFile);
 										Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-										localTempImgFileName = "microMsg." + System.currentTimeMillis() + ".jpg";
-										File f = new File(dir, localTempImgFileName);
-										Uri u = Uri.fromFile(f);
-										intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+										intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 										intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
 										startActivityForResult(intent,AppConfig.ACTIVITY_GET_IMAGE_VIA_CAMERA);
 									} catch (ActivityNotFoundException e) {
@@ -434,9 +430,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		if (resultCode == RESULT_OK) {
 			if (requestCode == AppConfig.ACTIVITY_GET_IMAGE_VIA_CAMERA) //拍照
 			{
-				String path = Environment.getExternalStorageDirectory()+"/"+LOCAL_TEMP_IMG_DIR+"/"+localTempImgFileName;
-				AppApplication.updatePhoto(new File(path));
-				startClipImageActivity(path);
+				AppApplication.updatePhoto(saveFile);
+				startClipImageActivity(saveFile.getAbsolutePath());
 			}
 			else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_NICK) //修改昵称
 			{
@@ -556,7 +551,11 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
 				}else {
-					showSendEmailDialog(); //需邮件确认
+					if (StringUtil.isNull(emailStr)) {
+						showServerBusy();
+					} else {
+						showSendEmailDialog(); //需邮件确认
+					}
 				}
 			}else {
 				showServerBusy();

@@ -16,6 +16,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
+import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.BalanceListAdapter;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
@@ -38,14 +39,13 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	
 	private static final String TAG = "AccountBalanceActivity";
 	public static AccountBalanceActivity instance = null;
-	public boolean isUpdate = false;
-
 	private int dataTotal = 0; //数据总量
+
 	private int current_Page = 1;  //当前列表加载页
 	private int overStatus = 0; //余额状态
 	private String overHintStr; //余额状态描述
 	private double amountTotal = 0; //账号余额
-	private boolean isLogined, isSuccess;
+	private boolean isLogined, isUpdate, isSuccess;
 
 	private PullToRefreshListView refresh_lv;
 	private ListView mListView;
@@ -94,8 +94,10 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 
 	private void setHeadView(BalanceDetailEntity mainEn) {
 		ll_auth_main.setVisibility(View.GONE);
+		String currStr = LangCurrTools.getCurrencyValue();
 		if (mainEn != null) {
 			amountTotal = mainEn.getAmount();
+			UserManager.getInstance().saveUserMoney(currStr + amountTotal);
 			String amountStr = String.valueOf(amountTotal);
 			if (StringUtil.isNull(amountStr)) {
 				amountStr = "0";
@@ -137,7 +139,8 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 					break;
 			}
 		}
-		tv_amount_title.setText(getString(R.string.money_balance_burrency, LangCurrTools.getCurrencyValue()));
+		currStr = currStr.replace(" ", "");
+		tv_amount_title.setText(getString(R.string.money_balance_burrency, currStr));
 	}
 
 	private void initListView() {
@@ -255,7 +258,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 							@Override
 							public void handleMessage(Message msg) {
 								switch (msg.what) {
-									case DIALOG_CANCEL_CLICK:
+									case DIALOG_CONFIRM_CLICK:
 										toUpgradeDaren();
 										break;
 								}
@@ -273,6 +276,11 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	}
 
 	private void toUpgradeDaren() {
+		Intent intent = new Intent(mContext, MyWebViewActivity.class);
+		intent.putExtra("goodsId", AppConfig.SP_JION_PROGRAM_ID);
+		intent.putExtra("title", getString(R.string.money_jion_program));
+		intent.putExtra("lodUrl", AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + AppConfig.SP_JION_PROGRAM_ID);
+		startActivity(intent);
 	}
 
 	@Override
@@ -288,12 +296,16 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdate = true;
+				updateData();
 			}
 			updateAllData();
 		}else {
 			showTimeOutDialog(TAG);
 		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	private void updateAllData() {

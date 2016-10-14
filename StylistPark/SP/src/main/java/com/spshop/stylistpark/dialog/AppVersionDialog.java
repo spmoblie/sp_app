@@ -32,7 +32,7 @@ import java.util.List;
 
 public class AppVersionDialog {
 	
-	private static final String APK_PATH = AppConfig.SAVE_APK_PATH_LONG + "/stylistpark.apk"; 
+	private static final String APK_PATH = AppConfig.SAVE_PATH_APK_DICE + "/stylistpark.apk";
 	private static final int DIALOG_WIDTH = AppApplication.screenWidth * 2/3;
 	private Context mContext;
 	private DialogManager dm;

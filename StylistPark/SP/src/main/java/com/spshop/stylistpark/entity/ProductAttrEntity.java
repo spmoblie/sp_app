@@ -7,20 +7,30 @@ public class ProductAttrEntity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 商品属性id
+	 * 属性id
 	 */
 	private int attrId;
-	
+
+	/**
+	 * 商品id
+	 */
+	private int goodsId;
+
+	/**
+	 * 首张缩略图
+	 */
+	private String fristImgUrl;
+
+	/**
+	 * 商品结算价
+	 */
+	private double computePrice;
+
 	/**
 	 * 商品库存数
 	 */
 	private int skuNum;
-	
-	/**
-	 * 已选商品库存数
-	 */
-	private int selectSkuNum;
-	
+
 	/**
 	 * 商品属性名称
 	 */
@@ -80,6 +90,29 @@ public class ProductAttrEntity extends BaseEntity {
 		this.attrId = attrId;
 	}
 
+	public int getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(int goodsId) {
+		this.goodsId = goodsId;
+	}
+
+	public String getFristImgUrl() {
+		return fristImgUrl;
+	}
+
+	public void setFristImgUrl(String fristImgUrl) {
+		this.fristImgUrl = fristImgUrl;
+	}
+
+	public double getComputePrice() {
+		return computePrice;
+	}
+
+	public void setComputePrice(double computePrice) {
+		this.computePrice = computePrice;
+	}
 
 	public int getSkuNum() {
 		return skuNum;
@@ -88,16 +121,6 @@ public class ProductAttrEntity extends BaseEntity {
 
 	public void setSkuNum(int skuNum) {
 		this.skuNum = skuNum;
-	}
-
-
-	public int getSelectSkuNum() {
-		return selectSkuNum;
-	}
-
-
-	public void setSelectSkuNum(int selectSkuNum) {
-		this.selectSkuNum = selectSkuNum;
 	}
 
 

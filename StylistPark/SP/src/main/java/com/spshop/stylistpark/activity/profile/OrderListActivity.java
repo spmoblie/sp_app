@@ -46,7 +46,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "OrderListActivity";
 	public static OrderListActivity instance = null;
-	public boolean isUpdate = false;
+
 	public static final int TYPE_1 = 0;  //全部
 	public static final int TYPE_2 = 1;  //待付款或已完成
 	public static final int TYPE_3 = 2;  //待发货或待分成
@@ -64,7 +64,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int total_1, total_2, total_3, total_4, total_5;
 	private boolean isLoadOk = true; //加载数据控制符
-	private boolean isLogined, isSuccess;
+	private boolean isLogined, isUpdate, isSuccess;
 
 	private int rootCode = 0; //页面来源标记
 	private String orderId, orderStr, noDataShowStr;
@@ -502,7 +502,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdate = true;
+				updateData();
 			}
 			updateAllData();
 			if (rootCode == 0 && lv_adapter != null) {
@@ -511,6 +511,10 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		}else {
 			showTimeOutDialog(TAG);
 		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	private void updateAllData() {
@@ -664,7 +668,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			if (result != null) {
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					isUpdate = true;
+					updateData();
 					updateAllData();
 					updateActivityData(5);
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {

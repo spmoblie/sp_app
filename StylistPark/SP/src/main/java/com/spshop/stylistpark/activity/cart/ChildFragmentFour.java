@@ -23,9 +23,8 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
+import com.spshop.stylistpark.activity.HomeFragmentActivity;
 import com.spshop.stylistpark.activity.category.CategoryActivity;
-import com.spshop.stylistpark.activity.home.ProductDetailActivity;
-import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.CartProductListAdapter;
 import com.spshop.stylistpark.dialog.DialogManager;
@@ -219,9 +218,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 						updateSelectAllView();
 						break;
 					case CartProductListAdapter.TYPE_CHECK: //查看
-						Intent intent = new Intent(mContext, ProductDetailActivity.class);
-						intent.putExtra("goodsId", changeData.getId());
-						startActivity(intent);
+						HomeFragmentActivity.instance.openProductDetailActivity(changeData.getId());
 						break;
 					case CartProductListAdapter.TYPE_MINUS: //数量减1
 						if (!isChange) return;
@@ -500,7 +497,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 
 	private void loadSuccessHandle(GoodsCartEntity resultEn) {
 		amountStr = resultEn.getAmount();
-		updateCartTotal(resultEn.getGoodsTotal());
+		BaseActivity.updateCartTotal(resultEn.getGoodsTotal());
 		setView();
 	}
 
@@ -514,7 +511,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 
 	private void loginTimeoutHandle() {
 		AppApplication.AppLogout(true);
-		openLoginActivity();
+		HomeFragmentActivity.instance.openLoginActivity(TAG);
 	}
 
 	/**
@@ -536,13 +533,6 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 		}
 		isChange = true;
 	}
-	
-	private void openLoginActivity(){
-		Intent intent = new Intent(mContext, LoginActivity.class);
-		intent.putExtra("rootPage", TAG);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-	}
 
 	/**
 	 * 修改或删除购物车中商品失败时提示
@@ -550,13 +540,6 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	private void changeFailUpdateCartData(String msg) {
 		checkLogin();
 		CommonTools.showToast(msg, 3000);
-	}
-
-	/**
-	 * 更新缓存的购物车商品数量
-	 */
-	private void updateCartTotal(int cartNumTotal) {
-		UserManager.getInstance().saveCartTotal(cartNumTotal);
 	}
 
 	/**

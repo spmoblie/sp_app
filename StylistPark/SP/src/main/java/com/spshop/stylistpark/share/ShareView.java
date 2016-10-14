@@ -162,7 +162,7 @@ public class ShareView {
 			/*if (UserManager.getInstance().isTalent()) { //达人
 				// 生成二维码
 				Bitmap dropBm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.bg_img_qr_code);
-				String qrPath = BitmapUtil.createPath("qr_code.png", false).getPath();
+				String qrPath = BitmapUtil.createPath("qr_code.png", false).getAbsolutePath();
 				QRCodeUtil.createQRImage(dropBm, newUrl, 400, 400, null, qrPath);
 				// 拼接长图
 				ArrayList<String> imagePaths = new ArrayList<String>();

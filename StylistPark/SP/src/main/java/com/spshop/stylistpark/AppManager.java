@@ -119,7 +119,7 @@ public class AppManager {
 	 * 清除所有缓存Cookie
 	 */
 	public void clearAllCookie(Context ctx) {
-		CleanDataManager.cleanCustomCache(AppConfig.SAVE_TXT_PATH_LONG + AppConfig.cookiesFileName);
+		CleanDataManager.cleanCustomCache(AppConfig.SAVE_PATH_TXT_SAVE + AppConfig.cookiesFileName);
 		CookieSyncManager.createInstance(ctx);
 		CookieSyncManager.getInstance().startSync(); 
         CookieManager.getInstance().removeAllCookie();

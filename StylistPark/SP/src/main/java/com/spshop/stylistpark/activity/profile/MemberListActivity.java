@@ -38,11 +38,11 @@ import java.util.List;
 public class MemberListActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "MemberListActivity";
-	public boolean isUpdate = false;
-	public static final int TYPE_1 = 0;  //最新客户
-	public static final int TYPE_2 = 1;  //活跃排名
-	public static final int TYPE_3 = 2;  //订单排名
-	public static final int TYPE_4 = 3;  //收入排名
+
+	public static final int TYPE_1 = 0;  //全部
+	public static final int TYPE_2 = 1;  //收入榜
+	public static final int TYPE_3 = 2;  //订单榜
+	public static final int TYPE_4 = 3;
 
 	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
@@ -54,8 +54,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int total_1, total_2, total_3, total_4;
 	private boolean isLoadOk = true; //加载数据控制符
-	private boolean isLogined, isSuccess;
-	private String noDataShowStr;
+	private boolean isLogined, isUpdate, isSuccess;
+	private String typeStr, noDataShowStr;
 
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
 	private RelativeLayout rl_top_screen, rl_loading;
@@ -107,11 +107,12 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 
 	private void initView() {
 		if (UserManager.getInstance().isTalent()) { //达人
-			noDataShowStr = getString(R.string.profile_customer);
+			typeStr = getString(R.string.profile_customer);
 		} else {
-			noDataShowStr = getString(R.string.profile_member);
+			typeStr = getString(R.string.profile_member);
 		}
-		setTitle(getString(R.string.profile_my_member, noDataShowStr));
+		setTitle(getString(R.string.profile_my_member, typeStr));
+		noDataShowStr = getString(R.string.loading_no_data, typeStr);
 		iv_to_top.setOnClickListener(this);
 		
 		initRaidoGroup();
@@ -279,9 +280,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			return;
 		}
 		switch (v.getId()) {
-		case R.id.topbar_radio_rb_1: //最新客户
+		case R.id.topbar_radio_rb_1:
 			if (topType == TYPE_1) return;
 			topType = TYPE_1;
+			noDataShowStr = getString(R.string.loading_no_data, typeStr);
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
 				addOldListDatas(lv_all_1, page_type_1, total_1);
 			}else {
@@ -290,9 +292,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 				getSVDatas();
 			}
 			break;
-		case R.id.topbar_radio_rb_2: //活跃排名
+		case R.id.topbar_radio_rb_2:
 			if (topType == TYPE_2) return;
 			topType = TYPE_2;
+			noDataShowStr = typeStr + getString(R.string.loading_no_data, getString(R.string.member_data_null_2));
 			if (lv_all_2 != null && lv_all_2.size() > 0) {
 				addOldListDatas(lv_all_2, page_type_2, total_2);
 			}else {
@@ -301,9 +304,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 				getSVDatas();
 			}
 			break;
-		case R.id.topbar_radio_rb_3: //订单排名
+		case R.id.topbar_radio_rb_3:
 			if (topType == TYPE_3) return;
 			topType = TYPE_3;
+			noDataShowStr = typeStr + getString(R.string.loading_no_data, getString(R.string.member_data_null_3));
 			if (lv_all_3 != null && lv_all_3.size() > 0) {
 				addOldListDatas(lv_all_3, page_type_3, total_3);
 			}else {
@@ -312,9 +316,10 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 				getSVDatas();
 			}
 			break;
-		case R.id.topbar_radio_rb_4: //收入排名
+		case R.id.topbar_radio_rb_4:
 			if (topType == TYPE_4) return;
 			topType = TYPE_4;
+			//noDataShowStr = typeStr + getString(R.string.loading_no_data, getString(R.string.member_data_null_3));
 			if (lv_all_4 != null && lv_all_4.size() > 0) {
 				addOldListDatas(lv_all_4, page_type_4, total_4);
 			}else {
@@ -356,12 +361,16 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdate = true;
+				updateData();
 			}
 			updateAllData();
 		}else {
 			showTimeOutDialog(TAG);
 		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	private void updateAllData() {
@@ -564,7 +573,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		refresh_lv.onPullDownRefreshComplete();
 		refresh_lv.onPullUpRefreshComplete();
 		if (lv_show.size() == 0) {
-			tv_no_data.setText(getString(R.string.loading_no_data, noDataShowStr));
+			tv_no_data.setText(noDataShowStr);
 			rl_no_data.setVisibility(View.VISIBLE);
 			refresh_lv.setVisibility(View.GONE);
 		}else {

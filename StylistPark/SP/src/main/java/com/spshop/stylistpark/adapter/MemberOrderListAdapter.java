@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
+import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
+import com.spshop.stylistpark.utils.LangCurrTools;
 
 import java.util.List;
 
@@ -24,10 +26,11 @@ import java.util.List;
  */
 public class MemberOrderListAdapter extends BaseAdapter {
 	
-	private static final String IMAGE_URL_HTTP = "";
+	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 
 	private Context context;
 	private List<OrderEntity> datas;
+	private String currStr;
 	//private AdapterCallback adapterCallback;
 	private LayoutInflater mInflater;
 	private DisplayImageOptions options, headOptions;
@@ -35,6 +38,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 	public MemberOrderListAdapter(Context context, List<OrderEntity> datas, AdapterCallback adapterCallback) {
 		this.context = context;
 		this.datas = datas;
+		this.currStr = LangCurrTools.getCurrencyValue();
 		//this.adapterCallback = adapterCallback;
 		this.mInflater = LayoutInflater.from(context);
 		options = AppApplication.getDefaultImageOptions();
@@ -128,12 +132,31 @@ public class MemberOrderListAdapter extends BaseAdapter {
 		if (goodsLists != null) {
 			holder.ll_goods_lists.removeAllViews(); //移除之前添加的所有View
 			for (int i = 0; i < goodsLists.size(); i++) {
-				View view = mInflater.inflate(R.layout.item_goods_img_horizontal, holder.ll_goods_lists, false);  
-				ImageView img = (ImageView) view.findViewById(R.id.item_goods_horizontal_iv_img);
+				View view = mInflater.inflate(R.layout.item_goods_img_vertical, holder.ll_goods_lists, false);
+
+				ImageView img = (ImageView) view.findViewById(R.id.item_goods_vertical_iv_img);
 				String imgUrl = IMAGE_URL_HTTP + goodsLists.get(i).getImageUrl();
 				ImageLoader.getInstance().displayImage(imgUrl, img, options);
-				TextView tv_price = (TextView) view.findViewById(R.id.item_goods_horizontal_tv_price);
-				tv_price.setText(goodsLists.get(i).getSellPrice() + " x " + goodsLists.get(i).getTotal());
+
+				TextView tv_brand = (TextView) view.findViewById(R.id.item_goods_vertical_tv_brand);
+				tv_brand.setText(goodsLists.get(i).getBrand());
+				TextView tv_curr = (TextView) view.findViewById(R.id.item_goods_vertical_tv_curr);
+				tv_curr.setText(currStr);
+				TextView tv_price = (TextView) view.findViewById(R.id.item_goods_vertical_tv_price);
+				tv_price.setText(goodsLists.get(i).getSellPrice());
+				TextView tv_name = (TextView) view.findViewById(R.id.item_goods_vertical_tv_name);
+				tv_name.setText(goodsLists.get(i).getName());
+				TextView tv_number = (TextView) view.findViewById(R.id.item_goods_vertical_tv_number);
+				tv_number.setText("x"+goodsLists.get(i).getTotal());
+				TextView tv_attr = (TextView) view.findViewById(R.id.item_goods_vertical_tv_attr);
+				String attrStr = goodsLists.get(i).getAttr();
+				attrStr = attrStr.replace("\n", " ");
+				tv_attr.setText(attrStr);
+
+				if (i == goodsLists.size()-1) {
+					ImageView iv_line = (ImageView) view.findViewById(R.id.item_goods_vertical_iv_line);
+					iv_line.setVisibility(View.GONE);
+				}
 				holder.ll_goods_lists.addView(view);
 			}
 		}

@@ -35,6 +35,7 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
+import com.spshop.stylistpark.activity.HomeFragmentActivity;
 import com.spshop.stylistpark.activity.common.MipcaActivityCapture;
 import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
@@ -44,6 +45,7 @@ import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.ProductListEntity;
+import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
@@ -67,11 +69,11 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 	private static final String TAG = "ChildFragmentOne";
 	public static ChildFragmentOne instance = null;
-	public boolean isUpdate = true;
 
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
+	private boolean isUpdate = true;
 	private String currStr;
 	private Context mContext;
 	private NetworkInfo netInfo;
@@ -80,8 +82,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
 	private RelativeLayout rl_category, rl_search, rl_zxing;
-	private LinearLayout ll_head_main, ll_indicator, ll_goods_main, ll_peida_main, ll_sale_main;
 
+	private LinearLayout ll_head_main, ll_indicator, ll_goods_main, ll_peida_main, ll_sale_main;
 	private View sv_goods_main, vw_goods_title, sv_peida_main, vw_peida_title, vw_sale_title;
 	private TextView tv_goods_title, tv_peida_title, tv_sale_title, tv_load_again;
 	private RelativeLayout rl_loading, rl_load_fail;
@@ -93,8 +95,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private ProductList2ItemAdapter lv_two_adapter;
 	private Runnable mPagerAction;
 	private LayoutInflater mInflater;
-	private DisplayImageOptions options;
 
+	private DisplayImageOptions options;
 	private ThemeEntity themeEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
@@ -260,7 +262,16 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 					@Override
 					public void onClick(View v) {
+						// 创建分享数据
+						ShareEntity shareEn = new ShareEntity();
+						shareEn.setTitle(items.getTitle());
+						shareEn.setText(items.getTitle());
+						shareEn.setUrl(AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + items.getId());
+						shareEn.setImageUrl(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + items.getImgUrl());
+						// 跳转至WebView
 						Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
+						intent.putExtra("shareEn", shareEn);
+						intent.putExtra("goodsId", items.getId());
 						intent.putExtra("title", items.getTitle());
 						intent.putExtra("lodUrl", AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + items.getId());
 						startActivity(intent);
@@ -281,6 +292,10 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				}
 			}
 			final boolean loop = viewLists.size() > 3 ? true:false;
+			FrameLayout.LayoutParams vplp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+			vplp.width = AppApplication.screenWidth;
+			vplp.height = AppApplication.screenWidth * 324 / 640;
+			viewPager.setLayoutParams(vplp);
 			viewPager.setAdapter(new PagerAdapter()
 			{
 				// 创建
@@ -417,14 +432,21 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					TextView item_full_price = (TextView) view.findViewById(R.id.home_line_goods_item_tv_full_price);
 					TextView item_discount = (TextView) view.findViewById(R.id.home_line_goods_item_tv_discount);
 					item_curr.setText(currStr);
-					item_sell_price.setText(items.getSellPrice()); //商品卖价
+
+					String sell_price = items.getSellPrice(); //商品卖价
 					String full_price = items.getFullPrice(); //商品原价
-					if (StringUtil.isNull(full_price) || full_price.equals("0") || full_price.equals("0.00")) {
+					if (StringUtil.priceIsNull(full_price) || StringUtil.priceIsNull(sell_price)) {
+						if (!StringUtil.priceIsNull(sell_price)) {
+							item_sell_price.setText(sell_price);
+						} else {
+							item_sell_price.setText(full_price);
+						}
 						item_full_price.getPaint().setFlags(0);
 						item_full_price.setVisibility(View.GONE);
 						item_discount.setVisibility(View.GONE);
 					} else {
-						item_full_price.setText(full_price);
+						item_sell_price.setText(sell_price);
+						item_full_price.setText(currStr + full_price);
 						item_full_price.setVisibility(View.VISIBLE);
 						item_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 						if (!StringUtil.isNull(items.getDiscount())) {
@@ -438,9 +460,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					view.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							Intent intent = new Intent(mContext, ProductDetailActivity.class);
-							intent.putExtra("goodsId", items.getId());
-							startActivity(intent);
+							HomeFragmentActivity.instance.openProductDetailActivity(items.getId());
 						}
 					});
 					ll_goods_main.addView(view, lp);
@@ -540,10 +560,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 			@Override
 			public void setOnClick(Object entity, int position, int type) {
-				ProductListEntity data = (ProductListEntity) entity;
-				Intent intent = new Intent(mContext, ProductDetailActivity.class);
-				intent.putExtra("goodsId", data.getId());
-				startActivity(intent);
+				if (entity == null) return;
+				HomeFragmentActivity.instance.openProductDetailActivity(((ProductListEntity) entity).getId());
 			}
 		};
 		lv_two_adapter = new ProductList2ItemAdapter(mContext, lv_show_two, lv_callback);
@@ -619,6 +637,10 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		if (intent != null) {
 			startActivity(intent);
 		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	@Override

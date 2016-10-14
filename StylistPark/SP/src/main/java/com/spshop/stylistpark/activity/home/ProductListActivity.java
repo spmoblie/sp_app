@@ -57,7 +57,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	
 	private static final String TAG = "ProductListActivity";
 	public static ProductListActivity instance = null;
-	public boolean isUpdate = false;
+
 	public static final int TYPE_1 = 1;  //默认
 	public static final int TYPE_2 = 2;  //价格
 
@@ -72,6 +72,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int total_1, total_2_ASC, total_2_DSC;
 	private boolean isLoadOk = true; //加载数据控制符
+	private boolean isUpdate = false;
 	private boolean flag_type_2 = true; //价格排序控制符(true:价格升序/false:价格降序)
 
 	private int mFirstVisibleItem = 0;
@@ -194,7 +195,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			initEditText();
 			initWordsHistoryList();
 		}else {
-			isUpdate = true;
+			updateData();
 			rl_search_et.setVisibility(View.GONE);
 			rl_search_txt.setVisibility(View.GONE);
 			rl_search_line.setVisibility(View.GONE);
@@ -381,10 +382,8 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 
 			@Override
 			public void setOnClick(Object entity, int position, int type) {
-				ProductListEntity data = (ProductListEntity) entity;
-				Intent intent = new Intent(mContext, ProductDetailActivity.class);
-				intent.putExtra("goodsId", data.getId());
-				startActivity(intent);
+				if (entity == null) return;
+				openProductDetailActivity(((ProductListEntity) entity).getId());
 			}
 		};
 		lv_two_adapter = new ProductList2ItemAdapter(mContext, lv_show_two, lv_callback);
@@ -502,7 +501,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			screen_MainEn.getMainLists().get(0).setSelectEn(selectEn);
 		}
 		if (brandId != selectId) {
-			isUpdate = true;
+			updateData();
 		}
 		brandId = selectId;
 	}
@@ -514,7 +513,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		screen_MainEn = mainEn;
 		brandId = brand_id;
 		attrStr = attr_name;
-		isUpdate = true;
+		updateData();
 	}
 
 	@Override
@@ -632,6 +631,10 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private void updateSearchWords(TextView tv_words) {
 		et_search.setText(tv_words.getText().toString());
 		requestSearchDatas();
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 	
 	@Override

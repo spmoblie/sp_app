@@ -26,6 +26,7 @@ import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.BitmapUtil;
+import com.spshop.stylistpark.utils.CleanDataManager;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
@@ -92,7 +93,7 @@ public class AppApplication extends Application implements OnDataListener{
 
 		// 设置每天第一次启动App时清除与日期关联的缓存标志
 		long newDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		long oldDay = shared.getLong(AppConfig.KEY_LOAD_SV_DATA_DAY, 00);
+		long oldDay = shared.getLong(AppConfig.KEY_LOAD_SV_DATA_DAY, 0);
 		if ((newDay == 1 && oldDay != 1) || newDay - oldDay > 0) {
 			clearSharedLoadSVData();
 			shared.edit().putLong(AppConfig.KEY_LOAD_SV_DATA_DAY, newDay).apply();
@@ -126,7 +127,10 @@ public class AppApplication extends Application implements OnDataListener{
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				CategoryDBService.getInstance(spApp).deleteAll();
+				CategoryDBService.getInstance(spApp).deleteAll(); //清空数据库
+				clearImageLoaderCache(); //清除图片缓存
+				CleanDataManager.cleanAppTemporaryData(spApp); //清除临时缓存
+				CleanDataManager.cleanCustomCache(AppConfig.SAVE_PATH_MEDIA_DICE); //清除视频缓存
 			}
 		}).start();
 		shared.edit().putBoolean(AppConfig.KEY_LOAD_CATEGORY_DATA, true).apply();
@@ -159,6 +163,14 @@ public class AppApplication extends Application implements OnDataListener{
 		.tasksProcessingOrder(QueueProcessingType.LIFO)
 		.writeDebugLogs().build();
 		ImageLoader.getInstance().init(config);
+	}
+
+	/**
+	 * 清除图片缓存
+	 */
+	public static void clearImageLoaderCache() {
+		ImageLoader.getInstance().clearDiscCache();
+		ImageLoader.getInstance().clearMemoryCache();
 	}
 
 	/**
@@ -225,7 +237,7 @@ public class AppApplication extends Application implements OnDataListener{
 		}
 		try {
 			BitmapUtil.save(bm, file, compress);
-			if (file.getPath().contains(AppConfig.SAVE_IMAGE_PATH_LONG)) {
+			if (file.getAbsolutePath().contains(AppConfig.SAVE_PATH_IMAGE_SAVE)) {
 				updatePhoto(file); //需要保存的图片更新相册
 			}
 		} catch (IOException e) {

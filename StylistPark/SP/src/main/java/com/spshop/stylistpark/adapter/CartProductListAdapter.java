@@ -106,7 +106,7 @@ public class CartProductListAdapter extends BaseAdapter{
 	/**代表了ListView中的一个item对象*/
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ViewHolder holder = null;
+		ViewHolder holder;
 		if(convertView == null){
 			holder = new ViewHolder();
 			convertView = LayoutInflater.from(context).inflate(R.layout.item_list_cart_product, null);

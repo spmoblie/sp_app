@@ -79,7 +79,7 @@ public class LoaderAndSaveImage {
 						    byte[] data = EntityUtils.toByteArray(entity);
 						    task.bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
 						    //保存到本地
-						    File file = BitmapUtil.createPath(task.newPath, task.saveOR);
+						    File file = BitmapUtil.createPath(task.newPath, task.isSave);
 						    AppApplication.saveBitmapFile(task.bitmap, file, 100);
 						    Message msg = Message.obtain();
 						    msg.obj = file;
@@ -124,11 +124,11 @@ public class LoaderAndSaveImage {
 	 * 
 	 * @param pathCount 图片张数
 	 * @param oldPath 图片URL
-	 * @param saveOR 是否保存到本地
+	 * @param isSave 是否保存
 	 */
-	public void loadAndSaveImage(int pathCount, String oldPath, boolean saveOR){
+	public void loadAndSaveImage(int pathCount, String oldPath, boolean isSave){
 		this.pathCount = pathCount;
-		ImageLoadTask task = new ImageLoadTask(BitmapUtil.filterPath(oldPath), oldPath, saveOR);
+		ImageLoadTask task = new ImageLoadTask(BitmapUtil.filterPath(oldPath), oldPath, isSave);
 		if(!tasks.equals(task)){
 			tasks.add(task);
 			synchronized (workThread) {
@@ -153,12 +153,12 @@ public class LoaderAndSaveImage {
 		private String newPath;
 		private String oldPath;
 		private Bitmap bitmap;
-		private boolean saveOR;
+		private boolean isSave;
 		
-		public ImageLoadTask(String newPath, String oldPath, boolean saveOR){
+		public ImageLoadTask(String newPath, String oldPath, boolean isSave){
 			this.newPath = newPath;
 			this.oldPath = oldPath;
-			this.saveOR = saveOR;
+			this.isSave = isSave;
 		}
 		
 		@Override

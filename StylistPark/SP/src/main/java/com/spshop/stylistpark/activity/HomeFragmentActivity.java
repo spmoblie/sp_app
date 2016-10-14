@@ -28,6 +28,7 @@ import com.spshop.stylistpark.activity.cart.ChildFragmentFour;
 import com.spshop.stylistpark.activity.category.ChildFragmentTwo;
 import com.spshop.stylistpark.activity.events.ChildFragmentThree;
 import com.spshop.stylistpark.activity.home.ChildFragmentOne;
+import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.activity.profile.ChildFragmentFive;
 import com.spshop.stylistpark.activity.profile.MemberListActivity;
@@ -259,7 +260,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			break;
 		case 3:
 			if (!UserManager.getInstance().checkIsLogined()) {
-				openLoginActivity();
+				openLoginActivity(TAG);
 				return;
 			}
 			fragment = (Fragment) mFragmentPagerAdapter.instantiateItem(fl_container, R.id.home_fragment_fl_four);
@@ -295,7 +296,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 		case R.id.home_fragment_fl_four:
 			if (current_index == 3) return;
 			if (!UserManager.getInstance().checkIsLogined()) {
-				openLoginActivity();
+				openLoginActivity(TAG);
 				return;
 			}
 			current_index = 3;
@@ -314,10 +315,17 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 		exit = Boolean.FALSE;
 	}
 	
-	private void openLoginActivity(){
+	public void openLoginActivity(String rootStr){
 		Intent intent = new Intent(this, LoginActivity.class);
-		intent.putExtra("rootPage", TAG);
+		intent.putExtra("rootPage", rootStr);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+
+	public void openProductDetailActivity(int id){
+		if (id == AppConfig.SP_JION_PROGRAM_ID) return; //虚拟商品
+		Intent intent = new Intent(this, ProductDetailActivity.class);
+		intent.putExtra("goodsId", id);
 		startActivity(intent);
 	}
 

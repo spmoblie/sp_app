@@ -270,14 +270,14 @@ public class BitmapUtil {
 	/**
 	 * 创建保存文件到SD卡的路径
 	 */
-	public static File createPath(String path, boolean saveOr) {
+	public static File createPath(String path, boolean isSave) {
 		String[] a = path.split("/");
 		String fileName = a[a.length-1];
-		File file = null;
-		if (saveOr) {
-			file = new File(AppConfig.SAVE_IMAGE_PATH_LONG, fileName);
+		File file;
+		if (isSave) {
+			file = new File(AppConfig.SAVE_PATH_IMAGE_SAVE, fileName);
 		}else {
-			file = new File(AppConfig.SAVE_IMAGE_PATH_TEMPORARY, fileName);
+			file = new File(AppConfig.SAVE_PATH_IMAGE_DICE, fileName);
 		}
 		file = checkFile(file);
 		return file;
@@ -440,9 +440,10 @@ public class BitmapUtil {
 				}
 			}
 			if (longBm != null) {
-				longImgPath = AppConfig.SAVE_IMAGE_PATH_TEMPORARY + "longImg.jpg";
+				File filePath = createPath("longImg.jpg", false);
+				longImgPath = filePath.getAbsolutePath();
 				try {
-					save(longBm, new File(longImgPath), 100);
+					save(longBm, filePath, 100);
 				} catch (IOException e) {
 					ExceptionUtil.handle(e);
 					longImgPath = "";

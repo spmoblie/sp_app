@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_gravity="bottom"
-        android:background="#88ff1493" >
+        android:background="#88ff1493"
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/home_line_sales_item_tv_name"

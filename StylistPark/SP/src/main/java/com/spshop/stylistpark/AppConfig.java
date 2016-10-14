@@ -69,6 +69,9 @@ public class AppConfig {
 	public static final int ERROR_CODE_SUCCESS = 1;
 	// Error状态码：登录失效
 	public static final int ERROR_CODE_LOGOUT = 999;
+
+	// SP加盟计划ID
+	public static final int SP_JION_PROGRAM_ID = 1;
 	
 	// QQ AppID
 	public static final String QQ_APP_ID = "1104891333";
@@ -99,20 +102,20 @@ public class AppConfig {
 	public static final String brandsFileName = "brands";
 	// 内置SD卡路径
 	public static final String SDPATH = Environment.getExternalStorageDirectory().toString();
-	// 长久存储apk包的路径，应用关闭时不清除
-	public static final String SAVE_APK_PATH_LONG = SDPATH + "/stylistpark/apk/long/";
-	// 长久存储文件的路径，应用关闭时不清除
-	public static final String SAVE_TXT_PATH_LONG = SDPATH + "/stylistpark/txt/long/";
-	// 临时存储文件的路径，应用关闭时要清除
-	public static final String SAVE_TXT_PATH_TEMPORARY = SDPATH + "/stylistpark/txt/temporary/";
-	// 长久存储图片的路径，应用关闭时不清除
-	public static final String SAVE_IMAGE_PATH_LONG = SDPATH + "/stylistpark/image/long/";
-	// 临时存储图片的路径，应用关闭时要清除
-	public static final String SAVE_IMAGE_PATH_TEMPORARY = SDPATH + "/stylistpark/image/temporary/";
-	// 长久存储多媒体的路径，应用关闭时不清除
-	public static final String SAVE_MEDIA_PATH_LONG = SDPATH + "/stylistpark/media/long/";
-	// 临时存储多媒体的路径，应用关闭时要清除
-	public static final String SAVE_MEDIA_PATH_TEMPORARY = SDPATH + "/stylistpark/media/temporary/";
+	// 应用缓存路径，应用关闭时须清除
+	public static final String SAVE_PATH_APK_DICE = SDPATH + "/stylistpark/apk/SP_AD/";
+	// 文本保存路径，应用关闭时不清除
+	public static final String SAVE_PATH_TXT_SAVE = SDPATH + "/stylistpark/txt/SP_TS/";
+	// 文本缓存路径，应用关闭时须清除
+	public static final String SAVE_PATH_TXT_DICE = SDPATH + "/stylistpark/txt/SP_TD/";
+	// 图片保存路径，应用关闭时不清除
+	public static final String SAVE_PATH_IMAGE_SAVE = SDPATH + "/stylistpark/image/SP_IS/";
+	// 图片缓存路径，应用关闭时须清除
+	public static final String SAVE_PATH_IMAGE_DICE = SDPATH + "/stylistpark/image/SP_ID/";
+	// 媒体保存路径，应用关闭时不清除
+	public static final String SAVE_PATH_MEDIA_SAVE = SDPATH + "/stylistpark/media/SP_MS/";
+	// 媒体缓存路径，应用关闭时须清除
+	public static final String SAVE_PATH_MEDIA_DICE = SDPATH + "/stylistpark/media/SP_MD/";
 
 	/**
 	 ******************************************* 全局常量设置结束 ******************************************
@@ -151,9 +154,11 @@ public class AppConfig {
 	public static final int REQUEST_SV_GET_BRAND_PROFILE_CODE = 0X1052;
 	// 加载商品详情数据
 	public static final int REQUEST_SV_GET_PRODUCT_DETAIL_CODE = 0X1060;
+	// 加载商品属性数据
+	public static final int REQUEST_SV_GET_PRODUCT_ATTR_CODE = 0X1061;
 	// 提交加入购物车商品数据
 	public static final int REQUEST_SV_POST_CART_PRODUCT_CODE = 0X1070;
-	// 提交收藏商品请求
+	// 提交关注商品请求
 	public static final int REQUEST_SV_POST_COLLECITON_CODE = 0X1080;
 
 	// 加载专题列表请求
@@ -255,6 +260,8 @@ public class AppConfig {
 	public static final String KEY_USER_ID = "user_id";
 	// 偏好设置Key-记录分享ID
 	public static final String KEY_SHARE_ID = "share_id";
+	// 偏好设置Key-记录登入账号
+	public static final String KEY_LOGIN_ACCOUNT = "login_account";
 	// 偏好设置Key-记录用户姓名
 	public static final String KEY_USER_NAME = "user_name";
 	// 偏好设置Key-记录用户身份ID
@@ -273,6 +280,8 @@ public class AppConfig {
 	public static final String KEY_USER_EMAIL = "user_email";
 	// 偏好设置Key-记录用户手机号码
 	public static final String KEY_USER_PHONE = "user_phone";
+	// 偏好设置Key-记录用户账户余额
+	public static final String KEY_USER_MONEY = "user_money";
 	// 偏好设置Key-记录用户等级编号
 	public static final String KEY_USER_RANK_CODE = "user_rank_code";
 	// 偏好设置Key-记录用户等级名称
@@ -301,10 +310,6 @@ public class AppConfig {
 	public static final String KEY_HOME_CURRENT_INDEX = "home_current_index";
 	// 偏好设置Key-记录是否自动跳转到会员页面
 	public static final String KEY_PUSH_PAGE_MEMBER = "push_page_member";
-	// 偏好设置Key-记录视频加载地址
-	public static final String KEY_VIDEO_LOAD_PATH = "video_load_path";
-	// 偏好设置Key-记录视频缓存地址
-	public static final String KEY_VIDEO_SAVE_PATH = "video_save_path";
 
 	/**
 	 ******************************************* 偏好设置Key值设置结束 ******************************************

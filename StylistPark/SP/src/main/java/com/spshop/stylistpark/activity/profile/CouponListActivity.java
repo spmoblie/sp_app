@@ -19,7 +19,6 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.cart.PostOrderActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.CouponListAdapter;
 import com.spshop.stylistpark.entity.BaseEntity;
@@ -44,7 +43,7 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "CouponListActivity";
 	public static CouponListActivity instance = null;
-	public boolean isUpdate = false;
+
 	public static final int TYPE_1 = 0;  //可使用
 	public static final int TYPE_2 = 1;  //已使用
 	public static final int TYPE_3 = 2;  //已过期
@@ -58,7 +57,7 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int total_1, total_2, total_3;
 	private boolean isLoadOk = true; //加载数据控制符
-	private boolean isLogined, isSuccess;
+	private boolean isLogined, isUpdate, isSuccess;
 	private String rootStr, couponId, couponStr, noDataShowStr;
 	
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
@@ -201,7 +200,7 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 	 * 添加优惠券成功后刷新数据
 	 */
 	public void addCouponOk() {
-		isUpdate = true;
+		updateData();
 		topType = TYPE_1;
 		setDefaultRadioButton();
 	}
@@ -379,12 +378,16 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdate = true;
+				updateData();
 			}
 			updateAllData();
 		}else {
 			showTimeOutDialog(TAG);
 		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	private void updateAllData() {
@@ -507,9 +510,7 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 			if (result != null) {
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					if (PostOrderActivity.instance != null) {
-						PostOrderActivity.instance.isUpdate = true;
-					}
+					updateActivityData(9);
 					finish();
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理

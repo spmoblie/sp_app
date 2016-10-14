@@ -23,7 +23,6 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.ProductList2ItemAdapter;
 import com.spshop.stylistpark.adapter.SelectListAdapter;
@@ -61,8 +60,8 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private static final String TAG = "ShowListHeadActivity";
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	public static ShowListHeadActivity instance = null;
+
 	public static final int PAGE_ROOT_CODE_1 = 1001; //CategoryActivity 或 ProductDetailActivity 或 ChildFragmentOne
-	public boolean isUpdate = true;
 	public static final int TYPE_1 = 1;  //默认
 	public static final int TYPE_2 = 2;  //价格
 
@@ -77,6 +76,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int total_1, total_2_ASC, total_2_DSC;
 	private boolean isLoadOk = true; //加载数据控制符
+	private boolean isUpdate = true;
 	private boolean flag_type_2 = true; //价格排序控制符(true:价格升序/false:价格降序)
 
 	private int rootCode = PAGE_ROOT_CODE_1;
@@ -107,6 +107,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private AsyncImageLoader asyncImageLoader;
 
 	private BrandEntity brandEn;
+	private ShareEntity shareEn;
 	private SelectListEntity selectEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
@@ -279,7 +280,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private void setHeadView() {
 		if (brandEn != null) {
 			setTitleLogo(options, IMAGE_URL_HTTP + brandEn.getLogoUrl());
-			setBtnRight(R.drawable.topbar_icon_share);
 			selectEn = brandEn.getSelectEn();
 			endTime = brandEn.getEndTime();
 			if (endTime > 0) {
@@ -321,16 +321,21 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 				@Override
 				public void imageLoaded(String path, String cachePath, Bitmap bm) {
-					shareImgPath = cachePath;
+					initShareData(cachePath);
 					showHeadViews(bm);
 				}
 			});
 			ImageLoadTask task = asyncImageLoader.loadImage(shareImgUrl, 0);
 			if (task != null && task.getBitmap() != null) {
-				shareImgPath = task.getNewPath();
+				initShareData(task.getNewPath());
 				showHeadViews(task.getBitmap());
 			}
 		}
+	}
+
+	private void initShareData(String cachePath) {
+		shareImgPath = cachePath;
+		setBtnRight(R.drawable.topbar_icon_share);
 	}
 
 	private void showHeadViews(Bitmap bm) {
@@ -409,10 +414,8 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 			@Override
 			public void setOnClick(Object entity, int position, int type) {
-				ProductListEntity data = (ProductListEntity) entity;
-				Intent intent = new Intent(mContext, ProductDetailActivity.class);
-				intent.putExtra("goodsId", data.getId());
-				startActivity(intent);
+				if (entity == null) return;
+				openProductDetailActivity(((ProductListEntity) entity).getId());
 			}
 		};
 		lv_two_adapter = new ProductList2ItemAdapter(mContext, lv_show_two, lv_callback);
@@ -513,7 +516,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			selectEn.setSelectEn(newEn);
 		}
 		if (selectId != newId) {
-			isUpdate = true;
+			updateData();
 		}
 		selectId = newId;
 	}
@@ -531,28 +534,20 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void OnListenerRight() {
 		super.OnListenerRight();
-		showShareView();
+		if (shareEn == null && brandEn != null) {
+			shareEn = new ShareEntity();
+			shareEn.setTitle(brandEn.getName());
+			shareEn.setText(brandEn.getDesc());
+			shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "brand.php?id=" + brandEn.getBrandId());
+			shareEn.setImageUrl(shareImgUrl);
+			shareEn.setImagePath(shareImgPath);
+		}
+		showShareView(shareEn);
 	}
 
-	private void showShareView() {
-		if (mShareView != null && brandEn != null) {
-			if (mShareView.getShareEntity() == null) {
-				ShareEntity shareEn = new ShareEntity();
-				shareEn.setTitle(brandEn.getName());
-				shareEn.setText(brandEn.getDesc());
-				shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "brand.php?id=" + brandEn.getBrandId());
-				shareEn.setImageUrl(shareImgUrl);
-				shareEn.setImagePath(shareImgPath);
-				mShareView.setShareEntity(shareEn);
-			}
-			if (mShareView.isShowing()) {
-				mShareView.showShareLayer(false);
-			} else {
-				mShareView.showShareLayer(true);
-			}
-		}else {
-			showShareError();
-		}
+	@Override
+	protected void openLoginActivity() {
+		openLoginActivity(TAG);
 	}
 
 	@Override
@@ -632,33 +627,34 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		setLoadMoreData();
 	}
 	
-	/**
-	 * 刷新所有已缓存的数据
-	 */
-	private void updateAllDatas() {
-		lv_show.clear();
-		lv_show_two.clear();
-		lv_all_1.clear();
-		lv_all_2_DSC.clear();
-		lv_all_2_ASC.clear();
-		am_all_1.clear();
-		am_all_2_asc.clear();
-		am_all_2_dsc.clear();
-		getSVDatas();
-	}
-
 	@Override
 	protected void onResume() {
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
 
+		updateAllData();
+		super.onResume();
+	}
+
+	public void updateData() {
+		isUpdate = true;
+	}
+
+	private void updateAllData() {
 		if (isUpdate) {
 			isUpdate = false;
-			updateAllDatas();
+			lv_show.clear();
+			lv_show_two.clear();
+			lv_all_1.clear();
+			lv_all_2_DSC.clear();
+			lv_all_2_ASC.clear();
+			am_all_1.clear();
+			am_all_2_asc.clear();
+			am_all_2_dsc.clear();
+			getSVDatas();
 			updateScreenStatus();
 		}
-		super.onResume();
 	}
 
 	@Override

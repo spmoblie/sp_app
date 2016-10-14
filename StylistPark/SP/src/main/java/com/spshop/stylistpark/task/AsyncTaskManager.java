@@ -145,7 +145,7 @@ public class AsyncTaskManager {
 				try {
 					boolean networkOK = NetworkUtil.networkStateTips();
 					if (networkOK || AppApplication.loadDBData) {
-						Object result = null;
+						Object result;
 						if (bean.getListener() != null) {
 							result = bean.getListener().doInBackground(bean.getRequestCode());
 							bean.setState(REQUEST_SUCCESS_CODE);
@@ -180,7 +180,6 @@ public class AsyncTaskManager {
 
 		@Override
 		protected void onPostExecute(Object result) {
-			DownLoad bean = (DownLoad) result;
 			if (bean == null || bean.getListener() == null) return;
 			switch (bean.getState()) {
 			case REQUEST_SUCCESS_CODE: // 加载成功

@@ -14,14 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
@@ -42,8 +40,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	
 	private static final String TAG = "OrderDetailActivity";
 	public static OrderDetailActivity instance = null;
-	private boolean isUpdate = false;
-	
+
 	private TextView tv_name, tv_phone, tv_address, tv_order_no, tv_order_date, tv_order_status;
 	private TextView tv_logistics_name, tv_logistics_no;
 	private TextView tv_goods_total, tv_buyer, tv_invoice, tv_pay_type, tv_valid_time;
@@ -53,10 +50,9 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	private LinearLayout ll_logistics, ll_goods_lists, ll_order_edit;
 	
 	private OrderEntity orderEn;
-	private DisplayImageOptions options;
 	private MyTimer mTimer;
 	private String logisticsCode, orderId;
-	private boolean isLogined, isSuccess;
+	private boolean isLogined, isUpdate, isSuccess;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +64,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		
 		instance = this;
 		orderId = getIntent().getExtras().getString("orderId");
-		options = AppApplication.getDefaultImageOptions();
-		
+
 		findViewById();
 		initView();
 	}
@@ -227,9 +222,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 					
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent(mContext, ProductDetailActivity.class);
-						intent.putExtra("goodsId", itemEn.getId());
-						startActivity(intent);
+						openProductDetailActivity(itemEn.getId());
 					}
 				});
 				ll_goods_lists.addView(view);
@@ -241,17 +234,9 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	 * 刷新订单数据状态
 	 */
 	public void updateOrderStatus() {
-		isUpdate = true;
-		updateOrderList();
-	}
-
-	/**
-	 * 刷新订单列表数据
-	 */
-	private void updateOrderList() {
-		if (OrderListActivity.instance != null) {
-			OrderListActivity.instance.isUpdate = true;
-		}
+		updateData();
+		updateActivityData(5);
+		updateActivityData(10);
 	}
 
 	private void getSVData() {
@@ -353,8 +338,8 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 
 		@Override
 		public void onFinish() {
-			updateOrderList();
-			getSVData();
+			updateOrderStatus();
+			updateAllData();
 		}
 		
 	}
@@ -372,12 +357,16 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdate = true;
+				updateData();
 			}
 			updateAllData();
 		}else {
 			showTimeOutDialog(TAG);
 		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	private void updateAllData() {

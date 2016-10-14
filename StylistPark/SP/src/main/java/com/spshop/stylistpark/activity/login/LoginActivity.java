@@ -90,7 +90,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	private UserManager um;
 	private UserInfoEntity fbOauthEn;
 	private boolean isStop = false;
-	private String rootPage, loginType, postUid, userStr, passWordStr;
+	private String rootPage, loginType, postUid, loginAccount, passWordStr;
 	// WX
 	private static final String WX_APP_ID = AppConfig.WX_APP_ID;
 	private String access_token, openid, unionid, refresh_token;
@@ -126,7 +126,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		instance = this;
 		rootPage = getIntent().getExtras().getString("rootPage");
 		um = UserManager.getInstance();
-		userStr = um.getUserNick();
+		loginAccount = um.getLoginAccount();
 
 		// QQ
 		mTencent = Tencent.createInstance(QQ_APP_ID, mContext);
@@ -192,8 +192,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 				}
 			}
 		});
-		if (!StringUtil.isNull(userStr)) { //显示偏好设置
-			et_user.setText(userStr);
+		if (!StringUtil.isNull(loginAccount)) { //显示偏好设置
+			et_user.setText(loginAccount);
 			et_user.setSelection(et_user.length());
 		}
 		iv_check_password.setSelected(false);//设置默认隐藏密码
@@ -212,8 +212,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void login() {
-		userStr = et_user.getText().toString();
-		if (userStr.isEmpty()) {
+		loginAccount = et_user.getText().toString();
+		if (loginAccount.isEmpty()) {
 			CommonTools.showToast(getString(R.string.login_input_user_name), 1000);
 			return;
 		}
@@ -841,6 +841,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     public void OnListenerLeft() {
     	LogUtil.i(TAG, "rootPage = " + rootPage);
     	if (!rootPage.equals("ProductDetailActivity") 
+    	 && !rootPage.equals("ShowListHeadActivity")
     	 && !rootPage.equals("HomeFragmentActivity")
     	 && !rootPage.equals("MyWebViewActivity")
     	 && !rootPage.equals("CartActivity")
@@ -889,7 +890,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_POST_ACCOUNT_LOGIN_CODE: //账号密码登入
 			uri = AppConfig.URL_COMMON_USER_URL + "?act=signin";
-			params.add(new MyNameValuePair("username", userStr));
+			params.add(new MyNameValuePair("username", loginAccount));
 			params.add(new MyNameValuePair("password", passWordStr));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_ACCOUNT_LOGIN_CODE, uri, params, HttpUtil.METHOD_POST);
 
@@ -920,7 +921,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					if (infoEn.getErrCode() == 1) //校验通过
 					{
 						um.saveUserLoginSuccess(infoEn.getUserId());
-						um.saveUserNick(userStr);
+						um.saveLoginAccount(loginAccount);
 						stopAnimation();
 						finish();
 					}

@@ -24,14 +24,13 @@ import java.util.List;
 public class LogisticsActivity extends BaseActivity {
 
 	private static final String TAG = "LogisticsActivity";
-	public boolean isUpdate = false;
-	
+
 	private FrameLayout rl_no_data;
 	private TextView tv_no_data;
 	private ListView mListView;
 	private LogisticsListAdapter lv_adapter;
-	private boolean isLogined, isSuccess;
 	private String typeStr, postId;
+	private boolean isLogined, isUpdate, isSuccess;
 	private List<LogisticsEntity> logLists = new ArrayList<LogisticsEntity>();
 	
 	@Override
@@ -83,12 +82,16 @@ public class LogisticsActivity extends BaseActivity {
 		isLogined = UserManager.getInstance().checkIsLogined();
 		if (isLogined) {
 			if (!isSuccess) {
-				isUpdate = true;
+				updateData();
 			}
 			updateAllData();
 		}else {
 			showTimeOutDialog(TAG);
 		}
+	}
+
+	public void updateData() {
+		isUpdate = true;
 	}
 
 	private void updateAllData() {

@@ -411,7 +411,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			datas = attrEn.getAttrLists();
 			if (attrEn.getSkuLists() != null) {
 				skuHashMap.clear();
-				ProductAttrEntity sku = null;
+				ProductAttrEntity sku;
 				for (int i = 0; i < attrEn.getSkuLists().size(); i++) {
 					sku = attrEn.getSkuLists().get(i);
 					if (sku != null) {

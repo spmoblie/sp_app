@@ -191,9 +191,7 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 			BaseEntity userEn = (BaseEntity) result;
 			if (userEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS){ //提交成功
 				CommonTools.showToast(getString(R.string.submit_success), 2000);
-				if (AccountBalanceActivity.instance != null) {
-					AccountBalanceActivity.instance.isUpdate = true;
-				}
+				updateActivityData(7);
 				finish();
 			}else if (userEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 				// 登入超时，交BaseActivity处理

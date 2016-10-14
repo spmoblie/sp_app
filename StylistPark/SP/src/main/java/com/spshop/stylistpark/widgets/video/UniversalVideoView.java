@@ -702,6 +702,7 @@ public class UniversalVideoView extends SurfaceView
     @Override
     public void start() {
         if (mMediaController != null) {
+            mMediaController.hideError();
             mMediaController.hideComplete();
         }
         if (!mPreparedBeforeStart && mMediaController != null) {

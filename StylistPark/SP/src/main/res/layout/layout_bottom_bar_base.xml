@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_bar_base_ll_main"
+    style="@style/top_main_layout"
+    android:orientation="vertical"
+    android:visibility="gone" >
+
+    <ImageView
+        style="@style/set_line_horizontal_bg"
+        android:contentDescription="@string/desc" />
+
+    <LinearLayout
+        android:id="@+id/bottom_bar_base_ll_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bottom_bar_base_tv_call"
+                style="@style/commom_mean_tab_text_assist"
+                android:drawableTop="@drawable/topbar_icon_call"
+                android:text="@string/product_call" />
+
+            <ImageView
+                android:id="@+id/bottom_bar_base_iv_line_1"
+                style="@style/set_line_vertical_bg"
+                android:contentDescription="@string/desc" />
+
+            <TextView
+                android:id="@+id/bottom_bar_base_tv_collection"
+                style="@style/commom_mean_tab_text_assist"
+                android:drawableTop="@drawable/selector_img_collection"
+                android:text="@string/product_collection" />
+
+            <ImageView
+                android:id="@+id/bottom_bar_base_iv_line_2"
+                style="@style/set_line_vertical_bg"
+                android:contentDescription="@string/desc" />
+
+            <FrameLayout style="@style/home_tab_frame">
+
+                <TextView
+                    android:id="@+id/bottom_bar_base_tv_cart"
+                    style="@style/home_tab_text"
+                    android:drawableTop="@drawable/topbar_icon_cart"
+                    android:text="@string/product_cart"
+                    android:textColor="@color/label_text_color"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/bottom_bar_base_tv_cart_total"
+                    style="@style/commom_warn_red_number_text"
+                    android:layout_marginTop="2dp" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/bottom_bar_base_tv_add_cart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_frame_bg_app_buttom_0"
+            android:gravity="center"
+            android:text="@string/product_add_cart"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
+
+</LinearLayout>

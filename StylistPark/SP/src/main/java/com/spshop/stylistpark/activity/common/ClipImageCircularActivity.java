@@ -44,7 +44,7 @@ public class ClipImageCircularActivity extends BaseActivity{
 		// 设置需要裁剪的图片
 		Bitmap bm =BitmapFactory.decodeFile(photoPath);
 		if (bm != null) {
-			bm = BitmapUtil.resizeImageByWidth(bm, 640);
+			bm = BitmapUtil.resizeImageByWidth(bm, width);
 			imageView.setImageBitmap(bm);
 		}else {
 			CommonTools.showToast(getString(R.string.photo_select_no_data), 1000);
@@ -57,12 +57,12 @@ public class ClipImageCircularActivity extends BaseActivity{
 		// 此处获取剪裁后的bitmap
 		Bitmap bm = imageView.clip();
 		if (bm != null) {
-			File file = BitmapUtil.createPath("user_head.png", true);
+			File file = BitmapUtil.createPath("user_head.png", false);
 			if (file == null) {
             	showErrorDialog(R.string.photo_show_save_fail);
     			return;
 			}
-			AppApplication.clip_photo_path = file.getPath();
+			AppApplication.clip_photo_path = file.getAbsolutePath();
 			AppApplication.saveBitmapFile(bm, file, 100);
 		}else {
 			CommonTools.showToast(getString(R.string.photo_clip_error), 1000);

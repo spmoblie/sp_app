@@ -23,7 +23,6 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.category.CategoryActivity;
-import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.adapter.AdapterCallback;
 import com.spshop.stylistpark.adapter.CartProductListAdapter;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
@@ -198,9 +197,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 						updateSelectAllView();
 						break;
 					case CartProductListAdapter.TYPE_CHECK: //查看
-						Intent intent = new Intent(mContext, ProductDetailActivity.class);
-						intent.putExtra("goodsId", changeData.getId());
-						startActivity(intent);
+						openProductDetailActivity(changeData.getId());
 						break;
 					case CartProductListAdapter.TYPE_MINUS: //数量减1
 						if (!isChange) return;
@@ -515,13 +512,6 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	private void changeFailUpdateCartData(String msg) {
 		checkLogin();
 		CommonTools.showToast(msg, 3000);
-	}
-
-	/**
-	 * 更新缓存的购物车商品数量
-	 */
-	private void updateCartTotal(int cartNumTotal) {
-		UserManager.getInstance().saveCartTotal(cartNumTotal);
 	}
 
 	/**

@@ -187,6 +187,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 				// 跳转至WebView
 				Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
 				intent.putExtra("shareEn", shareEn);
+				intent.putExtra("isComment", true);
 				intent.putExtra("postId", selectEn.getId());
 				intent.putExtra("title", selectEn.getTitle());
 				intent.putExtra("lodUrl", AppConfig.URL_COMMON_ARTICLE_URL + "?id=" + selectEn.getId());

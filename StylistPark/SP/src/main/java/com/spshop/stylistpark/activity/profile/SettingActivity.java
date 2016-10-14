@@ -180,7 +180,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		case R.id.setting_rl_about_us:
 			intent = new Intent(mContext, MyWebViewActivity.class);
 			intent.putExtra("title", getString(R.string.setting_about_us));
-			intent.putExtra("lodUrl", "http://sports.qq.com/nba/");
+			intent.putExtra("lodUrl", AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + AppConfig.SP_JION_PROGRAM_ID);
 			break;
 		case R.id.setting_rl_logout:
 			if (isLogined) {

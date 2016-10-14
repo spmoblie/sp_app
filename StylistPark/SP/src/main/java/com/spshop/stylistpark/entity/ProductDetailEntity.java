@@ -140,11 +140,6 @@ public class ProductDetailEntity extends BaseEntity{
 	 * 商品活动集合
 	 */
 	private List<ProductDetailEntity> promotionLists;
-	
-	/**
-	 * 商品属性实体
-	 */
-	private ProductAttrEntity attrEn;
 
 	
 	public ProductDetailEntity() {
@@ -430,14 +425,4 @@ public class ProductDetailEntity extends BaseEntity{
 		this.promotionLists = promotionLists;
 	}
 
-
-	public ProductAttrEntity getAttrEn() {
-		return attrEn;
-	}
-
-
-	public void setAttrEn(ProductAttrEntity attrEn) {
-		this.attrEn = attrEn;
-	}
-	
 }
