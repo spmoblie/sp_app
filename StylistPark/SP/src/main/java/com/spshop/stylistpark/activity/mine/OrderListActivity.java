@@ -67,7 +67,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	private boolean isLogined, isUpdate, isSuccess;
 
 	private int rootCode = 0; //页面来源标记
-	private String orderId, orderStr, noDataShowStr;
+	private String titleStr, orderId, orderStr, noDataShowStr;
 	
 	private RadioButton btn_1, btn_2, btn_3, btn_4, btn_5;
 	private RelativeLayout rl_top_screen, rl_loading;
@@ -102,6 +102,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		instance = this;
 		rootCode = getIntent().getExtras().getInt("rootType", 0);
 		topType = getIntent().getExtras().getInt("topType", TYPE_1);
+		titleStr = getIntent().getExtras().getString("showTitle", "");
 		
 		findViewById();
 		initView();
@@ -122,16 +123,11 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initView() {
-		orderStr = getString(R.string.order_order);
-		if (rootCode == 0) {
-			setTitle(R.string.mine_my_order);
-		}else { //会员订单
-			String memberType = getString(R.string.mine_member);
-			if (UserManager.getInstance().isTalent()) { //达人
-				memberType = getString(R.string.mine_customer);
-			}
-			setTitle(getString(R.string.mine_member_order, memberType));
+		if (rootCode == 0) { //我的订单
+			titleStr = getString(R.string.mine_my_order);
 		}
+		setTitle(titleStr);
+		orderStr = getString(R.string.order_order);
 		iv_to_top.setOnClickListener(this);
 		
 		initRaidoGroup();
@@ -288,7 +284,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		switch (topType) {
 		case TYPE_1:
 			defaultBtn = btn_1;
-			noDataShowStr = orderStr;
+			noDataShowStr = titleStr;
 			break;
 		case TYPE_2:
 			defaultBtn = btn_2;
@@ -316,7 +312,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			break;
 		default:
 			defaultBtn = btn_1;
-			noDataShowStr = orderStr;
+			noDataShowStr = titleStr;
 			break;
 		}
 		defaultBtn.setChecked(true);
@@ -404,7 +400,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_1: //全部
 			if (topType == TYPE_1) return;
 			topType = TYPE_1;
-			noDataShowStr = orderStr;
+			noDataShowStr = titleStr;
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
 				addOldListDatas(lv_all_1, page_type_1, total_1);
 			}else {
@@ -670,7 +666,6 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					updateData();
 					updateAllData();
-					updateActivityData(5);
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
 				}else {

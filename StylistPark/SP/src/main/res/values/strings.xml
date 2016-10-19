@@ -34,6 +34,7 @@
     <string name="time_divided">:</string>
     <string name="multiplication">×</string>
     <string name="number_0">0</string>
+    <string name="price_00">0.00</string>
     <string name="num_total">Total %1$d piece</string>
     <string name="prompt">Operation Prompt</string>
     <string name="delete">Delete</string>

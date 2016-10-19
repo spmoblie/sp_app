@@ -64,7 +64,8 @@
 
         <RelativeLayout
             android:id="@+id/payment_rl_select_zfb"
-            style="@style/common_vertical_item_layout">
+            style="@style/common_vertical_item_layout"
+            android:visibility="gone" >
 
             <ImageView
                 android:id="@+id/payment_iv_pay_zfb"
@@ -105,7 +106,8 @@
         <ImageView
             style="@style/set_line_horizontal_bg"
             android:layout_marginLeft="15dp"
-            android:contentDescription="@string/desc" />
+            android:contentDescription="@string/desc"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/payment_rl_select_weixi"

@@ -26,7 +26,6 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
-import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase.OnRefreshListener;
@@ -98,23 +97,6 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 		if (mainEn != null) {
 			amountTotal = mainEn.getAmount();
 			UserManager.getInstance().saveUserMoney(currStr + amountTotal);
-			String amountStr = String.valueOf(amountTotal);
-			if (StringUtil.isNull(amountStr)) {
-				amountStr = "0";
-			}
-			if (amountStr.length() <= 1) {
-				tv_amount.setTextSize(24);
-			} else if (amountStr.length() == 2) {
-				tv_amount.setTextSize(23);
-			} else if (amountStr.length() == 3) {
-				tv_amount.setTextSize(22);
-			} else if (amountStr.length() == 4) {
-				tv_amount.setTextSize(21);
-			} else if (amountStr.length() == 5) {
-				tv_amount.setTextSize(20);
-			} else {
-				tv_amount.setTextSize(18);
-			}
 			tv_amount.setText(decimalFormat.format(amountTotal));
 
 			ll_auth_main.setVisibility(View.VISIBLE);
@@ -128,8 +110,9 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 					break;
 				case 2: //未认证
 					overHintStr = getString(R.string.money_auth_explain);
-					tv_hint.setText(overHintStr + "，");
-					tv_auth.setVisibility(View.VISIBLE);
+					tv_hint.setText(overHintStr);
+					//tv_hint.setText(overHintStr + "，");
+					//tv_auth.setVisibility(View.VISIBLE);
 					break;
 				case 3: //非达人
 					tv_hint.setText(R.string.money_over_hint);

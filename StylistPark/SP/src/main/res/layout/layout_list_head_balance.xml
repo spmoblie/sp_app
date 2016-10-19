@@ -32,9 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/number_0"
+            android:text="@string/price_00"
             android:textColor="@color/text_color_white"
-            android:textSize="@dimen/text_size_22"
+            android:textSize="@dimen/text_size_18"
             android:textStyle="bold" />
     </LinearLayout>
     

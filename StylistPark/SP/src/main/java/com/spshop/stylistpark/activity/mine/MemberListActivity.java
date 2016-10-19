@@ -55,7 +55,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	private int total_1, total_2, total_3, total_4;
 	private boolean isLoadOk = true; //加载数据控制符
 	private boolean isLogined, isUpdate, isSuccess;
-	private String typeStr, noDataShowStr;
+	private String titleStr, noDataShowStr;
 
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
 	private RelativeLayout rl_top_screen, rl_loading;
@@ -87,7 +87,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 
 		shared.edit().putBoolean(AppConfig.KEY_PUSH_PAGE_MEMBER, false).apply();
 		topType = getIntent().getExtras().getInt("topType", TYPE_1);
-		
+		titleStr = getIntent().getExtras().getString("showTitle", "");
+
 		findViewById();
 		initView();
 	}
@@ -106,13 +107,8 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initView() {
-		if (UserManager.getInstance().isTalent()) { //达人
-			typeStr = getString(R.string.mine_customer);
-		} else {
-			typeStr = getString(R.string.mine_member);
-		}
-		setTitle(getString(R.string.mine_my_member, typeStr));
-		noDataShowStr = getString(R.string.loading_no_data, typeStr);
+		setTitle(titleStr);
+		noDataShowStr = getString(R.string.loading_no_data, titleStr);
 		iv_to_top.setOnClickListener(this);
 		
 		initRaidoGroup();
@@ -283,7 +279,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_1:
 			if (topType == TYPE_1) return;
 			topType = TYPE_1;
-			noDataShowStr = getString(R.string.loading_no_data, typeStr);
+			noDataShowStr = getString(R.string.loading_no_data, titleStr);
 			if (lv_all_1 != null && lv_all_1.size() > 0) {
 				addOldListDatas(lv_all_1, page_type_1, total_1);
 			}else {
@@ -295,7 +291,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_2:
 			if (topType == TYPE_2) return;
 			topType = TYPE_2;
-			noDataShowStr = typeStr + getString(R.string.loading_no_data, getString(R.string.member_data_null_2));
+			noDataShowStr = getString(R.string.loading_no_data, getString(R.string.member_data_null_2));
 			if (lv_all_2 != null && lv_all_2.size() > 0) {
 				addOldListDatas(lv_all_2, page_type_2, total_2);
 			}else {
@@ -307,7 +303,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_3:
 			if (topType == TYPE_3) return;
 			topType = TYPE_3;
-			noDataShowStr = typeStr + getString(R.string.loading_no_data, getString(R.string.member_data_null_3));
+			noDataShowStr = getString(R.string.loading_no_data, getString(R.string.member_data_null_3));
 			if (lv_all_3 != null && lv_all_3.size() > 0) {
 				addOldListDatas(lv_all_3, page_type_3, total_3);
 			}else {
@@ -319,7 +315,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 		case R.id.topbar_radio_rb_4:
 			if (topType == TYPE_4) return;
 			topType = TYPE_4;
-			//noDataShowStr = typeStr + getString(R.string.loading_no_data, getString(R.string.member_data_null_3));
+			//noDataShowStr = getString(R.string.loading_no_data, getString(R.string.member_data_null_3));
 			if (lv_all_4 != null && lv_all_4.size() > 0) {
 				addOldListDatas(lv_all_4, page_type_4, total_4);
 			}else {

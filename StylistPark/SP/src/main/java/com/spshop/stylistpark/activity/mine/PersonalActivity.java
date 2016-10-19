@@ -62,8 +62,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	private int genderCode = 0;
 	private boolean isAuth = false;
 	private boolean isUpload = false;
-	private boolean update_fragment = false;
-	
+
 	private UserInfoEntity infoEn;
 	private UserManager userManager;
 	private AsyncImageUpload asyncImageUpload;
@@ -180,7 +179,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 								isUpload = baseEn.getErrCode() == 1 ? false : true;
 								if (!isUpload) {
 									// 刷新头像
-									update_fragment = true;
+									updateActivityData(5);
 									// 清除图片缓存
 									AppApplication.clearImageLoaderCache();
 									CommonTools.showToast(getString(R.string.photo_upload_img_ok, getString(R.string.mine_avatar)), 1000);
@@ -207,14 +206,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			isUpload = false;
 			CommonTools.showToast(getString(R.string.photo_img_url_error, getString(R.string.mine_avatar)), 1000);
 		}
-	}
-	
-	@Override
-	public void OnListenerLeft() {
-		if (update_fragment) {
-			updateActivityData(5);
-		}
-		super.OnListenerLeft();
 	}
 
 	@Override
@@ -441,7 +432,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 				}
 				userManager.saveUserNick(nickStr);
 				setView();
-				update_fragment = true;
 			}
 			else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_GENDER) //修改性别
 			{
@@ -451,7 +441,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 				}
 				userManager.saveUserGender(genderCode);
 				setView();
-				update_fragment = true;
 			}
 			else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_INTRO) //修改简介
 			{
@@ -461,7 +450,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 				}
 				userManager.saveUserIntro(introStr);
 				setView();
-				update_fragment = true;
 			}
 			else if (requestCode == AppConfig.ACTIVITY_CHANGE_USER_EMAIL) //修改邮箱
 			{
@@ -471,7 +459,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 				}
 				userManager.saveUserEmail(emailStr);
 				setView();
-				update_fragment = true;
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -585,7 +572,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					changeStr = "";
 					changeTypeKey = "";
-					update_fragment = true;
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
 				}else {

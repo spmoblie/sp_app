@@ -149,11 +149,7 @@ public class WXEntryActivity extends BaseActivity {
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
-		switch (requestCode) {
-			case AppConfig.REQUEST_SV_GET_WX_SHARE_CODE:
-				updateActivityData(5);
-				break;
-		}
+
 	}
 
 	@Override

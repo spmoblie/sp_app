@@ -69,7 +69,17 @@ public class UserInfoEntity extends BaseEntity {
 	 * 用户等级名称
 	 */
 	private String userRankName;
-	
+
+	/**
+	 * 等级分类标签1
+	 */
+	private String rankType1;
+
+	/**
+	 * 等级分类标签2
+	 */
+	private String rankType2;
+
 	/**
 	 * 待付款订单数
 	 */
@@ -258,6 +268,21 @@ public class UserInfoEntity extends BaseEntity {
 		this.userRankName = userRankName;
 	}
 
+	public String getRankType1() {
+		return rankType1;
+	}
+
+	public void setRankType1(String rankType1) {
+		this.rankType1 = rankType1;
+	}
+
+	public String getRankType2() {
+		return rankType2;
+	}
+
+	public void setRankType2(String rankType2) {
+		this.rankType2 = rankType2;
+	}
 
 	public int getOrder_1() {
 		return order_1;

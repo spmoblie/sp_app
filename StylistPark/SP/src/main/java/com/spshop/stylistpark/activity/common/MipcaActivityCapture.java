@@ -12,6 +12,8 @@ import android.os.Vibrator;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
@@ -69,6 +71,10 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
 		AppApplication.onPageStart(this, TAG);
 		super.onResume();
 		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.height = width * 4 / 3;
+		surfaceView.setLayoutParams(lp);
+
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();
 		if (hasSurface) {
 			initCamera(surfaceHolder);

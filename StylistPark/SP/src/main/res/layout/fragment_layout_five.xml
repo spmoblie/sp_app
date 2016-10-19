@@ -198,7 +198,7 @@
                     <TextView
                         android:id="@+id/fragment_five_tv_money"
                         style="@style/setting_lay_text_content"
-                        android:text="@string/number_0"
+                        android:text="@string/price_00"
                         android:textColor="@color/price_text_color" />
                 </RelativeLayout>
 

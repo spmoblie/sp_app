@@ -111,8 +111,8 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		if (orderEn != null) {
 			String signStr = getString(R.string.sign_semicolon);
 			tv_order_no.setText(getString(R.string.order_order_no, orderEn.getOrderNo()));
-			tv_order_date.setText(getString(R.string.order_order_date, 
-					TimeUtil.getFormatedDateTime("yyyy-MM-dd HH:mm:ss", orderEn.getCreateTime())));
+			//String addTime = TimeUtil.getFormatedDateTime("yyyy-MM-dd HH:mm:ss", orderEn.getCreateTime());
+			tv_order_date.setText(getString(R.string.order_order_date, orderEn.getAddTime()));
 			tv_order_status.setText(orderEn.getStatusName());
 			tv_logistics_name.setText(getString(R.string.order_logistics_name, orderEn.getLogisticsName()));
 			tv_logistics_no.setText(getString(R.string.order_logistics_no, orderEn.getLogisticsNo()));
@@ -129,7 +129,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			tv_coupon.setText("-" + currStr + orderEn.getPriceCoupon());
 			tv_discount_name.setText(orderEn.getPriceDiscountName() + signStr);
 			tv_discount.setText("-" + currStr + orderEn.getPriceDiscount());
-			tv_pay_name.setText(orderEn.getPricePaidName() + signStr);
+			tv_pay_name.setText(orderEn.getPricePaidName());
 			tv_pay.setText(currStr + orderEn.getPricePaid());
 			// 商品列表
 			addGoodsLists();
@@ -144,7 +144,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			ll_logistics.setVisibility(View.GONE);
 			rl_pay_type.setVisibility(View.VISIBLE);
 			if (orderEn.getStatus() == 1) { //待支付
-				tv_pay_name.setText(orderEn.getPricePayName() + signStr);
+				tv_pay_name.setText(orderEn.getPricePayName());
 				tv_pay.setText(currStr + orderEn.getPricePay());
 
 				ll_order_edit.setVisibility(View.VISIBLE);
@@ -235,7 +235,6 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	 */
 	public void updateOrderStatus() {
 		updateData();
-		updateActivityData(5);
 		updateActivityData(10);
 	}
 

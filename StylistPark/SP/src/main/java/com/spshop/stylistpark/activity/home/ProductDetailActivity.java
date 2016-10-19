@@ -45,7 +45,6 @@ import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.ObservableScrollView;
 import com.spshop.stylistpark.widgets.ObservableScrollView.ScrollViewListener;
 
@@ -290,11 +289,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		for (int i = 0; i < imgEns.size(); i++) {
 			if (i == 0) {
 				fristGoodsImgUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMinUrl();
-				if (UserManager.getInstance().isTalent()) { //达人
-					shareImgUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMaxUrl();
-				} else {
-					shareImgUrl = fristGoodsImgUrl;
-				}
+				shareImgUrl = fristGoodsImgUrl;
 			}
 			if (i < idsSize) {
 				String imgMaxUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMaxUrl();
@@ -323,7 +318,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			@Override
 			public Object instantiateItem(View container, int position)
 			{
-				View layout = null;
+				View layout;
 				if (loop) {
 					layout = viewLists.get(position % viewLists.size());
 				}else {

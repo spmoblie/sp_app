@@ -357,7 +357,6 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		intent.putExtra("rootType", rootType);
 		intent.putExtra("topType", topType);
 		startActivity(intent);
-		updateActivityData(5);
 		finish();
 	}
 

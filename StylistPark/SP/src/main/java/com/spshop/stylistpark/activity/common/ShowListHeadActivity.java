@@ -40,7 +40,6 @@ import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
-import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import com.spshop.stylistpark.widgets.stikkyheader.AnimatorBuilder;
@@ -311,12 +310,8 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private void loadShareImg() {
 		if (!StringUtil.isNull(brandEn.getDefineUrl())) {
 			logoImgUrl = IMAGE_URL_HTTP + brandEn.getDefineUrl();
+			shareImgUrl = logoImgUrl;
 			ImageLoader.getInstance().displayImage(logoImgUrl, iv_brand_img, options);
-			if (UserManager.getInstance().isTalent()) { //达人
-				shareImgUrl = IMAGE_URL_HTTP + brandEn.getDefineUrl();
-			} else {
-				shareImgUrl = logoImgUrl;
-			}
 			asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoader.AsyncImageLoaderCallback() {
 
 				@Override

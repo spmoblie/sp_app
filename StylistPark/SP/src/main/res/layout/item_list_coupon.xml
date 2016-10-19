@@ -10,22 +10,23 @@
     android:paddingTop="15dp" >
 
     <LinearLayout
+        android:id="@+id/item_list_coupon_ll_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/ui_bg_color_white"
-        android:orientation="vertical"
-        android:padding="10dp" >
+        android:layout_height="144dp"
+        android:background="@drawable/icon_coupon_use"
+        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="11"
             android:baselineAligned="false"
             android:orientation="horizontal" >
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3" >
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
 
                 <TextView
                     android:id="@+id/item_list_coupon_tv_currency"
@@ -35,7 +36,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:textColor="@color/price_text_color"
-                    android:textSize="@dimen/text_size_14" />
+                    android:textSize="@dimen/text_size_16" />
 
                 <TextView
                     android:id="@+id/item_list_coupon_tv_money"
@@ -44,47 +45,47 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/item_list_coupon_tv_currency"
                     android:textColor="@color/price_text_color"
-                    android:textSize="@dimen/text_size_30"
+                    android:textSize="33sp"
                     android:textStyle="bold" />
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="4" >
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/item_list_coupon_tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:ellipsize="end"
-                    android:lines="1"
+                    android:maxLines="2"
                     android:textColor="@color/conte_text_color"
-                    android:textSize="@dimen/text_size_12" />
+                    android:textSize="@dimen/text_size_14" />
 
                 <TextView
                     android:id="@+id/item_list_coupon_tv_limit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:ellipsize="end"
                     android:lines="1"
                     android:textColor="@color/conte_text_color"
-                    android:textSize="@dimen/text_size_12" />
-            </RelativeLayout>
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
         </LinearLayout>
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@string/desc" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" >
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="center_vertical" >
 
             <TextView
                 android:id="@+id/item_list_coupon_tv_status"
@@ -108,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
                 android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_12" />
         </RelativeLayout>

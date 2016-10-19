@@ -34,6 +34,7 @@
     <string name="time_divided">:</string>
     <string name="multiplication">×</string>
     <string name="number_0">0</string>
+    <string name="price_00">0.00</string>
     <string name="num_total">共%1$d件</string>
     <string name="prompt">操作提示</string>
     <string name="delete">删除</string>
@@ -326,11 +327,11 @@
     <string name="login_input_user_name">请输入邮箱/卡号</string>
     <string name="login_password">密码</string>
     <string name="login_input_password">请输入密码</string>
-    <string name="login_input_password_again">请再次输入密码</string>
+    <string name="login_input_password_again">请确认密码</string>
     <string name="login_password_error">两次输入的密码不一致！请重新输入！</string>
-    <string name="login_input_email">请输入邮箱地址</string>
+    <string name="login_input_email">请输入邮箱</string>
     <string name="login_email_format_error">请检查邮箱格式是否正确？</string>
-    <string name="login_input_verify_code">输入右侧验证码</string>
+    <string name="login_input_verify_code">输入验证码</string>
     <string name="login_error_verify_code">验证码错误！请重新输入！</string>
     <string name="login_new_register">新用户注册</string>
     <string name="login_forget_password">忘记密码？</string>

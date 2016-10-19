@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.config.SharedConfig;
 import com.spshop.stylistpark.db.SortDBService;
 import com.spshop.stylistpark.entity.MyNameValuePair;
@@ -325,6 +326,8 @@ public class AppApplication extends Application implements OnDataListener{
 		if (isSend) {
 			atm.request(AppConfig.REQUEST_SV_POST_LOGOUT_CODE, spApp); //通知服务器登出
 		}
+		// 刷新头像
+		BaseActivity.updateActivityData(5);
 	}
 
 	@Override

@@ -1288,9 +1288,9 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 					ChildFragmentOne.instance.updateData();
 				}
 				break;
-			case 5: //刷新"我的"页面数据
+			case 5: //刷新头像
 				if (ChildFragmentFive.instance != null) {
-					ChildFragmentFive.instance.updateData();
+					ChildFragmentFive.instance.updateAvatar();
 				}
 				break;
 			case 6: //刷新"我的关注"页面数据

@@ -24,7 +24,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -202,13 +201,12 @@ public final class ViewfinderView extends View {
 			
 			
 			//画扫描框下面的字
-			paint.setColor(Color.WHITE);
-			paint.setTextSize(TEXT_SIZE * density);
-			paint.setAlpha(0x40);
-			paint.setTypeface(Typeface.create("System", Typeface.BOLD));
-			canvas.drawText(getResources().getString(R.string.photo_scan_text_hint), frame.left, (float) (frame.bottom + (float)TEXT_PADDING_TOP *density), paint);
-			
-			
+			//paint.setColor(Color.WHITE);
+			//paint.setTextSize(TEXT_SIZE * density);
+			//paint.setAlpha(0x40);
+			//paint.setTypeface(Typeface.create("System", Typeface.BOLD));
+			//canvas.drawText(getResources().getString(R.string.photo_scan_text_hint), frame.left, (float) (frame.bottom + (float)TEXT_PADDING_TOP *density), paint);
+
 
 			Collection<ResultPoint> currentPossible = possibleResultPoints;
 			Collection<ResultPoint> currentLast = lastPossibleResultPoints;

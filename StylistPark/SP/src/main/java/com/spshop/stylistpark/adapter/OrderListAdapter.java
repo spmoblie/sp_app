@@ -108,8 +108,13 @@ public class OrderListAdapter extends BaseAdapter {
 		final OrderEntity data = datas.get(position);
 		//holder.tv_order_sn.setText(context.getString(R.string.order_sn, data.getOrderNo()));
 		holder.tv_order_sn.setText(data.getOrderNo());
-		holder.tv_order_status.setText(data.getStatusName());
-		
+		String statusStr = data.getStatusName();
+		if (statusStr.equals("0")) {
+			statusStr = context.getString(R.string.mine_wait_pay);
+		}
+		holder.tv_order_status.setText(statusStr);
+		//holder.tv_order_status.setText(data.getStatusName());
+
 		List<ProductListEntity> goodsLists = data.getGoodsLists();
 		if (goodsLists != null) {
 			holder.ll_goods_lists.removeAllViews(); //移除之前添加的所有View

@@ -182,7 +182,12 @@ public class OrderEntity extends BaseEntity {
 	 * 订单有效时间
 	 */
 	private long validTime;
-	
+
+	/**
+	 * 订单日期
+	 */
+	private String addTime;
+
 	/**
 	 * 收货地址
 	 */
@@ -563,6 +568,16 @@ public class OrderEntity extends BaseEntity {
 
 	public void setValidTime(long validTime) {
 		this.validTime = validTime;
+	}
+
+
+	public String getAddTime() {
+		return addTime;
+	}
+
+
+	public void setAddTime(String addTime) {
+		this.addTime = addTime;
 	}
 
 

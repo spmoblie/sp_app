@@ -93,7 +93,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	private LinearLayout ll_pay_type_1, ll_pay_type_2, ll_pay_confirm, ll_pay_done;
 	
 	private int payStatus = PAY_CANCEL; //支付状态
-	private int payType = PAY_ZFB; //支付类型
+	private int payType; //支付类型
 	private int checkCount = 0; //查询支付结果的次数
 	private String rootPage, orderSn, orderTotal;
 	private ServiceContext sc = ServiceContext.getServiceContext();
@@ -169,8 +169,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
 		PAYPAL_CURRENCY = LangCurrTools.getCurrencyHttpUrlValueStr();
 		if (LangCurrTools.getCurrency() == LangCurrTools.Currency.RMB) {
-			payType = PAY_ZFB;
-			iv_select_zfb.setSelected(true);
+			payType = PAY_WEIXI;
+			iv_select_weixi.setSelected(true);
 			ll_pay_type_1.setVisibility(View.VISIBLE);
 			ll_pay_type_2.setVisibility(View.GONE);
 		} else {
@@ -256,6 +256,10 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		}
 		startAnimation();
 		request(AppConfig.REQUEST_SV_POST_PAY_INFO_CODE);
+	}
+
+	private void showPaySuccess() {
+		CommonTools.showToast(getString(R.string.pay_result_ok), 2000);
 	}
 
 	/**
@@ -348,13 +352,11 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	public void finish() {
 		if ("PostOrderActivity".equals(rootPage) && PostOrderActivity.instance != null) {
 			PostOrderActivity.instance.finish(); //销毁确认订单页面
-			updateActivityData(5);
 		}
 		if (payStatus == PAY_SUCCESS || payStatus == PAY_ERROR) {
 			if (OrderDetailActivity.instance != null) {
 				OrderDetailActivity.instance.finish();
 			}
-			updateActivityData(5);
 			updateActivityData(10);
 		}
 		super.finish();
@@ -399,8 +401,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_PAY_INFO_CODE, uri, params, HttpUtil.METHOD_GET);
 
         case AppConfig.REQUEST_SV_GET_PAY_RESULT_CODE:
-			params.add(new MyNameValuePair("app", "order_pay"));
-			params.add(new MyNameValuePair("order_id", orderSn));
+			params.add(new MyNameValuePair("app", "pay_log"));
+			params.add(new MyNameValuePair("id", orderSn));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_PAY_RESULT_CODE, uri, params, HttpUtil.METHOD_GET);
         }
 		return null;
@@ -630,7 +632,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		payStatus = payCode;
 		switch (payCode) {
 			case PAY_SUCCESS:
-				showPaySuccess();
+				CommonTools.showToast(getString(R.string.pay_success), 1000);
 				updateViewStatus();
 				break;
 			case PAY_CANCEL:
@@ -646,17 +648,13 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		}
 	}
 
-	private void showPaySuccess() {
-		CommonTools.showToast(getString(R.string.pay_result_ok), 2000);
-	}
-
 	/**
 	 * 支付完成后更新界面显示状态
 	 */
 	private void updateViewStatus() {
 		ll_pay_confirm.setVisibility(View.GONE);
 		ll_pay_done.setVisibility(View.VISIBLE);
-		orderTotal = "0.00";
+		orderTotal = getString(R.string.price_00);
 		tv_pay_amount.setText(currStr + orderTotal); //支付金额
 	}
 

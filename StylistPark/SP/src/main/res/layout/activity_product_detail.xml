@@ -293,12 +293,12 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent" >
 
                     <WebView
                         android:id="@+id/product_detail_webView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content" />
 
                     <ProgressBar
                         android:id="@+id/product_detail_wv_progress"
@@ -306,6 +306,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="200dp"
+                        android:indeterminateDrawable="@anim/loading_anim_large"
                         android:visibility="gone" />
                 </FrameLayout>
             </LinearLayout>

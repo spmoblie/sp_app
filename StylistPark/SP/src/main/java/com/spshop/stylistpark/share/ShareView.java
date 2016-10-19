@@ -39,7 +39,6 @@ import com.sina.weibo.sdk.exception.WeiboException;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
-import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.image.BitmapCache;
 import com.spshop.stylistpark.service.ServiceContext;
@@ -687,9 +686,7 @@ public class ShareView {
 
 		@Override
 		protected void onPostExecute(String result) {
-			if (!StringUtil.isNull(result)) {
-				BaseActivity.updateActivityData(5);
-			}
+
 		}
 	}
 	

@@ -63,7 +63,7 @@ public class CouponListAdapter extends BaseAdapter {
 
 	static class ViewHolder {
 
-		LinearLayout ll_main;
+		LinearLayout ll_main, ll_item;
 		ImageView iv_select;
 		TextView tv_curr, tv_money, tv_name, tv_limit, tv_status, tv_date;
 
@@ -77,6 +77,7 @@ public class CouponListAdapter extends BaseAdapter {
 			convertView = View.inflate(context, R.layout.item_list_coupon, null);
 			holder = new ViewHolder();
 			holder.ll_main = (LinearLayout) convertView.findViewById(R.id.item_list_coupon_ll_main);
+			holder.ll_item = (LinearLayout) convertView.findViewById(R.id.item_list_coupon_ll_item);
 			holder.tv_curr = (TextView) convertView.findViewById(R.id.item_list_coupon_tv_currency);
 			holder.tv_money = (TextView) convertView.findViewById(R.id.item_list_coupon_tv_money);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.item_list_coupon_tv_name);
@@ -91,9 +92,11 @@ public class CouponListAdapter extends BaseAdapter {
 		final CouponEntity data = datas.get(position);
 		
 		if (data.getStatusType() == 1) {
+			holder.ll_item.setBackgroundResource(R.drawable.icon_coupon_use);
 			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.price_text_color));
 			holder.tv_money.setTextColor(context.getResources().getColor(R.color.price_text_color));
 		}else {
+			holder.ll_item.setBackgroundResource(R.drawable.icon_coupon_used);
 			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.label_text_color));
 			holder.tv_money.setTextColor(context.getResources().getColor(R.color.label_text_color));
 		}

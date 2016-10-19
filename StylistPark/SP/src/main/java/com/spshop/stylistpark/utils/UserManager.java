@@ -196,7 +196,7 @@ public class UserManager {
 
 	public String getUserMoney(){
 		if(StringUtil.isNull(mUserMoney)){
-			mUserMoney = sp.getString(AppConfig.KEY_USER_MONEY, null);
+			mUserMoney = sp.getString(AppConfig.KEY_USER_MONEY, LangCurrTools.getCurrencyValue() + "0.00");
 		}
 		return mUserMoney;
 	}
@@ -211,7 +211,8 @@ public class UserManager {
 	}
 
 	public boolean isTalent() { //判定是否达人
-		return getUserRankCode() == 4;
+		//return getUserRankCode() == 4;
+		return false;
 	}
 	
 	public void saveUserRankCode(int userRankCode){
@@ -348,7 +349,11 @@ public class UserManager {
 			saveUserBirthday(infoEn.getBirthday());
 			saveUserEmail(infoEn.getUserEmail());
 			saveUserPhone(infoEn.getUserPhone());
-			saveUserMoney(infoEn.getMoney());
+			if (StringUtil.isNull(infoEn.getMoney())) {
+				saveUserMoney(LangCurrTools.getCurrencyValue() + "0.00");
+			} else {
+				saveUserMoney(infoEn.getMoney());
+			}
 			saveUserRankCode(infoEn.getUserRankCode());
 			saveUserRankName(infoEn.getUserRankName());
 			// 绑定用户信息至推送服务
@@ -371,7 +376,7 @@ public class UserManager {
 		saveUserBirthday(null);
 		saveUserEmail(null);
 		saveUserPhone(null);
-		saveUserMoney(null);
+		saveUserMoney(LangCurrTools.getCurrencyValue() + "0.00");
 		saveUserRankCode(0);
 		saveUserRankName(null);
 		saveCartTotal(0); //购物车商品数

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ui_bg_color_app"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/order_detail_scrollview"
@@ -11,13 +11,13 @@
         android:layout_height="0dp"
         android:layout_weight="8"
         android:fillViewport="true"
-        android:scrollbars="none" >
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/ui_bg_color_nut"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/order_detail_tv_valid_time"
@@ -30,7 +30,7 @@
                 android:textSize="@dimen/text_size_12"
                 android:visibility="gone" />
 
-            <RelativeLayout style="@style/common_vertical_item_layout" >
+            <RelativeLayout style="@style/common_vertical_item_layout">
 
                 <TextView
                     android:id="@+id/order_detail_tv_address_name"
@@ -49,9 +49,15 @@
                     android:layout_marginTop="10dp" />
             </RelativeLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_address" />
+
             <RelativeLayout
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/order_detail_tv_order_no"
@@ -86,10 +92,10 @@
                 android:id="@+id/order_detail_ll_logistics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
                 android:background="@color/ui_bg_color_white"
                 android:orientation="vertical"
-                android:visibility="gone" >
+                android:paddingTop="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/order_detail_tv_logistics_name"
@@ -112,7 +118,7 @@
                     android:contentDescription="@string/desc" />
             </LinearLayout>
 
-            <RelativeLayout style="@style/common_vertical_item_layout" >
+            <RelativeLayout style="@style/common_vertical_item_layout">
 
                 <TextView
                     style="@style/Order_TextView_Title"
@@ -133,8 +139,7 @@
                 android:id="@+id/order_detail_ll_goods_lists"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
 
             <ImageView
                 style="@style/set_line_horizontal_bg"
@@ -144,7 +149,7 @@
             <RelativeLayout
                 style="@style/common_vertical_item_layout"
                 android:layout_marginTop="10dp"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/order_detail_tv_buyer"
@@ -154,7 +159,7 @@
             <RelativeLayout
                 style="@style/common_vertical_item_layout"
                 android:layout_marginTop="10dp"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/order_detail_tv_invoice"
@@ -164,7 +169,7 @@
             <RelativeLayout
                 android:id="@+id/order_detail_rl_pay_type"
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/order_detail_tv_pay_type"
@@ -174,11 +179,11 @@
             <LinearLayout
                 style="@style/common_vertical_item_layout"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_total_name"
@@ -193,7 +198,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_fee_name"
@@ -208,7 +213,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_coupon_name"
@@ -223,7 +228,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_discount_name"
@@ -238,7 +243,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_pay_name"
@@ -265,7 +270,7 @@
         android:background="@color/ui_bg_color_white"
         android:gravity="center_vertical|right"
         android:orientation="horizontal"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/order_detail_tv_pay_now"

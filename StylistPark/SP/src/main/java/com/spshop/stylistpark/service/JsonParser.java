@@ -7,7 +7,6 @@ import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BalanceDetailEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.BrandEntity;
-import com.spshop.stylistpark.entity.SortListEntity;
 import com.spshop.stylistpark.entity.CommentEntity;
 import com.spshop.stylistpark.entity.CouponEntity;
 import com.spshop.stylistpark.entity.GoodsCartEntity;
@@ -19,6 +18,7 @@ import com.spshop.stylistpark.entity.ProductAttrEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.entity.SortListEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
@@ -657,8 +657,9 @@ public class JsonParser {
 			mainEn.setGenderCode(StringUtil.getInteger(data.getString("sex")));
 			mainEn.setBirthday(data.getString("birthday"));
 			mainEn.setUserEmail(data.getString("email"));
-			mainEn.setUserRankCode(StringUtil.getInteger(data.getString("user_rank")));
-			mainEn.setUserRankName(data.getString("user_rank_name"));
+			mainEn.setUserRankName(data.getString("user_rank"));
+			mainEn.setRankType1(data.getString("label_member"));
+			mainEn.setRankType2(data.getString("member_affiliate"));
 			mainEn.setOrder_1(StringUtil.getInteger(data.getString("order_1")));
 			mainEn.setOrder_2(StringUtil.getInteger(data.getString("order_2")));
 			mainEn.setOrder_3(StringUtil.getInteger(data.getString("order_3")));
@@ -780,8 +781,7 @@ public class JsonParser {
 		getCommonKeyValue(mainEn, jsonObject);
 
 		if (StringUtil.notNull(jsonObject, "data")) {
-			JSONArray datas = jsonObject.getJSONArray("data");
-			JSONObject data = datas.getJSONObject(0);
+			JSONObject data = jsonObject.getJSONObject("data");
 			mainEn.setOrderId(data.getString("order_id"));
 			mainEn.setOrderNo(data.getString("order_sn"));
 			mainEn.setStatus(StringUtil.getInteger(data.getString("status")));
@@ -809,14 +809,14 @@ public class JsonParser {
 			//mainEn.setBuyerName(data.getString("postscript_name"));
 			//mainEn.setBuyer(data.getString("postscript"));
 
-			long createTime = StringUtil.getLong(data.getString("add_time"))*1000;
+			/*long createTime = StringUtil.getLong(data.getString("add_time"))*1000;
 			mainEn.setCreateTime(createTime);
-			mainEn.setValidTime(createTime + 1800000); //有效时间30分钟
+			mainEn.setValidTime(createTime + 1800000); //有效时间30分钟*/
+			mainEn.setAddTime(data.getString("add_time"));
 
 			AddressEntity addrEn = new AddressEntity();
 			addrEn.setName(data.getString("consignee"));
 			addrEn.setPhone(data.getString("mobile"));
-			addrEn.setCountry(data.getString("address_name"));
 			addrEn.setAddress(data.getString("address"));
 			mainEn.setAddressEn(addrEn);
 			mainEn.setGoodsLists(getProductListsFormJson2(data, "goods_list"));

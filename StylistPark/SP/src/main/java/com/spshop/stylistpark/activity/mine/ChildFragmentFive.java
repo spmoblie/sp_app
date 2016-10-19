@@ -31,7 +31,6 @@ import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
-import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UserManager;
 
@@ -47,14 +46,16 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	private Context mContext;
 	private SharedPreferences shared;
 	private UserInfoEntity infoEn;
-	private boolean isLogined, isUpdate, isSuccess;
+	private String rankType1, rankType2;
+	private boolean isLogined;
+	private boolean isUpdateAvatar = true;
 
 	private RelativeLayout rl_my_member, rl_member_order, rl_order_all, rl_my_address;
 	private RelativeLayout rl_my_wallet, rl_my_coupon, rl_collection, rl_history, rl_call;
 	private FrameLayout fl_order_pay, fl_order_delivery, fl_order_receive, fl_order_return;
 	private ImageView iv_setting, iv_avatar;
 	private TextView tv_pay_num, tv_delivery_num, tv_receive_num, tv_return_num;
-	private TextView tv_my_member, tv_member_order, tv_money, tv_coupon, tv_collection, tv_history;
+	private TextView tv_my_member, tv_member_order, tv_money;
 	
 	private AsyncTaskManager atm;
 	private ServiceContext sc = ServiceContext.getServiceContext();
@@ -108,9 +109,6 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		tv_my_member = (TextView) view.findViewById(R.id.fragment_five_tv_my_member);
 		tv_member_order = (TextView) view.findViewById(R.id.fragment_five_tv_member_order);
 		tv_money = (TextView) view.findViewById(R.id.fragment_five_tv_money);
-		tv_coupon = (TextView) view.findViewById(R.id.fragment_five_tv_coupon);
-		tv_collection = (TextView) view.findViewById(R.id.fragment_five_tv_collection);
-		tv_history = (TextView) view.findViewById(R.id.fragment_five_tv_history);
 		rl_my_address = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_address);
 		rl_my_wallet = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_wallet);
 		rl_my_coupon = (RelativeLayout) view.findViewById(R.id.fragment_five_rl_coupon);
@@ -138,72 +136,65 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	}
 
 	private void setView() {
-		String memberType = getString(R.string.mine_member);
-		if (UserManager.getInstance().isTalent()) { //达人
-			memberType = getString(R.string.mine_customer);
-		}
-		tv_my_member.setText(getString(R.string.mine_my_member, memberType));
-		tv_member_order.setText(getString(R.string.mine_member_order, memberType));
-
-		updateUserMoney();
 		String userAvatar = "";
+		int order_1, order_2, order_3, order_4;
 		if (infoEn != null) {
 			userAvatar = infoEn.getUserAvatar();
-			int order_1 = infoEn.getOrder_1();
-			if (order_1 > 0) { //待付款
-				if (order_1 > 99) {
-					order_1 = 99;
-				}
-				tv_pay_num.setVisibility(View.VISIBLE);
-				tv_pay_num.setText(String.valueOf(order_1));
-			}else {
-				tv_pay_num.setVisibility(View.GONE);
-			}
-			int order_2 = infoEn.getOrder_2();
-			if (order_2 > 0) { //待发货
-				if (order_2 > 99) {
-					order_2 = 99;
-				}
-				tv_delivery_num.setVisibility(View.VISIBLE);
-				tv_delivery_num.setText(String.valueOf(order_2));
-			}else {
-				tv_delivery_num.setVisibility(View.GONE);
-			}
-			int order_3 = infoEn.getOrder_3();
-			if (order_3 > 0) { //待收货
-				if (order_3 > 99) {
-					order_3 = 99;
-				}
-				tv_receive_num.setVisibility(View.VISIBLE);
-				tv_receive_num.setText(String.valueOf(order_3));
-			}else {
-				tv_receive_num.setVisibility(View.GONE);
-			}
-			int order_4 = infoEn.getOrder_4();
-			if (order_4 > 0) { //返修、退换
-				if (order_4 > 99) {
-					order_4 = 99;
-				}
-				tv_return_num.setVisibility(View.VISIBLE);
-				tv_return_num.setText(String.valueOf(order_4));
-			}else {
-				tv_return_num.setVisibility(View.GONE);
-			}
+			order_1 = infoEn.getOrder_1();
+			order_2 = infoEn.getOrder_2();
+			order_3 = infoEn.getOrder_3();
+			order_4 = infoEn.getOrder_4();
+			rankType1 = infoEn.getRankType1();
+			rankType2 = infoEn.getRankType2();
 			BaseActivity.updateCartTotal(infoEn.getCartTotal());
 		}else {
-			String num = getString(R.string.number_0);
-			tv_pay_num.setText(num);
-			tv_pay_num.setVisibility(View.GONE);
-			tv_delivery_num.setText(num);
-			tv_delivery_num.setVisibility(View.GONE);
-			tv_receive_num.setText(num);
-			tv_receive_num.setVisibility(View.GONE);
-			tv_return_num.setText(num);
-			tv_return_num.setVisibility(View.GONE);
-			tv_money.setText(LangCurrTools.getCurrencyValue() + num);
-			tv_coupon.setText("");
+			order_1 = order_2 = order_3 = order_4 = 0;
+			rankType1 = getString(R.string.mine_my_member, getString(R.string.mine_member));
+			rankType2 = getString(R.string.mine_member_order, getString(R.string.mine_member));
 		}
-		ImageLoader.getInstance().displayImage(userAvatar, iv_avatar, AppApplication.getAvatarOptions());
+		if (order_1 > 0) { //待付款
+			if (order_1 > 99) {
+				order_1 = 99;
+			}
+			tv_pay_num.setVisibility(View.VISIBLE);
+			tv_pay_num.setText(String.valueOf(order_1));
+		}else {
+			tv_pay_num.setVisibility(View.GONE);
+		}
+		if (order_2 > 0) { //待发货
+			if (order_2 > 99) {
+				order_2 = 99;
+			}
+			tv_delivery_num.setVisibility(View.VISIBLE);
+			tv_delivery_num.setText(String.valueOf(order_2));
+		}else {
+			tv_delivery_num.setVisibility(View.GONE);
+		}
+		if (order_3 > 0) { //待收货
+			if (order_3 > 99) {
+				order_3 = 99;
+			}
+			tv_receive_num.setVisibility(View.VISIBLE);
+			tv_receive_num.setText(String.valueOf(order_3));
+		}else {
+			tv_receive_num.setVisibility(View.GONE);
+		}
+		if (order_4 > 0) { //返修、退换
+			if (order_4 > 99) {
+				order_4 = 99;
+			}
+			tv_return_num.setVisibility(View.VISIBLE);
+			tv_return_num.setText(String.valueOf(order_4));
+		}else {
+			tv_return_num.setVisibility(View.GONE);
+		}
+		tv_my_member.setText(rankType1);
+		tv_member_order.setText(rankType2);
+		updateUserMoney();
+		if (isUpdateAvatar) {
+			isUpdateAvatar = false;
+			ImageLoader.getInstance().displayImage(userAvatar, iv_avatar, AppApplication.getAvatarOptions());
+		}
 	}
 
 	private void updateUserMoney() {
@@ -212,19 +203,18 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		}
 	}
 
-	public void updateData() {
-		isUpdate = true;
+	/**
+	 * 刷新头像
+	 */
+	public void updateAvatar() {
+		isUpdateAvatar = true;
 	}
 
 	private void checkLogin() {
 		isLogined = UserManager.getInstance().checkIsLogined();
 		LogUtil.i("isLogined", isLogined);
 		if (isLogined) {
-			if (isUpdate || !isSuccess) {
-				requestGetUserInfo();
-				isUpdate = false;
-			}
-			updateUserMoney();
+			requestGetUserInfo();
 		}else {
 			infoEn = null;
 			setView();
@@ -319,6 +309,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	private void startMemberListActivity(int topType) {
 		Intent intent = new Intent(mContext, MemberListActivity.class);
 		intent.putExtra("topType", topType);
+		intent.putExtra("showTitle", rankType1);
 		startActivity(intent);
 	}
 
@@ -329,6 +320,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		Intent intent = new Intent(mContext, OrderListActivity.class);
 		intent.putExtra("rootType", rootType);
 		intent.putExtra("topType", topType);
+		intent.putExtra("showTitle", rankType2);
 		startActivity(intent);
 	}
 	
@@ -387,9 +379,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			if (result != null) {
 				infoEn = (UserInfoEntity) result;
 				if (infoEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					isSuccess = true;
 					UserManager.getInstance().saveUserInfo(infoEn);
-					setView();
 				}else if (infoEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) { //登录失效
 					AppApplication.AppLogout(false);
 					checkLogin();
@@ -400,6 +390,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 				infoEn = null;
 				loadFailHandle(getString(R.string.toast_server_busy));
 			}
+			setView();
 			break;
 		}
 	}
@@ -411,7 +402,6 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	}
 
 	private void loadFailHandle(String msg) {
-		isSuccess = false;
 		CommonTools.showToast(msg, 3000);
 	}
 
