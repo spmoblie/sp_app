@@ -26,6 +26,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import com.spshop.stylistpark.AppApplication;
+
 import java.io.IOException;
 
 /**
@@ -38,11 +40,6 @@ import java.io.IOException;
 public final class CameraManager {
 
   private static final String TAG = CameraManager.class.getSimpleName();
-
-  private static final int MIN_FRAME_WIDTH = 240;
-  private static final int MIN_FRAME_HEIGHT = 240;
-  private static final int MAX_FRAME_WIDTH = 480;
-  private static final int MAX_FRAME_HEIGHT = 480;
 
   private static CameraManager cameraManager;
 
@@ -217,26 +214,16 @@ public final class CameraManager {
    * @return The rectangle to draw on screen in window coordinates.
    */
   public Rect getFramingRect() {
-    Point screenResolution = configManager.getScreenResolution();
     if (framingRect == null) {
       if (camera == null) {
         return null;
       }
-      int width = screenResolution.x * 3 / 4;
-      if (width < MIN_FRAME_WIDTH) {
-        width = MIN_FRAME_WIDTH;
-      } else if (width > MAX_FRAME_WIDTH) {
-        width = MAX_FRAME_WIDTH;
-      }
-      int height = screenResolution.y * 3 / 4;
-      if (height < MIN_FRAME_HEIGHT) {
-        height = MIN_FRAME_HEIGHT;
-      } else if (height > MAX_FRAME_HEIGHT) {
-        height = MAX_FRAME_HEIGHT;
-      }
-      int leftOffset = (screenResolution.x - width) / 2;
-      int topOffset = (screenResolution.y - height) * 2 / 7;
-      framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
+      int cameraWidth = AppApplication.screenWidth;
+      int cameraHeight = cameraWidth * 4 / 3;
+      int scanWidth = cameraWidth * 3 / 5;
+      int leftOffset = (cameraWidth - scanWidth) / 2;
+      int topOffset = (cameraHeight - scanWidth) / 2;
+      framingRect = new Rect(leftOffset, topOffset, leftOffset + scanWidth, topOffset + scanWidth);
       Log.d(TAG, "Calculated framing rect: " + framingRect);
     }
     return framingRect;
