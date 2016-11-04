@@ -157,7 +157,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 					public void run() {
 						requestProductLists();
 					}
-				}, 1000);
+				}, AppConfig.LOADING_TIME);
             }
 
             @Override
@@ -295,7 +295,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 			public void run() {
 				requestProductLists();
 			}
-		}, 1000);
+		}, AppConfig.LOADING_TIME);
 	}
 
 	/**

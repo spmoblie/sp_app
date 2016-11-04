@@ -44,9 +44,10 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	private TextView tv_name, tv_phone, tv_address, tv_order_no, tv_order_date, tv_order_status;
 	private TextView tv_logistics_name, tv_logistics_no;
 	private TextView tv_goods_total, tv_buyer, tv_invoice, tv_pay_type, tv_valid_time;
-	private TextView tv_total_name, tv_total, tv_fee_name, tv_fee, tv_coupon_name, tv_coupon;
-	private TextView tv_discount_name, tv_discount, tv_pay_name, tv_pay, tv_pay_now, tv_order_cacel;
-	private RelativeLayout rl_pay_type;
+	private TextView tv_total_name, tv_total, tv_fee_name, tv_fee;
+	private TextView tv_coupon_name, tv_coupon, tv_discount_name, tv_discount, tv_cashback_name, tv_cashback;
+	private TextView tv_pay_name, tv_pay, tv_pay_now, tv_order_cacel;
+	private RelativeLayout rl_pay_type, rl_coupon, rl_discount, rl_cashback;
 	private LinearLayout ll_logistics, ll_goods_lists, ll_order_edit;
 	
 	private OrderEntity orderEn;
@@ -91,11 +92,16 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		tv_coupon = (TextView) findViewById(R.id.order_detail_tv_price_coupon);
 		tv_discount_name = (TextView) findViewById(R.id.order_detail_tv_price_discount_name);
 		tv_discount = (TextView) findViewById(R.id.order_detail_tv_price_discount);
+		tv_cashback_name = (TextView) findViewById(R.id.order_detail_tv_price_cashback_name);
+		tv_cashback = (TextView) findViewById(R.id.order_detail_tv_price_cashback);
 		tv_pay_name = (TextView) findViewById(R.id.order_detail_tv_price_pay_name);
 		tv_pay = (TextView) findViewById(R.id.order_detail_tv_price_pay);
 		tv_pay_now = (TextView) findViewById(R.id.order_detail_tv_pay_now);
 		tv_order_cacel = (TextView) findViewById(R.id.order_detail_tv_cacel_order);
 		rl_pay_type = (RelativeLayout) findViewById(R.id.order_detail_rl_pay_type);
+		rl_coupon = (RelativeLayout) findViewById(R.id.order_detail_rl_price_coupon);
+		rl_discount = (RelativeLayout) findViewById(R.id.order_detail_rl_price_discount);
+		rl_cashback = (RelativeLayout) findViewById(R.id.order_detail_rl_price_cashback);
 		ll_logistics = (LinearLayout) findViewById(R.id.order_detail_ll_logistics);
 		ll_goods_lists = (LinearLayout) findViewById(R.id.order_detail_ll_goods_lists);
 		ll_order_edit = (LinearLayout) findViewById(R.id.order_detail_ll_edit);
@@ -124,11 +130,31 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			tv_total_name.setText(orderEn.getPriceTotalName() + signStr);
 			tv_total.setText(currStr + orderEn.getPriceTotal());
 			tv_fee_name.setText(orderEn.getPriceFeeName() + signStr);
-			tv_fee.setText(currStr + orderEn.getPriceFee());
-			tv_coupon_name.setText(orderEn.getPriceCouponName() + signStr);
-			tv_coupon.setText("-" + currStr + orderEn.getPriceCoupon());
-			tv_discount_name.setText(orderEn.getPriceDiscountName() + signStr);
-			tv_discount.setText("-" + currStr + orderEn.getPriceDiscount());
+			tv_fee.setText("+ " + currStr + orderEn.getPriceFee());
+			// 优惠抵用
+			if (StringUtil.priceIsNull(orderEn.getPriceCoupon())) {
+				rl_coupon.setVisibility(View.GONE);
+			} else {
+				rl_coupon.setVisibility(View.VISIBLE);
+				tv_coupon_name.setText(orderEn.getPriceCouponName() + signStr);
+				tv_coupon.setText("- " + currStr + orderEn.getPriceCoupon());
+			}
+			// 活动折扣
+			if (StringUtil.priceIsNull(orderEn.getPriceDiscount())) {
+				rl_discount.setVisibility(View.GONE);
+			} else {
+				rl_discount.setVisibility(View.VISIBLE);
+				tv_discount_name.setText(orderEn.getPriceDiscountName() + signStr);
+				tv_discount.setText("- " + currStr + orderEn.getPriceDiscount());
+			}
+			// 达人折扣
+			if (StringUtil.priceIsNull(orderEn.getPriceCashback())) {
+				rl_cashback.setVisibility(View.GONE);
+			} else {
+				rl_cashback.setVisibility(View.VISIBLE);
+				tv_cashback_name.setText(orderEn.getPriceCashbackName() + signStr);
+				tv_cashback.setText("- " + currStr + orderEn.getPriceCashback());
+			}
 			tv_pay_name.setText(orderEn.getPricePaidName());
 			tv_pay.setText(currStr + orderEn.getPricePaid());
 			// 商品列表

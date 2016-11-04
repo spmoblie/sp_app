@@ -42,7 +42,6 @@
                 android:layout_marginRight="50dp"
                 android:ellipsize="end"
                 android:lines="1"
-                android:drawablePadding="5dp"
                 android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_14" />
 
@@ -55,13 +54,14 @@
                 android:textSize="@dimen/text_size_12" />
 
             <TextView
-                android:id="@+id/item_list_member_tv_order_count"
+                android:id="@+id/item_list_member_tv_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/item_list_member_tv_gender"
                 android:textColor="@color/label_text_color"
-                android:textSize="@dimen/text_size_12"
-                android:visibility="gone" />
+                android:textSize="@dimen/text_size_12" />
 
             <TextView
                 android:id="@+id/item_list_member_tv_order_money"

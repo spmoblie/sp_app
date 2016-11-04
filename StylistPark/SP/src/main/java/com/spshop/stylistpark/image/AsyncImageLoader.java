@@ -29,15 +29,17 @@ public class AsyncImageLoader {
 	/**
 	 * 创建此对象请记得在Activity的onPause()中调用clearInstance()销毁对象
 	 */
-	public static AsyncImageLoader getInstance(final AsyncImageLoaderCallback callback) {
+	public static AsyncImageLoader getInstance(AsyncImageLoaderCallback callback) {
 		if (instance == null) {
-			synchronized (AsyncImageLoader.class) {
-				if (instance == null) {
-					instance = new AsyncImageLoader(callback);
-				}
-			}
+			syncInit(callback);
 		}
 		return instance;
+	}
+
+	private static synchronized void syncInit(AsyncImageLoaderCallback callback) {
+		if (instance == null) {
+			instance = new AsyncImageLoader(callback);
+		}
 	}
 
 	@SuppressLint("HandlerLeak")

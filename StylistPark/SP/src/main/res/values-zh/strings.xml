@@ -94,7 +94,7 @@
     <string name="loading_load_more">加載更多</string>
     <string name="loading_strive_loading">奮力加載中&#8230;</string>
     <string name="loading_downloading">奮力下載中&#8230;&#8230;</string>
-    <string name="loading_no_more">没有更多了~</string>
+    <string name="loading_no_more">没有更多了</string>
     <string name="loading_no_data">暫無%1$s</string>
     <string name="loading_click_load">重新加載</string>
     <string name="loading_submit_fail">上載失敗</string>
@@ -118,7 +118,6 @@
     <string name="title_login">用戶登入</string>
     <string name="title_register">郵箱注冊</string>
     <string name="title_reset">找回密碼</string>
-    <string name="title_my_address">我的收貨地址</string>
     <string name="title_delivery_info">收貨信息</string>
     <string name="title_order_confirm">確認訂單</string>
     <string name="title_order_detail">訂單詳情</string>
@@ -169,7 +168,8 @@
     <string name="cart_go_add">快去添加吧~</string>
     <string name="cart_go_shopping">去逛逛</string>
     <string name="cart_goods_num">共%1$d件商品</string>
-    <string name="cart_buy_now">立即購買</string>
+    <string name="cart_offers">購物滿¥200包郵</string>
+    <string name="cart_buy_now">確認訂單</string>
     <string name="cart_error_data_null">數據同步出現異常！請下拉刷新購物車商品！</string>
 
     <!-- Find -->
@@ -221,6 +221,7 @@
     <string name="order_charges_name">貨到付款：</string>
     <string name="order_coupon_name">優惠抵用：</string>
     <string name="order_discount_name">活動優惠：</string>
+    <string name="order_cash_back">達人折扣：</string>
     <string name="order_pay_name">應付金額：</string>
     <string name="order_pay_type">支付方式：%1$s</string>
     <string name="order_sn">訂單號：%1$s</string>
@@ -359,8 +360,8 @@
     <string name="share_msg_no_facebook">請先下載 Facebook</string>
     <string name="share_msg_no_whatsapp">請先下載 Whatsapp</string>
     <string name="share_msg_no_line">請先下載 Line</string>
-    <string name="share_msg_error_license">授权失败，请重试！</string>
-    <string name="share_msg_error_oauth">获取授权信息异常，请关闭页面后重新授权。</string>
+    <string name="share_msg_error_license">授權失敗，請重試！</string>
+    <string name="share_msg_error_oauth">獲取授權信息異常，請關閉頁面後重新授權。</string>
 	<string name="share_msg_success">分享成功</string>
 	<string name="share_msg_error">分享出錯</string>
 	<string name="share_msg_cancel">分享取消</string>
@@ -408,18 +409,16 @@
     <string name="mine_member_order">%1$s訂單</string>
     <string name="mine_my_member">我的%1$s</string>
     <string name="mine_my_order">我的訂單</string>
-    <string name="mine_my_address">收貨地址</string>
-    <string name="mine_my_collages">我的配搭</string>
-    <string name="mine_my_favorite">我的最愛</string>
     <string name="mine_check_all_order">查看全部訂單</string>
-    <string name="mine_done">已完成</string>
-    <string name="mine_wait_commission">待分成</string>
+    <string name="mine_revenue">已收入</string>
+    <string name="mine_wait_pending">待收入</string>
     <string name="mine_wait_pay">待付款</string>
     <string name="mine_wait_delivery">配貨中</string>
     <string name="mine_wait_receive">已發貨</string>
     <string name="mine_repair_return">退換貨</string>
     <string name="mine_account_money">我的錢包</string>
-    <string name="mine_coupon">優惠券</string>
+    <string name="mine_coupon">我的票券</string>
+    <string name="mine_my_address">地址管理</string>
     <string name="mine_collection">我的關注</string>
     <string name="mine_concerns_goods">關注的商品</string>
     <string name="mine_history">浏覽記錄</string>

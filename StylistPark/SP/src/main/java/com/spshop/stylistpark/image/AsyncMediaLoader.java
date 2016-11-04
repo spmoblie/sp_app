@@ -35,13 +35,15 @@ public class AsyncMediaLoader {
 	 */
 	public static AsyncMediaLoader getInstance(final AsyncMediaLoaderCallback callback) {
 		if (instance == null) {
-			synchronized (AsyncMediaLoader.class) {
-				if (instance == null) {
-					instance = new AsyncMediaLoader(callback);
-				}
-			}
+			syncInit(callback);
 		}
 		return instance;
+	}
+
+	private static synchronized void syncInit(AsyncMediaLoaderCallback callback) {
+		if (instance == null) {
+			instance = new AsyncMediaLoader(callback);
+		}
 	}
 
 	@SuppressLint("HandlerLeak")

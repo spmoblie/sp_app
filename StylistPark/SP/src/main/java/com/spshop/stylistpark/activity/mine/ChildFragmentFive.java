@@ -32,6 +32,7 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 
 import java.util.ArrayList;
@@ -118,6 +119,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	}
 
 	private void initView() {
+		setMemberType(rankType1, rankType2);
 		iv_setting.setOnClickListener(this);
 		iv_avatar.setOnClickListener(this);
 		rl_my_member.setOnClickListener(this);
@@ -188,13 +190,27 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		}else {
 			tv_return_num.setVisibility(View.GONE);
 		}
-		tv_my_member.setText(rankType1);
-		tv_member_order.setText(rankType2);
+		setMemberType(rankType1, rankType2);
 		updateUserMoney();
 		if (isUpdateAvatar) {
-			isUpdateAvatar = false;
-			ImageLoader.getInstance().displayImage(userAvatar, iv_avatar, AppApplication.getAvatarOptions());
+			if (StringUtil.isNull(userAvatar)) {
+				iv_avatar.setImageResource(R.drawable.default_avatar);
+			} else {
+				isUpdateAvatar = false;
+				ImageLoader.getInstance().displayImage(userAvatar, iv_avatar, AppApplication.getAvatarOptions());
+			}
 		}
+	}
+
+	private void setMemberType(String type1, String type2) {
+		if (StringUtil.isNull(type1)) {
+			type1 = getString(R.string.mine_my_member, getString(R.string.mine_member));
+		}
+		if (StringUtil.isNull(type2)) {
+			type2 = getString(R.string.mine_member_order, getString(R.string.mine_member));
+		}
+		tv_my_member.setText(type1);
+		tv_member_order.setText(type2);
 	}
 
 	private void updateUserMoney() {

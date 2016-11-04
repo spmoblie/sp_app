@@ -102,7 +102,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 下拉刷新
             	if (lv_show.size() == 0) {
-            		getSVDatas(1000);
+            		getSVDatas(AppConfig.LOADING_TIME);
 				}else {
 					new Handler().postDelayed(new Runnable() {
 						
@@ -110,7 +110,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 						public void run() {
 							refresh_lv.onPullDownRefreshComplete();
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
             }
 
@@ -127,7 +127,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 							refresh_lv.onPullUpRefreshComplete();
 							refresh_lv.setHasMoreData(false);
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
             }
         });
@@ -182,7 +182,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 	 * 加载翻页数据
 	 */
 	private void loadSVDatas() {
-		requestProductLists(1000);
+		requestProductLists(AppConfig.LOADING_TIME);
 	}
 
 	/**

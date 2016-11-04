@@ -19,12 +19,17 @@ public class PushManager {
 	private PushAgent pa;
 	private UserManager um;
 
-	
 	public static PushManager getInstance(){
+		if (instance == null) {
+			syncInit();
+		}
+		return instance;
+	}
+
+	private static synchronized void syncInit(){
 		if (instance == null) {
 			instance = new PushManager();
 		}
-		return instance;
 	}
 
 	private PushManager(){

@@ -17,6 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
             android:background="@color/ui_bg_color_nut"
             android:orientation="vertical" >
 
@@ -121,7 +122,7 @@
             </RelativeLayout>
             
             <RelativeLayout
-                android:id="@+id/post_order_rl_coupon_main"
+                android:id="@+id/post_order_rl_coupon_use"
                 style="@style/common_vertical_item_layout"
                 android:layout_marginTop="10dp" >
 
@@ -220,7 +221,8 @@
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
                 
-                <RelativeLayout 
+                <RelativeLayout
+                    android:id="@+id/post_order_rl_price_fee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" >
@@ -237,7 +239,7 @@
                 </RelativeLayout>
                 
                 <RelativeLayout 
-                    android:id="@+id/post_order_rl_price_charges_main"
+                    android:id="@+id/post_order_rl_price_charges"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -254,7 +256,8 @@
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
                 
-                <RelativeLayout 
+                <RelativeLayout
+                    android:id="@+id/post_order_rl_price_coupon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" >
@@ -269,8 +272,9 @@
                         style="@style/Order_TextView_Title"
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
-                
-                <RelativeLayout 
+
+                <RelativeLayout
+                    android:id="@+id/post_order_rl_price_discount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" >
@@ -282,6 +286,23 @@
                     
                     <TextView 
                         android:id="@+id/post_order_tv_price_discount"
+                        style="@style/Order_TextView_Title"
+                        android:layout_alignParentRight="true" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/post_order_rl_price_cashback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" >
+
+                    <TextView
+                        android:id="@+id/post_order_tv_price_cashback_name"
+                        style="@style/Order_TextView_Title"
+                        android:text="@string/order_cash_back" />
+
+                    <TextView
+                        android:id="@+id/post_order_tv_price_cashback"
                         style="@style/Order_TextView_Title"
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>

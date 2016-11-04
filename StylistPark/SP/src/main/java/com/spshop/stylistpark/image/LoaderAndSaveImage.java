@@ -35,13 +35,15 @@ public class LoaderAndSaveImage {
 	 */
 	public static LoaderAndSaveImage getInstance(final LoaderAndSaveImageCallback callback){
 		if (instance == null) {
-			synchronized (LoaderAndSaveImage.class) {
-				if (instance == null) {
-					instance = new LoaderAndSaveImage(callback);
-				}
-			}
+			syncInit(callback);
 		}
 		return instance;
+	}
+
+	private static synchronized void syncInit(LoaderAndSaveImageCallback callback) {
+		if (instance == null) {
+			instance = new LoaderAndSaveImage(callback);
+		}
 	}
 	
 	@SuppressLint("HandlerLeak")

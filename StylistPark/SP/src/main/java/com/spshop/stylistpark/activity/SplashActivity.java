@@ -11,7 +11,9 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.utils.DeviceUtil;
+import com.spshop.stylistpark.utils.FileManager;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -31,10 +33,10 @@ public class SplashActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-		
-		LangCurrTools.setLanguage(this, LangCurrTools.getLanguage()); //更新设置的系统语言
-		setHeadVisibility(View.GONE); //隐藏父类组件
+
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
+		setHeadVisibility(View.GONE); //隐藏父类组件
+		LangCurrTools.setLanguage(this, LangCurrTools.getLanguage()); //更新设置的系统语言
 
 		// 非推送通知打开首页
 		boolean isPushOpen = shared.getBoolean(AppConfig.KEY_PUSH_PAGE_MEMBER, false);
@@ -54,25 +56,27 @@ public class SplashActivity extends BaseActivity {
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
-		// 请求校验登录状态
+		// 校验登录状态
 		request(AppConfig.REQUEST_SV_GET_SESSIONS_CODE);
-		// 延迟1秒跳转页面
-		new Handler().postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				goHomeActivity();
-			}
-		}, 1000);
+		// 加载首页数据
+		request(AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE);
+		// 延迟跳转页面
+		goHomeActivity();
 		super.onResume();
 	}
 
 	private void goHomeActivity() {
-		AppApplication.statusHeight = DeviceUtil.getStatusBarHeight(SplashActivity.this);
-		startActivity(new Intent(SplashActivity.this, HomeFragmentActivity.class));
-		finish();
-		// 设置Activity的切换效果
-		overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				AppApplication.statusHeight = DeviceUtil.getStatusBarHeight(SplashActivity.this);
+				startActivity(new Intent(SplashActivity.this, HomeFragmentActivity.class));
+				finish();
+				// 设置Activity的切换效果
+				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+			}
+		}, 1000);
 	}
 
 	@Override
@@ -95,8 +99,17 @@ public class SplashActivity extends BaseActivity {
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requsetCode) {
 			case AppConfig.REQUEST_SV_GET_SESSIONS_CODE:
-			params.add(new MyNameValuePair("app", "sessions"));
-			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_SESSIONS_CODE, uri, params, HttpUtil.METHOD_GET);
+				params.add(new MyNameValuePair("app", "sessions"));
+				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_SESSIONS_CODE, uri, params, HttpUtil.METHOD_GET);
+			case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
+				uri = AppConfig.URL_COMMON_INDEX_URL;
+				params.add(new MyNameValuePair("app", "home"));
+				BaseEntity baseEn = sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE, uri, params, HttpUtil.METHOD_GET);
+				if (baseEn != null) {
+					AppApplication.themeEn = (ThemeEntity) baseEn;
+					FileManager.writeFileSaveObject(AppConfig.homeAdsFileName, baseEn, true);
+				}
+				return baseEn;
 		}
 		return null;
 	}
@@ -118,7 +131,7 @@ public class SplashActivity extends BaseActivity {
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
-		
+
 	}
 
 }

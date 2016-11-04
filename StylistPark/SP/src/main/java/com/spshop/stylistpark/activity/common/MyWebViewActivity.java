@@ -138,7 +138,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		initWebview();
 		initVideo();
 		// 初始化分享组件
-		if (shareEn != null && StringUtil.isNull(shareEn.getImagePath())) {
+		if (shareEn != null && shareEn.getShareBm() == null) {
 			loadShareImg();
 		}
 		// 初始化评论组件
@@ -177,20 +177,20 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 				public void imageLoaded(String path, String cachePath, Bitmap bm) {
 					vdoImg = bm;
 					setVideoViewBackground();
-					initShareData(cachePath);
+					initShareData(vdoImg);
 				}
 			});
 			ImageLoadTask task = asyncImageLoader.loadImage(shareEn.getImageUrl(), 0);
 			if (task != null && task.getBitmap() != null) {
 				vdoImg = task.getBitmap();
 				setVideoViewBackground();
-				initShareData(task.getNewPath());
+				initShareData(vdoImg);
 			}
 		}
 	}
 
-	private void initShareData(String cachePath) {
-		shareEn.setImagePath(cachePath);
+	private void initShareData(Bitmap bm) {
+		shareEn.setShareBm(bm);
 		setBtnRight(R.drawable.topbar_icon_share);
 	}
 
@@ -207,7 +207,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 			webSettings.setJavaScriptEnabled(true); //设置支持javascript脚本
 			webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
 			webSettings.setCacheMode(WebSettings.LOAD_DEFAULT); //设置缓冲的模式
-			//webSettings.setBuiltInZoomControls(false); //设置是否支持缩放
+			webSettings.setBuiltInZoomControls(false); //设置是否支持缩放
 			//webSettings.setBlockNetworkImage(true); //是否显示网络图像
 			//webSettings.setSupportZoom(true); //设置是否支持变焦
 			//webSettings.setDefaultFontSize(12); //设置默认的字体大小

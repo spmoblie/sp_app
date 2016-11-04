@@ -22,13 +22,19 @@ public class SortDBService {
 	private DBOpenHelper dbOpenHelper;
 	private static SortDBService instance = null;
 
-	public SortDBService(Context context) {
+	private SortDBService(Context context) {
 		this.dbOpenHelper = new DBOpenHelper(context);
 	}
 
-	public synchronized static SortDBService getInstance(Context ctx) {
-		if (null == instance) {
-			instance = new SortDBService(ctx);
+	private static synchronized void syncInit(Context context) {
+		if (instance == null) {
+			instance = new SortDBService(context);
+		}
+	}
+
+	public static SortDBService getInstance(Context ctx) {
+		if (instance == null) {
+			syncInit(ctx);
 		}
 		return instance;
 	}

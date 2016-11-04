@@ -97,7 +97,17 @@ public class OrderEntity extends BaseEntity {
 	 * 活动优惠金额
 	 */
 	private String priceDiscount;
-	
+
+	/**
+	 * 达人返现名称
+	 */
+	private String priceCashbackName;
+
+	/**
+	 * 达人返现金额
+	 */
+	private String priceCashback;
+
 	/**
 	 * 已付金额名称
 	 */
@@ -400,6 +410,26 @@ public class OrderEntity extends BaseEntity {
 
 	public void setPriceDiscount(String priceDiscount) {
 		this.priceDiscount = priceDiscount;
+	}
+
+
+	public String getPriceCashbackName() {
+		return priceCashbackName;
+	}
+
+
+	public void setPriceCashbackName(String priceCashbackName) {
+		this.priceCashbackName = priceCashbackName;
+	}
+
+
+	public String getPriceCashback() {
+		return priceCashback;
+	}
+
+
+	public void setPriceCashback(String priceCashback) {
+		this.priceCashback = priceCashback;
 	}
 
 

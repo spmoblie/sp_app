@@ -130,6 +130,13 @@
                             android:id="@+id/product_detail_tv_product_discount"
                             style="@style/common_text_discount"
                             android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/product_detail_tv_product_commission"
+                            style="@style/common_text_price"
+                            android:layout_marginLeft="10dp"
+                            android:ellipsize="end"
+                            android:lines="1" />
                     </LinearLayout>
 
                     <LinearLayout

@@ -160,7 +160,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 							refresh_lv.onPullUpRefreshComplete();
 							refresh_lv.setHasMoreData(false); //设置不允许加载更多
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
 			}
 		});
@@ -201,7 +201,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 					public void run() {
 						lv_adapter.updateAdapter(lv_show);
 					}
-				}, 1000);
+				}, AppConfig.LOADING_TIME);
 			}
 		};
 		lv_adapter = new FindListAdapter(mContext, lv_show, lv_callback);
@@ -259,7 +259,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 					public void run() {
 						refresh_lv.onPullDownRefreshComplete();
 					}
-				}, 1000);
+				}, AppConfig.LOADING_TIME);
 			}
 			return;
 		}
@@ -270,7 +270,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 			public void run() {
 				atm.request(AppConfig.REQUEST_SV_GET_FIND_LIST_CODE, ChildFragmentThree.this);
 			}
-		}, 1000);
+		}, AppConfig.LOADING_TIME);
 	}
 
 	@Override

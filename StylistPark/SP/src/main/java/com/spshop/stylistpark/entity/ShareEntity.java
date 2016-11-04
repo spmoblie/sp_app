@@ -1,5 +1,6 @@
 package com.spshop.stylistpark.entity;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import java.util.ArrayList;
@@ -11,10 +12,10 @@ public class ShareEntity extends BaseEntity {
 	private String id; //分享对象的ID（如果有多个ID则用“，”隔离）
 	private String title; //分享的标题
 	private String text; //分享文本
-	private String imagePath; //图片的本地路径
+	private String url; //分享的链接
 	private String imageUrl; //图片的网络路径
 	private String longImgPath; //长图片的本地路径
-	private String url; //分享的链接
+	private Bitmap shareBm; //分享的图片对象
 	private int type; //分享对象的类型
 	private ArrayList<Uri> imageUris; //保存到本地的图片Uri集
 	
@@ -56,12 +57,12 @@ public class ShareEntity extends BaseEntity {
 		this.text = text;
 	}
 
-	public String getImagePath() {
-		return imagePath;
+	public Bitmap getShareBm() {
+		return shareBm;
 	}
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setShareBm(Bitmap shareBm) {
+		this.shareBm = shareBm;
 	}
 
 	public String getImageUrl() {

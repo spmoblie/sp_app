@@ -73,7 +73,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	private int dataTotal = 0; //数据总量
 	private int current_Page = 1;  //当前列表加载页
-	private boolean isUpdate = true;
+	private boolean isUpdate = false;
 	private String currStr;
 	private Context mContext;
 	private NetworkInfo netInfo;
@@ -128,6 +128,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		atm = AsyncTaskManager.getInstance(mContext);
 		mInflater = LayoutInflater.from(mContext);
 		options = AppApplication.getDefaultImageOptions();
+		themeEn = AppApplication.themeEn;
 
 		// 动态注册广播
 		IntentFilter mFilter = new IntentFilter();
@@ -168,6 +169,11 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		initListView();
 		initListViewHead();
 		setAdapter();
+		if (themeEn != null) {
+			setHeadView();
+		} else {
+			getSVDatas();
+		}
 	}
 
 	private void initListView() {
@@ -185,7 +191,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					public void run() {
 						refresh_lv.onPullDownRefreshComplete();
 					}
-				}, 1000);
+				}, AppConfig.LOADING_TIME);
 			}
 
 			@Override
@@ -201,7 +207,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 							refresh_lv.onPullUpRefreshComplete();
 							refresh_lv.setHasMoreData(false);
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
 			}
 		});
@@ -579,33 +585,28 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		requestHeadDatas();
 	}
 
-	/**
-	 * 从本地数据库加载数据
-	 */
-	private void getDBDatas() {
-		AppApplication.loadDBData = true;
-		atm.request(AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE, instance);
-	}
-
 	private void requestHeadDatas() {
 		new Handler().postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				atm.request(AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE, instance);
 			}
-		}, 1000);
+		}, AppConfig.LOADING_TIME);
 	}
 
 	/**
 	 * 加载翻页数据
 	 */
 	private void loadSVDatas() {
-		requestListDatas();
+		atm.request(AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE, instance);
 	}
 
-	private void requestListDatas() {
-		atm.request(AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE, instance);
+	/**
+	 * 从本地数据库加载数据
+	 */
+	private void getDBDatas() {
+		AppApplication.loadDBData = true;
+		atm.request(AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE, instance);
 	}
 
 	@Override
@@ -675,7 +676,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			ImageView iv = viewLists.get(i);
 			if (iv != null) {
 				iv.setImageBitmap(null);
-				iv = null;
 			}
 		}
 		if (viewPager != null) {
@@ -710,30 +710,30 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		String uri = AppConfig.URL_COMMON_INDEX_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
-			params.add(new MyNameValuePair("app", "home"));
-			BaseEntity baseEn = sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE, uri, params, HttpUtil.METHOD_GET);
-			if (baseEn != null) {
-				themeEn = (ThemeEntity) baseEn;
-				FileManager.writeFileSaveObject(AppConfig.homeAdsFileName, themeEn, true);
-			}
-			return baseEn;
+			case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
+				params.add(new MyNameValuePair("app", "home"));
+				BaseEntity baseEn = sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE, uri, params, HttpUtil.METHOD_GET);
+				if (baseEn != null) {
+					themeEn = (ThemeEntity) baseEn;
+					FileManager.writeFileSaveObject(AppConfig.homeAdsFileName, themeEn, true);
+				}
+				return baseEn;
 
-		case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
-			uri = AppConfig.URL_COMMON_PRODUCT_URL;
-			params.add(new MyNameValuePair("app", "category"));
-			params.add(new MyNameValuePair("cat_id", "0"));
-			params.add(new MyNameValuePair("brand", "0"));
-			params.add(new MyNameValuePair("order", "0"));
-			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
-			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+			case AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE:
+				Object obj = FileManager.readFileSaveObject(AppConfig.homeAdsFileName, true);
+				if (obj != null) {
+					themeEn = (ThemeEntity) obj;
+				}
+				return obj;
 
-		case AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE:
-			Object obj = FileManager.readFileSaveObject(AppConfig.homeAdsFileName, true);
-			if (obj != null) {
-				themeEn = (ThemeEntity) obj;
-			}
-			return obj;
+			case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
+				uri = AppConfig.URL_COMMON_PRODUCT_URL;
+				params.add(new MyNameValuePair("app", "category"));
+				params.add(new MyNameValuePair("cat_id", "0"));
+				params.add(new MyNameValuePair("brand", "0"));
+				params.add(new MyNameValuePair("order", "0"));
+				params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
+				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -742,55 +742,55 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	public void onSuccess(int requestCode, Object result) {
 		if (getActivity() == null) return;
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
-			setHeadView();
-			if (themeEn != null) {
-				requestListDatas();
+			case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
+				setHeadView();
+				if (themeEn == null) {
+					getDBDatas();
+				} else {
+					stopAnimation();
+					loadSVDatas();
+				}
+				break;
+			case AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE:
+				AppApplication.loadDBData = false;
+				setHeadView();
 				stopAnimation();
-			} else {
-				getDBDatas(); //加载远程数据失败则获取本地数据
-			}
-			break;
-		case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
-			if (result != null) {
-				ProductListEntity mainEn = (ProductListEntity) result;
-				dataTotal = mainEn.getDataTotal();
-				List<ProductListEntity> lists = mainEn.getMainLists();
-				if (lists != null && lists.size() > 0) {
-					rl_load_fail.setVisibility(View.GONE);
-					lv_all.addAll(lists);
-					addAllShow(lv_all);
-					current_Page++;
-					myUpdateAdapter();
-				}else {
+				if (themeEn == null) {
+					rl_load_fail.setVisibility(View.VISIBLE);
+				} else {
+					loadSVDatas();
+				}
+				break;
+			case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
+				if (result != null) {
+					ProductListEntity mainEn = (ProductListEntity) result;
+					dataTotal = mainEn.getDataTotal();
+					List<ProductListEntity> lists = mainEn.getMainLists();
+					if (lists != null && lists.size() > 0) {
+						rl_load_fail.setVisibility(View.GONE);
+						lv_all.addAll(lists);
+						addAllShow(lv_all);
+						current_Page++;
+						myUpdateAdapter();
+					} else {
+						loadFailHandle();
+					}
+				} else {
 					loadFailHandle();
 				}
-			}else {
-				loadFailHandle();
-			}
-			break;
-		case AppConfig.REQUEST_DB_GET_HOME_SHOW_HEAD_CODE:
-			AppApplication.loadDBData = false;
-			setHeadView();
-			stopAnimation();
-			if (themeEn != null) {
-				requestListDatas();
-			} else {
-				rl_load_fail.setVisibility(View.VISIBLE);
-			}
-			break;
+				break;
 		}
 	}
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
 		if (getActivity() == null) return;
-		CommonTools.showToast(String.valueOf(result), 1000);
 		if (themeEn == null) {
-			getDBDatas(); //加载远程数据失败则获取本地数据
+			getDBDatas();
 		} else {
 			loadFailHandle();
 		}
+		CommonTools.showToast(String.valueOf(result), 1000);
 	}
 
 	private void loadFailHandle() {
@@ -802,11 +802,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	}
 
 	private void myUpdateAdapter() {
-		if (current_Page == 1) {
-			toTop();
-		}
 		lv_show_two.clear();
-		ListShowTwoEntity lstEn = null;
+		ListShowTwoEntity lstEn;
 		for (int i = 0; i < lv_show.size(); i++) {
 			ProductListEntity en = lv_show.get(i);
 			if (i%2 == 0) {

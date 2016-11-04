@@ -39,9 +39,15 @@ public class UserManager {
 
 	public static UserManager getInstance(){
 		if (instance == null) {
-			instance = new UserManager();
+			syncInit();
 		}
 		return instance;
+	}
+
+	private static synchronized void syncInit() {
+		if (instance == null) {
+			instance = new UserManager();
+		}
 	}
 
 	private UserManager(){

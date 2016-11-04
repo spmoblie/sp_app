@@ -52,7 +52,7 @@ public class ProductListEntity extends BaseEntity {
 	private String discount;
 	
 	/**
-	 * 会员佣金
+	 * 达人返现
 	 */
 	private String commission;
 

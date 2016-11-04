@@ -11,57 +11,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
         android:background="@color/ui_bg_color_white" >
 
-        <FrameLayout
-            android:id="@+id/item_list_order_member_fl_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp" >
+        <ImageView
+            android:id="@+id/item_list_order_member_iv_avatar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/default_avatar" />
 
-            <ImageView
-                android:id="@+id/item_list_order_member_iv_avatar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                android:contentDescription="@string/desc"
-                android:src="@drawable/default_avatar" />
-
-            <ImageView
-                android:id="@+id/item_list_order_member_iv_rank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp"
-                android:contentDescription="@string/desc"
-                android:src="@drawable/icon_rank_1" />
-        </FrameLayout>
+        <TextView
+            android:id="@+id/item_list_order_member_tv_order_no"
+            style="@style/setting_lay_text_title"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/item_list_order_member_iv_avatar"
+            android:textSize="@dimen/text_size_12" />
 
         <TextView
             android:id="@+id/item_list_order_member_tv_nick"
             style="@style/setting_lay_text_title"
             android:layout_centerVertical="false"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@id/item_list_order_member_fl_avatar"
-            android:textSize="@dimen/text_size_12"
-            android:visibility="gone" />
+            android:layout_marginLeft="5dp"
+            android:layout_below="@+id/item_list_order_member_tv_order_no"
+            android:layout_toRightOf="@id/item_list_order_member_iv_avatar"
+            android:textSize="@dimen/text_size_12" />
 
         <TextView
-            android:id="@+id/item_list_order_member_tv_add_time"
+            android:id="@+id/item_list_order_member_tv_total_user"
             style="@style/setting_lay_text_title"
-            android:layout_marginLeft="0dp"
-            android:layout_toRightOf="@id/item_list_order_member_fl_avatar"
-            android:textSize="@dimen/text_size_14" />
+            android:layout_centerVertical="false"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/text_size_12"
+            android:textColor="@color/tv_color_status" />
 
         <TextView
             android:id="@+id/item_list_order_member_tv_order_status"
             style="@style/setting_lay_text_title"
+            android:layout_centerVertical="false"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:textColor="@color/tv_color_status"
-            android:textSize="@dimen/text_size_14" />
+            android:layout_below="@+id/item_list_order_member_tv_total_user"
+            android:textSize="@dimen/text_size_12" />
     </RelativeLayout>
 
     <ImageView
@@ -84,25 +78,5 @@
     <ImageView
         style="@style/set_line_horizontal_bg"
         android:contentDescription="@string/desc" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/ui_bg_color_white"
-        android:paddingBottom="10dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp" >
-
-        <TextView
-            android:id="@+id/item_list_order_member_tv_total_goods"
-            style="@style/setting_lay_text_title"
-            android:textSize="@dimen/text_size_12" />
-
-        <TextView
-            android:id="@+id/item_list_order_member_tv_total_user"
-            style="@style/setting_lay_text_title"
-            android:layout_alignParentRight="true"
-            android:textSize="@dimen/text_size_12" />
-    </RelativeLayout>
 
 </LinearLayout>

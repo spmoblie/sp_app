@@ -87,7 +87,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private boolean isHead = true;
 	private boolean isGone = true;
 	private String selectName = "";
-	private String logoImgUrl, shareImgUrl, shareImgPath;
+	private String logoImgUrl, shareImgUrl;
 
 	private LinearLayout ll_stikky_main, ll_favourable_time, ll_group_main;
 	private RelativeLayout rl_top_1, rl_top_2, rl_top_3;
@@ -107,6 +107,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private BrandEntity brandEn;
 	private ShareEntity shareEn;
+	private Bitmap shareBm;
 	private SelectListEntity selectEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
@@ -194,7 +195,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 					public void run() {
 						refresh_lv.onPullDownRefreshComplete();
 					}
-				}, 1000);
+				}, AppConfig.LOADING_TIME);
 			}
 
 			@Override
@@ -210,7 +211,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 							refresh_lv.onPullUpRefreshComplete();
 							refresh_lv.setHasMoreData(false); //设置不允许加载更多
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
 			}
 		});
@@ -316,20 +317,20 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 				@Override
 				public void imageLoaded(String path, String cachePath, Bitmap bm) {
-					initShareData(cachePath);
+					initShareData(bm);
 					showHeadViews(bm);
 				}
 			});
 			ImageLoadTask task = asyncImageLoader.loadImage(shareImgUrl, 0);
 			if (task != null && task.getBitmap() != null) {
-				initShareData(task.getNewPath());
+				initShareData(task.getBitmap());
 				showHeadViews(task.getBitmap());
 			}
 		}
 	}
 
-	private void initShareData(String cachePath) {
-		shareImgPath = cachePath;
+	private void initShareData(Bitmap bm) {
+		shareBm = bm;
 		setBtnRight(R.drawable.topbar_icon_share);
 	}
 
@@ -481,7 +482,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 					}
 				}
 
-			}, 1000);
+			}, AppConfig.LOADING_TIME);
 		}else {
 			getBrandProductLists();
 		}
@@ -535,7 +536,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			shareEn.setText(brandEn.getDesc());
 			shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "brand.php?id=" + brandEn.getBrandId());
 			shareEn.setImageUrl(shareImgUrl);
-			shareEn.setImagePath(shareImgPath);
+			shareEn.setShareBm(shareBm);
 		}
 		showShareView(shareEn);
 	}

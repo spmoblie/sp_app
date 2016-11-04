@@ -33,9 +33,15 @@ public class UpdateAppVersion {
 
 	public static UpdateAppVersion getInstance(Context context, boolean isHomeIndex) {
 		if (instance == null) {
-			instance = new UpdateAppVersion(context, isHomeIndex);
+			syncInit(context, isHomeIndex);
 		}
 		return instance;
+	}
+
+	private static synchronized void syncInit(Context context, boolean isHomeIndex) {
+		if (instance == null) {
+			instance = new UpdateAppVersion(context, isHomeIndex);
+		}
 	}
 	
 	private UpdateAppVersion(Context context, boolean isHomeIndex) {

@@ -72,7 +72,9 @@ public class AppConfig {
 
 	// SP加盟计划ID
 	public static final int SP_JION_PROGRAM_ID = 1;
-	
+	// 加载缓冲时间
+	public static final int LOADING_TIME = 500;
+
 	// QQ AppID
 	public static final String QQ_APP_ID = "1104891333";
 	// QQ授权接口参数：Scope权限

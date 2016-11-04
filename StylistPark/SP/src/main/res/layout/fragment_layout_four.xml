@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/layout_full" >
+    style="@style/layout_full">
 
     <LinearLayout
         style="@style/layout_full"
         android:background="@color/ui_bg_color_nut"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <include layout="@layout/layout_top_commom" />
 
@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
-            android:scrollbars="none" >
+            android:scrollbars="none">
 
         </com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView>
 
@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:background="@color/ui_bg_color_white"
             android:orientation="horizontal"
-            android:visibility="gone" >
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/fragment_four_ll_select_all"
@@ -40,7 +40,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/fragment_four_iv_select_all"
@@ -62,28 +62,44 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
+                android:paddingLeft="15dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp" >
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/common_text_price"
+                        android:text="@string/order_total_name"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="@color/label_text_color"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fragment_four_tv_curr"
+                        style="@style/common_text_price"
+                        android:layout_marginTop="2dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fragment_four_tv_total"
+                        style="@style/common_text_price"
+                        android:text="@string/number_0"
+                        android:textSize="@dimen/text_size_18"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <TextView
-                    style="@style/common_text_price"
-                    android:text="@string/order_total_name"
-                    android:textSize="@dimen/text_size_16"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/fragment_four_tv_curr"
-                    style="@style/common_text_price"
-                    android:layout_marginTop="2dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/fragment_four_tv_total"
-                    style="@style/common_text_price"
-                    android:text="@string/number_0"
-                    android:textSize="@dimen/text_size_18"
-                    android:textStyle="bold" />
+                    android:id="@+id/fragment_four_tv_offers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cart_offers"
+                    android:textSize="@dimen/text_size_12"
+                    android:textColor="@color/label_text_color" />
             </LinearLayout>
 
             <TextView

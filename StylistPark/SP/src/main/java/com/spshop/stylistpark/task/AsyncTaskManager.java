@@ -46,6 +46,12 @@ public class AsyncTaskManager {
 		requestMap = new WeakHashMap<Integer, WeakReference<BaseAsyncTask>>();
 	}
 
+	private static synchronized void syncInit(Context context) {
+		if (instance == null) {
+			instance = new AsyncTaskManager(context);
+		}
+	}
+
 	/**
 	 * [AsyncTaskManager constructor]
 	 * 
@@ -54,11 +60,7 @@ public class AsyncTaskManager {
 	 */
 	public static AsyncTaskManager getInstance(Context context) {
 		if (instance == null) {
-			synchronized (AsyncTaskManager.class) {
-				if (instance == null) {
-					instance = new AsyncTaskManager(context);
-				}
-			}
+			syncInit(context);
 		}
 		return instance;
 	}
@@ -169,11 +171,11 @@ public class AsyncTaskManager {
 					bean.setResult(mContext.getString((R.string.toast_server_busy)));
 					ExceptionUtil.handle(e);
 				}
-				try {
-					Thread.sleep(500);
+				/*try {
+					Thread.sleep(100);
 				} catch (InterruptedException e1) {
 					ExceptionUtil.handle(e1);
-				}
+				}*/
 			}
 			return bean;
 		}

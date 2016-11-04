@@ -40,7 +40,6 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ShareEntity;
-import com.spshop.stylistpark.image.BitmapCache;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.share.weibo.AccessTokenKeeper;
 import com.spshop.stylistpark.share.weixi.WXShareUtil;
@@ -408,12 +407,9 @@ public class ShareView {
 			WXMediaMessage msg = new WXMediaMessage(webpage);
 			msg.title = mShareEn.getTitle();
 			msg.description = mShareEn.getText();
-			Bitmap bitmap = BitmapCache.getInstance().getBitmap(mShareEn.getImagePath());
+			Bitmap bitmap = mShareEn.getShareBm();
 			if (bitmap == null) {
-				bitmap = BitmapFactory.decodeFile(mShareEn.getImagePath());
-				if (bitmap == null) {
-					bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher);
-				}
+				bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher);
 			}
 			if (bitmap != null) {
 				bitmap = BitmapUtil.getBitmap(bitmap, 80, 80);
@@ -501,12 +497,9 @@ public class ShareView {
 			textObject.text = "【" + mShareEn.getTitle() + "】 " + mShareEn.getUrl();
 			weiboMessage.textObject = textObject;
 			ImageObject imageObject = new ImageObject();
-			Bitmap bitmap = BitmapCache.getInstance().getBitmap(mShareEn.getImagePath());
+			Bitmap bitmap = mShareEn.getShareBm();
 			if (bitmap == null) {
-				bitmap = BitmapFactory.decodeFile(mShareEn.getImagePath());
-				if (bitmap == null) {
-					bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher);
-				}
+				bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher);
 			}
 			imageObject.setImageObject(bitmap);
 			weiboMessage.imageObject = imageObject;

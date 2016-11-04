@@ -30,12 +30,12 @@ public class MemberEntity extends BaseEntity {
 	 * 会员等级
 	 */
 	private int memberRank;
-	
+
 	/**
-	 * 成交订单数
+	 * 会员来源
 	 */
-	private String orderCount;
-	
+	private String memberType;
+
 	/**
 	 * 成交订单金额
 	 */
@@ -100,13 +100,16 @@ public class MemberEntity extends BaseEntity {
 		this.memberNick = memberNick;
 	}
 
+
 	public String getGender() {
 		return gender;
 	}
 
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 
 	public int getMemberRank() {
 		return memberRank;
@@ -118,13 +121,13 @@ public class MemberEntity extends BaseEntity {
 	}
 
 
-	public String getOrderCount() {
-		return orderCount;
+	public String getMemberType() {
+		return memberType;
 	}
 
 
-	public void setOrderCount(String orderCount) {
-		this.orderCount = orderCount;
+	public void setMemberType(String memberType) {
+		this.memberType = memberType;
 	}
 
 

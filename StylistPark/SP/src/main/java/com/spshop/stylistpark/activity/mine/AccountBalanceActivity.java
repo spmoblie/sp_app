@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.util.ArrayMap;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,7 +32,7 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountBalanceActivity extends BaseActivity implements OnClickListener{
+public class AccountBalanceActivity extends BaseActivity {
 	
 	private static final String TAG = "AccountBalanceActivity";
 	public static AccountBalanceActivity instance = null;
@@ -50,8 +48,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	private ListView mListView;
 	private AdapterCallback lv_callback;
 	private BalanceListAdapter lv_adapter;
-	private LinearLayout ll_auth_main;
-	private TextView tv_amount_title, tv_amount, tv_hint, tv_auth, tv_no_data;
+	private TextView tv_curr, tv_amount, tv_withdrawals, tv_hint, tv_no_data;
 
 	private List<BalanceDetailEntity> lv_show = new ArrayList<BalanceDetailEntity>();
 	private List<BalanceDetailEntity> lv_all_1 = new ArrayList<BalanceDetailEntity>();
@@ -73,18 +70,46 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	
 	private void findViewById() {
 		refresh_lv = (PullToRefreshListView) findViewById(R.id.account_balance_refresh_lv);
-		tv_amount_title = (TextView) findViewById(R.id.balance_list_head_tv_amount_title);
+		tv_curr = (TextView) findViewById(R.id.balance_list_head_tv_curr);
 		tv_amount = (TextView) findViewById(R.id.balance_list_head_tv_amount);
-		ll_auth_main = (LinearLayout) findViewById(R.id.balance_list_head_ll_auth);
+		tv_withdrawals = (TextView) findViewById(R.id.balance_list_head_tv_withdrawals);
 		tv_hint = (TextView) findViewById(R.id.balance_list_head_tv_withdrawals_hint);
-		tv_auth = (TextView) findViewById(R.id.balance_list_head_tv_auth);
 		tv_no_data = (TextView) findViewById(R.id.account_balance_tv_no_data);
 	}
 
 	private void initView() {
 		setTitle(R.string.mine_account_money);
-		setBtnRight(getString(R.string.money_withdrawals));
-		tv_auth.setOnClickListener(this);
+
+		tv_withdrawals.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				switch (overStatus) {
+					case 1: //可提现
+						if (isSuccess) {
+							Intent intent = new Intent(mContext, WithdrawalsActivity.class);
+							intent.putExtra("amountTotal", amountTotal);
+							startActivity(intent);
+						}
+						break;
+					case 2: //提现中
+						CommonTools.showToast(overHintStr, 2000);
+						break;
+					case 3: //非达人
+						showConfirmDialog(R.string.money_over_hint, getString(R.string.cancel),
+								getString(R.string.money_upgrade), true, true, new Handler() {
+									@Override
+									public void handleMessage(Message msg) {
+										switch (msg.what) {
+											case DIALOG_CONFIRM_CLICK:
+												toUpgradeDaren();
+												break;
+										}
+									}
+								});
+						break;
+				}
+			}
+		});
 
 		initListView();
 		setAdapter();
@@ -92,38 +117,23 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 	}
 
 	private void setHeadView(BalanceDetailEntity mainEn) {
-		ll_auth_main.setVisibility(View.GONE);
 		String currStr = LangCurrTools.getCurrencyValue();
+		tv_curr.setText(currStr);
 		if (mainEn != null) {
 			amountTotal = mainEn.getAmount();
 			UserManager.getInstance().saveUserMoney(currStr + amountTotal);
 			tv_amount.setText(decimalFormat.format(amountTotal));
-
-			ll_auth_main.setVisibility(View.VISIBLE);
-			tv_auth.setVisibility(View.GONE);
-			tv_hint.setVisibility(View.VISIBLE);
+			overHintStr = mainEn.getStatusHint();
 			overStatus = mainEn.getStatus();
-			switch (overStatus) {
-				case 1: //提现中
-					overHintStr = mainEn.getStatusHint();
-					tv_hint.setText(overHintStr);
-					break;
-				case 2: //未认证
-					overHintStr = getString(R.string.money_auth_explain);
-					tv_hint.setText(overHintStr);
-					//tv_hint.setText(overHintStr + "，");
-					//tv_auth.setVisibility(View.VISIBLE);
-					break;
-				case 3: //非达人
-					tv_hint.setText(R.string.money_over_hint);
-					break;
-				default: //可提现
-					ll_auth_main.setVisibility(View.GONE);
-					break;
+			if (overStatus == 2) { //提现中
+				tv_hint.setText(overHintStr);
+				tv_hint.setVisibility(View.VISIBLE);
+				tv_withdrawals.setVisibility(View.GONE);
+			} else {
+				tv_hint.setVisibility(View.GONE);
+				tv_withdrawals.setVisibility(View.VISIBLE);
 			}
 		}
-		currStr = currStr.replace(" ", "");
-		tv_amount_title.setText(getString(R.string.money_balance_burrency, currStr));
 	}
 
 	private void initListView() {
@@ -142,7 +152,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 						public void run() {
 							refresh_lv.onPullDownRefreshComplete();
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
             }
 
@@ -159,7 +169,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 							refresh_lv.onPullUpRefreshComplete();
 							refresh_lv.setHasMoreData(false);
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
             }
         });
@@ -212,50 +222,7 @@ public class AccountBalanceActivity extends BaseActivity implements OnClickListe
 			public void run() {
 				request(AppConfig.REQUEST_SV_GET_BALANCE_DETAIL_LIST_CODE);
 			}
-		}, 1000);
-	}
-
-	@Override
-	public void onClick(View v) {
-		Intent intent = null;
-		switch (v.getId()) {
-		case R.id.balance_list_head_tv_auth:
-			intent = new Intent(mContext, AuthenticationActivity.class);
-			break;
-		}
-		if (intent != null) {
-			startActivity(intent);
-		}
-	}
-
-	@Override
-	public void OnListenerRight() {
-		switch (overStatus) {
-			case 1: //提现中
-			case 2: //未认证
-				CommonTools.showToast(overHintStr, 2000);
-				break;
-			case 3: //非达人
-				showConfirmDialog(R.string.money_over_hint, getString(R.string.cancel),
-						getString(R.string.money_upgrade), true, true, new Handler() {
-							@Override
-							public void handleMessage(Message msg) {
-								switch (msg.what) {
-									case DIALOG_CONFIRM_CLICK:
-										toUpgradeDaren();
-										break;
-								}
-							}
-						});
-				break;
-			default: //可提现
-				if (isSuccess) {
-					Intent intent = new Intent(mContext, WithdrawalsActivity.class);
-					intent.putExtra("amountTotal", amountTotal);
-					startActivity(intent);
-				}
-				break;
-		}
+		}, AppConfig.LOADING_TIME);
 	}
 
 	private void toUpgradeDaren() {

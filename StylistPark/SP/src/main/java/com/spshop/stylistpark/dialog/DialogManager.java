@@ -33,12 +33,18 @@ public class DialogManager {
 		this.mContext = context;
 	}
 
+	private static synchronized void syncInit(Context context) {
+		if (instance == null) {
+			instance = new DialogManager(context);
+		}
+	}
+
 	/**
 	 * 创建此对象请记得在Activity的onPause()中调用clearInstance()销毁对象
 	 */
 	public static DialogManager getInstance(Context context) {
 		if (instance == null) {
-			instance = new DialogManager(context);
+			syncInit(context);
 		}
 		return instance;
 	}

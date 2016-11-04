@@ -147,8 +147,8 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			btn_5.setOnClickListener(this);
 		}else { //会员订单
 			btn_1.setText(getString(R.string.order_top_tab_1));
-			btn_2.setText(getString(R.string.mine_done));
-			btn_3.setText(getString(R.string.mine_wait_commission));
+			btn_2.setText(getString(R.string.mine_revenue));
+			btn_3.setText(getString(R.string.mine_wait_pending));
 			btn_4.setText(getString(R.string.order_top_tab_4));
 			btn_4.setVisibility(View.GONE);
 		}
@@ -182,7 +182,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 							refresh_lv.onPullUpRefreshComplete();
 							refresh_lv.setHasMoreData(false);
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
             }
         });
@@ -291,7 +291,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			if (rootCode == 0) {
 				noDataShowStr = getString(R.string.mine_wait_pay) + orderStr;
 			}else { //会员订单
-				noDataShowStr = getString(R.string.mine_done) + orderStr;
+				noDataShowStr = getString(R.string.mine_revenue) + orderStr;
 			}
 			break;
 		case TYPE_3:
@@ -299,7 +299,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			if (rootCode == 0) {
 				noDataShowStr = getString(R.string.mine_wait_delivery) + orderStr;
 			}else { //会员订单
-				noDataShowStr = getString(R.string.mine_wait_commission) + orderStr;
+				noDataShowStr = getString(R.string.mine_wait_pending) + orderStr;
 			}
 			break;
 		case TYPE_4:
@@ -376,7 +376,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 					public void run() {
 						refresh_lv.onPullDownRefreshComplete();
 					}
-				}, 1000);
+				}, AppConfig.LOADING_TIME);
 			}
 			return;
 		}
@@ -387,7 +387,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			public void run() {
 				request(AppConfig.REQUEST_SV_GET_ORDER_LIST_CODE);
 			}
-		}, 1000);
+		}, AppConfig.LOADING_TIME);
 	}
 
 	@Override
@@ -415,7 +415,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			if (rootCode == 0) {
 				noDataShowStr = getString(R.string.mine_wait_pay) + orderStr;
 			}else { //会员订单
-				noDataShowStr = getString(R.string.mine_done) + orderStr;
+				noDataShowStr = getString(R.string.mine_revenue) + orderStr;
 			}
 			if (lv_all_2 != null && lv_all_2.size() > 0) {
 				addOldListDatas(lv_all_2, page_type_2, total_2);
@@ -431,7 +431,7 @@ public class OrderListActivity extends BaseActivity implements OnClickListener{
 			if (rootCode == 0) {
 				noDataShowStr = getString(R.string.mine_wait_delivery) + orderStr;
 			}else { //会员订单
-				noDataShowStr = getString(R.string.mine_wait_commission) + orderStr;
+				noDataShowStr = getString(R.string.mine_wait_pending) + orderStr;
 			}
 			if (lv_all_3 != null && lv_all_3.size() > 0) {
 				addOldListDatas(lv_all_3, page_type_3, total_3);

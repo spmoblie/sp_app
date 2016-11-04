@@ -152,7 +152,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 							refresh_lv.onPullUpRefreshComplete();
 							refresh_lv.setHasMoreData(false);
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
             }
         });
@@ -255,7 +255,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 					public void run() {
 						refresh_lv.onPullDownRefreshComplete();
 					}
-				}, 1000);
+				}, AppConfig.LOADING_TIME);
 			}
 			return;
 		}
@@ -266,7 +266,7 @@ public class MemberListActivity extends BaseActivity implements OnClickListener{
 			public void run() {
 				request(AppConfig.REQUEST_SV_GET_MEMBER_LIST_CODE);
 			}
-		}, 1000);
+		}, AppConfig.LOADING_TIME);
 	}
 
 	@Override

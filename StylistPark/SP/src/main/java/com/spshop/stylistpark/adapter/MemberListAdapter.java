@@ -1,7 +1,6 @@
 package com.spshop.stylistpark.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import java.util.List;
  */
 public class MemberListAdapter extends BaseAdapter {
 	
-	private static final String IMAGE_URL_HTTP = "";
 	public static final int TYPE_CHECK = 1;
 	public static final int TYPE_PAY = 2;
 	public static final int TYPE_CACEL = 3;
@@ -33,20 +31,12 @@ public class MemberListAdapter extends BaseAdapter {
 	private List<MemberEntity> datas;
 	private AdapterCallback adapterCallback;
 	private DisplayImageOptions avatarOptions;
-	private Drawable rank_1, rank_2, rank_3;
 
 	public MemberListAdapter(Context context, List<MemberEntity> datas, AdapterCallback adapterCallback) {
 		this.context = context;
 		this.datas = datas;
 		this.adapterCallback = adapterCallback;
 		avatarOptions = AppApplication.getAvatarOptions();
-		
-		/*rank_1 = context.getResources().getDrawable(R.drawable.icon_rank_1);
-		rank_2 = context.getResources().getDrawable(R.drawable.icon_rank_2);
-		rank_3 = context.getResources().getDrawable(R.drawable.icon_rank_3);
-		rank_1.setBounds(0, 0, rank_1.getMinimumWidth(), rank_1.getMinimumHeight());
-		rank_2.setBounds(0, 0, rank_2.getMinimumWidth(), rank_2.getMinimumHeight());
-		rank_3.setBounds(0, 0, rank_3.getMinimumWidth(), rank_3.getMinimumHeight());*/
 	}
 
 	public void updateAdapter(List<MemberEntity> datas) {
@@ -77,14 +67,14 @@ public class MemberListAdapter extends BaseAdapter {
 	static class ViewHolder {
 
 		ImageView iv_top_line, iv_avatar;
-		TextView tv_nick, tv_gender, tv_order_count, tv_order_money;
+		TextView tv_nick, tv_gender, tv_type, tv_order_money;
 
 	}
 
 	/** 代表了ListView中的一个item对象 */
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ViewHolder holder = null;
+		ViewHolder holder;
 		if (convertView == null) {
 			convertView = View.inflate(context, R.layout.item_list_member, null);
 			holder = new ViewHolder();
@@ -92,7 +82,7 @@ public class MemberListAdapter extends BaseAdapter {
 			holder.iv_avatar = (ImageView) convertView.findViewById(R.id.item_list_member_iv_avatar);
 			holder.tv_nick = (TextView) convertView.findViewById(R.id.item_list_member_tv_nick);
 			holder.tv_gender = (TextView) convertView.findViewById(R.id.item_list_member_tv_gender);
-			holder.tv_order_count = (TextView) convertView.findViewById(R.id.item_list_member_tv_order_count);
+			holder.tv_type = (TextView) convertView.findViewById(R.id.item_list_member_tv_type);
 			holder.tv_order_money = (TextView) convertView.findViewById(R.id.item_list_member_tv_order_money);
 			convertView.setTag(holder);
 		} else {
@@ -107,26 +97,12 @@ public class MemberListAdapter extends BaseAdapter {
 		}
 		
 		holder.tv_nick.setText(data.getMemberNick());
-		/*switch (data.getMemberRank()) {
-		case 0:
-			holder.tv_name.setCompoundDrawables(null, null, rank_1, null);
-			break;
-		case 1:
-			holder.tv_name.setCompoundDrawables(null, null, rank_2, null);
-			break;
-		case 2:
-			holder.tv_name.setCompoundDrawables(null, null, rank_3, null);
-			break;
-		default:
-			holder.tv_name.setCompoundDrawables(null, null, rank_1, null);
-			break;
-		}*/
 		holder.tv_gender.setText(data.getGender());
-		holder.tv_order_count.setText(data.getOrderCount());
+		holder.tv_type.setText(data.getMemberType());
 		holder.tv_order_money.setText(data.getOrderMoney());
 
 		holder.iv_avatar.setImageResource(R.drawable.default_avatar);
-		ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + data.getAvatar(), holder.iv_avatar, avatarOptions);
+		ImageLoader.getInstance().displayImage(data.getAvatar(), holder.iv_avatar, avatarOptions);
 		holder.iv_avatar.setOnClickListener(new OnClickListener() {
 			
 			@Override

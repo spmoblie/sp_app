@@ -94,7 +94,7 @@
     <string name="loading_load_more">Load more</string>
     <string name="loading_strive_loading">Strive loading&#8230;</string>
     <string name="loading_downloading">Downloading&#8230;&#8230;</string>
-    <string name="loading_no_more">No more ~</string>
+    <string name="loading_no_more">No more</string>
     <string name="loading_no_data">No %1$s</string>
     <string name="loading_click_load">Reload</string>
     <string name="loading_submit_fail">Upload failed</string>
@@ -118,7 +118,6 @@
     <string name="title_login">User Login</string>
     <string name="title_register">Email Register</string>
     <string name="title_reset">Reset Password</string>
-    <string name="title_my_address">My Address</string>
     <string name="title_delivery_info">Delivery Information</string>
     <string name="title_order_confirm">Confirm Order</string>
     <string name="title_order_detail">Order Details</string>
@@ -169,7 +168,8 @@
     <string name="cart_go_add">To add goods</string>
     <string name="cart_go_shopping">Shopping</string>
     <string name="cart_goods_num">Total %1$d piece</string>
-    <string name="cart_buy_now">Buy now</string>
+    <string name="cart_offers">Free shipping over ¥ 200</string>
+    <string name="cart_buy_now">Confirm Order</string>
     <string name="cart_error_data_null">Data synchronization exception! Please pull down to refresh the shopping cart data!</string>
 
     <!-- Find-->
@@ -221,6 +221,7 @@
     <string name="order_charges_name">Charges:</string>
     <string name="order_coupon_name">Deduction:</string>
     <string name="order_discount_name">Discount:</string>
+    <string name="order_cash_back">Cashback:</string>
     <string name="order_pay_name">Pay price：</string>
     <string name="order_pay_type">Pay type：%1$s</string>
     <string name="order_sn">Order No ：%1$s</string>
@@ -360,7 +361,7 @@
     <string name="share_msg_no_whatsapp">Please install Whatsapp first.</string>
     <string name="share_msg_no_line">Please install Line first.</string>
     <string name="share_msg_error_license">License failed, please try again!</string>
-    <string name="share_msg_error_oauth">获取授权信息异常，请关闭页面后重新授权。</string>
+    <string name="share_msg_error_oauth">Authorization exception, please re-authorization after close the page.</string>
     <string name="share_msg_success">Success</string>
     <string name="share_msg_error">Error</string>
     <string name="share_msg_cancel">Cancel</string>
@@ -408,18 +409,16 @@
     <string name="mine_member_order">%1$s Order</string>
     <string name="mine_my_member">My %1$s</string>
     <string name="mine_my_order">My Order</string>
-    <string name="mine_my_address">My Address</string>
-    <string name="mine_my_collages">My Collage</string>
-    <string name="mine_my_favorite">My Favorite</string>
     <string name="mine_check_all_order">Check All Order</string>
-    <string name="mine_done">Done</string>
-    <string name="mine_wait_commission">Commission</string>
+    <string name="mine_revenue">Revenue</string>
+    <string name="mine_wait_pending">Pending</string>
     <string name="mine_wait_pay">Wait Pay</string>
     <string name="mine_wait_delivery">Delivery</string>
     <string name="mine_wait_receive">Receive</string>
     <string name="mine_repair_return">Return</string>
     <string name="mine_account_money">My wallet</string>
     <string name="mine_coupon">My Coupon</string>
+    <string name="mine_my_address">My Address</string>
     <string name="mine_collection">My Concerns</string>
     <string name="mine_concerns_goods">Concerns goods</string>
     <string name="mine_history">Browse History</string>

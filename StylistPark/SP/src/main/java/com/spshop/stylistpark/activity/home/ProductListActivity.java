@@ -364,7 +364,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 							refresh_lv.onPullUpRefreshComplete();
 							refresh_lv.setHasMoreData(false); //设置不允许加载更多
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
 			}
 		});
@@ -466,7 +466,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 					public void run() {
 						refresh_lv.onPullDownRefreshComplete();
 					}
-				}, 1000);
+				}, AppConfig.LOADING_TIME);
 			}
 			return;
 		}
@@ -478,7 +478,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				public void run() {
 					request(AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE);
 				}
-			}, 1000);
+			}, AppConfig.LOADING_TIME);
 		}else {
 			request(AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE);
 		}

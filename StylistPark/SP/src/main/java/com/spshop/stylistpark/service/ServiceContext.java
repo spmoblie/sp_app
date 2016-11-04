@@ -15,9 +15,15 @@ public class ServiceContext {
 		this.ms = new MainServiceImpl();
 	}
 
-	public static ServiceContext getServiceContext() {
+	private static synchronized void syncInit() {
 		if (sc == null) {
 			sc = new ServiceContext();
+		}
+	}
+
+	public static ServiceContext getServiceContext() {
+		if (sc == null) {
+			syncInit();
 		}
 		return sc;
 	}

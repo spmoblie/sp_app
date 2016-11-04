@@ -95,12 +95,17 @@ public class ProductDetailEntity extends BaseEntity{
 	 * 商品结算价
 	 */
 	private double computePrice;
-	
+
 	/**
 	 * 商品折扣
 	 */
 	private String discount;
-	
+
+	/**
+	 * 达人返现
+	 */
+	private String commission;
+
 	/**
 	 * 是否收藏
 	 */
@@ -333,6 +338,16 @@ public class ProductDetailEntity extends BaseEntity{
 
 	public void setDiscount(String discount) {
 		this.discount = discount;
+	}
+
+
+	public String getCommission() {
+		return commission;
+	}
+
+
+	public void setCommission(String commission) {
+		this.commission = commission;
 	}
 
 

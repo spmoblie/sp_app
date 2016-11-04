@@ -137,7 +137,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 					public void run() {
 						requestProductLists();
 					}
-				}, 1000);
+				}, AppConfig.LOADING_TIME);
             }
 
             @Override
@@ -273,7 +273,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 			public void run() {
 				requestProductLists();
 			}
-		}, 1000);
+		}, AppConfig.LOADING_TIME);
 	}
 
 	/**

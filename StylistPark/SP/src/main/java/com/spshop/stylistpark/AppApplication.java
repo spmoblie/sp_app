@@ -23,6 +23,7 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.config.SharedConfig;
 import com.spshop.stylistpark.db.SortDBService;
 import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
 import com.spshop.stylistpark.task.OnDataListener;
@@ -35,6 +36,7 @@ import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.PushManager;
+import com.spshop.stylistpark.widgets.Displayer;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
@@ -60,6 +62,8 @@ public class AppApplication extends Application implements OnDataListener{
 	public static boolean loadDBData = false; //是否从本地数据库加载数据
 	public static boolean isWXShare = false; //记录是否微信分享
 	public static boolean isStartHome = true; //记录是否允许重新启动HomeFragmentActivity
+
+	public static ThemeEntity themeEn;
 
 	private static DisplayImageOptions defaultOptions, avatarOptions;
 	private static SharedPreferences shared;
@@ -216,7 +220,8 @@ public class AppApplication extends Application implements OnDataListener{
 	public static DisplayImageOptions getAvatarOptions() {
 		if (avatarOptions == null) {
 			avatarOptions = new DisplayImageOptions.Builder()
-					.displayer(new RoundedBitmapDisplayer(360))
+					//.displayer(new RoundedBitmapDisplayer(360))
+					.displayer(new Displayer(0)) //自定义圆形参数
 					.showImageForEmptyUri(R.drawable.default_avatar)
 					.showImageOnFail(R.drawable.default_avatar)
 					.cacheInMemory(true) // 内存缓存

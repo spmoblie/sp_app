@@ -58,7 +58,7 @@ public class MyAddressActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setTitle(R.string.title_my_address);
+		setTitle(R.string.mine_my_address);
 		setBtnRight(getString(R.string.my_new));
 		setAdapter();
 	}

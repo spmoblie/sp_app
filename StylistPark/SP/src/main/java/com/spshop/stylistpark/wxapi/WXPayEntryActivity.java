@@ -273,7 +273,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			public void run() {
 				request(AppConfig.REQUEST_SV_GET_PAY_RESULT_CODE);
 			}
-		}, 500);
+		}, AppConfig.LOADING_TIME);
 	}
 
 	/**
@@ -588,7 +588,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			public void run() {
 				stopAnimation();
 			}
-		}, 1000);
+		}, AppConfig.LOADING_TIME);
 	}
 
     @Override

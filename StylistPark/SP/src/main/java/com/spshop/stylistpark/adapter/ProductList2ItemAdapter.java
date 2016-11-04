@@ -70,8 +70,8 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		LinearLayout item_main, left_main, right_main;
 		RelativeLayout left_rl_bottom;
 		ImageView left_img, right_img;
-		TextView left_name, left_brand, left_curr, left_sell_price, left_full_price, left_discount;
-		TextView right_name, right_brand, right_curr, right_sell_price, right_full_price, right_discount;
+		TextView left_name, left_brand, left_curr, left_sell_price, left_full_price, left_discount, left_commission;
+		TextView right_name, right_brand, right_curr, right_sell_price, right_full_price, right_discount, right_commission;
 	}
 	
 	/**代表了ListView中的一个item对象*/
@@ -91,6 +91,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder.left_sell_price = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_sell_price);
 			holder.left_full_price = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_full_price);
 			holder.left_discount = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_discount);
+			holder.left_commission = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_commission);
 			holder.left_rl_bottom = (RelativeLayout) convertView.findViewById(R.id.list_commodity_two_left_rl_bottom);
 			holder.right_main = (LinearLayout) convertView.findViewById(R.id.list_commodity_two_right_ll_main);
 			holder.right_img = (ImageView) convertView.findViewById(R.id.list_commodity_two_right_iv_img);
@@ -100,7 +101,8 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder.right_sell_price = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_sell_price);
 			holder.right_full_price = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_full_price);
 			holder.right_discount = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_discount);
-			
+			holder.right_commission = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_commission);
+
 			convertView.setTag(holder);
 		}else{
 			holder=(ViewHolder)convertView.getTag();
@@ -111,6 +113,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		}else {
 			holder.left_rl_bottom.setVisibility(View.GONE);
 		}
+		boolean isShow = false;
 		final ProductListEntity leftEn = (ProductListEntity) data.getLeftEn();
 		if (leftEn != null) {
 			// 网络图片地址
@@ -125,6 +128,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 				if (!StringUtil.priceIsNull(sell_price)) {
 					holder.left_sell_price.setText(sell_price);
 				} else {
+					holder.left_curr.setText("");
 					holder.left_sell_price.setText(full_price);
 				}
 				holder.left_full_price.getPaint().setFlags(0);
@@ -132,13 +136,19 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 				holder.left_discount.setVisibility(View.GONE);
 			} else {
 				holder.left_sell_price.setText(sell_price);
-				holder.left_full_price.setText(currStr + full_price);
+				holder.left_full_price.setText(full_price);
 				holder.left_full_price.setVisibility(View.VISIBLE);
 				holder.left_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 				if (!StringUtil.isNull(leftEn.getDiscount())) {
 					holder.left_discount.setVisibility(View.VISIBLE);
 					holder.left_discount.setText(leftEn.getDiscount());
 				}
+			}
+			if (StringUtil.isNull(leftEn.getCommission())) {
+				holder.left_commission.setText(".........");
+			} else {
+				isShow = true;
+				holder.left_commission.setText(leftEn.getCommission());
 			}
 			holder.left_main.setOnClickListener(new OnClickListener() {
 				
@@ -163,6 +173,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 				if (!StringUtil.priceIsNull(sell_price)) {
 					holder.right_sell_price.setText(sell_price);
 				} else {
+					holder.right_curr.setText("");
 					holder.right_sell_price.setText(full_price);
 				}
 				holder.right_full_price.getPaint().setFlags(0);
@@ -170,13 +181,19 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 				holder.right_discount.setVisibility(View.GONE);
 			} else {
 				holder.right_sell_price.setText(sell_price);
-				holder.right_full_price.setText(currStr + full_price);
+				holder.right_full_price.setText(full_price);
 				holder.right_full_price.setVisibility(View.VISIBLE);
 				holder.right_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 				if (!StringUtil.isNull(rightEn.getDiscount())) {
 					holder.right_discount.setVisibility(View.VISIBLE);
 					holder.right_discount.setText(rightEn.getDiscount());
 				}
+			}
+			if (StringUtil.isNull(rightEn.getCommission())) {
+				holder.right_commission.setText(".........");
+			} else {
+				isShow = true;
+				holder.right_commission.setText(rightEn.getCommission());
 			}
 			holder.right_main.setOnClickListener(new OnClickListener() {
 				
@@ -187,6 +204,13 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			});
 		}else {
 			holder.right_main.setVisibility(View.INVISIBLE);
+		}
+		if (isShow) {
+			holder.left_commission.setVisibility(View.VISIBLE);
+			holder.right_commission.setVisibility(View.VISIBLE);
+		} else {
+			holder.left_commission.setVisibility(View.GONE);
+			holder.right_commission.setVisibility(View.GONE);
 		}
 		return convertView;
 	}

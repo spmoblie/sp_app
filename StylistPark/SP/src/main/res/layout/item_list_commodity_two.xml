@@ -90,6 +90,13 @@
                     android:id="@+id/list_commodity_two_left_tv_discount"
                     style="@style/common_text_discount" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/list_commodity_two_left_tv_commission"
+                style="@style/common_text_price"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="5dp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -188,6 +195,13 @@
                         android:id="@+id/list_commodity_two_right_tv_discount"
                         style="@style/common_text_discount" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/list_commodity_two_right_tv_commission"
+                    style="@style/common_text_price"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

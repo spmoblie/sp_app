@@ -66,7 +66,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private FrameLayout fl_main;
 	private RelativeLayout rl_screen;
 	private ImageView iv_left, iv_video, iv_brang_logo, iv_to_top;
-	private TextView tv_title, tv_timer, tv_page, tv_name, tv_curr, tv_price_sell, tv_price_full, tv_discount;
+	private TextView tv_title, tv_timer, tv_page, tv_name, tv_curr, tv_price_sell, tv_price_full, tv_discount, tv_commission;
 	private TextView tv_property_1, tv_property_2, tv_property_3, tv_brand_name, tv_brand_country, tv_brand_go;
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
 	private Button btn_share;
@@ -78,6 +78,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private AsyncImageLoader asyncImageLoader;
 
 	private ShareEntity shareEn;
+	private Bitmap shareBm;
 	private ProductDetailEntity mainEn;
 	private MyCountDownTimer mcdt;
 	private boolean isShow = false;
@@ -86,7 +87,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private int idsSize, idsPosition, vprPosition;
 	private int goodsId = 0;
 	private int propertyNum = 3;
-	private String fristGoodsImgUrl, shareImgUrl, shareImgPath, fristPromotionName;
+	private String fristGoodsImgUrl, shareImgUrl;
+	private String fristPromotionName = "";
 	private ArrayList<ImageView> viewLists = new ArrayList<ImageView>();
 	private ArrayList<String> urlLists = new ArrayList<String>();
 	private ArrayList<ProductDetailEntity> imgEns = new ArrayList<ProductDetailEntity>();
@@ -126,6 +128,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		tv_price_sell = (TextView) findViewById(R.id.product_detail_tv_product_price_sell);
 		tv_price_full = (TextView) findViewById(R.id.product_detail_tv_product_price_full);
 		tv_discount = (TextView) findViewById(R.id.product_detail_tv_product_discount);
+		tv_commission = (TextView) findViewById(R.id.product_detail_tv_product_commission);
 		tv_property_1 = (TextView) findViewById(R.id.product_detail_tv_property_1);
 		tv_property_2 = (TextView) findViewById(R.id.product_detail_tv_property_2);
 		tv_property_3 = (TextView) findViewById(R.id.product_detail_tv_property_3);
@@ -179,6 +182,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				if (!StringUtil.priceIsNull(sell_price)) {
 					tv_price_sell.setText(sell_price);
 				} else {
+					tv_curr.setText("");
 					tv_price_sell.setText(full_price);
 				}
 				tv_price_full.getPaint().setFlags(0);
@@ -186,7 +190,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				tv_discount.setVisibility(View.GONE);
 			} else {
 				tv_price_sell.setText(sell_price);
-				tv_price_full.setText(currStr + full_price);
+				tv_price_full.setText(full_price);
 				tv_price_full.setVisibility(View.VISIBLE);
 				tv_price_full.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 				if (!StringUtil.isNull(mainEn.getDiscount())) {
@@ -196,6 +200,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 					tv_discount.setVisibility(View.GONE);
 				}
 			}
+			tv_commission.setText(mainEn.getCommission());
 			
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + mainEn.getBrandLogo(), iv_brang_logo, options);
 			tv_brand_name.setText(mainEn.getBrandName());
@@ -425,18 +430,18 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				
 				@Override
 				public void imageLoaded(String path, String cachePath, Bitmap bm) {
-					initShareData(cachePath);
+					initShareData(bm);
 				}
 			});
 			ImageLoadTask task = asyncImageLoader.loadImage(shareImgUrl, 0);
 			if (task != null && task.getBitmap() != null) {
-				initShareData(task.getNewPath());
+				initShareData(task.getBitmap());
 			}
 		}
 	}
 
-	private void initShareData(String cachePath) {
-		shareImgPath = cachePath;
+	private void initShareData(Bitmap bm) {
+		shareBm = bm;
 		btn_share.setVisibility(View.VISIBLE);
 	}
 
@@ -512,7 +517,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			public void run() {
 				request(AppConfig.REQUEST_SV_GET_PRODUCT_DETAIL_CODE);
 			}
-		}, 1000);
+		}, AppConfig.LOADING_TIME);
 	}
 
 	@Override
@@ -542,7 +547,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 						+ genuine + " " + mainEn.getName() + " " + fristPromotionName);
 				shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "goods.php?id=" + mainEn.getId());
 				shareEn.setImageUrl(shareImgUrl);
-				shareEn.setImagePath(shareImgPath);
+				shareEn.setShareBm(shareBm);
 			}
 			showShareView(shareEn);
 			break;

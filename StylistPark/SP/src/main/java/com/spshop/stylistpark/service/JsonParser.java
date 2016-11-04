@@ -360,6 +360,7 @@ public class JsonParser {
 			mainEn.setSellPrice(goods.getString("price"));
 			mainEn.setComputePrice(StringUtil.getDouble(goods.getString("bag_price")));
 			mainEn.setDiscount(goods.getString("sale"));
+			mainEn.setCommission(goods.getString("affiliate"));
 			mainEn.setIsCollection(goods.getString("collect"));
 			mainEn.setIsVideo(StringUtil.getInteger(goods.getString("is_video")));
 			mainEn.setVideoUrl(goods.getString("goods_sn"));
@@ -557,6 +558,7 @@ public class JsonParser {
 			mainEn.setPriceCoupon(data.getString("bonus_formated"));
 			mainEn.setCouponId(data.getString("bonus_id"));
 			mainEn.setPriceDiscount(data.getString("discount_formated"));
+			mainEn.setPriceCashback(data.getString("pack_fee_formated"));
 			mainEn.setPricePay(data.getString("amount_formated"));
 			mainEn.setOrderAmount(data.getString("amount"));
 		}
@@ -693,7 +695,7 @@ public class JsonParser {
 				en.setGender(item.getString("sex"));
 				en.setAvatar(item.getString("avatar"));
 				//en.setMemberRank(StringUtil.getInteger(item.getString("user_rank")));
-				//en.setOrderCount(item.getString("affiliate_count"));
+				en.setMemberType(item.getString("type"));
 				en.setOrderMoney(item.getString("affiliate_money"));
 				//en.setLastLogin(item.getString("last_login"));
 				mainLists.add(en);
@@ -721,16 +723,16 @@ public class JsonParser {
 				en = new OrderEntity();
 
 				infoEn = new UserInfoEntity();
-				infoEn.setUserNick(item.getString("user_name"));
+				infoEn.setUserNick(item.getString("nickname"));
 				infoEn.setUserAvatar(item.getString("avatar"));
 				infoEn.setUserRankCode(StringUtil.getInteger(item.getString("user_rank")));
 				en.setUserInfo(infoEn);
 
 				en.setOrderId(item.getString("order_id"));
 				en.setStatusName(item.getString("handler"));
-				en.setPriceTotal(item.getString("goods_amount"));
+				//en.setPriceTotal(item.getString("goods_amount"));
 				en.setPricePaid(item.getString("user_amount"));
-				en.setBuyer(item.getString("order_time"));
+				en.setBuyer(item.getString("order_sn"));
 				en.setGoodsLists(getProductListsFormJson2(item, "goods_list"));
 				mainLists.add(en);
 			}
@@ -797,6 +799,8 @@ public class JsonParser {
 			mainEn.setPriceCoupon(data.getString("bonus"));
 			mainEn.setPriceDiscountName(data.getString("discount_name"));
 			mainEn.setPriceDiscount(data.getString("discount"));
+			mainEn.setPriceCashbackName(data.getString("pack_fee_name"));
+			mainEn.setPriceCashback(data.getString("pack_fee"));
 			mainEn.setPricePaidName(data.getString("money_paid_name"));
 			mainEn.setPricePaid(data.getString("money_paid"));
 			mainEn.setPricePayName(data.getString("order_amount_name"));
@@ -902,8 +906,8 @@ public class JsonParser {
 			mainEn.setStatus(StringUtil.getInteger(jsonObject.getString("content")));
 			mainEn.setStatusHint(jsonObject.getString("message"));
 
-			if (StringUtil.notNull(jsonObject, "account")) {
-				JSONArray data = jsonObject.getJSONArray("account");
+			if (StringUtil.notNull(jsonObject, "data")) {
+				JSONArray data = jsonObject.getJSONArray("data");
 				BalanceDetailEntity en;
 				List<BalanceDetailEntity> mainLists = new ArrayList<BalanceDetailEntity>();
 				for (int i = 0; i < data.length(); i++) {
@@ -971,6 +975,7 @@ public class JsonParser {
 				en.setFullPrice(item.getString("prices"));
 				en.setSellPrice(item.getString("price"));
 				en.setDiscount(item.getString("sale"));
+				en.setCommission(item.getString("affiliate"));
 				mainLists.add(en);
 			}
 		}

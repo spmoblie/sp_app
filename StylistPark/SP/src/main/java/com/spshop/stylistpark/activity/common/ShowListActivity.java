@@ -109,7 +109,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 						public void run() {
 							refresh_lv.onPullDownRefreshComplete();
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
             }
 
@@ -126,7 +126,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 							refresh_lv.onPullUpRefreshComplete();
 							refresh_lv.setHasMoreData(false);
 						}
-					}, 1000);
+					}, AppConfig.LOADING_TIME);
 				}
             }
         });
@@ -187,7 +187,7 @@ public class ShowListActivity extends BaseActivity implements OnClickListener {
 					break;
 				}
 			}
-		}, 1000);
+		}, AppConfig.LOADING_TIME);
 	}
 
 	@Override
