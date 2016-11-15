@@ -53,6 +53,7 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.tencent.connect.UserInfo;
@@ -166,7 +167,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		tv_alipay.setOnClickListener(this);
 		tv_facebook.setOnClickListener(this);
 
-		ImageLoader.getInstance().displayImage("", iv_avatar, AppApplication.getAvatarOptions());
+		ImageLoader.getInstance().displayImage("", iv_avatar, OptionsManager.getInstance().getAvatarOptions());
 		initEditText();
 	}
 	

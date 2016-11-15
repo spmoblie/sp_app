@@ -34,6 +34,7 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.FileManager;
 import com.spshop.stylistpark.utils.HttpUtil;
+import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -257,7 +258,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 			//加载Url
 			if (!StringUtil.isNull(lodUrl)) {
 				webview.addJavascriptInterface(new JsToJava(), "stub");
-				lodUrl = lodUrl + AppApplication.getHttpUrlLangCurValueStr();
+				lodUrl = lodUrl + LangCurrTools.getHttpUrlLangCurValueStr();
 				myLoadUrl(lodUrl);
 			}
 		}

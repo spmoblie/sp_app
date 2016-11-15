@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.utils.LangCurrTools;
+import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 	private Context context;
 	private List<ListShowTwoEntity> datas;
 	private AdapterCallback apCallback;
-    private DisplayImageOptions options;
+    private DisplayImageOptions goodsOptions;
 	private String currStr;
 	
 	public ProductList2ItemAdapter(Context context, List<ListShowTwoEntity> datas, AdapterCallback callback) {
@@ -38,7 +38,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		this.datas = datas;
 		this.apCallback = callback;
 		currStr = LangCurrTools.getCurrencyValue();
-        options = AppApplication.getDefaultImageOptions();
+		goodsOptions = OptionsManager.getInstance().getGoodsOptions();
 	}
 	
 	public void updateAdapter(List<ListShowTwoEntity> datas){
@@ -117,7 +117,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		final ProductListEntity leftEn = (ProductListEntity) data.getLeftEn();
 		if (leftEn != null) {
 			// 网络图片地址
-			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + leftEn.getImageUrl(), holder.left_img, options);
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + leftEn.getImageUrl(), holder.left_img, goodsOptions);
 			holder.left_brand.setText(leftEn.getBrand()); //商品品牌
 			holder.left_name.setText(leftEn.getName()); //商品名称
 			holder.left_curr.setText(currStr);
@@ -162,7 +162,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		if (rightEn != null) {
 			holder.right_main.setVisibility(View.VISIBLE);
 			// 网络图片地址
-			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getImageUrl(), holder.right_img, options);
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getImageUrl(), holder.right_img, goodsOptions);
 			holder.right_brand.setText(rightEn.getBrand()); //商品品牌
 			holder.right_name.setText(rightEn.getName()); //商品名称
 			holder.right_curr.setText(currStr);

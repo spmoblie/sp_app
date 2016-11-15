@@ -13,12 +13,9 @@ import android.util.DisplayMetrics;
 import com.facebook.FacebookSdk;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.config.SharedConfig;
 import com.spshop.stylistpark.db.SortDBService;
@@ -33,10 +30,8 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
-import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.PushManager;
-import com.spshop.stylistpark.widgets.Displayer;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
@@ -65,7 +60,6 @@ public class AppApplication extends Application implements OnDataListener{
 
 	public static ThemeEntity themeEn;
 
-	private static DisplayImageOptions defaultOptions, avatarOptions;
 	private static SharedPreferences shared;
 	private static AsyncTaskManager atm;
 	private static PushManager pushManager;
@@ -142,14 +136,6 @@ public class AppApplication extends Application implements OnDataListener{
 	}
 
 	/**
-	 * 获取HttpUrl语言、货币参数
-	 */
-	public static String getHttpUrlLangCurValueStr() {
-		return "&lang=" + LangCurrTools.getLanguageHttpUrlValueStr()
-				+ "&currency=" + LangCurrTools.getCurrencyHttpUrlValueStr();
-	}
-
-	/**
 	 * 设置App字体不随系统字体变化
 	 */
 	public static void initDisplayMetrics() {
@@ -179,61 +165,6 @@ public class AppApplication extends Application implements OnDataListener{
 	}
 
 	/**
-	 * 创建图片加载器对象
-	 * 
-	 * @param circular 加载圆形效果的数值
-	 * @param drawableId 默认图片Id
-	 */
-	public static DisplayImageOptions getImageOptions(int circular, int drawableId, boolean isCache) {
-		return new DisplayImageOptions.Builder()
-				.displayer(new RoundedBitmapDisplayer(circular))
-				.showImageForEmptyUri(drawableId)
-				.showImageOnFail(drawableId)
-				.cacheInMemory(isCache) // 内存缓存
-				.cacheOnDisc(isCache) // sdcard缓存
-				.resetViewBeforeLoading(true)//设置图片下载前复位
-				.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
-	}
-
-	/**
-	 * 获取默认图片加载器对象
-	 */
-	public static DisplayImageOptions getDefaultImageOptions() {
-		if (defaultOptions == null) {
-			defaultOptions = new DisplayImageOptions.Builder()
-					//.displayer(new FadeInBitmapDisplayer(300)) // 图片加载好后渐入的动画时间
-					.showImageForEmptyUri(R.drawable.bg_img_white)
-					.showImageOnFail(R.drawable.bg_img_white)
-					.cacheInMemory(true) // 内存缓存
-					.cacheOnDisc(true) // sdcard缓存
-					.resetViewBeforeLoading(true)//设置图片下载前复位
-					.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-					.bitmapConfig(Bitmap.Config.RGB_565).build();
-		}
-		return defaultOptions;
-	}
-
-	/**
-	 * 获取头像图片加载器对象
-	 */
-	public static DisplayImageOptions getAvatarOptions() {
-		if (avatarOptions == null) {
-			avatarOptions = new DisplayImageOptions.Builder()
-					//.displayer(new RoundedBitmapDisplayer(360))
-					.displayer(new Displayer(0)) //自定义圆形参数
-					.showImageForEmptyUri(R.drawable.default_avatar)
-					.showImageOnFail(R.drawable.default_avatar)
-					.cacheInMemory(true) // 内存缓存
-					.cacheOnDisc(true) // sdcard缓存
-					.resetViewBeforeLoading(true)//设置图片下载前复位
-					.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-					.bitmapConfig(Bitmap.Config.RGB_565).build();
-		}
-		return avatarOptions;
-	}
-
-	/**
 	 * 保存图片对象到指定文件并通知相册更新相片
 	 */
 	public static void saveBitmapFile(Bitmap bm, File file, int compress) {
@@ -244,7 +175,7 @@ public class AppApplication extends Application implements OnDataListener{
 		try {
 			BitmapUtil.save(bm, file, compress);
 			if (file.getAbsolutePath().contains(AppConfig.SAVE_PATH_IMAGE_SAVE)) {
-				updatePhoto(file); //需要保存的图片更新相册
+				updatePhoto(file); //需要保存的图片通知更新相册
 			}
 		} catch (IOException e) {
 			ExceptionUtil.handle(e);
@@ -262,14 +193,14 @@ public class AppApplication extends Application implements OnDataListener{
 	}
 
 	/**
-	 * 应用数据统计之页面启动1
+	 * 应用数据统计之页面启动
 	 */
 	public static void onPageStart(String pageName) {
 		MobclickAgent.onPageStart(pageName);
 	}
 
 	/**
-	 * 应用数据统计之页面启动2
+	 * 应用数据统计之页面启动
 	 */
 	public static void onPageStart(Activity activity, String pageName) {
 		MobclickAgent.onPageStart(pageName);

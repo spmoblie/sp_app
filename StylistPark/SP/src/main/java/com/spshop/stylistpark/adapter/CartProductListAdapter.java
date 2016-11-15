@@ -19,6 +19,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.utils.LangCurrTools;
+import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.MyHorizontalScrollView;
 import com.spshop.stylistpark.widgets.MyHorizontalScrollView.ScrollType;
@@ -46,7 +47,7 @@ public class CartProductListAdapter extends BaseAdapter{
 	//private SparseArray<ProductDetailEntity> sa_cart;
 	private String currStr;
 	private AdapterCallback apCallback;
-    private DisplayImageOptions options;
+    private DisplayImageOptions goodsOptions;
 	private LinearLayout.LayoutParams lp;
 	
 	public CartProductListAdapter(Context context, List<ProductDetailEntity> datas,
@@ -56,8 +57,8 @@ public class CartProductListAdapter extends BaseAdapter{
 		//this.sa_cart = sa_cart;
 		currStr = LangCurrTools.getCurrencyValue();
 		this.apCallback = callback;
-        
-        options = AppApplication.getDefaultImageOptions();
+
+		goodsOptions = OptionsManager.getInstance().getGoodsOptions();
 
 		lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp.width = AppApplication.screenWidth;
@@ -157,7 +158,7 @@ public class CartProductListAdapter extends BaseAdapter{
 
 		String imgUrl = data.getImgMinUrl();
 		if (!StringUtil.isNull(imgUrl)) {
-			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + imgUrl, holder.iv_img, options);
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + imgUrl, holder.iv_img, goodsOptions);
 		}else {
 			holder.iv_img.setImageResource(R.drawable.bg_img_white);
 		}

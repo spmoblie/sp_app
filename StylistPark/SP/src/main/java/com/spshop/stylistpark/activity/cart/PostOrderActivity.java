@@ -252,7 +252,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				View view = LayoutInflater.from(this).inflate(R.layout.item_goods_img_vertical, ll_goods_lists, false);  
 				ImageView img = (ImageView) view.findViewById(R.id.item_goods_vertical_iv_img);
 				String imgUrl = AppConfig.ENVIRONMENT_PRESENT_IMG_APP + goodsLists.get(i).getImageUrl();
-				ImageLoader.getInstance().displayImage(imgUrl, img, options);
+				ImageLoader.getInstance().displayImage(imgUrl, img, goodsOptions);
 				
 				TextView tv_brand = (TextView) view.findViewById(R.id.item_goods_vertical_tv_brand);
 				tv_brand.setText(goodsLists.get(i).getBrand());

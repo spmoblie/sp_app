@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.utils.LangCurrTools;
+import com.spshop.stylistpark.utils.OptionsManager;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 	private String currStr;
 	//private AdapterCallback adapterCallback;
 	private LayoutInflater mInflater;
-	private DisplayImageOptions options, avatarOptions;
+	private DisplayImageOptions goodsOptions, avatarOptions;
 
 	public MemberOrderListAdapter(Context context, List<OrderEntity> datas, AdapterCallback adapterCallback) {
 		this.context = context;
@@ -41,8 +41,8 @@ public class MemberOrderListAdapter extends BaseAdapter {
 		this.currStr = LangCurrTools.getCurrencyValue();
 		//this.adapterCallback = adapterCallback;
 		this.mInflater = LayoutInflater.from(context);
-		options = AppApplication.getDefaultImageOptions();
-		avatarOptions = AppApplication.getAvatarOptions();
+		goodsOptions = OptionsManager.getInstance().getGoodsOptions();
+		avatarOptions = OptionsManager.getInstance().getAvatarOptions();
 	}
 
 	public void updateAdapter(List<OrderEntity> datas) {
@@ -115,7 +115,7 @@ public class MemberOrderListAdapter extends BaseAdapter {
 
 				ImageView img = (ImageView) view.findViewById(R.id.item_goods_vertical_iv_img);
 				String imgUrl = IMAGE_URL_HTTP + goodsLists.get(i).getImageUrl();
-				ImageLoader.getInstance().displayImage(imgUrl, img, options);
+				ImageLoader.getInstance().displayImage(imgUrl, img, goodsOptions);
 
 				TextView tv_brand = (TextView) view.findViewById(R.id.item_goods_vertical_tv_brand);
 				tv_brand.setText(goodsLists.get(i).getBrand());

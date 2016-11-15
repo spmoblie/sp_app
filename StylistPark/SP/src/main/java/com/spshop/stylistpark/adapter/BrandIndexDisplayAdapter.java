@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.BrandEntity;
 import com.spshop.stylistpark.entity.IndexDisplay;
+import com.spshop.stylistpark.utils.OptionsManager;
 
 public class BrandIndexDisplayAdapter extends IndexDisplayAdapter {
 
@@ -24,7 +24,7 @@ public class BrandIndexDisplayAdapter extends IndexDisplayAdapter {
 
 	public BrandIndexDisplayAdapter(Context mContext) {
 		super(mContext);
-		options = AppApplication.getImageOptions(0, 0, true);
+		options = OptionsManager.getInstance().getImageOptions(0, 0, true);
 	}
 
 	public void setOnIndexDisplayItemClick(OnIndexDisplayItemClick onIndexDisplayItemClick) {

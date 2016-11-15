@@ -169,8 +169,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
 		PAYPAL_CURRENCY = LangCurrTools.getCurrencyHttpUrlValueStr();
 		if (LangCurrTools.getCurrency() == LangCurrTools.Currency.RMB) {
-			payType = PAY_WEIXI;
-			iv_select_weixi.setSelected(true);
+			payType = PAY_ZFB;
+			iv_select_zfb.setSelected(true);
 			ll_pay_type_1.setVisibility(View.VISIBLE);
 			ll_pay_type_2.setVisibility(View.GONE);
 		} else {

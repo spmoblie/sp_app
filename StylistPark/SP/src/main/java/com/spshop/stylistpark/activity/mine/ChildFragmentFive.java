@@ -32,6 +32,7 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 
@@ -197,7 +198,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 				iv_avatar.setImageResource(R.drawable.default_avatar);
 			} else {
 				isUpdateAvatar = false;
-				ImageLoader.getInstance().displayImage(userAvatar, iv_avatar, AppApplication.getAvatarOptions());
+				ImageLoader.getInstance().displayImage(userAvatar, iv_avatar, OptionsManager.getInstance().getAvatarOptions());
 			}
 		}
 	}

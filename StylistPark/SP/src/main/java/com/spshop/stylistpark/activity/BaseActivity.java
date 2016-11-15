@@ -70,6 +70,7 @@ import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
+import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 import com.spshop.stylistpark.widgets.ScrollViewListView;
@@ -104,7 +105,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected IWXAPI api;
 	protected Boolean isInitShare = false;
 	protected DecimalFormat decimalFormat;
-	protected DisplayImageOptions options;
+	protected DisplayImageOptions goodsOptions, defaultOptions;
 
 	private ShareView mShareView;
 	private FrameLayout fl_main;
@@ -161,14 +162,15 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		decimalFormat = new DecimalFormat("0.00");
 		dm = DialogManager.getInstance(mContext);
 		atm = AsyncTaskManager.getInstance(mContext);
+		goodsOptions = OptionsManager.getInstance().getGoodsOptions();
+		defaultOptions = OptionsManager.getInstance().getDefaultOptions();
 		api = WXAPIFactory.createWXAPI(mContext, AppConfig.WX_APP_ID);
 		api.registerApp(AppConfig.WX_APP_ID);
-		
+
 		// 获取屏幕配置
 		width = AppApplication.screenWidth;
 		height = AppApplication.screenHeight;
 		statusHeight = AppApplication.statusHeight;
-		options = AppApplication.getDefaultImageOptions();
 
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
@@ -850,7 +852,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 			iv_num_add = (ImageView) popupView.findViewById(R.id.popup_add_cart_iv_num_add);
 			iv_num_minus = (ImageView) popupView.findViewById(R.id.popup_add_cart_iv_num_minus);
 			iv_goods_img = (ImageView) popupView.findViewById(R.id.popup_add_cart_iv_img);
-			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + attrEn.getFristImgUrl(), iv_goods_img, options);
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + attrEn.getFristImgUrl(), iv_goods_img, goodsOptions);
 
 			if (attrNum > 0) {
 				ScrollViewListView svlv = (ScrollViewListView) popupView.findViewById(R.id.popup_add_cart_svlv);
@@ -861,9 +863,9 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 										   int id1, int id2, String selectName, String selectImg) {
 						// 图片替换
 						if (!StringUtil.isNull(selectImg)) {
-							ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + selectImg, iv_goods_img, options);
+							ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + selectImg, iv_goods_img, goodsOptions);
 						}else {
-							ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + attrEn.getFristImgUrl(), iv_goods_img, options);
+							ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + attrEn.getFristImgUrl(), iv_goods_img, goodsOptions);
 						}
 						// 刷新选择的属性名称
 						tv_popup_select.setText(selectName);

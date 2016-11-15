@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.utils.LangCurrTools;
+import com.spshop.stylistpark.utils.OptionsManager;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class OrderListAdapter extends BaseAdapter {
 	private AdapterCallback adapterCallback;
 	private LayoutInflater mInflater;
 	private String currStr;
-	private DisplayImageOptions options;
+	private DisplayImageOptions goodsOptions;
 
 	public OrderListAdapter(Context context, List<OrderEntity> datas, AdapterCallback adapterCallback) {
 		this.context = context;
@@ -45,7 +45,7 @@ public class OrderListAdapter extends BaseAdapter {
 		this.adapterCallback = adapterCallback;
 		this.mInflater = LayoutInflater.from(context);
 		currStr = LangCurrTools.getCurrencyValue();
-		options = AppApplication.getDefaultImageOptions();
+		goodsOptions = OptionsManager.getInstance().getGoodsOptions();
 	}
 
 	public void updateAdapter(List<OrderEntity> datas) {
@@ -122,7 +122,7 @@ public class OrderListAdapter extends BaseAdapter {
 				View view = mInflater.inflate(R.layout.item_goods_img_vertical, holder.ll_goods_lists, false);  
 				ImageView img = (ImageView) view.findViewById(R.id.item_goods_vertical_iv_img);
 				String imgUrl = IMAGE_URL_HTTP + goodsLists.get(i).getImageUrl();
-				ImageLoader.getInstance().displayImage(imgUrl, img, options);
+				ImageLoader.getInstance().displayImage(imgUrl, img, goodsOptions);
 				
 				TextView tv_brand = (TextView) view.findViewById(R.id.item_goods_vertical_tv_brand);
 				tv_brand.setText(goodsLists.get(i).getBrand());

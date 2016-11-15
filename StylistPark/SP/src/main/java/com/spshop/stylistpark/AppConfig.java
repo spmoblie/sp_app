@@ -10,7 +10,7 @@ public class AppConfig {
 	 */
 	
 	// 是否正式发布
-	public static final boolean IS_PUBLISH = false;
+	public static final boolean IS_PUBLISH = true;
 	// 网络传输协议http
 	public final static String APP_HTTP = "http://";
 	// 网络传输协议https
@@ -22,7 +22,7 @@ public class AppConfig {
 	// 域名3
 	public final static String ENVIRONMENT_TEST_APP_3 = "192.168.11.155/api/mobile/";
 	// 图片域名
-	public final static String ENVIRONMENT_PRESENT_IMG_APP = APP_HTTP + ENVIRONMENT_TEST_APP_1;
+	public final static String ENVIRONMENT_PRESENT_IMG_APP = "";
 	// 推广域名
 	public final static String ENVIRONMENT_PRESENT_SHARE_URL = APP_HTTP + ENVIRONMENT_TEST_APP_1;
 	// Data域名1

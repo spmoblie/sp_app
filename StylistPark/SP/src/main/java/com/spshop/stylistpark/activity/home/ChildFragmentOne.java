@@ -57,6 +57,7 @@ import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
+import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
@@ -96,7 +97,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private Runnable mPagerAction;
 	private LayoutInflater mInflater;
 
-	private DisplayImageOptions options;
+	private DisplayImageOptions defaultOptions;
 	private ThemeEntity themeEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
@@ -127,8 +128,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		currStr = LangCurrTools.getCurrencyValue();
 		atm = AsyncTaskManager.getInstance(mContext);
 		mInflater = LayoutInflater.from(mContext);
-		options = AppApplication.getDefaultImageOptions();
 		themeEn = AppApplication.themeEn;
+		defaultOptions = OptionsManager.getInstance().getDefaultOptions();
 
 		// 动态注册广播
 		IntentFilter mFilter = new IntentFilter();
@@ -263,7 +264,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				String imgUrl = IMAGE_URL_HTTP + items.getImgUrl();
 				ImageView imageView = new ImageView(mContext);
 				imageView.setScaleType(ScaleType.FIT_XY);
-				ImageLoader.getInstance().displayImage(imgUrl, imageView, options);
+				ImageLoader.getInstance().displayImage(imgUrl, imageView, defaultOptions);
 				imageView.setOnClickListener(new OnClickListener() {
 
 					@Override
@@ -429,7 +430,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					View view = mInflater.inflate(R.layout.item_line_goods, ll_goods_main, false);
 					ImageView imgView = (ImageView) view.findViewById(R.id.home_line_goods_item_iv_img);
 					String imgUrl = IMAGE_URL_HTTP + items.getImageUrl();
-					ImageLoader.getInstance().displayImage(imgUrl, imgView, options);
+					ImageLoader.getInstance().displayImage(imgUrl, imgView, defaultOptions);
 					TextView tv_name = (TextView) view.findViewById(R.id.home_line_goods_item_tv_name);
 					tv_name.setText(items.getName());
 
@@ -494,7 +495,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				if (items != null) {
 					ImageView imgView = new ImageView(mContext);
 					String imgUrl = IMAGE_URL_HTTP + items.getImgUrl();
-					ImageLoader.getInstance().displayImage(imgUrl, imgView, options);
+					ImageLoader.getInstance().displayImage(imgUrl, imgView, defaultOptions);
 					imgView.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -525,7 +526,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					View view = mInflater.inflate(R.layout.item_line_sales, ll_sale_main, false);
 					ImageView imgView = (ImageView) view.findViewById(R.id.home_line_sales_item_iv_logo);
 					String imgUrl = IMAGE_URL_HTTP + items.getImgUrl();
-					ImageLoader.getInstance().displayImage(imgUrl, imgView, options);
+					ImageLoader.getInstance().displayImage(imgUrl, imgView, defaultOptions);
 					TextView tv_name = (TextView) view.findViewById(R.id.home_line_sales_item_tv_name);
 					tv_name.setText(items.getTitle());
 					view.setOnClickListener(new OnClickListener() {

@@ -54,7 +54,7 @@ public class SortGridAdapter extends BaseAdapter{
 		this.apCallback = callback;
 		lang = LangCurrTools.getLanguage();
 		
-		//options = AppApplication.getDefaultImageOptions();
+		//options = OptionsManager.getInstance().getDefaultImageOptions();
 		
 		mGridView = gridView;
         mGridView.setOnScrollListener(new ScrollListenerImpl());

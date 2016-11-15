@@ -199,5 +199,13 @@ public class LangCurrTools {
 		}
 		return curStr;
 	}
+
+
+	/**
+	 * 获取HttpUrl语言、货币参数
+	 */
+	public static String getHttpUrlLangCurValueStr() {
+		return "&lang=" + getLanguageHttpUrlValueStr() + "&currency=" + getCurrencyHttpUrlValueStr();
+	}
 	
 }

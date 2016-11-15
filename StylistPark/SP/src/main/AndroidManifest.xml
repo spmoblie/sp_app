@@ -190,10 +190,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
-        
-        <activity android:name=".activity.common.ShowPhotoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
 
         <activity android:name=".activity.common.ViewPagerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

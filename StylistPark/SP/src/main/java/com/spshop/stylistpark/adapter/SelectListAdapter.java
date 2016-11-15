@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class SelectListAdapter extends BaseAdapter{
 		this.datas = datas;
 		this.apCallback = callback;
 		this.dataType = dataType;
-		options = AppApplication.getImageOptions(0, R.drawable.bg_img_white, true);
+		options = OptionsManager.getInstance().getImageOptions(0, R.drawable.bg_img_white, true);
 	}
 	
 	public void updateAdapter(List<SelectListEntity> datas, int dataType){

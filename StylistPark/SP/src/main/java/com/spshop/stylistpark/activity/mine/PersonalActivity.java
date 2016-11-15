@@ -39,6 +39,7 @@ import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.NetworkUtil;
+import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 
@@ -155,7 +156,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			tv_auth_go.setVisibility(View.VISIBLE);
 			tv_auth_ok.setVisibility(View.GONE);
 		}
-		ImageLoader.getInstance().displayImage(avatarStr, iv_avatar, AppApplication.getAvatarOptions());
+		ImageLoader.getInstance().displayImage(avatarStr, iv_avatar, OptionsManager.getInstance().getAvatarOptions());
 	}
 
 	private void uploadImage() {
@@ -473,7 +474,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
         if (!StringUtil.isNull(AppApplication.clip_photo_path)) { //修改头像
         	isUpload = true;
 			avatarStr = AppApplication.clip_photo_path;
-        	ImageLoader.getInstance().displayImage("file://" + avatarStr, iv_avatar, AppApplication.getAvatarOptions());
+        	ImageLoader.getInstance().displayImage("file://" + avatarStr, iv_avatar, OptionsManager.getInstance().getAvatarOptions());
         	uploadImage();
 		}
         AppApplication.clip_photo_path = "";

@@ -15,6 +15,7 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ThemeEntity;
+import com.spshop.stylistpark.utils.OptionsManager;
 
 import java.util.List;
 
@@ -28,15 +29,15 @@ public class FindListAdapter extends BaseAdapter {
 	private Context context;
 	private List<ThemeEntity> datas;
 	private AdapterCallback adapterCallback;
-	private DisplayImageOptions options, avatarOptions;
+	private DisplayImageOptions avatarOptions, defaultOptions;
 	private LinearLayout.LayoutParams lp;
 
 	public FindListAdapter(Context context, List<ThemeEntity> datas, AdapterCallback adapterCallback) {
 		this.context = context;
 		this.datas = datas;
 		this.adapterCallback = adapterCallback;
-		options = AppApplication.getDefaultImageOptions();
-		avatarOptions = AppApplication.getAvatarOptions();
+		avatarOptions = OptionsManager.getInstance().getAvatarOptions();
+		defaultOptions = OptionsManager.getInstance().getDefaultOptions();
 		lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		int newWidth = (AppApplication.screenWidth - 20);
 		lp.width = newWidth;
@@ -106,7 +107,7 @@ public class FindListAdapter extends BaseAdapter {
 
 		holder.iv_logo.setLayoutParams(lp);
 
-		ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + data.getImgUrl(), holder.iv_logo, options);
+		ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + data.getImgUrl(), holder.iv_logo, defaultOptions);
 		ImageLoader.getInstance().displayImage(data.getAvatar(), holder.iv_avatar, avatarOptions);
 		holder.tv_title.setText(data.getTitle());
 		holder.tv_nick.setText(data.getNick());

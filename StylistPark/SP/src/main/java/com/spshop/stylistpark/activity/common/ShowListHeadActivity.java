@@ -39,6 +39,7 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
+import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshBase;
 import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
@@ -134,7 +135,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		time_height = getResources().getDimensionPixelSize(R.dimen.favourable_time_height);
 		group_height = getResources().getDimensionPixelSize(R.dimen.topbar_group_height);
 		spaceHeight = CommonTools.dip2px(mContext, 15);
-		options = AppApplication.getImageOptions(0, 0, true);
+		options = OptionsManager.getInstance().getImageOptions(0, 0, true);
 		
 		findViewById();
 		initView();

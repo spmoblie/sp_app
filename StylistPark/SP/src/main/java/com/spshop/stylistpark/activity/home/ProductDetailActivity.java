@@ -42,6 +42,7 @@ import com.spshop.stylistpark.image.AsyncImageLoader.AsyncImageLoaderCallback;
 import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.HttpUtil;
+import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.MyCountDownTimer;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -202,7 +203,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			}
 			tv_commission.setText(mainEn.getCommission());
 			
-			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + mainEn.getBrandLogo(), iv_brang_logo, options);
+			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + mainEn.getBrandLogo(), iv_brang_logo, defaultOptions);
 			tv_brand_name.setText(mainEn.getBrandName());
 			tv_brand_country.setText(mainEn.getBrandCountry());
 			
@@ -302,7 +303,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			}
 			String imgMinUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMinUrl();
 			ImageView imageView = new ImageView(mContext);
-			ImageLoader.getInstance().displayImage(imgMinUrl, imageView, options);
+			ImageLoader.getInstance().displayImage(imgMinUrl, imageView, goodsOptions);
 			imageView.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -558,7 +559,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			initVideoPopup();
 			break;
 		case R.id.topbar_radio_rb_1:
-			String loadingUrl = AppConfig.URL_COMMON_GOODS_DETAIL_URL + "?id=" + goodsId + AppApplication.getHttpUrlLangCurValueStr();
+			String loadingUrl = AppConfig.URL_COMMON_GOODS_DETAIL_URL + "?id=" + goodsId + LangCurrTools.getHttpUrlLangCurValueStr();
 			// 同步Cookies
 			HttpUtil.synCookies(loadingUrl);
 			webview.loadUrl(loadingUrl);

@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.MemberEntity;
+import com.spshop.stylistpark.utils.OptionsManager;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class MemberListAdapter extends BaseAdapter {
 		this.context = context;
 		this.datas = datas;
 		this.adapterCallback = adapterCallback;
-		avatarOptions = AppApplication.getAvatarOptions();
+		avatarOptions = OptionsManager.getInstance().getAvatarOptions();
 	}
 
 	public void updateAdapter(List<MemberEntity> datas) {
