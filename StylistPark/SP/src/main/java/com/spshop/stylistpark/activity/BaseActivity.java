@@ -8,6 +8,7 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +16,7 @@ import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -115,6 +117,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	private Button btn_right;
 	private ViewFlipper mLayoutBase;
 	private Animation inAnim, outAnim;
+	private ACountDownTimer acdt;
 
 	// 底部购物栏
 	private LinearLayout ll_bottom_main;
@@ -546,27 +549,31 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 	@Override
 	protected void onResume() {
-		super.onResume();
 		LogUtil.i(TAG, "onResume()");
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
+		// 开启倒计时
+		startCountdown();
+		super.onResume();
 	}
 	
 	@Override
 	protected void onPause() {
-		super.onPause();
 		LogUtil.i(TAG, "onPause()");
 		if (dm != null) {
 			dm.clearInstance();
 		}
+		// 清除倒计时
+		clearCountdown();
+		super.onPause();
 	}
 	
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy()");
 		headGONE = null;
 		headVISIBLE = null;
+		super.onDestroy();
 	}
 
 	protected void openLoginActivity(){
@@ -1335,6 +1342,54 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 					ShowListHeadActivity.instance.updateData();
 				}
 				break;
+		}
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				clearCountdown();
+				break;
+			case MotionEvent.ACTION_UP:
+				startCountdown();
+				break;
+		}
+		return super.onTouchEvent(event);
+	}
+
+	/**
+	 * 开启倒计时
+	 */
+	private void startCountdown() {
+		clearCountdown();
+		//acdt = new ACountDownTimer(AppConfig.TO_SREEN_VIDEO_TIME, 1000);
+		//acdt.start();
+	}
+
+	/**
+	 * 清除倒计时
+	 */
+	private void clearCountdown() {
+		/*if (acdt != null) {
+			acdt.cancel();
+			acdt = null;
+		}*/
+	}
+
+	private class ACountDownTimer extends CountDownTimer {
+		public ACountDownTimer(long millisInFuture, long countDownInterval) {
+			super(millisInFuture, countDownInterval);
+		}
+
+		@Override
+		public void onTick(long millisUntilFinished) {
+
+		}
+
+		@Override
+		public void onFinish() {
+			//startActivity(new Intent(mContext, ScreenVideoActivity.class));
 		}
 	}
 

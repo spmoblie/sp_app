@@ -316,11 +316,11 @@ public class UserManager {
 	 * 刷新所有登录状态下的数据
 	 */
 	private void changeAllDataStatus() {
-		BaseActivity.updateActivityData(1);
-		BaseActivity.updateActivityData(5);
-		BaseActivity.updateActivityData(20);
-		BaseActivity.updateActivityData(21);
-		BaseActivity.updateActivityData(22);
+		BaseActivity.updateActivityData(1); //首页
+		BaseActivity.updateActivityData(5); //头像
+		BaseActivity.updateActivityData(20); //商品详情
+		BaseActivity.updateActivityData(21); //商品列表
+		BaseActivity.updateActivityData(22); //品牌列表
 	}
 
 	/**

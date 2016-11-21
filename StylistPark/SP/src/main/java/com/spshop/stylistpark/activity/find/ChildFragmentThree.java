@@ -183,7 +183,7 @@ public class ChildFragmentThree extends Fragment implements OnClickListener, OnD
 				shareEn.setTitle(selectEn.getTitle());
 				shareEn.setText(selectEn.getTitle());
 				shareEn.setUrl(AppConfig.URL_COMMON_ARTICLE_SHARE_URL + "?id=" + selectEn.getId());
-				shareEn.setImageUrl(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + selectEn.getImgUrl());
+				shareEn.setImageUrl(selectEn.getImgUrl());
 				// 跳转至WebView
 				Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
 				intent.putExtra("shareEn", shareEn);

@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import com.spshop.stylistpark.AppApplication;
-import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -91,7 +90,7 @@ public class VideoActivity extends BaseActivity {
 	private void startPaly() {
 		if (!StringUtil.isNull(videoUrl)) {
 			startAnimation();
-			Uri uri = Uri.parse(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + "/video/" + videoUrl + ".mp4");
+			Uri uri = Uri.parse("http://spshop.com/video/" + videoUrl + ".mp4");
 			MediaController  mc = new MediaController(mContext);
 			mc.show(10000);
 			videoView.setMediaController(mc);

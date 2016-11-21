@@ -136,12 +136,9 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 			showMyErrorDialog(getString(R.string.network_fault));
 			return;
 		}
-		initWebview();
 		initVideo();
-		// 初始化分享组件
-		if (shareEn != null && shareEn.getShareBm() == null) {
-			loadShareImg();
-		}
+		loadShareImg();
+		initWebview();
 		// 初始化评论组件
 		if (isComment) {
 			ll_comment_main.setVisibility(View.VISIBLE);
@@ -171,7 +168,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	}
 
 	private void loadShareImg() {
-		if (!StringUtil.isNull(shareEn.getImageUrl())) {
+		if (shareEn != null && !StringUtil.isNull(shareEn.getImageUrl())) {
 			asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoader.AsyncImageLoaderCallback() {
 
 				@Override
@@ -191,8 +188,10 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	}
 
 	private void initShareData(Bitmap bm) {
-		shareEn.setShareBm(bm);
-		setBtnRight(R.drawable.topbar_icon_share);
+		if (shareEn != null) {
+			shareEn.setShareBm(bm);
+			setBtnRight(R.drawable.topbar_icon_share);
+		}
 	}
 
 	@SuppressWarnings("static-access")

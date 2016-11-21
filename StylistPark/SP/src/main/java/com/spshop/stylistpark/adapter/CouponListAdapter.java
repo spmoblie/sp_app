@@ -91,14 +91,22 @@ public class CouponListAdapter extends BaseAdapter {
 		}
 		final CouponEntity data = datas.get(position);
 		
-		if (data.getStatusType() == 1) {
+		if (data.getStatusType() == 1) { //可使用
 			holder.ll_item.setBackgroundResource(R.drawable.icon_coupon_use);
 			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.price_text_color));
 			holder.tv_money.setTextColor(context.getResources().getColor(R.color.price_text_color));
+			holder.tv_name.setTextColor(context.getResources().getColor(R.color.conte_text_color));
+			holder.tv_limit.setTextColor(context.getResources().getColor(R.color.conte_text_color));
+			holder.tv_date.setTextColor(context.getResources().getColor(R.color.conte_text_color));
+			holder.tv_status.setTextColor(context.getResources().getColor(R.color.conte_text_color));
 		}else {
 			holder.ll_item.setBackgroundResource(R.drawable.icon_coupon_used);
-			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.label_text_color));
-			holder.tv_money.setTextColor(context.getResources().getColor(R.color.label_text_color));
+			holder.tv_curr.setTextColor(context.getResources().getColor(R.color.debar_text_color));
+			holder.tv_money.setTextColor(context.getResources().getColor(R.color.debar_text_color));
+			holder.tv_name.setTextColor(context.getResources().getColor(R.color.label_text_color));
+			holder.tv_limit.setTextColor(context.getResources().getColor(R.color.label_text_color));
+			holder.tv_date.setTextColor(context.getResources().getColor(R.color.label_text_color));
+			holder.tv_status.setTextColor(context.getResources().getColor(R.color.label_text_color));
 		}
 		holder.tv_curr.setText(data.getCurrency());
 		holder.tv_money.setText(data.getCouponMoney());

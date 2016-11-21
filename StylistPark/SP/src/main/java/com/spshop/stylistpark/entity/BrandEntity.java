@@ -17,6 +17,7 @@ public class BrandEntity extends BaseEntity implements IndexDisplay, Parcelable,
 	String favourable;
 	long endTime;
 
+	ShareEntity shareEn;
 	SelectListEntity selectEn;
 
 	public BrandEntity() {
@@ -76,6 +77,14 @@ public class BrandEntity extends BaseEntity implements IndexDisplay, Parcelable,
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public ShareEntity getShareEn() {
+		return shareEn;
+	}
+
+	public void setShareEn(ShareEntity shareEn) {
+		this.shareEn = shareEn;
 	}
 
 	public SelectListEntity getSelectEn() {

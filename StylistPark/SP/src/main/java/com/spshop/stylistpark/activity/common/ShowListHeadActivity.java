@@ -58,7 +58,6 @@ import java.util.List;
 public class ShowListHeadActivity extends BaseActivity implements OnClickListener {
 
 	private static final String TAG = "ShowListHeadActivity";
-	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	public static ShowListHeadActivity instance = null;
 
 	public static final int PAGE_ROOT_CODE_1 = 1001; //SortActivity 或 ProductDetailActivity 或 ChildFragmentOne
@@ -88,7 +87,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private boolean isHead = true;
 	private boolean isGone = true;
 	private String selectName = "";
-	private String logoImgUrl, shareImgUrl;
 
 	private LinearLayout ll_stikky_main, ll_favourable_time, ll_group_main;
 	private RelativeLayout rl_top_1, rl_top_2, rl_top_3;
@@ -108,7 +106,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private BrandEntity brandEn;
 	private ShareEntity shareEn;
-	private Bitmap shareBm;
 	private SelectListEntity selectEn;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
@@ -281,6 +278,8 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private void setHeadView() {
 		if (brandEn != null) {
 			setTitleLogo(options, IMAGE_URL_HTTP + brandEn.getLogoUrl());
+			ImageLoader.getInstance().displayImage(brandEn.getDefineUrl(), iv_brand_img, options);
+			shareEn = brandEn.getShareEn();
 			selectEn = brandEn.getSelectEn();
 			endTime = brandEn.getEndTime();
 			if (endTime > 0) {
@@ -310,10 +309,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void loadShareImg() {
-		if (!StringUtil.isNull(brandEn.getDefineUrl())) {
-			logoImgUrl = IMAGE_URL_HTTP + brandEn.getDefineUrl();
-			shareImgUrl = logoImgUrl;
-			ImageLoader.getInstance().displayImage(logoImgUrl, iv_brand_img, options);
+		if (brandEn != null && !StringUtil.isNull(brandEn.getDefineUrl())) {
 			asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoader.AsyncImageLoaderCallback() {
 
 				@Override
@@ -322,7 +318,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 					showHeadViews(bm);
 				}
 			});
-			ImageLoadTask task = asyncImageLoader.loadImage(shareImgUrl, 0);
+			ImageLoadTask task = asyncImageLoader.loadImage(brandEn.getDefineUrl(), 0);
 			if (task != null && task.getBitmap() != null) {
 				initShareData(task.getBitmap());
 				showHeadViews(task.getBitmap());
@@ -331,8 +327,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void initShareData(Bitmap bm) {
-		shareBm = bm;
-		setBtnRight(R.drawable.topbar_icon_share);
+		if (shareEn != null) {
+			shareEn.setShareBm(bm);
+			setBtnRight(R.drawable.topbar_icon_share);
+		}
 	}
 
 	private void showHeadViews(Bitmap bm) {
@@ -531,14 +529,6 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void OnListenerRight() {
 		super.OnListenerRight();
-		if (shareEn == null && brandEn != null) {
-			shareEn = new ShareEntity();
-			shareEn.setTitle(brandEn.getName());
-			shareEn.setText(brandEn.getDesc());
-			shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "brand.php?id=" + brandEn.getBrandId());
-			shareEn.setImageUrl(shareImgUrl);
-			shareEn.setShareBm(shareBm);
-		}
 		showShareView(shareEn);
 	}
 

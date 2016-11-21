@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	public static final String TAG = "LoginActivity";
 	public static LoginActivity instance = null;
 	
-	public static final String LOGIN_TYPE_WX = "wechat";
+	public static final String LOGIN_TYPE_WX = "wechat_app";
 	public static final String LOGIN_TYPE_QQ = "qq";
 	public static final String LOGIN_TYPE_WB = "weibo";
 	public static final String LOGIN_TYPE_ZF = "alipay";

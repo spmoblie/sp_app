@@ -74,6 +74,8 @@ public class AppConfig {
 	public static final int SP_JION_PROGRAM_ID = 1;
 	// 加载缓冲时间
 	public static final int LOADING_TIME = 500;
+	// 进入屏播时间
+	public static final int TO_SREEN_VIDEO_TIME = 1000 * 60;
 
 	// QQ AppID
 	public static final String QQ_APP_ID = "1104891333";

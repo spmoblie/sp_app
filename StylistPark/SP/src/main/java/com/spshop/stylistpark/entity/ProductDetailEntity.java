@@ -135,6 +135,11 @@ public class ProductDetailEntity extends BaseEntity{
 	 * 图片Url（大）
 	 */
 	private String imgMaxUrl;
+
+	/**
+	 * 分享实体
+	 */
+	private ShareEntity shareEn;
 	
 	/**
 	 * 图片集合
@@ -408,6 +413,16 @@ public class ProductDetailEntity extends BaseEntity{
 
 	public void setImgMaxUrl(String imgMaxUrl) {
 		this.imgMaxUrl = imgMaxUrl;
+	}
+
+
+	public ShareEntity getShareEn() {
+		return shareEn;
+	}
+
+
+	public void setShareEn(ShareEntity shareEn) {
+		this.shareEn = shareEn;
 	}
 
 

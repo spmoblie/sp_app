@@ -274,7 +274,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 						shareEn.setTitle(items.getTitle());
 						shareEn.setText(items.getTitle());
 						shareEn.setUrl(AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + items.getId());
-						shareEn.setImageUrl(AppConfig.ENVIRONMENT_PRESENT_IMG_APP + items.getImgUrl());
+						shareEn.setImageUrl(items.getImgUrl());
 						// 跳转至WebView
 						Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
 						intent.putExtra("shareEn", shareEn);

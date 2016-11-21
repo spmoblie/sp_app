@@ -18,6 +18,7 @@ import com.spshop.stylistpark.entity.ProductAttrEntity;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.entity.ShareEntity;
 import com.spshop.stylistpark.entity.SortListEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.entity.UpdateVersionEntity;
@@ -364,6 +365,13 @@ public class JsonParser {
 			mainEn.setIsCollection(goods.getString("collect"));
 			mainEn.setIsVideo(StringUtil.getInteger(goods.getString("is_video")));
 			mainEn.setVideoUrl(goods.getString("goods_sn"));
+
+			ShareEntity shareEn = new ShareEntity();
+			shareEn.setTitle(goods.getString("share"));
+			shareEn.setText(goods.getString("share"));
+			shareEn.setUrl(goods.getString("url"));
+			shareEn.setImageUrl(goods.getString("goods_thumb"));
+			mainEn.setShareEn(shareEn);
 		}
 
 		if (StringUtil.notNull(jsonObject, "brand")) {
@@ -442,6 +450,13 @@ public class JsonParser {
 			mainEn.setDesc(data.getString("desc"));
 			mainEn.setFavourable(data.getString("favourable"));
 			mainEn.setEndTime(StringUtil.getLong(data.getString("time")));
+
+			ShareEntity shareEn = new ShareEntity();
+			shareEn.setTitle(data.getString("share"));
+			shareEn.setText(data.getString("share"));
+			shareEn.setUrl(data.getString("url"));
+			shareEn.setImageUrl(data.getString("banner"));
+			mainEn.setShareEn(shareEn);
 		}
 
 		if (StringUtil.notNull(jsonObject, "cat")) {

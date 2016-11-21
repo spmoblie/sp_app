@@ -78,9 +78,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private ProgressBar progressBar;
 	private AsyncImageLoader asyncImageLoader;
 
-	private ShareEntity shareEn;
-	private Bitmap shareBm;
 	private ProductDetailEntity mainEn;
+	private ShareEntity shareEn;
 	private MyCountDownTimer mcdt;
 	private boolean isShow = false;
 	private boolean vprStop = true;
@@ -88,7 +87,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private int idsSize, idsPosition, vprPosition;
 	private int goodsId = 0;
 	private int propertyNum = 3;
-	private String fristGoodsImgUrl, shareImgUrl;
 	private String fristPromotionName = "";
 	private ArrayList<ImageView> viewLists = new ArrayList<ImageView>();
 	private ArrayList<String> urlLists = new ArrayList<String>();
@@ -171,6 +169,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		if (mainEn != null) {
 			ll_other.setVisibility(View.VISIBLE);
 			tv_title.setText(mainEn.getName());
+			shareEn = mainEn.getShareEn();
+			loadShareImg();
 			if (mainEn.getImgLists() != null && viewLists.size() == 0) {
 				initViewPager();
 			}
@@ -293,10 +293,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		tv_page.setVisibility(View.VISIBLE);
 		tv_page.setText(getString(R.string.viewpager_indicator, 1, idsSize));
 		for (int i = 0; i < imgEns.size(); i++) {
-			if (i == 0) {
-				fristGoodsImgUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMinUrl();
-				shareImgUrl = fristGoodsImgUrl;
-			}
 			if (i < idsSize) {
 				String imgMaxUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMaxUrl();
 				urlLists.add(imgMaxUrl);
@@ -316,7 +312,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			});
 			viewLists.add(imageView);
 		}
-		loadShareImg();
 		final boolean loop = viewLists.size() > 3 ? true:false;
 		viewPager.setAdapter(new PagerAdapter()
 		{
@@ -426,7 +421,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	}
 
 	private void loadShareImg() {
-		if (!StringUtil.isNull(shareImgUrl)) {
+		if (shareEn != null && !StringUtil.isNull(shareEn.getImageUrl())) {
 			asyncImageLoader = AsyncImageLoader.getInstance(new AsyncImageLoaderCallback() {
 				
 				@Override
@@ -434,7 +429,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 					initShareData(bm);
 				}
 			});
-			ImageLoadTask task = asyncImageLoader.loadImage(shareImgUrl, 0);
+			ImageLoadTask task = asyncImageLoader.loadImage(shareEn.getImageUrl(), 0);
 			if (task != null && task.getBitmap() != null) {
 				initShareData(task.getBitmap());
 			}
@@ -442,8 +437,10 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	}
 
 	private void initShareData(Bitmap bm) {
-		shareBm = bm;
-		btn_share.setVisibility(View.VISIBLE);
+		if (shareEn != null) {
+			shareEn.setShareBm(bm);
+			btn_share.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private void initRaidoGroup() {
@@ -540,16 +537,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.top_commom_btn_right_one:
-			if (shareEn == null && mainEn != null) {
-				String genuine = getString(R.string.product_genuine_safeguard);
-				shareEn = new ShareEntity();
-				shareEn.setTitle(mainEn.getName());
-				shareEn.setText(mainEn.getBrandCountry() + " " + mainEn.getBrandName()
-						+ genuine + " " + mainEn.getName() + " " + fristPromotionName);
-				shareEn.setUrl(AppConfig.ENVIRONMENT_PRESENT_SHARE_URL + "goods.php?id=" + mainEn.getId());
-				shareEn.setImageUrl(shareImgUrl);
-				shareEn.setShareBm(shareBm);
-			}
 			showShareView(shareEn);
 			break;
 		case R.id.top_commom_iv_left:

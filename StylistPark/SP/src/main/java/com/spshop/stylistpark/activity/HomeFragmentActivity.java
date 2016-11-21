@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -25,13 +27,13 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.cart.ChildFragmentFour;
-import com.spshop.stylistpark.activity.sort.ChildFragmentTwo;
 import com.spshop.stylistpark.activity.find.ChildFragmentThree;
 import com.spshop.stylistpark.activity.home.ChildFragmentOne;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
 import com.spshop.stylistpark.activity.login.LoginActivity;
 import com.spshop.stylistpark.activity.mine.ChildFragmentFive;
 import com.spshop.stylistpark.activity.mine.MemberListActivity;
+import com.spshop.stylistpark.activity.sort.ChildFragmentTwo;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -60,6 +62,8 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 	private boolean warn_two = false;
 	private boolean warn_three = false;
 	private boolean warn_five = false;
+	private ACountDownTimer acdt;
+
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -185,24 +189,29 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 
 		exit = Boolean.FALSE;
 		initView();
+
+		// 开启倒计时
+		startCountdown();
 		super.onResume();
 	}
 
 	@Override
 	protected void onPause() {
-		super.onPause();
 		LogUtil.i(TAG, "onPause");
 		// 页面结束
 		AppApplication.onPageEnd(this, TAG);
+		// 清除倒计时
+		clearCountdown();
+		super.onPause();
 	}
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
 		if (myBroadcastReceiver != null) {
 			unregisterReceiver(myBroadcastReceiver);
 		}
+		super.onDestroy();
 	}
 
 	/**
@@ -462,5 +471,53 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			}
 		}
 	};
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		switch (ev.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				clearCountdown();
+				break;
+			case MotionEvent.ACTION_UP:
+				startCountdown();
+				break;
+		}
+		return super.dispatchTouchEvent(ev);
+	}
+
+	/**
+	 * 开启倒计时
+	 */
+	private void startCountdown() {
+		clearCountdown();
+		//acdt = new ACountDownTimer(AppConfig.TO_SREEN_VIDEO_TIME, 1000);
+		//acdt.start();
+	}
+
+	/**
+	 * 清除倒计时
+	 */
+	private void clearCountdown() {
+		/*if (acdt != null) {
+			acdt.cancel();
+			acdt = null;
+		}*/
+	}
+
+	private class ACountDownTimer extends CountDownTimer {
+		public ACountDownTimer(long millisInFuture, long countDownInterval) {
+			super(millisInFuture, countDownInterval);
+		}
+
+		@Override
+		public void onTick(long millisUntilFinished) {
+
+		}
+
+		@Override
+		public void onFinish() {
+			//startActivity(new Intent(HomeFragmentActivity.this, ScreenVideoActivity.class));
+		}
+	}
 
 }
