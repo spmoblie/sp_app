@@ -21,7 +21,6 @@ import java.util.Map;
  * 二维码图片生成工具
  */
 public class QRCodeUtil{
-	
 
 	/**
 	 * @param url 要转换的地址或字符串,可以是中文
@@ -37,7 +36,7 @@ public class QRCodeUtil{
 			}
 			Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
 			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-			hints.put(EncodeHintType.MARGIN, 2); 
+			hints.put(EncodeHintType.MARGIN, 2);
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, widthPix, heightPix, hints);
 			int[] pixels = new int[widthPix * heightPix];

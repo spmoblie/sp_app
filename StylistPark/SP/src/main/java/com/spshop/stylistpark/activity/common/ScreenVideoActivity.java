@@ -1,10 +1,7 @@
 package com.spshop.stylistpark.activity.common;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +10,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
@@ -22,12 +20,9 @@ import android.widget.VideoView;
 import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
-import com.spshop.stylistpark.dialog.DialogManager;
+import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
-import com.spshop.stylistpark.service.ServiceContext;
-import com.spshop.stylistpark.task.AsyncTaskManager;
-import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.NetworkUtil;
@@ -38,19 +33,17 @@ import com.spshop.stylistpark.utils.UserManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.spshop.stylistpark.activity.BaseActivity.DIALOG_CONFIRM_CLICK;
-
 
 @SuppressLint("HandlerLeak")
-public class ScreenVideoActivity extends Activity implements OnDataListener {
+public class ScreenVideoActivity extends BaseActivity {
 
 	private static final String TAG = "VideoActivity";
 
 	private VideoView videoView;
-	private TextView tv_price, tv_qr_buy;
+	private TextView tv_price;
+	private ImageView iv_qr_buy;
 	private LinearLayout loading_main;
 	private RelativeLayout rl_next_1, rl_next_2, rl_close;
-	private Drawable qr_default, qr_buy;
 	private int old_duration;
 	private int mSeekPosition;
 	private int urlPosition = 0;
@@ -59,21 +52,16 @@ public class ScreenVideoActivity extends Activity implements OnDataListener {
 	private ArrayList<ProductDetailEntity> urlLists = new ArrayList<ProductDetailEntity>();
 	private Runnable runnable;
 	private Handler handler;
-	private DialogManager dm;
 	private PowerManager powerManager = null;
 	private PowerManager.WakeLock wakeLock = null;
-	private AsyncTaskManager atm;
-	private ServiceContext sc = ServiceContext.getServiceContext();
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_screen_video);
 
-		dm = DialogManager.getInstance(this);
 		powerManager = (PowerManager)this.getSystemService(this.POWER_SERVICE);
 		wakeLock = this.powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "My Lock");
-		atm = AsyncTaskManager.getInstance(this);
 
 		findViewById();
 		initView();
@@ -82,17 +70,15 @@ public class ScreenVideoActivity extends Activity implements OnDataListener {
 	private void findViewById() {
 		videoView = (VideoView) findViewById(R.id.screen_video_video_view);
 		tv_price = (TextView) findViewById(R.id.screen_video_tv_price);
-		tv_qr_buy = (TextView) findViewById(R.id.screen_video_qr_buy);
+		iv_qr_buy = (ImageView) findViewById(R.id.screen_video_qr_buy);
 		rl_close = (RelativeLayout) findViewById(R.id.screen_video_rl_close);
 		rl_next_1 = (RelativeLayout) findViewById(R.id.screen_video_rl_next_1);
 		rl_next_2 = (RelativeLayout) findViewById(R.id.screen_video_rl_next_2);
-		loading_main = (LinearLayout) findViewById(R.id.uvv_loading_ll_main);
-
-		qr_default = getResources().getDrawable(R.drawable.icon_qr_public);
-		qr_default.setBounds(0, 0, qr_default.getMinimumWidth(), qr_default.getMinimumHeight());
+		loading_main = (LinearLayout) findViewById(R.id.screen_video_loading_main);
 	}
 
 	private void initView() {
+		setHeadVisibility(View.GONE);
 		stopAnimation();
 
 		rl_close.setOnClickListener(new OnClickListener() {
@@ -133,7 +119,7 @@ public class ScreenVideoActivity extends Activity implements OnDataListener {
 			rl_next_2.setVisibility(View.VISIBLE);
 		} else if (isFirst) {
 			startAnimation();
-			atm.request(AppConfig.REQUEST_SV_GET_SCREEN_VIDEO_CODE, this);
+			request(AppConfig.REQUEST_SV_GET_SCREEN_VIDEO_CODE);
 			isFirst = false;
 			return;
 		}
@@ -239,7 +225,7 @@ public class ScreenVideoActivity extends Activity implements OnDataListener {
 			urlPosition--;
 		}
 		tv_price.setVisibility(View.GONE);
-		tv_qr_buy.setCompoundDrawables(null, qr_default, null, null);
+		iv_qr_buy.setImageResource(R.drawable.icon_qr_public);
 		if (!StringUtil.isNull(videoUrl)) {
 			videoView.setVideoURI(Uri.parse(videoUrl));
 			videoView.start();
@@ -248,11 +234,9 @@ public class ScreenVideoActivity extends Activity implements OnDataListener {
 				tv_price.setVisibility(View.VISIBLE);
 			}
 			if (!StringUtil.isNull(videoImg)) {
-				Bitmap bm = QRCodeUtil.createQRImage(videoImg, 200, 200);
+				Bitmap bm = QRCodeUtil.createQRImage(videoImg, 100, 100);
 				if (bm != null) {
-					qr_buy = new BitmapDrawable(bm);
-					qr_buy.setBounds(0, 0, qr_buy.getMinimumWidth(), qr_buy.getMinimumHeight());
-					tv_qr_buy.setCompoundDrawables(null, qr_buy, null, null);
+					iv_qr_buy.setImageBitmap(bm);
 				}
 			}
 		}else {
@@ -278,13 +262,15 @@ public class ScreenVideoActivity extends Activity implements OnDataListener {
 		}
 	}
 
-	private void startAnimation() {
+	@Override
+	protected void startAnimation() {
 		if (loading_main != null) {
 			loading_main.setVisibility(View.VISIBLE);
 		}
 	}
 
-	private void stopAnimation() {
+	@Override
+	protected void stopAnimation() {
 		if (loading_main != null) {
 			loading_main.setVisibility(View.GONE);
 		}
@@ -292,6 +278,7 @@ public class ScreenVideoActivity extends Activity implements OnDataListener {
 
 	@Override
 	protected void onResume() {
+		super.onResume();
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
@@ -301,7 +288,8 @@ public class ScreenVideoActivity extends Activity implements OnDataListener {
 			videoView.start();
 		}
 		wakeLock.acquire();
-		super.onResume();
+		// 清除倒计时
+		clearCountdown();
 	}
 
 	@Override
@@ -344,6 +332,7 @@ public class ScreenVideoActivity extends Activity implements OnDataListener {
 
 	@Override
 	public void onSuccess(int requestCode, Object result) {
+		super.onSuccess(requestCode, result);
 		switch (requestCode) {
 			case AppConfig.REQUEST_SV_GET_SCREEN_VIDEO_CODE:
 				if (result != null) {
@@ -356,7 +345,6 @@ public class ScreenVideoActivity extends Activity implements OnDataListener {
 
 	@Override
 	public void onFailure(int requestCode, int state, Object result) {
-		stopAnimation();
-		showMyErrorDialog(getString(R.string.network_fault));
+		super.onFailure(requestCode, state, result);
 	}
 }
