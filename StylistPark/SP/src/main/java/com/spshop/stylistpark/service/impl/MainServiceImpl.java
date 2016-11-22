@@ -58,8 +58,11 @@ public class MainServiceImpl implements MainService {
 			case AppConfig.REQUEST_SV_POST_VERSION_CODE:
 				return JsonParser.checkVersionUpdate(jsonStr);
 
+			case AppConfig.REQUEST_SV_GET_SCREEN_VIDEO_CODE:
+				return JsonParser.getScreenVideoLists(jsonStr);
+
 			case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
-				return JsonParser.getHomeHeadDatas(jsonStr);
+			return JsonParser.getHomeHeadDatas(jsonStr);
 
 			case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
 			case AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE:

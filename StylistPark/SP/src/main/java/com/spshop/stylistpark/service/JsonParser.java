@@ -53,6 +53,32 @@ public class JsonParser {
 	}
 
 	/**
+	 * 解析循播视频列表
+	 */
+	public static ProductDetailEntity getScreenVideoLists(String jsonStr) throws JSONException {
+		JSONObject jsonObject = new JSONObject(jsonStr);
+		ProductDetailEntity mainEn = new ProductDetailEntity();
+		getCommonKeyValue(mainEn, jsonObject);
+
+		if (StringUtil.notNull(jsonObject, "data")) {
+			JSONArray videos = jsonObject.getJSONArray("data");
+			ProductDetailEntity childEn;
+			ArrayList<ProductDetailEntity> lists = new ArrayList<ProductDetailEntity>();
+			for (int i = 0; i < videos.length(); i++) {
+				JSONObject item = videos.getJSONObject(i);
+				childEn = new ProductDetailEntity();
+				childEn.setVideoUrl(item.getString("video"));
+				childEn.setSellPrice(item.getString("price"));
+				childEn.setPromotionName(item.getString("url"));
+
+				lists.add(childEn);
+			}
+			mainEn.setPromotionLists(lists);
+		}
+		return mainEn;
+	}
+
+	/**
 	 * 解析首页展示数据
 	 */
 	public static ThemeEntity getHomeHeadDatas(String jsonStr) throws JSONException {

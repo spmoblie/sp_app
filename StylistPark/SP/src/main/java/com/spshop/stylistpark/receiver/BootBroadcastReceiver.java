@@ -17,7 +17,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(ACTION)) {
             //开机自启动应用
-            context.startActivity(context.getPackageManager().getLaunchIntentForPackage("com.spshop.stylistpark"));
+            //context.startActivity(context.getPackageManager().getLaunchIntentForPackage("com.spshop.stylistpark"));
         }
     }
 

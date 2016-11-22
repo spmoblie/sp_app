@@ -27,6 +27,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.cart.ChildFragmentFour;
+import com.spshop.stylistpark.activity.common.ScreenVideoActivity;
 import com.spshop.stylistpark.activity.find.ChildFragmentThree;
 import com.spshop.stylistpark.activity.home.ChildFragmentOne;
 import com.spshop.stylistpark.activity.home.ProductDetailActivity;
@@ -489,19 +490,21 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 	 * 开启倒计时
 	 */
 	private void startCountdown() {
-		clearCountdown();
-		//acdt = new ACountDownTimer(AppConfig.TO_SREEN_VIDEO_TIME, 1000);
-		//acdt.start();
+		if (UserManager.getInstance().isSreenPlay()) {
+			clearCountdown();
+			acdt = new ACountDownTimer(AppConfig.TO_SCREEN_VIDEO_TIME, 1000);
+			acdt.start();
+		}
 	}
 
 	/**
 	 * 清除倒计时
 	 */
 	private void clearCountdown() {
-		/*if (acdt != null) {
+		if (UserManager.getInstance().isSreenPlay() && acdt != null) {
 			acdt.cancel();
 			acdt = null;
-		}*/
+		}
 	}
 
 	private class ACountDownTimer extends CountDownTimer {
@@ -516,7 +519,9 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 
 		@Override
 		public void onFinish() {
-			//startActivity(new Intent(HomeFragmentActivity.this, ScreenVideoActivity.class));
+			if (UserManager.getInstance().isSreenPlay()) {
+				startActivity(new Intent(HomeFragmentActivity.this, ScreenVideoActivity.class));
+			}
 		}
 	}
 

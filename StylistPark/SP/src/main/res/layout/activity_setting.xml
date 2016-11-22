@@ -137,6 +137,33 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/setting_rl_screen_play"
+        style="@style/setting_lay_item"
+        android:layout_below="@id/setting_rl_version" >
+
+        <TextView
+            android:id="@+id/setting_tv_screen_play_title"
+            style="@style/setting_lay_text_title"
+            android:text="@string/setting_screen_play" />
+
+        <ImageView
+            android:id="@+id/setting_iv_screen_play_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:clickable="true"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/selector_btn_push_control" />
+
+        <ImageView
+            style="@style/set_line_horizontal_bg"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/setting_rl_logout"
         style="@style/setting_lay_item"
         android:layout_alignParentBottom="true" >

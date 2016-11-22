@@ -237,6 +237,14 @@ public class UserManager {
 		mUserRankName = userRankName;
 	}
 
+	public boolean isSreenPlay(){
+		return sp.getBoolean(AppConfig.KEY_IS_SCREEN_PLAY, false);
+	}
+
+	public void setScreenPlay(boolean isPlay){
+		editor.putBoolean(AppConfig.KEY_IS_SCREEN_PLAY, isPlay).apply();
+	}
+
 	public String getWXAccessToken(){
 		if(StringUtil.isNull(wxAccessToken)){
 			wxAccessToken = sp.getString(AppConfig.KEY_WX_ACCESS_TOKEN, null);

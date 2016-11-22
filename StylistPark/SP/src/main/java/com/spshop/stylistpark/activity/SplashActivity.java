@@ -11,6 +11,7 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.utils.DeviceUtil;
 import com.spshop.stylistpark.utils.FileManager;
@@ -60,6 +61,8 @@ public class SplashActivity extends BaseActivity {
 		request(AppConfig.REQUEST_SV_GET_SESSIONS_CODE);
 		// 加载首页数据
 		request(AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE);
+		// 加载循播视频
+		request(AppConfig.REQUEST_SV_GET_SCREEN_VIDEO_CODE);
 		// 延迟跳转页面
 		goHomeActivity();
 		super.onResume();
@@ -110,6 +113,10 @@ public class SplashActivity extends BaseActivity {
 					FileManager.writeFileSaveObject(AppConfig.homeAdsFileName, baseEn, true);
 				}
 				return baseEn;
+			case AppConfig.REQUEST_SV_GET_SCREEN_VIDEO_CODE:
+				uri = AppConfig.URL_COMMON_PRODUCT_URL;
+				params.add(new MyNameValuePair("app", "video"));
+				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_SCREEN_VIDEO_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -124,6 +131,11 @@ public class SplashActivity extends BaseActivity {
 				if (!UserManager.getInstance().checkIsLogined()) {
 					AppApplication.AppLogout(true);
 				}
+			}
+			break;
+		case AppConfig.REQUEST_SV_GET_SCREEN_VIDEO_CODE:
+			if (result != null) {
+				AppApplication.videoEn = (ProductDetailEntity) result;
 			}
 			break;
 		}

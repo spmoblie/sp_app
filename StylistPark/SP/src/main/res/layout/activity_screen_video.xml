@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_bg_color_app"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/screen_video_tv_price"
+            style="@style/common_text_price"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_18"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/screen_video_rl_close"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/topbar_icon_clear" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <VideoView
+            android:id="@+id/screen_video_video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <RelativeLayout
+            android:id="@+id/screen_video_rl_next_1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/topbar_icon_next_1" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/screen_video_rl_next_2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="right|center_vertical"
+            android:visibility="gone" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/topbar_icon_next_2" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="100dp"
+            android:gravity="center"
+            android:drawableTop="@drawable/icon_qr_public"
+            android:text="@string/setting_qr_attention"
+            android:textSize="@dimen/text_size_11"
+            android:textColor="@color/conte_text_color" />
+
+        <TextView
+            android:id="@+id/screen_video_qr_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="100dp"
+            android:gravity="center"
+            android:drawableTop="@drawable/icon_qr_public"
+            android:text="@string/setting_qr_buy"
+            android:textSize="@dimen/text_size_11"
+            android:textColor="@color/conte_text_color" />
+
+        <include layout="@layout/uvv_on_loading_layout" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -305,6 +305,10 @@
     <string name="setting_about_us">關於我們</string>
     <string name="setting_version">檢查更新</string>
     <string name="setting_notification">消息推送</string>
+    <string name="setting_screen_play">循播視頻</string>
+    <string name="setting_screen_play_yes">%1$d秒內無操作將循環播放視頻</string>
+    <string name="setting_qr_attention">掃碼關注</string>
+    <string name="setting_qr_buy">掃碼購買</string>
     <string name="setting_logout">登出帳戶</string>
     <string name="setting_logout_confirm">&#160;確定要退出登入麽？</string>
     <string name="setting_input_hint_feedback">寫下您的意見或建議</string>

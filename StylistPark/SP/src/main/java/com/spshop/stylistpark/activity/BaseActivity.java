@@ -45,6 +45,7 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.cart.CartActivity;
 import com.spshop.stylistpark.activity.cart.PostOrderActivity;
 import com.spshop.stylistpark.activity.common.OnlineServiceActivity;
+import com.spshop.stylistpark.activity.common.ScreenVideoActivity;
 import com.spshop.stylistpark.activity.common.ShowListActivity;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
 import com.spshop.stylistpark.activity.home.ChildFragmentOne;
@@ -1346,8 +1347,8 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		switch (event.getAction()) {
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		switch (ev.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				clearCountdown();
 				break;
@@ -1355,26 +1356,28 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 				startCountdown();
 				break;
 		}
-		return super.onTouchEvent(event);
+		return super.dispatchTouchEvent(ev);
 	}
 
 	/**
 	 * 开启倒计时
 	 */
-	private void startCountdown() {
-		clearCountdown();
-		//acdt = new ACountDownTimer(AppConfig.TO_SREEN_VIDEO_TIME, 1000);
-		//acdt.start();
+	protected void startCountdown() {
+		if (UserManager.getInstance().isSreenPlay()) {
+			clearCountdown();
+			acdt = new ACountDownTimer(AppConfig.TO_SCREEN_VIDEO_TIME, 1000);
+			acdt.start();
+		}
 	}
 
 	/**
 	 * 清除倒计时
 	 */
-	private void clearCountdown() {
-		/*if (acdt != null) {
+	protected void clearCountdown() {
+		if (UserManager.getInstance().isSreenPlay() && acdt != null) {
 			acdt.cancel();
 			acdt = null;
-		}*/
+		}
 	}
 
 	private class ACountDownTimer extends CountDownTimer {
@@ -1389,7 +1392,9 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 		@Override
 		public void onFinish() {
-			//startActivity(new Intent(mContext, ScreenVideoActivity.class));
+			if (UserManager.getInstance().isSreenPlay()) {
+				startActivity(new Intent(mContext, ScreenVideoActivity.class));
+			}
 		}
 	}
 

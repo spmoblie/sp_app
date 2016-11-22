@@ -305,6 +305,10 @@
     <string name="setting_about_us">About Us</string>
     <string name="setting_version">Check update</string>
     <string name="setting_notification">Push Message</string>
+    <string name="setting_screen_play">Loop video</string>
+    <string name="setting_screen_play_yes">No action within %1$d seconds will loop the video</string>
+    <string name="setting_qr_attention">Attention</string>
+    <string name="setting_qr_buy">Scan buy</string>
     <string name="setting_logout">Log Out</string>
     <string name="setting_logout_confirm">&#160;Confirm logout?</string>
     <string name="setting_input_hint_feedback">Write down your comments or advice</string>

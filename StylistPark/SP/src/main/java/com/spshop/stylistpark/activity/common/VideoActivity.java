@@ -47,9 +47,9 @@ public class VideoActivity extends BaseActivity {
 	}
 
 	private void findViewById() {
-		videoView = (VideoView) findViewById(R.id.popup_videoView);
+		videoView = (VideoView) findViewById(R.id.video_video_view);
 		loading_main = (LinearLayout) findViewById(R.id.uvv_loading_ll_main);
-		rl_close = (RelativeLayout) findViewById(R.id.popup_rl_close);
+		rl_close = (RelativeLayout) findViewById(R.id.video_rl_close);
 	}
 
 	private void initView() {

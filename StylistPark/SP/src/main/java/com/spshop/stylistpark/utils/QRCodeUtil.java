@@ -22,13 +22,13 @@ import java.util.Map;
  */
 public class QRCodeUtil{
 	
-	private static int QR_WIDTH = 400, QR_HEIGHT = 400;
-	
+
 	/**
 	 * @param url 要转换的地址或字符串,可以是中文
-	 * @return
+	 * @param widthPix  图片宽度
+	 * @param heightPix 图片高度
 	 */
-	public static Bitmap createQRImage(String url) {
+	public static Bitmap createQRImage(String url, int widthPix, int heightPix) {
 		Bitmap bitmap = null;
 		try {
 			//判断URL合法性
@@ -39,22 +39,22 @@ public class QRCodeUtil{
 			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
 			hints.put(EncodeHintType.MARGIN, 2); 
 			//图像数据转换，使用了矩阵转换
-			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
-			int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
+			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, widthPix, heightPix, hints);
+			int[] pixels = new int[widthPix * heightPix];
 			//下面这里按照二维码的算法，逐个生成二维码的图片，
 			//两个for循环是图片横列扫描的结果
-			for (int y = 0; y < QR_HEIGHT; y++) {
-				for (int x = 0; x < QR_WIDTH; x++) {
+			for (int y = 0; y < heightPix; y++) {
+				for (int x = 0; x < widthPix; x++) {
 					if (bitMatrix.get(x, y)) {
-						pixels[y * QR_WIDTH + x] = 0xff000000;
+						pixels[y * widthPix + x] = 0xff000000;
 					}else {
-						pixels[y * QR_WIDTH + x] = 0xffffffff;
+						pixels[y * widthPix + x] = 0xffffffff;
 					}
 				}
 			}
 			//生成二维码图片的格式，使用ARGB_8888
-			bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT, Bitmap.Config.ARGB_8888);
-			bitmap.setPixels(pixels, 0, QR_WIDTH, 0, 0, QR_WIDTH, QR_HEIGHT);
+			bitmap = Bitmap.createBitmap(widthPix, heightPix, Bitmap.Config.ARGB_8888);
+			bitmap.setPixels(pixels, 0, widthPix, 0, 0, widthPix, heightPix);
 			return bitmap;
 		}catch (WriterException e) {
 			ExceptionUtil.handle(e);

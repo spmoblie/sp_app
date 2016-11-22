@@ -20,6 +20,7 @@ import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.config.SharedConfig;
 import com.spshop.stylistpark.db.SortDBService;
 import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.entity.ProductDetailEntity;
 import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.task.AsyncTaskManager;
@@ -59,6 +60,7 @@ public class AppApplication extends Application implements OnDataListener{
 	public static boolean isStartHome = true; //记录是否允许重新启动HomeFragmentActivity
 
 	public static ThemeEntity themeEn;
+	public static ProductDetailEntity videoEn;
 
 	private static SharedPreferences shared;
 	private static AsyncTaskManager atm;

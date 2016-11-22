@@ -19,6 +19,7 @@ import com.spshop.stylistpark.activity.HomeFragmentActivity;
 import com.spshop.stylistpark.activity.common.MyWebViewActivity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LangCurrTools.Currency;
@@ -42,11 +43,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private TextView tv_lang_title, tv_lang_content, tv_cur_title, tv_cur_content;
 	private TextView tv_feedback, tv_version_title, tv_version_no, tv_about_us;
 	private TextView tv_push_title, tv_logout;
-	private ImageView iv_push_status;
+	private ImageView iv_push_status, iv_play_status;
 
 	private boolean isLogined = false;
 	private boolean pushStatus = true;
+	private boolean playStatus = false;
 	private boolean update_fragment = false;
+	private UserManager um;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		
 		instance = this;
 		pushStatus = AppApplication.getPushStatus();
+		um = UserManager.getInstance();
+		playStatus = um.isSreenPlay();
 
 		findViewById();
 		initView();
@@ -81,6 +86,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		tv_push_title = (TextView) findViewById(R.id.setting_tv_push_control_title);
 		tv_logout = (TextView) findViewById(R.id.setting_tv_logout);
 		iv_push_status = (ImageView) findViewById(R.id.setting_iv_push_control_btn);
+		iv_play_status = (ImageView) findViewById(R.id.setting_iv_screen_play_btn);
 	}
 
 	private void initView() {
@@ -133,6 +139,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 
 		iv_push_status.setSelected(pushStatus);
 		iv_push_status.setOnClickListener(this);
+		iv_play_status.setSelected(playStatus);
+		iv_play_status.setOnClickListener(this);
 	}
 	
 	private void postLogouRequest(){
@@ -176,6 +184,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			pushStatus = !pushStatus;
 			iv_push_status.setSelected(pushStatus);
 			AppApplication.setPushStatus(pushStatus);
+			break;
+		case R.id.setting_iv_screen_play_btn:
+			playStatus = !playStatus;
+			iv_play_status.setSelected(playStatus);
+			um.setScreenPlay(playStatus);
+			if (playStatus) {
+				CommonTools.showToast(getString(R.string.setting_screen_play_yes, AppConfig.TO_SCREEN_VIDEO_TIME / 1000), 2000);
+			}
 			break;
 		case R.id.setting_rl_about_us:
 			intent = new Intent(mContext, MyWebViewActivity.class);

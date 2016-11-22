@@ -74,8 +74,8 @@ public class AppConfig {
 	public static final int SP_JION_PROGRAM_ID = 1;
 	// 加载缓冲时间
 	public static final int LOADING_TIME = 500;
-	// 进入屏播时间
-	public static final int TO_SREEN_VIDEO_TIME = 1000 * 60;
+	// 进入循播时间
+	public static final int TO_SCREEN_VIDEO_TIME = 1000 * 30;
 
 	// QQ AppID
 	public static final String QQ_APP_ID = "1104891333";
@@ -135,6 +135,8 @@ public class AppConfig {
 	public static final int REQUEST_SV_POST_VERSION_CODE = 0X0002;
 	// 微信分享反馈
 	public static final int REQUEST_SV_GET_WX_SHARE_CODE = 0X0003;
+	// 加载循播视频
+	public static final int REQUEST_SV_GET_SCREEN_VIDEO_CODE = 0X0004;
 
 	// 加载远程首页推广数据
 	public static final int REQUEST_SV_GET_HOME_SHOW_HEAD_CODE = 0X1010;
@@ -292,6 +294,8 @@ public class AppConfig {
 	public static final String KEY_USER_RANK_NAME = "user_rank_name";
 	// 偏好设置Key-记录用户购物车中商品数量
 	public static final String KEY_CART_NUM = "cart_num";
+	// 偏好设置Key-记录是否屏保播放视频
+	public static final String KEY_IS_SCREEN_PLAY = "is_screen_play";
 	// 偏好设置Key-记录用户的微信授权码
 	public static final String KEY_WX_ACCESS_TOKEN = "wx_access_token";
 	// 偏好设置Key-记录用户的微信校验码
