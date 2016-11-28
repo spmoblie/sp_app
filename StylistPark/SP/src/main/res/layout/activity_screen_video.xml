@@ -76,8 +76,9 @@
         </RelativeLayout>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/screen_video_qr_public"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="115dp"
@@ -87,16 +88,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="18dp"
+            android:layout_marginLeft="17dp"
             android:layout_marginBottom="100dp"
             android:text="@string/setting_qr_attention"
             android:textSize="@dimen/text_size_11"
-            android:textColor="@color/conte_text_color" />
+            android:textColor="@color/tv_color_status" />
 
         <ImageView
             android:id="@+id/screen_video_qr_buy"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="115dp"
@@ -106,11 +107,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
-            android:layout_marginRight="18dp"
+            android:layout_marginRight="17dp"
             android:layout_marginBottom="100dp"
             android:text="@string/setting_qr_buy"
             android:textSize="@dimen/text_size_11"
-            android:textColor="@color/conte_text_color" />
+            android:textColor="@color/tv_color_status" />
 
         <include layout="@layout/layout_screen_video_loading" />
     </FrameLayout>

@@ -40,23 +40,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="10dp">
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp" >
 
                 <ImageView
                     android:id="@+id/item_list_cart_product_iv_img"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="58dp"
+                    android:layout_height="74dp"
                     android:contentDescription="@string/desc"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/bg_img_white" />
+                    android:src="@drawable/icon_goods_default" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp">
+                android:paddingBottom="5dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp" >
 
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_brand"
@@ -69,6 +71,7 @@
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_name"
                     style="@style/cart_product_text_content"
+                    android:layout_marginTop="5dp"
                     android:lines="2"
                     android:layout_below="@id/item_list_cart_product_tv_brand" />
 
@@ -90,10 +93,14 @@
                 <TextView
                     android:id="@+id/item_list_cart_product_tv_attr"
                     style="@style/cart_product_text_assist"
+                    android:layout_width="match_parent"
+                    android:layout_toLeftOf="@+id/item_list_cart_product_ll_change"
                     android:layout_alignParentBottom="true"
+                    android:gravity="left"
                     android:layout_marginBottom="5dp" />
 
                 <LinearLayout
+                    android:id="@+id/item_list_cart_product_ll_change"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"

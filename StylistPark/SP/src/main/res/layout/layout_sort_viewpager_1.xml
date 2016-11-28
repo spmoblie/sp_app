@@ -26,7 +26,6 @@
             android:id="@+id/sort_right_gv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="60dp"
             android:horizontalSpacing="5dp"
             android:listSelector="@null"
             android:numColumns="3"

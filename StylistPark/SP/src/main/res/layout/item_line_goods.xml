@@ -19,12 +19,11 @@
 
             <ImageView
                 android:id="@+id/home_line_goods_item_iv_img"
-                android:layout_width="70dp"
-                android:layout_height="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/desc"
-                android:scaleType="fitXY"
-                android:src="@drawable/bg_img_white" />
+                android:src="@drawable/icon_goods_default" />
         </RelativeLayout>
 
         <LinearLayout

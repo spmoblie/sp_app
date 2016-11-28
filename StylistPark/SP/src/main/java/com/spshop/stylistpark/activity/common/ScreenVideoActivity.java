@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
@@ -38,10 +41,11 @@ import java.util.List;
 public class ScreenVideoActivity extends BaseActivity {
 
 	private static final String TAG = "VideoActivity";
+	private static final int QR_IMG_WIDTH = AppApplication.screenWidth * 2 / 15;
 
 	private VideoView videoView;
 	private TextView tv_price;
-	private ImageView iv_qr_buy;
+	private ImageView iv_qr_public, iv_qr_buy;
 	private LinearLayout loading_main;
 	private RelativeLayout rl_next_1, rl_next_2, rl_close;
 	private int old_duration;
@@ -70,6 +74,7 @@ public class ScreenVideoActivity extends BaseActivity {
 	private void findViewById() {
 		videoView = (VideoView) findViewById(R.id.screen_video_video_view);
 		tv_price = (TextView) findViewById(R.id.screen_video_tv_price);
+		iv_qr_public = (ImageView) findViewById(R.id.screen_video_qr_public);
 		iv_qr_buy = (ImageView) findViewById(R.id.screen_video_qr_buy);
 		rl_close = (RelativeLayout) findViewById(R.id.screen_video_rl_close);
 		rl_next_1 = (RelativeLayout) findViewById(R.id.screen_video_rl_next_1);
@@ -80,6 +85,23 @@ public class ScreenVideoActivity extends BaseActivity {
 	private void initView() {
 		setHeadVisibility(View.GONE);
 		stopAnimation();
+
+		int marginLeft = getResources().getDimensionPixelSize(R.dimen.video_margin_left);
+		int marginBottom = getResources().getDimensionPixelSize(R.dimen.video_margin_bottom);
+		FrameLayout.LayoutParams lp_1 = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp_1.gravity = Gravity.BOTTOM;
+		lp_1.width = QR_IMG_WIDTH;
+		lp_1.height = QR_IMG_WIDTH;
+		lp_1.setMargins(marginLeft, 0, 0, marginBottom);
+		iv_qr_public.setLayoutParams(lp_1);
+		iv_qr_public.setScaleType(ImageView.ScaleType.FIT_XY);
+		FrameLayout.LayoutParams lp_2 = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp_2.gravity = Gravity.RIGHT | Gravity.BOTTOM;
+		lp_2.width = QR_IMG_WIDTH;
+		lp_2.height = QR_IMG_WIDTH;
+		lp_2.setMargins(0, 0, marginLeft, marginBottom);
+		iv_qr_buy.setLayoutParams(lp_2);
+		iv_qr_buy.setScaleType(ImageView.ScaleType.FIT_XY);
 
 		rl_close.setOnClickListener(new OnClickListener() {
 			
@@ -234,7 +256,7 @@ public class ScreenVideoActivity extends BaseActivity {
 				tv_price.setVisibility(View.VISIBLE);
 			}
 			if (!StringUtil.isNull(videoImg)) {
-				Bitmap bm = QRCodeUtil.createQRImage(videoImg, 100, 100);
+				Bitmap bm = QRCodeUtil.createQRImage(videoImg, QR_IMG_WIDTH * 2, QR_IMG_WIDTH * 2, 1);
 				if (bm != null) {
 					iv_qr_buy.setImageBitmap(bm);
 				}

@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/item_list_coupon_ll_item"
         android:layout_width="match_parent"
-        android:layout_height="144dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/icon_coupon_use"
         android:orientation="vertical" >
 

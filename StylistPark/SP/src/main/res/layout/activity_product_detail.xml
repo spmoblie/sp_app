@@ -40,7 +40,8 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/product_detail_viewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="370dp" />
+                        android:layout_height="wrap_content"
+                        android:background="@color/ui_bg_color_white"/>
 
                     <TextView
                         android:id="@+id/product_detail_tv_timer"

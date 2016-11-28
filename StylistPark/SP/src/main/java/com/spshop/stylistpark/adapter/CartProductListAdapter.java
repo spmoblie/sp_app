@@ -160,7 +160,7 @@ public class CartProductListAdapter extends BaseAdapter{
 		if (!StringUtil.isNull(imgUrl)) {
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + imgUrl, holder.iv_img, goodsOptions);
 		}else {
-			holder.iv_img.setImageResource(R.drawable.bg_img_white);
+			holder.iv_img.setImageResource(R.drawable.icon_goods_default);
 		}
 		holder.tv_brand.setText(data.getBrandName());
 		holder.tv_name.setText(data.getName());

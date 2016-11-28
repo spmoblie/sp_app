@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.SortListEntity;
@@ -36,6 +37,7 @@ public class SortGridAdapter extends BaseAdapter{
 	private List<SortListEntity> datas;
 	private AdapterCallback apCallback;
 	private GridView mGridView;
+	private RelativeLayout.LayoutParams lp;
 	private Language lang;
 	private AsyncImageLruCache ailc;
     //可见的第一张图片的下标
@@ -66,6 +68,12 @@ public class SortGridAdapter extends BaseAdapter{
 				setImageBitmap(imageUrl, bitmap);
 			}
 		});
+
+		lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		int newWidth = AppApplication.screenWidth / 6;
+		lp.width = newWidth;
+		lp.height = newWidth;
 	}
 	
 	public void updateAdapter(List<SortListEntity> datas){
@@ -127,6 +135,7 @@ public class SortGridAdapter extends BaseAdapter{
 		holder.tv_name.setText(data.getName());
 		
 		String imageUrl = IMAGE_URL_HTTP + data.getImageUrl();
+		holder.iv_img.setLayoutParams(lp);
 		holder.iv_img.setTag(imageUrl);
 		//为该ImageView设置显示的图片
         setImageForImageView(imageUrl, holder.iv_img);

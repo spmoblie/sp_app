@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
@@ -32,6 +33,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 	private AdapterCallback apCallback;
     private DisplayImageOptions goodsOptions;
 	private String currStr;
+	private RelativeLayout.LayoutParams lp;
 	
 	public ProductList2ItemAdapter(Context context, List<ListShowTwoEntity> datas, AdapterCallback callback) {
 		this.context = context;
@@ -39,6 +41,12 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		this.apCallback = callback;
 		currStr = LangCurrTools.getCurrencyValue();
 		goodsOptions = OptionsManager.getInstance().getGoodsOptions();
+
+		lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.addRule(RelativeLayout.CENTER_IN_PARENT);
+		int newWidth = (AppApplication.screenWidth - 72) / 2;
+		lp.width = newWidth;
+		lp.height = newWidth * 37 / 29;
 	}
 	
 	public void updateAdapter(List<ListShowTwoEntity> datas){
@@ -113,6 +121,9 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		}else {
 			holder.left_rl_bottom.setVisibility(View.GONE);
 		}
+		holder.left_img.setLayoutParams(lp);
+		holder.right_img.setLayoutParams(lp);
+
 		boolean isShow = false;
 		final ProductListEntity leftEn = (ProductListEntity) data.getLeftEn();
 		if (leftEn != null) {

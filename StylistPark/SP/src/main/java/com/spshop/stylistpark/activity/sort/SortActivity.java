@@ -200,7 +200,7 @@ public class SortActivity extends BaseActivity implements OnClickListener{
 			idf.setIndexHashMap(am_index);
 
 			FragmentTransaction ft = fm.beginTransaction();
-			ft.add(R.id.sort_brand_fl, idf).commit();
+			ft.add(R.id.sort_brand_fl, idf).commitAllowingStateLoss();
 		}
 	}
 

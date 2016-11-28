@@ -9,9 +9,11 @@ import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -313,6 +315,11 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			viewLists.add(imageView);
 		}
 		final boolean loop = viewLists.size() > 3 ? true:false;
+		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.gravity = Gravity.CENTER;
+		lp.width = AppApplication.screenWidth;
+		lp.height = AppApplication.screenWidth;
+		viewPager.setLayoutParams(lp);
 		viewPager.setAdapter(new PagerAdapter()
 		{
 			// 创建

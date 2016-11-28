@@ -70,6 +70,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 
 	private static final String TAG = "ChildFragmentOne";
 	public static ChildFragmentOne instance = null;
+	private static final int GOODS_WIDTH = (AppApplication.screenWidth - 80) / 4;
 
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	private int dataTotal = 0; //数据总量
@@ -96,6 +97,9 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private ProductList2ItemAdapter lv_two_adapter;
 	private Runnable mPagerAction;
 	private LayoutInflater mInflater;
+	private FrameLayout.LayoutParams brandLP;
+	private LinearLayout.LayoutParams indicatorsLP, goodsItemLP;
+	private RelativeLayout.LayoutParams goodsImgLP;
 
 	private DisplayImageOptions defaultOptions;
 	private ThemeEntity themeEn;
@@ -130,6 +134,22 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		mInflater = LayoutInflater.from(mContext);
 		themeEn = AppApplication.themeEn;
 		defaultOptions = OptionsManager.getInstance().getDefaultOptions();
+
+		// 动态调整宽高
+		indicatorsLP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		indicatorsLP.setMargins(8, 0, 8, 0);
+
+		brandLP = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		brandLP.width = AppApplication.screenWidth;
+		brandLP.height = AppApplication.screenWidth / 2;
+
+		goodsItemLP = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		goodsItemLP.setMargins(10, 0, 10, 0);
+		goodsItemLP.width = GOODS_WIDTH;
+
+		goodsImgLP = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		goodsImgLP.width = GOODS_WIDTH;
+		goodsImgLP.height = GOODS_WIDTH * 37 / 29;
 
 		// 动态注册广播
 		IntentFilter mFilter = new IntentFilter();
@@ -287,10 +307,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				viewLists.add(imageView);
 				if (i < idsSize) {
 					// 循环加入指示器
-					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-					params.setMargins(8, 0, 8, 0);
 					indicators[i] = new ImageView(mContext);
-					indicators[i].setLayoutParams(params);
+					indicators[i].setLayoutParams(indicatorsLP);
 					indicators[i].setImageResource(R.drawable.indicators_default);
 					if (i == 0) {
 						indicators[i].setImageResource(R.drawable.indicators_now);
@@ -299,10 +317,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				}
 			}
 			final boolean loop = viewLists.size() > 3 ? true:false;
-			FrameLayout.LayoutParams vplp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			vplp.width = AppApplication.screenWidth;
-			vplp.height = AppApplication.screenWidth * 324 / 640;
-			viewPager.setLayoutParams(vplp);
+			viewPager.setLayoutParams(brandLP);
 			viewPager.setAdapter(new PagerAdapter()
 			{
 				// 创建
@@ -421,14 +436,13 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			sv_goods_main.setVisibility(View.VISIBLE);
 			List<ProductListEntity> datas = goodsEn.getMainLists();
 			ll_goods_main.removeAllViews();
-			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			lp.setMargins(10, 0, 0, 0);
-			lp.width = (AppApplication.screenWidth - 40) / 3;
+
 			for (int i = 0; i < datas.size(); i++) {
 				final ProductListEntity items = datas.get(i);
 				if (items != null) {
 					View view = mInflater.inflate(R.layout.item_line_goods, ll_goods_main, false);
 					ImageView imgView = (ImageView) view.findViewById(R.id.home_line_goods_item_iv_img);
+					imgView.setLayoutParams(goodsImgLP);
 					String imgUrl = IMAGE_URL_HTTP + items.getImageUrl();
 					ImageLoader.getInstance().displayImage(imgUrl, imgView, defaultOptions);
 					TextView tv_name = (TextView) view.findViewById(R.id.home_line_goods_item_tv_name);
@@ -470,7 +484,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 							HomeFragmentActivity.instance.openProductDetailActivity(items.getId());
 						}
 					});
-					ll_goods_main.addView(view, lp);
+					ll_goods_main.addView(view, goodsItemLP);
 				}
 			}
 		} else {
@@ -486,10 +500,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			sv_peida_main.setVisibility(View.VISIBLE);
 			List<ThemeEntity> datas = peidaEn.getMainLists();
 			ll_peida_main.removeAllViews();
-			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			lp.setMargins(10, 0, 0, 0);
-			lp.width = (AppApplication.screenWidth - 40) / 3;
-			lp.height = (AppApplication.screenWidth - 40) / 3;
 			for (int i = 0; i < datas.size(); i++) {
 				final ThemeEntity items = datas.get(i);
 				if (items != null) {
@@ -505,7 +515,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 							startActivity(intent);
 						}
 					});
-					ll_peida_main.addView(imgView, lp);
+					ll_peida_main.addView(imgView, goodsItemLP);
 				}
 			}
 		} else {
@@ -525,6 +535,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				if (items != null) {
 					View view = mInflater.inflate(R.layout.item_line_sales, ll_sale_main, false);
 					ImageView imgView = (ImageView) view.findViewById(R.id.home_line_sales_item_iv_logo);
+					imgView.setLayoutParams(brandLP);
 					String imgUrl = IMAGE_URL_HTTP + items.getImgUrl();
 					ImageLoader.getInstance().displayImage(imgUrl, imgView, defaultOptions);
 					TextView tv_name = (TextView) view.findViewById(R.id.home_line_sales_item_tv_name);

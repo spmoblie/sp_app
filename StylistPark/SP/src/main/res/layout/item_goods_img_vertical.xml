@@ -16,16 +16,15 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp">
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp" >
 
             <ImageView
                 android:id="@+id/item_goods_vertical_iv_img"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="58dp"
+                android:layout_height="74dp"
                 android:contentDescription="@string/desc"
-                android:scaleType="fitXY"
                 android:src="@drawable/bg_img_white" />
         </RelativeLayout>
 
@@ -34,7 +33,7 @@
             android:layout_height="match_parent"
             android:paddingBottom="5dp"
             android:paddingRight="15dp"
-            android:paddingTop="5dp">
+            android:paddingTop="5dp" >
 
             <TextView
                 android:id="@+id/item_goods_vertical_tv_brand"
@@ -47,6 +46,7 @@
             <TextView
                 android:id="@+id/item_goods_vertical_tv_name"
                 style="@style/cart_product_text_content"
+                android:layout_marginTop="5dp"
                 android:lines="2"
                 android:layout_below="@id/item_goods_vertical_tv_brand" />
 
