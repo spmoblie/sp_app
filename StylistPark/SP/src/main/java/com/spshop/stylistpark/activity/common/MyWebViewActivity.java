@@ -288,6 +288,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 				@Override
 				public void onCompletion(MediaPlayer mp) {
 					setVideoViewBackground();
+					startCountdown();
 					isStop = true;
 					mSeekPosition = uvv.getCurrentPosition();
 					LogUtil.i(TAG, "onCompletion Position = " + mSeekPosition);
@@ -391,6 +392,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	}
 
 	private void loadVideo() {
+		clearCountdown();
 		asyncMediaLoader = AsyncMediaLoader.getInstance(new AsyncMediaLoader.AsyncMediaLoaderCallback() {
 
 			@Override

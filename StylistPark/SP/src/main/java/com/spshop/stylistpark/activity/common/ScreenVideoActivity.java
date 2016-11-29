@@ -8,11 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
@@ -66,6 +64,7 @@ public class ScreenVideoActivity extends BaseActivity {
 
 		powerManager = (PowerManager)this.getSystemService(this.POWER_SERVICE);
 		wakeLock = this.powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "My Lock");
+		urlPosition = shared.getInt(AppConfig.KEY_SCREEN_VIDEO_POSITION, 0);
 
 		findViewById();
 		initView();
@@ -86,20 +85,14 @@ public class ScreenVideoActivity extends BaseActivity {
 		setHeadVisibility(View.GONE);
 		stopAnimation();
 
-		int marginLeft = getResources().getDimensionPixelSize(R.dimen.video_margin_left);
-		int marginBottom = getResources().getDimensionPixelSize(R.dimen.video_margin_bottom);
-		FrameLayout.LayoutParams lp_1 = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		lp_1.gravity = Gravity.BOTTOM;
+		LinearLayout.LayoutParams lp_1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp_1.width = QR_IMG_WIDTH;
 		lp_1.height = QR_IMG_WIDTH;
-		lp_1.setMargins(marginLeft, 0, 0, marginBottom);
 		iv_qr_public.setLayoutParams(lp_1);
 		iv_qr_public.setScaleType(ImageView.ScaleType.FIT_XY);
-		FrameLayout.LayoutParams lp_2 = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		lp_2.gravity = Gravity.RIGHT | Gravity.BOTTOM;
+		LinearLayout.LayoutParams lp_2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp_2.width = QR_IMG_WIDTH;
 		lp_2.height = QR_IMG_WIDTH;
-		lp_2.setMargins(0, 0, marginLeft, marginBottom);
 		iv_qr_buy.setLayoutParams(lp_2);
 		iv_qr_buy.setScaleType(ImageView.ScaleType.FIT_XY);
 
@@ -232,6 +225,7 @@ public class ScreenVideoActivity extends BaseActivity {
 		} else if (urlPosition < 0) {
 			urlPosition = urlLists.size() - 1;
 		}
+		editor.putInt(AppConfig.KEY_SCREEN_VIDEO_POSITION, urlPosition).apply();
 		String priceStr = "";
 		String videoUrl = "";
 		String videoImg = "";

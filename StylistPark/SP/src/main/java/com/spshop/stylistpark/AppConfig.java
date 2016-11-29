@@ -318,6 +318,8 @@ public class AppConfig {
 	public static final String KEY_HOME_CURRENT_INDEX = "home_current_index";
 	// 偏好设置Key-记录是否自动跳转到会员页面
 	public static final String KEY_PUSH_PAGE_MEMBER = "push_page_member";
+	// 偏好设置Key-记录循播视频的当前下标
+	public static final String KEY_SCREEN_VIDEO_POSITION = "screen_video_position";
 
 	/**
 	 ******************************************* 偏好设置Key值设置结束 ******************************************

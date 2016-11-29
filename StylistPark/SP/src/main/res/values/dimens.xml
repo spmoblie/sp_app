@@ -50,10 +50,6 @@
     <dimen name="language_cell_left_margin">6dp</dimen>
     <dimen name="language_cell_right_margin">20dp</dimen>
 
-    <!-- screen video activity -->
-    <dimen name="video_margin_left">15dp</dimen>
-    <dimen name="video_margin_bottom">115dp</dimen>
-
 	<!-- brand index display cell -->
     <dimen name="brand_cell_header_height">20dp</dimen>
     <dimen name="brand_cell_header_text_size">14sp</dimen>
