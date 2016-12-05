@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/screen_margin_default"
+            android:layout_marginRight="@dimen/screen_margin_default"
             android:textColor="@color/tv_color_status"
             android:textSize="@dimen/brand_cell_header_text_size"
             android:textStyle="bold" />
@@ -34,9 +34,9 @@
 
         <ImageView
             android:id="@+id/brand_iv_logo"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="@dimen/brand_cell_logo_width"
+            android:layout_height="@dimen/brand_cell_logo_height"
+            android:layout_marginLeft="@dimen/screen_margin_default"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
             android:contentDescription="@string/desc" />
@@ -47,8 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/brand_iv_logo"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/margin_padding_10"
+            android:layout_marginRight="@dimen/screen_margin_default"
             android:textColor="@color/conte_text_color"
             android:textSize="@dimen/brand_cell_item_text_size" />
 
@@ -56,8 +56,8 @@
             android:id="@+id/brand_dividerImageView"
             style="@style/set_line_horizontal_bg"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/screen_margin_default"
+            android:layout_marginRight="@dimen/screen_margin_default"
             android:contentDescription="@string/desc" />
     </RelativeLayout>
 

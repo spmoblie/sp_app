@@ -9,15 +9,15 @@
 
     <ImageView
         style="@style/set_line_horizontal_bg"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_padding_10"
         android:contentDescription="@string/desc" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/ui_bg_color_white"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
+        android:paddingBottom="@dimen/margin_padding_10"
+        android:paddingTop="@dimen/margin_padding_10" >
 
         <TextView
             android:id="@+id/item_list_order_tv_order_sn"
@@ -28,7 +28,7 @@
             android:id="@+id/item_list_order_tv_order_status"
             style="@style/setting_lay_text_title"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="@dimen/screen_margin_default"
             android:textSize="@dimen/text_size_12"
             android:textColor="@color/conte_text_color" />
     </RelativeLayout>
@@ -58,9 +58,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/ui_bg_color_white"
-        android:paddingBottom="10dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp"
+        android:paddingBottom="@dimen/margin_padding_10"
+        android:paddingRight="@dimen/screen_margin_default"
+        android:paddingTop="@dimen/margin_padding_10"
         android:visibility="gone" >
 
         <TextView
@@ -85,8 +85,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/ui_bg_color_white"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:paddingBottom="@dimen/margin_padding_10"
+        android:paddingTop="@dimen/margin_padding_10"
         android:visibility="gone" >
         
         <RelativeLayout 
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp" >
+            android:layout_marginLeft="@dimen/screen_margin_default" >
             
         </RelativeLayout>
         

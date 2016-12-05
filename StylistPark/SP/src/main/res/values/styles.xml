@@ -61,10 +61,10 @@
     <style name="home_text_time">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingTop">2dp</item>
-        <item name="android:paddingRight">5dp</item>
-        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingLeft">@dimen/margin_padding_5</item>
+        <item name="android:paddingTop">@dimen/margin_padding_2</item>
+        <item name="android:paddingRight">@dimen/margin_padding_5</item>
+        <item name="android:paddingBottom">@dimen/margin_padding_2</item>
         <item name="android:background">@drawable/shape_frame_bg_red_10</item>
         <item name="android:textColor">@color/text_color_white</item>
         <item name="android:textSize">@dimen/text_size_22</item>
@@ -98,7 +98,7 @@
     <style name="top_left_back">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:paddingLeft">@dimen/title_left_paddingLeft</item>
+        <item name="android:paddingLeft">@dimen/margin_padding_12</item>
         <item name="android:src">@drawable/btn_pressed_back</item>
     </style>
 
@@ -107,8 +107,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerInParent">true</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingLeft">@dimen/screen_margin_default</item>
+        <item name="android:paddingRight">@dimen/screen_margin_default</item>
         <item name="android:gravity">center</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/title_text_color</item>
@@ -121,7 +121,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginRight">@dimen/screen_margin_default</item>
         <item name="android:background">@drawable/btn_top_text_btn_short</item>
         <item name="android:gravity">right|center_vertical</item>
         <item name="android:ellipsize">end</item>
@@ -133,7 +133,7 @@
     <!-- 设置页面布局样式 -->
     <style name="setting_lay_item">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">@dimen/setting_cell_height</item>
         <item name="android:background">@color/ui_bg_color_white</item>
     </style>
 
@@ -141,8 +141,8 @@
     <style name="setting_lay_text_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">15dp</item>
-        <item name="android:drawablePadding">15dp</item>
+        <item name="android:layout_marginLeft">@dimen/screen_margin_default</item>
+        <item name="android:drawablePadding">@dimen/screen_margin_default</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:ellipsize">end</item>
@@ -155,10 +155,10 @@
     <style name="setting_lay_text_content">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginRight">@dimen/screen_margin_default</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:drawableRight">@drawable/common_go_right</item>
-        <item name="android:drawablePadding">10dp</item>
+        <item name="android:drawablePadding">@dimen/margin_padding_10</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">right</item>
         <item name="android:ellipsize">end</item>
@@ -171,7 +171,7 @@
     <style name="setting_lay_img_left">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginLeft">@dimen/screen_margin_default</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
     
@@ -179,7 +179,7 @@
     <style name="setting_lay_img_right">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginRight">@dimen/screen_margin_default</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:src">@drawable/common_go_right</item>
@@ -190,8 +190,8 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">3</item>
-        <item name="android:padding">3dp</item>
-        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:padding">@dimen/margin_padding_3</item>
+        <item name="android:layout_marginLeft">@dimen/margin_padding_5</item>
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
@@ -235,14 +235,14 @@
     <style name="common_text_discount">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_padding_5</item>
         <item name="android:background">@drawable/shape_frame_bg_app_buttom_0</item>
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingLeft">1dp</item>
-        <item name="android:paddingRight">1dp</item>
+        <item name="android:paddingLeft">@dimen/margin_padding_1</item>
+        <item name="android:paddingRight">@dimen/margin_padding_1</item>
         <item name="android:textColor">@color/text_color_white</item>
         <item name="android:textSize">@dimen/text_size_08</item>
         <item name="android:visibility">gone</item>
@@ -275,7 +275,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:drawableLeft">@drawable/icon_support</item>
-        <item name="android:drawablePadding">2dp</item>
+        <item name="android:drawablePadding">@dimen/margin_padding_2</item>
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
@@ -287,7 +287,7 @@
     <style name="Order_Type_TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:drawablePadding">5dp</item>
+        <item name="android:drawablePadding">@dimen/margin_padding_5</item>
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
@@ -306,9 +306,9 @@
     <!-- 注册页面EditText样式 -->
     <style name="Register_EditText">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:paddingLeft">10dp</item>
+        <item name="android:layout_height">@dimen/login_et_height_default</item>
+        <item name="android:layout_marginTop">@dimen/margin_padding_10</item>
+        <item name="android:paddingLeft">@dimen/margin_padding_10</item>
         <item name="android:inputType">textEmailAddress</item>
         <item name="android:background">@drawable/shape_frame_bg_app_hollow_4</item>
         <item name="android:textColorHint">@color/input_text_color</item>
@@ -319,8 +319,8 @@
     <!-- 注册页面Button样式 -->
     <style name="Register_Button">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
-        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_height">@dimen/login_bt_height_default</item>
+        <item name="android:layout_marginTop">@dimen/margin_padding_30</item>
         <item name="android:background">@drawable/shape_frame_bg_app_buttom_4</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_size_16</item>
@@ -339,7 +339,7 @@
     <style name="address_text_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_padding_20</item>
         <item name="android:textColor">@color/conte_text_color</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/text_size_16</item>
@@ -349,9 +349,9 @@
     <style name="Address_EditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:paddingTop">15dp</item>
-        <item name="android:paddingBottom">15dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_padding_10</item>
+        <item name="android:paddingTop">@dimen/margin_padding_15</item>
+        <item name="android:paddingBottom">@dimen/margin_padding_15</item>
         <item name="android:background">@color/ui_bg_color_white</item>
         <item name="android:textColorHint">@color/input_text_color</item>
         <item name="android:textColor">@color/conte_text_color</item>
@@ -362,8 +362,8 @@
     <style name="Address_Spinner">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">15dp</item>
-        <item name="android:paddingLeft">15dp</item>
+        <item name="android:layout_marginLeft">@dimen/screen_margin_default</item>
+        <item name="android:paddingLeft">@dimen/screen_margin_default</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 
@@ -382,9 +382,9 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:drawablePadding">5dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:drawablePadding">@dimen/margin_padding_5</item>
+        <item name="android:paddingTop">@dimen/margin_padding_10</item>
+        <item name="android:paddingBottom">@dimen/margin_padding_10</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/label_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
@@ -395,21 +395,21 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/ui_bg_color_white</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingRight">15dp</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">@dimen/screen_margin_default</item>
+        <item name="android:paddingTop">@dimen/margin_padding_10</item>
+        <item name="android:paddingRight">@dimen/screen_margin_default</item>
+        <item name="android:paddingBottom">@dimen/margin_padding_10</item>
     </style>
     
     <!-- 通用TextView+背景边框样式 -->
     <style name="common_text_bg_frame">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginRight">15dp</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingRight">15dp</item>
-        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_marginRight">@dimen/screen_margin_default</item>
+        <item name="android:paddingLeft">@dimen/screen_margin_default</item>
+        <item name="android:paddingTop">@dimen/margin_padding_5</item>
+        <item name="android:paddingRight">@dimen/screen_margin_default</item>
+        <item name="android:paddingBottom">@dimen/margin_padding_5</item>
         <item name="android:background">@drawable/shape_frame_bg_app_hollow_4</item>
         <item name="android:textColor">@color/tv_color_status</item>
         <item name="android:textSize">@dimen/text_size_12</item>
@@ -419,8 +419,8 @@
     <style name="commom_warn_red_img">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_padding_5</item>
+        <item name="android:layout_marginLeft">@dimen/margin_padding_10</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:background">@drawable/shape_frame_bg_red_90</item>
         <item name="android:visibility">gone</item>
@@ -428,11 +428,11 @@
     
     <!-- 通用红点数字提醒TextView样式 -->
     <style name="commom_warn_red_number_text">
-        <item name="android:layout_width">15dp</item>
-        <item name="android:layout_height">15dp</item>
+        <item name="android:layout_width">@dimen/screen_margin_default</item>
+        <item name="android:layout_height">@dimen/screen_margin_default</item>
         <item name="android:background">@drawable/shape_frame_bg_red_90</item>
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_padding_10</item>
         <item name="android:gravity">center</item>
         <item name="android:text">@string/number_0</item>
         <item name="android:textSize">@dimen/text_size_10</item>
@@ -461,7 +461,7 @@
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
         <item name="android:drawableLeft">@drawable/selector_img_select_hook</item>
-        <item name="android:drawablePadding">3dp</item>
+        <item name="android:drawablePadding">@dimen/margin_padding_3</item>
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColor">@color/conte_text_color</item>
     </style>
@@ -491,8 +491,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">bottom|right</item>
-        <item name="android:layout_marginBottom">30dp</item>
-        <item name="android:layout_marginRight">30dp</item>
+        <item name="android:layout_marginBottom">@dimen/to_top_margin_bottom</item>
+        <item name="android:layout_marginRight">@dimen/to_top_margin_right</item>
         <item name="android:src">@drawable/btn_icon_to_top</item>
         <item name="android:visibility">gone</item>
     </style>
@@ -514,13 +514,13 @@
     <!-- 水平分割线 -->
     <style name="set_line_horizontal_bg">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_height">@dimen/margin_padding_05</item>
         <item name="android:background">@color/ui_bg_color_div_min</item>
     </style>
 
     <!-- 垂直分割线 -->
     <style name="set_line_vertical_bg">
-        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_width">@dimen/margin_padding_05</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/ui_bg_color_div_min</item>
     </style>

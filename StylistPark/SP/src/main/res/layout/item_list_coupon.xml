@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/ui_bg_color_nut"
     android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="15dp" >
+    android:paddingLeft="@dimen/screen_margin_default"
+    android:paddingRight="@dimen/screen_margin_default"
+    android:paddingTop="@dimen/screen_margin_default" >
 
     <LinearLayout
         android:id="@+id/item_list_coupon_ll_item"
@@ -33,8 +33,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/item_list_coupon_tv_money"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="@dimen/screen_margin_default"
+                    android:layout_marginBottom="@dimen/margin_padding_5"
                     android:textColor="@color/price_text_color"
                     android:textSize="@dimen/text_size_16" />
 
@@ -45,7 +45,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/item_list_coupon_tv_currency"
                     android:textColor="@color/price_text_color"
-                    android:textSize="33sp"
+                    android:textSize="@dimen/text_size_33"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -53,8 +53,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="@dimen/margin_padding_10"
+                android:paddingRight="@dimen/margin_padding_10"
                 android:orientation="vertical" >
 
                 <TextView
@@ -91,7 +91,7 @@
                 android:id="@+id/item_list_coupon_tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="@dimen/screen_margin_default"
                 android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_12" />
             
@@ -99,7 +99,7 @@
                 android:id="@+id/item_list_coupon_iv_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="@dimen/screen_margin_default"
                 android:src="@drawable/btn_select_hook_yes"
                 android:contentDescription="@string/desc"
                 android:visibility="gone" />
@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="@dimen/screen_margin_default"
                 android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_12" />
         </RelativeLayout>

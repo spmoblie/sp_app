@@ -13,8 +13,8 @@
             android:baselineAligned="false"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp" >
+            android:paddingBottom="@dimen/margin_padding_8"
+            android:paddingTop="@dimen/margin_padding_8" >
 
             <RelativeLayout
                 android:id="@+id/fragment_one_topbar_rl_zxing"
@@ -28,14 +28,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/desc"
-                    android:paddingLeft="15dp"
+                    android:paddingLeft="@dimen/screen_margin_default"
                     android:src="@drawable/btn_icon_scan" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/fragment_one_topbar_rl_search"
                 android:layout_width="0dp"
-                android:layout_height="28dp"
+                android:layout_height="@dimen/search_et_view_height"
                 android:layout_weight="7"
                 android:background="@drawable/shape_frame_white_dfdfdf_4" >
 
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/search_et_iv_padding_left"
                     android:contentDescription="@string/desc"
                     android:src="@drawable/btn_icon_search_small" />
 
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="35dp"
+                    android:layout_marginLeft="@dimen/search_et_tv_padding_left"
                     android:text="@string/product_search_et_hint"
                     android:textColor="@color/label_text_color"
                     android:textSize="@dimen/text_size_14" />

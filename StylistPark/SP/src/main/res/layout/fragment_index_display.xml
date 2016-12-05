@@ -12,7 +12,7 @@
         android:divider="@null"
         android:dividerHeight="0dp"
         android:scrollbars="none"
-        android:minHeight="40dip" 
+        android:minHeight="@dimen/margin_padding_40"
         android:fastScrollEnabled="false" >
     </ListView>
 
@@ -20,8 +20,8 @@
         android:id="@+id/indexDisplay_section_indexer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="@dimen/margin_padding_10"
+        android:paddingRight="@dimen/margin_padding_10"
         android:layout_gravity="right"
         android:visibility="gone" />
 

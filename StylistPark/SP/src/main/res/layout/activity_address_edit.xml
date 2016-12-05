@@ -19,7 +19,7 @@
             <EditText
                 android:id="@+id/new_address_et_name"
                 style="@style/Address_EditText"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="@dimen/margin_padding_18"
                 android:hint="@string/address_consignee" />
         </LinearLayout>
 
@@ -35,7 +35,7 @@
             <EditText
                 android:id="@+id/new_address_et_phone"
                 style="@style/Address_EditText"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="@dimen/margin_padding_18"
                 android:hint="@string/address_phone_number"
                 android:inputType="phone" />
         </LinearLayout>
@@ -53,7 +53,7 @@
             <EditText
                 android:id="@+id/new_address_et_email"
                 style="@style/Address_EditText"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="@dimen/margin_padding_18"
                 android:hint="@string/address_email_address"
                 android:inputType="textEmailAddress" />
         </LinearLayout>
@@ -83,13 +83,13 @@
                     android:id="@+id/new_address_tv_country"
                     style="@style/Address_EditText"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="18dp"
+                    android:layout_marginLeft="@dimen/margin_padding_18"
                     android:hint="@string/address_choose_country" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="@dimen/screen_margin_default"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/common_go_right" />
@@ -121,13 +121,13 @@
                     android:id="@+id/new_address_tv_province"
                     style="@style/Address_EditText"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="18dp"
+                    android:layout_marginLeft="@dimen/margin_padding_18"
                     android:hint="@string/address_choose_province" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="@dimen/screen_margin_default"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/common_go_right" />
@@ -159,13 +159,13 @@
                     android:id="@+id/new_address_tv_city"
                     style="@style/Address_EditText"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="18dp"
+                    android:layout_marginLeft="@dimen/margin_padding_18"
                     android:hint="@string/address_choose_city" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="@dimen/screen_margin_default"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/common_go_right" />
@@ -197,13 +197,13 @@
                     android:id="@+id/new_address_tv_district"
                     style="@style/Address_EditText"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="18dp"
+                    android:layout_marginLeft="@dimen/margin_padding_18"
                     android:hint="@string/address_choose_district" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="@dimen/screen_margin_default"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/common_go_right" />
@@ -263,7 +263,7 @@
             <EditText
                 android:id="@+id/new_address_et_address"
                 style="@style/Address_EditText"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="@dimen/margin_padding_18"
                 android:hint="@string/address_detailed_address" />
         </LinearLayout>
 
@@ -279,7 +279,7 @@
         android:layout_gravity="bottom"
         android:background="#E9E9E9"
         android:orientation="vertical"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/margin_padding_10"
         android:visibility="gone" >
 
         <LinearLayout
@@ -312,11 +312,11 @@
         <Button
             android:id="@+id/new_address_btn_confirm"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/margin_padding_40"
+            android:layout_marginBottom="@dimen/margin_padding_5"
+            android:layout_marginLeft="@dimen/screen_margin_default"
+            android:layout_marginRight="@dimen/screen_margin_default"
+            android:layout_marginTop="@dimen/margin_padding_5"
             android:background="@drawable/shape_frame_bg_app_buttom_4"
             android:gravity="center"
             android:text="@string/confirm"

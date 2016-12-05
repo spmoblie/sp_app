@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/ui_bg_color_app"
     android:orientation="vertical"
-    android:padding="15dp" >
+    android:padding="@dimen/screen_margin_default" >
 
     <EditText
         android:id="@+id/add_coupon_et_no"
         style="@style/Register_EditText"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/screen_margin_default"
         android:hint="@string/coupon_input_hint"
         android:inputType="number" />
 

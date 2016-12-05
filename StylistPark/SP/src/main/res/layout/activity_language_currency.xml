@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/setting_cell_left_margin"
+                android:layout_marginLeft="@dimen/screen_margin_default"
                 android:contentDescription="@string/desc"
                 android:src="@drawable/language_flag_hk" />
 
@@ -36,8 +36,8 @@
 
             <ImageView
                 android:id="@+id/setting_iv_zh_select"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/language_cell_tick_size"
+                android:layout_height="@dimen/language_cell_tick_size"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/language_cell_right_margin"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/setting_cell_left_margin"
+                android:layout_marginLeft="@dimen/screen_margin_default"
                 android:contentDescription="@string/desc"
                 android:src="@drawable/language_flag_cn" />
 
@@ -77,8 +77,8 @@
 
             <ImageView
                 android:id="@+id/setting_iv_cn_select"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/language_cell_tick_size"
+                android:layout_height="@dimen/language_cell_tick_size"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/language_cell_right_margin"
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/setting_cell_left_margin"
+                android:layout_marginLeft="@dimen/screen_margin_default"
                 android:contentDescription="@string/desc"
                 android:src="@drawable/language_flag_us" />
 
@@ -118,8 +118,8 @@
 
             <ImageView
                 android:id="@+id/setting_iv_en_select"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/language_cell_tick_size"
+                android:layout_height="@dimen/language_cell_tick_size"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/language_cell_right_margin"

@@ -3,7 +3,7 @@
     android:id="@+id/loading_no_data_fl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
+    android:padding="@dimen/screen_margin_default"
     android:visibility="gone" >
 
     <TextView 
@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="@dimen/margin_padding_50"
         android:drawableBottom="@drawable/bg_no_data"
-        android:drawablePadding="30dp"
+        android:drawablePadding="@dimen/margin_padding_30"
         android:text="@string/loading_no_data"
         android:textColor="@color/label_text_color"
         android:textSize="@dimen/text_size_14" />

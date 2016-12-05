@@ -29,7 +29,7 @@
         <RelativeLayout
             android:id="@+id/product_rl_search_line"
             android:layout_width="match_parent"
-            android:layout_height="10dp" >
+            android:layout_height="@dimen/margin_padding_10" >
 
             <ImageView
                 style="@style/set_line_horizontal_bg"
@@ -45,7 +45,7 @@
             android:id="@+id/product_ll_search_no_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="15dp"
+            android:padding="@dimen/screen_margin_default"
             android:background="@color/ui_bg_color_nut"
             android:visibility="gone" >
 
@@ -77,8 +77,8 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:background="@color/ui_bg_color_nut"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" >
+            android:paddingLeft="@dimen/screen_margin_default"
+            android:paddingRight="@dimen/screen_margin_default" >
 
             <TextView
                 android:layout_width="0dp"

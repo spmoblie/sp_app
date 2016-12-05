@@ -17,7 +17,7 @@
         <LinearLayout
             android:id="@+id/product_detail_ll_anim_bottom"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/title_height"
             android:orientation="vertical"></LinearLayout>
 
         <com.spshop.stylistpark.widgets.ObservableScrollView
@@ -48,11 +48,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="@dimen/screen_margin_default"
+                        android:layout_marginLeft="@dimen/screen_margin_default"
                         android:background="@color/ui_bg_color_percent_05"
                         android:gravity="center"
-                        android:padding="5dp"
+                        android:padding="@dimen/margin_padding_5"
                         android:text=""
                         android:textColor="@color/text_color_white"
                         android:textSize="@dimen/text_size_12"
@@ -63,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|center_horizontal"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginBottom="@dimen/screen_margin_default"
                         android:background="@drawable/bg_toast"
                         android:gravity="center"
                         android:text=""
@@ -76,8 +76,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|right"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="@dimen/screen_margin_default"
+                        android:layout_marginRight="@dimen/screen_margin_default"
                         android:src="@drawable/icon_video"
                         android:contentDescription="@string/desc"
                         android:visibility="gone" />
@@ -96,9 +96,9 @@
                         android:id="@+id/product_detail_tv_product_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="@dimen/margin_padding_10"
+                        android:layout_marginRight="@dimen/margin_padding_10"
+                        android:layout_marginTop="@dimen/margin_padding_10"
                         android:text=""
                         android:textColor="@color/conte_text_color"
                         android:textSize="@dimen/text_size_14" />
@@ -106,8 +106,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="@dimen/margin_padding_10"
+                        android:layout_marginTop="@dimen/margin_padding_5"
                         android:orientation="horizontal">
 
                         <TextView
@@ -123,7 +123,7 @@
                         <TextView
                             android:id="@+id/product_detail_tv_product_price_full"
                             style="@style/common_text_price"
-                            android:layout_marginLeft="2dp"
+                            android:layout_marginLeft="@dimen/margin_padding_2"
                             android:textColor="@color/label_text_color"
                             android:visibility="gone" />
 
@@ -135,7 +135,7 @@
                         <TextView
                             android:id="@+id/product_detail_tv_product_commission"
                             style="@style/common_text_price"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="@dimen/margin_padding_10"
                             android:ellipsize="end"
                             android:lines="1" />
                     </LinearLayout>
@@ -151,8 +151,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="@dimen/margin_padding_10"
+                        android:layout_marginTop="@dimen/margin_padding_10"
                         android:baselineAligned="false"
                         android:orientation="horizontal"
                         android:visibility="gone" >
@@ -209,13 +209,13 @@
 
                     <ImageView
                         style="@style/set_line_horizontal_bg"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/margin_padding_10"
                         android:contentDescription="@string/desc" />
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="@dimen/margin_padding_10"
                     android:background="@color/ui_bg_color_nut" >
                 </RelativeLayout>
 
@@ -228,17 +228,17 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="10dp" >
+                    android:padding="@dimen/margin_padding_10" >
 
                     <RelativeLayout
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
+                        android:layout_width="@dimen/product_brand_parent_width"
+                        android:layout_height="@dimen/product_brand_parent_height"
                         android:background="@drawable/shape_frame_white_dfdfdf_4" >
 
                         <ImageView
                             android:id="@+id/product_detail_iv_brand_logo"
-                            android:layout_width="50dp"
-                            android:layout_height="25dp"
+                            android:layout_width="@dimen/product_brand_logo_width"
+                            android:layout_height="@dimen/product_brand_logo_height"
                             android:layout_centerInParent="true"
                             android:contentDescription="@string/desc" />
                     </RelativeLayout>
@@ -246,8 +246,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="@dimen/margin_padding_10"
+                        android:layout_marginRight="@dimen/margin_padding_10"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -277,7 +277,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_frame_bg_app_hollow_4"
                         android:gravity="center"
-                        android:padding="5dp"
+                        android:padding="@dimen/margin_padding_5"
                         android:text="@string/product_brand_go"
                         android:textColor="@color/tv_color_status"
                         android:textSize="@dimen/text_size_12" />
@@ -289,7 +289,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="@dimen/margin_padding_10"
                     android:background="@color/ui_bg_color_nut">
                 </RelativeLayout>
 
@@ -313,7 +313,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="200dp"
+                        android:layout_marginTop="@dimen/margin_padding_200"
                         android:indeterminateDrawable="@anim/loading_anim_large"
                         android:visibility="gone" />
                 </FrameLayout>
@@ -324,8 +324,8 @@
     <ImageView
         android:id="@+id/product_detail_iv_to_top"
         style="@style/common_to_top"
-        android:layout_marginBottom="50dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginBottom="@dimen/margin_padding_50"
+        android:layout_marginRight="@dimen/margin_padding_20"
         android:contentDescription="@string/desc" />
 
 </FrameLayout>

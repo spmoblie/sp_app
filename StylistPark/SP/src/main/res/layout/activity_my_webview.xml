@@ -47,8 +47,8 @@
         <LinearLayout
             android:id="@+id/my_webview_ll_comment_main"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:padding="10dp"
+            android:layout_height="@dimen/comment_et_parent_height"
+            android:padding="@dimen/margin_padding_10"
             android:orientation="horizontal"
             android:visibility="gone" >
 
@@ -58,8 +58,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:background="@drawable/shape_frame_white_dfdfdf_4"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="@dimen/margin_padding_10"
+                android:paddingRight="@dimen/margin_padding_10"
                 android:hint="@string/find_comment_participate"
                 android:textColor="@color/conte_text_color"
                 android:textColorHint="@color/input_text_color"
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="right|center_vertical"
-                android:paddingLeft="10dp"
+                android:paddingLeft="@dimen/margin_padding_10"
                 android:text="@string/find_comment"
                 android:textSize="@dimen/text_size_16"
                 android:textColor="@color/label_text_color"/>

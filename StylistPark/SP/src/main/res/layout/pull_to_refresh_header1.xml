@@ -9,9 +9,9 @@
     <RelativeLayout
         android:id="@+id/pull_to_refresh_header_content"
         android:layout_width="fill_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/margin_padding_60"
         android:gravity="center_horizontal"
-        android:paddingBottom="8dp" >
+        android:paddingBottom="@dimen/margin_padding_8" >
 
         <RelativeLayout
             android:id="@+id/pull_to_refresh_header_text"
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pull_to_refresh_header_hint_textview"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/margin_padding_6"
                 android:text="@string/loading_update_time"
                 android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12"
@@ -44,36 +44,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pull_to_refresh_header_hint_textview"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginLeft="@dimen/margin_padding_2"
+                android:layout_marginTop="@dimen/margin_padding_6"
                 android:layout_toRightOf="@id/pull_to_refresh_last_update_time_text"
-                android:minWidth="50dp"
+                android:minWidth="@dimen/loading_min_height"
                 android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12"
                 android:visibility="gone" />
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/pull_to_refresh_header_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <FrameLayout
+            android:layout_width="@dimen/margin_padding_28"
+            android:layout_height="@dimen/margin_padding_28"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@id/pull_to_refresh_header_text"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/arrow_down" />
+            android:layout_marginRight="@dimen/margin_padding_8"
+            android:layout_toLeftOf="@id/pull_to_refresh_header_text" >
 
-        <ProgressBar
-            android:id="@+id/pull_to_refresh_header_progressbar"
-            android:layout_width="28dip"
-            android:layout_height="28dip"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@id/pull_to_refresh_header_text"
-            android:gravity="center"
-            android:indeterminateDrawable="@anim/pull_loading_anim"
-            android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/pull_to_refresh_header_arrow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/arrow_down"
+                android:contentDescription="@string/desc" />
+
+            <ProgressBar
+                android:id="@+id/pull_to_refresh_header_progressbar"
+                android:layout_width="@dimen/loading_small_size"
+                android:layout_height="@dimen/loading_small_size"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@anim/pull_loading_anim"
+                android:indeterminateDuration="700"
+                android:visibility="invisible" />
+        </FrameLayout>
     </RelativeLayout>
 
 </LinearLayout>

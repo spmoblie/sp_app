@@ -15,20 +15,20 @@
             <RelativeLayout
                 android:id="@+id/fragment_five_rl_top_login"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/personal_main_head_height"
                 android:background="@drawable/bg_img_profile_top" >
 
                 <ImageView
                     android:id="@+id/fragment_five_iv_avatar"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="@dimen/avatar_size_default"
+                    android:layout_height="@dimen/avatar_size_default"
                     android:layout_centerInParent="true"
                     android:contentDescription="@string/desc"
                     android:src="@drawable/default_avatar" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="@dimen/personal_main_info_height"
                     android:layout_alignParentBottom="true"
                     android:baselineAligned="false"
                     android:orientation="horizontal" >
@@ -53,7 +53,7 @@
                         android:id="@+id/fragment_five_rl_member_order"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="0.5dp"
+                        android:layout_marginLeft="@dimen/margin_padding_1"
                         android:layout_weight="1"
                         android:background="@color/ui_bg_color_percent_08" >
 
@@ -73,12 +73,12 @@
                 android:layout_height="wrap_content"
                 android:background="@color/ui_bg_color_nut"
                 android:orientation="vertical"
-                android:paddingBottom="10dp" >
+                android:paddingBottom="@dimen/margin_padding_10" >
 
                 <RelativeLayout
                     android:id="@+id/fragment_five_rl_order"
                     style="@style/setting_lay_item"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="@dimen/margin_padding_10" >
 
                     <ImageView
                         style="@style/set_line_horizontal_bg"
@@ -161,7 +161,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingRight="10dp" >
+                        android:paddingRight="@dimen/margin_padding_10" >
 
                         <TextView
                             android:id="@+id/fragment_five_tv_wait_return"
@@ -184,7 +184,7 @@
                 <RelativeLayout
                     android:id="@+id/fragment_five_rl_wallet"
                     style="@style/setting_lay_item"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="@dimen/margin_padding_10" >
 
                     <ImageView
                         style="@style/set_line_horizontal_bg"
@@ -303,7 +303,7 @@
     <RelativeLayout
         android:id="@+id/fragment_five_top_head_rl"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/title_height"
         android:background="@color/ui_bg_color_percent_10" >
 
         <ImageView
@@ -312,7 +312,7 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:contentDescription="@string/desc"
-            android:paddingLeft="15dp"
+            android:paddingLeft="@dimen/screen_margin_default"
             android:src="@drawable/btn_icon_setting" />
     </RelativeLayout>
 

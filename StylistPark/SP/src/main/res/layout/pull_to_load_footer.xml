@@ -9,18 +9,18 @@
     <LinearLayout
         android:id="@+id/pull_to_load_footer_content"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/loading_min_height"
         android:padding="0dp"
         android:gravity="center" >
 
         <ProgressBar
             android:id="@+id/pull_to_load_footer_progressbar"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="@dimen/loading_small_size"
+            android:layout_height="@dimen/loading_small_size"
             android:visibility="visible"
             android:indeterminateDrawable="@anim/pull_loading_anim"
             android:gravity="center"
-            android:layout_marginRight="8dp" />
+            android:layout_marginRight="@dimen/margin_padding_8" />
 
         <TextView
             android:id="@+id/pull_to_load_footer_hint_textview"

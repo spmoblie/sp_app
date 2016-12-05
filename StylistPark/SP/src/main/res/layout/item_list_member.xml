@@ -9,7 +9,7 @@
     <ImageView 
         android:id="@+id/item_list_member_iv_top_line"
         style="@style/set_line_horizontal_bg"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_padding_10"
         android:contentDescription="@string/desc" />
 
     <LinearLayout
@@ -18,28 +18,28 @@
         android:background="@color/ui_bg_color_app"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp" >
+        android:paddingBottom="@dimen/margin_padding_10"
+        android:paddingLeft="@dimen/screen_margin_default"
+        android:paddingRight="@dimen/screen_margin_default"
+        android:paddingTop="@dimen/margin_padding_10" >
 
         <ImageView
             android:id="@+id/item_list_member_iv_avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/avatar_size_default"
+            android:layout_height="@dimen/avatar_size_default"
             android:contentDescription="@string/desc"
             android:src="@drawable/default_avatar" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp" >
+            android:layout_marginLeft="@dimen/margin_padding_10" >
 
             <TextView
                 android:id="@+id/item_list_member_tv_nick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="@dimen/margin_padding_50"
                 android:ellipsize="end"
                 android:lines="1"
                 android:textColor="@color/conte_text_color"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="@dimen/margin_padding_5"
                 android:layout_toRightOf="@+id/item_list_member_tv_gender"
                 android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12" />

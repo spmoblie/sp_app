@@ -11,14 +11,14 @@
         android:layout_weight="6"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:padding="15dp" >
+        android:padding="@dimen/screen_margin_default" >
 
         <EditText
             android:id="@+id/feed_back_et_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_frame_bg_app_hollow_4"
-            android:padding="10dp"
+            android:padding="@dimen/margin_padding_10"
             android:gravity="top"
             android:hint="@string/setting_input_hint_feedback"
             android:lines="13"
@@ -37,8 +37,8 @@
             android:id="@+id/feed_back_btn_submit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/screen_margin_default"
+            android:layout_marginRight="@dimen/screen_margin_default"
             android:background="@drawable/shape_frame_bg_app_buttom_4"
             android:gravity="center"
             android:text="@string/submit"

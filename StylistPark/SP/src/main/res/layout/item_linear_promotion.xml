@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:background="@color/ui_bg_color_app"
     android:orientation="horizontal"
-    android:paddingLeft="5dp"
-    android:paddingTop="5dp" >
+    android:paddingLeft="@dimen/margin_padding_5"
+    android:paddingTop="@dimen/margin_padding_5" >
 
     <TextView
         android:id="@+id/item_tv_promotion_type"
         style="@style/common_text_discount"
-        android:paddingLeft="2dp"
-        android:paddingRight="2dp"
+        android:paddingLeft="@dimen/margin_padding_2"
+        android:paddingRight="@dimen/margin_padding_2"
         android:text="@string/product_full_minus"
         android:textSize="@dimen/text_size_09"
         android:visibility="visible" />
@@ -21,7 +21,7 @@
         android:id="@+id/item_tv_promotion_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="@dimen/margin_padding_5"
         android:text=""
         android:textColor="@color/conte_text_color"
         android:textSize="@dimen/text_size_11" />

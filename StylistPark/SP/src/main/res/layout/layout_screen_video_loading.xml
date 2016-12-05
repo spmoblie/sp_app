@@ -7,16 +7,16 @@
     android:orientation="vertical">
 
     <ProgressBar
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="@dimen/loading_large_size"
+        android:layout_height="@dimen/loading_large_size"
         android:layout_centerInParent="true"
         android:indeterminateDrawable="@anim/loading_anim_large" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_padding_10"
         android:text="@string/loading_loading"
         android:textColor="@color/tv_color_status"
-        android:textSize="13dp" />
+        android:textSize="@dimen/text_size_13" />
 </LinearLayout>

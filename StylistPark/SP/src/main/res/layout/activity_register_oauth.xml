@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ui_bg_color_app"
-    android:padding="15dp"
+    android:padding="@dimen/screen_margin_default"
     android:orientation="vertical" >
 
     <TextView
@@ -16,7 +16,7 @@
     <EditText
         android:id="@+id/register_oauth_et_account"
         style="@style/Register_EditText"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/margin_padding_15"
         android:hint="@string/login_input_user_name" />
 
     <EditText
@@ -34,7 +34,7 @@
     <Button
         android:id="@+id/register_oauth_btn_register"
         style="@style/Register_Button"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/margin_padding_15"
         android:text="@string/login_no_account"
         android:textSize="@dimen/text_size_16" />
 

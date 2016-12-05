@@ -3,8 +3,8 @@
     android:id="@+id/list_item_sort_left_rl_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp"
+    android:paddingTop="@dimen/screen_margin_default"
+    android:paddingBottom="@dimen/screen_margin_default"
     android:background="@color/ui_bg_color_nut" >
 
     <TextView
@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text=""
         android:textColor="@color/tv_color_change"
         android:textSize="@dimen/text_size_12" />
 

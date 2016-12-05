@@ -12,9 +12,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="2dp"
+        android:layout_marginTop="@dimen/margin_padding_4"
+        android:layout_marginLeft="@dimen/margin_padding_4"
+        android:layout_marginRight="@dimen/margin_padding_2"
         android:background="@color/ui_bg_color_app"
         android:orientation="vertical">
 
@@ -36,10 +36,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp">
+            android:paddingBottom="@dimen/margin_padding_5"
+            android:paddingLeft="@dimen/margin_padding_10"
+            android:paddingRight="@dimen/margin_padding_10"
+            android:paddingTop="@dimen/margin_padding_5">
 
             <TextView
                 android:id="@+id/list_commodity_two_left_tv_brand"
@@ -80,7 +80,7 @@
                 <TextView
                     android:id="@+id/list_commodity_two_left_tv_full_price"
                     style="@style/common_text_price"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="@dimen/margin_padding_2"
                     android:textColor="@color/label_text_color"
                     android:textSize="@dimen/text_size_09"/>
 
@@ -94,13 +94,13 @@
                 style="@style/common_text_price"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="@dimen/margin_padding_5" />
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/list_commodity_two_left_rl_bottom"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="@dimen/margin_padding_4"
             android:background="@color/ui_bg_color_nut"
             android:visibility="gone" >
         </RelativeLayout>
@@ -110,9 +110,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="4dp"
+        android:layout_marginTop="@dimen/margin_padding_4"
+        android:layout_marginLeft="@dimen/margin_padding_2"
+        android:layout_marginRight="@dimen/margin_padding_4"
         android:background="@color/ui_bg_color_app" >
 
         <LinearLayout
@@ -139,10 +139,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp">
+                android:paddingBottom="@dimen/margin_padding_5"
+                android:paddingLeft="@dimen/margin_padding_10"
+                android:paddingRight="@dimen/margin_padding_10"
+                android:paddingTop="@dimen/margin_padding_5">
 
                 <TextView
                     android:id="@+id/list_commodity_two_right_tv_brand"
@@ -183,7 +183,7 @@
                     <TextView
                         android:id="@+id/list_commodity_two_right_tv_full_price"
                         style="@style/common_text_price"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="@dimen/margin_padding_2"
                         android:textColor="@color/label_text_color"
                         android:textSize="@dimen/text_size_09"/>
 
@@ -197,7 +197,7 @@
                     style="@style/common_text_price"
                     android:layout_width="match_parent"
                     android:gravity="center"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="@dimen/margin_padding_5" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

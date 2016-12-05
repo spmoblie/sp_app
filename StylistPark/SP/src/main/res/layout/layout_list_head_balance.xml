@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="@dimen/margin_padding_150"
     android:background="@color/ui_color_status" >
 
     <LinearLayout
         android:id="@+id/balance_list_head_ll_amount_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="@dimen/margin_padding_45"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal" >
 
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/balance_list_head_ll_amount_main"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margin_padding_20"
         android:gravity="center" >
 
         <TextView
@@ -40,10 +40,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_frame_empty_ffffff_20"
-            android:paddingLeft="20dp"
-            android:paddingTop="2dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="2dp"
+            android:paddingLeft="@dimen/margin_padding_20"
+            android:paddingTop="@dimen/margin_padding_2"
+            android:paddingRight="@dimen/margin_padding_20"
+            android:paddingBottom="@dimen/margin_padding_2"
             android:gravity="center"
             android:text="@string/money_withdrawals"
             android:textSize="@dimen/text_size_14"

@@ -95,7 +95,7 @@ public class AppConfig {
 	public static final String WB_SCOPE = "email,direct_messages_read,direct_messages_write,friendships_groups_read," 
 			+ "friendships_groups_write,statuses_to_me_read,follow_app_official_microblog,invitation_write";
 	// PayPal ClientID
-	public static final String PAYPAL_CLIENT_ID = "";
+	public static final String PAYPAL_CLIENT_ID = "AafTOrDvoUh5MjlMYyUlZOh0ZyyBDpZCSqObK_6By8mPrZZVW8XGHWk7nIfPlvZ9kI_hkbl0_UN1Ka-2";
 
 
 	// 缓存Cookies文件名

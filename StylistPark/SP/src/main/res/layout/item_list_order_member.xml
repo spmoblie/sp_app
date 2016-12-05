@@ -10,17 +10,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="5dp"
+        android:layout_marginTop="@dimen/margin_padding_10"
+        android:paddingLeft="@dimen/screen_margin_default"
+        android:paddingTop="@dimen/margin_padding_5"
+        android:paddingRight="@dimen/screen_margin_default"
+        android:paddingBottom="@dimen/margin_padding_5"
         android:background="@color/ui_bg_color_white" >
 
         <ImageView
             android:id="@+id/item_list_order_member_iv_avatar"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/avatar_size_order"
+            android:layout_height="@dimen/avatar_size_order"
             android:contentDescription="@string/desc"
             android:src="@drawable/default_avatar" />
 
@@ -28,7 +28,7 @@
             android:id="@+id/item_list_order_member_tv_order_no"
             style="@style/setting_lay_text_title"
             android:layout_centerVertical="false"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/margin_padding_5"
             android:layout_toRightOf="@id/item_list_order_member_iv_avatar"
             android:textSize="@dimen/text_size_12" />
 
@@ -36,7 +36,7 @@
             android:id="@+id/item_list_order_member_tv_nick"
             style="@style/setting_lay_text_title"
             android:layout_centerVertical="false"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/margin_padding_5"
             android:layout_below="@+id/item_list_order_member_tv_order_no"
             android:layout_toRightOf="@id/item_list_order_member_iv_avatar"
             android:textSize="@dimen/text_size_12" />

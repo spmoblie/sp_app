@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/photo_item_image"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="@dimen/photo_list_select_size"
+        android:layout_height="@dimen/photo_list_select_size"
         android:contentDescription="@string/desc"
         android:src="@drawable/icon_goods_default" />
 

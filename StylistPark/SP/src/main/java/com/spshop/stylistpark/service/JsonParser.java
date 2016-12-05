@@ -917,7 +917,7 @@ public class JsonParser {
 			case WXPayEntryActivity.PAY_UNION: //银联支付
 				mainEn.setAlipay(jsonObject.getString("content"));
 				break;
-			case WXPayEntryActivity.PAY_PAL: //PayPal支付
+			case WXPayEntryActivity.PAY_PAYPAL: //PayPal支付
 				mainEn.setAlipay(jsonObject.getString("content"));
 				break;
 		}

@@ -8,7 +8,7 @@
         android:id="@+id/personal_rl_avatar"
         android:layout_width="match_parent"
         android:background="@color/ui_bg_color_white"
-        android:layout_height="80dp" >
+        android:layout_height="@dimen/avatar_size_parent" >
 
         <TextView
             android:id="@+id/personal_tv_avatar_title"
@@ -17,8 +17,8 @@
         
         <ImageView 
             android:id="@+id/personal_iv_avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/avatar_size_default"
+            android:layout_height="@dimen/avatar_size_default"
             android:layout_toLeftOf="@+id/personal_tv_avatar_content"
             android:layout_centerVertical="true"
             android:src="@drawable/default_avatar"
@@ -32,7 +32,7 @@
     <RelativeLayout
         android:id="@+id/personal_rl_nick"
         style="@style/setting_lay_item"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_padding_10"
         android:layout_below="@id/personal_rl_avatar" >
 
         <TextView
@@ -105,7 +105,7 @@
             android:id="@+id/personal_tv_rank_content"
             style="@style/setting_lay_text_content"
             android:drawableRight="@null"
-            android:layout_marginRight="35dp"
+            android:layout_marginRight="@dimen/margin_padding_35"
             android:textColor="@color/tv_color_status" />
 
         <ImageView
@@ -128,7 +128,7 @@
             android:id="@+id/personal_tv_intro_content"
             style="@style/setting_lay_text_content"
             android:layout_width="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin_padding_10"
             android:layout_toRightOf="@+id/personal_tv_intro_title"
             android:ellipsize="marquee"
             android:singleLine="true"
@@ -141,7 +141,7 @@
     <RelativeLayout
         android:id="@+id/personal_rl_email"
         style="@style/setting_lay_item"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_padding_10"
         android:layout_below="@id/personal_rl_intro" >
 
         <TextView
@@ -176,7 +176,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="@dimen/screen_margin_default"
             android:layout_centerVertical="true"
             android:text="@string/money_auth_ok"
             android:textSize="@dimen/text_size_13"

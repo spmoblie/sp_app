@@ -5,18 +5,18 @@
     android:layout_height="wrap_content"
     android:background="@color/ui_bg_color_app"
     android:orientation="vertical"
-    android:paddingTop="10dp" >
+    android:paddingTop="@dimen/margin_padding_10" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="10dp">
+        android:paddingRight="@dimen/margin_padding_10">
 
         <ImageView
             android:id="@+id/list_item_select_iv_logo"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="@dimen/brand_cell_logo_width"
+            android:layout_height="@dimen/brand_cell_logo_height"
+            android:layout_marginLeft="@dimen/margin_padding_20"
             android:scaleType="fitXY"
             android:contentDescription="@string/desc"
             android:visibility="gone" />
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="@dimen/margin_padding_20"
             android:layout_toRightOf="@id/list_item_select_iv_logo"
             android:ellipsize="end"
             android:lines="1"
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="@dimen/margin_padding_30"
             android:layout_toLeftOf="@+id/list_item_select_iv_go"
             android:layout_toRightOf="@id/list_item_select_tv_item_name"
             android:ellipsize="end"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="@dimen/margin_padding_20"
             android:contentDescription="@string/desc"
             android:src="@drawable/common_go_right" />
     </RelativeLayout>
@@ -63,14 +63,14 @@
     <ImageView
         android:id="@+id/list_item_select_iv_line_1"
         style="@style/set_line_horizontal_bg"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/margin_padding_20"
+        android:layout_marginTop="@dimen/margin_padding_10"
         android:contentDescription="@string/desc" />
     
     <ImageView
         android:id="@+id/list_item_select_iv_line_2"
         style="@style/set_line_horizontal_bg"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_padding_10"
         android:contentDescription="@string/desc" 
         android:visibility="gone" />
 

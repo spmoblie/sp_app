@@ -24,7 +24,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="42dp"
+            android:layout_height="@dimen/margin_padding_42"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="@string/share"
@@ -38,15 +38,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="@dimen/screen_margin_default"
+            android:layout_marginRight="@dimen/screen_margin_default"
+            android:layout_marginTop="@dimen/screen_margin_default"
             android:baselineAligned="false" >
 
             <TextView
                 android:id="@+id/share_view_tv_share_QQ"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/share_icon_qq"
                 android:text="@string/share_qq"
                 android:textColor="@color/conte_text_color" />
@@ -54,7 +54,7 @@
             <TextView
                 android:id="@+id/share_view_tv_share_Friends"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/share_icon_friends"
                 android:text="@string/share_friends"
                 android:textColor="@color/conte_text_color" />
@@ -62,7 +62,7 @@
             <TextView
                 android:id="@+id/share_view_tv_share_Wechat"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/share_icon_wechat"
                 android:text="@string/share_wechat"
                 android:textColor="@color/conte_text_color" />
@@ -70,7 +70,7 @@
             <TextView
                 android:id="@+id/share_view_tv_share_Weibo"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/share_icon_weibo"
                 android:text="@string/share_weibo"
                 android:textColor="@color/conte_text_color" />
@@ -79,16 +79,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_margin="@dimen/screen_margin_default"
             android:baselineAligned="false" >
 
             <TextView
                 android:id="@+id/share_view_tv_share_Facebook"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/share_icon_fb"
                 android:text="@string/share_fb"
                 android:textColor="@color/conte_text_color" />
@@ -96,7 +93,7 @@
             <TextView
                 android:id="@+id/share_view_tv_share_WhatsApp"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/share_icon_whatsapp"
                 android:text="@string/share_whatsapp"
                 android:textColor="@color/conte_text_color" />
@@ -104,7 +101,7 @@
             <TextView
                 android:id="@+id/share_view_tv_share_Line"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/share_icon_line"
                 android:text="@string/share_line"
                 android:textColor="@color/conte_text_color" />
@@ -112,7 +109,7 @@
             <TextView
                 android:id="@+id/share_view_tv_share_Copy"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/share_icon_copy"
                 android:text="@string/share_copy"
                 android:textColor="@color/conte_text_color" />

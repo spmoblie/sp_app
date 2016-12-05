@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/again_loading"
-        android:drawablePadding="10dp"
+        android:drawablePadding="@dimen/margin_padding_15"
         android:gravity="center"
         android:text="@string/loading_click_load"
         android:textColor="@color/tv_color_status"

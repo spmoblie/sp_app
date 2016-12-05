@@ -20,15 +20,14 @@
             <RelativeLayout 
                 android:id="@+id/scroll_list_btn_rl_top_title"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" >
+                android:layout_height="@dimen/search_ls_item_height" >
                 
                 <TextView 
                     android:id="@+id/scroll_list_btn_tv_top_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:text=""
+                    android:layout_marginLeft="@dimen/margin_padding_20"
                     android:textColor="@color/conte_text_color"
                     android:textSize="@dimen/text_size_14" />
                 
@@ -46,8 +45,8 @@
             <RelativeLayout
                 android:id="@+id/scroll_list_btn_rl_clear"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="30dp"
+                android:layout_height="@dimen/search_bt_clear_height"
+                android:layout_marginTop="@dimen/margin_padding_30"
                 android:gravity="center" >
                 
                 <include 

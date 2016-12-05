@@ -19,8 +19,8 @@
 
         <RelativeLayout
             android:id="@+id/screen_video_rl_close"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/video_top_colse_size"
+            android:layout_height="@dimen/video_top_colse_size"
             android:layout_alignParentRight="true" >
 
             <ImageView
@@ -44,9 +44,9 @@
 
         <RelativeLayout
             android:id="@+id/screen_video_rl_next_1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="30dp"
+            android:layout_width="@dimen/video_next_view_size"
+            android:layout_height="@dimen/video_next_view_size"
+            android:layout_marginBottom="@dimen/margin_padding_30"
             android:layout_gravity="center_vertical"
             android:visibility="gone" >
 
@@ -60,9 +60,9 @@
 
         <RelativeLayout
             android:id="@+id/screen_video_rl_next_2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="30dp"
+            android:layout_width="@dimen/video_next_view_size"
+            android:layout_height="@dimen/video_next_view_size"
+            android:layout_marginBottom="@dimen/margin_padding_30"
             android:layout_gravity="right|center_vertical"
             android:visibility="gone" >
 
@@ -79,8 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginLeft="@dimen/screen_margin_default"
+            android:layout_marginBottom="@dimen/margin_padding_100"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -102,8 +102,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginRight="@dimen/screen_margin_default"
+            android:layout_marginBottom="@dimen/margin_padding_100"
             android:gravity="center"
             android:orientation="vertical">
 

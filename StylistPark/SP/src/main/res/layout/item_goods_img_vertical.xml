@@ -15,25 +15,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="5dp" >
+            android:paddingBottom="@dimen/margin_padding_5"
+            android:paddingLeft="@dimen/screen_margin_default"
+            android:paddingRight="@dimen/screen_margin_default"
+            android:paddingTop="@dimen/margin_padding_5" >
 
             <ImageView
                 android:id="@+id/item_goods_vertical_iv_img"
-                android:layout_width="58dp"
-                android:layout_height="74dp"
+                android:layout_width="@dimen/cart_goods_img_width"
+                android:layout_height="@dimen/cart_goods_img_height"
                 android:contentDescription="@string/desc"
-                android:src="@drawable/bg_img_white" />
+                android:src="@drawable/icon_goods_default" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="5dp"
-            android:paddingRight="15dp"
-            android:paddingTop="5dp" >
+            android:paddingBottom="@dimen/margin_padding_8"
+            android:paddingRight="@dimen/screen_margin_default"
+            android:paddingTop="@dimen/margin_padding_8" >
 
             <TextView
                 android:id="@+id/item_goods_vertical_tv_brand"
@@ -46,7 +46,7 @@
             <TextView
                 android:id="@+id/item_goods_vertical_tv_name"
                 style="@style/cart_product_text_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/margin_padding_5"
                 android:lines="2"
                 android:layout_below="@id/item_goods_vertical_tv_brand" />
 
@@ -54,7 +54,7 @@
                 android:id="@+id/item_goods_vertical_tv_curr"
                 style="@style/common_text_price"
                 android:layout_alignBottom="@+id/item_goods_vertical_tv_price"
-                android:layout_marginBottom="1dp"
+                android:layout_marginBottom="@dimen/margin_padding_1"
                 android:layout_toLeftOf="@+id/item_goods_vertical_tv_price"
                 android:textSize="@dimen/text_size_09"
                 android:textColor="@color/conte_text_color" />
@@ -69,13 +69,13 @@
                 android:id="@+id/item_goods_vertical_tv_attr"
                 style="@style/cart_product_text_assist"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5dp" />
+                android:layout_marginBottom="@dimen/margin_padding_5" />
 
             <TextView
                 android:id="@+id/item_goods_vertical_tv_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="@dimen/margin_padding_5"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/conte_text_color"
@@ -86,7 +86,7 @@
     <ImageView
         android:id="@+id/item_goods_vertical_iv_line"
         style="@style/set_line_horizontal_bg"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="@dimen/screen_margin_default"
         android:contentDescription="@string/desc" />
 
 </LinearLayout>

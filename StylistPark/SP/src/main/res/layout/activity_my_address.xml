@@ -15,7 +15,7 @@
         android:id="@+id/my_address_tv_no_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="@dimen/margin_padding_100"
         android:gravity="center"
         android:text="@string/address_error_data_null"
         android:textColor="@color/label_text_color"

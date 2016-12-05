@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
+            android:paddingTop="@dimen/margin_padding_10"
             android:background="@color/ui_bg_color_nut"
             android:orientation="vertical">
 
@@ -25,8 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
+                android:paddingBottom="@dimen/margin_padding_10"
+                android:paddingTop="@dimen/margin_padding_10"
                 android:textColor="@color/label_text_color"
                 android:textSize="@dimen/text_size_12"
                 android:visibility="gone" />
@@ -40,14 +40,14 @@
                 <TextView
                     android:id="@+id/order_detail_tv_address_phone"
                     style="@style/address_order_text"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="@dimen/screen_margin_default"
                     android:layout_toRightOf="@id/order_detail_tv_address_name" />
 
                 <TextView
                     android:id="@+id/order_detail_tv_address_address"
                     style="@style/address_order_text"
                     android:layout_below="@id/order_detail_tv_address_name"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="@dimen/margin_padding_10" />
             </RelativeLayout>
 
             <ImageView
@@ -58,7 +58,7 @@
 
             <RelativeLayout
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="@dimen/margin_padding_10">
 
                 <TextView
                     android:id="@+id/order_detail_tv_order_no"
@@ -71,7 +71,7 @@
                     style="@style/Order_TextView_Title"
                     android:layout_width="match_parent"
                     android:layout_below="@id/order_detail_tv_order_no"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_padding_8"
                     android:layout_toLeftOf="@+id/order_detail_tv_order_status" />
 
                 <TextView
@@ -79,7 +79,7 @@
                     style="@style/Order_TextView_Title"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/margin_padding_10"
                     android:textColor="@color/tv_color_status"
                     android:textSize="@dimen/text_size_14"
                     android:textStyle="bold" />
@@ -95,27 +95,27 @@
                 android:layout_height="wrap_content"
                 android:background="@color/ui_bg_color_white"
                 android:orientation="vertical"
-                android:paddingTop="10dp"
+                android:paddingTop="@dimen/margin_padding_10"
                 android:visibility="gone">
 
                 <TextView
                     android:id="@+id/order_detail_tv_logistics_name"
                     style="@style/Order_TextView_Title"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginLeft="@dimen/screen_margin_default"
+                    android:layout_marginRight="@dimen/screen_margin_default" />
 
                 <TextView
                     android:id="@+id/order_detail_tv_logistics_no"
                     style="@style/Order_TextView_Title"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginLeft="@dimen/screen_margin_default"
+                    android:layout_marginRight="@dimen/screen_margin_default"
+                    android:layout_marginTop="@dimen/margin_padding_8" />
 
                 <ImageView
                     style="@style/set_line_horizontal_bg"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_padding_10"
                     android:contentDescription="@string/desc" />
             </LinearLayout>
 
@@ -133,7 +133,7 @@
 
             <ImageView
                 style="@style/set_line_horizontal_bg"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="@dimen/screen_margin_default"
                 android:contentDescription="@string/desc" />
 
             <LinearLayout
@@ -144,12 +144,12 @@
 
             <ImageView
                 style="@style/set_line_horizontal_bg"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="@dimen/screen_margin_default"
                 android:contentDescription="@string/desc" />
 
             <RelativeLayout
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_padding_10"
                 android:visibility="gone">
 
                 <TextView
@@ -159,7 +159,7 @@
 
             <RelativeLayout
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_padding_10"
                 android:visibility="gone">
 
                 <TextView
@@ -170,7 +170,7 @@
             <RelativeLayout
                 android:id="@+id/order_detail_rl_pay_type"
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="@dimen/margin_padding_10">
 
                 <TextView
                     android:id="@+id/order_detail_tv_pay_type"
@@ -179,7 +179,7 @@
 
             <LinearLayout
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_padding_10"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -199,7 +199,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/margin_padding_10">
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_fee_name"
@@ -215,7 +215,7 @@
                     android:id="@+id/order_detail_rl_price_coupon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/margin_padding_10">
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_coupon_name"
@@ -231,7 +231,7 @@
                     android:id="@+id/order_detail_rl_price_discount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/margin_padding_10">
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_discount_name"
@@ -247,7 +247,7 @@
                     android:id="@+id/order_detail_rl_price_cashback"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/margin_padding_10">
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_cashback_name"
@@ -262,7 +262,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/margin_padding_10">
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_pay_name"

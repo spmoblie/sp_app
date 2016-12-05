@@ -27,7 +27,7 @@
         android:baselineAligned="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp" >
+        android:padding="@dimen/margin_padding_5" >
 
         <FrameLayout
             android:id="@+id/home_fragment_fl_one"

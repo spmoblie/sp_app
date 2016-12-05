@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="@dimen/screen_margin_default"
             android:clickable="true"
             android:contentDescription="@string/desc"
             android:src="@drawable/selector_btn_push_control" />
@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="@dimen/screen_margin_default"
             android:clickable="true"
             android:contentDescription="@string/desc"
             android:src="@drawable/selector_btn_push_control" />

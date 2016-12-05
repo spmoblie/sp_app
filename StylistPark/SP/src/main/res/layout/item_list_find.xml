@@ -9,14 +9,14 @@
     <ImageView
         android:id="@+id/list_find_iv_line"
         style="@style/set_line_horizontal_bg"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/screen_margin_default"
         android:contentDescription="@string/desc" />
 
     <LinearLayout
         android:id="@+id/list_find_ll_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="@dimen/screen_margin_default"
         android:background="@color/text_color_white"
         android:orientation="vertical" >
 
@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/list_find_iv_avatar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/avatar_size_find"
+                android:layout_height="@dimen/avatar_size_find"
                 android:contentDescription="@string/desc" />
 
             <TextView
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/list_find_iv_avatar"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="@dimen/margin_padding_2"
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/text_size_14"
                 android:textColor="@color/conte_text_color" />
@@ -47,7 +47,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:drawableLeft="@drawable/icon_read"
-                android:drawablePadding="2dp"
+                android:drawablePadding="@dimen/margin_padding_2"
                 android:textSize="@dimen/text_size_12"
                 android:textColor="@color/conte_text_color" />
         </RelativeLayout>
@@ -64,11 +64,11 @@
             android:id="@+id/list_find_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/margin_padding_5"
             android:ellipsize="end"
             android:maxLines="3"
             android:textColor="@color/conte_text_color"
-            android:textSize="14sp" />
+            android:textSize="@dimen/text_size_14" />
 
     </LinearLayout>
 

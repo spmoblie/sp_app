@@ -37,7 +37,7 @@
                 android:id="@+id/topbar_group_tv_2"
                 style="@style/ViewGroup_TextView"
                 android:drawableRight="@drawable/icon_rank_normal"
-                android:drawablePadding="5dp" />
+                android:drawablePadding="@dimen/margin_padding_5" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -45,14 +45,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingRight="15dp"
+            android:paddingRight="@dimen/screen_margin_default"
             android:gravity="center" >
 
             <TextView
                 android:id="@+id/topbar_group_tv_3"
                 style="@style/ViewGroup_TextView"
                 android:drawableRight="@drawable/selector_btn_screen"
-                android:drawablePadding="5dp" />
+                android:drawablePadding="@dimen/margin_padding_5" />
         </RelativeLayout>
     </LinearLayout>
 

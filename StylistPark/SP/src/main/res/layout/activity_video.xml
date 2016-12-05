@@ -7,8 +7,8 @@
 
     <RelativeLayout
         android:id="@+id/video_rl_close"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/video_top_colse_size"
+        android:layout_height="@dimen/video_top_colse_size"
         android:layout_gravity="right" >
 
         <ImageView

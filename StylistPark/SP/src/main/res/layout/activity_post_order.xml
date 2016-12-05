@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
+            android:paddingTop="@dimen/margin_padding_10"
             android:background="@color/ui_bg_color_nut"
             android:orientation="vertical" >
 
@@ -32,7 +32,7 @@
                 <TextView
                     android:id="@+id/post_order_tv_address_phone"
                     style="@style/address_order_text"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="@dimen/screen_margin_default"
                     android:layout_toRightOf="@id/post_order_tv_address_name" />
 
                 <TextView
@@ -41,14 +41,14 @@
                     android:layout_width="match_parent"
                     android:layout_below="@id/post_order_tv_address_name"
                     android:layout_toLeftOf="@+id/post_order_iv_go_address"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginTop="@dimen/margin_padding_10"
+                    android:layout_marginRight="@dimen/margin_padding_5" />
                 
                 <TextView
                     android:id="@+id/post_order_tv_address_hint"
                     style="@style/address_order_text"
                     android:layout_centerInParent="true"
-                    android:padding="15dp"
+                    android:padding="@dimen/margin_padding_15"
                     android:text="@string/address_error_no_select"
                     android:visibility="gone" />
                 
@@ -70,7 +70,7 @@
 
             <RelativeLayout
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="@dimen/margin_padding_10" >
                 
                 <TextView
                     style="@style/Order_TextView_Title"
@@ -84,7 +84,7 @@
 
             <ImageView
                 style="@style/set_line_horizontal_bg"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="@dimen/screen_margin_default"
                 android:contentDescription="@string/desc" />
 
             <LinearLayout
@@ -97,7 +97,7 @@
             <RelativeLayout
                 android:id="@+id/post_order_rl_pay_type"
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="@dimen/margin_padding_10" >
 
                 <TextView
                     style="@style/address_order_text"
@@ -113,7 +113,7 @@
                     android:id="@+id/post_order_iv_go_pay_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/margin_padding_10"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/common_go_right"
@@ -124,7 +124,7 @@
             <RelativeLayout
                 android:id="@+id/post_order_rl_coupon_use"
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="@dimen/margin_padding_10" >
 
                 <TextView
                     style="@style/address_order_text"
@@ -140,7 +140,7 @@
                     android:id="@+id/post_order_iv_go_coupon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/margin_padding_10"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/common_go_right"
@@ -149,7 +149,7 @@
             
             <LinearLayout 
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_padding_10"
                 android:orientation="horizontal"
                 android:visibility="gone" >
                 
@@ -163,7 +163,7 @@
                     style="@style/Address_EditText"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginRight="@dimen/margin_padding_3"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
                     android:focusable="false"
@@ -182,7 +182,7 @@
             
             <LinearLayout 
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_padding_10"
                 android:orientation="horizontal"
                 android:visibility="gone" >
                 
@@ -203,7 +203,7 @@
             
             <LinearLayout 
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_padding_10"
                 android:orientation="vertical" >
                 
                 <RelativeLayout 
@@ -225,7 +225,7 @@
                     android:id="@+id/post_order_rl_price_fee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="@dimen/margin_padding_10" >
                     
                     <TextView 
                         android:id="@+id/post_order_tv_price_fee_name"
@@ -242,7 +242,7 @@
                     android:id="@+id/post_order_rl_price_charges"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_padding_10"
                     android:visibility="gone" >
                     
                     <TextView 
@@ -260,7 +260,7 @@
                     android:id="@+id/post_order_rl_price_coupon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="@dimen/margin_padding_10" >
                     
                     <TextView 
                         android:id="@+id/post_order_tv_price_coupon_name"
@@ -277,7 +277,7 @@
                     android:id="@+id/post_order_rl_price_discount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="@dimen/margin_padding_10" >
                     
                     <TextView 
                         android:id="@+id/post_order_tv_price_discount_name"
@@ -294,7 +294,7 @@
                     android:id="@+id/post_order_rl_price_cashback"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="@dimen/margin_padding_10" >
 
                     <TextView
                         android:id="@+id/post_order_tv_price_cashback_name"
@@ -310,7 +310,7 @@
                 <RelativeLayout 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" >
+                    android:layout_marginTop="@dimen/margin_padding_10" >
                     
                     <TextView 
                         android:id="@+id/post_order_tv_price_pay_name"
@@ -341,7 +341,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="horizontal"
-            android:paddingLeft="15dp" >
+            android:paddingLeft="@dimen/screen_margin_default" >
 
             <TextView
                 style="@style/common_text_price"

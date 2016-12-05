@@ -192,6 +192,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		setAdapter();
 		if (themeEn != null) {
 			setHeadView();
+			loadSVDatas();
 		} else {
 			getSVDatas();
 		}

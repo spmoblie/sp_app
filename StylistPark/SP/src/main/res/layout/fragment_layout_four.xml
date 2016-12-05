@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:paddingLeft="15dp"
+                android:paddingLeft="@dimen/screen_margin_default"
                 android:gravity="center_vertical"
                 android:orientation="vertical" >
 
@@ -82,7 +82,7 @@
                     <TextView
                         android:id="@+id/fragment_four_tv_curr"
                         style="@style/common_text_price"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="@dimen/margin_padding_2"
                         android:textStyle="bold" />
 
                     <TextView

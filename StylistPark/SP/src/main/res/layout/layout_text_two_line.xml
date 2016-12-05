@@ -16,8 +16,8 @@
         android:id="@+id/text_two_line_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="@dimen/screen_margin_default"
+        android:paddingRight="@dimen/screen_margin_default"
         android:textColor="@color/tv_color_status"
         android:textSize="@dimen/text_size_12" />
 

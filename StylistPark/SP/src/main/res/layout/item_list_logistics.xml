@@ -23,15 +23,15 @@
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="@dimen/margin_padding_70"
         android:layout_weight="6" >
 
         <TextView
             android:id="@+id/logistics_tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:paddingRight="15dp"
+            android:layout_marginTop="@dimen/margin_padding_8"
+            android:paddingRight="@dimen/screen_margin_default"
             android:lines="2"
             android:maxLines="2"
             android:ellipsize="end"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="@dimen/margin_padding_5"
             android:textColor="@color/label_text_color"
             android:textSize="@dimen/text_size_12" />
 

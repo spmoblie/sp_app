@@ -30,8 +30,8 @@
             android:id="@+id/home_line_goods_item_ll_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingLeft="@dimen/margin_padding_5"
+            android:paddingRight="@dimen/margin_padding_5"
             android:gravity="center"
             android:orientation="vertical" >
 
@@ -65,7 +65,7 @@
                 <TextView
                     android:id="@+id/home_line_goods_item_tv_full_price"
                     style="@style/common_text_price"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="@dimen/margin_padding_2"
                     android:textColor="@color/label_text_color"
                     android:textSize="@dimen/text_size_08"/>
 

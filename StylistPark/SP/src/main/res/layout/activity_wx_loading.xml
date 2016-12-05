@@ -9,24 +9,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_wexin_loading"
-        android:padding="15dip" >
+        android:padding="@dimen/screen_margin_default" >
 
         <ProgressBar
             style="?android:attr/progressBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="@dimen/margin_padding_5" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dip"
-            android:paddingRight="10dp"
+            android:layout_marginLeft="@dimen/margin_padding_10"
+            android:paddingRight="@dimen/margin_padding_10"
             android:text="@string/loading"
             android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textSize="@dimen/text_size_16" />
     </LinearLayout>
 
 </LinearLayout>

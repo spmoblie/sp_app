@@ -4,7 +4,6 @@ package com.spshop.stylistpark.wxapi;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,9 +18,7 @@ import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
-import com.paypal.android.sdk.payments.PayPalItem;
 import com.paypal.android.sdk.payments.PayPalPayment;
-import com.paypal.android.sdk.payments.PayPalPaymentDetails;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
@@ -31,9 +28,9 @@ import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.activity.cart.PostOrderActivity;
-import com.spshop.stylistpark.activity.sort.SortActivity;
 import com.spshop.stylistpark.activity.mine.OrderDetailActivity;
 import com.spshop.stylistpark.activity.mine.OrderListActivity;
+import com.spshop.stylistpark.activity.sort.SortActivity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.PayResult;
 import com.spshop.stylistpark.entity.PaymentEntity;
@@ -41,7 +38,6 @@ import com.spshop.stylistpark.service.ServiceContext;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
-import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
@@ -64,7 +60,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	public static final int PAY_ZFB = 12;
 	public static final int PAY_WEIXI = 11;
 	public static final int PAY_UNION = 13;
-	public static final int PAY_PAL = 14;
+	public static final int PAY_PAYPAL = 14;
 
 	public static final int PAY_SUCCESS = 1;
 	public static final int PAY_CANCEL = 0;
@@ -76,24 +72,19 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	// 支付宝
 	private static final int SDK_ZFB_PAY_FLAG = 101;
 	// PayPal
-	private List<PayPalItem> productsInCart = new ArrayList<PayPalItem>();
-	private String PAYPAL_CURRENCY = "USD";
 	private static final int REQUEST_CODE_PAYMENT = 1;
-	private static final String PAYPAL_CLIENT_ID = AppConfig.PAYPAL_CLIENT_ID;
 	private static PayPalConfiguration paypalConfig = new PayPalConfiguration()
-			.environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK).clientId(PAYPAL_CLIENT_ID)
-			.merchantName("Example Merchant")
-			.merchantPrivacyPolicyUri(Uri.parse("https://www.example.com/privacy"))
-			.merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"));
+			.environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+			.clientId(AppConfig.PAYPAL_CLIENT_ID);
 
-	private TextView tv_pay_amount;
-	private ImageView iv_select_zfb, iv_select_weixi, iv_select_union, iv_select_pal;
-	private RelativeLayout rl_select_zfb, rl_select_weixi, rl_select_union;
+	private TextView tv_pay_amount, tv_pay_start;
+	private ImageView iv_select_zfb, iv_select_weixi, iv_select_paypal, iv_select_union;
+	private RelativeLayout rl_select_zfb, rl_select_weixi, rl_select_paypal, rl_select_union;
 	private Button btn_confirm, btn_done_left, btn_done_right;
-	private LinearLayout ll_pay_type_1, ll_pay_type_2, ll_pay_confirm, ll_pay_done;
+	private LinearLayout ll_pay_select, ll_pay_confirm, ll_pay_done;
 	
 	private int payStatus = PAY_CANCEL; //支付状态
-	private int payType; //支付类型
+	private int payType = PAY_ZFB; //支付类型
 	private int checkCount = 0; //查询支付结果的次数
 	private String rootPage, orderSn, orderTotal;
 	private ServiceContext sc = ServiceContext.getServiceContext();
@@ -134,19 +125,25 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
 		findViewById();
 		initView();
+
+		// 启动paypal的服务
+		Intent intent = new Intent(this, PayPalService.class);
+		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
+		startService(intent);
     }
     
 	private void findViewById() {
 		tv_pay_amount = (TextView) findViewById(R.id.payment_tv_pay_amount);
+		tv_pay_start = (TextView) findViewById(R.id.payment_tv_pay_start);
 		iv_select_zfb = (ImageView) findViewById(R.id.payment_iv_select_zfb);
 		iv_select_weixi = (ImageView) findViewById(R.id.payment_iv_select_weixi);
+		iv_select_paypal = (ImageView) findViewById(R.id.payment_iv_select_paypal);
 		iv_select_union = (ImageView) findViewById(R.id.payment_iv_select_union);
-		iv_select_pal = (ImageView) findViewById(R.id.payment_iv_select_pal);
 		rl_select_zfb = (RelativeLayout) findViewById(R.id.payment_rl_select_zfb);
 		rl_select_weixi = (RelativeLayout) findViewById(R.id.payment_rl_select_weixi);
+		rl_select_paypal = (RelativeLayout) findViewById(R.id.payment_rl_select_paypal);
 		rl_select_union = (RelativeLayout) findViewById(R.id.payment_rl_select_union);
-		ll_pay_type_1 = (LinearLayout) findViewById(R.id.payment_ll_pay_type_1);
-		ll_pay_type_2 = (LinearLayout) findViewById(R.id.payment_ll_pay_type_2);
+		ll_pay_select = (LinearLayout) findViewById(R.id.payment_ll_select_pay_select);
 		ll_pay_confirm = (LinearLayout) findViewById(R.id.payment_ll_pay_confirm);
 		ll_pay_done = (LinearLayout) findViewById(R.id.payment_ll_pay_done);
 		btn_confirm = (Button) findViewById(R.id.button_confirm_btn_one);
@@ -158,7 +155,9 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		setTitle(R.string.pay_title);  //设置标题
 		tv_pay_amount.setText(currStr + orderTotal); //支付金额
 		rl_select_zfb.setOnClickListener(this);
+		iv_select_zfb.setSelected(true);
 		rl_select_weixi.setOnClickListener(this);
+		rl_select_paypal.setOnClickListener(this);
 		rl_select_union.setOnClickListener(this);
 		btn_confirm.setText(getString(R.string.pay_confirm));
 		btn_confirm.setOnClickListener(this);
@@ -166,23 +165,6 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		btn_done_left.setOnClickListener(this);
 		btn_done_right.setText(getString(R.string.cart_go_shopping));
 		btn_done_right.setOnClickListener(this);
-
-		PAYPAL_CURRENCY = LangCurrTools.getCurrencyHttpUrlValueStr();
-		if (LangCurrTools.getCurrency() == LangCurrTools.Currency.RMB) {
-			payType = PAY_ZFB;
-			iv_select_zfb.setSelected(true);
-			ll_pay_type_1.setVisibility(View.VISIBLE);
-			ll_pay_type_2.setVisibility(View.GONE);
-		} else {
-			payType = PAY_PAL;
-			iv_select_pal.setSelected(true);
-			ll_pay_type_1.setVisibility(View.GONE);
-			ll_pay_type_2.setVisibility(View.VISIBLE);
-			// 启动paypal的服务
-			Intent intent = new Intent(this, PayPalService.class);
-			intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
-			startService(intent);
-		}
 	}
 
 	@Override
@@ -196,6 +178,11 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		case R.id.payment_rl_select_weixi:
 			if (payType != PAY_WEIXI) {
 				changeSelected(PAY_WEIXI);
+			}
+			break;
+		case R.id.payment_rl_select_paypal:
+			if (payType != PAY_PAYPAL) {
+				changeSelected(PAY_PAYPAL);
 			}
 			break;
 		case R.id.payment_rl_select_union:
@@ -228,6 +215,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		payType = typeCode;
 		iv_select_zfb.setSelected(false);
 		iv_select_weixi.setSelected(false);
+		iv_select_paypal.setSelected(false);
 		iv_select_union.setSelected(false);
 		switch (typeCode) {
 			case PAY_ZFB:
@@ -235,6 +223,9 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 				break;
 			case PAY_WEIXI:
 				iv_select_weixi.setSelected(true);
+				break;
+			case PAY_PAYPAL:
+				iv_select_paypal.setSelected(true);
 				break;
 			case PAY_UNION:
 				iv_select_union.setSelected(true);
@@ -424,12 +415,13 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 				case PAY_UNION: //银联支付
 					sendUnionPayReq(payEntity);
 					break;
-				case PAY_PAL: //PayPal支付
-					sendPALPayReq(payEntity);
+				case PAY_PAYPAL: //PayPal支付
+					sendPayPalPayReq(payEntity);
 					break;
 				}
 			}else {
-				getPayDataFail();
+				sendPayPalPayReq(null);
+				//getPayDataFail();
 			}
 			break;
 		case AppConfig.REQUEST_SV_GET_PAY_RESULT_CODE:
@@ -528,52 +520,21 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	/**
 	 * 发送PayPal支付请求
 	 */
-	private void sendPALPayReq(PaymentEntity payEntity) {
-		// 获取支付订单号
-		String payInfo = "201608011034301340338";
-		if (!StringUtil.isNumeric(payInfo)) {
+	private void sendPayPalPayReq(PaymentEntity payEntity) {
+		if (payEntity != null) {
 			getPayDataFail();
 			return;
 		}
 		// 构建支付信息
-		addToCart(payEntity);
-		PayPalPayment thingsToBuy = prepareFinalCart();
+		PayPalPayment thingToBuy = new PayPalPayment(new BigDecimal("99.99"),
+				"USD", "Name", PayPalPayment.PAYMENT_INTENT_SALE);
 		// 调用支付SDK
 		Intent intent = new Intent(WXPayEntryActivity.this, PaymentActivity.class);
 		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
-		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingsToBuy);
+		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
 		startActivityForResult(intent, REQUEST_CODE_PAYMENT);
 		// 结束加载动画
 		getPayDataSuccess();
-	}
-
-	public void addToCart(PaymentEntity payEn) {
-		productsInCart.clear();
-		PayPalItem item = new PayPalItem("sample item #1", 2, new BigDecimal("0.01"), PAYPAL_CURRENCY, "sku-12345678");
-		productsInCart.add(item);
-	}
-
-	private PayPalPayment prepareFinalCart() {
-		PayPalItem[] items = new PayPalItem[productsInCart.size()];
-		items = productsInCart.toArray(items);
-
-		// Total amount
-		BigDecimal subtotal = PayPalItem.getItemTotal(items);
-		// If you have shipping cost, add it here
-		BigDecimal shipping = new BigDecimal("0.0");
-		// If you have tax, add it here
-		BigDecimal tax = new BigDecimal("0.0");
-		PayPalPaymentDetails paymentDetails = new PayPalPaymentDetails(shipping, subtotal, tax);
-		BigDecimal amount = subtotal.add(shipping).add(tax);
-
-		PayPalPayment payment = new PayPalPayment(
-				amount, PAYPAL_CURRENCY,
-				"Description about transaction. This will be displayed to the user.",
-				PayPalPayment.PAYMENT_INTENT_SALE);
-		payment.items(items).paymentDetails(paymentDetails);
-		payment.custom("This is text that will be associated with the payment that the app can use.");
-
-		return payment;
 	}
 
 	private void getPayDataFail() {
@@ -597,8 +558,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			return;
 		}
 		int payCode = PAY_FAIL;
-		if (requestCode == REQUEST_CODE_PAYMENT) {
-			// PayPal
+		if (requestCode == REQUEST_CODE_PAYMENT) { //PayPal支付
 			if (resultCode == Activity.RESULT_OK) {
 				PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
 				if (confirm != null) {
@@ -629,11 +589,12 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
 	private void showPayResult(int payCode) {
 		stopAnimation();
+		String startStr;
 		payStatus = payCode;
 		switch (payCode) {
 			case PAY_SUCCESS:
-				CommonTools.showToast(getString(R.string.pay_success), 1000);
-				updateViewStatus();
+				startStr = getString(R.string.pay_success);
+				updateViewStatus(startStr);
 				break;
 			case PAY_CANCEL:
 				CommonTools.showToast(getString(R.string.pay_cancel), 1000);
@@ -642,8 +603,9 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 				CommonTools.showToast(getString(R.string.pay_fail), 3000);
 				break;
 			case PAY_ERROR:
-				showErrorDialog(getString(R.string.pay_result_abnormal));
-				updateViewStatus();
+				startStr = getString(R.string.pay_result_abnormal);
+				showErrorDialog(startStr);
+				updateViewStatus(startStr);
 				break;
 		}
 	}
@@ -651,11 +613,12 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	/**
 	 * 支付完成后更新界面显示状态
 	 */
-	private void updateViewStatus() {
+	private void updateViewStatus(String startStr) {
 		ll_pay_confirm.setVisibility(View.GONE);
 		ll_pay_done.setVisibility(View.VISIBLE);
-		orderTotal = getString(R.string.price_00);
-		tv_pay_amount.setText(currStr + orderTotal); //支付金额
+		ll_pay_select.setVisibility(View.GONE);
+		tv_pay_start.setText(startStr);
+		tv_pay_start.setVisibility(View.VISIBLE);
 	}
 
 }

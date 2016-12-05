@@ -23,8 +23,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="20dp"
+        android:paddingTop="@dimen/margin_padding_10"
+        android:paddingBottom="@dimen/margin_padding_20"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -37,10 +37,10 @@
                 android:id="@+id/login_et_users"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/margin_padding_20"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/icon_login_user"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:background="@null"
                 android:lines="1"
                 android:hint="@string/login_user_name"
@@ -53,7 +53,7 @@
                 android:id="@+id/login_iv_clear_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="@dimen/margin_padding_20"
                 android:contentDescription="@string/desc"
                 android:src="@drawable/icon_clear"
                 android:visibility="gone" />
@@ -61,14 +61,15 @@
 
         <ImageView
             style="@style/set_line_horizontal_bg"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/margin_padding_50"
+            android:layout_marginTop="@dimen/margin_padding_5"
+            android:layout_marginRight="@dimen/screen_margin_default"
             android:contentDescription="@string/desc" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_padding_20"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
@@ -76,10 +77,10 @@
                 android:id="@+id/login_et_passwords"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/margin_padding_20"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/icon_login_password"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:background="@null"
                 android:lines="1"
                 android:hint="@string/login_password"
@@ -92,15 +93,16 @@
                 android:id="@+id/login_iv_password_check"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="@dimen/margin_padding_20"
                 android:contentDescription="@string/desc"
                 android:src="@drawable/selector_btn_password_check" />
         </LinearLayout>
 
         <ImageView
             style="@style/set_line_horizontal_bg"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/margin_padding_50"
+            android:layout_marginTop="@dimen/margin_padding_5"
+            android:layout_marginRight="@dimen/screen_margin_default"
             android:contentDescription="@string/desc" />
     </LinearLayout>
 
@@ -114,8 +116,8 @@
             android:id="@+id/login_btn_login"
             style="@style/Register_Button"
             android:layout_marginTop="0dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="@dimen/margin_padding_20"
+            android:layout_marginRight="@dimen/margin_padding_20"
             android:text="@string/login_login" />
 
         <LinearLayout
@@ -136,7 +138,7 @@
 
             <ImageView
                 style="@style/set_line_vertical_bg"
-                android:layout_height="15dp"
+                android:layout_height="@dimen/margin_padding_15"
                 android:contentDescription="@string/desc" />
 
             <TextView
@@ -160,15 +162,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_padding_10"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
             <ImageView
                 style="@style/set_line_horizontal_bg"
                 android:layout_width="0dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="@dimen/margin_padding_20"
+                android:layout_marginRight="@dimen/margin_padding_5"
                 android:layout_weight="1"
                 android:contentDescription="@string/desc" />
 
@@ -182,8 +184,8 @@
             <ImageView
                 style="@style/set_line_horizontal_bg"
                 android:layout_width="0dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="@dimen/margin_padding_5"
+                android:layout_marginRight="@dimen/margin_padding_20"
                 android:layout_weight="1"
                 android:contentDescription="@string/desc" />
         </LinearLayout>
@@ -193,34 +195,34 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" >
+            android:paddingLeft="@dimen/screen_margin_default"
+            android:paddingRight="@dimen/screen_margin_default" >
 
             <TextView
                 android:id="@+id/login_tv_wechat"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/login_icon_logo_wechat"
                 android:text="@string/share_wechat" />
 
             <TextView
                 android:id="@+id/login_tv_qq"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/login_icon_logo_qq"
                 android:text="@string/share_qq" />
 
             <TextView
                 android:id="@+id/login_tv_weibo"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/login_icon_logo_sina"
                 android:text="@string/share_weibo" />
 
             <TextView
                 android:id="@+id/login_tv_alipay"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/login_icon_logo_alipay"
                 android:text="@string/share_alipay"
                 android:visibility="gone" />
@@ -228,7 +230,7 @@
             <TextView
                 android:id="@+id/login_tv_facebook"
                 style="@style/commom_mean_tab_text_assist"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/margin_padding_10"
                 android:drawableTop="@drawable/login_icon_logo_facebook"
                 android:text="@string/share_fb"
                 android:visibility="gone" />

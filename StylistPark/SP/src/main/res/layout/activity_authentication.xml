@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     android:background="@color/ui_bg_color_app"
     android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="10dp">
+    android:paddingLeft="@dimen/screen_margin_default"
+    android:paddingRight="@dimen/screen_margin_default"
+    android:paddingTop="@dimen/margin_padding_10">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -22,20 +22,20 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="@dimen/margin_padding_3"
             android:src="@drawable/icon_warning" />
     </FrameLayout>
 
     <EditText
         android:id="@+id/authentication_et_name"
         style="@style/Register_EditText"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margin_padding_20"
         android:hint="@string/money_auth_input_name_hint" />
 
     <EditText
         android:id="@+id/authentication_et_name_id"
         style="@style/Register_EditText"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margin_padding_20"
         android:inputType="number"
         android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRTSUVWXYZ"
         android:hint="@string/money_auth_input_name_id_hint" />
@@ -43,7 +43,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margin_padding_20"
         android:orientation="horizontal" >
 
         <TextView
@@ -70,13 +70,13 @@
     <EditText
         android:id="@+id/authentication_et_account"
         style="@style/Register_EditText"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margin_padding_20"
         android:hint="@string/money_auth_input_account_hint" />
 
     <Button
         android:id="@+id/authentication_btn_submit"
         style="@style/Register_Button"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/margin_padding_30"
         android:text="@string/mine_submit_audit" />
 
 </LinearLayout>

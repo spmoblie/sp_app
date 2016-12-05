@@ -15,8 +15,8 @@
         android:id="@+id/error_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_padding_10"
         android:text="@string/dialog_error_video_url"
         android:textColor="@color/ui_bg_color_white"
-        android:textSize="13dp" />
+        android:textSize="@dimen/text_size_13" />
 </LinearLayout>

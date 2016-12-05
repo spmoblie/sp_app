@@ -11,14 +11,14 @@
         android:id="@+id/item_list_balance_ll_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/margin_padding_5"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="gone" >
 
         <ImageView
             style="@style/set_line_horizontal_bg"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="@dimen/margin_padding_5"
             android:layout_weight="1"
             android:contentDescription="@string/desc" />
 
@@ -31,7 +31,7 @@
 
         <ImageView
             style="@style/set_line_horizontal_bg"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/margin_padding_5"
             android:layout_weight="1"
             android:contentDescription="@string/desc" />
     </LinearLayout>
@@ -44,17 +44,17 @@
             android:id="@+id/item_list_balance_tv_title"
             style="@style/setting_lay_text_title"
             android:layout_centerVertical="false"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_padding_10"
             android:ellipsize="end"
             android:lines="1"
-            android:layout_marginRight="100dp" />
+            android:layout_marginRight="@dimen/margin_padding_100" />
 
         <TextView
             android:id="@+id/item_list_balance_tv_time"
             style="@style/setting_lay_text_title"
             android:layout_below="@id/item_list_balance_tv_title"
             android:layout_centerVertical="false"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_padding_8"
             android:textColor="@color/label_text_color"
             android:textSize="@dimen/text_size_12" />
 
@@ -62,14 +62,14 @@
             android:id="@+id/item_list_balance_tv_money"
             style="@style/setting_lay_text_title"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp" />
+            android:layout_marginRight="@dimen/screen_margin_default" />
 
         <ImageView
             style="@style/set_line_horizontal_bg"
             android:layout_below="@id/item_list_balance_tv_time"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/screen_margin_default"
+            android:layout_marginRight="@dimen/screen_margin_default"
+            android:layout_marginTop="@dimen/margin_padding_5"
             android:contentDescription="@string/desc" />
     </RelativeLayout>
 
