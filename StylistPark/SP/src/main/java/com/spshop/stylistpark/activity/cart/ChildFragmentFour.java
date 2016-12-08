@@ -49,6 +49,10 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.screenHeight;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+import static com.spshop.stylistpark.AppApplication.statusHeight;
+
 @SuppressLint("UseSparseArrays")
 public class ChildFragmentFour extends Fragment implements OnClickListener, OnDataListener {
 
@@ -186,8 +190,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 
 	private void showNoDataView(boolean isShow) {
 		if (isShow) {
-			CommonTools.setLayoutParams(ll_no_data, AppApplication.screenWidth,
-					AppApplication.screenHeight - AppApplication.statusHeight - 300);
+			CommonTools.setLayoutParams(ll_no_data, screenWidth, screenHeight - statusHeight - 300);
 			ll_no_data.setVisibility(View.VISIBLE);
 			//ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_white));
 		} else {
@@ -239,7 +242,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 					case CartProductListAdapter.TYPE_DELETE: //删除
 						dm.showTwoBtnDialog(null, getString(R.string.delete_confirm),
 								getString(R.string.delete_pain), getString(R.string.delete_think),
-								AppApplication.screenWidth * 2/3, true, true, new Handler() {
+								screenWidth * 2/3, true, true, new Handler() {
 									@Override
 									public void handleMessage(Message msg) {
 										switch (msg.what) {

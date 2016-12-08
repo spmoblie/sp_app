@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
@@ -14,6 +13,9 @@ import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
 
 import java.util.ArrayList;
+
+import static com.spshop.stylistpark.AppApplication.screenHeight;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
 
 /**
  * 执行图片下载任务并缓存到集合
@@ -67,7 +69,7 @@ public class AsyncImageLoader {
 							if (task.type == 1) { //下载头像
 								task.bitmap = BitmapUtil.getBitmap(data, 120, 120);
 							} else {
-								task.bitmap = BitmapUtil.getBitmap(data, AppApplication.screenWidth, AppApplication.screenHeight);
+								task.bitmap = BitmapUtil.getBitmap(data, screenWidth, screenHeight);
 							}
 							// 缓存到集合
 							BitmapCache.getInstance().addCacheBitmap(task.bitmap, task.newPath);

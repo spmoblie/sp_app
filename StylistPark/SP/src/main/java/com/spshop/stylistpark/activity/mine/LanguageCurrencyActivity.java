@@ -189,6 +189,7 @@ public class LanguageCurrencyActivity extends BaseActivity {
 				break;
 			case 2:
 				SettingActivity.instance.change_currency = true; //切换App展示的货币
+				AppApplication.themeEn = null;
 				break;
 			}
 		}

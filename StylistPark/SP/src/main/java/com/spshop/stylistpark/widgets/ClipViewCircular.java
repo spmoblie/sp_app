@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.spshop.stylistpark.AppApplication;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
 
 /**
  * 裁剪圆形边框
@@ -17,7 +17,7 @@ public class ClipViewCircular extends View {
 	/**
 	 * 内圆半径
 	 */
-	public static final int CIRCULAR_RADIUS = AppApplication.screenWidth / 3;
+	public static final int CIRCULAR_RADIUS = screenWidth / 3;
 	
 	private Paint mPaint;
 

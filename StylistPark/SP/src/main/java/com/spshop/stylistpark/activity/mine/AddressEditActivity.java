@@ -51,6 +51,8 @@ import java.util.Map;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import static com.spshop.stylistpark.AppApplication.mScale;
+
 @SuppressLint("UseSparseArrays")
 public class AddressEditActivity extends BaseActivity implements
 		OnClickListener, OnWheelChangedListener {
@@ -371,7 +373,7 @@ public class AddressEditActivity extends BaseActivity implements
 
 	private void changeTextViewStyle(View view) {
 		TextView tv_show = (TextView) view;
-		tv_show.setTextSize(14);
+		tv_show.setTextSize(mScale * 14);
 	}
 
 	private void changeTextViewShow(TextView showView, int showPos, List<String> ls_datas) {

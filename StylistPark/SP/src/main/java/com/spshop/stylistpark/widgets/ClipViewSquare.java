@@ -9,8 +9,10 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.activity.common.ClipImageSquareActivity;
+
+import static com.spshop.stylistpark.AppApplication.screenHeight;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
 
 /**
  * 裁剪方形边框
@@ -20,11 +22,11 @@ public class ClipViewSquare extends View {
 	/**
 	 * 屏幕宽
 	 */
-	public static final int WIDTH = AppApplication.screenWidth;
+	public static final int WIDTH = screenWidth;
 	/**
 	 * 屏幕高
 	 */
-	public static final int HEIGHT = AppApplication.screenHeight;
+	public static final int HEIGHT = screenHeight;
 	/**
 	 * 方形宽高
 	 */

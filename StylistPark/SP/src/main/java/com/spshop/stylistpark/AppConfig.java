@@ -10,7 +10,7 @@ public class AppConfig {
 	 */
 	
 	// 是否正式发布
-	public static final boolean IS_PUBLISH = true;
+	public static final boolean IS_PUBLISH = false;
 	// 网络传输协议http
 	public final static String APP_HTTP = "http://";
 	// 网络传输协议https
@@ -54,6 +54,8 @@ public class AppConfig {
 
 	// 上传头像URL
 	public static final String API_UPDATE_PROFILE = URL_COMMON_USER_URL + "?act=act_edit_profile";
+	// SP微信公众号
+	public static final String SP_WECHAT_PUBLIC = "http://weixin.qq.com/r/MnXVzWXE-jiBrSGu9yAg";
 	// 联系客服URL
 	public static final String API_CUSTOMER_SERVICE = "http://webim.qiao.baidu.com/im/gateway?siteid=3888057&type=n&ucid=6374202";
 

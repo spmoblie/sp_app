@@ -46,12 +46,12 @@ public class AppApplication extends Application implements OnDataListener{
 	
 	private static AppApplication spApp = null;
 	
-	public static String model = ""; //手机型号
 	public static String version_name = ""; //当前版本号
 	public static String clip_photo_path; //裁剪后相片的路径
 	public static int screenWidth; //手机屏幕的宽
 	public static int screenHeight; //手机屏幕的高
 	public static int statusHeight; //手机状态栏高
+	public static int mScale = 1;
 	public static int clip_photo_type = 1; //记录裁剪相片的类型(1:圆形/2:方形)
 	public static int network_current_state = 0; //记录当前网络的状态
 	
@@ -88,9 +88,8 @@ public class AppApplication extends Application implements OnDataListener{
 	    // 获取手机型号及屏幕的宽高许
 		screenWidth = DeviceUtil.getDeviceWidth(spApp);
 		screenHeight = DeviceUtil.getDeviceHeight(spApp);
-		model = DeviceUtil.getModel();
 		// 判定是否为Pad
-		LogUtil.i("device", "手机型号："+ model + " 宽："+screenWidth + " / 高："+screenHeight);
+		LogUtil.i("device", "手机型号："+ DeviceUtil.getModel() + " 宽："+screenWidth + " / 高："+screenHeight);
 
 		// 设置每天第一次启动App时清除与日期关联的缓存标志
 		long newDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);

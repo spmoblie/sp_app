@@ -90,6 +90,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.mScale;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+
 /**
  * 所有Activity的父类
  */
@@ -128,6 +131,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected boolean isColl = false;
 
 	// 购物浮层组件
+	private int dialogWidth;
 	private int goodsId = 0;
 	private int skuNum = 1;
 	private int buyNumber = 1;
@@ -143,7 +147,6 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 	protected Animation headGONE, headVISIBLE;
 	protected boolean headStatus = false;
-	protected int width, height, statusHeight;
 	protected String currStr;
 	protected ServiceContext sc = ServiceContext.getServiceContext();
 
@@ -163,6 +166,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		editor = shared.edit();
 		editor.apply();
 		currStr = LangCurrTools.getCurrencyValue();
+		dialogWidth = screenWidth * 2/3;
 		decimalFormat = new DecimalFormat("0.00");
 		dm = DialogManager.getInstance(mContext);
 		atm = AsyncTaskManager.getInstance(mContext);
@@ -170,11 +174,6 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		defaultOptions = OptionsManager.getInstance().getDefaultOptions();
 		api = WXAPIFactory.createWXAPI(mContext, AppConfig.WX_APP_ID);
 		api.registerApp(AppConfig.WX_APP_ID);
-
-		// 获取屏幕配置
-		width = AppApplication.screenWidth;
-		height = AppApplication.screenHeight;
-		statusHeight = AppApplication.statusHeight;
 
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
@@ -992,7 +991,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		tv_name.setGravity(Gravity.CENTER);
 		tv_name.setText("+" + addNum);
 		tv_name.setTextColor(mContext.getResources().getColor(R.color.tv_color_status));
-		tv_name.setTextSize(14);
+		tv_name.setTextSize(mScale * 14);
 		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
 				ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp.gravity = Gravity.BOTTOM;
@@ -1113,7 +1112,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	
 	protected void showErrorDialog(String content, boolean isVanish, final Handler handler) {
 		content = (TextUtils.isEmpty(content)) ? getString(R.string.dialog_error_msg) : content;
-		dm.showOneBtnDialog(content, width * 2/3, true, isVanish, handler, null);
+		dm.showOneBtnDialog(content, dialogWidth, true, isVanish, handler, null);
 	}
 	
     protected void showConfirmDialog(int contentResId, String positiveBtnStr, String negativeBtnStr,
@@ -1130,7 +1129,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 					boolean isCenter, boolean isVanish, final Handler handler) {
 		positiveBtnStr = (positiveBtnStr == null) ? getString(R.string.confirm) : positiveBtnStr;
 		negativeBtnStr = (negativeBtnStr == null) ? getString(R.string.cancel) : negativeBtnStr;
-		showConfirmDialog(null, content, positiveBtnStr, negativeBtnStr, width * 2/3, isCenter, isVanish, handler);
+		showConfirmDialog(null, content, positiveBtnStr, negativeBtnStr, dialogWidth, isCenter, isVanish, handler);
 	}
 
 	protected void showConfirmDialog(String title, String content, String positiveBtnStr, String negativeBtnStr,
@@ -1141,7 +1140,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	}
 
 	protected void showListDialog(int contentResId, CharSequence[] items, boolean isCenter, final Handler handler) {
-		showListDialog(contentResId, items, width * 2/3, isCenter, handler);
+		showListDialog(contentResId, items, dialogWidth, isCenter, handler);
 	}
 
 	protected void showListDialog(int contentResId, CharSequence[] items, int width, boolean isCenter, final Handler handler) {
@@ -1149,7 +1148,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	}
 
 	protected void showListDialog(String content, CharSequence[] items, boolean isCenter, final Handler handler) {
-		showListDialog(content, items, width * 2/3, isCenter, handler);
+		showListDialog(content, items, dialogWidth, isCenter, handler);
 	}
 
 	protected void showListDialog(String content, CharSequence[] items, int width, boolean isCenter, final Handler handler) {

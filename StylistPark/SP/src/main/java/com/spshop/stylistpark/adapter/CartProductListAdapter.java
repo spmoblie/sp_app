@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ProductDetailEntity;
@@ -26,6 +25,8 @@ import com.spshop.stylistpark.widgets.MyHorizontalScrollView.ScrollType;
 import com.spshop.stylistpark.widgets.MyHorizontalScrollView.ScrollViewListener;
 
 import java.util.List;
+
+import static com.spshop.stylistpark.AppApplication.screenWidth;
 
 
 /**
@@ -61,7 +62,7 @@ public class CartProductListAdapter extends BaseAdapter{
 		goodsOptions = OptionsManager.getInstance().getGoodsOptions();
 
 		lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		lp.width = AppApplication.screenWidth;
+		lp.width = screenWidth;
 	}
 	
 	public void updateAdapter(List<ProductDetailEntity> datas, SparseArray<ProductDetailEntity> sa_cart){

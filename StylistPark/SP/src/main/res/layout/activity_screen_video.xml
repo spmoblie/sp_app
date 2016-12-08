@@ -9,14 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/screen_video_tv_price"
-            style="@style/common_text_price"
-            android:layout_centerInParent="true"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size_18"
-            android:visibility="gone" />
-
         <RelativeLayout
             android:id="@+id/screen_video_rl_close"
             android:layout_width="@dimen/video_top_colse_size"
@@ -46,7 +38,7 @@
             android:id="@+id/screen_video_rl_next_1"
             android:layout_width="@dimen/video_next_view_size"
             android:layout_height="@dimen/video_next_view_size"
-            android:layout_marginBottom="@dimen/margin_padding_30"
+            android:layout_marginBottom="@dimen/margin_padding_15"
             android:layout_gravity="center_vertical"
             android:visibility="gone" >
 
@@ -62,7 +54,7 @@
             android:id="@+id/screen_video_rl_next_2"
             android:layout_width="@dimen/video_next_view_size"
             android:layout_height="@dimen/video_next_view_size"
-            android:layout_marginBottom="@dimen/margin_padding_30"
+            android:layout_marginBottom="@dimen/margin_padding_15"
             android:layout_gravity="right|center_vertical"
             android:visibility="gone" >
 
@@ -78,47 +70,31 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="@dimen/screen_margin_default"
-            android:layout_marginBottom="@dimen/margin_padding_100"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="@dimen/margin_padding_15"
+            android:layout_marginBottom="@dimen/margin_padding_115"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/screen_video_qr_public"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_qr_public" />
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/common_text_price"
                 android:text="@string/setting_qr_attention"
-                android:textSize="@dimen/text_size_11"
-                android:textColor="@color/tv_color_status" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:layout_marginRight="@dimen/screen_margin_default"
-            android:layout_marginBottom="@dimen/margin_padding_100"
-            android:gravity="center"
-            android:orientation="vertical">
+                android:textSize="@dimen/text_size_11" />
 
             <ImageView
                 android:id="@+id/screen_video_qr_buy"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_qr_public" />
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/common_text_price"
                 android:text="@string/setting_qr_buy"
-                android:textSize="@dimen/text_size_11"
-                android:textColor="@color/tv_color_status" />
+                android:textSize="@dimen/text_size_11" />
         </LinearLayout>
 
         <include layout="@layout/layout_screen_video_loading" />

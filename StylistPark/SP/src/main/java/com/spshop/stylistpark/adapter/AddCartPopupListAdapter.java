@@ -2,8 +2,6 @@ package com.spshop.stylistpark.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,15 +11,16 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ProductAttrEntity;
-import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.spshop.stylistpark.AppApplication.mScale;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
 
 
 /**
@@ -29,28 +28,28 @@ import java.util.List;
  */
 @SuppressLint({ "NewApi", "UseSparseArrays" })
 public class AddCartPopupListAdapter extends BaseAdapter{
-	
+
 	private Context context;
 	private List<ProductAttrEntity> datas;
 	private HashMap<String, Integer> skuHashMap = new HashMap<String, Integer>();
 	private HashMap<Integer, ProductAttrEntity> attrHashMap = new HashMap<Integer, ProductAttrEntity>();;
 	private AddCartCallback callback;
-	private int txtSize, pdLeft, pdTop, mgRight;
-	private int mgWidth, pdWidth, size;
+	private int txtSize, pdWidth, pdHeight, mgWidth;
+	private int count, mgDps, tvSpec;
 	private int select_id_1, select_id_2;
 	private String attr_name_1, attr_name_2, select_name_1, select_name_2;
 	private View[] views_1, views_2;
-	
+
 	public AddCartPopupListAdapter(Context context, ProductAttrEntity attrEn, AddCartCallback callback) {
 		this.context = context;
 		this.callback = callback;
 
-		txtSize = 12;
-		pdLeft = 15;
-		pdTop = 10;
-		mgRight = 15;
-		mgWidth = CommonTools.dip2px(context, 15) * 2;
-		pdWidth = (pdLeft + 2) * 2;
+		txtSize = mScale * 12;
+		mgWidth = 15;
+		pdWidth = 15;
+		pdHeight = 10;
+		mgDps = context.getResources().getDimensionPixelSize(R.dimen.screen_margin_default) * 2;
+		tvSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 
 		getAttrDatas(attrEn);
 		if (datas == null) {
@@ -61,8 +60,8 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 	/**获得总共有多少条数据*/
 	@Override
 	public int getCount() {
-		size = datas.size();
-		return size;
+		count = datas.size();
+		return count;
 	}
 
 	/**在ListView中显示的每个item内容*/
@@ -78,36 +77,36 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 	}
 
 	static class ViewHolder{
-		
+
 		RelativeLayout rl_main;
-		
+
 	}
-	
+
 	/**代表了ListView中的一个item对象*/
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ViewHolder holder = null;
+		ViewHolder holder;
 		if(convertView == null){
 			convertView = View.inflate(context, R.layout.item_list_cart_popup, null);
-			
+
 			holder = new ViewHolder();
 			holder.rl_main = (RelativeLayout) convertView.findViewById(R.id.popup_add_cart_rl_attr_main);
-			
+
 			convertView.setTag(holder);
 		}else{
 			holder=(ViewHolder)convertView.getTag();
 		}
-		
+
 		final ProductAttrEntity data = datas.get(position);
-		
+
 		if (data != null) {
 			holder.rl_main.removeAllViews();
 			addAttributeView(holder.rl_main, data, position);
 		}
-		
+
 		return convertView;
 	}
-	
+
 	/**
 	 * 动态添加View
 	 */
@@ -120,7 +119,7 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 		tv_name.setTextSize(txtSize);
 		tv_name.setId(attrId);
 		rl_main.addView(tv_name);
-		
+
 //		// 添加选择的属性名称
 //		int showId = attrId + 10000;
 //		final TextView tv_name_show = new TextView(context);
@@ -132,44 +131,36 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 //		params1.addRule(RelativeLayout.RIGHT_OF, attrId);
 //		params1.setMargins(5, 0, 0, 0);
 //		rl_main.addView(tv_name_show, params1);
-		
+
 		ArrayList<ProductAttrEntity> nameLists = data.getAttrLists();
 		if (nameLists == null || nameLists.size() == 0) {
 			return;
 		}
 		// 循环添加属性View
-		Paint pFont = new Paint();
-		Rect rect = new Rect();
-		String str = "";
-		int viewId = 0;
-		int childWidth = 0;
-		int widthTotal = mgWidth;
+		int widthTotal = mgDps;
+		int tvWidth;
+		int viewId;
 		int fristId = 0;
 		int beforeId = 0;
-		
+		String str;
+
 		switch (position) {
-		case 0:
-			attr_name_1 = data.getAttrName();
-			views_1 = new View[nameLists.size()]; 
-			break;
-		case 1:
-			attr_name_2 = data.getAttrName();
-			views_2 = new View[nameLists.size()];
-			break;
+			case 0:
+				attr_name_1 = data.getAttrName();
+				views_1 = new View[nameLists.size()];
+				break;
+			case 1:
+				attr_name_2 = data.getAttrName();
+				views_2 = new View[nameLists.size()];
+				break;
 		}
-		
+
 		for (int i = 0; i < nameLists.size(); i++) {
 			str = nameLists.get(i).getAttrName();
-			// 计算str的宽度
-			pFont.getTextBounds(str, 0, str.length(), rect);
-			childWidth = (CommonTools.dip2px(context, rect.width()) + pdWidth + mgRight);
-			widthTotal += childWidth;
-			
 			viewId = nameLists.get(i).getAttrId();
 			if (i > 0) {
 				beforeId = nameLists.get(i-1).getAttrId();
 			}
-			
 			TextView tv = new TextView(context);
 			// 判定库存数
 			int skuNum = nameLists.get(i).getSkuNum();
@@ -183,120 +174,125 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			// 记录库存数
 			skuHashMap.put(String.valueOf(viewId), skuNum);
 			attrHashMap.put(viewId, nameLists.get(i));
-			tv.setPadding(pdLeft, pdTop, pdLeft, pdTop);
+			tv.setPadding(pdWidth, pdHeight, pdWidth, pdHeight);
 			tv.setGravity(Gravity.CENTER);
 			tv.setText(str);
 			tv.setTextSize(txtSize);
 			tv.setId(viewId);
 			tv.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					TextView tv = (TextView) v;
-					switch (size) {
-					case 1: //一种属性
-						if (getSkuNum(String.valueOf(v.getId())) <= 0) { //不可选
-							return;
-						}
-						defaultViewStatus(views_1);
-						updateSelectStatus(v, tv, position, select_id_1);
-						if (select_id_1 > 0) {
-							callback.setOnClick(data, position, getSkuNum(String.valueOf(select_id_1)), getAttrPrice(select_id_1), 
-									select_id_1, 0, getSelectShowStr(select_name_1, ""), getAttrImage(select_id_1));
-						}else {
-							callback.setOnClick(data, position, -1, 0, select_id_1, 0, attr_name_1, "");
-						}
-						break;
-					case 2: //两种属性
-						switch (position) {
-						case 0: //第一种
+					switch (count) {
+						case 1: //一种属性
 							if (getSkuNum(String.valueOf(v.getId())) <= 0) { //不可选
 								return;
 							}
-							// 首先更新第二种属性状态
-							if (select_id_1 == v.getId()) { //取消
-								select_id_2 = 0;
-								select_name_2 = "";
-								defaultViewStatus(views_2);
-							}else {
-								if (views_1.length > 1) { //两选项以上
-									select_id_2 = 0;
-									select_name_2 = "";
-									updateViewStatus(v.getId());
-								}
-							}
-							// 其次更新第一种属性状态
 							defaultViewStatus(views_1);
 							updateSelectStatus(v, tv, position, select_id_1);
+							if (select_id_1 > 0) {
+								callback.setOnClick(data, position, getSkuNum(String.valueOf(select_id_1)), getAttrPrice(select_id_1),
+										select_id_1, 0, getSelectShowStr(select_name_1, ""), getAttrImage(select_id_1));
+							}else {
+								callback.setOnClick(data, position, -1, 0, select_id_1, 0, attr_name_1, "");
+							}
 							break;
-						case 1: //第二种
-							if (select_id_1 <= 0) { //第一未选
-								if (getSkuNum(String.valueOf(v.getId())) <= 0) { //不可选
-									return;
-								}
-								defaultViewStatus(views_2);
-							}else { //第一已选
-								if (getSkuNum(select_id_1 + "|" + String.valueOf(v.getId())) <= 0) { //不可选
-									return;
-								}
-								updateViewStatus(select_id_1);
+						case 2: //两种属性
+							switch (position) {
+								case 0: //第一种
+									if (getSkuNum(String.valueOf(v.getId())) <= 0) { //不可选
+										return;
+									}
+									// 首先更新第二种属性状态
+									if (select_id_1 == v.getId()) { //取消
+										select_id_2 = 0;
+										select_name_2 = "";
+										defaultViewStatus(views_2);
+									}else {
+										if (views_1.length > 1) { //两选项以上
+											select_id_2 = 0;
+											select_name_2 = "";
+											updateViewStatus(v.getId());
+										}
+									}
+									// 其次更新第一种属性状态
+									defaultViewStatus(views_1);
+									updateSelectStatus(v, tv, position, select_id_1);
+									break;
+								case 1: //第二种
+									if (select_id_1 <= 0) { //第一未选
+										if (getSkuNum(String.valueOf(v.getId())) <= 0) { //不可选
+											return;
+										}
+										defaultViewStatus(views_2);
+									}else { //第一已选
+										if (getSkuNum(select_id_1 + "|" + String.valueOf(v.getId())) <= 0) { //不可选
+											return;
+										}
+										updateViewStatus(select_id_1);
+									}
+									updateSelectStatus(v, tv, position, select_id_2);
+									break;
 							}
-							updateSelectStatus(v, tv, position, select_id_2);
+							int attrPrice = 0;
+							if (select_id_1 > 0) {
+								attrPrice += getAttrPrice(select_id_1);
+							}
+							if (select_id_2 > 0) {
+								attrPrice += getAttrPrice(select_id_2);
+							}
+							if (select_id_1 > 0 && select_id_2 > 0) {
+								callback.setOnClick(data, position, getSkuNum(select_id_1 + "|" + select_id_2), attrPrice,
+										select_id_1, select_id_2, getSelectShowStr(select_name_1, select_name_2), getAttrImage(select_id_1));
+							}else {
+								String select_name = "";
+								if (select_id_1 <= 0) {
+									select_name = attr_name_1;
+								}
+								if (select_id_2 <= 0) {
+									if (StringUtil.isNull(select_name)) {
+										select_name = attr_name_2;
+									}else {
+										select_name = select_name + "、" + attr_name_2;
+									}
+								}
+								callback.setOnClick(data, position, -1, attrPrice, select_id_1, select_id_2, select_name, getAttrImage(select_id_1));
+							}
 							break;
-						}
-						int attrPrice = 0;
-						if (select_id_1 > 0) {
-							attrPrice += getAttrPrice(select_id_1);
-						}
-						if (select_id_2 > 0) {
-							attrPrice += getAttrPrice(select_id_2);
-						}
-						if (select_id_1 > 0 && select_id_2 > 0) {
-							callback.setOnClick(data, position, getSkuNum(select_id_1 + "|" + select_id_2), attrPrice, 
-									select_id_1, select_id_2, getSelectShowStr(select_name_1, select_name_2), getAttrImage(select_id_1));
-						}else {
-							String select_name = "";
-							if (select_id_1 <= 0) {
-								select_name = attr_name_1;
-							}
-							if (select_id_2 <= 0) {
-								if (StringUtil.isNull(select_name)) {
-									select_name = attr_name_2;
-								}else {
-									select_name = select_name + "、" + attr_name_2;
-								}
-							}
-							callback.setOnClick(data, position, -1, attrPrice, select_id_1, select_id_2, select_name, getAttrImage(select_id_1));
-						}
-						break;
 					}
 				}
 
 			});
 			switch (position) {
-			case 0:
-				views_1[i] = tv; 
-				break;
-			case 1:
-				views_2[i] = tv;
-				break;
+				case 0:
+					views_1[i] = tv;
+					break;
+				case 1:
+					views_2[i] = tv;
+					break;
 			}
-			
+
+			// 计算TextView的宽度
+			tv.measure(tvSpec, tvSpec);
+			tvWidth = tv.getMeasuredWidth() + 2 + mgWidth; //view宽+边框+右外边距
+			widthTotal += tvWidth;
+
 			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			if (i == 0) {
 				params.addRule(RelativeLayout.BELOW, data.getAttrId()); //在此id控件的下边
 				fristId = viewId;
 			}else {
-				if (widthTotal < AppApplication.screenWidth) {
+				if (widthTotal < screenWidth) {
 					params.addRule(RelativeLayout.RIGHT_OF, beforeId); //在控件的右边
 					params.addRule(RelativeLayout.ALIGN_BOTTOM, beforeId); //与控件底部对齐
 				}else {
 					params.addRule(RelativeLayout.BELOW, fristId); //在控件的下边
 					fristId = viewId;
-					widthTotal = mgWidth + childWidth;
+					widthTotal = mgDps + tvWidth;
 				}
 			}
-			params.setMargins(0, mgRight, mgRight, 0);
+			params.setMargins(0, mgWidth, mgWidth, 0);
 			rl_main.addView(tv,params);
 		}
 	}
@@ -304,32 +300,32 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 	private void updateSelectStatus(View v, TextView tv, int position, int selectId) {
 		TextView tv_item = (TextView)v;
 		switch (position) {
-		case 0:
-			if (selectId != v.getId()) {
-				tv_item.setTextColor(context.getResources().getColor(R.color.text_color_white));
-				v.setSelected(true);
-				selectId = v.getId();
-				select_name_1 = tv.getText().toString();
-			}else {
-				selectId = 0;
-				select_name_1 = "";
-			}
-			select_id_1 = selectId;
-			//tv_show.setText(select_name_1);
-			break;
-		case 1:
-			if (selectId != v.getId()) {
-				tv_item.setTextColor(context.getResources().getColor(R.color.text_color_white));
-				v.setSelected(true);
-				selectId = v.getId();
-				select_name_2 = tv.getText().toString();
-			}else {
-				selectId = 0;
-				select_name_2 = "";
-			}
-			select_id_2 = selectId;
-			//tv_show.setText(select_name_2);
-			break;
+			case 0:
+				if (selectId != v.getId()) {
+					tv_item.setTextColor(context.getResources().getColor(R.color.text_color_white));
+					v.setSelected(true);
+					selectId = v.getId();
+					select_name_1 = tv.getText().toString();
+				}else {
+					selectId = 0;
+					select_name_1 = "";
+				}
+				select_id_1 = selectId;
+				//tv_show.setText(select_name_1);
+				break;
+			case 1:
+				if (selectId != v.getId()) {
+					tv_item.setTextColor(context.getResources().getColor(R.color.text_color_white));
+					v.setSelected(true);
+					selectId = v.getId();
+					select_name_2 = tv.getText().toString();
+				}else {
+					selectId = 0;
+					select_name_2 = "";
+				}
+				select_id_2 = selectId;
+				//tv_show.setText(select_name_2);
+				break;
 		}
 	}
 
@@ -346,10 +342,10 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 				tv_item.setTextColor(context.getResources().getColor(R.color.debar_text_color));
 				views[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
 			}
-			views[i].setPadding(pdLeft, pdTop, pdLeft, pdTop);
+			views[i].setPadding(pdWidth, pdHeight, pdWidth, pdHeight);
 		}
 	}
-	
+
 	private void updateViewStatus(int selectId) {
 		int num = 0;
 		for (int i = 0; i < views_2.length; i++) {
@@ -363,31 +359,31 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 				tv_item.setTextColor(context.getResources().getColor(R.color.debar_text_color));
 				views_2[i].setBackground(context.getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
 			}
-			views_2[i].setPadding(pdLeft, pdTop, pdLeft, pdTop);
+			views_2[i].setPadding(pdWidth, pdHeight, pdWidth, pdHeight);
 		}
 	}
-	
+
 	private int getSkuNum(String keyStr) {
 		if (skuHashMap.containsKey(keyStr)) {
 			return skuHashMap.get(keyStr);
 		}
 		return 0;
 	}
-	
+
 	private double getAttrPrice(int key) {
 		if (attrHashMap.containsKey(key)) {
 			return attrHashMap.get(key).getAttrPrice();
 		}
 		return 0;
 	}
-	
+
 	private String getAttrImage(int key) {
 		if (attrHashMap.containsKey(key)) {
 			return attrHashMap.get(key).getAttrImg();
 		}
 		return "";
 	}
-	
+
 	private String getSelectShowStr(String show1, String show2){
 		StringBuilder sb = new StringBuilder();
 		if (!StringUtil.isNull(show1)) {
@@ -421,12 +417,12 @@ public class AddCartPopupListAdapter extends BaseAdapter{
 			}
 		}
 	}
-	
+
 	public interface AddCartCallback {
-		
+
 		void setOnClick(Object entity, int position, int num, double attrPrice,
-				int id1, int id2, String selectName, String selectImg);
+						int id1, int id2, String selectName, String selectImg);
 
 	}
-	
+
 }

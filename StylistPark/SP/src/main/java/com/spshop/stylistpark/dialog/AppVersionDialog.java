@@ -11,7 +11,6 @@ import android.os.Message;
 import android.text.Html;
 import android.view.KeyEvent;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
@@ -29,11 +28,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+
 
 public class AppVersionDialog {
 	
 	private static final String APK_PATH = AppConfig.SAVE_PATH_APK_DICE + "/stylistpark.apk";
-	private static final int DIALOG_WIDTH = AppApplication.screenWidth * 2/3;
+	private static final int DIALOG_WIDTH = screenWidth * 2/3;
 	private Context mContext;
 	private DialogManager dm;
 	private String apkLoadAddress;

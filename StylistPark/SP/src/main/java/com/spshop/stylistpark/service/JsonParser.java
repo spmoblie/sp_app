@@ -904,9 +904,6 @@ public class JsonParser {
 		PaymentEntity mainEn = new PaymentEntity();
 		getCommonKeyValue(mainEn, jsonObject);
 		switch (payType) {
-			case WXPayEntryActivity.PAY_ZFB: //支付宝支付
-				mainEn.setAlipay(jsonObject.getString("content"));
-				break;
 			case WXPayEntryActivity.PAY_WEIXI: //微信支付
 				JSONObject data = jsonObject.getJSONObject("content");
 				mainEn.setPrepayid(data.getString("prepayid"));
@@ -914,11 +911,10 @@ public class JsonParser {
 				mainEn.setTimestamp(data.getString("timestamp"));
 				mainEn.setSign(data.getString("sign"));
 				break;
+			case WXPayEntryActivity.PAY_ZFB: //支付宝支付
 			case WXPayEntryActivity.PAY_UNION: //银联支付
-				mainEn.setAlipay(jsonObject.getString("content"));
-				break;
 			case WXPayEntryActivity.PAY_PAYPAL: //PayPal支付
-				mainEn.setAlipay(jsonObject.getString("content"));
+				mainEn.setContent(jsonObject.getString("content"));
 				break;
 		}
 		return mainEn;

@@ -50,6 +50,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+
 public class PersonalActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "PersonalActivity";
@@ -317,7 +319,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	private void changeAvatar() {
 		AppApplication.clip_photo_type = 1; //设定裁剪相片的类型为圆形
 		showListDialog(R.string.photo_change_avatar, getResources().getStringArray(R.array.array_photo_choose),
-				width * 1/2, false, new Handler(){
+				screenWidth * 1/2, false, new Handler(){
 
 					@Override
 					public void handleMessage(Message msg) {
@@ -403,7 +405,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	private void showSendEmailDialog() {
 		showConfirmDialog(null, getString(R.string.mine_send_email_hint, emailStr),
 				getString(R.string.cancel), getString(R.string.send_confirm),
-				width * 5/6, false, false, new Handler() {
+				screenWidth * 5/6, false, false, new Handler() {
 					@Override
 					public void handleMessage(Message msg) {
 						switch (msg.what) {

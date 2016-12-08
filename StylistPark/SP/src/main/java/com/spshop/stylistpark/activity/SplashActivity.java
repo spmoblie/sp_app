@@ -23,6 +23,8 @@ import com.spshop.stylistpark.utils.UserManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.statusHeight;
+
 /**
  * App首页欢迎界面
  */
@@ -73,7 +75,7 @@ public class SplashActivity extends BaseActivity {
 
 			@Override
 			public void run() {
-				AppApplication.statusHeight = DeviceUtil.getStatusBarHeight(SplashActivity.this);
+				statusHeight = DeviceUtil.getStatusBarHeight(SplashActivity.this);
 				startActivity(new Intent(SplashActivity.this, HomeFragmentActivity.class));
 				finish();
 				// 设置Activity的切换效果

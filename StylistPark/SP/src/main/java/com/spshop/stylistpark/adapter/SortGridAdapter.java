@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.SortListEntity;
@@ -24,6 +23,9 @@ import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LangCurrTools.Language;
 
 import java.util.List;
+
+import static com.spshop.stylistpark.AppApplication.mScale;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
 
 
 /**
@@ -71,7 +73,7 @@ public class SortGridAdapter extends BaseAdapter{
 
 		lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		int newWidth = AppApplication.screenWidth / 6;
+		int newWidth = screenWidth / 6;
 		lp.width = newWidth;
 		lp.height = newWidth;
 	}
@@ -128,9 +130,9 @@ public class SortGridAdapter extends BaseAdapter{
 		final SortListEntity data = datas.get(position);
 		
 		if (lang == Language.En) {
-			holder.tv_name.setTextSize(10);
+			holder.tv_name.setTextSize(mScale * 10);
 		}else {
-			holder.tv_name.setTextSize(12);
+			holder.tv_name.setTextSize(mScale * 12);
 		}
 		holder.tv_name.setText(data.getName());
 		

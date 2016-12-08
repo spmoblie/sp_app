@@ -82,7 +82,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	private String attrStr = ""; //筛选的其它类型Value字符串
 	private String titleName = "";
 	private String searchStr = "";
-	private String wordsHistoryStr = "";
 
 	private RelativeLayout rl_search_et, rl_search_txt, rl_search_line;
 	private RelativeLayout rl_words_clear, rl_search_no_data;
@@ -277,6 +276,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			
 			@Override
 			public void setOnClick(Object entity, int position, int type) {
+				if (position < 0 || position >= lv_words.size()) return;
 				et_search.setText(lv_words.get(position).getChildShowName());
 				requestSearchDatas();
 			}
@@ -585,12 +585,10 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 			break;
 		case R.id.search_iv_clear: //清除搜索
 			et_search.setText("");
-			clearAllData();
 			break;
 		case R.id.button_confirm_btn_one: //清除历史搜索记录
 			lv_words.clear();
-			wordsHistoryStr = "";
-			editor.putString(AppConfig.KEY_SEARCH_WORDS_HISTORY, wordsHistoryStr).commit();
+			editor.putString(AppConfig.KEY_SEARCH_WORDS_HISTORY, "").apply();
 			initWordsHistoryList();
 			break;
 		case R.id.search_rl_search_txt: //搜索
@@ -970,13 +968,13 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 	 * 获取商品搜索的历史记录集合
 	 */
 	private void getWordsHistoryLists() {
-		wordsHistoryStr = shared.getString(AppConfig.KEY_SEARCH_WORDS_HISTORY, "");
-		String[] strs = wordsHistoryStr.split("_");
+		String historyStr = shared.getString(AppConfig.KEY_SEARCH_WORDS_HISTORY, "");
+		String[] strs = historyStr.split("_");
 		lv_words.clear();
-		SelectListEntity en;
+		if (strs == null || strs.length == 0) return;
 		for (int i = 0; i < strs.length; i++) {
 			if (!StringUtil.isNull(strs[i])) {
-				en = new SelectListEntity();
+				SelectListEntity en = new SelectListEntity();
 				en.setChildShowName(strs[i]);
 				lv_words.add(en);
 			}
@@ -1002,7 +1000,6 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 				sb.append(wordsEn.getChildShowName()).append("_");
 			}
 		}
-		wordsHistoryStr = sb.toString();
 		lists.clear();
 		lists.addAll(lv_words);
 		lv_words.clear();
@@ -1010,7 +1007,7 @@ public class ProductListActivity extends BaseActivity implements OnClickListener
 		wordsEn.setChildShowName(searchStr);
 		lv_words.add(wordsEn);
 		lv_words.addAll(lists);
-		editor.putString(AppConfig.KEY_SEARCH_WORDS_HISTORY, wordsHistoryStr).apply();
+		editor.putString(AppConfig.KEY_SEARCH_WORDS_HISTORY, sb.toString()).apply();
 	}
 
 	/**

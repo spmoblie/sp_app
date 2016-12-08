@@ -51,6 +51,8 @@ import com.spshop.stylistpark.widgets.stikkyheader.StikkyHeaderBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+
 /**
  * "有头部跟随滑动的商品展示列表"
  */
@@ -337,7 +339,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		if (bm != null) {
 			int w = bm.getWidth();
 			int h = bm.getHeight();
-            logo_height = h * AppApplication.screenWidth / w;
+            logo_height = h * screenWidth / w;
 			iv_topbar_line.setVisibility(View.VISIBLE);
         } else {
             logo_height = 0;

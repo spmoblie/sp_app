@@ -11,13 +11,14 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ThemeEntity;
 import com.spshop.stylistpark.utils.OptionsManager;
 
 import java.util.List;
+
+import static com.spshop.stylistpark.AppApplication.screenWidth;
 
 /**
  * 专题列表适配器
@@ -39,7 +40,7 @@ public class FindListAdapter extends BaseAdapter {
 		avatarOptions = OptionsManager.getInstance().getAvatarOptions();
 		defaultOptions = OptionsManager.getInstance().getDefaultOptions();
 		lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		int newWidth = (AppApplication.screenWidth - 20);
+		int newWidth = (screenWidth - 20);
 		lp.width = newWidth;
 		lp.height = newWidth * 405 / 720; //标准视频宽高比
 		lp.setMargins(0, 10, 0, 0);

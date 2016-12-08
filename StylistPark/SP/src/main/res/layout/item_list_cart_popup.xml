@@ -8,10 +8,7 @@
         android:id="@+id/popup_add_cart_rl_attr_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/screen_margin_default"
-        android:paddingRight="@dimen/screen_margin_default"
-        android:paddingTop="@dimen/margin_padding_10"
-        android:paddingBottom="@dimen/screen_margin_default" >
+        android:padding="@dimen/screen_margin_default" >
 
         <TextView
             android:id="@+id/popup_add_cart_tv_attr_name"

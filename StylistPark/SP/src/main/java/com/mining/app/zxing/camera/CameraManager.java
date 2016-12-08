@@ -26,9 +26,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
-import com.spshop.stylistpark.AppApplication;
-
 import java.io.IOException;
+
+import static com.spshop.stylistpark.AppApplication.screenWidth;
 
 /**
  * This object wraps the Camera service object and expects to be the only one talking to it. The
@@ -218,7 +218,7 @@ public final class CameraManager {
       if (camera == null) {
         return null;
       }
-      int cameraWidth = AppApplication.screenWidth;
+      int cameraWidth = screenWidth;
       int cameraHeight = cameraWidth * 4 / 3;
       int scanWidth = cameraWidth * 3 / 5;
       int leftOffset = (cameraWidth - scanWidth) / 2;

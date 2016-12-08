@@ -15,6 +15,8 @@ import com.spshop.stylistpark.utils.LangCurrTools.Language;
 
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.mScale;
+
 
 /**
  * 商品分类ListView适配器 
@@ -86,9 +88,9 @@ public class SortLeftListAdapter extends BaseAdapter{
 		final SortListEntity data = datas.get(position);
 		
 		if (lang == Language.En) {
-			holder.tv_name.setTextSize(10);
+			holder.tv_name.setTextSize(mScale * 10);
 		}else {
-			holder.tv_name.setTextSize(12);
+			holder.tv_name.setTextSize(mScale * 12);
 		}
 		holder.tv_name.setText(data.getName());
 		

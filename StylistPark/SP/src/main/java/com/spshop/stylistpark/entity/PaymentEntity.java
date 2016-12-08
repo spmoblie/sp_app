@@ -33,11 +33,11 @@ public class PaymentEntity extends BaseEntity {
 	 * 交易状态描述
 	 */
 	private String trade_state_desc;
-	
+
 	/**
-	 * 支付宝签名后的订单信息
+	 * 签名支付信息
 	 */
-	private String alipay;
+	private String content;
 
 	
 	public PaymentEntity() {
@@ -125,23 +125,12 @@ public class PaymentEntity extends BaseEntity {
 		this.trade_state_desc = trade_state_desc;
 	}
 
-
-	public String getAlipay() {
-		return alipay;
+	public String getContent() {
+		return content;
 	}
 
-
-	public void setAlipay(String alipay) {
-		this.alipay = alipay;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-
-	@Override
-	public String toString() {
-		return "PaymentEntity [prepayid=" + prepayid + ", noncestr=" + noncestr
-				+ ", timestamp=" + timestamp + ", sign=" + sign
-				+ ", trade_state=" + trade_state + ", trade_state_desc="
-				+ trade_state_desc + ", alipay=" + alipay + "]";
-	}
-	
 }

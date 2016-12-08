@@ -22,6 +22,8 @@ import com.spshop.stylistpark.utils.StringUtil;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.mScale;
+
 
 public class DialogManager {
 
@@ -222,7 +224,7 @@ public class DialogManager {
 				View view = super.getView(position, convertView, parent);
 				TextView tv_item = (TextView) view.findViewById(android.R.id.text1);
 				tv_item.setPadding(30, 0, 30, 0);
-				tv_item.setTextSize(18);
+				tv_item.setTextSize(mScale * 18);
 				tv_item.setTextColor(mContext.getResources().getColor(R.color.conte_text_color));
 				if (!isCenter) { //不居中
 					tv_item.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);

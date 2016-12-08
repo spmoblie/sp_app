@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.spshop.stylistpark.AppApplication;
@@ -42,10 +41,10 @@ public class ScreenVideoActivity extends BaseActivity {
 	private static final int QR_IMG_WIDTH = AppApplication.screenWidth * 2 / 15;
 
 	private VideoView videoView;
-	private TextView tv_price;
 	private ImageView iv_qr_public, iv_qr_buy;
 	private LinearLayout loading_main;
 	private RelativeLayout rl_next_1, rl_next_2, rl_close;
+	private Bitmap qrImg;
 	private int old_duration;
 	private int mSeekPosition;
 	private int urlPosition = 0;
@@ -72,7 +71,6 @@ public class ScreenVideoActivity extends BaseActivity {
 
 	private void findViewById() {
 		videoView = (VideoView) findViewById(R.id.screen_video_video_view);
-		tv_price = (TextView) findViewById(R.id.screen_video_tv_price);
 		iv_qr_public = (ImageView) findViewById(R.id.screen_video_qr_public);
 		iv_qr_buy = (ImageView) findViewById(R.id.screen_video_qr_buy);
 		rl_close = (RelativeLayout) findViewById(R.id.screen_video_rl_close);
@@ -90,14 +88,22 @@ public class ScreenVideoActivity extends BaseActivity {
 		lp_1.height = QR_IMG_WIDTH;
 		iv_qr_public.setLayoutParams(lp_1);
 		iv_qr_public.setScaleType(ImageView.ScaleType.FIT_XY);
+
 		LinearLayout.LayoutParams lp_2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp_2.width = QR_IMG_WIDTH;
 		lp_2.height = QR_IMG_WIDTH;
+		lp_2.setMargins(0, 30, 0, 0);
 		iv_qr_buy.setLayoutParams(lp_2);
 		iv_qr_buy.setScaleType(ImageView.ScaleType.FIT_XY);
 
+		qrImg = QRCodeUtil.createQRImage(AppConfig.SP_WECHAT_PUBLIC, QR_IMG_WIDTH * 2, QR_IMG_WIDTH * 2, 1);
+		if (qrImg != null) {
+			iv_qr_public.setImageBitmap(qrImg);
+			iv_qr_buy.setImageBitmap(qrImg);
+		}
+
 		rl_close.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				finish();
@@ -208,9 +214,9 @@ public class ScreenVideoActivity extends BaseActivity {
 	 */
 	protected void playNext() {
 		if (!isRight) {
-            urlPosition += 2;
-            isRight = true;
-        }
+			urlPosition += 2;
+			isRight = true;
+		}
 		startPlay();
 	}
 
@@ -226,12 +232,10 @@ public class ScreenVideoActivity extends BaseActivity {
 			urlPosition = urlLists.size() - 1;
 		}
 		editor.putInt(AppConfig.KEY_SCREEN_VIDEO_POSITION, urlPosition).apply();
-		String priceStr = "";
 		String videoUrl = "";
 		String videoImg = "";
 		ProductDetailEntity playEn = urlLists.get(urlPosition);
 		if (playEn != null) {
-			priceStr = playEn.getSellPrice();
 			videoUrl = playEn.getVideoUrl();
 			videoImg = playEn.getPromotionName() + UserManager.getInstance().getUserId();
 		}
@@ -240,15 +244,12 @@ public class ScreenVideoActivity extends BaseActivity {
 		} else {
 			urlPosition--;
 		}
-		tv_price.setVisibility(View.GONE);
-		iv_qr_buy.setImageResource(R.drawable.icon_qr_public);
+		if (qrImg != null) {
+			iv_qr_buy.setImageBitmap(qrImg);
+		}
 		if (!StringUtil.isNull(videoUrl)) {
 			videoView.setVideoURI(Uri.parse(videoUrl));
 			videoView.start();
-			if (!StringUtil.isNull(priceStr)) {
-				tv_price.setText(priceStr);
-				tv_price.setVisibility(View.VISIBLE);
-			}
 			if (!StringUtil.isNull(videoImg)) {
 				Bitmap bm = QRCodeUtil.createQRImage(videoImg, QR_IMG_WIDTH * 2, QR_IMG_WIDTH * 2, 1);
 				if (bm != null) {
@@ -265,11 +266,11 @@ public class ScreenVideoActivity extends BaseActivity {
 			@Override
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
-				case DIALOG_CONFIRM_CLICK:
-					finish();
-					break;
-				default:
-					break;
+					case DIALOG_CONFIRM_CLICK:
+						finish();
+						break;
+					default:
+						break;
 				}
 			}
 		};

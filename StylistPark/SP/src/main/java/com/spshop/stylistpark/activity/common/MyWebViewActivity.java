@@ -46,6 +46,8 @@ import com.spshop.stylistpark.widgets.video.UniversalVideoView;
 import java.io.File;
 import java.io.IOException;
 
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+
 
 /**
  * "Html页面展示"Activity
@@ -552,7 +554,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 
 		@Override
 		protected Bitmap doInBackground(String... params) {
-			return BitmapUtil.createVideoThumbnail(params[0], width, cachedHeight);
+			return BitmapUtil.createVideoThumbnail(params[0], screenWidth, cachedHeight);
 		}
 
 		@SuppressLint("NewApi")

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.entity.ListShowTwoEntity;
@@ -23,6 +22,8 @@ import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
 
 import java.util.List;
+
+import static com.spshop.stylistpark.AppApplication.screenWidth;
 
 public class ProductList2ItemAdapter extends BaseAdapter{
 	
@@ -44,7 +45,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 
 		lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-		int newWidth = (AppApplication.screenWidth - 72) / 2;
+		int newWidth = (screenWidth - 72) / 2;
 		lp.width = newWidth;
 		lp.height = newWidth * 37 / 29;
 	}

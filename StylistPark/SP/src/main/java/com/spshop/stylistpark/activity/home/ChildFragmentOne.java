@@ -65,12 +65,14 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+
 @SuppressLint("UseSparseArrays")
 public class ChildFragmentOne extends Fragment implements OnClickListener, OnDataListener {
 
 	private static final String TAG = "ChildFragmentOne";
 	public static ChildFragmentOne instance = null;
-	private static final int GOODS_WIDTH = (AppApplication.screenWidth - 80) / 4;
+	private static final int GOODS_WIDTH = (screenWidth - 80) / 4;
 
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
 	private int dataTotal = 0; //数据总量
@@ -140,8 +142,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		indicatorsLP.setMargins(8, 0, 8, 0);
 
 		brandLP = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		brandLP.width = AppApplication.screenWidth;
-		brandLP.height = AppApplication.screenWidth / 2;
+		brandLP.width = screenWidth;
+		brandLP.height = screenWidth / 2;
 
 		goodsItemLP = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		goodsItemLP.setMargins(10, 0, 10, 0);

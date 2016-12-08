@@ -29,7 +29,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_padding_90"
+            android:layout_height="@dimen/margin_padding_85"
             android:background="@color/ui_bg_color_white" >
 
             <LinearLayout
@@ -41,7 +41,10 @@
                     android:id="@+id/popup_add_cart_rl_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_padding_10"
+                    android:paddingLeft="@dimen/margin_padding_15"
+                    android:paddingTop="@dimen/margin_padding_5"
+                    android:paddingRight="@dimen/margin_padding_15"
+                    android:paddingBottom="@dimen/margin_padding_5"
                     android:background="@color/ui_bg_color_white" >
 
                     <ImageView
@@ -89,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="@dimen/margin_padding_10"
+                        android:layout_marginBottom="@dimen/margin_padding_15"
                         android:text="@string/item_select_no"
                         android:textColor="@color/label_text_color"
                         android:textSize="@dimen/text_size_12" />
@@ -99,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="@dimen/margin_padding_10"
+                        android:layout_marginBottom="@dimen/margin_padding_15"
                         android:layout_toRightOf="@id/popup_add_cart_tv_prompt"
                         android:ellipsize="end"
                         android:maxLines="2"

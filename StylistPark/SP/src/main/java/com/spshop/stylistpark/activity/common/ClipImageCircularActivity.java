@@ -15,6 +15,8 @@ import com.spshop.stylistpark.widgets.ClipImageView;
 
 import java.io.File;
 
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+
 public class ClipImageCircularActivity extends BaseActivity{
 	
 	public static ClipImageCircularActivity instance;
@@ -44,7 +46,7 @@ public class ClipImageCircularActivity extends BaseActivity{
 		// 设置需要裁剪的图片
 		Bitmap bm =BitmapFactory.decodeFile(photoPath);
 		if (bm != null) {
-			bm = BitmapUtil.resizeImageByWidth(bm, width);
+			bm = BitmapUtil.resizeImageByWidth(bm, screenWidth);
 			imageView.setImageBitmap(bm);
 		}else {
 			CommonTools.showToast(getString(R.string.photo_select_no_data), 1000);

@@ -31,6 +31,8 @@ import com.spshop.stylistpark.utils.StringUtil;
 import java.io.IOException;
 import java.util.Vector;
 
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+
 /**
  * Initial the camera
  * @author Ryan.Tang
@@ -72,7 +74,7 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
 		super.onResume();
 		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		lp.height = width * 4 / 3;
+		lp.height = screenWidth * 4 / 3;
 		surfaceView.setLayoutParams(lp);
 
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();

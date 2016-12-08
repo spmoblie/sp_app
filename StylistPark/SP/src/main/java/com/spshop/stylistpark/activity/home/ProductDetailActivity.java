@@ -54,6 +54,9 @@ import com.spshop.stylistpark.widgets.ObservableScrollView.ScrollViewListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.screenHeight;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+
 /**
  * "商品详情"Activity
  */
@@ -317,8 +320,8 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		final boolean loop = viewLists.size() > 3 ? true:false;
 		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp.gravity = Gravity.CENTER;
-		lp.width = AppApplication.screenWidth;
-		lp.height = AppApplication.screenWidth;
+		lp.width = screenWidth;
+		lp.height = screenWidth;
 		viewPager.setLayoutParams(lp);
 		viewPager.setAdapter(new PagerAdapter()
 		{
@@ -632,7 +635,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 	@Override
 	public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-		if (y > height * 2) {
+		if (y > screenHeight * 2) {
 			if (!isShow) {
 				isShow = true;
 				iv_to_top.setVisibility(View.VISIBLE);

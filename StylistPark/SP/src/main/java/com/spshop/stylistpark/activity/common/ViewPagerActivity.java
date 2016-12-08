@@ -20,8 +20,8 @@ import com.spshop.stylistpark.AppApplication;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
 import com.spshop.stylistpark.image.AsyncImageLoader;
-import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.image.AsyncImageLoader.AsyncImageLoaderCallback;
+import com.spshop.stylistpark.image.AsyncImageLoader.ImageLoadTask;
 import com.spshop.stylistpark.utils.BitmapUtil;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.widgets.DragImageView;
@@ -30,6 +30,10 @@ import com.spshop.stylistpark.widgets.IViewPager;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import static com.spshop.stylistpark.AppApplication.screenHeight;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+import static com.spshop.stylistpark.AppApplication.statusHeight;
 
 /**
  * 相片查看器
@@ -126,8 +130,8 @@ public class ViewPagerActivity extends BaseActivity {
 			imageView = new DragImageView(getApplicationContext());
 			imageView.setLayoutParams(lp_m);
 			imageView.setmActivity(this);
-			imageView.setScreen_H(height - statusHeight);
-			imageView.setScreen_W(width);
+			imageView.setScreen_H(screenHeight - statusHeight);
+			imageView.setScreen_W(screenWidth);
 			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 			// 加载图片对象
 			ImageLoadTask task = asyncImageLoader.loadImage(imgUrl, 0);

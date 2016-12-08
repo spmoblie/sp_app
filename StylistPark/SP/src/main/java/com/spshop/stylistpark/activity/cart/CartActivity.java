@@ -41,6 +41,10 @@ import com.spshop.stylistpark.widgets.pullrefresh.PullToRefreshScrollView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.screenHeight;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+import static com.spshop.stylistpark.AppApplication.statusHeight;
+
 /**
  * "购物车"Activity
  */
@@ -166,7 +170,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 
 	private void showNoDataView(boolean isShow) {
 		if (isShow) {
-			CommonTools.setLayoutParams(ll_no_data, width, height - statusHeight - 300);
+			CommonTools.setLayoutParams(ll_no_data, screenWidth, screenHeight - statusHeight - 300);
 			ll_no_data.setVisibility(View.VISIBLE);
 			//ptrsv.setBackgroundColor(getResources().getColor(R.color.ui_bg_color_white));
 		} else {
