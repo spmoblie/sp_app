@@ -2,275 +2,281 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_app" >
+    android:background="@color/ui_bg_color_app">
 
-    <LinearLayout
-        android:id="@+id/new_address_ll_top"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/ui_bg_color_white"
-        android:orientation="vertical" >
+        android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/new_address_ll_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:background="@color/ui_bg_color_white"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/new_address_et_name"
-                style="@style/Address_EditText"
-                android:layout_marginLeft="@dimen/margin_padding_18"
-                android:hint="@string/address_consignee" />
-        </LinearLayout>
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:contentDescription="@string/desc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <EditText
-                android:id="@+id/new_address_et_phone"
-                style="@style/Address_EditText"
-                android:layout_marginLeft="@dimen/margin_padding_18"
-                android:hint="@string/address_phone_number"
-                android:inputType="phone" />
-        </LinearLayout>
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:contentDescription="@string/desc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone" >
-
-            <EditText
-                android:id="@+id/new_address_et_email"
-                style="@style/Address_EditText"
-                android:layout_marginLeft="@dimen/margin_padding_18"
-                android:hint="@string/address_email_address"
-                android:inputType="textEmailAddress" />
-        </LinearLayout>
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:contentDescription="@string/desc"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/new_address_ll_country_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical" >
+                android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/new_address_sp_country"
-                    style="@style/Address_Spinner"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/new_address_tv_country"
+                <EditText
+                    android:id="@+id/new_address_et_name"
                     style="@style/Address_EditText"
-                    android:layout_width="wrap_content"
                     android:layout_marginLeft="@dimen/margin_padding_18"
-                    android:hint="@string/address_choose_country" />
+                    android:hint="@string/address_consignee" />
+            </LinearLayout>
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:contentDescription="@string/desc" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_address_et_phone"
+                    style="@style/Address_EditText"
+                    android:layout_marginLeft="@dimen/margin_padding_18"
+                    android:hint="@string/address_phone_number"
+                    android:inputType="phone" />
+            </LinearLayout>
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:contentDescription="@string/desc" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/new_address_et_email"
+                    style="@style/Address_EditText"
+                    android:layout_marginLeft="@dimen/margin_padding_18"
+                    android:hint="@string/address_email_address"
+                    android:inputType="textEmailAddress" />
+            </LinearLayout>
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:contentDescription="@string/desc"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/new_address_ll_country_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <Spinner
+                        android:id="@+id/new_address_sp_country"
+                        style="@style/Address_Spinner"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/new_address_tv_country"
+                        style="@style/Address_EditText"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_padding_18"
+                        android:hint="@string/address_choose_country" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/screen_margin_default"
+                        android:src="@drawable/common_go_right" />
+                </RelativeLayout>
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    style="@style/set_line_horizontal_bg"
+                    android:contentDescription="@string/desc" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/new_address_ll_province_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/screen_margin_default"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/common_go_right" />
-            </RelativeLayout>
+                    android:gravity="center_vertical">
+
+                    <Spinner
+                        android:id="@+id/new_address_sp_province"
+                        style="@style/Address_Spinner"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/new_address_tv_province"
+                        style="@style/Address_EditText"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_padding_18"
+                        android:hint="@string/address_choose_province" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/screen_margin_default"
+                        android:src="@drawable/common_go_right" />
+                </RelativeLayout>
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:contentDescription="@string/desc" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/new_address_ll_city_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <Spinner
+                        android:id="@+id/new_address_sp_city"
+                        style="@style/Address_Spinner"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/new_address_tv_city"
+                        style="@style/Address_EditText"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_padding_18"
+                        android:hint="@string/address_choose_city" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/screen_margin_default"
+                        android:src="@drawable/common_go_right" />
+                </RelativeLayout>
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:contentDescription="@string/desc" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/new_address_ll_district_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <Spinner
+                        android:id="@+id/new_address_sp_district"
+                        style="@style/Address_Spinner"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/new_address_tv_district"
+                        style="@style/Address_EditText"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_padding_18"
+                        android:hint="@string/address_choose_district" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/screen_margin_default"
+                        android:src="@drawable/common_go_right" />
+                </RelativeLayout>
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:contentDescription="@string/desc" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/new_address_ll_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/address_text_title"
+                    android:text="@string/address_area" />
+
+                <TextView
+                    style="@style/Address_EditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/address_province"
+                    android:singleLine="true" />
+
+                <TextView
+                    style="@style/Address_EditText"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/address_city"
+                    android:singleLine="true" />
+
+                <TextView
+                    style="@style/Address_EditText"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/address_district"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/new_address_iv_area_line"
+                style="@style/set_line_horizontal_bg"
+                android:contentDescription="@string/desc"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_address_et_address"
+                    style="@style/Address_EditText"
+                    android:layout_marginLeft="@dimen/margin_padding_18"
+                    android:hint="@string/address_detailed_address" />
+            </LinearLayout>
 
             <ImageView
                 style="@style/set_line_horizontal_bg"
                 android:contentDescription="@string/desc" />
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/new_address_ll_province_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical" >
-
-                <Spinner
-                    android:id="@+id/new_address_sp_province"
-                    style="@style/Address_Spinner"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/new_address_tv_province"
-                    style="@style/Address_EditText"
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_padding_18"
-                    android:hint="@string/address_choose_province" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/screen_margin_default"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/common_go_right" />
-            </RelativeLayout>
-
-            <ImageView
-                style="@style/set_line_horizontal_bg"
-                android:contentDescription="@string/desc" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/new_address_ll_city_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical" >
-
-                <Spinner
-                    android:id="@+id/new_address_sp_city"
-                    style="@style/Address_Spinner"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/new_address_tv_city"
-                    style="@style/Address_EditText"
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_padding_18"
-                    android:hint="@string/address_choose_city" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/screen_margin_default"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/common_go_right" />
-            </RelativeLayout>
-
-            <ImageView
-                style="@style/set_line_horizontal_bg"
-                android:contentDescription="@string/desc" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/new_address_ll_district_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical" >
-
-                <Spinner
-                    android:id="@+id/new_address_sp_district"
-                    style="@style/Address_Spinner"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/new_address_tv_district"
-                    style="@style/Address_EditText"
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_padding_18"
-                    android:hint="@string/address_choose_district" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/screen_margin_default"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/common_go_right" />
-            </RelativeLayout>
-
-            <ImageView
-                style="@style/set_line_horizontal_bg"
-                android:contentDescription="@string/desc" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/new_address_ll_area"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone" >
-
-            <TextView
-                style="@style/address_text_title"
-                android:text="@string/address_area" />
-
-            <TextView
-                style="@style/Address_EditText"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:hint="@string/address_province"
-                android:singleLine="true" />
-
-            <TextView
-                style="@style/Address_EditText"
-                android:layout_width="0dp"
-                android:layout_marginLeft="0dp"
-                android:layout_weight="1"
-                android:hint="@string/address_city"
-                android:singleLine="true" />
-
-            <TextView
-                style="@style/Address_EditText"
-                android:layout_width="0dp"
-                android:layout_marginLeft="0dp"
-                android:layout_weight="1"
-                android:hint="@string/address_district"
-                android:singleLine="true" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/new_address_iv_area_line"
-            style="@style/set_line_horizontal_bg"
-            android:contentDescription="@string/desc"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <EditText
-                android:id="@+id/new_address_et_address"
-                style="@style/Address_EditText"
-                android:layout_marginLeft="@dimen/margin_padding_18"
-                android:hint="@string/address_detailed_address" />
-        </LinearLayout>
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:contentDescription="@string/desc" />
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/new_address_ll_bottom"
@@ -280,33 +286,30 @@
         android:background="#E9E9E9"
         android:orientation="vertical"
         android:paddingTop="@dimen/margin_padding_10"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <com.district.selector.wheel.widget.WheelView
                 android:id="@+id/wheel_province"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" >
-            </com.district.selector.wheel.widget.WheelView>
+                android:layout_weight="1"></com.district.selector.wheel.widget.WheelView>
 
             <com.district.selector.wheel.widget.WheelView
                 android:id="@+id/wheel_city"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" >
-            </com.district.selector.wheel.widget.WheelView>
+                android:layout_weight="1"></com.district.selector.wheel.widget.WheelView>
 
             <com.district.selector.wheel.widget.WheelView
                 android:id="@+id/wheel_district"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" >
-            </com.district.selector.wheel.widget.WheelView>
+                android:layout_weight="1"></com.district.selector.wheel.widget.WheelView>
         </LinearLayout>
 
         <Button

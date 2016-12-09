@@ -442,8 +442,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 				showPayResult(PAY_SUCCESS);
 			}else {
 				if (payType == PAY_PAYPAL) {
-					// 失败？取消？等待？
-					showPayResult(PAY_ERROR);
+					// 取消？失败？等待？
+					stopAnimation();
 				} else {
 					if (checkCount < 3) {
 						checkPayResult();
@@ -628,7 +628,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 				break;
 			case PAY_ERROR:
 				startStr = getString(R.string.pay_result_abnormal);
-				showErrorDialog(startStr);
+				//showErrorDialog(startStr);
 				updateViewStatus(startStr);
 				break;
 		}

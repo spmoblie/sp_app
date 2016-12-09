@@ -1,187 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_nut" >
+    android:background="@color/ui_bg_color_nut"
+    android:scrollbars="none">
 
-    <RelativeLayout
-        android:id="@+id/personal_rl_avatar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:background="@color/ui_bg_color_white"
-        android:layout_height="@dimen/avatar_size_parent" >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/personal_tv_avatar_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/mine_avatar" />
-        
-        <ImageView 
-            android:id="@+id/personal_iv_avatar"
-            android:layout_width="@dimen/avatar_size_default"
-            android:layout_height="@dimen/avatar_size_default"
-            android:layout_toLeftOf="@+id/personal_tv_avatar_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/default_avatar"
-            android:contentDescription="@string/desc" />
-
-        <TextView
-            android:id="@+id/personal_tv_avatar_content"
-            style="@style/setting_lay_text_content" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/personal_rl_nick"
-        style="@style/setting_lay_item"
-        android:layout_marginTop="@dimen/margin_padding_10"
-        android:layout_below="@id/personal_rl_avatar" >
-
-        <TextView
-            android:id="@+id/personal_tv_nick_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/mine_nick" />
-
-        <TextView
-            android:id="@+id/personal_tv_nick_content"
-            style="@style/setting_lay_text_content" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/personal_rl_gender"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/personal_rl_nick" >
-
-        <TextView
-            android:id="@+id/personal_tv_gender_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/mine_gender" />
-
-        <TextView
-            android:id="@+id/personal_tv_gender_content"
-            style="@style/setting_lay_text_content" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/personal_rl_birthday"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/personal_rl_gender"
-        android:visibility="gone" >
-
-        <TextView
-            android:id="@+id/personal_tv_birthday_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/mine_birthday" />
-
-        <TextView
-            android:id="@+id/personal_tv_birthday_content"
-            style="@style/setting_lay_text_content" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/personal_rl_rank"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/personal_rl_gender" >
-
-        <TextView
-            android:id="@+id/personal_tv_rank_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/mine_rank" />
-
-        <TextView
-            android:id="@+id/personal_tv_rank_content"
-            style="@style/setting_lay_text_content"
-            android:drawableRight="@null"
-            android:layout_marginRight="@dimen/margin_padding_35"
-            android:textColor="@color/tv_color_status" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/personal_rl_intro"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/personal_rl_rank" >
-
-        <TextView
-            android:id="@+id/personal_tv_intro_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/mine_intro" />
-
-        <TextView
-            android:id="@+id/personal_tv_intro_content"
-            style="@style/setting_lay_text_content"
+        <RelativeLayout
+            android:id="@+id/personal_rl_avatar"
             android:layout_width="match_parent"
-            android:layout_marginLeft="@dimen/margin_padding_10"
-            android:layout_toRightOf="@+id/personal_tv_intro_title"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:scrollHorizontally="true"
-            android:marqueeRepeatLimit="marquee_forever" />
-    </RelativeLayout>
+            android:layout_height="@dimen/avatar_size_parent"
+            android:background="@color/ui_bg_color_white">
 
-    <RelativeLayout
-        android:id="@+id/personal_rl_email"
-        style="@style/setting_lay_item"
-        android:layout_marginTop="@dimen/margin_padding_10"
-        android:layout_below="@id/personal_rl_intro" >
+            <TextView
+                android:id="@+id/personal_tv_avatar_title"
+                style="@style/setting_lay_text_title"
+                android:text="@string/mine_avatar" />
 
-        <TextView
-            android:id="@+id/personal_tv_email_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/address_email_address" />
+            <ImageView
+                android:id="@+id/personal_iv_avatar"
+                android:layout_width="@dimen/avatar_size_default"
+                android:layout_height="@dimen/avatar_size_default"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/personal_tv_avatar_content"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/default_avatar" />
 
-        <TextView
-            android:id="@+id/personal_tv_email_content"
-            style="@style/setting_lay_text_content" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/personal_tv_avatar_content"
+                style="@style/setting_lay_text_content" />
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/personal_rl_auth"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/personal_rl_email"
-        android:visibility="gone" >
+        <RelativeLayout
+            android:id="@+id/personal_rl_nick"
+            style="@style/setting_lay_item"
+            android:layout_below="@id/personal_rl_avatar"
+            android:layout_marginTop="@dimen/margin_padding_10">
 
-        <TextView
-            android:id="@+id/personal_tv_auth_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/money_auth" />
+            <TextView
+                android:id="@+id/personal_tv_nick_title"
+                style="@style/setting_lay_text_title"
+                android:text="@string/mine_nick" />
 
-        <TextView
-            android:id="@+id/personal_tv_auth_go"
-            style="@style/setting_lay_text_content"
-            android:text="@string/money_auth_go"
-            android:textColor="@color/tv_color_status" />
+            <TextView
+                android:id="@+id/personal_tv_nick_content"
+                style="@style/setting_lay_text_content" />
 
-        <TextView
-            android:id="@+id/personal_tv_auth_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/screen_margin_default"
-            android:layout_centerVertical="true"
-            android:text="@string/money_auth_ok"
-            android:textSize="@dimen/text_size_13"
-            android:textColor="@color/label_text_color"
-            android:visibility="gone" />
-    </RelativeLayout>
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:layout_alignParentBottom="true"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
 
-</RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/personal_rl_gender"
+            style="@style/setting_lay_item"
+            android:layout_below="@id/personal_rl_nick">
+
+            <TextView
+                android:id="@+id/personal_tv_gender_title"
+                style="@style/setting_lay_text_title"
+                android:text="@string/mine_gender" />
+
+            <TextView
+                android:id="@+id/personal_tv_gender_content"
+                style="@style/setting_lay_text_content" />
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:layout_alignParentBottom="true"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/personal_rl_birthday"
+            style="@style/setting_lay_item"
+            android:layout_below="@id/personal_rl_gender"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/personal_tv_birthday_title"
+                style="@style/setting_lay_text_title"
+                android:text="@string/mine_birthday" />
+
+            <TextView
+                android:id="@+id/personal_tv_birthday_content"
+                style="@style/setting_lay_text_content" />
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:layout_alignParentBottom="true"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/personal_rl_rank"
+            style="@style/setting_lay_item"
+            android:layout_below="@id/personal_rl_gender">
+
+            <TextView
+                android:id="@+id/personal_tv_rank_title"
+                style="@style/setting_lay_text_title"
+                android:text="@string/mine_rank" />
+
+            <TextView
+                android:id="@+id/personal_tv_rank_content"
+                style="@style/setting_lay_text_content"
+                android:layout_marginRight="@dimen/margin_padding_35"
+                android:drawableRight="@null"
+                android:textColor="@color/tv_color_status" />
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:layout_alignParentBottom="true"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/personal_rl_intro"
+            style="@style/setting_lay_item"
+            android:layout_below="@id/personal_rl_rank">
+
+            <TextView
+                android:id="@+id/personal_tv_intro_title"
+                style="@style/setting_lay_text_title"
+                android:text="@string/mine_intro" />
+
+            <TextView
+                android:id="@+id/personal_tv_intro_content"
+                style="@style/setting_lay_text_content"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/margin_padding_10"
+                android:layout_toRightOf="@+id/personal_tv_intro_title"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/personal_rl_email"
+            style="@style/setting_lay_item"
+            android:layout_below="@id/personal_rl_intro"
+            android:layout_marginTop="@dimen/margin_padding_10">
+
+            <TextView
+                android:id="@+id/personal_tv_email_title"
+                style="@style/setting_lay_text_title"
+                android:text="@string/address_email_address" />
+
+            <TextView
+                android:id="@+id/personal_tv_email_content"
+                style="@style/setting_lay_text_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/personal_rl_auth"
+            style="@style/setting_lay_item"
+            android:layout_below="@id/personal_rl_email"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/personal_tv_auth_title"
+                style="@style/setting_lay_text_title"
+                android:text="@string/money_auth" />
+
+            <TextView
+                android:id="@+id/personal_tv_auth_go"
+                style="@style/setting_lay_text_content"
+                android:text="@string/money_auth_go"
+                android:textColor="@color/tv_color_status" />
+
+            <TextView
+                android:id="@+id/personal_tv_auth_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/screen_margin_default"
+                android:text="@string/money_auth_ok"
+                android:textColor="@color/label_text_color"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

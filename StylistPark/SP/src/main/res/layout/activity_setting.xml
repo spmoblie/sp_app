@@ -2,170 +2,177 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_bg_color_app" >
+    android:background="@color/ui_bg_color_app">
 
-    <RelativeLayout
-        android:id="@+id/setting_rl_language"
-        style="@style/setting_lay_item"
-        android:visibility="gone" >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/setting_rl_logout"
+        android:scrollbars="none">
 
-        <TextView
-            android:id="@+id/setting_tv_language_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/setting_language" />
-
-        <TextView
-            android:id="@+id/setting_tv_language_content"
-            style="@style/setting_lay_text_content"
-            android:textColor="@color/tv_color_status" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/setting_rl_currency"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/setting_rl_language" >
-
-        <TextView
-            android:id="@+id/setting_tv_currency_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/setting_currency" />
-
-        <TextView
-            android:id="@+id/setting_tv_currency_content"
-            style="@style/setting_lay_text_content"
-            android:textColor="@color/tv_color_status" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/setting_rl_feedback"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/setting_rl_currency"
-        android:visibility="gone" >
-
-        <TextView
-            android:id="@+id/setting_tv_feedback_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/setting_feedback" />
-
-        <TextView
-            android:id="@+id/setting_tv_feedback_content"
-            style="@style/setting_lay_text_content" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
-    
-    <RelativeLayout
-        android:id="@+id/setting_rl_about_us"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/setting_rl_feedback" >
-
-        <TextView
-            android:id="@+id/setting_tv_about_us_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/setting_about_us" />
-
-        <TextView
-            android:id="@+id/setting_tv_about_us_content"
-            style="@style/setting_lay_text_content" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/setting_rl_version"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/setting_rl_about_us" >
-
-        <TextView
-            android:id="@+id/setting_tv_version_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/setting_version" />
-
-        <TextView
-            android:id="@+id/setting_tv_version_content"
-            style="@style/setting_lay_text_content" />
-
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/setting_rl_push_control"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/setting_rl_version"
-        android:visibility="gone" >
-
-        <TextView
-            android:id="@+id/setting_tv_push_control_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/setting_notification" />
-
-        <ImageView
-            android:id="@+id/setting_iv_push_control_btn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/screen_margin_default"
-            android:clickable="true"
-            android:contentDescription="@string/desc"
-            android:src="@drawable/selector_btn_push_control" />
+            android:orientation="vertical">
 
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/setting_rl_language"
+                style="@style/setting_lay_item"
+                android:visibility="gone">
 
-    <RelativeLayout
-        android:id="@+id/setting_rl_screen_play"
-        style="@style/setting_lay_item"
-        android:layout_below="@id/setting_rl_version" >
+                <TextView
+                    android:id="@+id/setting_tv_language_title"
+                    style="@style/setting_lay_text_title"
+                    android:text="@string/setting_language" />
 
-        <TextView
-            android:id="@+id/setting_tv_screen_play_title"
-            style="@style/setting_lay_text_title"
-            android:text="@string/setting_screen_play" />
+                <TextView
+                    android:id="@+id/setting_tv_language_content"
+                    style="@style/setting_lay_text_content"
+                    android:textColor="@color/tv_color_status" />
 
-        <ImageView
-            android:id="@+id/setting_iv_screen_play_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/screen_margin_default"
-            android:clickable="true"
-            android:contentDescription="@string/desc"
-            android:src="@drawable/selector_btn_push_control" />
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/desc" />
+            </RelativeLayout>
 
-        <ImageView
-            style="@style/set_line_horizontal_bg"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/desc" />
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/setting_rl_currency"
+                style="@style/setting_lay_item">
+
+                <TextView
+                    android:id="@+id/setting_tv_currency_title"
+                    style="@style/setting_lay_text_title"
+                    android:text="@string/setting_currency" />
+
+                <TextView
+                    android:id="@+id/setting_tv_currency_content"
+                    style="@style/setting_lay_text_content"
+                    android:textColor="@color/tv_color_status" />
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/desc" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setting_rl_feedback"
+                style="@style/setting_lay_item"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/setting_tv_feedback_title"
+                    style="@style/setting_lay_text_title"
+                    android:text="@string/setting_feedback" />
+
+                <TextView
+                    android:id="@+id/setting_tv_feedback_content"
+                    style="@style/setting_lay_text_content" />
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/desc" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setting_rl_about_us"
+                style="@style/setting_lay_item">
+
+                <TextView
+                    android:id="@+id/setting_tv_about_us_title"
+                    style="@style/setting_lay_text_title"
+                    android:text="@string/setting_about_us" />
+
+                <TextView
+                    android:id="@+id/setting_tv_about_us_content"
+                    style="@style/setting_lay_text_content" />
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/desc" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setting_rl_version"
+                style="@style/setting_lay_item">
+
+                <TextView
+                    android:id="@+id/setting_tv_version_title"
+                    style="@style/setting_lay_text_title"
+                    android:text="@string/setting_version" />
+
+                <TextView
+                    android:id="@+id/setting_tv_version_content"
+                    style="@style/setting_lay_text_content" />
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/desc" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setting_rl_push_control"
+                style="@style/setting_lay_item"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/setting_tv_push_control_title"
+                    style="@style/setting_lay_text_title"
+                    android:text="@string/setting_notification" />
+
+                <ImageView
+                    android:id="@+id/setting_iv_push_control_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/screen_margin_default"
+                    android:clickable="true"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/selector_btn_push_control" />
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/desc" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setting_rl_screen_play"
+                style="@style/setting_lay_item">
+
+                <TextView
+                    android:id="@+id/setting_tv_screen_play_title"
+                    style="@style/setting_lay_text_title"
+                    android:text="@string/setting_screen_play" />
+
+                <ImageView
+                    android:id="@+id/setting_iv_screen_play_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/screen_margin_default"
+                    android:clickable="true"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/selector_btn_push_control" />
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/desc" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <RelativeLayout
         android:id="@+id/setting_rl_logout"
         style="@style/setting_lay_item"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true">
 
         <TextView
             android:id="@+id/setting_tv_logout"
