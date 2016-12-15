@@ -212,6 +212,7 @@
     <string name="order_goods_lists">Goods lists</string>
     <string name="order_support_pay">Support pay type</string>
     <string name="order_use_coupon">Use coupon arrived with</string>
+    <string name="order_use_balance">Use balance to pay</string>
     <string name="order_invoice_name">Invoice:</string>
     <string name="order_invoice_hint">Invoice Head</string>
     <string name="order_buyer_name">Remark:</string>

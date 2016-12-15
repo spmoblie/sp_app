@@ -146,7 +146,38 @@
                     android:src="@drawable/common_go_right"
                     android:contentDescription="@string/desc" />
             </RelativeLayout>
-            
+
+            <RelativeLayout
+                android:id="@+id/post_order_rl_balance_use"
+                style="@style/common_vertical_item_layout"
+                android:layout_marginTop="@dimen/margin_padding_10"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/post_order_tv_balance_title"
+                    style="@style/address_order_text"
+                    android:layout_centerVertical="true"
+                    android:text="@string/order_use_balance" />
+
+                <TextView
+                    android:id="@+id/post_order_tv_balance_num"
+                    style="@style/address_order_text"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_padding_10"
+                    android:layout_toRightOf="@+id/post_order_tv_balance_title"
+                    android:textColor="@color/tv_color_status" />
+
+                <ImageView
+                    android:id="@+id/post_order_iv_balance_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/selector_btn_push_control" />
+            </RelativeLayout>
+
             <LinearLayout 
                 style="@style/common_vertical_item_layout"
                 android:layout_marginTop="@dimen/margin_padding_10"

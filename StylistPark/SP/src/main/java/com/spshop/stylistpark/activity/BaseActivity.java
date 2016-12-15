@@ -1099,6 +1099,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 * 加载数据出错提示
 	 */
 	protected void showServerBusy() {
+		stopAnimation();
 		showErrorDialog(R.string.toast_server_busy);
 	}
 

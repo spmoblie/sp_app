@@ -598,6 +598,7 @@ public class JsonParser {
 			mainEn.setPriceCharges(data.getString("pay_fee_formated"));
 			mainEn.setPriceCoupon(data.getString("bonus_formated"));
 			mainEn.setCouponId(data.getString("bonus_id"));
+			mainEn.setPriceBalance(data.getString("pack_fee_formated"));
 			mainEn.setPriceDiscount(data.getString("discount_formated"));
 			mainEn.setPriceCashback(data.getString("pack_fee_formated"));
 			mainEn.setPricePay(data.getString("amount_formated"));

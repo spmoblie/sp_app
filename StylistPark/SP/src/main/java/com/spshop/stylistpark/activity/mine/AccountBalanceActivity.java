@@ -3,7 +3,6 @@ package com.spshop.stylistpark.activity.mine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.widget.ListView;
@@ -95,7 +94,7 @@ public class AccountBalanceActivity extends BaseActivity {
 						CommonTools.showToast(overHintStr, 2000);
 						break;
 					case 3: //非达人
-						showConfirmDialog(R.string.money_over_hint, getString(R.string.cancel),
+						/*showConfirmDialog(R.string.money_over_hint, getString(R.string.cancel),
 								getString(R.string.money_upgrade), true, true, new Handler() {
 									@Override
 									public void handleMessage(Message msg) {
@@ -105,7 +104,8 @@ public class AccountBalanceActivity extends BaseActivity {
 												break;
 										}
 									}
-								});
+								});*/
+						startActivity(new Intent(mContext, AuthenticationActivity.class));
 						break;
 				}
 			}

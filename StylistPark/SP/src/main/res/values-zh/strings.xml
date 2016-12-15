@@ -212,6 +212,7 @@
     <string name="order_goods_lists">商品列表</string>
     <string name="order_support_pay">支持支付方式</string>
     <string name="order_use_coupon">使用優惠抵用</string>
+    <string name="order_use_balance">使用余額支付</string>
     <string name="order_invoice_name">開票信息：</string>
     <string name="order_invoice_hint">開票擡頭</string>
     <string name="order_buyer_name">訂單備注：</string>

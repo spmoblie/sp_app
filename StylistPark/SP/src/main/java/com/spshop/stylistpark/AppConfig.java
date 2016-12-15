@@ -186,8 +186,10 @@ public class AppConfig {
 	public static final int REQUEST_SV_GET_ORDER_CONFIRM_CODE = 0X4040;
 	// 提交选择的支付方式
 	public static final int REQUEST_SV_POST_SELECT_PAYMENT_CODE = 0X4041;
+	// 提交余额支付选项
+	public static final int REQUEST_SV_POST_USE_BALANCE_CODE = 0X4042;
 	// 提交确认订单数据
-	public static final int REQUEST_SV_POST_CONFIRM_ORDER_CODE = 0X4042;
+	public static final int REQUEST_SV_POST_CONFIRM_ORDER_CODE = 0X4043;
 	// 提交支付请求
 	public static final int REQUEST_SV_POST_PAY_INFO_CODE = 0X4050;
 	// 查询支付结果

@@ -36,6 +36,7 @@ public class MainServiceImpl implements MainService {
 			case AppConfig.REQUEST_SV_GET_SESSIONS_CODE:
 			case AppConfig.REQUEST_SV_GET_WX_SHARE_CODE:
 			case AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE:
+			case AppConfig.REQUEST_SV_POST_USE_BALANCE_CODE:
 			case AppConfig.REQUEST_SV_POST_COLLECITON_CODE:
 			case AppConfig.REQUEST_SV_POST_COMMENT_CODE:
 			case AppConfig.REQUEST_SV_POST_LOGOUT_CODE:

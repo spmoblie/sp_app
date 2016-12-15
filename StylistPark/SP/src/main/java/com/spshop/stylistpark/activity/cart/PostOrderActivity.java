@@ -51,15 +51,15 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	public static PostOrderActivity instance = null;
 
 	private TextView tv_name, tv_phone, tv_address, tv_address_hint;
-	private TextView tv_pay_type, tv_coupon_use, tv_goods_total, tv_total_curr, tv_pay_total;
+	private TextView tv_pay_type, tv_coupon_num, tv_balance_num, tv_goods_total, tv_total_curr, tv_pay_total;
 	private TextView tv_total, tv_fee, tv_charges, tv_coupon, tv_discount, tv_cashback, tv_pay, tv_pay_now;
-	private ImageView iv_go_pay_select, iv_invoice_select;
+	private ImageView iv_go_pay_select, iv_invoice_select, iv_balance_pay;
 	private EditText et_invoice, et_buyer;
 	private LinearLayout ll_main, ll_goods_lists;
-	private RelativeLayout rl_address_main, rl_pay_type, rl_coupon_use;
+	private RelativeLayout rl_address_main, rl_pay_type, rl_coupon_use, rl_balance_use;
 	private RelativeLayout rl_charges, rl_coupon, rl_discount, rl_cashback;
 
-	private boolean addressOk, isCashPay, isInvoice;
+	private boolean addressOk, isCashPay, isInvoice, isBalance;
 	private boolean isLogined, isUpdate, isSuccess;
 	private int payTypeCode;
 	private int payType = PAY_TYPE_1;
@@ -84,6 +84,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		rl_address_main = (RelativeLayout) findViewById(R.id.post_order_rl_address_main);
 		rl_pay_type = (RelativeLayout) findViewById(R.id.post_order_rl_pay_type);
 		rl_coupon_use = (RelativeLayout) findViewById(R.id.post_order_rl_coupon_use);
+		rl_balance_use = (RelativeLayout) findViewById(R.id.post_order_rl_balance_use);
 		rl_charges = (RelativeLayout) findViewById(R.id.post_order_rl_price_charges);
 		rl_coupon = (RelativeLayout) findViewById(R.id.post_order_rl_price_coupon);
 		rl_discount = (RelativeLayout) findViewById(R.id.post_order_rl_price_discount);
@@ -93,7 +94,8 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		tv_address = (TextView) findViewById(R.id.post_order_tv_address_address);
 		tv_address_hint = (TextView) findViewById(R.id.post_order_tv_address_hint);
 		tv_pay_type = (TextView) findViewById(R.id.post_order_tv_pay_type);
-		tv_coupon_use = (TextView) findViewById(R.id.post_order_tv_coupon_num);
+		tv_coupon_num = (TextView) findViewById(R.id.post_order_tv_coupon_num);
+		tv_balance_num = (TextView) findViewById(R.id.post_order_tv_balance_num);
 		tv_goods_total = (TextView) findViewById(R.id.post_order_tv_order_goods_total);
 		tv_total = (TextView) findViewById(R.id.post_order_tv_price_total);
 		tv_fee = (TextView) findViewById(R.id.post_order_tv_price_fee);
@@ -107,6 +109,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		tv_pay_now = (TextView) findViewById(R.id.post_order_tv_pay_now);
 		iv_go_pay_select = (ImageView) findViewById(R.id.post_order_iv_go_pay_select);
 		iv_invoice_select = (ImageView) findViewById(R.id.post_order_iv_invoice_select);
+		iv_balance_pay = (ImageView) findViewById(R.id.post_order_iv_balance_pay);
 		et_invoice = (EditText) findViewById(R.id.post_order_et_invoice);
 		et_buyer = (EditText) findViewById(R.id.post_order_et_buyer);
 		ll_main = (LinearLayout) findViewById(R.id.post_order_ll_main);
@@ -118,6 +121,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		rl_address_main.setOnClickListener(this);
 		rl_pay_type.setOnClickListener(this);
 		rl_coupon_use.setOnClickListener(this);
+		iv_balance_pay.setOnClickListener(this);
 		tv_pay_now.setOnClickListener(this);
 	}
 
@@ -209,9 +213,16 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			// 优惠券使用情况
 			couponId = orderEn.getCouponId();
 			if (!StringUtil.isNull(couponId) && !"0".equals(couponId)) {
-				tv_coupon_use.setText(getString(R.string.coupon_used_sum, orderEn.getPriceCoupon()));
+				tv_coupon_num.setText(getString(R.string.coupon_used_sum, orderEn.getPriceCoupon()));
 			}else {
-				tv_coupon_use.setText("");
+				tv_coupon_num.setText("");
+			}
+			// 账户余额抵用情况
+			tv_balance_num.setText(currStr + orderEn.getPriceBalance());
+			if (StringUtil.priceIsNull(orderEn.getPriceBalance())) {
+				rl_balance_use.setVisibility(View.GONE);
+			} else {
+				rl_balance_use.setVisibility(View.VISIBLE);
 			}
 			// 发票信息
 			final InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -289,6 +300,11 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		request(AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE);
 	}
 
+	private void postUseBalancePay() {
+		startAnimation();
+		request(AppConfig.REQUEST_SV_POST_USE_BALANCE_CODE);
+	}
+
 	private void postConfirmOrderData() {
 		invoiceStr = et_invoice.getText().toString();
 		buyerStr = et_buyer.getText().toString();
@@ -318,6 +334,16 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			intent.putExtra("root", TAG);
 			intent.putExtra("couponId", couponId);
 			startActivity(intent);
+			break;
+		case R.id.post_order_iv_balance_pay:
+			if (!isSuccess) return;
+			if (isBalance) {
+				iv_balance_pay.setSelected(false);
+			} else {
+				iv_balance_pay.setSelected(true);
+			}
+			isBalance = !isBalance;
+			postUseBalancePay();
 			break;
 		case R.id.post_order_tv_pay_now:
 			if (!addressOk) return;
@@ -494,6 +520,11 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			params.add(new MyNameValuePair("payment", String.valueOf(selectPayType)));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE, uri, params, HttpUtil.METHOD_POST);
 
+		case AppConfig.REQUEST_SV_POST_USE_BALANCE_CODE:
+			uri = AppConfig.URL_COMMON_INDEX_URL + "?app=update_payment";
+			params.add(new MyNameValuePair("payment", String.valueOf(selectPayType)));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_USE_BALANCE_CODE, uri, params, HttpUtil.METHOD_POST);
+
 		case AppConfig.REQUEST_SV_POST_CONFIRM_ORDER_CODE:
 			uri = AppConfig.URL_COMMON_FLOW_URL + "?step=done";
 			params.add(new MyNameValuePair("shipping", String.valueOf(payTypeCode)));
@@ -510,9 +541,9 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	public void onSuccess(int requestCode, Object result) {
 		if (instance == null) return;
 		super.onSuccess(requestCode, result);
-		stopAnimation();
 		switch (requestCode) {
 		case AppConfig.REQUEST_SV_GET_ORDER_CONFIRM_CODE:
+			stopAnimation();
 			if (result != null) {
 				OrderEntity orderEn = (OrderEntity) result;
 				if (orderEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
@@ -528,6 +559,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE:
+		case AppConfig.REQUEST_SV_POST_USE_BALANCE_CODE:
 			if (result != null) {
 				BaseEntity baseEn = (BaseEntity) result;
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
@@ -536,6 +568,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 					updateAllData();
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
+					stopAnimation();
 				}else {
 					showServerBusy();
 				}
@@ -544,6 +577,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case AppConfig.REQUEST_SV_POST_CONFIRM_ORDER_CODE:
+			stopAnimation();
 			if (result != null) {
 				OrderEntity payOrderEn = (OrderEntity) result;
 				if (payOrderEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {

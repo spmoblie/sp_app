@@ -87,7 +87,12 @@ public class OrderEntity extends BaseEntity {
 	 * 抵用优惠券Id
 	 */
 	private String couponId;
-	
+
+	/**
+	 * 账户余额抵用金额
+	 */
+	private String priceBalance;
+
 	/**
 	 * 活动优惠名称
 	 */
@@ -390,6 +395,16 @@ public class OrderEntity extends BaseEntity {
 
 	public void setCouponId(String couponId) {
 		this.couponId = couponId;
+	}
+
+
+	public String getPriceBalance() {
+		return priceBalance;
+	}
+
+
+	public void setPriceBalance(String priceBalance) {
+		this.priceBalance = priceBalance;
 	}
 
 
