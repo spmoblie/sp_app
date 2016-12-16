@@ -593,15 +593,15 @@ public class JsonParser {
 			mainEn.setPayId(StringUtil.getInteger(data.getString("pay_id")));
 			mainEn.setPayTypeCode(StringUtil.getInteger(data.getString("shipping_id")));
 			mainEn.setGoodsTotal(StringUtil.getInteger(data.getString("real_goods_count")));
-			mainEn.setPriceTotal(data.getString("formated_goods_price"));
-			mainEn.setPriceFee(data.getString("shipping_fee_formated"));
-			mainEn.setPriceCharges(data.getString("pay_fee_formated"));
-			mainEn.setPriceCoupon(data.getString("bonus_formated"));
+			mainEn.setPriceTotal(data.getString("goods_price"));
+			mainEn.setPriceFee(data.getString("shipping_fee"));
+			mainEn.setPriceCharges(data.getString("pay_fee"));
+			mainEn.setPriceCoupon(data.getString("bonus"));
 			mainEn.setCouponId(data.getString("bonus_id"));
-			mainEn.setPriceBalance(data.getString("pack_fee_formated"));
-			mainEn.setPriceDiscount(data.getString("discount_formated"));
-			mainEn.setPriceCashback(data.getString("pack_fee_formated"));
-			mainEn.setPricePay(data.getString("amount_formated"));
+			mainEn.setPriceBalance(data.getString("user_money"));
+			mainEn.setPriceDiscount(data.getString("discount"));
+			mainEn.setPriceCashback(data.getString("pack_fee"));
+			mainEn.setPricePay(data.getString("amount"));
 			mainEn.setOrderAmount(data.getString("amount"));
 		}
 		return mainEn;

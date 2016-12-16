@@ -64,7 +64,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	private int payTypeCode;
 	private int payType = PAY_TYPE_1;
 	private int selectPayType = PAY_TYPE_1;
-	private String couponId, invoiceStr, buyerStr, pricePay, orderAmount;
+	private String couponId, invoiceStr, buyerStr, balanceStr, balancePay, pricePay, orderAmount;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -218,12 +218,15 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				tv_coupon_num.setText("");
 			}
 			// 账户余额抵用情况
-			tv_balance_num.setText(currStr + orderEn.getPriceBalance());
+			balanceStr = "0.00";
+			balancePay = balanceStr;
 			if (StringUtil.priceIsNull(orderEn.getPriceBalance())) {
 				rl_balance_use.setVisibility(View.GONE);
 			} else {
 				rl_balance_use.setVisibility(View.VISIBLE);
+				balanceStr = orderEn.getPriceBalance();
 			}
+			tv_balance_num.setText(currStr + balanceStr);
 			// 发票信息
 			final InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 			iv_invoice_select.setOnClickListener(new OnClickListener() {
@@ -339,8 +342,10 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			if (!isSuccess) return;
 			if (isBalance) {
 				iv_balance_pay.setSelected(false);
+				balancePay = "0.00";
 			} else {
 				iv_balance_pay.setSelected(true);
+				balancePay = balanceStr;
 			}
 			isBalance = !isBalance;
 			postUseBalancePay();
@@ -521,8 +526,8 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE, uri, params, HttpUtil.METHOD_POST);
 
 		case AppConfig.REQUEST_SV_POST_USE_BALANCE_CODE:
-			uri = AppConfig.URL_COMMON_INDEX_URL + "?app=update_payment";
-			params.add(new MyNameValuePair("payment", String.valueOf(selectPayType)));
+			uri = AppConfig.URL_COMMON_FLOW_URL + "?step=change_surplus";
+			params.add(new MyNameValuePair("surplus", balancePay));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_USE_BALANCE_CODE, uri, params, HttpUtil.METHOD_POST);
 
 		case AppConfig.REQUEST_SV_POST_CONFIRM_ORDER_CODE:
