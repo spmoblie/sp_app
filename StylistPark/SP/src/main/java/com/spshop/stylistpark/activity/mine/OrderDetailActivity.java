@@ -45,9 +45,10 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	private TextView tv_logistics_name, tv_logistics_no;
 	private TextView tv_goods_total, tv_buyer, tv_invoice, tv_pay_type, tv_valid_time;
 	private TextView tv_total_name, tv_total, tv_fee_name, tv_fee;
-	private TextView tv_coupon_name, tv_coupon, tv_discount_name, tv_discount, tv_cashback_name, tv_cashback;
+	private TextView tv_coupon_name, tv_coupon, tv_discount_name, tv_discount;
+	private TextView tv_cashback_name, tv_cashback, tv_balance_name, tv_balance;
 	private TextView tv_pay_name, tv_pay, tv_pay_now, tv_order_cacel;
-	private RelativeLayout rl_pay_type, rl_coupon, rl_discount, rl_cashback;
+	private RelativeLayout rl_pay_type, rl_coupon, rl_discount, rl_cashback, rl_balance;
 	private LinearLayout ll_logistics, ll_goods_lists, ll_order_edit;
 	
 	private OrderEntity orderEn;
@@ -94,6 +95,8 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		tv_discount = (TextView) findViewById(R.id.order_detail_tv_price_discount);
 		tv_cashback_name = (TextView) findViewById(R.id.order_detail_tv_price_cashback_name);
 		tv_cashback = (TextView) findViewById(R.id.order_detail_tv_price_cashback);
+		tv_balance_name = (TextView) findViewById(R.id.order_detail_tv_price_balance_name);
+		tv_balance = (TextView) findViewById(R.id.order_detail_tv_price_balance);
 		tv_pay_name = (TextView) findViewById(R.id.order_detail_tv_price_pay_name);
 		tv_pay = (TextView) findViewById(R.id.order_detail_tv_price_pay);
 		tv_pay_now = (TextView) findViewById(R.id.order_detail_tv_pay_now);
@@ -102,6 +105,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		rl_coupon = (RelativeLayout) findViewById(R.id.order_detail_rl_price_coupon);
 		rl_discount = (RelativeLayout) findViewById(R.id.order_detail_rl_price_discount);
 		rl_cashback = (RelativeLayout) findViewById(R.id.order_detail_rl_price_cashback);
+		rl_balance = (RelativeLayout) findViewById(R.id.order_detail_rl_price_balance);
 		ll_logistics = (LinearLayout) findViewById(R.id.order_detail_ll_logistics);
 		ll_goods_lists = (LinearLayout) findViewById(R.id.order_detail_ll_goods_lists);
 		ll_order_edit = (LinearLayout) findViewById(R.id.order_detail_ll_edit);
@@ -154,6 +158,14 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 				rl_cashback.setVisibility(View.VISIBLE);
 				tv_cashback_name.setText(orderEn.getPriceCashbackName() + signStr);
 				tv_cashback.setText("- " + currStr + orderEn.getPriceCashback());
+			}
+			// 使用余额
+			if (StringUtil.priceIsNull(orderEn.getPriceBalance())) {
+				rl_balance.setVisibility(View.GONE);
+			} else {
+				rl_balance.setVisibility(View.VISIBLE);
+				tv_balance_name.setText(orderEn.getPriceBalanceName() + signStr);
+				tv_balance.setText("- " + currStr + orderEn.getPriceBalance());
 			}
 			tv_pay_name.setText(orderEn.getPricePaidName());
 			tv_pay.setText(currStr + orderEn.getPricePaid());

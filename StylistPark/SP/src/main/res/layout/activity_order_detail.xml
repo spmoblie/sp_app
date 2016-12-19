@@ -40,7 +40,7 @@
                 <TextView
                     android:id="@+id/order_detail_tv_address_phone"
                     style="@style/address_order_text"
-                    android:layout_marginLeft="@dimen/screen_margin_default"
+                    android:layout_marginLeft="@dimen/margin_padding_10"
                     android:layout_toRightOf="@id/order_detail_tv_address_name" />
 
                 <TextView
@@ -255,6 +255,22 @@
 
                     <TextView
                         android:id="@+id/order_detail_tv_price_cashback"
+                        style="@style/Order_TextView_Title"
+                        android:layout_alignParentRight="true" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/order_detail_rl_price_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_10">
+
+                    <TextView
+                        android:id="@+id/order_detail_tv_price_balance_name"
+                        style="@style/Order_TextView_Title" />
+
+                    <TextView
+                        android:id="@+id/order_detail_tv_price_balance"
                         style="@style/Order_TextView_Title"
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>

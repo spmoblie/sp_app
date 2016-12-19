@@ -211,6 +211,7 @@
     <string name="order_logistics_no">Logistic No：%1$s</string>
     <string name="order_goods_lists">Goods lists</string>
     <string name="order_support_pay">Support pay type</string>
+    <string name="order_balance_pay">Balance pay</string>
     <string name="order_use_coupon">Use coupon arrived with</string>
     <string name="order_use_balance">Use balance to pay</string>
     <string name="order_invoice_name">Invoice:</string>
@@ -223,6 +224,7 @@
     <string name="order_coupon_name">Deduction:</string>
     <string name="order_discount_name">Discount:</string>
     <string name="order_cash_back">Cashback:</string>
+    <string name="order_balance_name">Balance：</string>
     <string name="order_pay_name">Pay price：</string>
     <string name="order_pay_type">Pay type：%1$s</string>
     <string name="order_sn">Order No ：%1$s</string>
@@ -231,6 +233,7 @@
     <string name="order_valid_time">Please complete the payment in %1$s，Timeout orders automatically closed.</string>
     <string name="order_pay">Payable：%1$s</string>
     <string name="order_pay_now">Pay now</string>
+    <string name="order_post_order">Post Order</string>
     <string name="order_cacel">Cacel</string>
     <string name="order_cacel_confirm">Confirm cacel order？</string>
     <string name="order_delete">Delete</string>
@@ -374,6 +377,8 @@
     <string name="share_msg_entity_error">Share parameter error, please re open page.</string>
     
     <!-- Address -->
+    <string name="address_store_pickup">Store pickup</string>
+    <string name="address_free_postage">Free postage</string>
     <string name="address_default">Default address</string>
     <string name="address_consignee">Consignee</string>
     <string name="address_phone_number">Mobile Phone</string>

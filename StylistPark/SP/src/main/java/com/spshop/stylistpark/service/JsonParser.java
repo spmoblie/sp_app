@@ -598,9 +598,13 @@ public class JsonParser {
 			mainEn.setPriceCharges(data.getString("pay_fee"));
 			mainEn.setPriceCoupon(data.getString("bonus"));
 			mainEn.setCouponId(data.getString("bonus_id"));
-			mainEn.setPriceBalance(data.getString("user_money"));
+			mainEn.setUserBalance(data.getString("user_money"));
 			mainEn.setPriceDiscount(data.getString("discount"));
 			mainEn.setPriceCashback(data.getString("pack_fee"));
+			if (data.has("surplus")) {
+				mainEn.setPriceBalance(data.getString("surplus"));
+			}
+			mainEn.setPricePay(data.getString("amount"));
 			mainEn.setPricePay(data.getString("amount"));
 			mainEn.setOrderAmount(data.getString("amount"));
 		}
@@ -623,13 +627,13 @@ public class JsonParser {
 	/**
 	 * 解析收货地址列表
 	 */
-	public static AddressEntity getAddressLists(String jsonStr) throws JSONException {
+	public static AddressEntity getAddressLists(String jsonStr, String keyStr) throws JSONException {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		AddressEntity mainEn = new AddressEntity();
 		getCommonKeyValue(mainEn, jsonObject);
 
-		if (StringUtil.notNull(jsonObject, "data")) {
-			JSONArray data = jsonObject.getJSONArray("data");
+		if (StringUtil.notNull(jsonObject, keyStr)) {
+			JSONArray data = jsonObject.getJSONArray(keyStr);
 			AddressEntity addrEn;
 			List<AddressEntity> mainLists = new ArrayList<AddressEntity>();
 			for (int i = 0; i < data.length(); i++) {
@@ -688,7 +692,7 @@ public class JsonParser {
 		if (StringUtil.notNull(jsonObject, "data")) {
 			JSONObject data = jsonObject.getJSONObject("data");
 			mainEn.setUserId(data.getString("user_id"));
-			mainEn.setShareId(data.getString("share"));
+			mainEn.setShareId(data.getString("user_id"));
 			if (StringUtil.notNull(jsonObject, "name")) {
 				mainEn.setUserName(data.getString("name"));
 			}
@@ -711,8 +715,8 @@ public class JsonParser {
 			mainEn.setCartTotal(StringUtil.getInteger(data.getString("cart")));
 			mainEn.setMoney(data.getString("money"));
 			//mainEn.setCoupon(data.getString("bonus"));
-			mainEn.setMemberNum(data.getString("member"));
-			mainEn.setMemberOrder(data.getString("share"));
+			//mainEn.setMemberNum(data.getString("member"));
+			//mainEn.setMemberOrder(data.getString("share"));
 		}
 		return mainEn;
 	}
@@ -843,6 +847,8 @@ public class JsonParser {
 			mainEn.setPriceDiscount(data.getString("discount"));
 			mainEn.setPriceCashbackName(data.getString("pack_fee_name"));
 			mainEn.setPriceCashback(data.getString("pack_fee"));
+			mainEn.setPriceBalanceName(data.getString("surplus_name"));
+			mainEn.setPriceBalance(data.getString("surplus"));
 			mainEn.setPricePaidName(data.getString("money_paid_name"));
 			mainEn.setPricePaid(data.getString("money_paid"));
 			mainEn.setPricePayName(data.getString("order_amount_name"));
@@ -1043,7 +1049,7 @@ public class JsonParser {
 		}
 		return mainLists;
 	}
-	
+
 	/**
 	 * 解析JSON获取待确认订单相关商品
 	 */

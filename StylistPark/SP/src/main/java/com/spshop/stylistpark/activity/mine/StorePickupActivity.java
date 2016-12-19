@@ -1,12 +1,8 @@
 package com.spshop.stylistpark.activity.mine;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.spshop.stylistpark.AppApplication;
@@ -28,18 +24,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyAddressActivity extends BaseActivity {
+public class StorePickupActivity extends BaseActivity {
 
 	private static final String TAG = "MyAddressActivity";
-	public static MyAddressActivity instance = null;
+	public static StorePickupActivity instance = null;
 
-	private RelativeLayout rl_store_pickup;
 	private TextView tv_no_data;
 	private ListView mListView;
 	private AdapterCallback ap_callback;
 	private AddressListAdapter lv_adapter;
 
-	private boolean showTop;
 	private AddressEntity data;
 	private List<AddressEntity> lv_show = new ArrayList<AddressEntity>();
 	private boolean isLogined, isUpdate, isSuccess;
@@ -49,10 +43,6 @@ public class MyAddressActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_address);
 
-		Bundle bundle = getIntent().getExtras();
-		if (bundle != null) {
-			showTop = bundle.getBoolean("showTop", false);
-		}
 		instance = this;
 
 		findViewById();
@@ -60,24 +50,12 @@ public class MyAddressActivity extends BaseActivity {
 	}
 
 	private void findViewById() {
-		rl_store_pickup = (RelativeLayout) findViewById(R.id.mey_address_rl_store_pickup);
 		mListView = (ListView) findViewById(R.id.my_address_listView);
 		tv_no_data = (TextView) findViewById(R.id.my_address_tv_no_data);
 	}
 
 	private void initView() {
-		setTitle(R.string.mine_my_address);
-		setBtnRight(getString(R.string.my_new));
-
-		rl_store_pickup.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(mContext, StorePickupActivity.class));
-			}
-		});
-		if (showTop) {
-			rl_store_pickup.setVisibility(View.VISIBLE);
-		}
+		setTitle(R.string.address_store_pickup);
 		setAdapter();
 	}
 	
@@ -94,31 +72,11 @@ public class MyAddressActivity extends BaseActivity {
 							requestSelectAddress();
 						}
 						break;
-					case AddressListAdapter.TYPE_EDIT:
-						Intent intent = new Intent(mContext, AddressEditActivity.class);
-						intent.putExtra("data", data);
-						startActivity(intent);
-						break;
-					case AddressListAdapter.TYPE_DELETE:
-						showConfirmDialog(getString(R.string.delete_confirm), getString(R.string.cancel),
-								getString(R.string.confirm), true, true, new Handler() {
-									@Override
-									public void handleMessage(Message msg) {
-										switch (msg.what) {
-											case BaseActivity.DIALOG_CANCEL_CLICK:
-												break;
-											case BaseActivity.DIALOG_CONFIRM_CLICK:
-												requestDeleteAddress();
-												break;
-										}
-									}
-								});
-						break;
 					}
 				}
 			}
 		};
-		lv_adapter = new AddressListAdapter(mContext, AddressListAdapter.TYPE_DATA_1, lv_show, ap_callback);
+		lv_adapter = new AddressListAdapter(mContext, AddressListAdapter.TYPE_DATA_2, lv_show, ap_callback);
 		mListView.setAdapter(lv_adapter);
 		mListView.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
@@ -126,23 +84,12 @@ public class MyAddressActivity extends BaseActivity {
 	private void getSVDatas() {
 		isSuccess = false;
 		startAnimation();
-		request(AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE);
+		request(AppConfig.REQUEST_SV_GET_PICKUP_LIST_CODE);
 	}
 
 	private void requestSelectAddress() {
 		startAnimation();
 		request(AppConfig.REQUEST_SV_POST_SELECT_ADDRESS_CODE);
-	}
-
-	private void requestDeleteAddress() {
-		startAnimation();
-		request(AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE);
-	}
-
-	@Override
-	public void OnListenerRight() {
-		super.OnListenerRight();
-		startActivity(new Intent(mContext, AddressEditActivity.class));
 	}
 
 	@Override
@@ -197,19 +144,14 @@ public class MyAddressActivity extends BaseActivity {
 		String uri = AppConfig.URL_COMMON_USER_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE:
+		case AppConfig.REQUEST_SV_GET_PICKUP_LIST_CODE:
 			params.add(new MyNameValuePair("act", "address_list"));
-			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_PICKUP_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 
 		case AppConfig.REQUEST_SV_POST_SELECT_ADDRESS_CODE:
 			uri = AppConfig.URL_COMMON_USER_URL + "?act=is_address";
 			params.add(new MyNameValuePair("id", String.valueOf(data.getAddressId())));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_SELECT_ADDRESS_CODE, uri, params, HttpUtil.METHOD_POST);
-
-		case AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE:
-			uri = AppConfig.URL_COMMON_USER_URL + "?act=drop_address";
-			params.add(new MyNameValuePair("id", String.valueOf(data.getAddressId())));
-			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -219,7 +161,7 @@ public class MyAddressActivity extends BaseActivity {
 		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE:
+		case AppConfig.REQUEST_SV_GET_PICKUP_LIST_CODE:
 			stopAnimation();
 			if (result != null) {
 				AddressEntity mainEn = (AddressEntity) result;
@@ -240,6 +182,9 @@ public class MyAddressActivity extends BaseActivity {
 				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					updateListView();
 					updateActivityData(9);
+					if (MyAddressActivity.instance != null) {
+						MyAddressActivity.instance.finish();
+					}
 					finish();
 				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理
@@ -251,15 +196,6 @@ public class MyAddressActivity extends BaseActivity {
 					}
 				}
 			}else {
-				showServerBusy();
-			}
-			break;
-		case AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE:
-			if (result != null && ((BaseEntity) result).getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-				getSVDatas();
-				updateActivityData(9);
-			}else {
-				stopAnimation();
 				showServerBusy();
 			}
 			break;
@@ -276,7 +212,7 @@ public class MyAddressActivity extends BaseActivity {
 		if (lv_show.size() > 0) {
 			mListView.setVisibility(View.VISIBLE);
 			tv_no_data.setVisibility(View.GONE);
-			lv_adapter.updateAdapter(lv_show, AddressListAdapter.TYPE_DATA_1);
+			lv_adapter.updateAdapter(lv_show, AddressListAdapter.TYPE_DATA_2);
 		}else {
 			mListView.setVisibility(View.GONE);
 			tv_no_data.setVisibility(View.VISIBLE);

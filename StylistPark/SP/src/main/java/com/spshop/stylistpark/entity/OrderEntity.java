@@ -89,9 +89,9 @@ public class OrderEntity extends BaseEntity {
 	private String couponId;
 
 	/**
-	 * 账户余额抵用金额
+	 * 账户可使用余额
 	 */
-	private String priceBalance;
+	private String userBalance;
 
 	/**
 	 * 活动优惠名称
@@ -114,6 +114,16 @@ public class OrderEntity extends BaseEntity {
 	private String priceCashback;
 
 	/**
+	 * 余额支付名称
+	 */
+	private String priceBalanceName;
+
+	/**
+	 * 余额支付
+	 */
+	private String priceBalance;
+
+	/**
 	 * 已付金额名称
 	 */
 	private String pricePaidName;
@@ -122,17 +132,17 @@ public class OrderEntity extends BaseEntity {
 	 * 已付金额
 	 */
 	private String pricePaid;
-	
+
 	/**
 	 * 应付金额名称
 	 */
 	private String pricePayName;
-	
+
 	/**
 	 * 应付金额
 	 */
 	private String pricePay;
-	
+
 	/**
 	 * 订单金额
 	 */
@@ -398,13 +408,13 @@ public class OrderEntity extends BaseEntity {
 	}
 
 
-	public String getPriceBalance() {
-		return priceBalance;
+	public String getUserBalance() {
+		return userBalance;
 	}
 
 
-	public void setPriceBalance(String priceBalance) {
-		this.priceBalance = priceBalance;
+	public void setUserBalance(String userBalance) {
+		this.userBalance = userBalance;
 	}
 
 
@@ -447,6 +457,25 @@ public class OrderEntity extends BaseEntity {
 		this.priceCashback = priceCashback;
 	}
 
+
+	public String getPriceBalanceName() {
+		return priceBalanceName;
+	}
+
+
+	public void setPriceBalanceName(String priceBalanceName) {
+		this.priceBalanceName = priceBalanceName;
+	}
+
+
+	public String getPriceBalance() {
+		return priceBalance;
+	}
+
+
+	public void setPriceBalance(String priceBalance) {
+		this.priceBalance = priceBalance;
+	}
 
 	public String getPricePaidName() {
 		return pricePaidName;

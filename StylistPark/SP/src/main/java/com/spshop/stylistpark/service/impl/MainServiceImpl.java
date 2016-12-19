@@ -160,7 +160,10 @@ public class MainServiceImpl implements MainService {
 				return JsonParser.getCouponLists(jsonStr);
 
 			case AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE:
-				return JsonParser.getAddressLists(jsonStr);
+				return JsonParser.getAddressLists(jsonStr, "data");
+
+			case AppConfig.REQUEST_SV_GET_PICKUP_LIST_CODE:
+				return JsonParser.getAddressLists(jsonStr, "address");
 
 			case AppConfig.REQUEST_SV_GET_COUNTRY_LIST_CODE:
 				return JsonParser.getCountryLists(jsonStr);

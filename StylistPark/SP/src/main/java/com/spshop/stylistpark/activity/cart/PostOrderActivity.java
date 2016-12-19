@@ -46,18 +46,19 @@ import java.util.List;
 public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "PostOrderActivity";
-	private static final int PAY_TYPE_1 = 2; //在线支付
-	private static final int PAY_TYPE_2 = 1; //货到付款
+	private static final int PAY_TYPE_1 = 1; //货到付款
+	private static final int PAY_TYPE_2 = 2; //在线支付
+	private static final int PAY_TYPE_3 = 3; //余额支付
 	public static PostOrderActivity instance = null;
 
 	private TextView tv_name, tv_phone, tv_address, tv_address_hint;
 	private TextView tv_pay_type, tv_coupon_num, tv_balance_num, tv_goods_total, tv_total_curr, tv_pay_total;
-	private TextView tv_total, tv_fee, tv_charges, tv_coupon, tv_discount, tv_cashback, tv_pay, tv_pay_now;
+	private TextView tv_total, tv_fee, tv_charges, tv_coupon, tv_discount, tv_cashback, tv_balance, tv_pay, tv_pay_now;
 	private ImageView iv_go_pay_select, iv_invoice_select, iv_balance_pay;
 	private EditText et_invoice, et_buyer;
 	private LinearLayout ll_main, ll_goods_lists;
 	private RelativeLayout rl_address_main, rl_pay_type, rl_coupon_use, rl_balance_use;
-	private RelativeLayout rl_charges, rl_coupon, rl_discount, rl_cashback;
+	private RelativeLayout rl_charges, rl_coupon, rl_discount, rl_cashback, rl_balance;
 
 	private boolean addressOk, isCashPay, isInvoice, isBalance;
 	private boolean isLogined, isUpdate, isSuccess;
@@ -89,6 +90,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		rl_coupon = (RelativeLayout) findViewById(R.id.post_order_rl_price_coupon);
 		rl_discount = (RelativeLayout) findViewById(R.id.post_order_rl_price_discount);
 		rl_cashback = (RelativeLayout) findViewById(R.id.post_order_rl_price_cashback);
+		rl_balance = (RelativeLayout) findViewById(R.id.post_order_rl_price_balance);
 		tv_name = (TextView) findViewById(R.id.post_order_tv_address_name);
 		tv_phone = (TextView) findViewById(R.id.post_order_tv_address_phone);
 		tv_address = (TextView) findViewById(R.id.post_order_tv_address_address);
@@ -103,6 +105,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		tv_coupon = (TextView) findViewById(R.id.post_order_tv_price_coupon);
 		tv_discount = (TextView) findViewById(R.id.post_order_tv_price_discount);
 		tv_cashback = (TextView) findViewById(R.id.post_order_tv_price_cashback);
+		tv_balance = (TextView) findViewById(R.id.post_order_tv_price_balance);
 		tv_pay = (TextView) findViewById(R.id.post_order_tv_price_pay);
 		tv_total_curr = (TextView) findViewById(R.id.post_order_tv_curr);
 		tv_pay_total = (TextView) findViewById(R.id.post_order_tv_pay_total);
@@ -152,6 +155,17 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				rl_cashback.setVisibility(View.VISIBLE);
 				tv_cashback.setText("- " + currStr + orderEn.getPriceCashback());
 			}
+			// 使用余额
+			if (StringUtil.priceIsNull(orderEn.getPriceBalance())) {
+				rl_balance.setVisibility(View.GONE);
+				isBalance = false;
+				iv_balance_pay.setSelected(false);
+			} else {
+				rl_balance.setVisibility(View.VISIBLE);
+				tv_balance.setText("- " + currStr + orderEn.getPriceBalance());
+				isBalance = true;
+				iv_balance_pay.setSelected(true);
+			}
 			orderAmount = orderEn.getOrderAmount();
 			pricePay = orderEn.getPricePay();
 			tv_pay.setText(currStr + pricePay);
@@ -185,22 +199,25 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			}
 			// 付款方式
 			payType = orderEn.getPayId();
-			if (payType != PAY_TYPE_2) {
-				payType = PAY_TYPE_1;
-			}
 			switch (payType) {
-			case PAY_TYPE_1:
-				tv_pay_type.setText(R.string.pay_title);
-				tv_pay_now.setText(R.string.order_pay_now);
-				rl_charges.setVisibility(View.GONE);
-				tv_charges.setText(R.string.number_0);
-				break;
-			case PAY_TYPE_2:
-				tv_pay_type.setText(R.string.product_cash_delivery);
-				tv_pay_now.setText(R.string.title_order_confirm);
-				rl_charges.setVisibility(View.VISIBLE);
-				tv_charges.setText(orderEn.getPriceCharges());
-				break;
+				case PAY_TYPE_1:
+					tv_pay_type.setText(R.string.product_cash_delivery);
+					tv_pay_now.setText(R.string.order_post_order);
+					rl_charges.setVisibility(View.VISIBLE);
+					tv_charges.setText(orderEn.getPriceCharges());
+					break;
+				case PAY_TYPE_2:
+					tv_pay_type.setText(R.string.pay_title);
+					tv_pay_now.setText(R.string.order_pay_now);
+					rl_charges.setVisibility(View.GONE);
+					tv_charges.setText(R.string.number_0);
+					break;
+				case PAY_TYPE_3:
+					tv_pay_type.setText(R.string.order_balance_pay);
+					tv_pay_now.setText(R.string.order_post_order);
+					rl_charges.setVisibility(View.GONE);
+					tv_charges.setText(R.string.number_0);
+					break;
 			}
 			// 是否支持货到付款
 			payTypeCode = orderEn.getPayTypeCode();
@@ -220,11 +237,11 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			// 账户余额抵用情况
 			balanceStr = "0.00";
 			balancePay = balanceStr;
-			if (StringUtil.priceIsNull(orderEn.getPriceBalance())) {
+			if (StringUtil.priceIsNull(orderEn.getUserBalance())) {
 				rl_balance_use.setVisibility(View.GONE);
 			} else {
 				rl_balance_use.setVisibility(View.VISIBLE);
-				balanceStr = orderEn.getPriceBalance();
+				balanceStr = orderEn.getUserBalance();
 			}
 			tv_balance_num.setText(currStr + balanceStr);
 			// 发票信息
@@ -317,10 +334,12 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		Intent intent = null;
+		Intent intent;
 		switch (v.getId()) {
 		case R.id.post_order_rl_address_main:
-			startActivity(new Intent(mContext, MyAddressActivity.class));
+			intent = new Intent(mContext, MyAddressActivity.class);
+			intent.putExtra("showTop", true);
+			startActivity(intent);
 			break;
 		case R.id.post_order_rl_pay_type:
 			if (!isSuccess || !isCashPay) return;
@@ -366,19 +385,19 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		ArrayList<SelectListEntity> childLists = new ArrayList<SelectListEntity>();
 		SelectListEntity childEn1 = new SelectListEntity();
 		childEn1.setChildId(PAY_TYPE_1);
-		childEn1.setChildShowName(getString(R.string.pay_title));
+		childEn1.setChildShowName(getString(R.string.product_cash_delivery));
 		childLists.add(childEn1);
 		SelectListEntity childEn2 = new SelectListEntity();
 		childEn2.setChildId(PAY_TYPE_2);
-		childEn2.setChildShowName(getString(R.string.product_cash_delivery));
+		childEn2.setChildShowName(getString(R.string.pay_title));
 		childLists.add(childEn2);
 		switch (payType) {
-		case PAY_TYPE_1:
-			selectEn.setSelectEn(childEn1);
-			break;
-		case PAY_TYPE_2:
-			selectEn.setSelectEn(childEn2);
-			break;
+			case PAY_TYPE_1:
+				selectEn.setSelectEn(childEn1);
+				break;
+			case PAY_TYPE_2:
+				selectEn.setSelectEn(childEn2);
+				break;
 		}
 		selectEn.setChildLists(childLists);
 		return selectEn;
@@ -587,14 +606,11 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 				OrderEntity payOrderEn = (OrderEntity) result;
 				if (payOrderEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
 					updateCartTotal(0);
-					switch (payType) {
-					case PAY_TYPE_1:
+					if (payType == PAY_TYPE_2) { //在线支付
 						payOrderEn.setPricePay(pricePay);
 						startPayActivity(payOrderEn);
-						break;
-					case PAY_TYPE_2:
+					} else {
 						startOrderListActivity(0, OrderListActivity.TYPE_3);
-						break;
 					}
 				}else if (payOrderEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 					// 登入超时，交BaseActivity处理

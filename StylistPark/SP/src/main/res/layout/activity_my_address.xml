@@ -4,6 +4,21 @@
     android:background="@color/ui_bg_color_nut"
     android:orientation="vertical" >
 
+    <RelativeLayout
+        android:id="@+id/mey_address_rl_store_pickup"
+        style="@style/setting_lay_item"
+        android:layout_marginTop="@dimen/margin_padding_10"
+        android:visibility="gone" >
+
+        <TextView
+            style="@style/setting_lay_text_title"
+            android:text="@string/address_store_pickup" />
+
+        <TextView
+            style="@style/setting_lay_text_content"
+            android:text="@string/address_free_postage" />
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/my_address_listView"
         android:layout_width="match_parent"

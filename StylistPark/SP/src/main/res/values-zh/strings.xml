@@ -211,6 +211,7 @@
     <string name="order_logistics_no">物流單號：%1$s</string>
     <string name="order_goods_lists">商品列表</string>
     <string name="order_support_pay">支持支付方式</string>
+    <string name="order_balance_pay">余額支付</string>
     <string name="order_use_coupon">使用優惠抵用</string>
     <string name="order_use_balance">使用余額支付</string>
     <string name="order_invoice_name">開票信息：</string>
@@ -223,6 +224,7 @@
     <string name="order_coupon_name">優惠抵用：</string>
     <string name="order_discount_name">活動優惠：</string>
     <string name="order_cash_back">達人折扣：</string>
+    <string name="order_balance_name">使用余額：</string>
     <string name="order_pay_name">應付金額：</string>
     <string name="order_pay_type">支付方式：%1$s</string>
     <string name="order_sn">訂單號：%1$s</string>
@@ -231,6 +233,7 @@
     <string name="order_valid_time">請在%1$s內完成支付，超時訂單自動關閉</string>
     <string name="order_pay">應付：%1$s</string>
     <string name="order_pay_now">立即支付</string>
+    <string name="order_post_order">提交訂單</string>
     <string name="order_cacel">取消訂單</string>
     <string name="order_cacel_confirm">確定取消訂單？</string>
     <string name="order_delete">刪除訂單</string>
@@ -374,6 +377,8 @@
 	<string name="share_msg_entity_error">分享參數出錯，請重新加載頁面。</string>
 	
 	<!-- Address -->
+    <string name="address_store_pickup">上門自取</string>
+    <string name="address_free_postage">免郵費</string>
     <string name="address_default">設爲默認地址</string>
     <string name="address_consignee">收貨人</string>
    	<string name="address_phone_number">手機號碼</string>

@@ -249,14 +249,16 @@ public class AppConfig {
 	public static final int REQUEST_SV_POST_CHOOSE_COUPON_CODE = 0X5252;
 	// 获取收货地址列表
 	public static final int REQUEST_SV_GET_ADDRESS_LIST_CODE = 0X5260;
+	// 获取自提点列表
+	public static final int REQUEST_SV_GET_PICKUP_LIST_CODE = 0X5261;
 	// 选择收货地址为默认地址
-	public static final int REQUEST_SV_POST_SELECT_ADDRESS_CODE = 0X5261;
+	public static final int REQUEST_SV_POST_SELECT_ADDRESS_CODE = 0X5262;
 	// 删除收货地址
-	public static final int REQUEST_SV_POST_DELETE_ADDRESS_CODE = 0X5262;
+	public static final int REQUEST_SV_POST_DELETE_ADDRESS_CODE = 0X5263;
 	// 获取国家列表清单
-	public static final int REQUEST_SV_GET_COUNTRY_LIST_CODE = 0X5263;
+	public static final int REQUEST_SV_GET_COUNTRY_LIST_CODE = 0X5264;
 	// 编辑收货地址
-	public static final int REQUEST_SV_POST_EDIT_ADDRESS_CODE = 0X5264;
+	public static final int REQUEST_SV_POST_EDIT_ADDRESS_CODE = 0X5265;
 	
 	/**
 	 ******************************************* RequestCode参数设置结束 ******************************************

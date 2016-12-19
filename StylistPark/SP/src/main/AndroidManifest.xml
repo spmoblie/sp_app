@@ -310,6 +310,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".activity.mine.StorePickupActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".activity.mine.AddCouponActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
