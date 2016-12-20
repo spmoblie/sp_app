@@ -27,6 +27,7 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.cart.ChildFragmentFour;
+import com.spshop.stylistpark.activity.common.ScreenImageActivity;
 import com.spshop.stylistpark.activity.common.ScreenVideoActivity;
 import com.spshop.stylistpark.activity.find.ChildFragmentThree;
 import com.spshop.stylistpark.activity.home.ChildFragmentOne;
@@ -40,8 +41,6 @@ import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UpdateAppVersion;
 import com.spshop.stylistpark.utils.UserManager;
-
-import static com.spshop.stylistpark.AppApplication.isStartLoop;
 
 public class HomeFragmentActivity extends FragmentActivity implements OnClickListener {
 
@@ -482,9 +481,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 				clearCountdown();
 				break;
 			case MotionEvent.ACTION_UP:
-				if (isStartLoop) {
-					startCountdown();
-				}
+				startCountdown();
 				break;
 		}
 		return super.dispatchTouchEvent(ev);
@@ -505,7 +502,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 	 * 清除倒计时
 	 */
 	private void clearCountdown() {
-		if (acdt != null && (UserManager.getInstance().isPlayVideo() || UserManager.getInstance().isPlayImage())) {
+		if (acdt != null) {
 			acdt.cancel();
 			acdt = null;
 		}
@@ -526,7 +523,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			if (UserManager.getInstance().isPlayVideo()) {
 				startActivity(new Intent(HomeFragmentActivity.this, ScreenVideoActivity.class));
 			} else if (UserManager.getInstance().isPlayImage()){
-				//startActivity(new Intent(HomeFragmentActivity.this, ScreenImageActivity.class));
+				startActivity(new Intent(HomeFragmentActivity.this, ScreenImageActivity.class));
 			}
 		}
 	}

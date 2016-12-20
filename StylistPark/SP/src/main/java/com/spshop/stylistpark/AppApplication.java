@@ -45,9 +45,9 @@ import java.util.List;
 public class AppApplication extends Application implements OnDataListener{
 	
 	private static AppApplication spApp = null;
-	
-	public static String version_name = ""; //当前版本号
+
 	public static String clip_photo_path; //裁剪后相片的路径
+	public static String version_name = ""; //当前版本号
 	public static int screenWidth; //手机屏幕的宽
 	public static int screenHeight; //手机屏幕的高
 	public static int statusHeight; //手机状态栏高
@@ -57,7 +57,7 @@ public class AppApplication extends Application implements OnDataListener{
 	
 	public static boolean loadDBData = false; //是否从本地数据库加载数据
 	public static boolean isWXShare = false; //记录是否微信分享
-	public static boolean isStartLoop = true; //记录是否开启循播倒计时
+	public static boolean isStartLoop = true; //记录是否开启循播
 	public static boolean isStartHome = true; //记录是否允许重新启动HomeFragmentActivity
 
 	public static ThemeEntity themeEn;

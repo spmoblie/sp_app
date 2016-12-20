@@ -31,9 +31,9 @@ import com.spshop.stylistpark.utils.StringUtil;
 import com.spshop.stylistpark.utils.UserManager;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import static com.spshop.stylistpark.AppApplication.isStartLoop;
 import static com.spshop.stylistpark.AppApplication.screenWidth;
 
 
@@ -66,6 +66,14 @@ public class ScreenVideoActivity extends BaseActivity {
 
 		powerManager = (PowerManager)this.getSystemService(this.POWER_SERVICE);
 		wakeLock = this.powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "My Lock");
+
+		long newDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		long oldDay = shared.getLong(AppConfig.KEY_UPDATE_LOOP_DATA_DAY, 0);
+		if ((newDay == 1 && oldDay != 1) || newDay - oldDay > 0) {
+			AppApplication.videoEn = null;
+			AppApplication.imageEn = null;
+			shared.edit().putLong(AppConfig.KEY_UPDATE_LOOP_DATA_DAY, newDay).apply();
+		}
 		urlPosition = shared.getInt(AppConfig.KEY_SCREEN_VIDEO_POSITION, 0);
 
 		findViewById();
@@ -300,6 +308,7 @@ public class ScreenVideoActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		LogUtil.i(TAG, "onResume");
+		stopLoop();
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
 
@@ -308,9 +317,6 @@ public class ScreenVideoActivity extends BaseActivity {
 			videoView.start();
 		}
 		wakeLock.acquire();
-		// 清除倒计时
-		isStartLoop = false;
-		clearCountdown();
 	}
 
 	@Override
@@ -336,7 +342,6 @@ public class ScreenVideoActivity extends BaseActivity {
 		if (videoView != null) {
 			videoView.stopPlayback();
 		}
-		isStartLoop = true;
 		super.onDestroy();
 	}
 

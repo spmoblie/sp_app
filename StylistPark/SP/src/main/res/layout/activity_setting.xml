@@ -79,7 +79,8 @@
 
             <RelativeLayout
                 android:id="@+id/setting_rl_about_us"
-                style="@style/setting_lay_item">
+                style="@style/setting_lay_item"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/setting_tv_about_us_title"
@@ -88,25 +89,6 @@
 
                 <TextView
                     android:id="@+id/setting_tv_about_us_content"
-                    style="@style/setting_lay_text_content" />
-
-                <ImageView
-                    style="@style/set_line_horizontal_bg"
-                    android:layout_alignParentBottom="true"
-                    android:contentDescription="@string/desc" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/setting_rl_version"
-                style="@style/setting_lay_item">
-
-                <TextView
-                    android:id="@+id/setting_tv_version_title"
-                    style="@style/setting_lay_text_title"
-                    android:text="@string/setting_version" />
-
-                <TextView
-                    android:id="@+id/setting_tv_version_content"
                     style="@style/setting_lay_text_content" />
 
                 <ImageView
@@ -187,6 +169,25 @@
                     android:clickable="true"
                     android:contentDescription="@string/desc"
                     android:src="@drawable/selector_btn_push_control" />
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/desc" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setting_rl_version"
+                style="@style/setting_lay_item">
+
+                <TextView
+                    android:id="@+id/setting_tv_version_title"
+                    style="@style/setting_lay_text_title"
+                    android:text="@string/setting_version" />
+
+                <TextView
+                    android:id="@+id/setting_tv_version_content"
+                    style="@style/setting_lay_text_content" />
 
                 <ImageView
                     style="@style/set_line_horizontal_bg"

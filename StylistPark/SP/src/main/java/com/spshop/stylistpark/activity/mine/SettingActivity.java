@@ -202,6 +202,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					playImage = false;
 					um.setPlayImage(false);
 					iv_play_image.setSelected(false);
+					startLoop();
 					CommonTools.showToast(getString(R.string.setting_play_video_yes, AppConfig.TO_SCREEN_VIDEO_TIME / 1000), 2000);
 				}
 				break;
@@ -213,6 +214,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					playVideo = false;
 					um.setPlayVideo(false);
 					iv_play_video.setSelected(false);
+					startLoop();
 					CommonTools.showToast(getString(R.string.setting_play_image_yes, AppConfig.TO_SCREEN_VIDEO_TIME / 1000), 2000);
 				}
 				break;

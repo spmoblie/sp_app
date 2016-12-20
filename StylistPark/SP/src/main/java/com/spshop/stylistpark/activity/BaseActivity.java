@@ -45,6 +45,7 @@ import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.cart.CartActivity;
 import com.spshop.stylistpark.activity.cart.PostOrderActivity;
 import com.spshop.stylistpark.activity.common.OnlineServiceActivity;
+import com.spshop.stylistpark.activity.common.ScreenImageActivity;
 import com.spshop.stylistpark.activity.common.ScreenVideoActivity;
 import com.spshop.stylistpark.activity.common.ShowListActivity;
 import com.spshop.stylistpark.activity.common.ShowListHeadActivity;
@@ -554,7 +555,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
 		// 开启倒计时
-		startCountdown();
+		startLoop();
 		super.onResume();
 	}
 
@@ -1353,9 +1354,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 				clearCountdown();
 				break;
 			case MotionEvent.ACTION_UP:
-				if (isStartLoop) {
-					startCountdown();
-				}
+				startCountdown();
 				break;
 		}
 		return super.dispatchTouchEvent(ev);
@@ -1364,7 +1363,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	/**
 	 * 开启倒计时
 	 */
-	protected void startCountdown() {
+	private void startCountdown() {
 		if (UserManager.getInstance().isPlayVideo() || UserManager.getInstance().isPlayImage()) {
 			clearCountdown();
 			acdt = new ACountDownTimer(AppConfig.TO_SCREEN_VIDEO_TIME, 1000);
@@ -1375,11 +1374,21 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	/**
 	 * 清除倒计时
 	 */
-	protected void clearCountdown() {
-		if (acdt != null && (UserManager.getInstance().isPlayVideo() || UserManager.getInstance().isPlayImage())) {
+	private void clearCountdown() {
+		if (acdt != null) {
 			acdt.cancel();
 			acdt = null;
 		}
+	}
+
+	protected void stopLoop() {
+		isStartLoop = false;
+		clearCountdown();
+	}
+
+	protected void startLoop() {
+		isStartLoop = true;
+		startCountdown();
 	}
 
 	private class ACountDownTimer extends CountDownTimer {
@@ -1394,10 +1403,11 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 		@Override
 		public void onFinish() {
+			if (!isStartLoop) return;
 			if (UserManager.getInstance().isPlayVideo()) {
 				startActivity(new Intent(mContext, ScreenVideoActivity.class));
 			} else if (UserManager.getInstance().isPlayImage()){
-				//startActivity(new Intent(mContext, ScreenImageActivity.class));
+				startActivity(new Intent(mContext, ScreenImageActivity.class));
 			}
 		}
 	}

@@ -47,7 +47,7 @@ public class QRCodeUtil{
 			for (int y = 0; y < heightPix; y++) {
 				for (int x = 0; x < widthPix; x++) {
 					if (bitMatrix.get(x, y)) {
-						pixels[y * widthPix + x] = 0xff000000;
+						pixels[y * widthPix + x] = 0xffFE6B90;
 					}else {
 						pixels[y * widthPix + x] = 0xffffffff;
 					}

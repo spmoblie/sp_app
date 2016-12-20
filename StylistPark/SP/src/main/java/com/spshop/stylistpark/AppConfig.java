@@ -77,7 +77,7 @@ public class AppConfig {
 	// 加载缓冲时间
 	public static final int LOADING_TIME = 500;
 	// 进入循播时间
-	public static final int TO_SCREEN_VIDEO_TIME = 1000 * 60;
+	public static final int TO_SCREEN_VIDEO_TIME = 1000 * 10;
 
 	// QQ AppID
 	public static final String QQ_APP_ID = "1104891333";

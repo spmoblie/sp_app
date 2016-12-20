@@ -233,6 +233,13 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".activity.common.ScreenImageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".activity.common.MipcaActivityCapture"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />

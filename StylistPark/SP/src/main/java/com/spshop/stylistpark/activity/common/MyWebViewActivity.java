@@ -80,7 +80,6 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	private int mSeekPosition;
 	private int cachedHeight;
 	private boolean isComment, isFullscreen;
-	private boolean isStop = false;
 	private boolean isSynCookies = true;
 
 	private Handler mHandler = new Handler(){
@@ -290,8 +289,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 				@Override
 				public void onCompletion(MediaPlayer mp) {
 					setVideoViewBackground();
-					startCountdown();
-					isStop = true;
+					startLoop();
 					mSeekPosition = uvv.getCurrentPosition();
 					LogUtil.i(TAG, "onCompletion Position = " + mSeekPosition);
 				}
@@ -299,6 +297,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 			uvv.setOnErrorListener(new MediaPlayer.OnErrorListener() {
 				@Override
 				public boolean onError(MediaPlayer mp, int what, int extra) {
+					startLoop();
 					umc.setIsFrist(true);
 					try { //播放出错清除所有缓存视频
 						FileManager.deleteFolderFile(new File(AppConfig.SAVE_PATH_MEDIA_DICE));
@@ -394,7 +393,6 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 	}
 
 	private void loadVideo() {
-		clearCountdown();
 		asyncMediaLoader = AsyncMediaLoader.getInstance(new AsyncMediaLoader.AsyncMediaLoaderCallback() {
 
 			@Override
@@ -437,11 +435,12 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 			mSeekPosition = uvv.getCurrentPosition();
 			LogUtil.i(TAG, "onPause mSeekPosition = " + mSeekPosition);
 		}
+		startLoop();
 	}
 
 	@Override
 	public void onStart(MediaPlayer mediaPlayer) {
-		isStop = false;
+		stopLoop();
 		if (uvv != null) {
 			uvv.setBackgroundResource(R.color.ui_bg_color_percent_10);
 		}
@@ -511,7 +510,7 @@ public class MyWebViewActivity extends BaseActivity implements UniversalVideoVie
 		AppApplication.onPageStart(this, TAG);
 
 		if (uvv != null && umc != null) {
-			if (mSeekPosition > 0 && !isStop) {
+			if (mSeekPosition > 0) {
 				uvv.seekTo(mSeekPosition);
 				uvv.start();
 				LogUtil.i(TAG, "onResume mSeekPosition = " + mSeekPosition);
