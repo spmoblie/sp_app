@@ -719,10 +719,10 @@ public class JsonParser {
 			JSONObject data = jsonObject.getJSONObject("data");
 			mainEn.setUserId(data.getString("user_id"));
 			mainEn.setShareId(data.getString("user_id"));
-			if (StringUtil.notNull(jsonObject, "name")) {
+			if (StringUtil.notNull(data, "name")) {
 				mainEn.setUserName(data.getString("name"));
 			}
-			if (StringUtil.notNull(jsonObject, "name_id")) {
+			if (StringUtil.notNull(data, "name_id")) {
 				mainEn.setUserNameID(data.getString("name_id"));
 			}
 			mainEn.setUserNick(data.getString("nickname"));
@@ -1046,6 +1046,7 @@ public class JsonParser {
 				en.setSellPrice(item.getString("price"));
 				en.setDiscount(item.getString("sale"));
 				en.setCommission(item.getString("affiliate"));
+				en.setSuppliersId(StringUtil.getInteger((item.getString("suppliers"))));
 				mainLists.add(en);
 			}
 		}

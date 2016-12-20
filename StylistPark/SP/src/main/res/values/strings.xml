@@ -462,13 +462,20 @@
     <string name="money_auth_explain">Your account info is not verified</string>
     <string name="money_auth_input_name_hint">Real name</string>
     <string name="money_auth_input_name_id_hint">ID number</string>
+    <string name="money_auth_input_email_hint">Email</string>
     <string name="money_auth_input_account_hint">Account withdrawals</string>
     <string name="money_withdrawals_confirm">Confirm withdrawals</string>
     <string name="money_withdrawals_success">Apply success</string>
+    <string name="money_input_account_title">Account withdrawals:</string>
+    <string name="money_input_account_hint">Please first real-name authentication</string>
+    <string name="money_input_card_title">Bank card number:</string>
+    <string name="money_input_card_hint">Please enter your bank card number correctly</string>
+    <string name="money_input_amount_title">Withdrawal amount:</string>
     <string name="money_input_amount_hint">Withdrawal amount can not be 0</string>
     <string name="money_max_amount_hint">Max of withdrawals: %1$s</string>
+    <string name="money_withdrawals_hint">Each withdrawal automatically deducted ¥ 1.00 fee</string>
     <string name="money_over_hint">Analog income，Daren can earn real income</string>
-    <string name="money_auth_hint">&#160;&#160;&#160;&#160;&#160;Info can not modified after verification, Make sure the proper input; Need change the mode withdrawals please contact customer service;</string>
+    <string name="money_auth_hint">&#160;&#160;&#160;&#160;&#160;At the request of customs, to ensure the security of your goods and funds, please fill in the real name information correctly (not allowed to modify after submission); </string>
     <string name="money_withdrawals_reminder">Prompt: The withdrawal amount will play money to your withdrawal account within seven business days;</string>
 
     <!-- Collage -->

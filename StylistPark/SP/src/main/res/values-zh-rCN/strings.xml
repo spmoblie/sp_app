@@ -462,13 +462,20 @@
     <string name="money_auth_explain">您的实名账户信息未验证</string>
     <string name="money_auth_input_name_hint">真实姓名</string>
     <string name="money_auth_input_name_id_hint">身份证号</string>
+    <string name="money_auth_input_email_hint">邮箱地址</string>
     <string name="money_auth_input_account_hint">提现账户</string>
     <string name="money_withdrawals_confirm">确认提现</string>
     <string name="money_withdrawals_success">提现申请已提交</string>
+    <string name="money_input_account_title">提现账户：</string>
+    <string name="money_input_account_hint">账户名为空，请先进行实名认证</string>
+    <string name="money_input_card_title">银行卡号：</string>
+    <string name="money_input_card_hint">请正确输入银行卡号，否则提现将自动退回</string>
+    <string name="money_input_amount_title">提现金额：</string>
     <string name="money_input_amount_hint">提现金额不能为0</string>
     <string name="money_max_amount_hint">最大可提现金额：%1$s</string>
+    <string name="money_withdrawals_hint">每笔提现自动扣除￥1.00手续费</string>
     <string name="money_over_hint">此余额为模拟收入，升级为达人才能赚取真实收入哦</string>
-    <string name="money_auth_hint">&#160;&#160;&#160;&#160;&#160;实名信息验证通过后不可修改，请确保正确输入；如需修改提现方式请联系官方客服；</string>
+    <string name="money_auth_hint">&#160;&#160;&#160;&#160;&#160;应海关要求，为确保您的货品与资金安全，请正确填写实名信息（提交后不允许修改）；</string>
     <string name="money_withdrawals_reminder">提示：提现金额将在七个工作日内打款至您的提现账户；</string>
 
     <!-- Collage -->

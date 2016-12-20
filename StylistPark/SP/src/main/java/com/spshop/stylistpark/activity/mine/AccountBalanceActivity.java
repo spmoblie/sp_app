@@ -83,29 +83,18 @@ public class AccountBalanceActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				switch (overStatus) {
-					case 1: //可提现
+					case 1: //未实名
+						startActivity(new Intent(mContext, AuthenticationActivity.class));
+						break;
+					case 2: //可提现
 						if (isSuccess) {
 							Intent intent = new Intent(mContext, WithdrawalsActivity.class);
 							intent.putExtra("amountTotal", amountTotal);
 							startActivity(intent);
 						}
 						break;
-					case 2: //提现中
+					case 3: //提现中
 						CommonTools.showToast(overHintStr, 2000);
-						break;
-					case 3: //非达人
-						/*showConfirmDialog(R.string.money_over_hint, getString(R.string.cancel),
-								getString(R.string.money_upgrade), true, true, new Handler() {
-									@Override
-									public void handleMessage(Message msg) {
-										switch (msg.what) {
-											case DIALOG_CONFIRM_CLICK:
-												toUpgradeDaren();
-												break;
-										}
-									}
-								});*/
-						startActivity(new Intent(mContext, AuthenticationActivity.class));
 						break;
 				}
 			}
@@ -125,7 +114,7 @@ public class AccountBalanceActivity extends BaseActivity {
 			tv_amount.setText(decimalFormat.format(amountTotal));
 			overHintStr = mainEn.getStatusHint();
 			overStatus = mainEn.getStatus();
-			if (overStatus == 2) { //提现中
+			if (overStatus == 3) { //提现中
 				tv_hint.setText(overHintStr);
 				tv_hint.setVisibility(View.VISIBLE);
 				tv_withdrawals.setVisibility(View.GONE);

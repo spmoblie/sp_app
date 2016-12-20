@@ -57,6 +57,11 @@ public class ProductListEntity extends BaseEntity {
 	private String commission;
 
 	/**
+	 * 货品发货地ID
+	 */
+	private int suppliersId;
+
+	/**
 	 * 已选商品数量
 	 */
 	private int total;
@@ -204,6 +209,13 @@ public class ProductListEntity extends BaseEntity {
 		this.commission = commission;
 	}
 
+	public int getSuppliersId() {
+		return suppliersId;
+	}
+
+	public void setSuppliersId(int suppliersId) {
+		this.suppliersId = suppliersId;
+	}
 
 	public int getTotal() {
 		return total;

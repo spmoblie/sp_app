@@ -19,6 +19,7 @@ import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
+import com.spshop.stylistpark.utils.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,9 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	
 	private static final String TAG = "WithdrawalsActivity";
 
-	private EditText et_amount;
+	private EditText et_account, et_card, et_amount;
 	private Button btn_confirm;
+	private String accountName, cardNumStr;
 	private double amountTotal, inputAmount;
 	
 	@Override
@@ -41,7 +43,8 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
-		
+
+		accountName = UserManager.getInstance().getUserName();
 		amountTotal = getIntent().getExtras().getDouble("amountTotal", 0);
 		
 		findViewById();
@@ -49,6 +52,8 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	}
 	
 	private void findViewById() {
+		et_account = (EditText) findViewById(R.id.withdrawals_et_account_name);
+		et_card = (EditText) findViewById(R.id.withdrawals_et_card_num);
 		et_amount = (EditText) findViewById(R.id.withdrawals_et_amount);
 		btn_confirm = (Button) findViewById(R.id.withdrawals_btn_confirm);
 	}
@@ -57,6 +62,9 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		setTitle(R.string.money_withdrawals_confirm);
 		btn_confirm.setOnClickListener(this);
 
+		if (!StringUtil.isNull(accountName)) {
+			et_account.setText(accountName);
+		}
 		et_amount.setHint(getString(R.string.money_max_amount_hint, currStr + decimalFormat.format(amountTotal)));
 		et_amount.addTextChangedListener(new TextWatcher() {
 			
@@ -116,7 +124,18 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	}
 
 	private void confirmWithdrawals() {
-		// 金额校验
+		// 校验账户
+		if (accountName.isEmpty()) {
+			CommonTools.showToast(getString(R.string.money_input_account_hint), 1000);
+			return;
+		}
+		// 校验卡号
+		cardNumStr = et_card.getText().toString();
+		if (cardNumStr.isEmpty()) {
+			CommonTools.showToast(getString(R.string.money_input_card_hint), 1000);
+			return;
+		}
+		// 校验金额
 		if (inputAmount <= 0) {
 			CommonTools.showToast(getString(R.string.money_input_amount_hint), 1000);
 			return;
@@ -164,6 +183,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	public Object doInBackground(int requestCode) throws Exception {
 		String uri = AppConfig.URL_COMMON_USER_URL + "?act=act_account";
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+		params.add(new MyNameValuePair("bank", cardNumStr));
 		params.add(new MyNameValuePair("amount", String.valueOf(inputAmount)));
 		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_WITHDRAWALS_CODE, uri, params, HttpUtil.METHOD_POST);
 	}

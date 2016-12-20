@@ -1,82 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ui_bg_color_app"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/screen_margin_default"
-    android:paddingRight="@dimen/screen_margin_default"
-    android:paddingTop="@dimen/margin_padding_10">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/money_auth_hint"
-            android:textColor="@color/label_text_color"
-            android:textSize="@dimen/text_size_12" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_padding_3"
-            android:src="@drawable/icon_warning" />
-    </FrameLayout>
-
-    <EditText
-        android:id="@+id/authentication_et_name"
-        style="@style/Register_EditText"
-        android:layout_marginTop="@dimen/margin_padding_20"
-        android:hint="@string/money_auth_input_name_hint" />
-
-    <EditText
-        android:id="@+id/authentication_et_name_id"
-        style="@style/Register_EditText"
-        android:layout_marginTop="@dimen/margin_padding_20"
-        android:inputType="number"
-        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRTSUVWXYZ"
-        android:hint="@string/money_auth_input_name_id_hint" />
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_padding_20"
-        android:orientation="horizontal" >
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/screen_margin_default"
+        android:paddingRight="@dimen/screen_margin_default"
+        android:paddingTop="@dimen/margin_padding_10">
 
-        <TextView
-            style="@style/commom_checkbox_min"
-            android:drawableLeft="@null"
-            android:text="@string/money_withdrawals_mode" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <CheckBox
-            android:id="@+id/authentication_cb_type_wx"
-            style="@style/commom_checkbox_min"
-            android:text="@string/share_wechat" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/money_auth_hint"
+                android:textColor="@color/label_text_color"
+                android:textSize="@dimen/text_size_12" />
 
-        <CheckBox
-            android:id="@+id/authentication_cb_type_zfb"
-            style="@style/commom_checkbox_min"
-            android:text="@string/share_alipay" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_padding_3"
+                android:src="@drawable/icon_warning" />
+        </FrameLayout>
 
-        <CheckBox
-            android:id="@+id/authentication_cb_type_union"
-            style="@style/commom_checkbox_min"
-            android:text="@string/money_bank_card" />
+        <EditText
+            android:id="@+id/authentication_et_name"
+            style="@style/Register_EditText"
+            android:layout_marginTop="@dimen/margin_padding_20"
+            android:inputType="text"
+            android:hint="@string/money_auth_input_name_hint" />
+
+        <EditText
+            android:id="@+id/authentication_et_name_id"
+            style="@style/Register_EditText"
+            android:layout_marginTop="@dimen/margin_padding_20"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRTSUVWXYZ"
+            android:hint="@string/money_auth_input_name_id_hint"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/authentication_et_phone"
+            style="@style/Register_EditText"
+            android:layout_marginTop="@dimen/margin_padding_20"
+            android:digits="0123456789"
+            android:hint="@string/address_phone_number"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/authentication_et_email"
+            style="@style/Register_EditText"
+            android:layout_marginTop="@dimen/margin_padding_20"
+            android:hint="@string/money_auth_input_email_hint"
+            android:inputType="textEmailAddress" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_20"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/commom_checkbox_min"
+                android:drawableLeft="@null"
+                android:text="@string/money_withdrawals_mode" />
+
+            <CheckBox
+                android:id="@+id/authentication_cb_type_wx"
+                style="@style/commom_checkbox_min"
+                android:text="@string/share_wechat" />
+
+            <CheckBox
+                android:id="@+id/authentication_cb_type_zfb"
+                style="@style/commom_checkbox_min"
+                android:text="@string/share_alipay" />
+
+            <CheckBox
+                android:id="@+id/authentication_cb_type_union"
+                style="@style/commom_checkbox_min"
+                android:text="@string/money_bank_card" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/authentication_et_account"
+            style="@style/Register_EditText"
+            android:layout_marginTop="@dimen/margin_padding_20"
+            android:hint="@string/money_auth_input_account_hint"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/authentication_btn_submit"
+            style="@style/Register_Button"
+            android:layout_marginTop="@dimen/margin_padding_30"
+            android:text="@string/mine_submit_audit" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/authentication_et_account"
-        style="@style/Register_EditText"
-        android:layout_marginTop="@dimen/margin_padding_20"
-        android:hint="@string/money_auth_input_account_hint" />
-
-    <Button
-        android:id="@+id/authentication_btn_submit"
-        style="@style/Register_Button"
-        android:layout_marginTop="@dimen/margin_padding_30"
-        android:text="@string/mine_submit_audit" />
-
-</LinearLayout>
+</ScrollView>

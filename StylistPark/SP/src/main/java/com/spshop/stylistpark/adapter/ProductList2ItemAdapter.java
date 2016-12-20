@@ -2,10 +2,12 @@ package com.spshop.stylistpark.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,7 +36,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 	private AdapterCallback apCallback;
     private DisplayImageOptions goodsOptions;
 	private String currStr;
-	private RelativeLayout.LayoutParams lp;
+	private FrameLayout.LayoutParams lp;
 	
 	public ProductList2ItemAdapter(Context context, List<ListShowTwoEntity> datas, AdapterCallback callback) {
 		this.context = context;
@@ -43,8 +45,8 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		currStr = LangCurrTools.getCurrencyValue();
 		goodsOptions = OptionsManager.getInstance().getGoodsOptions();
 
-		lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		lp.addRule(RelativeLayout.CENTER_IN_PARENT);
+		lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.gravity = Gravity.CENTER;
 		int newWidth = (screenWidth - 72) / 2;
 		lp.width = newWidth;
 		lp.height = newWidth * 37 / 29;
@@ -78,7 +80,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 	static class ViewHolder{
 		LinearLayout item_main, left_main, right_main;
 		RelativeLayout left_rl_bottom;
-		ImageView left_img, right_img;
+		ImageView left_img, left_icon, right_img, right_icon;
 		TextView left_name, left_brand, left_curr, left_sell_price, left_full_price, left_discount, left_commission;
 		TextView right_name, right_brand, right_curr, right_sell_price, right_full_price, right_discount, right_commission;
 	}
@@ -94,6 +96,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder.item_main = (LinearLayout) convertView.findViewById(R.id.list_commodity_two_ll_main);
 			holder.left_main = (LinearLayout) convertView.findViewById(R.id.list_commodity_two_left_ll_main);
 			holder.left_img = (ImageView) convertView.findViewById(R.id.list_commodity_two_left_iv_img);
+			holder.left_icon = (ImageView) convertView.findViewById(R.id.list_commodity_two_left_iv_icon);
 			holder.left_brand = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_brand);
 			holder.left_name = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_name);
 			holder.left_curr = (TextView) convertView.findViewById(R.id.list_commodity_two_left_tv_curr);
@@ -104,6 +107,7 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder.left_rl_bottom = (RelativeLayout) convertView.findViewById(R.id.list_commodity_two_left_rl_bottom);
 			holder.right_main = (LinearLayout) convertView.findViewById(R.id.list_commodity_two_right_ll_main);
 			holder.right_img = (ImageView) convertView.findViewById(R.id.list_commodity_two_right_iv_img);
+			holder.right_icon = (ImageView) convertView.findViewById(R.id.list_commodity_two_right_iv_icon);
 			holder.right_brand = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_brand);
 			holder.right_name = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_name);
 			holder.right_curr = (TextView) convertView.findViewById(R.id.list_commodity_two_right_tv_curr);
@@ -130,6 +134,11 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		if (leftEn != null) {
 			// 网络图片地址
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + leftEn.getImageUrl(), holder.left_img, goodsOptions);
+			if (leftEn.getSuppliersId() == AppConfig.SP_GOODS_START_HK) { //港货
+				holder.left_icon.setVisibility(View.VISIBLE);
+			} else {
+				holder.left_icon.setVisibility(View.GONE);
+			}
 			holder.left_brand.setText(leftEn.getBrand()); //商品品牌
 			holder.left_name.setText(leftEn.getName()); //商品名称
 			holder.left_curr.setText(currStr);
@@ -175,6 +184,11 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 			holder.right_main.setVisibility(View.VISIBLE);
 			// 网络图片地址
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + rightEn.getImageUrl(), holder.right_img, goodsOptions);
+			if (rightEn.getSuppliersId() == AppConfig.SP_GOODS_START_HK) { //港货
+				holder.right_icon.setVisibility(View.VISIBLE);
+			} else {
+				holder.right_icon.setVisibility(View.GONE);
+			}
 			holder.right_brand.setText(rightEn.getBrand()); //商品品牌
 			holder.right_name.setText(rightEn.getName()); //商品名称
 			holder.right_curr.setText(currStr);

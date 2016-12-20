@@ -462,13 +462,20 @@
     <string name="money_auth_explain">您的實名賬戶信息未驗證</string>
     <string name="money_auth_input_name_hint">真實姓名</string>
     <string name="money_auth_input_name_id_hint">身份證號</string>
+    <string name="money_auth_input_email_hint">郵箱地址</string>
     <string name="money_auth_input_account_hint">提現賬戶</string>
     <string name="money_withdrawals_confirm">確認提現</string>
     <string name="money_withdrawals_success">提現申請已提交</string>
+    <string name="money_input_account_title">提現賬戶：</string>
+    <string name="money_input_account_hint">賬戶名爲空，請先進行實名認證</string>
+    <string name="money_input_card_title">銀行卡號：</string>
+    <string name="money_input_card_hint">請正確輸入銀行卡號，否則提現將自動退回</string>
+    <string name="money_input_amount_title">提現金額：</string>
     <string name="money_input_amount_hint">提現金額不能爲0</string>
     <string name="money_max_amount_hint">最大可提現金額：%1$s</string>
+    <string name="money_withdrawals_hint">每筆提現自動扣除￥1.00手續費</string>
     <string name="money_over_hint">此余額爲模擬收入，升級爲達人才能賺取真實收入哦</string>
-    <string name="money_auth_hint">&#160;&#160;&#160;&#160;&#160;實名信息驗證通過後不可修改，請確保正確輸入；如需修改提現方式請聯系官方客服；</string>
+    <string name="money_auth_hint">&#160;&#160;&#160;&#160;&#160;應海關要求，爲確保您的貨品與資金安全，請正確填寫實名信息（提交後不允許修改）；</string>
     <string name="money_withdrawals_reminder">提示：提現金額將在七個工作日內打款至您的提現賬戶；</string>
 
     <!-- Collage -->

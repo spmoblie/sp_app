@@ -31,10 +31,11 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 	public static final int MODE_ZFB = 2;
 	public static final int MODE_UNION = 3;
 
-	private EditText et_auth_name, et_auth_name_id, et_auth_account;
+	private EditText et_auth_name, et_auth_name_id, et_auth_phone, et_auth_email, et_auth_account;
 	private CheckBox cb_type_wx, cb_type_zfb, cb_type_union;
 	private Button btn_submit;
-	private String nameStr, nameIDStr, accountStr, hintStr;
+	private String nameStr, nameIDStr, phoneStr, emailStr, accountStr, hintStr;
+	private boolean isCheckEmail = true;
 	private int modeType = MODE_UNION; //提现方式
 
 	@Override
@@ -52,6 +53,8 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 	private void findViewById() {
 		et_auth_name = (EditText) findViewById(R.id.authentication_et_name);
 		et_auth_name_id = (EditText) findViewById(R.id.authentication_et_name_id);
+		et_auth_phone = (EditText) findViewById(R.id.authentication_et_phone);
+		et_auth_email = (EditText) findViewById(R.id.authentication_et_email);
 		et_auth_account = (EditText) findViewById(R.id.authentication_et_account);
 		cb_type_wx = (CheckBox) findViewById(R.id.authentication_cb_type_wx);
 		cb_type_zfb = (CheckBox) findViewById(R.id.authentication_cb_type_zfb);
@@ -81,6 +84,14 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 			et_auth_name_id.setTextColor(getResources().getColor(R.color.debar_text_color));
 			et_auth_name_id.setBackground(getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
 			et_auth_name_id.setEnabled(false);
+		}
+		emailStr = UserManager.getInstance().getUserEmail();
+		if (!StringUtil.isNull(emailStr)) {
+			et_auth_email.setText(emailStr);
+			et_auth_email.setTextColor(getResources().getColor(R.color.debar_text_color));
+			et_auth_email.setBackground(getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
+			et_auth_email.setEnabled(false);
+			isCheckEmail = false;
 		}
 	}
 
@@ -129,6 +140,8 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 	private void postAuditData() {
 		nameStr = et_auth_name.getText().toString();
 		nameIDStr = et_auth_name_id.getText().toString();
+		phoneStr = et_auth_phone.getText().toString();
+		emailStr = et_auth_email.getText().toString();
 		accountStr = et_auth_account.getText().toString();
 		if (nameStr.isEmpty()) {
 			CommonTools.showToast(getString(R.string.money_auth_input_name_hint) + hintStr, 1000);
@@ -138,10 +151,18 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 			CommonTools.showToast(getString(R.string.money_auth_input_name_id_hint) + hintStr, 1000);
 			return;
 		}
-		if (accountStr.isEmpty()) {
-			CommonTools.showToast(getString(R.string.money_auth_input_account_hint) + hintStr, 1000);
+		if (phoneStr.isEmpty()) {
+			CommonTools.showToast(getString(R.string.address_phone_number) + hintStr, 1000);
 			return;
 		}
+		if (isCheckEmail && !StringUtil.isEmail(emailStr)) {
+			CommonTools.showToast(getString(R.string.money_auth_input_email_hint) + hintStr, 1000);
+			return;
+		}
+		/*if (accountStr.isEmpty()) {
+			CommonTools.showToast(getString(R.string.money_auth_input_account_hint) + hintStr, 1000);
+			return;
+		}*/
 		startAnimation();
 		postAuthName();
 	}
@@ -178,8 +199,10 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		params.add(new MyNameValuePair("name", nameStr));
 		params.add(new MyNameValuePair("name_id", nameIDStr));
-		params.add(new MyNameValuePair("name_pay", String.valueOf(modeType)));
-		params.add(new MyNameValuePair("name_payid", accountStr));
+		params.add(new MyNameValuePair("mobile", phoneStr));
+		params.add(new MyNameValuePair("email", emailStr));
+		//params.add(new MyNameValuePair("name_pay", String.valueOf(modeType)));
+		//params.add(new MyNameValuePair("name_payid", accountStr));
 		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_AUTH_NAME, uri, params, HttpUtil.METHOD_POST);
 	}
 
