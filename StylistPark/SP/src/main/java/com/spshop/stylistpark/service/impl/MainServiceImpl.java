@@ -28,7 +28,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public BaseEntity loadServerDatas(String tag, int requestCode,
-		String uri, List<MyNameValuePair> params, int method) throws Exception {
+									  String uri, List<MyNameValuePair> params, int method) throws Exception {
 		HttpEntity entity = HttpUtil.getEntity(uri, params, method);
 		String jsonStr = HttpUtil.getString(entity);
 		LogUtil.i("JsonParser", jsonStr);
@@ -62,8 +62,11 @@ public class MainServiceImpl implements MainService {
 			case AppConfig.REQUEST_SV_GET_SCREEN_VIDEO_CODE:
 				return JsonParser.getScreenVideoLists(jsonStr);
 
+			case AppConfig.REQUEST_SV_GET_SCREEN_IMAGE_CODE:
+				return JsonParser.getScreenImageLists(jsonStr);
+
 			case AppConfig.REQUEST_SV_GET_HOME_SHOW_HEAD_CODE:
-			return JsonParser.getHomeHeadDatas(jsonStr);
+				return JsonParser.getHomeHeadDatas(jsonStr);
 
 			case AppConfig.REQUEST_SV_GET_HOME_SHOW_LIST_CODE:
 			case AppConfig.REQUEST_SV_GET_PRODUCT_LIST_CODE:

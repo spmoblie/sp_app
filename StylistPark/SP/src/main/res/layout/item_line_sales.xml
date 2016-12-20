@@ -17,7 +17,7 @@
         android:layout_height="@dimen/margin_padding_25"
         android:layout_gravity="bottom"
         android:background="#88ff1493"
-        android:visibility="gone" >
+        android:visibility="visible" >
 
         <TextView
             android:id="@+id/home_line_sales_item_tv_name"
@@ -28,7 +28,5 @@
             android:layout_centerVertical="true"
             android:textSize="@dimen/text_size_14"
             android:textColor="@color/text_color_white"/>
-
     </RelativeLayout>
-
 </FrameLayout>

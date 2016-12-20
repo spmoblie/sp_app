@@ -20,6 +20,8 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.NetworkUtil;
 import com.spshop.stylistpark.utils.StringUtil;
 
+import static com.spshop.stylistpark.AppApplication.isStartLoop;
+
 
 @SuppressLint("HandlerLeak")
 public class VideoActivity extends BaseActivity {
@@ -173,6 +175,7 @@ public class VideoActivity extends BaseActivity {
 			videoView.start();
 		}
 		// 清除倒计时
+		isStartLoop = false;
 		clearCountdown();
 	}
 
@@ -196,6 +199,7 @@ public class VideoActivity extends BaseActivity {
 		if (videoView != null) {
 			videoView.stopPlayback();
 		}
+		isStartLoop = true;
 	}
 
 	@Override

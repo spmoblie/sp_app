@@ -33,12 +33,15 @@ import com.spshop.stylistpark.utils.UserManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.isStartLoop;
+import static com.spshop.stylistpark.AppApplication.screenWidth;
+
 
 @SuppressLint("HandlerLeak")
 public class ScreenVideoActivity extends BaseActivity {
 
 	private static final String TAG = "VideoActivity";
-	private static final int QR_IMG_WIDTH = AppApplication.screenWidth * 2 / 15;
+	private static final int QR_IMG_WIDTH = screenWidth * 2 / 15;
 
 	private VideoView videoView;
 	private ImageView iv_qr_public, iv_qr_buy;
@@ -275,7 +278,7 @@ public class ScreenVideoActivity extends BaseActivity {
 			}
 		};
 		if (dm != null) {
-			dm.showOneBtnDialog(content, AppApplication.screenWidth * 2/3, true, false, mHandler, null);
+			dm.showOneBtnDialog(content, screenWidth * 2/3, true, false, mHandler, null);
 		}
 	}
 
@@ -306,6 +309,7 @@ public class ScreenVideoActivity extends BaseActivity {
 		}
 		wakeLock.acquire();
 		// 清除倒计时
+		isStartLoop = false;
 		clearCountdown();
 	}
 
@@ -332,6 +336,7 @@ public class ScreenVideoActivity extends BaseActivity {
 		if (videoView != null) {
 			videoView.stopPlayback();
 		}
+		isStartLoop = true;
 		super.onDestroy();
 	}
 

@@ -13,11 +13,11 @@ import com.spshop.stylistpark.entity.WXEntity;
 import com.spshop.stylistpark.share.weibo.AccessTokenKeeper;
 
 public class UserManager {
-	
+
 	private static UserManager instance;
 	private SharedPreferences sp;
 	private Editor editor;
-	
+
 	private String mUserId = null;
 	private String shareId = null;
 	private String loginAccount = null;
@@ -55,7 +55,7 @@ public class UserManager {
 		editor = sp.edit();
 		editor.apply();
 	}
-	
+
 	public String getUserId(){
 		if(StringUtil.isNull(mUserId)){
 			mUserId = sp.getString(AppConfig.KEY_USER_ID, null);
@@ -63,7 +63,7 @@ public class UserManager {
 		LogUtil.i("isLogined", "getUserId = " + mUserId);
 		return mUserId;
 	}
-	
+
 	private void saveUserId(String userId){
 		editor.putString(AppConfig.KEY_USER_ID, userId).apply();
 		mUserId = userId;
@@ -90,7 +90,7 @@ public class UserManager {
 		}
 		return loginAccount;
 	}
-	
+
 	public void saveLoginAccount(String account){
 		editor.putString(AppConfig.KEY_LOGIN_ACCOUNT, account).apply();
 		loginAccount = account;
@@ -126,19 +126,19 @@ public class UserManager {
 		}
 		return mUserNick;
 	}
-	
+
 	public void saveUserNick(String userNick){
 		editor.putString(AppConfig.KEY_USER_NICK, userNick).apply();
 		mUserNick = userNick;
 	}
-	
+
 	public String getUserAvatar(){
 		if(StringUtil.isNull(mUserAvatar)){
 			mUserAvatar = sp.getString(AppConfig.KEY_USER_AVATAR_URL, null);
 		}
 		return mUserAvatar;
 	}
-	
+
 	public void saveUserAvatar(String userAvatar){
 		editor.putString(AppConfig.KEY_USER_AVATAR_URL, userAvatar).apply();
 		mUserAvatar = userAvatar;
@@ -150,51 +150,51 @@ public class UserManager {
 		}
 		return mUserIntro;
 	}
-	
+
 	public void saveUserIntro(String userIntro){
 		editor.putString(AppConfig.KEY_USER_INTRO, userIntro).apply();
 		mUserIntro = userIntro;
 	}
-	
+
 	public int getUserGender(){
 		return sp.getInt(AppConfig.KEY_USER_GENDER, 0);
 	}
-	
+
 	public void saveUserGender(int genderCode){
 		editor.putInt(AppConfig.KEY_USER_GENDER, genderCode).apply();
 	}
-	
+
 	public String getUserBirthday(){
 		if(StringUtil.isNull(mUserBirthday)){
 			mUserBirthday = sp.getString(AppConfig.KEY_USER_BIRTHDAY, null);
 		}
 		return mUserBirthday;
 	}
-	
+
 	public void saveUserBirthday(String userBirthday){
 		editor.putString(AppConfig.KEY_USER_BIRTHDAY, userBirthday).apply();
 		mUserBirthday = userBirthday;
 	}
-	
+
 	public String getUserEmail(){
 		if(StringUtil.isNull(mUserEmail)){
 			mUserEmail = sp.getString(AppConfig.KEY_USER_EMAIL, null);
 		}
 		return mUserEmail;
 	}
-	
+
 	public void saveUserEmail(String userEmail){
 		editor.putString(AppConfig.KEY_USER_EMAIL, userEmail).apply();
 		mUserEmail = userEmail;
 	}
-	
+
 	public String getUserPhone(){
 		if(StringUtil.isNull(mUserPhone)){
 			mUserPhone = sp.getString(AppConfig.KEY_USER_PHONE, null);
 		}
 		return mUserPhone;
 	}
-	
+
 	public void saveUserPhone(String userPhone){
 		editor.putString(AppConfig.KEY_USER_PHONE, userPhone).apply();
 		mUserPhone = userPhone;
@@ -220,7 +220,7 @@ public class UserManager {
 		//return getUserRankCode() == 4;
 		return false;
 	}
-	
+
 	public void saveUserRankCode(int userRankCode){
 		editor.putInt(AppConfig.KEY_USER_RANK_CODE, userRankCode).apply();
 	}
@@ -237,12 +237,20 @@ public class UserManager {
 		mUserRankName = userRankName;
 	}
 
-	public boolean isSreenPlay(){
-		return sp.getBoolean(AppConfig.KEY_IS_SCREEN_PLAY, false);
+	public boolean isPlayVideo(){
+		return sp.getBoolean(AppConfig.KEY_IS_SCREEN_PLAY_VIDEO, false);
 	}
 
-	public void setScreenPlay(boolean isPlay){
-		editor.putBoolean(AppConfig.KEY_IS_SCREEN_PLAY, isPlay).apply();
+	public void setPlayVideo(boolean isPlay){
+		editor.putBoolean(AppConfig.KEY_IS_SCREEN_PLAY_VIDEO, isPlay).apply();
+	}
+
+	public boolean isPlayImage(){
+		return sp.getBoolean(AppConfig.KEY_IS_SCREEN_PLAY_IMAGE, false);
+	}
+
+	public void setPlayImage(boolean isPlay){
+		editor.putBoolean(AppConfig.KEY_IS_SCREEN_PLAY_IMAGE, isPlay).apply();
 	}
 
 	public String getWXAccessToken(){
@@ -251,43 +259,43 @@ public class UserManager {
 		}
 		return wxAccessToken;
 	}
-	
+
 	public void saveWXAccessToken(String access_token){
 		editor.putString(AppConfig.KEY_WX_ACCESS_TOKEN, access_token).apply();
 		wxAccessToken = access_token;
 	}
-	
+
 	public String getWXOpenid(){
 		if(StringUtil.isNull(wxOpenid)){
 			wxOpenid = sp.getString(AppConfig.KEY_WX_OPEN_ID, null);
 		}
 		return wxOpenid;
 	}
-	
+
 	public void saveWXOpenid(String openid){
 		editor.putString(AppConfig.KEY_WX_OPEN_ID, openid).apply();
 		wxOpenid = openid;
 	}
-	
+
 	public String getWXUnionid(){
 		if(StringUtil.isNull(wxUnionid)){
 			wxUnionid = sp.getString(AppConfig.KEY_WX_UNION_ID, null);
 		}
 		return wxUnionid;
 	}
-	
+
 	public void saveWXUnionid(String unionid){
 		editor.putString(AppConfig.KEY_WX_UNION_ID, unionid).apply();
 		wxUnionid = unionid;
 	}
-	
+
 	public String getWXRefreshToken(){
 		if(StringUtil.isNull(wxRefreshToken)){
 			wxRefreshToken = sp.getString(AppConfig.KEY_WX_REFRESH_TOKEN, null);
 		}
 		return wxRefreshToken;
 	}
-	
+
 	public void saveWXRefreshToken(String refreshToken){
 		editor.putString(AppConfig.KEY_WX_REFRESH_TOKEN, refreshToken).apply();
 		wxRefreshToken = refreshToken;
@@ -296,7 +304,7 @@ public class UserManager {
 	public int getCartTotal(){
 		return sp.getInt(AppConfig.KEY_CART_NUM, 0);
 	}
-	
+
 	public void saveCartTotal(int cartTotal){
 		if (HomeFragmentActivity.instance != null) {
 			HomeFragmentActivity.instance.changeCartTotal(cartTotal);
@@ -304,7 +312,7 @@ public class UserManager {
 		LogUtil.i("CartTotal", "saveCartTotal = " + cartTotal);
 		editor.putInt(AppConfig.KEY_CART_NUM, cartTotal).apply();
 	}
-	
+
 	/**
 	 * 判定是否登录
 	 */

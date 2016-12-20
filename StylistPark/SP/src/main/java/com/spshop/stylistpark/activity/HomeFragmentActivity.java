@@ -41,6 +41,8 @@ import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.UpdateAppVersion;
 import com.spshop.stylistpark.utils.UserManager;
 
+import static com.spshop.stylistpark.AppApplication.isStartLoop;
+
 public class HomeFragmentActivity extends FragmentActivity implements OnClickListener {
 
 	private static final String TAG = "HomeFragmentActivity";
@@ -480,7 +482,9 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 				clearCountdown();
 				break;
 			case MotionEvent.ACTION_UP:
-				startCountdown();
+				if (isStartLoop) {
+					startCountdown();
+				}
 				break;
 		}
 		return super.dispatchTouchEvent(ev);
@@ -490,7 +494,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 	 * 开启倒计时
 	 */
 	private void startCountdown() {
-		if (UserManager.getInstance().isSreenPlay()) {
+		if (UserManager.getInstance().isPlayVideo() || UserManager.getInstance().isPlayImage()) {
 			clearCountdown();
 			acdt = new ACountDownTimer(AppConfig.TO_SCREEN_VIDEO_TIME, 1000);
 			acdt.start();
@@ -501,7 +505,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 	 * 清除倒计时
 	 */
 	private void clearCountdown() {
-		if (UserManager.getInstance().isSreenPlay() && acdt != null) {
+		if (acdt != null && (UserManager.getInstance().isPlayVideo() || UserManager.getInstance().isPlayImage())) {
 			acdt.cancel();
 			acdt = null;
 		}
@@ -519,8 +523,10 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 
 		@Override
 		public void onFinish() {
-			if (UserManager.getInstance().isSreenPlay()) {
+			if (UserManager.getInstance().isPlayVideo()) {
 				startActivity(new Intent(HomeFragmentActivity.this, ScreenVideoActivity.class));
+			} else if (UserManager.getInstance().isPlayImage()){
+				//startActivity(new Intent(HomeFragmentActivity.this, ScreenImageActivity.class));
 			}
 		}
 	}

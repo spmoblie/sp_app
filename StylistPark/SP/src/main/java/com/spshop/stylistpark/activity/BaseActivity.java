@@ -90,6 +90,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spshop.stylistpark.AppApplication.isStartLoop;
 import static com.spshop.stylistpark.AppApplication.mScale;
 import static com.spshop.stylistpark.AppApplication.screenWidth;
 
@@ -102,7 +103,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 	public static final String TAG = BaseActivity.class.getSimpleName();
 	public static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
-	
+
 	protected Context mContext;
 	protected AsyncTaskManager atm;
 	protected SharedPreferences shared;
@@ -194,7 +195,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 			}
 		}
 	}
-	
+
 	private void findViewById() {
 		fl_main = (FrameLayout) findViewById(R.id.base_fl_main);
 		ll_head = (LinearLayout) findViewById(R.id.top_bar_head_ll_main);
@@ -208,20 +209,20 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	@SuppressWarnings("static-access")
 	private void initView() {
 		iv_left.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				OnListenerLeft();
 			}
 		});
 		btn_right.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				OnListenerRight();
 			}
 		});
-		
+
 		inAnim = new AnimationUtils().loadAnimation(mContext, R.anim.in_from_right);
 		outAnim = new AnimationUtils().loadAnimation(mContext, R.anim.out_to_left);
 	}
@@ -231,18 +232,18 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 */
 	public void setHeadVisibility(int visibility) {
 		switch (visibility) {
-		case View.VISIBLE:
-			if (ll_head.getVisibility() == View.GONE) {
-				ll_head.clearAnimation();
-				ll_head.startAnimation(inAnim);
-			}
-			break;
-		case View.GONE:
-			if (ll_head.getVisibility() == View.VISIBLE) {
-				ll_head.clearAnimation();
-				ll_head.startAnimation(outAnim);
-			}
-			break;
+			case View.VISIBLE:
+				if (ll_head.getVisibility() == View.GONE) {
+					ll_head.clearAnimation();
+					ll_head.startAnimation(inAnim);
+				}
+				break;
+			case View.GONE:
+				if (ll_head.getVisibility() == View.VISIBLE) {
+					ll_head.clearAnimation();
+					ll_head.startAnimation(outAnim);
+				}
+				break;
 		}
 		ll_head.setVisibility(visibility);
 	}
@@ -332,7 +333,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	public void setHeadBackground(int color){
 		ll_head.setBackgroundColor(color);
 	}
-	
+
 	/**
 	 * 获取头部View的高度
 	 */
@@ -346,7 +347,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	public void setBtnLeftGone(int visibility){
 		iv_left.setVisibility(visibility);
 	}
-	
+
 	/**
 	 * 设置右边按钮是否可见
 	 */
@@ -399,7 +400,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		setBtnRightGone(View.VISIBLE);
 		btn_right.setBackground(btnRight);
 	}
-	
+
 	/**
 	 * 设置右边按钮背景图片资源Id
 	 */
@@ -407,7 +408,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		setBtnRightGone(View.VISIBLE);
 		btn_right.setBackgroundResource(drawableId);
 	}
-	
+
 	/**
 	 * 设置右边按钮显示文本
 	 */
@@ -440,9 +441,9 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 * 右键监听执行方法，让子类重写该方法
 	 */
 	public void OnListenerRight(){
-			
+
 	}
-	
+
 	public void request(int requsetCode) {
 		atm.request(requsetCode, this);
 	}
@@ -454,7 +455,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	public void cancelRequest() {
 		atm.cancelRequest();
 	}
-	
+
 	@Override
 	public void setContentView(View view) {
 		if (mLayoutBase.getChildCount() > 1) {
@@ -472,7 +473,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 	/**
 	 * 通过类名启动Activity
-	 * 
+	 *
 	 * @param pClass
 	 */
 	protected void openActivity(Class<?> pClass) {
@@ -481,7 +482,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 	/**
 	 * 通过类名启动Activity，并且含有Bundle数据
-	 * 
+	 *
 	 * @param pClass
 	 * @param pBundle
 	 */
@@ -495,7 +496,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 	/**
 	 * 通过Action启动Activity
-	 * 
+	 *
 	 * @param pAction
 	 */
 	protected void openActivity(String pAction) {
@@ -504,7 +505,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 	/**
 	 * 通过Action启动Activity，并且含有Bundle数据
-	 * 
+	 *
 	 * @param pAction
 	 * @param pBundle
 	 */
@@ -556,7 +557,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		startCountdown();
 		super.onResume();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		LogUtil.i(TAG, "onPause()");
@@ -567,7 +568,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		clearCountdown();
 		super.onPause();
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		LogUtil.i(TAG, "onDestroy()");
@@ -1067,7 +1068,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected void stopAnimation() {
 		LoadDialog.hidden();
 	}
-	
+
 	/**
 	 * 弹出登入超时对话框
 	 */
@@ -1094,12 +1095,11 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected void showShareError() {
 		CommonTools.showToast(getString(R.string.share_msg_entity_error), 1000);
 	}
-	
+
 	/**
 	 * 加载数据出错提示
 	 */
 	protected void showServerBusy() {
-		stopAnimation();
 		showErrorDialog(R.string.toast_server_busy);
 	}
 
@@ -1110,31 +1110,31 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	protected void showErrorDialog(String content) {
 		showErrorDialog(content, true, null);
 	}
-	
+
 	protected void showErrorDialog(String content, boolean isVanish, final Handler handler) {
 		content = (TextUtils.isEmpty(content)) ? getString(R.string.dialog_error_msg) : content;
 		dm.showOneBtnDialog(content, dialogWidth, true, isVanish, handler, null);
 	}
-	
-    protected void showConfirmDialog(int contentResId, String positiveBtnStr, String negativeBtnStr,
-					boolean isCenter, boolean isVanish, final Handler handler) {
+
+	protected void showConfirmDialog(int contentResId, String positiveBtnStr, String negativeBtnStr,
+									 boolean isCenter, boolean isVanish, final Handler handler) {
 		showConfirmDialog(getString(contentResId), positiveBtnStr, negativeBtnStr, isCenter, isVanish, handler);
 	}
 
 	protected void showConfirmDialog(String content, String positiveBtnStr, String negativeBtnStr,
-					boolean isCenter, boolean isVanish, final Handler handler) {
+									 boolean isCenter, boolean isVanish, final Handler handler) {
 		showConfirmDialog(null, content, positiveBtnStr, negativeBtnStr, isCenter, isVanish, handler);
 	}
 
 	protected void showConfirmDialog(String title, String content, String positiveBtnStr, String negativeBtnStr,
-					boolean isCenter, boolean isVanish, final Handler handler) {
+									 boolean isCenter, boolean isVanish, final Handler handler) {
 		positiveBtnStr = (positiveBtnStr == null) ? getString(R.string.confirm) : positiveBtnStr;
 		negativeBtnStr = (negativeBtnStr == null) ? getString(R.string.cancel) : negativeBtnStr;
 		showConfirmDialog(null, content, positiveBtnStr, negativeBtnStr, dialogWidth, isCenter, isVanish, handler);
 	}
 
 	protected void showConfirmDialog(String title, String content, String positiveBtnStr, String negativeBtnStr,
-					int width, boolean isCenter, boolean isVanish, final Handler handler) {
+									 int width, boolean isCenter, boolean isVanish, final Handler handler) {
 		positiveBtnStr = (positiveBtnStr == null) ? getString(R.string.confirm) : positiveBtnStr;
 		negativeBtnStr = (negativeBtnStr == null) ? getString(R.string.cancel) : negativeBtnStr;
 		dm.showTwoBtnDialog(null, content, positiveBtnStr, negativeBtnStr, width, isCenter, isVanish, handler);
@@ -1160,7 +1160,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 * 数据刷新函数
 	 */
 	public static List<BaseEntity> updNewEntity(int newTotal, int oldTotal, List<? extends BaseEntity> newDatas,
-							  List<? extends BaseEntity> oldDatas, ArrayMap<String, Boolean> oldMap) {
+												List<? extends BaseEntity> oldDatas, ArrayMap<String, Boolean> oldMap) {
 		if (oldDatas == null || newDatas == null || oldMap == null) return null;
 		if (oldTotal < newTotal) {
 			List<BaseEntity> newLists = new ArrayList<BaseEntity>();
@@ -1198,7 +1198,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 * 数据去重函数
 	 */
 	public static List<BaseEntity> addNewEntity(List<? extends BaseEntity> oldDatas,
-						List<? extends BaseEntity> newDatas, ArrayMap<String, Boolean> oldMap) {
+												List<? extends BaseEntity> newDatas, ArrayMap<String, Boolean> oldMap) {
 		if (oldDatas == null || newDatas == null || oldMap == null) return null;
 		List<BaseEntity> newLists = new ArrayList<BaseEntity>();
 		newLists.addAll(oldDatas);
@@ -1353,7 +1353,9 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 				clearCountdown();
 				break;
 			case MotionEvent.ACTION_UP:
-				startCountdown();
+				if (isStartLoop) {
+					startCountdown();
+				}
 				break;
 		}
 		return super.dispatchTouchEvent(ev);
@@ -1363,7 +1365,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 * 开启倒计时
 	 */
 	protected void startCountdown() {
-		if (UserManager.getInstance().isSreenPlay()) {
+		if (UserManager.getInstance().isPlayVideo() || UserManager.getInstance().isPlayImage()) {
 			clearCountdown();
 			acdt = new ACountDownTimer(AppConfig.TO_SCREEN_VIDEO_TIME, 1000);
 			acdt.start();
@@ -1374,7 +1376,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 * 清除倒计时
 	 */
 	protected void clearCountdown() {
-		if (UserManager.getInstance().isSreenPlay() && acdt != null) {
+		if (acdt != null && (UserManager.getInstance().isPlayVideo() || UserManager.getInstance().isPlayImage())) {
 			acdt.cancel();
 			acdt = null;
 		}
@@ -1392,8 +1394,10 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 
 		@Override
 		public void onFinish() {
-			if (UserManager.getInstance().isSreenPlay()) {
+			if (UserManager.getInstance().isPlayVideo()) {
 				startActivity(new Intent(mContext, ScreenVideoActivity.class));
+			} else if (UserManager.getInstance().isPlayImage()){
+				//startActivity(new Intent(mContext, ScreenImageActivity.class));
 			}
 		}
 	}

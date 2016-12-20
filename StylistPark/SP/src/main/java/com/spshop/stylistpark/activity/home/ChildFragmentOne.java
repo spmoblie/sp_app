@@ -541,6 +541,8 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					imgView.setLayoutParams(brandLP);
 					String imgUrl = IMAGE_URL_HTTP + items.getImgUrl();
 					ImageLoader.getInstance().displayImage(imgUrl, imgView, defaultOptions);
+					FrameLayout fl_intro = (FrameLayout) view.findViewById(R.id.home_line_sales_item_fl_main);
+					fl_intro.setLayoutParams(brandLP);
 					TextView tv_name = (TextView) view.findViewById(R.id.home_line_sales_item_tv_name);
 					tv_name.setText(items.getTitle());
 					view.setOnClickListener(new OnClickListener() {

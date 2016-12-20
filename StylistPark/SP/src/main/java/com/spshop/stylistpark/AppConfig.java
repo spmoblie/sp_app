@@ -4,11 +4,11 @@ import android.os.Environment;
 
 
 public class AppConfig {
-	
+
 	/**
 	 ******************************************* URL设置开始 ******************************************
 	 */
-	
+
 	// 是否正式发布
 	public static final boolean IS_PUBLISH = false;
 	// 网络传输协议http
@@ -62,11 +62,11 @@ public class AppConfig {
 	/**
 	 ******************************************* URL设置结束 ******************************************
 	 */
-	
+
 	/**
 	 ******************************************* 全局常量设置开始 ******************************************
 	 */
-	
+
 	// Error状态码：加载成功
 	public static final int ERROR_CODE_SUCCESS = 1;
 	// Error状态码：登录失效
@@ -77,7 +77,7 @@ public class AppConfig {
 	// 加载缓冲时间
 	public static final int LOADING_TIME = 500;
 	// 进入循播时间
-	public static final int TO_SCREEN_VIDEO_TIME = 1000 * 30;
+	public static final int TO_SCREEN_VIDEO_TIME = 1000 * 60;
 
 	// QQ AppID
 	public static final String QQ_APP_ID = "1104891333";
@@ -94,7 +94,7 @@ public class AppConfig {
 	// 微博授权回调Url
 	public static final String WB_REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
 	// 微博授权接口参数：Scope权限
-	public static final String WB_SCOPE = "email,direct_messages_read,direct_messages_write,friendships_groups_read," 
+	public static final String WB_SCOPE = "email,direct_messages_read,direct_messages_write,friendships_groups_read,"
 			+ "friendships_groups_write,statuses_to_me_read,follow_app_official_microblog,invitation_write";
 	// PayPal ClientID
 	public static final String PAYPAL_CLIENT_ID = "AafTOrDvoUh5MjlMYyUlZOh0ZyyBDpZCSqObK_6By8mPrZZVW8XGHWk7nIfPlvZ9kI_hkbl0_UN1Ka-2";
@@ -126,11 +126,11 @@ public class AppConfig {
 	/**
 	 ******************************************* 全局常量设置结束 ******************************************
 	 */
-	
+
 	/**
 	 ******************************************* RequestCode参数设置开始 ******************************************
 	 */
-	
+
 	// 校验Sessions
 	public static final int REQUEST_SV_GET_SESSIONS_CODE = 0X0001;
 	// 检测版本更新
@@ -139,6 +139,8 @@ public class AppConfig {
 	public static final int REQUEST_SV_GET_WX_SHARE_CODE = 0X0003;
 	// 加载循播视频
 	public static final int REQUEST_SV_GET_SCREEN_VIDEO_CODE = 0X0004;
+	// 加载循播图片
+	public static final int REQUEST_SV_GET_SCREEN_IMAGE_CODE = 0X0005;
 
 	// 加载远程首页推广数据
 	public static final int REQUEST_SV_GET_HOME_SHOW_HEAD_CODE = 0X1010;
@@ -194,7 +196,7 @@ public class AppConfig {
 	public static final int REQUEST_SV_POST_PAY_INFO_CODE = 0X4050;
 	// 查询支付结果
 	public static final int REQUEST_SV_GET_PAY_RESULT_CODE = 0X4060;
-	
+
 	// 问题反馈
 	public static final int REQUEST_SV_POST_FEED_BACK_CODE = 0X5001;
 	// 提交注册信息
@@ -259,15 +261,15 @@ public class AppConfig {
 	public static final int REQUEST_SV_GET_COUNTRY_LIST_CODE = 0X5264;
 	// 编辑收货地址
 	public static final int REQUEST_SV_POST_EDIT_ADDRESS_CODE = 0X5265;
-	
+
 	/**
 	 ******************************************* RequestCode参数设置结束 ******************************************
 	 */
-	
+
 	/**
 	 ******************************************* 偏好设置Key值设置开始 ******************************************
 	 */
-	
+
 	// 偏好设置Key-记录用户ID
 	public static final String KEY_USER_ID = "user_id";
 	// 偏好设置Key-记录分享ID
@@ -301,7 +303,9 @@ public class AppConfig {
 	// 偏好设置Key-记录用户购物车中商品数量
 	public static final String KEY_CART_NUM = "cart_num";
 	// 偏好设置Key-记录是否屏保播放视频
-	public static final String KEY_IS_SCREEN_PLAY = "is_screen_play";
+	public static final String KEY_IS_SCREEN_PLAY_VIDEO = "is_screen_play_video";
+	// 偏好设置Key-记录是否屏保播放图片
+	public static final String KEY_IS_SCREEN_PLAY_IMAGE= "is_screen_play_image";
 	// 偏好设置Key-记录用户的微信授权码
 	public static final String KEY_WX_ACCESS_TOKEN = "wx_access_token";
 	// 偏好设置Key-记录用户的微信校验码
@@ -326,11 +330,15 @@ public class AppConfig {
 	public static final String KEY_PUSH_PAGE_MEMBER = "push_page_member";
 	// 偏好设置Key-记录循播视频的当前下标
 	public static final String KEY_SCREEN_VIDEO_POSITION = "screen_video_position";
+	// 偏好设置Key-记录循播图片的当前下标
+	public static final String KEY_SCREEN_IMAGE_POSITION = "screen_image_position";
+	// 偏好设置Key-记录更新循播数据的时间
+	public static final String KEY_UPDATE_LOOP_DATA_DAY = "update_loop_date_day";
 
 	/**
 	 ******************************************* 偏好设置Key值设置结束 ******************************************
 	 */
-	
+
 	/**
 	 ******************************************* Activity传参设置开始 ******************************************
 	 */
@@ -357,7 +365,7 @@ public class AppConfig {
 	/**
 	 ******************************************* Activity传参设置结束 ******************************************
 	 */
-	
+
 	/**
 	 ******************************************* 广播参数设置开始 ******************************************
 	 */
@@ -370,5 +378,5 @@ public class AppConfig {
 	/**
 	 ******************************************* 广播参数设置结束 ******************************************
 	 */
-	
+
 }

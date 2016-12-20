@@ -57,10 +57,11 @@ public class AppApplication extends Application implements OnDataListener{
 	
 	public static boolean loadDBData = false; //是否从本地数据库加载数据
 	public static boolean isWXShare = false; //记录是否微信分享
+	public static boolean isStartLoop = true; //记录是否开启循播倒计时
 	public static boolean isStartHome = true; //记录是否允许重新启动HomeFragmentActivity
 
 	public static ThemeEntity themeEn;
-	public static ProductDetailEntity videoEn;
+	public static ProductDetailEntity videoEn, imageEn;
 
 	private static SharedPreferences shared;
 	private static AsyncTaskManager atm;
@@ -85,7 +86,7 @@ public class AppApplication extends Application implements OnDataListener{
 		MobclickAgent.openActivityDurationTrack(false);
 		MobclickAgent.setScenarioType(spApp, MobclickAgent.EScenarioType.E_UM_NORMAL);
 
-	    // 获取手机型号及屏幕的宽高许
+	    // 获取手机型号及屏幕的宽高
 		screenWidth = DeviceUtil.getDeviceWidth(spApp);
 		screenHeight = DeviceUtil.getDeviceHeight(spApp);
 		// 判定是否为Pad

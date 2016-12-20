@@ -32,22 +32,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SettingActivity extends BaseActivity implements OnClickListener{
-	
+
 	private static final String TAG = "SettingActivity";
 	public static SettingActivity instance = null;
 	public boolean change_language = false;
 	public boolean change_currency = false;
-	
+
 	private RelativeLayout rl_language, rl_currency, rl_feedback;
 	private RelativeLayout rl_version, rl_about_us, rl_logout;
 	private TextView tv_lang_title, tv_lang_content, tv_cur_title, tv_cur_content;
 	private TextView tv_feedback, tv_version_title, tv_version_no, tv_about_us;
-	private TextView tv_push_title, tv_logout;
-	private ImageView iv_push_status, iv_play_status;
+	private TextView tv_push_title, tv_video_title, tv_image_title, tv_logout;
+	private ImageView iv_push_status, iv_play_video, iv_play_image;
 
 	private boolean isLogined = false;
 	private boolean pushStatus = true;
-	private boolean playStatus = false;
+	private boolean playVideo = false;
+	private boolean playImage = false;
 	private boolean update_fragment = false;
 	private UserManager um;
 
@@ -55,19 +56,20 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
-		
+
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
-		
+
 		instance = this;
 		pushStatus = AppApplication.getPushStatus();
 		um = UserManager.getInstance();
-		playStatus = um.isSreenPlay();
+		playVideo = um.isPlayVideo();
+		playImage = um.isPlayImage();
 
 		findViewById();
 		initView();
 	}
-	
+
 	private void findViewById() {
 		rl_language = (RelativeLayout) findViewById(R.id.setting_rl_language);
 		rl_currency = (RelativeLayout) findViewById(R.id.setting_rl_currency);
@@ -84,9 +86,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		tv_version_no = (TextView) findViewById(R.id.setting_tv_version_content);
 		tv_about_us = (TextView) findViewById(R.id.setting_tv_about_us_title);
 		tv_push_title = (TextView) findViewById(R.id.setting_tv_push_control_title);
+		tv_video_title = (TextView) findViewById(R.id.setting_tv_screen_play_video_title);
+		tv_image_title = (TextView) findViewById(R.id.setting_tv_screen_play_image_title);
 		tv_logout = (TextView) findViewById(R.id.setting_tv_logout);
 		iv_push_status = (ImageView) findViewById(R.id.setting_iv_push_control_btn);
-		iv_play_status = (ImageView) findViewById(R.id.setting_iv_screen_play_btn);
+		iv_play_video = (ImageView) findViewById(R.id.setting_iv_screen_play_video_btn);
+		iv_play_image = (ImageView) findViewById(R.id.setting_iv_screen_play_image_btn);
 	}
 
 	private void initView() {
@@ -97,6 +102,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		tv_about_us.setText(getString(R.string.setting_about_us));
 		tv_version_title.setText(getString(R.string.setting_version));
 		tv_push_title.setText(getString(R.string.setting_notification));
+		tv_video_title.setText(getString(R.string.setting_play_video));
+		tv_image_title.setText(getString(R.string.setting_play_image));
 		rl_language.setOnClickListener(this);
 		rl_currency.setOnClickListener(this);
 		rl_feedback.setOnClickListener(this);
@@ -106,48 +113,50 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		// 当前语言
 		Language lang = LangCurrTools.getLanguage();
 		switch (lang) {
-		case En:
-			tv_lang_content.setText(getString(R.string.language_en));
-			break;
-		case Zh:
-			tv_lang_content.setText(getString(R.string.language_zh));
-			break;
-		case Cn:
-			tv_lang_content.setText(getString(R.string.language_cn));
-			break;
-		default:
-			tv_lang_content.setText(getString(R.string.language_cn));
-			break;
+			case En:
+				tv_lang_content.setText(getString(R.string.language_en));
+				break;
+			case Zh:
+				tv_lang_content.setText(getString(R.string.language_zh));
+				break;
+			case Cn:
+				tv_lang_content.setText(getString(R.string.language_cn));
+				break;
+			default:
+				tv_lang_content.setText(getString(R.string.language_cn));
+				break;
 		}
 		// 当前货币
 		Currency cur = LangCurrTools.getCurrency();
 		switch (cur) {
-		case HKD:
-			tv_cur_content.setText(getString(R.string.currency_hkd));
-			break;
-		case RMB:
-			tv_cur_content.setText(getString(R.string.currency_rmb));
-			break;
-		case USD:
-			tv_cur_content.setText(getString(R.string.currency_usd));
-			break;
-		default:
-			tv_cur_content.setText(getString(R.string.currency_rmb));
-			break;
+			case HKD:
+				tv_cur_content.setText(getString(R.string.currency_hkd));
+				break;
+			case RMB:
+				tv_cur_content.setText(getString(R.string.currency_rmb));
+				break;
+			case USD:
+				tv_cur_content.setText(getString(R.string.currency_usd));
+				break;
+			default:
+				tv_cur_content.setText(getString(R.string.currency_rmb));
+				break;
 		}
 		tv_version_no.setText("V" + AppApplication.version_name);
 
 		iv_push_status.setSelected(pushStatus);
 		iv_push_status.setOnClickListener(this);
-		iv_play_status.setSelected(playStatus);
-		iv_play_status.setOnClickListener(this);
+		iv_play_video.setSelected(playVideo);
+		iv_play_video.setOnClickListener(this);
+		iv_play_image.setSelected(playImage);
+		iv_play_image.setOnClickListener(this);
 	}
-	
+
 	private void postLogouRequest(){
 		startAnimation();
 		request(AppConfig.REQUEST_SV_POST_LOGOUT_CODE);
 	}
-	
+
 	@Override
 	public void OnListenerLeft() {
 		if (update_fragment && HomeFragmentActivity.instance != null) {
@@ -156,7 +165,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		}
 		super.OnListenerLeft();
 	}
-	
+
 	@Override
 	public void OnListenerRight() {
 		super.OnListenerRight();
@@ -166,80 +175,94 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		Intent intent = null;
 		switch (v.getId()) {
-		case R.id.setting_rl_language:
-			intent = new Intent(mContext, LanguageCurrencyActivity.class);
-			intent.putExtra("dataType", 1);
-			break;
-		case R.id.setting_rl_currency:
-			intent = new Intent(mContext, LanguageCurrencyActivity.class);
-			intent.putExtra("dataType", 2);
-			break;
-		case R.id.setting_rl_feedback:
-			intent = new Intent(mContext, FeedBackActivity.class);
-			break;
-		case R.id.setting_rl_version:
-			UpdateAppVersion.getInstance(mContext, false);
-			break;
-		case R.id.setting_iv_push_control_btn:
-			pushStatus = !pushStatus;
-			iv_push_status.setSelected(pushStatus);
-			AppApplication.setPushStatus(pushStatus);
-			break;
-		case R.id.setting_iv_screen_play_btn:
-			playStatus = !playStatus;
-			iv_play_status.setSelected(playStatus);
-			um.setScreenPlay(playStatus);
-			if (playStatus) {
-				CommonTools.showToast(getString(R.string.setting_screen_play_yes, AppConfig.TO_SCREEN_VIDEO_TIME / 1000), 2000);
-			}
-			break;
-		case R.id.setting_rl_about_us:
-			intent = new Intent(mContext, MyWebViewActivity.class);
-			intent.putExtra("title", getString(R.string.setting_about_us));
-			intent.putExtra("lodUrl", AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + AppConfig.SP_JION_PROGRAM_ID);
-			break;
-		case R.id.setting_rl_logout:
-			if (isLogined) {
-				showConfirmDialog(getString(R.string.setting_logout_confirm), getString(R.string.cancel),
-						getString(R.string.confirm), true, true, new Handler() {
-							@Override
-							public void handleMessage(Message msg) {
-								switch (msg.what) {
-									case BaseActivity.DIALOG_CANCEL_CLICK:
-										break;
-									case BaseActivity.DIALOG_CONFIRM_CLICK:
-										postLogouRequest();
-										break;
+			case R.id.setting_rl_language:
+				intent = new Intent(mContext, LanguageCurrencyActivity.class);
+				intent.putExtra("dataType", 1);
+				break;
+			case R.id.setting_rl_currency:
+				intent = new Intent(mContext, LanguageCurrencyActivity.class);
+				intent.putExtra("dataType", 2);
+				break;
+			case R.id.setting_rl_feedback:
+				intent = new Intent(mContext, FeedBackActivity.class);
+				break;
+			case R.id.setting_rl_version:
+				UpdateAppVersion.getInstance(mContext, false);
+				break;
+			case R.id.setting_iv_push_control_btn:
+				pushStatus = !pushStatus;
+				iv_push_status.setSelected(pushStatus);
+				AppApplication.setPushStatus(pushStatus);
+				break;
+			case R.id.setting_iv_screen_play_video_btn:
+				playVideo = !playVideo;
+				iv_play_video.setSelected(playVideo);
+				um.setPlayVideo(playVideo);
+				if (playVideo) {
+					playImage = false;
+					um.setPlayImage(false);
+					iv_play_image.setSelected(false);
+					CommonTools.showToast(getString(R.string.setting_play_video_yes, AppConfig.TO_SCREEN_VIDEO_TIME / 1000), 2000);
+				}
+				break;
+			case R.id.setting_iv_screen_play_image_btn:
+				playImage = !playImage;
+				iv_play_image.setSelected(playImage);
+				um.setPlayImage(playImage);
+				if (playImage) {
+					playVideo = false;
+					um.setPlayVideo(false);
+					iv_play_video.setSelected(false);
+					CommonTools.showToast(getString(R.string.setting_play_image_yes, AppConfig.TO_SCREEN_VIDEO_TIME / 1000), 2000);
+				}
+				break;
+			case R.id.setting_rl_about_us:
+				intent = new Intent(mContext, MyWebViewActivity.class);
+				intent.putExtra("title", getString(R.string.setting_about_us));
+				intent.putExtra("lodUrl", AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + AppConfig.SP_JION_PROGRAM_ID);
+				break;
+			case R.id.setting_rl_logout:
+				if (isLogined) {
+					showConfirmDialog(getString(R.string.setting_logout_confirm), getString(R.string.cancel),
+							getString(R.string.confirm), true, true, new Handler() {
+								@Override
+								public void handleMessage(Message msg) {
+									switch (msg.what) {
+										case BaseActivity.DIALOG_CANCEL_CLICK:
+											break;
+										case BaseActivity.DIALOG_CONFIRM_CLICK:
+											postLogouRequest();
+											break;
+									}
 								}
-							}
-						});
-			}else {
-				openLoginActivity(TAG);
-			}
-			break;
+							});
+				}else {
+					openLoginActivity(TAG);
+				}
+				break;
 		}
 		if (intent != null) {
 			startActivity(intent);
 		}
 	}
-	
+
 	@Override
 	protected void onResume() {
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
 
-        if (change_language) {
-        	initView();
-        	change_language = false;
-        	update_fragment = true;
+		if (change_language) {
+			initView();
+			change_language = false;
+			update_fragment = true;
 		}
-        if (change_currency) {
-        	initView();
-        	change_currency = false;
-        	update_fragment = true;
+		if (change_currency) {
+			initView();
+			change_currency = false;
+			update_fragment = true;
 		}
-        checkLogin();
+		checkLogin();
 		super.onResume();
 	}
 
@@ -251,7 +274,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			tv_logout.setText(getString(R.string.login_login));
 		}
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -259,7 +282,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		// 页面结束
 		AppApplication.onPageEnd(this, TAG);
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
@@ -272,15 +295,15 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		LogUtil.i(TAG, "onDestroy");
 		instance = null;
 	}
-	
+
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_POST_LOGOUT_CODE:
-			String uri = AppConfig.URL_COMMON_INDEX_URL;
-			List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-			params.add(new MyNameValuePair("app", "logout"));
-			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_LOGOUT_CODE, uri, params, HttpUtil.METHOD_GET);
+			case AppConfig.REQUEST_SV_POST_LOGOUT_CODE:
+				String uri = AppConfig.URL_COMMON_INDEX_URL;
+				List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+				params.add(new MyNameValuePair("app", "logout"));
+				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_LOGOUT_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -291,14 +314,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		super.onSuccess(requestCode, result);
 		stopAnimation();
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_POST_LOGOUT_CODE:
-			if (result != null && ((BaseEntity)result).getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-				AppApplication.AppLogout(false);
-				finish();
-			}else {
-				showServerBusy();
-			}
-			break;
+			case AppConfig.REQUEST_SV_POST_LOGOUT_CODE:
+				if (result != null && ((BaseEntity)result).getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
+					AppApplication.AppLogout(false);
+					finish();
+				}else {
+					showServerBusy();
+				}
+				break;
 		}
 	}
 
@@ -307,5 +330,5 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		if (instance == null) return;
 		super.onFailure(requestCode, state, result);
 	}
-	
+
 }
