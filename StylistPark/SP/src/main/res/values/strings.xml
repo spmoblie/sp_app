@@ -451,6 +451,9 @@
     <string name="money_balance_burrency">Balance(%1$s)</string>
     <string name="money_balance_detail">Balance Detail</string>
     <string name="money_no_detail">No detail</string>
+    <string name="money_recharge">Recharge</string>
+    <string name="money_recharge_success">Recharge Success</string>
+    <string name="money_recharge_input_hint">Please enter your recharge code</string>
     <string name="money_withdrawals">Withdrawals</string>
     <string name="money_withdrawals_mode">Mode</string>
     <string name="money_bank_card">Bank card</string>
@@ -460,6 +463,7 @@
     <string name="money_auth_ok">Verification OK</string>
     <string name="money_auth_go">Go verification</string>
     <string name="money_auth_explain">Your account info is not verified</string>
+    <string name="money_auth_daren_hint">Upgrade to reach people need to be verified</string>
     <string name="money_auth_input_name_hint">Real name</string>
     <string name="money_auth_input_name_id_hint">ID number</string>
     <string name="money_auth_input_email_hint">Email</string>

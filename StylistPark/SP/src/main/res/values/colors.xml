@@ -31,6 +31,8 @@
     <color name="warns_text_color">@color/style_text_color</color>
     <!-- 商品价格颜色值 -->
     <color name="price_text_color">@color/style_text_color</color>
+    <!-- 活动窗口背景色 -->
+    <color name="bg_favourable_color">#88FE6B90</color>
 
     <!-- AppTV切换色 -->
     <color name="tv_color_change">@color/text_color_greys</color>

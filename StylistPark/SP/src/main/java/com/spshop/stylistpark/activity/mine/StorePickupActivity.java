@@ -26,7 +26,7 @@ import java.util.List;
 
 public class StorePickupActivity extends BaseActivity {
 
-	private static final String TAG = "MyAddressActivity";
+	private static final String TAG = "StorePickupActivity";
 	public static StorePickupActivity instance = null;
 
 	private TextView tv_no_data;

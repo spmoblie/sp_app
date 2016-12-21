@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_padding_25"
         android:layout_gravity="bottom"
-        android:background="#88ff1493"
+        android:background="@color/bg_favourable_color"
         android:visibility="visible" >
 
         <TextView

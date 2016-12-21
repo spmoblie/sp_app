@@ -66,6 +66,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.spshop.stylistpark.AppApplication.screenWidth;
+import static com.spshop.stylistpark.R.id.home_list_head_iv_window_1;
+import static com.spshop.stylistpark.R.id.home_list_head_iv_window_2;
+import static com.spshop.stylistpark.R.id.home_list_head_iv_window_3;
 
 @SuppressLint("UseSparseArrays")
 public class ChildFragmentOne extends Fragment implements OnClickListener, OnDataListener {
@@ -87,12 +90,12 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private ServiceContext sc = ServiceContext.getServiceContext();
 	private RelativeLayout rl_zxing, rl_search, rl_right;
 
-	private LinearLayout ll_head_main, ll_indicator, ll_goods_main, ll_peida_main, ll_sale_main;
+	private LinearLayout ll_head_main, ll_indicator, ll_window_main, ll_goods_main, ll_peida_main, ll_sale_main;
 	private View sv_goods_main, vw_goods_title, sv_peida_main, vw_peida_title, vw_sale_title;
 	private TextView tv_goods_title, tv_peida_title, tv_sale_title, tv_load_again;
 	private RelativeLayout rl_loading, rl_load_fail;
 	private ViewPager viewPager;
-	private ImageView iv_to_top;
+	private ImageView iv_window_1, iv_window_2, iv_window_3, iv_to_top;
 	private PullToRefreshListView refresh_lv;
 	private ListView mListView;
 	private AdapterCallback lv_callback;
@@ -100,7 +103,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private Runnable mPagerAction;
 	private LayoutInflater mInflater;
 	private FrameLayout.LayoutParams brandLP;
-	private LinearLayout.LayoutParams indicatorsLP, goodsItemLP;
+	private LinearLayout.LayoutParams indicatorsLP, windowLP_1, windowLP_2, goodsItemLP;
 	private RelativeLayout.LayoutParams goodsImgLP;
 
 	private DisplayImageOptions defaultOptions;
@@ -111,6 +114,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private SparseBooleanArray sa_all = new SparseBooleanArray();
 	private boolean vprStop = false;
 	private boolean addHead = false;
+	private int newWindowWD;
 	private int idsSize, idsPosition, vprPosition;
 	private ImageView[] indicators = null;
 	private ArrayList<ImageView> viewLists = new ArrayList<ImageView>();
@@ -144,6 +148,15 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		brandLP = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		brandLP.width = screenWidth;
 		brandLP.height = screenWidth / 2;
+
+		int windowMg = getResources().getDimensionPixelSize(R.dimen.home_window_margin) * 2;
+		newWindowWD = screenWidth / 2 - windowMg;
+		windowLP_1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		windowLP_1.width = newWindowWD;
+		windowLP_1.height = newWindowWD * (346 + windowMg) / 320;
+		windowLP_2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		windowLP_2.width = newWindowWD;
+		windowLP_2.height = newWindowWD * 173 / 320;
 
 		goodsItemLP = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		goodsItemLP.setMargins(10, 0, 10, 0);
@@ -243,6 +256,10 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private void initListViewHead() {
 		viewPager = (ViewPager) ll_head_main.findViewById(R.id.home_list_head_viewPager);
 		ll_indicator = (LinearLayout) ll_head_main.findViewById(R.id.home_list_head_indicator);
+		ll_window_main = (LinearLayout) ll_head_main.findViewById(R.id.home_list_head_ll_window_main);
+		iv_window_1 = (ImageView) ll_head_main.findViewById(home_list_head_iv_window_1);
+		iv_window_2 = (ImageView) ll_head_main.findViewById(home_list_head_iv_window_2);
+		iv_window_3 = (ImageView) ll_head_main.findViewById(home_list_head_iv_window_3);
 		sv_goods_main = ll_head_main.findViewById(R.id.home_list_head_sv_goods_main);
 		vw_goods_title = ll_head_main.findViewById(R.id.home_list_head_ll_goods_title);
 		tv_goods_title = (TextView) vw_goods_title.findViewById(R.id.text_two_line_tv_title);
@@ -265,6 +282,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			if (viewLists.size() == 0) {
 				initViewPager(themeEn.getAdEn());
 			}
+			initWindows(themeEn.getWindowEn());
 			initGoodsView(themeEn.getGoodsEn());
 			initPeidaView(themeEn.getPeidaEn());
 			initSaleView(themeEn.getSaleEn());
@@ -429,6 +447,29 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					viewPager.postDelayed(mPagerAction, 3000);
 				}
 			}
+		}
+	}
+
+	private void initWindows(ThemeEntity windowEn) {
+		if (windowEn != null && windowEn.getMainLists() != null) {
+			List<ThemeEntity> datas = windowEn.getMainLists();
+			ll_window_main.setVisibility(View.VISIBLE);
+			iv_window_1.setLayoutParams(windowLP_1);
+			iv_window_2.setLayoutParams(windowLP_2);
+			iv_window_3.setLayoutParams(windowLP_2);
+
+			/*for (int i = 0; i < datas.size(); i++) {
+				ThemeEntity items = datas.get(i);
+				if (i == 0) {
+					ImageLoader.getInstance().displayImage(items.getImgUrl(), iv_window_1, defaultOptions);
+				} else if (i == 1) {
+					ImageLoader.getInstance().displayImage(items.getImgUrl(), iv_window_2, defaultOptions);
+				} else if (i == 2) {
+					ImageLoader.getInstance().displayImage(items.getImgUrl(), iv_window_3, defaultOptions);
+				}
+			}*/
+		} else {
+			ll_window_main.setVisibility(View.GONE);
 		}
 	}
 

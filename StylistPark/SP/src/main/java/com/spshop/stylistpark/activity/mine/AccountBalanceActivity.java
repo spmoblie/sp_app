@@ -38,6 +38,7 @@ public class AccountBalanceActivity extends BaseActivity {
 	private int dataTotal = 0; //数据总量
 
 	private int current_Page = 1;  //当前列表加载页
+	private int loadType = 1; //(0:下拉刷新/1:翻页加载)
 	private int overStatus = 0; //余额状态
 	private String overHintStr; //余额状态描述
 	private double amountTotal = 0; //账号余额
@@ -78,6 +79,7 @@ public class AccountBalanceActivity extends BaseActivity {
 
 	private void initView() {
 		setTitle(R.string.mine_account_money);
+		setBtnRight(getString(R.string.money_recharge));
 
 		tv_withdrawals.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -132,16 +134,10 @@ public class AccountBalanceActivity extends BaseActivity {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
             	// 下拉刷新
-            	if (lv_show.size() == 0) {
-            		getSVDatas();
-				}else {
-					new Handler().postDelayed(new Runnable() {
-						
-						@Override
-						public void run() {
-							refresh_lv.onPullDownRefreshComplete();
-						}
-					}, AppConfig.LOADING_TIME);
+				if (lv_show.size() == 0) {
+					getSVDatas();
+				} else {
+					refreshSVDatas();
 				}
             }
 
@@ -189,6 +185,16 @@ public class AccountBalanceActivity extends BaseActivity {
 	 * 从远程服务器加载数据
 	 */
 	private void getSVDatas() {
+		loadType = 1;
+		current_Page = 1;
+		requestProductLists();
+	}
+
+	/**
+	 * 加载下拉刷新数据
+	 */
+	private void refreshSVDatas() {
+		loadType = 0;
 		current_Page = 1;
 		requestProductLists();
 	}
@@ -197,6 +203,7 @@ public class AccountBalanceActivity extends BaseActivity {
 	 * 加载翻页数据
 	 */
 	private void loadMoreDatas() {
+		loadType = 1;
 		requestProductLists();
 	}
 
@@ -219,6 +226,14 @@ public class AccountBalanceActivity extends BaseActivity {
 		intent.putExtra("goodsId", AppConfig.SP_JION_PROGRAM_ID);
 		intent.putExtra("title", getString(R.string.money_jion_program));
 		intent.putExtra("lodUrl", AppConfig.URL_COMMON_TOPIC_URL + "?topic_id=" + AppConfig.SP_JION_PROGRAM_ID);
+		startActivity(intent);
+	}
+
+	@Override
+	public void OnListenerRight() {
+		super.OnListenerRight();
+		Intent intent = new Intent(mContext, AddCouponActivity.class);
+		intent.putExtra("pageType", 1);
 		startActivity(intent);
 	}
 
@@ -251,7 +266,9 @@ public class AccountBalanceActivity extends BaseActivity {
 		if (isUpdate) {
         	isUpdate = false;
 			lv_show.clear();
-        	refresh_lv.doPullRefreshing(true, 500);
+			lv_all_1.clear();
+			am_all_1.clear();
+			refresh_lv.doPullRefreshing(true, 500);
 		}
 	}
 	
@@ -303,12 +320,20 @@ public class AccountBalanceActivity extends BaseActivity {
 					if (current_Page == 1) {
 						setHeadView(mainEn);
 					}
-					dataTotal = mainEn.getDataTotal();
+					int newTotal = mainEn.getDataTotal();
 					List<BalanceDetailEntity> lists = mainEn.getMainLists();
 					if (lists != null && lists.size() > 0) {
-						List<BaseEntity> newLists = addNewEntity(lv_all_1, lists, am_all_1);
+						List<BaseEntity> newLists;
+						if (loadType == 0) { //下拉
+							newLists = updNewEntity(newTotal, dataTotal, lists, lv_all_1, am_all_1);
+						}else {
+							newLists = addNewEntity(lv_all_1, lists, am_all_1);
+							if (newLists != null) {
+								current_Page++;
+							}
+						}
+						dataTotal = newTotal;
 						if (newLists != null) {
-							current_Page++;
 							addNewShowLists(newLists);
 						}
 					}

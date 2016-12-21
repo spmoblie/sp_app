@@ -120,6 +120,30 @@ public class UserManager {
 		mUserNameID = userNameID;
 	}
 
+	public String getUserPhone(){
+		if(StringUtil.isNull(mUserPhone)){
+			mUserPhone = sp.getString(AppConfig.KEY_USER_PHONE, null);
+		}
+		return mUserPhone;
+	}
+
+	public void saveUserPhone(String userPhone){
+		editor.putString(AppConfig.KEY_USER_PHONE, userPhone).apply();
+		mUserPhone = userPhone;
+	}
+
+	public String getUserEmail(){
+		if(StringUtil.isNull(mUserEmail)){
+			mUserEmail = sp.getString(AppConfig.KEY_USER_EMAIL, null);
+		}
+		return mUserEmail;
+	}
+
+	public void saveUserEmail(String userEmail){
+		editor.putString(AppConfig.KEY_USER_EMAIL, userEmail).apply();
+		mUserEmail = userEmail;
+	}
+
 	public String getUserNick(){
 		if(StringUtil.isNull(mUserNick)){
 			mUserNick = sp.getString(AppConfig.KEY_USER_NICK, "");
@@ -174,30 +198,6 @@ public class UserManager {
 	public void saveUserBirthday(String userBirthday){
 		editor.putString(AppConfig.KEY_USER_BIRTHDAY, userBirthday).apply();
 		mUserBirthday = userBirthday;
-	}
-
-	public String getUserEmail(){
-		if(StringUtil.isNull(mUserEmail)){
-			mUserEmail = sp.getString(AppConfig.KEY_USER_EMAIL, null);
-		}
-		return mUserEmail;
-	}
-
-	public void saveUserEmail(String userEmail){
-		editor.putString(AppConfig.KEY_USER_EMAIL, userEmail).apply();
-		mUserEmail = userEmail;
-	}
-
-	public String getUserPhone(){
-		if(StringUtil.isNull(mUserPhone)){
-			mUserPhone = sp.getString(AppConfig.KEY_USER_PHONE, null);
-		}
-		return mUserPhone;
-	}
-
-	public void saveUserPhone(String userPhone){
-		editor.putString(AppConfig.KEY_USER_PHONE, userPhone).apply();
-		mUserPhone = userPhone;
 	}
 
 	public String getUserMoney(){
@@ -314,6 +314,14 @@ public class UserManager {
 	}
 
 	/**
+	 * 判定是否实名认证
+	 */
+	public boolean checkIsAuth(){
+		return StringUtil.isNull(getUserName()) || StringUtil.isNull(getUserNameID())
+				|| StringUtil.isNull(getUserPhone()) || StringUtil.isNull(getUserEmail());
+	}
+
+	/**
 	 * 判定是否登录
 	 */
 	public boolean checkIsLogined(){
@@ -364,13 +372,13 @@ public class UserManager {
 			saveShareId(infoEn.getShareId());
 			saveUserName(infoEn.getUserName());
 			saveUserNameID(infoEn.getUserNameID());
+			saveUserPhone(infoEn.getUserPhone());
+			saveUserEmail(infoEn.getUserEmail());
 			saveUserNick(infoEn.getUserNick());
 			saveUserAvatar(infoEn.getUserAvatar());
 			saveUserIntro(infoEn.getUserIntro());
 			saveUserGender(infoEn.getGenderCode());
 			saveUserBirthday(infoEn.getBirthday());
-			saveUserEmail(infoEn.getUserEmail());
-			saveUserPhone(infoEn.getUserPhone());
 			if (StringUtil.isNull(infoEn.getMoney())) {
 				saveUserMoney(LangCurrTools.getCurrencyValue() + "0.00");
 			} else {
@@ -391,13 +399,13 @@ public class UserManager {
 		saveShareId(null);
 		saveUserName(null);
 		saveUserNameID(null);
+		saveUserPhone(null);
+		saveUserEmail(null);
 		saveUserNick(null);
 		saveUserAvatar(null);
 		saveUserIntro(null);
 		saveUserGender(0);
 		saveUserBirthday(null);
-		saveUserEmail(null);
-		saveUserPhone(null);
 		saveUserMoney(LangCurrTools.getCurrencyValue() + "0.00");
 		saveUserRankCode(0);
 		saveUserRankName(null);

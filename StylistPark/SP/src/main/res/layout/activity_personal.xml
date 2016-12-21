@@ -109,10 +109,18 @@
 
             <TextView
                 android:id="@+id/personal_tv_rank_content"
-                style="@style/setting_lay_text_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/personal_tv_rank_go"
                 android:layout_marginRight="@dimen/margin_padding_35"
-                android:drawableRight="@null"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/text_size_12"
                 android:textColor="@color/tv_color_status" />
+
+            <TextView
+                android:id="@+id/personal_tv_rank_go"
+                style="@style/setting_lay_text_content"
+                android:text="@string/money_upgrade" />
 
             <ImageView
                 style="@style/set_line_horizontal_bg"

@@ -91,10 +91,10 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private String selectName = "";
 
 	private LinearLayout ll_stikky_main, ll_favourable_time, ll_group_main;
-	private RelativeLayout rl_top_1, rl_top_2, rl_top_3;
+	private RelativeLayout rl_top_1, rl_top_2, rl_top_3, rl_favourable_main;
 	private TextView tv_top_1, tv_top_2, tv_top_3;
 	private ImageView iv_topbar_line, iv_to_top, iv_brand_img, iv_brand_logo;
-	private TextView tv_brand_name, tv_brand_desc, tv_unfold, tv_no_data;
+	private TextView tv_favourable_name, tv_brand_name, tv_brand_desc, tv_unfold, tv_no_data;
 	private TextView tv_favourable_title, tv_time_day, tv_time_hour, tv_time_minute, tv_time_second;
 	private Drawable rank_up, rank_down, rank_normal;
 	private MyCountDownTimer mcdt;
@@ -117,16 +117,16 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	private ArrayMap<String, Boolean> am_all_1 = new ArrayMap<String, Boolean>();
 	private ArrayMap<String, Boolean> am_all_2_asc = new ArrayMap<String, Boolean>();
 	private ArrayMap<String, Boolean> am_all_2_dsc = new ArrayMap<String, Boolean>();
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		isInitShare = true;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_list);
-		
+
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
-		
+
 		instance = this;
 		rootCode = getIntent().getIntExtra("pageCode", PAGE_ROOT_CODE_1);
 		brandId = getIntent().getIntExtra("brandId", 0);
@@ -135,17 +135,18 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		group_height = getResources().getDimensionPixelSize(R.dimen.topbar_group_height);
 		spaceHeight = CommonTools.dip2px(mContext, 15);
 		options = OptionsManager.getInstance().getImageOptions(0, 0, true);
-		
+
 		findViewById();
 		initView();
 	}
-	
+
 	private void findViewById() {
 		refresh_lv = (PullToRefreshListView) findViewById(R.id.show_list_listView);
 		tv_no_data = (TextView) findViewById(R.id.show_list_tv_no_data);
 		ll_stikky_main = (LinearLayout) findViewById(R.id.show_list_ll_stikky_main);
 		ll_favourable_time = (LinearLayout) findViewById(R.id.show_list_ll_favourable_time);
 		ll_group_main = (LinearLayout) findViewById(R.id.topbar_group_ll_main);
+		rl_favourable_main = (RelativeLayout) findViewById(R.id.show_list_rl_favourable_main);
 		rl_top_1 = (RelativeLayout) findViewById(R.id.topbar_group_rl_1);
 		rl_top_2 = (RelativeLayout) findViewById(R.id.topbar_group_rl_2);
 		rl_top_3 = (RelativeLayout) findViewById(R.id.topbar_group_rl_3);
@@ -156,6 +157,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		iv_brand_logo = (ImageView) findViewById(R.id.show_list_iv_brand_img_logo);
 		iv_topbar_line = (ImageView) findViewById(R.id.show_list_iv_topbar_line);
 		iv_to_top = (ImageView) findViewById(R.id.show_list_iv_to_top);
+		tv_favourable_name = (TextView) findViewById(R.id.show_list_tv_favourable_name);
 		tv_brand_name = (TextView) findViewById(R.id.show_list_tv_brand_name);
 		tv_brand_desc = (TextView) findViewById(R.id.show_list_tv_brand_desc);
 		tv_unfold = (TextView) findViewById(R.id.show_list_tv_unfold);
@@ -285,6 +287,8 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			selectEn = brandEn.getSelectEn();
 			endTime = brandEn.getEndTime();
 			if (endTime > 0) {
+				rl_favourable_main.setVisibility(View.VISIBLE);
+				tv_favourable_name.setText(brandEn.getFavourable());
 				tv_favourable_title.setText(brandEn.getFavourable());
 				mcdt = new MyCountDownTimer(tv_time_day, tv_time_hour, tv_time_minute, tv_time_second,
 						endTime * 1000, 1000, new MyCountDownTimer.MyTimerCallback() {
@@ -294,6 +298,8 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 					}
 				});
 				mcdt.start(); //开始倒计时
+			} else {
+				rl_favourable_main.setVisibility(View.GONE);
 			}
 			loadShareImg();
 			//tv_brand_name.setText(brandEn.getName());
@@ -339,19 +345,19 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		if (bm != null) {
 			int w = bm.getWidth();
 			int h = bm.getHeight();
-            logo_height = h * screenWidth / w;
+			logo_height = h * screenWidth / w;
 			iv_topbar_line.setVisibility(View.VISIBLE);
-        } else {
-            logo_height = 0;
-        }
+		} else {
+			logo_height = 0;
+		}
 		if (endTime > 0) {
-            ll_favourable_time.setVisibility(View.VISIBLE); //height = 64dp
-            other_height = time_height + group_height;
+			ll_favourable_time.setVisibility(View.VISIBLE); //height = 64dp
+			other_height = time_height + group_height;
 			iv_topbar_line.setVisibility(View.VISIBLE);
 		}else {
 			ll_favourable_time.setVisibility(View.GONE);
 			other_height = group_height;
-        }
+		}
 		desc_lines = tv_brand_desc.getLineCount();
 		desc_min_height = 0;
 		/*if (brandEn == null || StringUtil.isNull(brandEn.getDesc())) {
@@ -430,38 +436,38 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		startAnimation();
 		sendRequestCode();
 	}
-	
+
 	/**
 	 * 加载翻页数据
 	 */
 	private void loadSVDatas() {
 		loadType = 1;
 		switch (topType) {
-		case TYPE_1: //默认
-			current_Page = page_type_1;
-			break;
-		case TYPE_2: //价格
-			switch (sortType) {
-			case 1: //升序
-				current_Page = page_type_2_ASC;
+			case TYPE_1: //默认
+				current_Page = page_type_1;
 				break;
-			case 2: //降序
-				current_Page = page_type_2_DSC;
+			case TYPE_2: //价格
+				switch (sortType) {
+					case 1: //升序
+						current_Page = page_type_2_ASC;
+						break;
+					case 2: //降序
+						current_Page = page_type_2_DSC;
+						break;
+				}
 				break;
-			}
-			break;
 		}
 		sendRequestCode();
 	}
-	
+
 	private void sendRequestCode() {
 		switch (rootCode) {
-		case PAGE_ROOT_CODE_1:
-			requestProductLists();
-			break;
-		default:
-			requestProductLists();
-			break;
+			case PAGE_ROOT_CODE_1:
+				requestProductLists();
+				break;
+			default:
+				requestProductLists();
+				break;
 		}
 	}
 
@@ -473,7 +479,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		isLoadOk = false;
 		if (current_Page == 1) {
 			new Handler().postDelayed(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					if (brandEn == null) {
@@ -488,11 +494,11 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 			getBrandProductLists();
 		}
 	}
-	
+
 	private void getBrandProfile(){
 		request(AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE);
 	}
-	
+
 	private void getBrandProductLists(){
 		request(AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE);
 	}
@@ -543,62 +549,62 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	public void onClick(View v) {
 		if (!isLoadOk) return; //加载频率控制
 		switch (v.getId()) {
-		case R.id.topbar_group_rl_1: //默认
-			if (topType == TYPE_1) return;
-			topType = TYPE_1;
-			updateViewGroupStatus();
-			flag_type_2 = true;
-			sortType = 0;
-			if (lv_all_1 != null && lv_all_1.size() > 0) {
-				addOldListDatas(lv_all_1, page_type_1, total_1);
-			}else {
-				page_type_1 = 1;
-				total_1 = 0;
-				getSVDatas();
-			}
-			break;
-		case R.id.topbar_group_rl_2: //价格
-			topType = TYPE_2;
-			if (flag_type_2) //价格升序
-			{
-				updateViewGroupStatus();
-				flag_type_2 = false;
-				sortType = 1;
-				if (lv_all_2_ASC != null && lv_all_2_ASC.size() > 0) {
-					addOldListDatas(lv_all_2_ASC, page_type_2_ASC, total_2_ASC);
-				}else {
-					page_type_2_ASC = 1;
-					total_2_ASC = 0;
-					getSVDatas();
-				}
-			} else //价格降序
-			{
+			case R.id.topbar_group_rl_1: //默认
+				if (topType == TYPE_1) return;
+				topType = TYPE_1;
 				updateViewGroupStatus();
 				flag_type_2 = true;
-				sortType = 2;
-				if (lv_all_2_DSC != null && lv_all_2_DSC.size() > 0) {
-					addOldListDatas(lv_all_2_DSC, page_type_2_DSC, total_2_DSC);
-				} else {
-					page_type_2_DSC = 1;
-					total_2_DSC = 0;
+				sortType = 0;
+				if (lv_all_1 != null && lv_all_1.size() > 0) {
+					addOldListDatas(lv_all_1, page_type_1, total_1);
+				}else {
+					page_type_1 = 1;
+					total_1 = 0;
 					getSVDatas();
 				}
-			}
-			break;
-		case R.id.topbar_group_rl_3: //筛选
-			if (selectEn != null) {
-				selectEn.setTypeName(getString(R.string.filter));
-				Intent intent = new Intent(mContext, SelectListActivity.class);
-				intent.putExtra("data", selectEn);
-				intent.putExtra("dataType", SelectListAdapter.DATA_TYPE_7);
-				startActivity(intent);
-			}else {
-				CommonTools.showToast(getString(R.string.toast_error_data_null), 1000);
-			}
-			break;
-		case R.id.show_list_iv_to_top: //回顶
-			toTop();
-			break;
+				break;
+			case R.id.topbar_group_rl_2: //价格
+				topType = TYPE_2;
+				if (flag_type_2) //价格升序
+				{
+					updateViewGroupStatus();
+					flag_type_2 = false;
+					sortType = 1;
+					if (lv_all_2_ASC != null && lv_all_2_ASC.size() > 0) {
+						addOldListDatas(lv_all_2_ASC, page_type_2_ASC, total_2_ASC);
+					}else {
+						page_type_2_ASC = 1;
+						total_2_ASC = 0;
+						getSVDatas();
+					}
+				} else //价格降序
+				{
+					updateViewGroupStatus();
+					flag_type_2 = true;
+					sortType = 2;
+					if (lv_all_2_DSC != null && lv_all_2_DSC.size() > 0) {
+						addOldListDatas(lv_all_2_DSC, page_type_2_DSC, total_2_DSC);
+					} else {
+						page_type_2_DSC = 1;
+						total_2_DSC = 0;
+						getSVDatas();
+					}
+				}
+				break;
+			case R.id.topbar_group_rl_3: //筛选
+				if (selectEn != null) {
+					selectEn.setTypeName(getString(R.string.filter));
+					Intent intent = new Intent(mContext, SelectListActivity.class);
+					intent.putExtra("data", selectEn);
+					intent.putExtra("dataType", SelectListAdapter.DATA_TYPE_7);
+					startActivity(intent);
+				}else {
+					CommonTools.showToast(getString(R.string.toast_error_data_null), 1000);
+				}
+				break;
+			case R.id.show_list_iv_to_top: //回顶
+				toTop();
+				break;
 		}
 	}
 
@@ -615,7 +621,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		}
 		setLoadMoreData();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		LogUtil.i(TAG, "onResume");
@@ -686,33 +692,33 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		}
 	}
 
-    private class ParallaxStikkyAnimator extends HeaderStikkyAnimator {
+	private class ParallaxStikkyAnimator extends HeaderStikkyAnimator {
 
-        @Override
-        public AnimatorBuilder getAnimatorBuilder() {
-            View mHeader_image = getHeader().findViewById(R.id.show_list_iv_brand_img);
+		@Override
+		public AnimatorBuilder getAnimatorBuilder() {
+			View mHeader_image = getHeader().findViewById(R.id.show_list_iv_brand_img);
 
-            return AnimatorBuilder.create().applyVerticalParallax(mHeader_image);
-        }
-    }
+			return AnimatorBuilder.create().applyVerticalParallax(mHeader_image);
+		}
+	}
 
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
 		String uri = AppConfig.URL_COMMON_PRODUCT_URL;
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE:
-			params.add(new MyNameValuePair("app", "brand"));
-			params.add(new MyNameValuePair("id", String.valueOf(brandId)));
-			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE, uri, params, HttpUtil.METHOD_GET);
+			case AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE:
+				params.add(new MyNameValuePair("app", "brand"));
+				params.add(new MyNameValuePair("id", String.valueOf(brandId)));
+				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE, uri, params, HttpUtil.METHOD_GET);
 
-		case AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE:
-			params.add(new MyNameValuePair("app", "brand_goods"));
-			params.add(new MyNameValuePair("id", String.valueOf(brandId)));
-			params.add(new MyNameValuePair("order", String.valueOf(sortType)));
-			params.add(new MyNameValuePair("cat_id", String.valueOf(selectId)));
-			params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
-			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE, uri, params, HttpUtil.METHOD_GET);
+			case AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE:
+				params.add(new MyNameValuePair("app", "brand_goods"));
+				params.add(new MyNameValuePair("id", String.valueOf(brandId)));
+				params.add(new MyNameValuePair("order", String.valueOf(sortType)));
+				params.add(new MyNameValuePair("cat_id", String.valueOf(selectId)));
+				params.add(new MyNameValuePair("page", String.valueOf(current_Page)));
+				return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -721,60 +727,60 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 	public void onSuccess(int requestCode, Object result) {
 		if (instance == null) return;
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE:
-			if (result != null) {
-				brandEn = (BrandEntity) result;
-			}
-			getBrandProductLists();
-			break;
-		case AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE:
-			if (result != null) {
-				ProductListEntity mainEn = (ProductListEntity) result;
-				pageCount = mainEn.getPageSize();
-				int newTotal = mainEn.getDataTotal();
-				List<ProductListEntity> lists = mainEn.getMainLists();
-				if (lists != null && lists.size() > 0) {
-					List<BaseEntity> newLists = null;
-					switch (topType) {
-					case TYPE_1: //默认
-						newLists = addNewEntity(lv_all_1, lists, am_all_1);
+			case AppConfig.REQUEST_SV_GET_BRAND_INFO_CODE:
+				if (result != null) {
+					brandEn = (BrandEntity) result;
+				}
+				getBrandProductLists();
+				break;
+			case AppConfig.REQUEST_SV_GET_BRAND_PRODUCT_CODE:
+				if (result != null) {
+					ProductListEntity mainEn = (ProductListEntity) result;
+					pageCount = mainEn.getPageSize();
+					int newTotal = mainEn.getDataTotal();
+					List<ProductListEntity> lists = mainEn.getMainLists();
+					if (lists != null && lists.size() > 0) {
+						List<BaseEntity> newLists = null;
+						switch (topType) {
+							case TYPE_1: //默认
+								newLists = addNewEntity(lv_all_1, lists, am_all_1);
+								if (newLists != null) {
+									page_type_1++;
+								}
+								total_1 = newTotal;
+								break;
+							case TYPE_2: //价格
+								switch (sortType) {
+									case 1: //升序
+										newLists = addNewEntity(lv_all_2_ASC, lists, am_all_2_asc);
+										if (newLists != null) {
+											page_type_2_ASC++;
+										}
+										total_2_ASC = newTotal;
+										break;
+									case 2: //降序
+										newLists = addNewEntity(lv_all_2_DSC, lists, am_all_2_dsc);
+										if (newLists != null) {
+											page_type_2_DSC++;
+										}
+										total_2_DSC = newTotal;
+										break;
+								}
+								break;
+						}
 						if (newLists != null) {
-							page_type_1++;
+							addNewShowLists(newLists);
 						}
-						total_1 = newTotal;
-						break;
-					case TYPE_2: //价格
-						switch (sortType) {
-						case 1: //升序
-							newLists = addNewEntity(lv_all_2_ASC, lists, am_all_2_asc);
-							if (newLists != null) {
-								page_type_2_ASC++;
-							}
-							total_2_ASC = newTotal;
-							break;
-						case 2: //降序
-							newLists = addNewEntity(lv_all_2_DSC, lists, am_all_2_dsc);
-							if (newLists != null) {
-								page_type_2_DSC++;
-							}
-							total_2_DSC = newTotal;
-							break;
-						}
-						break;
+						dataTotal = newTotal;
+						myUpdateAdapter();
+					}else {
+						loadFailHandle();
 					}
-					if (newLists != null) {
-						addNewShowLists(newLists);
-					}
-					dataTotal = newTotal;
-					myUpdateAdapter();
 				}else {
 					loadFailHandle();
+					showServerBusy();
 				}
-			}else {
-				loadFailHandle();
-				showServerBusy();
-			}
-			break;
+				break;
 		}
 	}
 
@@ -787,21 +793,21 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 
 	private void loadFailHandle() {
 		switch (topType) {
-		case TYPE_1: //默认
-			if (loadType != 0) { //非下拉
-				addAllShow(lv_all_1);
-			}
-			break;
-		case TYPE_2: //价格
-			switch (sortType) {
-			case 1: //升序
-				addAllShow(lv_all_2_ASC);
+			case TYPE_1: //默认
+				if (loadType != 0) { //非下拉
+					addAllShow(lv_all_1);
+				}
 				break;
-			case 2: //降序
-				addAllShow(lv_all_2_DSC);
+			case TYPE_2: //价格
+				switch (sortType) {
+					case 1: //升序
+						addAllShow(lv_all_2_ASC);
+						break;
+					case 2: //降序
+						addAllShow(lv_all_2_DSC);
+						break;
+				}
 				break;
-			}
-			break;
 		}
 		myUpdateAdapter();
 	}

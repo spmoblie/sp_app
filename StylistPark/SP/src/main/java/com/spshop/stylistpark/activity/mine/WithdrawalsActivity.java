@@ -185,6 +185,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		params.add(new MyNameValuePair("bank", cardNumStr));
 		params.add(new MyNameValuePair("amount", String.valueOf(inputAmount)));
+		params.add(new MyNameValuePair("id", "1"));
 		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_WITHDRAWALS_CODE, uri, params, HttpUtil.METHOD_POST);
 	}
 

@@ -1,6 +1,7 @@
 package com.spshop.stylistpark.activity.mine;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -27,7 +28,8 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 	
 	private EditText et_coupon;
 	private Button btn_confirm;
-	private String couponNo;
+	private int pageType = 0;
+	private String couponNo, hintStr;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,11 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 		
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
+
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {
+			pageType = bundle.getInt("pageType", 0);
+		}
 		
 		findViewById();
 		initView();
@@ -47,7 +54,14 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initView() {
-		setTitle(getString(R.string.add) + getString(R.string.coupon_coupon));
+		if (pageType == 0) {
+			setTitle(getString(R.string.add) + getString(R.string.coupon_coupon));
+			hintStr = getString(R.string.coupon_input_error);
+		} else { //充值
+			setTitle(R.string.money_recharge);
+			hintStr = getString(R.string.money_recharge_input_hint);
+			et_coupon.setHint(hintStr);
+		}
 		btn_confirm.setOnClickListener(this);
 	}
 
@@ -55,7 +69,7 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 		couponNo = et_coupon.getText().toString();
 		// 输入非空
 		if (couponNo.isEmpty()) {
-			CommonTools.showToast(getString(R.string.coupon_input_error), 1000);
+			CommonTools.showToast(hintStr, 1000);
 			return;
 		}
 		postResetData();
@@ -101,7 +115,13 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 	public Object doInBackground(int requestCode) throws Exception {
 		String uri = AppConfig.URL_COMMON_USER_URL + "?act=add_bonus";
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		params.add(new MyNameValuePair("bonus_sn", couponNo));
+		if (pageType == 0) {
+			params.add(new MyNameValuePair("bonus_sn", couponNo));
+		} else { //充值
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=act_account";
+			params.add(new MyNameValuePair("bank", couponNo));
+			params.add(new MyNameValuePair("id", "0"));
+		}
 		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_COUPON_NO_CODE, uri, params, HttpUtil.METHOD_POST);
 	}
 
@@ -112,9 +132,14 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 		if (result != null) {
 			BaseEntity baseEn = (BaseEntity) result;
 			if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-				CommonTools.showToast(getString(R.string.coupon_add_ok), 1000);
-				if (CouponListActivity.instance != null) {
-					CouponListActivity.instance.addCouponOk();
+				if (pageType == 0) {
+					if (CouponListActivity.instance != null) {
+						CouponListActivity.instance.addCouponOk();
+					}
+					CommonTools.showToast(getString(R.string.coupon_add_ok), 1000);
+				} else {
+					updateActivityData(7);
+					CommonTools.showToast(getString(R.string.money_recharge_success), 1000);
 				}
 				finish();
 			}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
@@ -126,6 +151,14 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 					CommonTools.showToast(baseEn.getErrInfo(), 2000);
 				}
 			}
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					if (et_coupon != null) {
+						et_coupon.setText("");
+					}
+				}
+			}, 1000);
 		}else {
 			showServerBusy();
 		}

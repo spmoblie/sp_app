@@ -37,6 +37,7 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 	private String nameStr, nameIDStr, phoneStr, emailStr, accountStr, hintStr;
 	private boolean isCheckEmail = true;
 	private int modeType = MODE_UNION; //提现方式
+	private UserManager userManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,8 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 		
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
+
+		userManager = UserManager.getInstance();
 		
 		findViewById();
 		initView();
@@ -214,6 +217,10 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 			BaseEntity userEn = (BaseEntity) result;
 			if (userEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS){ //提交成功
 				CommonTools.showToast(getString(R.string.submit_success), 2000);
+				userManager.saveUserName(nameStr);
+				userManager.saveUserNameID(nameIDStr);
+				userManager.saveUserPhone(phoneStr);
+				userManager.saveUserEmail(emailStr);
 				updateActivityData(7);
 				finish();
 			}else if (userEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {

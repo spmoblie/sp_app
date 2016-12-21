@@ -56,12 +56,13 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "PersonalActivity";
 
-	private RelativeLayout rl_avatar, rl_nick, rl_gender, rl_birthday, rl_intro, rl_email, rl_identity;
+	private RelativeLayout rl_avatar, rl_nick, rl_gender, rl_birthday, rl_rank, rl_intro, rl_email, rl_identity;
 	private ImageView iv_avatar;
-	private TextView tv_nick, tv_gender, tv_birthday, tv_rank, tv_intro, tv_email, tv_auth_go, tv_auth_ok;
+	private TextView tv_nick, tv_gender, tv_birthday, tv_rank, tv_rank_go, tv_intro, tv_email, tv_auth_go, tv_auth_ok;
 	private String avatarStr, nickStr, genderStr, birthdayStr, rankStr, introStr, emailStr;
 	private String changeStr, changeTypeKey;
 	private File saveFile;
+	private int rankCode;
 	private int genderCode = 0;
 	private boolean isAuth = false;
 	private boolean isUpload = false;
@@ -90,6 +91,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		rl_nick = (RelativeLayout) findViewById(R.id.personal_rl_nick);
 		rl_gender = (RelativeLayout) findViewById(R.id.personal_rl_gender);
 		rl_birthday = (RelativeLayout) findViewById(R.id.personal_rl_birthday);
+		rl_rank = (RelativeLayout) findViewById(R.id.personal_rl_rank);
 		rl_intro = (RelativeLayout) findViewById(R.id.personal_rl_intro);
 		rl_email = (RelativeLayout) findViewById(R.id.personal_rl_email);
 		rl_identity = (RelativeLayout) findViewById(R.id.personal_rl_auth);
@@ -98,6 +100,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		tv_gender = (TextView) findViewById(R.id.personal_tv_gender_content);
 		tv_birthday = (TextView) findViewById(R.id.personal_tv_birthday_content);
 		tv_rank = (TextView) findViewById(R.id.personal_tv_rank_content);
+		tv_rank_go = (TextView) findViewById(R.id.personal_tv_rank_go);
 		tv_intro = (TextView) findViewById(R.id.personal_tv_intro_content);
 		tv_email = (TextView) findViewById(R.id.personal_tv_email_content);
 		tv_auth_go = (TextView) findViewById(R.id.personal_tv_auth_go);
@@ -110,6 +113,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		rl_nick.setOnClickListener(this);
 		rl_gender.setOnClickListener(this);
 		rl_birthday.setOnClickListener(this);
+		rl_rank.setOnClickListener(this);
 		rl_intro.setOnClickListener(this);
 		rl_email.setOnClickListener(this);
 		rl_identity.setOnClickListener(this);
@@ -121,6 +125,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			avatarStr = infoEn.getUserAvatar();
 			nickStr = infoEn.getUserNick();
 			birthdayStr = infoEn.getBirthday();
+			rankCode = infoEn.getUserRankCode();
 			rankStr = infoEn.getUserRankName();
 			introStr = infoEn.getUserIntro();
 			emailStr = infoEn.getUserEmail();
@@ -130,6 +135,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			nickStr = userManager.getUserNick();
 			genderCode = userManager.getUserGender();
 			birthdayStr = userManager.getUserBirthday();
+			rankCode = userManager.getUserRankCode();
 			rankStr = userManager.getUserRankName();
 			introStr = userManager.getUserIntro();
 			emailStr = userManager.getUserEmail();
@@ -148,9 +154,14 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		tv_gender.setText(genderStr);
 		tv_nick.setText(nickStr);
 		tv_birthday.setText(birthdayStr);
-		tv_rank.setText(rankStr);
 		tv_intro.setText(introStr);
 		tv_email.setText(emailStr);
+		tv_rank.setText(rankStr);
+		if (rankCode == 4) { //达人
+			tv_rank_go.setVisibility(View.GONE);
+		} else {
+			tv_rank_go.setVisibility(View.VISIBLE);
+		}
 		if (isAuth) {
 			tv_auth_go.setVisibility(View.GONE);
 			tv_auth_ok.setVisibility(View.VISIBLE);
@@ -240,6 +251,15 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			return;
 		case R.id.personal_rl_birthday:
 			showDateDialog();
+			break;
+		case R.id.personal_rl_rank:
+			if (rankCode == 4) return;
+			if (userManager.checkIsAuth()) { //需要实名认证
+				startActivity(new Intent(mContext, AuthenticationActivity.class));
+				CommonTools.showToast(getString(R.string.money_auth_daren_hint), 2000);
+			} else {
+
+			}
 			break;
 		case R.id.personal_rl_intro:
 			intent = new Intent(mContext, EditUserInfoActivity.class);

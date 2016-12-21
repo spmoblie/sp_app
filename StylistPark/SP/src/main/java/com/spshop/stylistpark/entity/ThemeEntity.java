@@ -16,6 +16,7 @@ public class ThemeEntity extends BaseEntity {
 	private String imgUrl;
 	private String vdoUrl;
 	private ThemeEntity adEn; //广告
+	private ThemeEntity windowEn; //橱窗
 	private ProductListEntity goodsEn; //热销商品
 	private ThemeEntity peidaEn; //今日专题
 	private ThemeEntity saleEn; //限时活动
@@ -112,6 +113,14 @@ public class ThemeEntity extends BaseEntity {
 
 	public void setAdEn(ThemeEntity adEn) {
 		this.adEn = adEn;
+	}
+
+	public ThemeEntity getWindowEn() {
+		return windowEn;
+	}
+
+	public void setWindowEn(ThemeEntity windowEn) {
+		this.windowEn = windowEn;
 	}
 
 	public ProductListEntity getGoodsEn() {

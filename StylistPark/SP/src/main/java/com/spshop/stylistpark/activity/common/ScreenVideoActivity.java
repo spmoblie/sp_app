@@ -316,7 +316,9 @@ public class ScreenVideoActivity extends BaseActivity {
 			videoView.seekTo(mSeekPosition);
 			videoView.start();
 		}
-		wakeLock.acquire();
+		if (wakeLock != null) {
+			wakeLock.acquire();
+		}
 	}
 
 	@Override
@@ -329,9 +331,11 @@ public class ScreenVideoActivity extends BaseActivity {
 			mSeekPosition = videoView.getCurrentPosition();
 			videoView.pause();
 		}
-		wakeLock.release();
 		if (dm != null) {
 			dm.clearInstance();
+		}
+		if (wakeLock != null) {
+			wakeLock.release();
 		}
 		super.onPause();
 	}

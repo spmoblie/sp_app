@@ -48,6 +48,25 @@
                     android:contentDescription="@string/desc" />
 
                 <RelativeLayout
+                    android:id="@+id/show_list_rl_favourable_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_padding_25"
+                    android:layout_gravity="bottom"
+                    android:background="@color/bg_favourable_color"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:id="@+id/show_list_tv_favourable_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/margin_padding_10"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/text_size_14"
+                        android:textColor="@color/text_color_white"/>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/personal_main_info_height"
                     android:layout_gravity="bottom"
@@ -111,7 +130,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone" >
 
                     <ImageView
                         style="@style/set_line_horizontal_bg"

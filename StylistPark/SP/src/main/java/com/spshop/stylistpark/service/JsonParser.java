@@ -136,10 +136,10 @@ public class JsonParser {
 			mainEn.setGoodsEn(goodsEn);
 		}
 		// 解析今日专题
-		/*if (StringUtil.notNull(jsonObj, "paida")) {
-			JSONArray datas = jsonObj.getJSONArray("paida");
+		/*if (StringUtil.notNull(jsonObject, "paida")) {
+			JSONArray datas = jsonObject.getJSONArray("paida");
 			ThemeEntity peidaEn = new ThemeEntity();
-			ThemeEntity childEn = null;
+			ThemeEntity childEn;
 			List<ThemeEntity> peidaLists = new ArrayList<ThemeEntity>();
 			for (int j = 0; j < datas.length(); j++) {
 				JSONObject item = datas.getJSONObject(j);
@@ -152,6 +152,22 @@ public class JsonParser {
 			peidaEn.setMainLists(peidaLists);
 			mainEn.setPeidaEn(peidaEn);
 		}*/
+		// 解析今日专题
+		if (StringUtil.notNull(jsonObject, "brand")) {
+			JSONArray datas = jsonObject.getJSONArray("brand");
+			ThemeEntity windowEn = new ThemeEntity();
+			ThemeEntity childEn;
+			List<ThemeEntity> wdLists = new ArrayList<ThemeEntity>();
+			for (int j = 0; j < datas.length(); j++) {
+				JSONObject item = datas.getJSONObject(j);
+				childEn = new ThemeEntity();
+				childEn.setId(StringUtil.getInteger(item.getString("brand_id")));
+				childEn.setImgUrl(item.getString("brand_logo"));
+				wdLists.add(childEn);
+			}
+			windowEn.setMainLists(wdLists);
+			mainEn.setWindowEn(windowEn);
+		}
 		// 限时活动
 		if (StringUtil.notNull(jsonObject, "activity")) {
 			JSONArray datas = jsonObject.getJSONArray("activity");
@@ -725,12 +741,17 @@ public class JsonParser {
 			if (StringUtil.notNull(data, "name_id")) {
 				mainEn.setUserNameID(data.getString("name_id"));
 			}
+			if (StringUtil.notNull(data, "mobile")) {
+				mainEn.setUserPhone(data.getString("mobile"));
+			}
+			if (StringUtil.notNull(data, "email")) {
+				mainEn.setUserEmail(data.getString("email"));
+			}
 			mainEn.setUserNick(data.getString("nickname"));
 			mainEn.setUserAvatar(data.getString("avatar"));
 			mainEn.setUserIntro(data.getString("intro"));
 			mainEn.setGenderCode(StringUtil.getInteger(data.getString("sex")));
 			mainEn.setBirthday(data.getString("birthday"));
-			mainEn.setUserEmail(data.getString("email"));
 			mainEn.setUserRankName(data.getString("user_rank"));
 			mainEn.setRankType1(data.getString("label_member"));
 			mainEn.setRankType2(data.getString("member_affiliate"));

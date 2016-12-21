@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -41,7 +42,7 @@ import static com.spshop.stylistpark.AppApplication.screenWidth;
  */
 public class ScreenImageActivity extends BaseActivity {
 
-	private static final int QR_IMG_WIDTH = screenWidth * 1 / 10;
+	private static final int QR_IMG_WIDTH = screenWidth * 2 / 15;
 
 	public static final String HASHMAP_KEY_IMG = "img";
 	public static final String HASHMAP_KEY_BAR = "bar";
@@ -63,11 +64,16 @@ public class ScreenImageActivity extends BaseActivity {
 	private TextView tv_name, tv_price_sell;
 	private Runnable mPagerAction;
 	private AsyncImageLoader asyncImageLoader;
+	private PowerManager powerManager = null;
+	private PowerManager.WakeLock wakeLock = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_screen_image);
+
+		powerManager = (PowerManager)this.getSystemService(this.POWER_SERVICE);
+		wakeLock = this.powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "My Lock");
 
 		long newDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		long oldDay = shared.getLong(AppConfig.KEY_UPDATE_LOOP_DATA_DAY, 0);
@@ -315,6 +321,10 @@ public class ScreenImageActivity extends BaseActivity {
 		stopLoop();
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
+
+		if (wakeLock != null) {
+			wakeLock.acquire();
+		}
 	}
 
 	@Override
@@ -325,6 +335,9 @@ public class ScreenImageActivity extends BaseActivity {
 		// 销毁对象
         if (asyncImageLoader != null) {
         	asyncImageLoader.clearInstance();
+		}
+		if (wakeLock != null) {
+			wakeLock.release();
 		}
 	}
 

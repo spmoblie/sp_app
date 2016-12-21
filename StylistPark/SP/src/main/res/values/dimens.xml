@@ -93,6 +93,7 @@
 
     <!-- other -->
     <dimen name="en7zh12">@dimen/margin_padding_7</dimen>
+    <dimen name="home_window_margin">@dimen/margin_padding_2</dimen>
     <dimen name="topbar_group_height">@dimen/margin_padding_35</dimen>
     <dimen name="screen_margin_default">@dimen/margin_padding_15</dimen>
     <dimen name="to_top_margin_right">@dimen/margin_padding_30</dimen>
