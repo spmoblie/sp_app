@@ -2,7 +2,7 @@
 <resources>
 
     <!-- testing version -->
-    <string name="app_name">StylistPark</string>
+    <string name="app_name">SPSHOP</string>
 
     <!-- General -->
     <string name="confirm">Confirm</string>
@@ -147,6 +147,7 @@
     <string name="product_price_full">Full price : </string>
     <string name="product_full_minus">Minus</string>
     <string name="product_mail"> Mail</string>
+    <string name="product_mail_hk">HK mail</string>
     <string name="product_genuine_safeguard">Safeguard</string>
     <string name="product_carefree_return">Exchanged</string>
     <string name="product_cash_delivery">Cash Pay</string>

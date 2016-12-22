@@ -2,7 +2,7 @@
 <resources>
 
     <!-- testing version -->
-    <string name="app_name">名尚公園</string>
+    <string name="app_name">刷屏購</string>
 
     <!-- General -->
     <string name="confirm">確定</string>
@@ -147,6 +147,7 @@
     <string name="product_price_full">原價:</string>
     <string name="product_full_minus">滿減</string>
     <string name="product_mail">直郵</string>
+    <string name="product_mail_hk">香港直郵</string>
     <string name="product_genuine_safeguard">正品保證</string>
     <string name="product_carefree_return">無憂退換</string>
     <string name="product_cash_delivery">貨到付款</string>

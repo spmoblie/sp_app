@@ -91,8 +91,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private boolean isUpdate = false;
 	private int idsSize, idsPosition, vprPosition;
 	private int goodsId = 0;
-	private int propertyNum = 3;
-	private String fristPromotionName = "";
 	private ArrayList<ImageView> viewLists = new ArrayList<ImageView>();
 	private ArrayList<String> urlLists = new ArrayList<String>();
 	private ArrayList<ProductDetailEntity> imgEns = new ArrayList<ProductDetailEntity>();
@@ -223,33 +221,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 					}
 				});
 				mcdt.start(); //开始倒计时
-				propertyNum = 2;
-			}else {
-				propertyNum = 3;
-			}
-			// 判定商品特性(折价商品恕不退换/非大陆货源不能货到付款)
-			switch (propertyNum) {
-			case 2:
-				tv_property_1.setVisibility(View.VISIBLE); //正品保证
-				tv_property_2.setVisibility(View.GONE);
-				if (StringUtil.isNull(mainEn.getMailCountry()) || mainEn.getMailCountry().equals("0")) {
-					tv_property_2.setText(getString(R.string.product_cash_delivery)); //货到付款
-				}else {
-					tv_property_2.setText(mainEn.getMailCountry() + getString(R.string.product_mail)); //香港直邮
-				}
-				tv_property_3.setVisibility(View.GONE);
-				break;
-			case 3:
-				tv_property_1.setVisibility(View.VISIBLE); //正品保证
-				tv_property_2.setVisibility(View.VISIBLE);
-				tv_property_2.setText(getString(R.string.product_carefree_return)); //无忧退换
-				tv_property_3.setVisibility(View.GONE);
-				if (StringUtil.isNull(mainEn.getMailCountry()) || mainEn.getMailCountry().equals("0")) {
-					tv_property_3.setText(getString(R.string.product_cash_delivery)); //货到付款
-				}else {
-					tv_property_3.setText(mainEn.getMailCountry() + getString(R.string.product_mail)); //香港直邮
-				}
-				break;
 			}
 			// 判定商品活动
 			if (mainEn.getPromotionLists() != null && mainEn.getPromotionLists().size() > 0) {
@@ -257,6 +228,12 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 				addPromotionView(ll_promotion, mainEn.getPromotionLists());
 			}else {
 				ll_promotion.setVisibility(View.GONE);
+			}
+			// 判定商品特性
+			if (mainEn.getSuppliersId() == AppConfig.SP_GOODS_START_HK) { //香港发货
+				tv_property_1.setVisibility(View.VISIBLE);
+			} else {
+				tv_property_1.setVisibility(View.GONE);
 			}
 			// 判定是否收藏此商品
 			isColl = !StringUtil.isNull(mainEn.getIsCollection());
@@ -278,9 +255,6 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			TextView tv_name = (TextView) proView.findViewById(R.id.item_tv_promotion_name);
 			tv_name.setText(proLists.get(i).getPromotionName());
 			ll_main.addView(proView);
-			if (i == 0) {
-				fristPromotionName = proLists.get(i).getPromotionName();
-			}
 		}
 	}
 

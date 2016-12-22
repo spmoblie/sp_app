@@ -111,6 +111,7 @@
                 android:id="@+id/personal_tv_rank_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_toLeftOf="@+id/personal_tv_rank_go"
                 android:layout_marginRight="@dimen/margin_padding_35"
                 android:layout_centerVertical="true"
@@ -120,7 +121,8 @@
             <TextView
                 android:id="@+id/personal_tv_rank_go"
                 style="@style/setting_lay_text_content"
-                android:text="@string/money_upgrade" />
+                android:text="@string/money_upgrade"
+                android:visibility="gone" />
 
             <ImageView
                 style="@style/set_line_horizontal_bg"

@@ -161,7 +161,7 @@ public class JsonParser {
 			for (int j = 0; j < datas.length(); j++) {
 				JSONObject item = datas.getJSONObject(j);
 				childEn = new ThemeEntity();
-				childEn.setId(StringUtil.getInteger(item.getString("id")));
+				childEn.setId(StringUtil.getInteger(item.getString("ad_link")));
 				childEn.setType(StringUtil.getInteger(item.getString("type")));
 				childEn.setImgUrl(item.getString("images"));
 				wdLists.add(childEn);
@@ -429,6 +429,7 @@ public class JsonParser {
 			//mainEn.setPromoteTime(StringUtil.getLong(goods.getString("promote_time")));
 			mainEn.setFullPrice(goods.getString("prices"));
 			mainEn.setSellPrice(goods.getString("price"));
+			mainEn.setSuppliersId(StringUtil.getInteger((goods.getString("suppliers"))));
 			mainEn.setComputePrice(StringUtil.getDouble(goods.getString("bag_price")));
 			mainEn.setDiscount(goods.getString("sale"));
 			mainEn.setCommission(goods.getString("affiliate"));

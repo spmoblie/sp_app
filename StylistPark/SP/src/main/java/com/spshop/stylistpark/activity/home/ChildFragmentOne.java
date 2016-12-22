@@ -66,15 +66,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.spshop.stylistpark.AppApplication.screenWidth;
-import static com.spshop.stylistpark.R.id.home_list_head_iv_window_1;
-import static com.spshop.stylistpark.R.id.home_list_head_iv_window_2;
-import static com.spshop.stylistpark.R.id.home_list_head_iv_window_3;
 
 @SuppressLint("UseSparseArrays")
 public class ChildFragmentOne extends Fragment implements OnClickListener, OnDataListener {
 
 	private static final String TAG = "ChildFragmentOne";
-	public static ChildFragmentOne instance = null;
+	public static ChildFragmentOne instance;
 	private static final int GOODS_WIDTH = (screenWidth - 80) / 4;
 
 	private static final String IMAGE_URL_HTTP = AppConfig.ENVIRONMENT_PRESENT_IMG_APP;
@@ -114,7 +111,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private SparseBooleanArray sa_all = new SparseBooleanArray();
 	private boolean vprStop = false;
 	private boolean addHead = false;
-	private int newWindowWD;
 	private int idsSize, idsPosition, vprPosition;
 	private ImageView[] indicators = null;
 	private ArrayList<ImageView> viewLists = new ArrayList<ImageView>();
@@ -150,7 +146,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		brandLP.height = screenWidth / 2;
 
 		int windowMg = getResources().getDimensionPixelSize(R.dimen.home_window_margin) * 2;
-		newWindowWD = screenWidth / 2 - windowMg;
+		int newWindowWD = screenWidth / 2 - windowMg;
 		windowLP_1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		windowLP_1.width = newWindowWD;
 		windowLP_1.height = newWindowWD * (346 + windowMg) / 320;
@@ -257,9 +253,9 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		viewPager = (ViewPager) ll_head_main.findViewById(R.id.home_list_head_viewPager);
 		ll_indicator = (LinearLayout) ll_head_main.findViewById(R.id.home_list_head_indicator);
 		ll_window_main = (LinearLayout) ll_head_main.findViewById(R.id.home_list_head_ll_window_main);
-		iv_window_1 = (ImageView) ll_head_main.findViewById(home_list_head_iv_window_1);
-		iv_window_2 = (ImageView) ll_head_main.findViewById(home_list_head_iv_window_2);
-		iv_window_3 = (ImageView) ll_head_main.findViewById(home_list_head_iv_window_3);
+		iv_window_1 = (ImageView) ll_head_main.findViewById(R.id.home_list_head_iv_window_1);
+		iv_window_2 = (ImageView) ll_head_main.findViewById(R.id.home_list_head_iv_window_2);
+		iv_window_3 = (ImageView) ll_head_main.findViewById(R.id.home_list_head_iv_window_3);
 		sv_goods_main = ll_head_main.findViewById(R.id.home_list_head_sv_goods_main);
 		vw_goods_title = ll_head_main.findViewById(R.id.home_list_head_ll_goods_title);
 		tv_goods_title = (TextView) vw_goods_title.findViewById(R.id.text_two_line_tv_title);

@@ -159,11 +159,11 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		tv_intro.setText(introStr);
 		tv_email.setText(emailStr);
 		tv_rank.setText(rankStr);
-		if (rankCode == 4) { //达人
+		/*if (rankCode == 4) { //达人
 			tv_rank_go.setVisibility(View.GONE);
 		} else {
 			tv_rank_go.setVisibility(View.VISIBLE);
-		}
+		}*/
 		if (isAuth) {
 			tv_auth_go.setVisibility(View.GONE);
 			tv_auth_ok.setVisibility(View.VISIBLE);
@@ -255,14 +255,14 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			showDateDialog();
 			break;
 		case R.id.personal_rl_rank:
-			if (rankCode == 4) return;
+			/*if (rankCode == 4) return;
 			if (userManager.checkIsAuth()) { //需要实名认证
 				startActivity(new Intent(mContext, AuthenticationActivity.class));
 				CommonTools.showToast(getString(R.string.money_auth_daren_hint), 2000);
 			} else {
 				intent = new Intent(mContext, AddCouponActivity.class);
 				intent.putExtra("pageType", AddCouponActivity.TYPE_PAGE_2);
-			}
+			}*/
 			break;
 		case R.id.personal_rl_intro:
 			intent = new Intent(mContext, EditUserInfoActivity.class);

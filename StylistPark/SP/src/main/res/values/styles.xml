@@ -270,17 +270,18 @@
         <item name="android:textColor">@color/label_text_color</item>
     </style>
 
-    <!-- 商品详情属性文本样式:灰色 -->
-    <style name="product_property_text_assist">
+    <!-- 商品详情属性文本样式 -->
+    <style name="product_property_text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/margin_padding_15</item>
         <item name="android:drawableLeft">@drawable/icon_support</item>
         <item name="android:drawablePadding">@dimen/margin_padding_2</item>
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textSize">@dimen/text_size_10</item>
-        <item name="android:textColor">@color/label_text_color</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:textColor">@color/tv_color_status</item>
     </style>
     
     <!-- 订单分类TextView样式 -->

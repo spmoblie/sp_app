@@ -3,94 +3,99 @@ package com.spshop.stylistpark.entity;
 import java.util.List;
 
 public class ProductDetailEntity extends BaseEntity{
-	
+
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 商品id
 	 */
 	private int id;
-	
+
 	/**
 	 * 商品名称
 	 */
 	private String name;
-	
+
 	/**
 	 * 商品库存数
 	 */
 	private int stockNum;
-	
+
 	/**
 	 * 购物车商品列表id
 	 */
 	private int recId;
-	
+
 	/**
 	 * 放入购物车的商品数量
 	 */
 	private int cartNum;
-	
+
 	/**
 	 * 放入购物车的商品属性
 	 */
 	private String attrStr;
-	
+
 	/**
 	 * 品牌Id
 	 */
 	private String brandId;
-	
+
 	/**
 	 * 品牌Logo
 	 */
 	private String brandLogo;
-	
+
 	/**
 	 * 品牌名称
 	 */
 	private String brandName;
-	
+
 	/**
 	 * 品牌国家
 	 */
 	private String brandCountry;
-	
+
 	/**
 	 * 商品活动类型
 	 */
 	private String promotionType;
-	
+
 	/**
 	 * 商品活动内容
 	 */
 	private String promotionName;
-	
+
+	/**
+	 * 货品发货地ID
+	 */
+	private int suppliersId;
+
 	/**
 	 * 商品发货地
 	 */
 	private String mailCountry;
-	
+
 	/**
 	 * 商品折价倒计时
 	 */
 	private long promoteTime;
-	
+
 	/**
 	 * 当前使用货币
 	 */
 	private String currency;
-	
+
 	/**
 	 * 商品原价
 	 */
 	private String fullPrice;
-	
+
 	/**
 	 * 商品卖价
 	 */
 	private String sellPrice;
-	
+
 	/**
 	 * 商品结算价
 	 */
@@ -110,27 +115,27 @@ public class ProductDetailEntity extends BaseEntity{
 	 * 是否收藏
 	 */
 	private String isCollection;
-	
+
 	/**
 	 * 是否有视频(0:无/1:有)
 	 */
 	private int isVideo;
-	
+
 	/**
 	 * 视频路径
 	 */
 	private String videoUrl;
-	
+
 	/**
 	 * 图片Id
 	 */
 	private String imgId;
-	
+
 	/**
 	 * 图片Url（小）
 	 */
 	private String imgMinUrl;
-	
+
 	/**
 	 * 图片Url（大）
 	 */
@@ -140,18 +145,18 @@ public class ProductDetailEntity extends BaseEntity{
 	 * 分享实体
 	 */
 	private ShareEntity shareEn;
-	
+
 	/**
 	 * 图片集合
 	 */
 	private List<ProductDetailEntity> imgLists;
-	
+
 	/**
 	 * 商品活动集合
 	 */
 	private List<ProductDetailEntity> promotionLists;
 
-	
+
 	public ProductDetailEntity() {
 		super();
 	}
@@ -273,6 +278,16 @@ public class ProductDetailEntity extends BaseEntity{
 
 	public void setPromotionName(String promotionName) {
 		this.promotionName = promotionName;
+	}
+
+
+	public int getSuppliersId() {
+		return suppliersId;
+	}
+
+
+	public void setSuppliersId(int suppliersId) {
+		this.suppliersId = suppliersId;
 	}
 
 
