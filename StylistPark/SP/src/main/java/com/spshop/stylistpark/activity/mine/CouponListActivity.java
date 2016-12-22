@@ -300,7 +300,7 @@ public class CouponListActivity extends BaseActivity implements OnClickListener{
 	public void OnListenerRight() {
 		super.OnListenerRight();
 		Intent intent = new Intent(mContext, AddCouponActivity.class);
-		intent.putExtra("pageType", 0);
+		intent.putExtra("pageType", AddCouponActivity.TYPE_PAGE_0);
 		startActivity(intent);
 	}
 

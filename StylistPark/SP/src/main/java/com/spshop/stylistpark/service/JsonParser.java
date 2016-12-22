@@ -152,17 +152,18 @@ public class JsonParser {
 			peidaEn.setMainLists(peidaLists);
 			mainEn.setPeidaEn(peidaEn);
 		}*/
-		// 解析今日专题
-		if (StringUtil.notNull(jsonObject, "brand")) {
-			JSONArray datas = jsonObject.getJSONArray("brand");
+		// 解析橱窗数据
+		if (StringUtil.notNull(jsonObject, "index_ad")) {
+			JSONArray datas = jsonObject.getJSONArray("index_ad");
 			ThemeEntity windowEn = new ThemeEntity();
 			ThemeEntity childEn;
 			List<ThemeEntity> wdLists = new ArrayList<ThemeEntity>();
 			for (int j = 0; j < datas.length(); j++) {
 				JSONObject item = datas.getJSONObject(j);
 				childEn = new ThemeEntity();
-				childEn.setId(StringUtil.getInteger(item.getString("brand_id")));
-				childEn.setImgUrl(item.getString("brand_logo"));
+				childEn.setId(StringUtil.getInteger(item.getString("id")));
+				childEn.setType(StringUtil.getInteger(item.getString("type")));
+				childEn.setImgUrl(item.getString("images"));
 				wdLists.add(childEn);
 			}
 			windowEn.setMainLists(wdLists);

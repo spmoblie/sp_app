@@ -55,6 +55,7 @@ import static com.spshop.stylistpark.AppApplication.screenWidth;
 public class PersonalActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "PersonalActivity";
+	public static PersonalActivity instance;
 
 	private RelativeLayout rl_avatar, rl_nick, rl_gender, rl_birthday, rl_rank, rl_intro, rl_email, rl_identity;
 	private ImageView iv_avatar;
@@ -78,7 +79,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
-		
+
+		instance = this;
 		infoEn = (UserInfoEntity) getIntent().getExtras().get("data");
 		userManager = UserManager.getInstance();
 
@@ -258,7 +260,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 				startActivity(new Intent(mContext, AuthenticationActivity.class));
 				CommonTools.showToast(getString(R.string.money_auth_daren_hint), 2000);
 			} else {
-
+				intent = new Intent(mContext, AddCouponActivity.class);
+				intent.putExtra("pageType", AddCouponActivity.TYPE_PAGE_2);
 			}
 			break;
 		case R.id.personal_rl_intro:

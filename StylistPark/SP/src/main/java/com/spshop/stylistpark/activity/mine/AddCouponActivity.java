@@ -25,10 +25,14 @@ import java.util.List;
 public class AddCouponActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "AddCouponActivity";
-	
+
+	public static final int TYPE_PAGE_0 = 0;
+	public static final int TYPE_PAGE_1 = 1;
+	public static final int TYPE_PAGE_2 = 2;
+
 	private EditText et_coupon;
 	private Button btn_confirm;
-	private int pageType = 0;
+	private int pageType = TYPE_PAGE_0;
 	private String couponNo, hintStr;
 	
 	@Override
@@ -41,7 +45,7 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null) {
-			pageType = bundle.getInt("pageType", 0);
+			pageType = bundle.getInt("pageType", TYPE_PAGE_0);
 		}
 		
 		findViewById();
@@ -54,13 +58,21 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initView() {
-		if (pageType == 0) {
-			setTitle(getString(R.string.add) + getString(R.string.coupon_coupon));
-			hintStr = getString(R.string.coupon_input_error);
-		} else { //充值
-			setTitle(R.string.money_recharge);
-			hintStr = getString(R.string.money_recharge_input_hint);
-			et_coupon.setHint(hintStr);
+		switch (pageType) {
+			case TYPE_PAGE_1: //充值
+				setTitle(R.string.money_recharge);
+				hintStr = getString(R.string.money_recharge_input_hint);
+				et_coupon.setHint(hintStr);
+				break;
+			case TYPE_PAGE_2: //达人
+				setTitle(R.string.money_auth_daren);
+				hintStr = getString(R.string.money_auth_daren_input_hint);
+				et_coupon.setHint(hintStr);
+				break;
+			default:
+				setTitle(getString(R.string.add) + getString(R.string.coupon_coupon));
+				hintStr = getString(R.string.coupon_input_error);
+				break;
 		}
 		btn_confirm.setOnClickListener(this);
 	}
@@ -115,12 +127,17 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 	public Object doInBackground(int requestCode) throws Exception {
 		String uri = AppConfig.URL_COMMON_USER_URL + "?act=add_bonus";
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-		if (pageType == 0) {
-			params.add(new MyNameValuePair("bonus_sn", couponNo));
-		} else { //充值
-			uri = AppConfig.URL_COMMON_USER_URL + "?act=act_account";
-			params.add(new MyNameValuePair("bank", couponNo));
-			params.add(new MyNameValuePair("id", "0"));
+		switch (pageType) {
+			case TYPE_PAGE_1: //充值
+				uri = AppConfig.URL_COMMON_USER_URL + "?act=act_account";
+				params.add(new MyNameValuePair("bank", couponNo));
+				params.add(new MyNameValuePair("id", "0"));
+				break;
+			case TYPE_PAGE_2: //达人
+				break;
+			default:
+				params.add(new MyNameValuePair("bonus_sn", couponNo));
+				break;
 		}
 		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_COUPON_NO_CODE, uri, params, HttpUtil.METHOD_POST);
 	}
@@ -132,14 +149,23 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 		if (result != null) {
 			BaseEntity baseEn = (BaseEntity) result;
 			if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-				if (pageType == 0) {
-					if (CouponListActivity.instance != null) {
-						CouponListActivity.instance.addCouponOk();
-					}
-					CommonTools.showToast(getString(R.string.coupon_add_ok), 1000);
-				} else {
-					updateActivityData(7);
-					CommonTools.showToast(getString(R.string.money_recharge_success), 1000);
+				switch (pageType) {
+					case TYPE_PAGE_1: //充值
+						updateActivityData(7);
+						CommonTools.showToast(getString(R.string.money_recharge_success), 2000);
+						break;
+					case TYPE_PAGE_2: //达人
+						if (PersonalActivity.instance != null) {
+							PersonalActivity.instance.finish();
+						}
+						CommonTools.showToast(getString(R.string.money_auth_daren_success), 3000);
+						break;
+					default:
+						if (CouponListActivity.instance != null) {
+							CouponListActivity.instance.addCouponOk();
+						}
+						CommonTools.showToast(getString(R.string.coupon_add_ok), 2000);
+						break;
 				}
 				finish();
 			}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {

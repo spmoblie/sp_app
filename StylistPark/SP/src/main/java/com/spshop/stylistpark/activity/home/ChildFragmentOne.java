@@ -107,7 +107,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 	private RelativeLayout.LayoutParams goodsImgLP;
 
 	private DisplayImageOptions defaultOptions;
-	private ThemeEntity themeEn;
+	private ThemeEntity themeEn, windowEn_1, windowEn_2, windowEn_3;
 	private List<ListShowTwoEntity> lv_show_two = new ArrayList<ListShowTwoEntity>();
 	private List<ProductListEntity> lv_show = new ArrayList<ProductListEntity>();
 	private List<ProductListEntity> lv_all = new ArrayList<ProductListEntity>();
@@ -457,17 +457,23 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			iv_window_1.setLayoutParams(windowLP_1);
 			iv_window_2.setLayoutParams(windowLP_2);
 			iv_window_3.setLayoutParams(windowLP_2);
+			iv_window_1.setOnClickListener(this);
+			iv_window_2.setOnClickListener(this);
+			iv_window_3.setOnClickListener(this);
 
-			/*for (int i = 0; i < datas.size(); i++) {
+			for (int i = 0; i < datas.size(); i++) {
 				ThemeEntity items = datas.get(i);
 				if (i == 0) {
-					ImageLoader.getInstance().displayImage(items.getImgUrl(), iv_window_1, defaultOptions);
+					windowEn_1 = items;
+					ImageLoader.getInstance().displayImage(windowEn_1.getImgUrl(), iv_window_1, defaultOptions);
 				} else if (i == 1) {
-					ImageLoader.getInstance().displayImage(items.getImgUrl(), iv_window_2, defaultOptions);
+					windowEn_2 = items;
+					ImageLoader.getInstance().displayImage(windowEn_2.getImgUrl(), iv_window_2, defaultOptions);
 				} else if (i == 2) {
-					ImageLoader.getInstance().displayImage(items.getImgUrl(), iv_window_3, defaultOptions);
+					windowEn_3 = items;
+					ImageLoader.getInstance().displayImage(windowEn_3.getImgUrl(), iv_window_3, defaultOptions);
 				}
-			}*/
+			}
 		} else {
 			ll_window_main.setVisibility(View.GONE);
 		}
@@ -589,23 +595,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					view.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							Intent intent = null;
-							switch (items.getType()) {
-								case 1: //分类
-									intent = new Intent(mContext, ProductListActivity.class);
-									intent.putExtra("typeId", items.getId());
-									break;
-								case 2: //品牌
-									intent = new Intent(mContext, ShowListHeadActivity.class);
-									intent.putExtra("pageCode", ShowListHeadActivity.PAGE_ROOT_CODE_1);
-									intent.putExtra("brandId", items.getId());
-									break;
-								default:
-									break;
-							}
-							if (intent != null) {
-								startActivity(intent);
-							}
+							startWindowActivity(items);
 						}
 					});
 					ll_sale_main.addView(view);
@@ -685,6 +675,15 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 			intent = new Intent(mContext, MipcaActivityCapture.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			break;
+		case R.id.home_list_head_iv_window_1:
+			startWindowActivity(windowEn_1);
+			break;
+		case R.id.home_list_head_iv_window_2:
+			startWindowActivity(windowEn_2);
+			break;
+		case R.id.home_list_head_iv_window_3:
+			startWindowActivity(windowEn_3);
+			break;
 		case R.id.fragment_one_iv_to_top: //回顶
 			toTop();
 			break;
@@ -694,6 +693,26 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 		}
 		if (intent != null) {
 			startActivity(intent);
+		}
+	}
+
+	private void startWindowActivity(ThemeEntity windowEn) {
+		if (windowEn != null) {
+			Intent intent = null;
+			switch (windowEn.getType()) {
+				case 1: //分类
+					intent = new Intent(mContext, ProductListActivity.class);
+					intent.putExtra("typeId", windowEn.getId());
+					break;
+				case 2: //品牌
+					intent = new Intent(mContext, ShowListHeadActivity.class);
+					intent.putExtra("pageCode", ShowListHeadActivity.PAGE_ROOT_CODE_1);
+					intent.putExtra("brandId", windowEn.getId());
+					break;
+			}
+			if (intent != null) {
+				startActivity(intent);
+			}
 		}
 	}
 

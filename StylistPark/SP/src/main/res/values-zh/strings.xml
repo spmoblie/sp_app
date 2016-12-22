@@ -463,7 +463,10 @@
     <string name="money_auth_ok">已實名認證</string>
     <string name="money_auth_go">立即實名認證</string>
     <string name="money_auth_explain">您的實名賬戶信息未認證</string>
+    <string name="money_auth_daren">升級達人</string>
     <string name="money_auth_daren_hint">升級爲達人需要先進行實名認證</string>
+    <string name="money_auth_daren_input_hint">請輸入達人認證編碼</string>
+    <string name="money_auth_daren_success">恭喜您！達人認證通過!</string>
     <string name="money_auth_input_name_hint">真實姓名</string>
     <string name="money_auth_input_name_id_hint">身份證號</string>
     <string name="money_auth_input_email_hint">郵箱地址</string>

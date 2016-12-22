@@ -116,7 +116,7 @@ public class AccountBalanceActivity extends BaseActivity {
 			tv_amount.setText(decimalFormat.format(amountTotal));
 			overHintStr = mainEn.getStatusHint();
 			overStatus = mainEn.getStatus();
-			if (overStatus == 3) { //提现中
+			if (overStatus == 0 || overStatus == 3) { //提现中
 				tv_hint.setText(overHintStr);
 				tv_hint.setVisibility(View.VISIBLE);
 				tv_withdrawals.setVisibility(View.GONE);
@@ -233,7 +233,7 @@ public class AccountBalanceActivity extends BaseActivity {
 	public void OnListenerRight() {
 		super.OnListenerRight();
 		Intent intent = new Intent(mContext, AddCouponActivity.class);
-		intent.putExtra("pageType", 1);
+		intent.putExtra("pageType", AddCouponActivity.TYPE_PAGE_1);
 		startActivity(intent);
 	}
 
