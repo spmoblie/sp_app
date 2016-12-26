@@ -9,9 +9,9 @@
     <EditText
         android:id="@+id/add_coupon_et_no"
         style="@style/Register_EditText"
-        android:layout_marginTop="@dimen/screen_margin_default"
-        android:hint="@string/coupon_input_hint"
-        android:inputType="number" />
+        android:layout_marginTop="@dimen/margin_padding_15"
+        android:inputType="text"
+        android:hint="@string/coupon_input_hint" />
 
     <Button
         android:id="@+id/add_coupon_btn_confirm"

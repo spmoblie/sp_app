@@ -73,7 +73,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	private RelativeLayout rl_screen;
 	private ImageView iv_left, iv_video, iv_brang_logo, iv_to_top;
 	private TextView tv_title, tv_timer, tv_page, tv_name, tv_curr, tv_price_sell, tv_price_full, tv_discount, tv_commission;
-	private TextView tv_property_1, tv_property_2, tv_property_3, tv_brand_name, tv_brand_country, tv_brand_go;
+	private TextView tv_property_1, tv_property_2, tv_property_3, tv_property_4, tv_brand_name, tv_brand_country, tv_brand_go;
 	private RadioButton btn_1, btn_2, btn_3, btn_4;
 	private Button btn_share;
 	private ObservableScrollView mScrollView;
@@ -134,6 +134,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		tv_property_1 = (TextView) findViewById(R.id.product_detail_tv_property_1);
 		tv_property_2 = (TextView) findViewById(R.id.product_detail_tv_property_2);
 		tv_property_3 = (TextView) findViewById(R.id.product_detail_tv_property_3);
+		tv_property_4 = (TextView) findViewById(R.id.product_detail_tv_property_4);
 		iv_brang_logo = (ImageView) findViewById(R.id.product_detail_iv_brand_logo);
 		tv_brand_name = (TextView) findViewById(R.id.product_detail_tv_brand_name);
 		tv_brand_country = (TextView) findViewById(R.id.product_detail_tv_brand_country);
@@ -232,8 +233,12 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			// 判定商品特性
 			if (mainEn.getSuppliersId() == AppConfig.SP_GOODS_START_HK) { //香港发货
 				tv_property_1.setVisibility(View.VISIBLE);
+				tv_property_3.setVisibility(View.VISIBLE);
+				tv_property_4.setVisibility(View.VISIBLE);
 			} else {
 				tv_property_1.setVisibility(View.GONE);
+				tv_property_3.setVisibility(View.GONE);
+				tv_property_4.setVisibility(View.GONE);
 			}
 			// 判定是否收藏此商品
 			isColl = !StringUtil.isNull(mainEn.getIsCollection());

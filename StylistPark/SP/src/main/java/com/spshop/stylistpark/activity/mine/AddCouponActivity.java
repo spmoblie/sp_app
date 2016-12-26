@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddCouponActivity extends BaseActivity implements OnClickListener{
-	
+
 	private static final String TAG = "AddCouponActivity";
 
 	public static final int TYPE_PAGE_0 = 0;
@@ -34,12 +34,12 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 	private Button btn_confirm;
 	private int pageType = TYPE_PAGE_0;
 	private String couponNo, hintStr;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_coupon);
-		
+
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 
@@ -47,11 +47,11 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 		if (bundle != null) {
 			pageType = bundle.getInt("pageType", TYPE_PAGE_0);
 		}
-		
+
 		findViewById();
 		initView();
 	}
-	
+
 	private void findViewById() {
 		et_coupon = (EditText) findViewById(R.id.add_coupon_et_no);
 		btn_confirm = (Button) findViewById(R.id.add_coupon_btn_confirm);
@@ -86,7 +86,7 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 		}
 		postResetData();
 	}
-	
+
 	private void postResetData() {
 		startAnimation();
 		request(AppConfig.REQUEST_SV_POST_COUPON_NO_CODE);
@@ -95,9 +95,9 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.add_coupon_btn_confirm:
-			addConfirm();
-			break;
+			case R.id.add_coupon_btn_confirm:
+				addConfirm();
+				break;
 		}
 	}
 
@@ -108,7 +108,7 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 		AppApplication.onPageStart(this, TAG);
 		super.onResume();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -122,7 +122,7 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
 	}
-	
+
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
 		String uri = AppConfig.URL_COMMON_USER_URL + "?act=add_bonus";
@@ -131,9 +131,11 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 			case TYPE_PAGE_1: //充值
 				uri = AppConfig.URL_COMMON_USER_URL + "?act=act_account";
 				params.add(new MyNameValuePair("bank", couponNo));
-				params.add(new MyNameValuePair("id", "0"));
+				params.add(new MyNameValuePair("type", "0"));
 				break;
 			case TYPE_PAGE_2: //达人
+				uri = AppConfig.URL_COMMON_USER_URL + "?act=chain";
+				params.add(new MyNameValuePair("sn", couponNo));
 				break;
 			default:
 				params.add(new MyNameValuePair("bonus_sn", couponNo));
@@ -168,6 +170,10 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 						break;
 				}
 				finish();
+			}else if (baseEn.getErrCode() == 997) { //未实名认证
+				if (pageType == TYPE_PAGE_2) {
+					CommonTools.showToast(getString(R.string.money_auth_daren_hint), 2000);
+				}
 			}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
 				// 登入超时，交BaseActivity处理
 			}else {
@@ -194,5 +200,5 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 	public void onFailure(int requestCode, int state, Object result) {
 		super.onFailure(requestCode, state, result);
 	}
-	
+
 }

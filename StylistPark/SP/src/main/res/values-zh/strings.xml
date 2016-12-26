@@ -147,10 +147,10 @@
     <string name="product_price_full">原價:</string>
     <string name="product_full_minus">滿減</string>
     <string name="product_mail">直郵</string>
-    <string name="product_mail_hk">香港直郵</string>
-    <string name="product_genuine_safeguard">正品保證</string>
-    <string name="product_carefree_return">無憂退換</string>
-    <string name="product_cash_delivery">貨到付款</string>
+    <string name="product_property_1">香港直郵</string>
+    <string name="product_property_2">正品保證</string>
+    <string name="product_property_3">滿￥299包郵</string>
+    <string name="product_property_4">自提點免郵</string>
     <string name="product_brand_go">進入品牌</string>
     <string name="product_play_video">视频</string>
     <string name="product_collection">關注</string>
@@ -254,6 +254,7 @@
     <string name="pay_wait">待支付</string>
     <string name="pay_amount">支付金額</string>
     <string name="pay_type">支付方式</string>
+    <string name="pay_cash_delivery">貨到付款</string>
     <string name="pay_confirm">確認支付</string>
     <string name="pay_wechat">微信支付</string>
     <string name="pay_wechat_hint">微信安全支付</string>
@@ -317,7 +318,12 @@
     <string name="setting_qr_attention">掃碼關注</string>
     <string name="setting_qr_buy">掃碼購買</string>
     <string name="setting_logout">登出帳戶</string>
+    <string name="setting_close">關閉應用</string>
+    <string name="setting_password_error">密碼錯誤</string>
+    <string name="setting_admin_password">請輸入管理員密碼</string>
+    <string name="setting_admin_input_prompt">請盡快輸入密碼，否則頁面將在%1$d秒後關閉</string>
     <string name="setting_logout_confirm">&#160;確定要退出登入麽？</string>
+    <string name="setting_close_confirm">&#160;確定要關閉應用麽？</string>
     <string name="setting_input_hint_feedback">寫下您的意見或建議</string>
     <string name="setting_input_error_feedback">意見或建議不能爲空~</string>
 
@@ -333,7 +339,7 @@
     <string name="language_en">English(US)</string>
 
     <!-- Login Register -->
-    <string name="login_login">登入</string>
+    <string name="login_login">登入賬戶</string>
     <string name="login_register">注冊</string>
     <string name="login_user_name">郵箱/卡號</string>
     <string name="login_input_user_name">請輸入郵箱/卡號</string>

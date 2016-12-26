@@ -42,7 +42,7 @@ import static com.spshop.stylistpark.AppApplication.screenWidth;
  */
 public class ScreenImageActivity extends BaseActivity {
 
-	private static final int QR_IMG_WIDTH = screenWidth * 2 / 15;
+	private static final int QR_IMG_WIDTH = screenWidth * 1 / 10;
 
 	public static final String HASHMAP_KEY_IMG = "img";
 	public static final String HASHMAP_KEY_BAR = "bar";

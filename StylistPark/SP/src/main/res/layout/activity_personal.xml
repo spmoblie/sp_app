@@ -121,8 +121,7 @@
             <TextView
                 android:id="@+id/personal_tv_rank_go"
                 style="@style/setting_lay_text_content"
-                android:text="@string/money_upgrade"
-                android:visibility="gone" />
+                android:text="@string/money_upgrade" />
 
             <ImageView
                 style="@style/set_line_horizontal_bg"

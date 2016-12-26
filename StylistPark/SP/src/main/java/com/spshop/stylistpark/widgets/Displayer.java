@@ -11,12 +11,13 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.assist.LoadedFrom;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 
 /**
+ * 自定义圆形图片
  * Created by Administrator on 2016/11/2 0002.
  */
 
@@ -31,9 +32,8 @@ public class Displayer extends RoundedBitmapDisplayer {
 
     // 显示位图
     @Override
-    public Bitmap display(Bitmap bitmap, ImageView imageView, LoadedFrom loadedFrom) {
-        imageView.setImageDrawable(new CircleDrawable(bitmap, roundPixels));
-        return bitmap;
+    public void display(Bitmap bitmap, ImageAware imageAware, LoadedFrom loadedFrom) {
+        imageAware.setImageDrawable(new CircleDrawable(bitmap, roundPixels));
     }
 
     public static class CircleDrawable extends Drawable {
@@ -47,7 +47,9 @@ public class Displayer extends RoundedBitmapDisplayer {
             this.margin = 0;
             // 创建着色器
             bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-            mBitmapRect = new RectF(margin, margin, bitmap.getWidth() - margin, bitmap.getHeight() - margin);
+            if (bitmap != null) {
+                mBitmapRect = new RectF(margin, margin, bitmap.getWidth() - margin, bitmap.getHeight() - margin);
+            }
             // 设置画笔
             paint = new Paint();
             paint.setAntiAlias(true);
@@ -58,8 +60,9 @@ public class Displayer extends RoundedBitmapDisplayer {
         @Override
         protected void onBoundsChange(Rect bounds) {
             super.onBoundsChange(bounds);
-            mRect.set(margin, margin, bounds.width() - margin, bounds.height() - margin);
-
+            if (bounds != null) {
+                mRect.set(margin, margin, bounds.width() - margin, bounds.height() - margin);
+            }
             // 调整位图，设置该矩阵，转换映射源矩形和目的矩形
             Matrix shaderMatrix = new Matrix();
             shaderMatrix.setRectToRect(mBitmapRect, mRect, Matrix.ScaleToFit.FILL);
@@ -70,7 +73,9 @@ public class Displayer extends RoundedBitmapDisplayer {
         // 画出其边界（通过设置的setBounds）
         @Override
         public void draw(Canvas canvas) {
-            canvas.drawRoundRect(mRect, mRect.width()/2 , mRect.height()/2, paint);
+            if (canvas != null) {
+                canvas.drawRoundRect(mRect, mRect.width()/2 , mRect.height()/2, paint);
+            }
         }
 
         /**

@@ -201,7 +201,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			payType = orderEn.getPayId();
 			switch (payType) {
 				case PAY_TYPE_1:
-					tv_pay_type.setText(R.string.product_cash_delivery);
+					tv_pay_type.setText(R.string.pay_cash_delivery);
 					tv_pay_now.setText(R.string.order_post_order);
 					rl_charges.setVisibility(View.VISIBLE);
 					tv_charges.setText(orderEn.getPriceCharges());
@@ -385,7 +385,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		ArrayList<SelectListEntity> childLists = new ArrayList<SelectListEntity>();
 		SelectListEntity childEn1 = new SelectListEntity();
 		childEn1.setChildId(PAY_TYPE_1);
-		childEn1.setChildShowName(getString(R.string.product_cash_delivery));
+		childEn1.setChildShowName(getString(R.string.pay_cash_delivery));
 		childLists.add(childEn1);
 		SelectListEntity childEn2 = new SelectListEntity();
 		childEn2.setChildId(PAY_TYPE_2);

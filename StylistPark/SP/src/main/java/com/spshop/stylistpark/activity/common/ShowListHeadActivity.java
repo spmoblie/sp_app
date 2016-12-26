@@ -134,7 +134,7 @@ public class ShowListHeadActivity extends BaseActivity implements OnClickListene
 		time_height = getResources().getDimensionPixelSize(R.dimen.product_time_view_height);
 		group_height = getResources().getDimensionPixelSize(R.dimen.topbar_group_height);
 		spaceHeight = CommonTools.dip2px(mContext, 15);
-		options = OptionsManager.getInstance().getImageOptions(0, 0, true);
+		options = OptionsManager.getInstance().getDefaultOptions();
 
 		findViewById();
 		initView();

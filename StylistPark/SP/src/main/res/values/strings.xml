@@ -147,10 +147,10 @@
     <string name="product_price_full">Full price : </string>
     <string name="product_full_minus">Minus</string>
     <string name="product_mail"> Mail</string>
-    <string name="product_mail_hk">HK mail</string>
-    <string name="product_genuine_safeguard">Safeguard</string>
-    <string name="product_carefree_return">Exchanged</string>
-    <string name="product_cash_delivery">Cash Pay</string>
+    <string name="product_property_1">HK mail</string>
+    <string name="product_property_2">Safeguard</string>
+    <string name="product_property_3">￥299 free shipping</string>
+    <string name="product_property_4">Pickup free shipping</string>
     <string name="product_brand_go">Go Brand</string>
     <string name="product_play_video">Video</string>
     <string name="product_collection">Concerns</string>
@@ -254,6 +254,7 @@
     <string name="pay_wait">Wait to payment</string>
     <string name="pay_amount">Payment amount</string>
     <string name="pay_type">Payment method</string>
+    <string name="pay_cash_delivery">Cash delivery</string>
     <string name="pay_confirm">Confirm pay</string>
     <string name="pay_wechat">WeChat pay</string>
     <string name="pay_wechat_hint">WeChat safe payment</string>
@@ -317,7 +318,12 @@
     <string name="setting_qr_attention">Attention</string>
     <string name="setting_qr_buy">Scan buy</string>
     <string name="setting_logout">Log Out</string>
+    <string name="setting_close">Close App</string>
+    <string name="setting_password_error">Password error</string>
+    <string name="setting_admin_password">Enter the administrator password</string>
+    <string name="setting_admin_input_prompt">Please enter your password, otherwise the page will be closed after %1$d seconds</string>
     <string name="setting_logout_confirm">&#160;Confirm logout?</string>
+    <string name="setting_close_confirm">&#160;Confirm close？</string>
     <string name="setting_input_hint_feedback">Write down your comments or advice</string>
     <string name="setting_input_error_feedback">Comments or advice can not be empty ~</string>
 
@@ -333,7 +339,7 @@
     <string name="language_en">English(US)</string>
 
     <!-- Login Register -->
-    <string name="login_login">Login</string>
+    <string name="login_login">Login Account</string>
     <string name="login_register">Register</string>
     <string name="login_user_name">E-mail/Card</string>
     <string name="login_input_user_name">Please input your E-mail/Card</string>

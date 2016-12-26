@@ -28,29 +28,29 @@ import java.util.List;
  * 提现页面
  */
 public class WithdrawalsActivity extends BaseActivity implements OnClickListener{
-	
+
 	private static final String TAG = "WithdrawalsActivity";
 
 	private EditText et_account, et_card, et_amount;
 	private Button btn_confirm;
 	private String accountName, cardNumStr;
 	private double amountTotal, inputAmount;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_withdrawals);
-		
+
 		AppManager.getInstance().addActivity(this); //添加Activity到堆栈
 		LogUtil.i(TAG, "onCreate");
 
 		accountName = UserManager.getInstance().getUserName();
 		amountTotal = getIntent().getExtras().getDouble("amountTotal", 0);
-		
+
 		findViewById();
 		initView();
 	}
-	
+
 	private void findViewById() {
 		et_account = (EditText) findViewById(R.id.withdrawals_et_account_name);
 		et_card = (EditText) findViewById(R.id.withdrawals_et_card_num);
@@ -67,7 +67,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		}
 		et_amount.setHint(getString(R.string.money_max_amount_hint, currStr + decimalFormat.format(amountTotal)));
 		et_amount.addTextChangedListener(new TextWatcher() {
-			
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				String input = s.toString();
@@ -105,12 +105,12 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 					}
 				}
 			}
-			
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				
+
 			}
-			
+
 			@Override
 			public void afterTextChanged(Editable s) {
 				inputAmount = StringUtil.getDouble(et_amount.getText().toString());
@@ -142,7 +142,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		}
 		postWithdrawalsData();
 	}
-	
+
 	private void postWithdrawalsData() {
 		startAnimation();
 		request(AppConfig.REQUEST_SV_POST_WITHDRAWALS_CODE);
@@ -151,9 +151,9 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.withdrawals_btn_confirm:
-			confirmWithdrawals();
-			break;
+			case R.id.withdrawals_btn_confirm:
+				confirmWithdrawals();
+				break;
 		}
 	}
 
@@ -164,7 +164,7 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		AppApplication.onPageStart(this, TAG);
 		super.onResume();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -178,14 +178,14 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 		super.onDestroy();
 		LogUtil.i(TAG, "onDestroy");
 	}
-	
+
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
 		String uri = AppConfig.URL_COMMON_USER_URL + "?act=act_account";
 		List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
 		params.add(new MyNameValuePair("bank", cardNumStr));
 		params.add(new MyNameValuePair("amount", String.valueOf(inputAmount)));
-		params.add(new MyNameValuePair("id", "1"));
+		params.add(new MyNameValuePair("type", "1"));
 		return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_WITHDRAWALS_CODE, uri, params, HttpUtil.METHOD_POST);
 	}
 
@@ -217,5 +217,5 @@ public class WithdrawalsActivity extends BaseActivity implements OnClickListener
 	public void onFailure(int requestCode, int state, Object result) {
 		super.onFailure(requestCode, state, result);
 	}
-	
+
 }

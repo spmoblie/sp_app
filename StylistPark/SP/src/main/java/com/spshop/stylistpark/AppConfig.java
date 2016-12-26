@@ -40,7 +40,7 @@ public class AppConfig {
 	// 购物相关URL
 	public static final String URL_COMMON_FLOW_URL = ENVIRONMENT_PRESENT_DATA_URL_1 + "flow.php";
 	// 用户提交URL
-	public static final String URL_COMMON_USER_URL = ENVIRONMENT_PRESENT_DATA_URL_1 + "user.php";
+	public static final String URL_COMMON_USER_URL = ENVIRONMENT_PRESENT_DATA_URL_1 + "index.php";
 	// 商品详情URL
 	public static final String URL_COMMON_GOODS_DETAIL_URL = ENVIRONMENT_PRESENT_DATA_URL_1 + "app_goods.php";
 	// 广告详情URL
@@ -143,6 +143,8 @@ public class AppConfig {
 	public static final int REQUEST_SV_GET_SCREEN_VIDEO_CODE = 0X0004;
 	// 加载循播图片
 	public static final int REQUEST_SV_GET_SCREEN_IMAGE_CODE = 0X0005;
+	// 校验管理员密码
+	public static final int REQUEST_SV_POST_ADMIN_PASS_CODE = 0X0006;
 
 	// 加载远程首页推广数据
 	public static final int REQUEST_SV_GET_HOME_SHOW_HEAD_CODE = 0X1010;

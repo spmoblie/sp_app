@@ -14,9 +14,6 @@ import org.apache.http.util.EntityUtils;
 
 import java.util.ArrayList;
 
-import static com.spshop.stylistpark.AppApplication.screenHeight;
-import static com.spshop.stylistpark.AppApplication.screenWidth;
-
 /**
  * 执行图片下载任务并缓存到集合
  */
@@ -69,8 +66,9 @@ public class AsyncImageLoader {
 							if (task.type == 1) { //下载头像
 								task.bitmap = BitmapUtil.getBitmap(data, 120, 120);
 							} else {
-								task.bitmap = BitmapUtil.getBitmap(data, screenWidth, screenHeight);
+								task.bitmap = BitmapUtil.getBitmapFromByte(data);
 							}
+							data = null;
 							// 缓存到集合
 							BitmapCache.getInstance().addCacheBitmap(task.bitmap, task.newPath);
 							// 缓存到内存

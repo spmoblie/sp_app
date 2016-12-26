@@ -24,7 +24,7 @@ public class BrandIndexDisplayAdapter extends IndexDisplayAdapter {
 
 	public BrandIndexDisplayAdapter(Context mContext) {
 		super(mContext);
-		options = OptionsManager.getInstance().getImageOptions(0, 0, true);
+		options = OptionsManager.getInstance().getDefaultOptions();
 	}
 
 	public void setOnIndexDisplayItemClick(OnIndexDisplayItemClick onIndexDisplayItemClick) {
