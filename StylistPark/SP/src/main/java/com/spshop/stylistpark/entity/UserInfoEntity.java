@@ -66,6 +66,11 @@ public class UserInfoEntity extends BaseEntity {
 	private int userRankCode;
 	
 	/**
+	 * 达人有效期
+	 */
+	private String userRankTime;
+
+	/**
 	 * 用户等级名称
 	 */
 	private String userRankName;
@@ -258,6 +263,13 @@ public class UserInfoEntity extends BaseEntity {
 		this.userRankCode = userRankCode;
 	}
 
+	public String getUserRankTime() {
+		return userRankTime;
+	}
+
+	public void setUserRankTime(String userRankTime) {
+		this.userRankTime = userRankTime;
+	}
 
 	public String getUserRankName() {
 		return userRankName;

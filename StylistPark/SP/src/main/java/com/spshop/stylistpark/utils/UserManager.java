@@ -31,6 +31,7 @@ public class UserManager {
 	private String mUserPhone = null;
 	private String mUserMoney = null;
 	private String mUserRankName = null;
+	private String mUserRankTime = null;
 
 	private String wxAccessToken = null;
 	private String wxOpenid = null;
@@ -237,6 +238,18 @@ public class UserManager {
 		mUserRankName = userRankName;
 	}
 
+	public String getUserRankTime(){
+		if(StringUtil.isNull(mUserRankTime)){
+			mUserRankTime = sp.getString(AppConfig.KEY_USER_RANK_TIME, null);
+		}
+		return mUserRankTime;
+	}
+
+	public void saveUserRankTime(String userRankTime){
+		editor.putString(AppConfig.KEY_USER_RANK_TIME, userRankTime).apply();
+		mUserRankTime = userRankTime;
+	}
+
 	public boolean isPlayVideo(){
 		return sp.getBoolean(AppConfig.KEY_IS_SCREEN_PLAY_VIDEO, false);
 	}
@@ -386,6 +399,7 @@ public class UserManager {
 			}
 			saveUserRankCode(infoEn.getUserRankCode());
 			saveUserRankName(infoEn.getUserRankName());
+			saveUserRankTime(infoEn.getUserRankTime());
 			// 绑定用户信息至推送服务
 			AppApplication.onPushRegister(true);
 		}
@@ -409,6 +423,7 @@ public class UserManager {
 		saveUserMoney(LangCurrTools.getCurrencyValue() + "0.00");
 		saveUserRankCode(0);
 		saveUserRankName(null);
+		saveUserRankTime(null);
 		saveCartTotal(0); //购物车商品数
 	}
 

@@ -57,10 +57,10 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 	private static final String TAG = "PersonalActivity";
 	public static PersonalActivity instance;
 
-	private RelativeLayout rl_avatar, rl_nick, rl_gender, rl_birthday, rl_rank, rl_intro, rl_email, rl_identity;
+	private RelativeLayout rl_avatar, rl_nick, rl_gender, rl_birthday, rl_rank, rl_rank_time, rl_intro, rl_email, rl_identity;
 	private ImageView iv_avatar;
-	private TextView tv_nick, tv_gender, tv_birthday, tv_rank, tv_rank_go, tv_intro, tv_email, tv_auth_go, tv_auth_ok;
-	private String avatarStr, nickStr, genderStr, birthdayStr, rankStr, introStr, emailStr;
+	private TextView tv_nick, tv_gender, tv_birthday, tv_rank, tv_rank_go, tv_rank_time, tv_intro, tv_email, tv_auth_go, tv_auth_ok;
+	private String avatarStr, nickStr, genderStr, birthdayStr, rankName, rankTime, introStr, emailStr;
 	private String changeStr, changeTypeKey;
 	private File saveFile;
 	private int rankCode;
@@ -94,6 +94,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		rl_gender = (RelativeLayout) findViewById(R.id.personal_rl_gender);
 		rl_birthday = (RelativeLayout) findViewById(R.id.personal_rl_birthday);
 		rl_rank = (RelativeLayout) findViewById(R.id.personal_rl_rank);
+		rl_rank_time = (RelativeLayout) findViewById(R.id.personal_rl_rank_time);
 		rl_intro = (RelativeLayout) findViewById(R.id.personal_rl_intro);
 		rl_email = (RelativeLayout) findViewById(R.id.personal_rl_email);
 		rl_identity = (RelativeLayout) findViewById(R.id.personal_rl_auth);
@@ -103,6 +104,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		tv_birthday = (TextView) findViewById(R.id.personal_tv_birthday_content);
 		tv_rank = (TextView) findViewById(R.id.personal_tv_rank_content);
 		tv_rank_go = (TextView) findViewById(R.id.personal_tv_rank_go);
+		tv_rank_time = (TextView) findViewById(R.id.personal_tv_rank_time_content);
 		tv_intro = (TextView) findViewById(R.id.personal_tv_intro_content);
 		tv_email = (TextView) findViewById(R.id.personal_tv_email_content);
 		tv_auth_go = (TextView) findViewById(R.id.personal_tv_auth_go);
@@ -128,7 +130,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			nickStr = infoEn.getUserNick();
 			birthdayStr = infoEn.getBirthday();
 			rankCode = infoEn.getUserRankCode();
-			rankStr = infoEn.getUserRankName();
+			rankName = infoEn.getUserRankName();
+			rankTime = infoEn.getUserRankTime();
 			introStr = infoEn.getUserIntro();
 			emailStr = infoEn.getUserEmail();
 			genderCode = infoEn.getGenderCode();
@@ -138,7 +141,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 			genderCode = userManager.getUserGender();
 			birthdayStr = userManager.getUserBirthday();
 			rankCode = userManager.getUserRankCode();
-			rankStr = userManager.getUserRankName();
+			rankName = userManager.getUserRankName();
+			rankTime = userManager.getUserRankTime();
 			introStr = userManager.getUserIntro();
 			emailStr = userManager.getUserEmail();
 		}
@@ -158,11 +162,14 @@ public class PersonalActivity extends BaseActivity implements OnClickListener{
 		tv_birthday.setText(birthdayStr);
 		tv_intro.setText(introStr);
 		tv_email.setText(emailStr);
-		tv_rank.setText(rankStr);
+		tv_rank.setText(rankName);
+		tv_rank_time.setText(getString(R.string.mine_rank_validity, rankTime));
 		if (rankCode == 4) { //达人
 			tv_rank_go.setVisibility(View.GONE);
+			rl_rank_time.setVisibility(View.VISIBLE);
 		} else {
 			tv_rank_go.setVisibility(View.VISIBLE);
+			rl_rank_time.setVisibility(View.GONE);
 		}
 		if (isAuth) {
 			tv_auth_go.setVisibility(View.GONE);

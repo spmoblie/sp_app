@@ -58,7 +58,7 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 
 	private void initView() {
 		setTitle(R.string.login_bound);
-		setBtnRight(getString(R.string.skip));
+		//setBtnRight(getString(R.string.skip));
 		btn_oauth.setOnClickListener(this);
 		btn_register.setOnClickListener(this);
 		
@@ -111,9 +111,9 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 	@Override
 	public void OnListenerRight() {
 		super.OnListenerRight();
-		accountStr = "";
+		/*accountStr = "";
 		passwordStr = "";
-		postAccountOauthData();
+		postAccountOauthData();*/
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 	
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
-		String uri = "";
+		String uri;
 		if (StringUtil.isNull(accountStr) || StringUtil.isNull(passwordStr)) {
 			uri = AppConfig.URL_COMMON_USER_URL + "?act=oath_register";
 		}else {
@@ -163,7 +163,7 @@ public class RegisterOauthActivity extends BaseActivity implements OnClickListen
 		stopAnimation();
 		if (result != null) {
 			UserInfoEntity userEn = (UserInfoEntity) result;
-			if (userEn.getErrCode() == 1){ //绑定成功
+			if (userEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS){ //绑定成功
 				UserManager.getInstance().saveUserLoginSuccess(userEn.getUserId());
 				if (LoginActivity.instance != null) {
 					LoginActivity.instance.finish();

@@ -38,7 +38,6 @@
         <RelativeLayout
             android:id="@+id/personal_rl_nick"
             style="@style/setting_lay_item"
-            android:layout_below="@id/personal_rl_avatar"
             android:layout_marginTop="@dimen/margin_padding_10">
 
             <TextView
@@ -58,8 +57,7 @@
 
         <RelativeLayout
             android:id="@+id/personal_rl_gender"
-            style="@style/setting_lay_item"
-            android:layout_below="@id/personal_rl_nick">
+            style="@style/setting_lay_item">
 
             <TextView
                 android:id="@+id/personal_tv_gender_title"
@@ -79,7 +77,6 @@
         <RelativeLayout
             android:id="@+id/personal_rl_birthday"
             style="@style/setting_lay_item"
-            android:layout_below="@id/personal_rl_gender"
             android:visibility="gone">
 
             <TextView
@@ -99,29 +96,59 @@
 
         <RelativeLayout
             android:id="@+id/personal_rl_rank"
-            style="@style/setting_lay_item"
-            android:layout_below="@id/personal_rl_gender">
+            style="@style/setting_lay_item">
 
             <TextView
                 android:id="@+id/personal_tv_rank_title"
                 style="@style/setting_lay_text_title"
                 android:text="@string/mine_rank" />
 
-            <TextView
-                android:id="@+id/personal_tv_rank_content"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:layout_toLeftOf="@+id/personal_tv_rank_go"
-                android:layout_marginRight="@dimen/margin_padding_35"
-                android:layout_centerVertical="true"
-                android:textSize="@dimen/text_size_12"
-                android:textColor="@color/tv_color_status" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/personal_tv_rank_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_padding_35"
+                    android:textColor="@color/tv_color_status"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/personal_tv_rank_go"
+                    style="@style/setting_lay_text_content"
+                    android:text="@string/money_upgrade" />
+            </LinearLayout>
+
+            <ImageView
+                style="@style/set_line_horizontal_bg"
+                android:layout_alignParentBottom="true"
+                android:contentDescription="@string/desc" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/personal_rl_rank_time"
+            style="@style/setting_lay_item"
+            android:visibility="gone" >
 
             <TextView
-                android:id="@+id/personal_tv_rank_go"
-                style="@style/setting_lay_text_content"
-                android:text="@string/money_upgrade" />
+                android:id="@+id/personal_tv_rank_time_title"
+                style="@style/setting_lay_text_title"
+                android:text="@string/mine_rank_time" />
+
+            <TextView
+                android:id="@+id/personal_tv_rank_time_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/margin_padding_35"
+                android:textColor="@color/tv_color_status"
+                android:textSize="@dimen/text_size_12" />
 
             <ImageView
                 style="@style/set_line_horizontal_bg"
@@ -131,8 +158,7 @@
 
         <RelativeLayout
             android:id="@+id/personal_rl_intro"
-            style="@style/setting_lay_item"
-            android:layout_below="@id/personal_rl_rank">
+            style="@style/setting_lay_item">
 
             <TextView
                 android:id="@+id/personal_tv_intro_title"
@@ -156,7 +182,6 @@
         <RelativeLayout
             android:id="@+id/personal_rl_email"
             style="@style/setting_lay_item"
-            android:layout_below="@id/personal_rl_intro"
             android:layout_marginTop="@dimen/margin_padding_10">
 
             <TextView
@@ -172,7 +197,6 @@
         <RelativeLayout
             android:id="@+id/personal_rl_auth"
             style="@style/setting_lay_item"
-            android:layout_below="@id/personal_rl_email"
             android:visibility="gone">
 
             <TextView

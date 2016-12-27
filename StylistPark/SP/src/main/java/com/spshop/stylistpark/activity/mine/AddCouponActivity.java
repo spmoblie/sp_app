@@ -134,7 +134,7 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 				params.add(new MyNameValuePair("type", "0"));
 				break;
 			case TYPE_PAGE_2: //达人
-				uri = AppConfig.URL_COMMON_USER_URL + "?act=chain";
+				uri = AppConfig.URL_COMMON_USER_URL + "?act=add_chain";
 				params.add(new MyNameValuePair("sn", couponNo));
 				break;
 			default:
@@ -157,6 +157,7 @@ public class AddCouponActivity extends BaseActivity implements OnClickListener{
 						CommonTools.showToast(getString(R.string.money_recharge_success), 2000);
 						break;
 					case TYPE_PAGE_2: //达人
+						AppApplication.AppLogout(false); //升级后重新登入
 						if (PersonalActivity.instance != null) {
 							PersonalActivity.instance.finish();
 						}

@@ -117,7 +117,6 @@
     <string name="title_product_detail">商品详情</string>
     <string name="title_login">用户登入</string>
     <string name="title_register">邮箱注册</string>
-    <string name="title_reset">找回密码</string>
     <string name="title_delivery_info">收货信息</string>
     <string name="title_order_confirm">确认订单</string>
     <string name="title_order_detail">订单详情</string>
@@ -347,12 +346,13 @@
     <string name="login_input_password">请输入密码</string>
     <string name="login_input_password_again">请确认密码</string>
     <string name="login_password_error">两次输入的密码不一致！请重新输入！</string>
+    <string name="login_input_invitation_code">输入邀请码</string>
     <string name="login_input_email">请输入邮箱</string>
     <string name="login_email_format_error">请检查邮箱格式是否正确？</string>
     <string name="login_input_verify_code">输入验证码</string>
     <string name="login_error_verify_code">验证码错误！请重新输入！</string>
     <string name="login_new_register">新用户注册</string>
-    <string name="login_forget_password">忘记密码？</string>
+    <string name="login_reset_password">重置密码</string>
     <string name="login_quick">第三方账号快速登入</string>
     <string name="login_oauth_cancel">登入取消</string>
     <string name="login_error_oauth">授权登入出现错误！请重试！</string>
@@ -422,6 +422,8 @@
     <string name="mine_gender_confidential">保密</string>
     <string name="mine_birthday">生日</string>
     <string name="mine_rank">等级</string>
+    <string name="mine_rank_time">期限</string>
+    <string name="mine_rank_validity">有效期至 %1$s</string>
     <string name="mine_intro">简介</string>
     <string name="mine_customer">客户</string>
     <string name="mine_member">粉丝</string>
@@ -473,7 +475,7 @@
     <string name="money_auth_daren">升级达人</string>
     <string name="money_auth_daren_hint">升级为达人需要先进行实名认证</string>
     <string name="money_auth_daren_input_hint">请输入达人认证编码</string>
-    <string name="money_auth_daren_success">恭喜您！达人认证通过!</string>
+    <string name="money_auth_daren_success">恭喜您！达人认证通过！请重新登入</string>
     <string name="money_auth_input_name_hint">真实姓名</string>
     <string name="money_auth_input_name_id_hint">身份证号</string>
     <string name="money_auth_input_email_hint">邮箱地址</string>

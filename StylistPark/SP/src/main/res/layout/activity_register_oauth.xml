@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:text="@string/login_bound_reminder"
         android:textColor="@color/label_text_color"
-        android:textSize="@dimen/text_size_12" />
+        android:textSize="@dimen/text_size_12"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/register_oauth_et_account"

@@ -304,6 +304,8 @@ public class AppConfig {
 	public static final String KEY_USER_RANK_CODE = "user_rank_code";
 	// 偏好设置Key-记录用户等级名称
 	public static final String KEY_USER_RANK_NAME = "user_rank_name";
+	// 偏好设置Key-记录用户达人有效期
+	public static final String KEY_USER_RANK_TIME = "user_rank_time";
 	// 偏好设置Key-记录用户购物车中商品数量
 	public static final String KEY_CART_NUM = "cart_num";
 	// 偏好设置Key-记录是否屏保播放视频

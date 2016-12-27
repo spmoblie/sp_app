@@ -117,7 +117,6 @@
     <string name="title_product_detail">商品詳情</string>
     <string name="title_login">用戶登入</string>
     <string name="title_register">郵箱注冊</string>
-    <string name="title_reset">找回密碼</string>
     <string name="title_delivery_info">收貨信息</string>
     <string name="title_order_confirm">確認訂單</string>
     <string name="title_order_detail">訂單詳情</string>
@@ -347,12 +346,13 @@
     <string name="login_input_password">請輸入密碼</string>
     <string name="login_input_password_again">請確認密碼</string>
     <string name="login_password_error">兩次輸入的密碼不壹致！請重新輸入！</string>
+    <string name="login_input_invitation_code">輸入邀請碼</string>
     <string name="login_input_email">請輸入郵箱</string>
     <string name="login_email_format_error">請檢查郵箱格式是否正確？</string>
     <string name="login_input_verify_code">輸入驗證碼</string>
     <string name="login_error_verify_code">驗證碼錯誤！請重新輸入！</string>
     <string name="login_new_register">新用戶注冊</string>
-    <string name="login_forget_password">忘記密碼？</string>
+    <string name="login_reset_password">重置密碼</string>
     <string name="login_quick">第三方賬號快速登入</string>
     <string name="login_oauth_cancel">登入取消</string>
     <string name="login_error_oauth">授權登入出現錯誤！請重試！</string>
@@ -422,6 +422,8 @@
     <string name="mine_gender_confidential">保密</string>
     <string name="mine_birthday">生日</string>
     <string name="mine_rank">等級</string>
+    <string name="mine_rank_time">期限</string>
+    <string name="mine_rank_validity">有效期至 %1$s</string>
     <string name="mine_intro">間介</string>
     <string name="mine_customer">客戶</string>
     <string name="mine_member">粉絲</string>
@@ -473,7 +475,7 @@
     <string name="money_auth_daren">升級達人</string>
     <string name="money_auth_daren_hint">升級爲達人需要先進行實名認證</string>
     <string name="money_auth_daren_input_hint">請輸入達人認證編碼</string>
-    <string name="money_auth_daren_success">恭喜您！達人認證通過!</string>
+    <string name="money_auth_daren_success">恭喜您！達人認證通過！請重新登入</string>
     <string name="money_auth_input_name_hint">真實姓名</string>
     <string name="money_auth_input_name_id_hint">身份證號</string>
     <string name="money_auth_input_email_hint">郵箱地址</string>

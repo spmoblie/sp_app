@@ -117,7 +117,6 @@
     <string name="title_product_detail">Product Detail</string>
     <string name="title_login">User Login</string>
     <string name="title_register">Email Register</string>
-    <string name="title_reset">Reset Password</string>
     <string name="title_delivery_info">Delivery Information</string>
     <string name="title_order_confirm">Confirm Order</string>
     <string name="title_order_detail">Order Details</string>
@@ -347,12 +346,13 @@
     <string name="login_input_password">Please input password</string>
     <string name="login_input_password_again">Please input password again</string>
     <string name="login_password_error">Two input password inconsistent! Please re-enter!</string>
+    <string name="login_input_invitation_code">Please input a invitation code</string>
     <string name="login_input_email">Please input your email</string>
     <string name="login_email_format_error">Please check the email format is correct?</string>
     <string name="login_input_verify_code">Please input verify code</string>
     <string name="login_error_verify_code">Verify code error! Please re-enter!</string>
     <string name="login_new_register">New user register</string>
-    <string name="login_forget_password">Forgot password?</string>
+    <string name="login_reset_password">Reset password</string>
     <string name="login_quick">Third party account quick login</string>
     <string name="login_oauth_cancel">Login cancel</string>
     <string name="login_error_oauth">Authorized login error Please try again!</string>
@@ -422,6 +422,8 @@
     <string name="mine_gender_confidential">Confidential</string>
     <string name="mine_birthday">Birthday</string>
     <string name="mine_rank">Rank</string>
+    <string name="mine_rank_time">Deadline</string>
+    <string name="mine_rank_validity">Valid until %1$s</string>
     <string name="mine_intro">Intro</string>
     <string name="mine_customer">Customer</string>
     <string name="mine_member">Fans</string>
@@ -473,7 +475,7 @@
     <string name="money_auth_daren">Daren upgrade</string>
     <string name="money_auth_daren_hint">Upgrade to reach people need to be verified</string>
     <string name="money_auth_daren_input_hint">Please enter Daren authentication code</string>
-    <string name="money_auth_daren_success">Congratulations! Daren authentication through!</string>
+    <string name="money_auth_daren_success">Congratulations! Daren authentication through! Please sign in again</string>
     <string name="money_auth_input_name_hint">Real name</string>
     <string name="money_auth_input_name_id_hint">ID number</string>
     <string name="money_auth_input_email_hint">Email</string>

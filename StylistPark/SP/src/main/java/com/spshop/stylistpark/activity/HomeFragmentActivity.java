@@ -189,6 +189,10 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
 
+		if (!UserManager.getInstance().checkIsLogined()) {
+			openLoginActivity(TAG); //强制登入
+		}
+
 		exit = Boolean.FALSE;
 		initView();
 

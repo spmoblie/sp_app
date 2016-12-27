@@ -53,7 +53,7 @@ public class ResetPasswordActivity extends BaseActivity implements OnClickListen
 	}
 
 	private void initView() {
-		setTitle(R.string.title_reset);
+		setTitle(R.string.login_reset_password);
 		iv_verify_code.setOnClickListener(this);
 		btn_send.setOnClickListener(this);
 		createVerifyCode();

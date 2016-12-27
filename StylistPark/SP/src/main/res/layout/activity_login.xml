@@ -147,7 +147,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/login_forget_password"
+                android:text="@string/login_reset_password"
                 android:textColor="@color/conte_text_color"
                 android:textSize="@dimen/text_size_12" />
         </LinearLayout>

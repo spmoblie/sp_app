@@ -13,8 +13,8 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.entity.UserInfoEntity;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -28,10 +28,10 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "RegisterActivity";
 
-	private EditText et_email, et_verify_code, et_password, et_password_again;
+	private EditText et_email, et_verify_code, et_password, et_password_again, et_invitation_code;
 	private Button btn_register;
 	private ImageView iv_verify_code;
-	private String emailStr, verifyCodeStr, randomCode, passwordStr, passwordAgain;
+	private String emailStr, verifyCodeStr, randomCode, passwordStr, passwordAgain, invitationCode;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 		et_verify_code = (EditText) findViewById(R.id.register_et_verify_code);
 		et_password = (EditText) findViewById(R.id.register_et_passwords);
 		et_password_again = (EditText) findViewById(R.id.register_et_passwords_again);
+		et_invitation_code = (EditText) findViewById(R.id.register_et_invitation_code);
 		iv_verify_code = (ImageView) findViewById(R.id.register_iv_verify_code);
 		btn_register = (Button) findViewById(R.id.register_btn_register);
 	}
@@ -83,6 +84,12 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 		passwordAgain = et_password_again.getText().toString();
 		if (!passwordStr.equals(passwordAgain)) {
 			CommonTools.showToast(getString(R.string.login_password_error), 1000);
+			return;
+		}
+		// 校验邀请码
+		invitationCode = et_invitation_code.getText().toString();
+		if (invitationCode.isEmpty()) {
+			CommonTools.showToast(getString(R.string.login_input_invitation_code), 1000);
 			return;
 		}
 		// 验证码非空
@@ -169,7 +176,17 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 		stopAnimation();
 		createVerifyCode();
 		if (result != null) {
-			CommonTools.showToast(((BaseEntity) result).getErrInfo(), 2000);
+			UserInfoEntity userEn = (UserInfoEntity) result;
+			if (userEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS){ //注册成功
+				CommonTools.showToast(userEn.getErrInfo(), 2000);
+				finish();
+			}else {
+				if (StringUtil.isNull(userEn.getErrInfo())) {
+					showServerBusy();
+				}else {
+					CommonTools.showToast(userEn.getErrInfo(), 2000);
+				}
+			}
 		}else {
 			showServerBusy();
 		}

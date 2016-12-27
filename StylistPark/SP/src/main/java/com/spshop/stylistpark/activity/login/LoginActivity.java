@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -38,8 +39,6 @@ import com.spshop.stylistpark.AppConfig;
 import com.spshop.stylistpark.AppManager;
 import com.spshop.stylistpark.R;
 import com.spshop.stylistpark.activity.BaseActivity;
-import com.spshop.stylistpark.activity.HomeFragmentActivity;
-import com.spshop.stylistpark.activity.cart.CartActivity;
 import com.spshop.stylistpark.entity.AuthResult;
 import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.QQEntity;
@@ -90,6 +89,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	
 	private UserManager um;
 	private UserInfoEntity fbOauthEn;
+	private boolean exit = false;
 	private boolean isStop = false;
 	private String rootPage, loginType, postUid, loginAccount, passWordStr;
 	// WX
@@ -156,6 +156,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
 	private void initView() {
 		setTitle(R.string.title_login);
+		setHeadVisibility(View.GONE);
 		btn_login.setOnClickListener(this);
 		iv_clear_user.setOnClickListener(this);
 		iv_check_password.setOnClickListener(this);
@@ -841,7 +842,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     @Override
     public void OnListenerLeft() {
     	LogUtil.i(TAG, "rootPage = " + rootPage);
-    	if (!rootPage.equals("ProductDetailActivity") 
+    	/*if (!rootPage.equals("ProductDetailActivity")
     	 && !rootPage.equals("ShowListHeadActivity")
     	 && !rootPage.equals("HomeFragmentActivity")
     	 && !rootPage.equals("MyWebViewActivity")
@@ -856,9 +857,29 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			if (CartActivity.instance != null) {
 				CartActivity.instance.finish();
 			}
-		}
+		}*/
     	super.OnListenerLeft();
     }
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (exit) {
+				AppManager.getInstance().AppExit(getApplicationContext());
+			} else {
+				exit = Boolean.TRUE;
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						exit = Boolean.FALSE;
+					}
+				}, 2000);
+				CommonTools.showToast(getString(R.string.toast_exit_prompt), 1000);
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 
 	@Override
 	protected void onResume() {
