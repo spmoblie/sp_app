@@ -754,7 +754,7 @@ public class JsonParser {
 			mainEn.setUserIntro(data.getString("intro"));
 			mainEn.setGenderCode(StringUtil.getInteger(data.getString("sex")));
 			mainEn.setBirthday(data.getString("birthday"));
-			mainEn.setUserRankCode(StringUtil.getInteger(data.getString("user_rank")));
+			mainEn.setUserRankCode(StringUtil.getInteger(data.getString("rank_code")));
 			mainEn.setUserRankName(data.getString("user_rank"));
 			mainEn.setUserRankTime(data.getString("rank_time"));
 			mainEn.setRankType1(data.getString("label_member"));
