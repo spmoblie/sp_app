@@ -497,7 +497,6 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 					TextView item_curr = (TextView) view.findViewById(R.id.home_line_goods_item_tv_curr);
 					TextView item_sell_price = (TextView) view.findViewById(R.id.home_line_goods_item_tv_sell_price);
 					TextView item_full_price = (TextView) view.findViewById(R.id.home_line_goods_item_tv_full_price);
-					TextView item_discount = (TextView) view.findViewById(R.id.home_line_goods_item_tv_discount);
 					item_curr.setText(currStr);
 
 					String sell_price = items.getSellPrice(); //商品卖价
@@ -510,18 +509,11 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 						}
 						item_full_price.getPaint().setFlags(0);
 						item_full_price.setVisibility(View.GONE);
-						item_discount.setVisibility(View.GONE);
 					} else {
 						item_sell_price.setText(sell_price);
 						item_full_price.setText(currStr + full_price);
 						item_full_price.setVisibility(View.VISIBLE);
 						item_full_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-						if (!StringUtil.isNull(items.getDiscount())) {
-							item_discount.setVisibility(View.VISIBLE);
-							item_discount.setText(items.getDiscount());
-						} else {
-							item_discount.setVisibility(View.GONE);
-						}
 					}
 
 					view.setOnClickListener(new OnClickListener() {

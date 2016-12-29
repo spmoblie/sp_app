@@ -31,6 +31,7 @@ import com.spshop.stylistpark.task.OnDataListener;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.ExceptionUtil;
 import com.spshop.stylistpark.utils.HttpUtil;
+import com.spshop.stylistpark.utils.LangCurrTools;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.OptionsManager;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -216,7 +217,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 
 	private void updateUserMoney() {
 		if (tv_money != null) {
-			tv_money.setText(UserManager.getInstance().getUserMoney());
+			tv_money.setText(LangCurrTools.getCurrencyValue() + UserManager.getInstance().getUserMoney());
 		}
 	}
 

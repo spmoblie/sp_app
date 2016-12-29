@@ -148,7 +148,7 @@
     <string name="product_mail"> Mail</string>
     <string name="product_property_1">HK mail</string>
     <string name="product_property_2">Safeguard</string>
-    <string name="product_property_3">￥299 free shipping</string>
+    <string name="product_property_3">¥299 free shipping</string>
     <string name="product_property_4">Pickup free shipping</string>
     <string name="product_brand_go">Go Brand</string>
     <string name="product_play_video">Video</string>
@@ -168,7 +168,7 @@
     <string name="cart_go_add">To add goods</string>
     <string name="cart_go_shopping">Shopping</string>
     <string name="cart_goods_num">Total %1$d piece</string>
-    <string name="cart_offers">Free shipping over ¥ 200</string>
+    <string name="cart_offers">Does not include postage</string>
     <string name="cart_buy_now">Confirm Order</string>
     <string name="cart_error_data_null">Data synchronization exception! Please pull down to refresh the shopping cart data!</string>
 
@@ -319,8 +319,7 @@
     <string name="setting_logout">Log Out</string>
     <string name="setting_close">Close App</string>
     <string name="setting_password_error">Password error</string>
-    <string name="setting_admin_password">Enter the administrator password</string>
-    <string name="setting_admin_input_prompt">Please enter your password, otherwise the page will be closed after %1$d seconds</string>
+    <string name="setting_admin_password">Enter the administrator password in 60 seconds</string>
     <string name="setting_logout_confirm">&#160;Confirm logout?</string>
     <string name="setting_close_confirm">&#160;Confirm close？</string>
     <string name="setting_input_hint_feedback">Write down your comments or advice</string>

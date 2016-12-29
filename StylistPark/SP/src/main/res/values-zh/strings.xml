@@ -148,7 +148,7 @@
     <string name="product_mail">直郵</string>
     <string name="product_property_1">香港直郵</string>
     <string name="product_property_2">正品保證</string>
-    <string name="product_property_3">滿￥299包郵</string>
+    <string name="product_property_3">滿¥299包郵</string>
     <string name="product_property_4">自提點免郵</string>
     <string name="product_brand_go">進入品牌</string>
     <string name="product_play_video">视频</string>
@@ -168,7 +168,7 @@
     <string name="cart_go_add">快去添加吧~</string>
     <string name="cart_go_shopping">去逛逛</string>
     <string name="cart_goods_num">共%1$d件商品</string>
-    <string name="cart_offers">購物滿¥200包郵</string>
+    <string name="cart_offers">不包含郵費</string>
     <string name="cart_buy_now">確認訂單</string>
     <string name="cart_error_data_null">數據同步出現異常！請下拉刷新購物車商品！</string>
 
@@ -319,8 +319,7 @@
     <string name="setting_logout">登出帳戶</string>
     <string name="setting_close">關閉應用</string>
     <string name="setting_password_error">密碼錯誤</string>
-    <string name="setting_admin_password">請輸入管理員密碼</string>
-    <string name="setting_admin_input_prompt">請盡快輸入密碼，否則頁面將在%1$d秒後關閉</string>
+    <string name="setting_admin_password">請在60秒內輸入管理員密碼</string>
     <string name="setting_logout_confirm">&#160;確定要退出登入麽？</string>
     <string name="setting_close_confirm">&#160;確定要關閉應用麽？</string>
     <string name="setting_input_hint_feedback">寫下您的意見或建議</string>

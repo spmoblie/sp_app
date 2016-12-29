@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/product_detail_ll_anim_bottom"
@@ -41,7 +41,7 @@
                         android:id="@+id/product_detail_viewPager"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/ui_bg_color_white"/>
+                        android:background="@color/ui_bg_color_white" />
 
                     <TextView
                         android:id="@+id/product_detail_tv_timer"
@@ -125,10 +125,17 @@
                             android:textColor="@color/label_text_color"
                             android:visibility="gone" />
 
-                        <TextView
-                            android:id="@+id/product_detail_tv_product_discount"
-                            style="@style/common_text_discount"
-                            android:textSize="@dimen/text_size_10" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:paddingBottom="@dimen/margin_padding_5">
+
+                            <TextView
+                                android:id="@+id/product_detail_tv_product_discount"
+                                style="@style/common_text_discount"
+                                android:textSize="@dimen/text_size_09" />
+                        </RelativeLayout>
 
                         <TextView
                             android:id="@+id/product_detail_tv_product_commission"
@@ -143,16 +150,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone" >
-                    </LinearLayout>
+                        android:visibility="gone"></LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_padding_10"
                         android:layout_marginTop="@dimen/margin_padding_10"
-                        android:gravity="center_vertical"
                         android:baselineAligned="false"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
@@ -165,7 +171,7 @@
                         <TextView
                             android:id="@+id/product_detail_tv_property_2"
                             style="@style/product_property_text"
-                            android:text="@string/product_property_2"/>
+                            android:text="@string/product_property_2" />
 
                         <TextView
                             android:id="@+id/product_detail_tv_property_3"
@@ -189,8 +195,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin_padding_10"
-                    android:background="@color/ui_bg_color_nut" >
-                </RelativeLayout>
+                    android:background="@color/ui_bg_color_nut"></RelativeLayout>
 
                 <ImageView
                     style="@style/set_line_horizontal_bg"
@@ -201,12 +206,12 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="@dimen/margin_padding_10" >
+                    android:padding="@dimen/margin_padding_10">
 
                     <RelativeLayout
                         android:layout_width="@dimen/product_brand_parent_width"
                         android:layout_height="@dimen/product_brand_parent_height"
-                        android:background="@drawable/shape_frame_white_dfdfdf_4" >
+                        android:background="@drawable/shape_frame_white_dfdfdf_4">
 
                         <ImageView
                             android:id="@+id/product_detail_iv_brand_logo"
@@ -232,7 +237,7 @@
                             android:singleLine="true"
                             android:textColor="@color/conte_text_color"
                             android:textSize="@dimen/text_size_14"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/product_detail_tv_brand_country"
@@ -263,8 +268,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin_padding_10"
-                    android:background="@color/ui_bg_color_nut">
-                </RelativeLayout>
+                    android:background="@color/ui_bg_color_nut"></RelativeLayout>
 
                 <ImageView
                     style="@style/set_line_horizontal_bg"
@@ -274,7 +278,7 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <WebView
                         android:id="@+id/product_detail_webView"

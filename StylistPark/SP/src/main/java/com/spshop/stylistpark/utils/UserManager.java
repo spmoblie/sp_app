@@ -203,7 +203,7 @@ public class UserManager {
 
 	public String getUserMoney(){
 		if(StringUtil.isNull(mUserMoney)){
-			mUserMoney = sp.getString(AppConfig.KEY_USER_MONEY, LangCurrTools.getCurrencyValue() + "0.00");
+			mUserMoney = sp.getString(AppConfig.KEY_USER_MONEY, "0.00");
 		}
 		return mUserMoney;
 	}

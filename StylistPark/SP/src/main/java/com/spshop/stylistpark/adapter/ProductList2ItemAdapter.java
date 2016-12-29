@@ -231,13 +231,15 @@ public class ProductList2ItemAdapter extends BaseAdapter{
 		}else {
 			holder.right_main.setVisibility(View.INVISIBLE);
 		}
-		if (isShow) {
+		/*if (isShow) {
 			holder.left_commission.setVisibility(View.VISIBLE);
 			holder.right_commission.setVisibility(View.VISIBLE);
 		} else {
 			holder.left_commission.setVisibility(View.GONE);
 			holder.right_commission.setVisibility(View.GONE);
-		}
+		}*/
+		holder.left_commission.setVisibility(View.GONE);
+		holder.right_commission.setVisibility(View.GONE);
 		return convertView;
 	}
     

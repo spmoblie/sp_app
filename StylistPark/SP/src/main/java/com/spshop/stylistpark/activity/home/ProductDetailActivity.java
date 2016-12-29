@@ -205,7 +205,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 					tv_discount.setVisibility(View.GONE);
 				}
 			}
-			tv_commission.setText(mainEn.getCommission());
+			//tv_commission.setText(mainEn.getCommission()); //达人返现
 			
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + mainEn.getBrandLogo(), iv_brang_logo, defaultOptions);
 			tv_brand_name.setText(mainEn.getBrandName());
