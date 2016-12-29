@@ -146,8 +146,8 @@
     <string name="product_price_full">原价:</string>
     <string name="product_full_minus">满减</string>
     <string name="product_mail">直邮</string>
-    <string name="product_property_1">香港直邮</string>
-    <string name="product_property_2">正品保证</string>
+    <string name="product_property_1">正品保证</string>
+    <string name="product_property_2">香港直邮</string>
     <string name="product_property_3">满¥299包邮</string>
     <string name="product_property_4">自提点免邮</string>
     <string name="product_brand_go">进入品牌</string>

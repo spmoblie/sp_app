@@ -9,12 +9,12 @@
         <item name="android:windowEnterAnimation">@anim/splash_fade_in</item>
         <item name="android:windowExitAnimation">@anim/splash_fade_out</item>
     </style>
-    
+
     <!-- 自定义Activity动画效果1 -->
     <style name="MyTheme_1" parent="SPAppBaseTheme">
         <item name="android:windowAnimationStyle">@style/ClearAnimation</item>
     </style>
-    
+
     <!-- 自定义Activity动画效果2 -->
     <style name="MyTheme_2" parent="SPAppBaseTheme">
         <item name="android:windowAnimationStyle">@style/AnimationEnlargeNarrow</item>
@@ -69,14 +69,14 @@
         <item name="android:textColor">@color/text_color_white</item>
         <item name="android:textSize">@dimen/text_size_22</item>
     </style>
-    
+
     <!-- 主页底部Tab布局样式 -->
     <style name="home_tab_frame">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
     </style>
-    
+
     <!-- 主页底部Tab文字样式 -->
     <style name="home_tab_text">
         <item name="android:layout_width">match_parent</item>
@@ -166,7 +166,7 @@
         <item name="android:textColor">@color/label_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
-    
+
     <!-- 设置页面左边ImageView样式 -->
     <style name="setting_lay_img_left">
         <item name="android:layout_width">wrap_content</item>
@@ -174,7 +174,7 @@
         <item name="android:layout_marginLeft">@dimen/screen_margin_default</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
-    
+
     <!-- 设置页面右边ImageView样式 -->
     <style name="setting_lay_img_right">
         <item name="android:layout_width">wrap_content</item>
@@ -184,7 +184,7 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:src">@drawable/common_go_right</item>
     </style>
-    
+
     <!-- 商品搜索热搜词汇TextView样式 -->
     <style name="search_hot_words_text_content">
         <item name="android:layout_width">0dp</item>
@@ -199,7 +199,7 @@
         <item name="android:textColor">@color/label_text_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
-    
+
     <!-- Top RadioGroup样式 -->
     <style name="RadioGroup_RadioButton">
         <item name="android:layout_width">0dp</item>
@@ -271,18 +271,17 @@
 
     <!-- 商品详情属性文本样式 -->
     <style name="product_property_text">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginRight">@dimen/margin_padding_15</item>
+        <item name="android:layout_weight">5</item>
         <item name="android:drawableLeft">@drawable/icon_support</item>
         <item name="android:drawablePadding">@dimen/margin_padding_2</item>
-        <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/text_size_10</item>
         <item name="android:textColor">@color/tv_color_status</item>
     </style>
-    
+
     <!-- 订单分类TextView样式 -->
     <style name="Order_Type_TextView">
         <item name="android:layout_width">match_parent</item>
@@ -294,7 +293,7 @@
         <item name="android:textSize">@dimen/text_size_11</item>
         <item name="android:textColor">@color/conte_text_color</item>
     </style>
-    
+
     <!-- 订单TextView样式 -->
     <style name="Order_TextView_Title">
         <item name="android:layout_width">wrap_content</item>
@@ -302,7 +301,7 @@
         <item name="android:textColor">@color/conte_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
-    
+
     <!-- 注册页面EditText样式 -->
     <style name="Register_EditText">
         <item name="android:layout_width">match_parent</item>
@@ -315,7 +314,7 @@
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColor">@color/conte_text_color</item>
     </style>
-    
+
     <!-- 注册页面Button样式 -->
     <style name="Register_Button">
         <item name="android:layout_width">match_parent</item>
@@ -326,7 +325,7 @@
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:textColor">@color/text_color_white</item>
     </style>
-    
+
     <!-- 订单展示收货地址TextView样式 -->
     <style name="address_order_text">
         <item name="android:layout_width">wrap_content</item>
@@ -334,7 +333,7 @@
         <item name="android:textColor">@color/conte_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
-    
+
     <!-- 收货地址TextView标题样式 -->
     <style name="address_text_title">
         <item name="android:layout_width">wrap_content</item>
@@ -344,7 +343,7 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/text_size_16</item>
     </style>
-    
+
     <!-- 收货地址EditText样式 -->
     <style name="Address_EditText">
         <item name="android:layout_width">match_parent</item>
@@ -376,7 +375,7 @@
         <item name="android:textColor">@color/conte_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
-    
+
     <!-- 收货地址Drawable+TextView样式 -->
     <style name="Address_Drawable_TextView">
         <item name="android:layout_width">wrap_content</item>
@@ -389,7 +388,7 @@
         <item name="android:textColor">@color/label_text_color</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
-        
+
     <!-- 通用垂直Item布局样式 -->
     <style name="common_vertical_item_layout">
         <item name="android:layout_width">match_parent</item>
@@ -400,7 +399,7 @@
         <item name="android:paddingRight">@dimen/screen_margin_default</item>
         <item name="android:paddingBottom">@dimen/margin_padding_10</item>
     </style>
-    
+
     <!-- 通用TextView+背景边框样式 -->
     <style name="common_text_bg_frame">
         <item name="android:layout_width">wrap_content</item>
@@ -425,7 +424,7 @@
         <item name="android:background">@drawable/shape_frame_bg_red_90</item>
         <item name="android:visibility">gone</item>
     </style>
-    
+
     <!-- 通用红点数字提醒TextView样式 -->
     <style name="commom_warn_red_number_text">
         <item name="android:layout_width">@dimen/screen_margin_default</item>
@@ -439,7 +438,7 @@
         <item name="android:textColor">@color/text_color_white</item>
         <item name="android:visibility">gone</item>
     </style>
-    
+
     <!-- 通用均分Tab文本样式:灰色 -->
     <style name="commom_mean_tab_text_assist">
         <item name="android:layout_width">0dp</item>
@@ -475,7 +474,7 @@
         <item name="android:textColor">@color/tv_color_status</item>
         <item name="android:textSize">@dimen/text_size_16</item>
     </style>
-    
+
     <!-- 通用右边的按钮+文字样式 -->
     <style name="common_btn_text_right">
         <item name="android:layout_width">match_parent</item>
@@ -485,7 +484,7 @@
         <item name="android:textColor">@color/text_color_white</item>
         <item name="android:textSize">@dimen/text_size_14</item>
     </style>
-    
+
     <!-- 通用回顶箭头按钮 -->
     <style name="common_to_top">
         <item name="android:layout_width">wrap_content</item>
@@ -496,7 +495,7 @@
         <item name="android:src">@drawable/btn_icon_to_top</item>
         <item name="android:visibility">gone</item>
     </style>
-    
+
     <!-- 通用下一步箭头按钮 -->
     <style name="common_go_right">
         <item name="android:layout_width">wrap_content</item>
@@ -504,7 +503,7 @@
         <item name="android:layout_marginRight">10dip</item>
         <item name="android:src">@drawable/common_go_right</item>
     </style>
-    
+
     <!-- 通用按钮 -->
     <style name="BlackButton" parent="android:Widget.Holo.Light.Button">
         <item name="android:background">@drawable/shape_frame_bg_app_buttom_2</item>
@@ -515,16 +514,16 @@
     <style name="set_line_horizontal_bg">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/margin_padding_05</item>
-        <item name="android:background">@color/ui_bg_color_div_min</item>
+        <item name="android:background">@color/ui_bg_color_div_min_0</item>
     </style>
 
     <!-- 垂直分割线 -->
     <style name="set_line_vertical_bg">
         <item name="android:layout_width">@dimen/margin_padding_05</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/ui_bg_color_div_min</item>
+        <item name="android:background">@color/ui_bg_color_div_min_0</item>
     </style>
-    
+
     <!-- 权重布局占位通用样式 -->
     <style name="layout_weight_style">
         <item name="android:background">@color/ui_bg_color_percent_10</item>
@@ -535,19 +534,19 @@
         <item name="android:windowEnterAnimation">@anim/in_from_right</item>
         <item name="android:windowExitAnimation">@anim/out_to_right</item>
     </style>
-    
+
     <!-- 动画从底部进来，退出 -->
     <style name="AnimationPreviewDown">
         <item name="android:windowEnterAnimation">@anim/in_from_bottom</item>
         <item name="android:windowExitAnimation">@anim/out_to_bottom</item>
     </style>
-    
+
     <!-- 动画居中放大，缩小 -->
     <style name="AnimationEnlargeNarrow">
         <item name="android:windowEnterAnimation">@anim/center_enlarge</item>
         <item name="android:windowExitAnimation">@anim/center_narrow</item>
     </style>
-    
+
     <!-- 全屏幕拉伸 -->
     <style name="layout_full">
         <item name="android:layout_width">match_parent</item>

@@ -141,10 +141,10 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	private double mathPrice;
 	private boolean isNext = false;
 	private ProductAttrEntity attrEn;
-	private LinearLayout ll_show;
+	private LinearLayout ll_cart_show, ll_state_show;
 	private ImageView iv_goods_img, iv_num_minus, iv_num_add;
-	private View popupView;
-	private PopupWindow popupWindow;
+	private View cartPopupView, statePopupView;
+	private PopupWindow cartPopupWindow, statePopupWindow;
 	private Animation popupAnimShow, popupAnimGone;
 
 	protected Animation headGONE, headVISIBLE;
@@ -632,7 +632,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 			selectId_1 = 0;
 			selectId_2 = 0;
 			isNext = false;
-			popupWindow = null;
+			cartPopupWindow = null;
 			startAnimation();
 			request(AppConfig.REQUEST_SV_GET_PRODUCT_ATTR_CODE);
 		}
@@ -778,15 +778,62 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		}
 	}
 
+	/**
+	 * 弹出声明浮层
+	 */
+	protected void initStatePopup(String contentStr) {
+		if (statePopupWindow == null) {
+			statePopupView = LayoutInflater.from(mContext).inflate(R.layout.popup_state_show, null);
+			RelativeLayout rl_finish = (RelativeLayout) statePopupView.findViewById(R.id.state_show_rl_finish);
+			rl_finish.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					statePopupDismiss();
+				}
+			});
+			popupAnimShow = AnimationUtils.loadAnimation(mContext, R.anim.in_from_bottom);
+			popupAnimGone = AnimationUtils.loadAnimation(mContext, R.anim.out_to_bottom);
+			ll_state_show = (LinearLayout) statePopupView.findViewById(R.id.state_show_ll_show);
+			ll_state_show.startAnimation(popupAnimShow);
+
+			final TextView tv_popup_content = (TextView) statePopupView.findViewById(R.id.state_show_tv_show_content);
+			tv_popup_content.setText(contentStr);
+
+			statePopupWindow = new PopupWindow(statePopupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+			statePopupWindow.setFocusable(true);
+			statePopupWindow.update();
+			statePopupWindow.setBackgroundDrawable(new BitmapDrawable());
+			statePopupWindow.setOutsideTouchable(true);
+			statePopupWindow.showAtLocation(statePopupView, Gravity.BOTTOM, 0, 0);
+		}else {
+			ll_state_show.startAnimation(popupAnimShow);
+			statePopupWindow.showAtLocation(statePopupView, Gravity.BOTTOM, 0, 0);
+		}
+	}
+
+	/**
+	 * 关闭声明浮层
+	 */
+	private void statePopupDismiss() {
+		ll_state_show.startAnimation(popupAnimGone);
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				statePopupWindow.dismiss();
+			}
+		}, 500);
+	}
+
 	@SuppressWarnings("deprecation")
 	private void initCartPopup() {
 		if (attrEn == null) return;
 		goodsId = attrEn.getGoodsId();
 		mathPrice = attrEn.getComputePrice();
 		String attrNameStr = getSelectShowStr(attrEn);
-		if (popupWindow == null) {
-			popupView = LayoutInflater.from(mContext).inflate(R.layout.popup_add_cart_select, null);
-			RelativeLayout rl_finish = (RelativeLayout) popupView.findViewById(R.id.popup_add_cart_rl_finish);
+		if (cartPopupWindow == null) {
+			cartPopupView = LayoutInflater.from(mContext).inflate(R.layout.popup_add_cart_select, null);
+			RelativeLayout rl_finish = (RelativeLayout) cartPopupView.findViewById(R.id.popup_add_cart_rl_finish);
 			rl_finish.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -795,18 +842,18 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 			});
 			popupAnimShow = AnimationUtils.loadAnimation(mContext, R.anim.in_from_bottom);
 			popupAnimGone = AnimationUtils.loadAnimation(mContext, R.anim.out_to_bottom);
-			ll_show = (LinearLayout) popupView.findViewById(R.id.popup_add_cart_ll_show);
-			ll_show.startAnimation(popupAnimShow);
+			ll_cart_show = (LinearLayout) cartPopupView.findViewById(R.id.popup_add_cart_ll_show);
+			ll_cart_show.startAnimation(popupAnimShow);
 
-			final TextView tv_popup_number = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_number);
+			final TextView tv_popup_number = (TextView) cartPopupView.findViewById(R.id.popup_add_cart_tv_number);
 			tv_popup_number.setText(String.valueOf(buyNumber));
-			final TextView tv_popup_curr = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_curr);
+			final TextView tv_popup_curr = (TextView) cartPopupView.findViewById(R.id.popup_add_cart_tv_curr);
 			tv_popup_curr.setText(currStr);
-			final TextView tv_popup_price = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_price);
+			final TextView tv_popup_price = (TextView) cartPopupView.findViewById(R.id.popup_add_cart_tv_price);
 			tv_popup_price.setText(decimalFormat.format(mathPrice));
-			final TextView tv_popup_prompt = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_prompt);
-			final TextView tv_popup_select = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_select);
-			final TextView tv_popup_confirm = (TextView) popupView.findViewById(R.id.popup_add_cart_tv_confirm);
+			final TextView tv_popup_prompt = (TextView) cartPopupView.findViewById(R.id.popup_add_cart_tv_prompt);
+			final TextView tv_popup_select = (TextView) cartPopupView.findViewById(R.id.popup_add_cart_tv_select);
+			final TextView tv_popup_confirm = (TextView) cartPopupView.findViewById(R.id.popup_add_cart_tv_confirm);
 			tv_popup_confirm.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -821,7 +868,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 				}
 			});
 
-			RelativeLayout rl_num_minus = (RelativeLayout) popupView.findViewById(R.id.popup_add_cart_rl_num_minus);
+			RelativeLayout rl_num_minus = (RelativeLayout) cartPopupView.findViewById(R.id.popup_add_cart_rl_num_minus);
 			rl_num_minus.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -837,7 +884,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 					tv_popup_number.setText(String.valueOf(buyNumber));
 				}
 			});
-			RelativeLayout rl_num_add = (RelativeLayout) popupView.findViewById(R.id.popup_add_cart_rl_num_add);
+			RelativeLayout rl_num_add = (RelativeLayout) cartPopupView.findViewById(R.id.popup_add_cart_rl_num_add);
 			rl_num_add.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -858,13 +905,13 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 				}
 			});
 
-			iv_num_add = (ImageView) popupView.findViewById(R.id.popup_add_cart_iv_num_add);
-			iv_num_minus = (ImageView) popupView.findViewById(R.id.popup_add_cart_iv_num_minus);
-			iv_goods_img = (ImageView) popupView.findViewById(R.id.popup_add_cart_iv_img);
+			iv_num_add = (ImageView) cartPopupView.findViewById(R.id.popup_add_cart_iv_num_add);
+			iv_num_minus = (ImageView) cartPopupView.findViewById(R.id.popup_add_cart_iv_num_minus);
+			iv_goods_img = (ImageView) cartPopupView.findViewById(R.id.popup_add_cart_iv_img);
 			ImageLoader.getInstance().displayImage(IMAGE_URL_HTTP + attrEn.getFristImgUrl(), iv_goods_img, goodsOptions);
 
 			if (attrNum > 0) {
-				ScrollViewListView svlv = (ScrollViewListView) popupView.findViewById(R.id.popup_add_cart_svlv);
+				ScrollViewListView svlv = (ScrollViewListView) cartPopupView.findViewById(R.id.popup_add_cart_svlv);
 				AddCartPopupListAdapter.AddCartCallback apCallback = new AddCartPopupListAdapter.AddCartCallback() {
 
 					@Override
@@ -938,15 +985,15 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 			}
 			tv_popup_select.setText(attrNameStr);
 
-			popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-			popupWindow.setFocusable(true);
-			popupWindow.update();
-			popupWindow.setBackgroundDrawable(new BitmapDrawable());
-			popupWindow.setOutsideTouchable(true);
-			popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+			cartPopupWindow = new PopupWindow(cartPopupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+			cartPopupWindow.setFocusable(true);
+			cartPopupWindow.update();
+			cartPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+			cartPopupWindow.setOutsideTouchable(true);
+			cartPopupWindow.showAtLocation(cartPopupView, Gravity.BOTTOM, 0, 0);
 		}else {
-			ll_show.startAnimation(popupAnimShow);
-			popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+			ll_cart_show.startAnimation(popupAnimShow);
+			cartPopupWindow.showAtLocation(cartPopupView, Gravity.BOTTOM, 0, 0);
 		}
 	}
 
@@ -972,12 +1019,12 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	 * 关闭购物浮层
 	 */
 	private void catrPopupDismiss() {
-		ll_show.startAnimation(popupAnimGone);
+		ll_cart_show.startAnimation(popupAnimGone);
 		new Handler().postDelayed(new Runnable() {
 
 			@Override
 			public void run() {
-				popupWindow.dismiss();
+				cartPopupWindow.dismiss();
 			}
 		}, 500);
 	}

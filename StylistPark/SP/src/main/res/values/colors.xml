@@ -47,7 +47,9 @@
     <!-- AppUI区域色 -->
     <color name="ui_bg_color_nut">#F7F7F7</color>
     <!-- 分割线颜色值:细 -->
-    <color name="ui_bg_color_div_min">#E0E0E0</color>
+    <color name="ui_bg_color_div_min_0">#E0E0E0</color>
+    <!-- 分割线颜色值:淡 -->
+    <color name="ui_bg_color_div_min_1">#EAEAEA</color>
 
     <!-- 省、市、区选择组件 -->
     <color name="wheel_color_province_line_border">#C7C7C7</color>

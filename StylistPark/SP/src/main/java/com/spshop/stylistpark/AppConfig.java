@@ -324,6 +324,8 @@ public class AppConfig {
 	public static final String KEY_UPDATE_VERSION_LAST_TIME = "update_version_last_time";
 	// 偏好设置Key-记录同步远程服务器数据的日期
 	public static final String KEY_LOAD_SV_DATA_DAY = "load_sv_data_day";
+	// 偏好设置Key-记录重启App的日期
+	public static final String KEY_RESTART_APP_TIME = "restart_app_time";
 	// 偏好设置Key-记录是否重加载分类数据
 	public static final String KEY_LOAD_SORT_DATA = "load_sort_data";
 	// 偏好设置Key-记录推送服务的开关状态

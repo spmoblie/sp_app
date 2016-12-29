@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.spshop.stylistpark.activity.BaseActivity;
+import com.spshop.stylistpark.activity.SplashActivity;
 import com.spshop.stylistpark.config.SharedConfig;
 import com.spshop.stylistpark.db.SortDBService;
 import com.spshop.stylistpark.entity.MyNameValuePair;
@@ -43,7 +44,7 @@ import java.util.List;
 
 @SuppressLint({ "NewApi", "UseSparseArrays" })
 public class AppApplication extends Application implements OnDataListener{
-	
+
 	private static AppApplication spApp = null;
 
 	public static String clip_photo_path; //裁剪后相片的路径
@@ -54,7 +55,7 @@ public class AppApplication extends Application implements OnDataListener{
 	public static int mScale = 1;
 	public static int clip_photo_type = 1; //记录裁剪相片的类型(1:圆形/2:方形)
 	public static int network_current_state = 0; //记录当前网络的状态
-	
+
 	public static boolean loadDBData = false; //是否从本地数据库加载数据
 	public static boolean isWXShare = false; //记录是否微信分享
 	public static boolean isStartLoop = true; //记录是否开启循播
@@ -86,7 +87,7 @@ public class AppApplication extends Application implements OnDataListener{
 		MobclickAgent.openActivityDurationTrack(false);
 		MobclickAgent.setScenarioType(spApp, MobclickAgent.EScenarioType.E_UM_NORMAL);
 
-	    // 获取手机型号及屏幕的宽高
+		// 获取手机型号及屏幕的宽高
 		screenWidth = DeviceUtil.getDeviceWidth(spApp);
 		screenHeight = DeviceUtil.getDeviceHeight(spApp);
 		// 判定是否为Pad
@@ -97,12 +98,15 @@ public class AppApplication extends Application implements OnDataListener{
 		long oldDay = shared.getLong(AppConfig.KEY_LOAD_SV_DATA_DAY, 0);
 		if ((newDay == 1 && oldDay != 1) || newDay - oldDay > 0) {
 			clearSharedLoadSVData();
-			shared.edit().putLong(AppConfig.KEY_LOAD_SV_DATA_DAY, newDay).apply();
+			shared.edit().putLong(AppConfig.KEY_LOAD_SV_DATA_DAY, newDay).commit();
 		}
+
+		// 程序崩溃时触发线程
+		Thread.setDefaultUncaughtExceptionHandler(restartHandler);
 
 		// 设置App字体不随系统字体变化
 		initDisplayMetrics();
-		
+
 		// 初始化异步加载图片的jar配置
 		initImageLoader(spApp);
 
@@ -120,7 +124,7 @@ public class AppApplication extends Application implements OnDataListener{
 		}
 		return shared;
 	}
-	
+
 	/**
 	 * 清除联网加载数据控制符的缓存
 	 */
@@ -150,11 +154,11 @@ public class AppApplication extends Application implements OnDataListener{
 	 */
 	public static void initImageLoader(Context mContext){
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
-		.threadPriority(Thread.NORM_PRIORITY - 2)
-		.memoryCache(new WeakMemoryCache())
-		.discCacheFileNameGenerator(new Md5FileNameGenerator())
-		.tasksProcessingOrder(QueueProcessingType.LIFO)
-		.writeDebugLogs().build();
+				.threadPriority(Thread.NORM_PRIORITY - 2)
+				.memoryCache(new WeakMemoryCache())
+				.discCacheFileNameGenerator(new Md5FileNameGenerator())
+				.tasksProcessingOrder(QueueProcessingType.LIFO)
+				.writeDebugLogs().build();
 		ImageLoader.getInstance().init(config);
 	}
 
@@ -268,14 +272,31 @@ public class AppApplication extends Application implements OnDataListener{
 		BaseActivity.updateActivityData(5);
 	}
 
+	// 创建服务用于捕获崩溃异常
+	private Thread.UncaughtExceptionHandler restartHandler = new Thread.UncaughtExceptionHandler() {
+		public void uncaughtException(Thread thread, Throwable ex) {
+			restartApp(); //发生崩溃异常时,重启应用
+		}
+	};
+
+	// 重启应用
+	public void restartApp() {
+		Intent intent = new Intent(spApp, SplashActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		spApp.startActivity(intent);
+		AppManager.getInstance().AppExit(spApp);
+		// 结束进程之前可以把你程序的注销或者退出代码放在这段代码之前
+		android.os.Process.killProcess(android.os.Process.myPid());
+	}
+
 	@Override
 	public Object doInBackground(int requestCode) throws Exception {
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_POST_LOGOUT_CODE:
-			String uri = AppConfig.URL_COMMON_INDEX_URL;
-			List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
-			params.add(new MyNameValuePair("app", "logout"));
-			return sc.loadServerDatas("AppApplication", AppConfig.REQUEST_SV_POST_LOGOUT_CODE, uri, params, HttpUtil.METHOD_GET);
+			case AppConfig.REQUEST_SV_POST_LOGOUT_CODE:
+				String uri = AppConfig.URL_COMMON_INDEX_URL;
+				List<MyNameValuePair> params = new ArrayList<MyNameValuePair>();
+				params.add(new MyNameValuePair("app", "logout"));
+				return sc.loadServerDatas("AppApplication", AppConfig.REQUEST_SV_POST_LOGOUT_CODE, uri, params, HttpUtil.METHOD_GET);
 		}
 		return null;
 	}
@@ -292,5 +313,3 @@ public class AppApplication extends Application implements OnDataListener{
 	}
 
 }
-
-

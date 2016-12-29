@@ -68,7 +68,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 	public static ProductDetailActivity instance = null;
 
 	@SuppressWarnings("unused")
-	private LinearLayout ll_other, ll_bottom, ll_head, ll_promotion, ll_show, ll_radio_main;
+	private LinearLayout ll_other, ll_bottom, ll_head, ll_promotion, ll_show, ll_radio_main, ll_property_main;
 	private FrameLayout fl_main;
 	private RelativeLayout rl_screen;
 	private ImageView iv_left, iv_video, iv_brang_logo, iv_to_top;
@@ -141,6 +141,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		tv_brand_go = (TextView) findViewById(R.id.product_detail_tv_brand_go);
 		iv_to_top = (ImageView) findViewById(R.id.product_detail_iv_to_top);
 		ll_radio_main = (LinearLayout) findViewById(R.id.topbar_radio_ll_main);
+		ll_property_main = (LinearLayout) findViewById(R.id.product_detail_ll_property_main);
 		btn_1 = (RadioButton) findViewById(R.id.topbar_radio_rb_1);
 		btn_2 = (RadioButton) findViewById(R.id.topbar_radio_rb_2);
 		btn_3 = (RadioButton) findViewById(R.id.topbar_radio_rb_3);
@@ -162,6 +163,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 		iv_video.setOnClickListener(this);
 		iv_to_top.setOnClickListener(this);
 		tv_brand_go.setOnClickListener(this);
+		ll_property_main.setOnClickListener(this);
 
 		initRaidoGroup();
 		initWebView();
@@ -232,11 +234,11 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			}
 			// 判定商品特性
 			if (mainEn.getSuppliersId() == AppConfig.SP_GOODS_START_HK) { //香港发货
-				tv_property_1.setVisibility(View.VISIBLE);
+				tv_property_2.setVisibility(View.VISIBLE);
 				tv_property_3.setVisibility(View.VISIBLE);
 				tv_property_4.setVisibility(View.VISIBLE);
 			} else {
-				tv_property_1.setVisibility(View.GONE);
+				tv_property_2.setVisibility(View.GONE);
 				tv_property_3.setVisibility(View.GONE);
 				tv_property_4.setVisibility(View.GONE);
 			}
@@ -283,7 +285,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			}
 			String imgMinUrl = IMAGE_URL_HTTP + imgEns.get(i).getImgMinUrl();
 			ImageView imageView = new ImageView(mContext);
-			ImageLoader.getInstance().displayImage(imgMinUrl, imageView, goodsOptions);
+			ImageLoader.getInstance().displayImage(imgMinUrl, imageView, defaultOptions);
 			imageView.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -545,6 +547,9 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 			break;
 		case R.id.topbar_radio_rb_3:
 
+			break;
+		case R.id.product_detail_ll_property_main:
+			initStatePopup("购物声明");
 			break;
 		case R.id.product_detail_tv_brand_go:
 			if (mainEn != null) {
