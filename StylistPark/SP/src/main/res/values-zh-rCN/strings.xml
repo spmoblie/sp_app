@@ -146,10 +146,15 @@
     <string name="product_price_full">原价:</string>
     <string name="product_full_minus">满减</string>
     <string name="product_mail">直邮</string>
+    <string name="product_property_title">服务承诺</string>
     <string name="product_property_1">正品保证</string>
+    <string name="product_property_1_state">此商品为香港直接采购，全程接受海关监管，正品保障，商品非质量问题均不退不换。若商品出现漏发错发问题，可在收到货后联系客服处理。</string>
     <string name="product_property_2">香港直邮</string>
+    <string name="product_property_2_state">此商品属香港直邮，发货后1-3个工作日送达。</string>
     <string name="product_property_3">满¥299包邮</string>
+    <string name="product_property_3_state">购买此类商品订单实付金额满¥299免运费，不足金额订单根据收货地址收取快递费。</string>
     <string name="product_property_4">自提点免邮</string>
+    <string name="product_property_4_state">选择收货地址为官方指定自提点地址，购买的所有商品均免邮费。</string>
     <string name="product_brand_go">进入品牌</string>
     <string name="product_play_video">视频</string>
     <string name="product_collection">关注</string>

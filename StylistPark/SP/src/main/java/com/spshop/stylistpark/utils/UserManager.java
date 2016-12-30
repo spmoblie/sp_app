@@ -393,7 +393,7 @@ public class UserManager {
 			saveUserGender(infoEn.getGenderCode());
 			saveUserBirthday(infoEn.getBirthday());
 			if (StringUtil.isNull(infoEn.getMoney())) {
-				saveUserMoney(LangCurrTools.getCurrencyValue() + "0.00");
+				saveUserMoney("0.00");
 			} else {
 				saveUserMoney(infoEn.getMoney());
 			}
@@ -420,7 +420,7 @@ public class UserManager {
 		saveUserIntro(null);
 		saveUserGender(0);
 		saveUserBirthday(null);
-		saveUserMoney(LangCurrTools.getCurrencyValue() + "0.00");
+		saveUserMoney("0.00");
 		saveUserRankCode(0);
 		saveUserRankName(null);
 		saveUserRankTime(null);

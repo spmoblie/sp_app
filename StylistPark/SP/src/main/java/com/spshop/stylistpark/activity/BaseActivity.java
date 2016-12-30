@@ -781,7 +781,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 	/**
 	 * 弹出声明浮层
 	 */
-	protected void initStatePopup(String contentStr) {
+	protected void initStatePopup() {
 		if (statePopupWindow == null) {
 			statePopupView = LayoutInflater.from(mContext).inflate(R.layout.popup_state_show, null);
 			RelativeLayout rl_finish = (RelativeLayout) statePopupView.findViewById(R.id.state_show_rl_finish);
@@ -796,8 +796,13 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 			ll_state_show = (LinearLayout) statePopupView.findViewById(R.id.state_show_ll_show);
 			ll_state_show.startAnimation(popupAnimShow);
 
-			final TextView tv_popup_content = (TextView) statePopupView.findViewById(R.id.state_show_tv_show_content);
-			tv_popup_content.setText(contentStr);
+			final TextView tv_popup_done = (TextView) statePopupView.findViewById(R.id.state_show_tv_done);
+			tv_popup_done.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					statePopupDismiss();
+				}
+			});
 
 			statePopupWindow = new PopupWindow(statePopupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 			statePopupWindow.setFocusable(true);

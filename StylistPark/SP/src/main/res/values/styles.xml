@@ -282,6 +282,28 @@
         <item name="android:textColor">@color/tv_color_status</item>
     </style>
 
+    <!-- 商品详情属性描述标题样式 -->
+    <style name="product_property_state_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_padding_15</item>
+        <item name="android:drawableLeft">@drawable/icon_support_state</item>
+        <item name="android:drawablePadding">@dimen/margin_padding_5</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/tv_color_status</item>
+    </style>
+
+    <!-- 商品详情属性描述详情样式 -->
+    <style name="product_property_state_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_padding_10</item>
+        <item name="android:lineSpacingExtra">@dimen/margin_padding_5</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/label_text_color</item>
+    </style>
+
     <!-- 订单分类TextView样式 -->
     <style name="Order_Type_TextView">
         <item name="android:layout_width">match_parent</item>

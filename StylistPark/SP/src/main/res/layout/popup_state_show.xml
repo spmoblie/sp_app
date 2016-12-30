@@ -29,7 +29,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,13 +39,65 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/state_show_tv_show_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_14"
-                    android:textColor="@color/tv_color_status"/>
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/product_property_title"
+                    android:textColor="@color/conte_text_color"
+                    android:textSize="@dimen/text_size_14"/>
+
+                <ImageView
+                    style="@style/set_line_horizontal_bg"
+                    android:layout_marginTop="@dimen/margin_padding_10"
+                    android:contentDescription="@string/desc"/>
+
+                <TextView
+                    style="@style/product_property_state_title"
+                    android:drawableLeft="@drawable/icon_support_state_1"
+                    android:text="@string/product_property_1" />
+
+                <TextView
+                    style="@style/product_property_state_content"
+                    android:text="@string/product_property_1_state"/>
+
+                <TextView
+                    style="@style/product_property_state_title"
+                    android:drawableLeft="@drawable/icon_support_state_2"
+                    android:text="@string/product_property_2" />
+
+                <TextView
+                    style="@style/product_property_state_content"
+                    android:text="@string/product_property_2_state"/>
+
+                <TextView
+                    style="@style/product_property_state_title"
+                    android:drawableLeft="@drawable/icon_support_state_3"
+                    android:text="@string/product_property_3" />
+
+                <TextView
+                    style="@style/product_property_state_content"
+                    android:text="@string/product_property_3_state"/>
+
+                <TextView
+                    style="@style/product_property_state_title"
+                    android:drawableLeft="@drawable/icon_support_state_4"
+                    android:text="@string/product_property_4" />
+
+                <TextView
+                    style="@style/product_property_state_content"
+                    android:text="@string/product_property_4_state"/>
             </LinearLayout>
         </ScrollView>
+
+        <TextView
+            android:id="@+id/state_show_tv_done"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_bt_height_default"
+            android:background="@color/ui_color_status"
+            android:gravity="center"
+            android:text="@string/done"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_14"/>
     </LinearLayout>
 
 </LinearLayout>

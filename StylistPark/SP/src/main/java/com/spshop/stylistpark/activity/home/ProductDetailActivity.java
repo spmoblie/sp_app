@@ -549,7 +549,7 @@ public class ProductDetailActivity extends BaseActivity implements OnDataListene
 
 			break;
 		case R.id.product_detail_ll_property_main:
-			initStatePopup("购物声明");
+			initStatePopup();
 			break;
 		case R.id.product_detail_tv_brand_go:
 			if (mainEn != null) {
