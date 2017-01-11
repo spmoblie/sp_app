@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -40,6 +41,7 @@ public class MyAddressActivity extends BaseActivity {
 	private AddressListAdapter lv_adapter;
 
 	private boolean showTop;
+	private String phoneStr;
 	private AddressEntity data;
 	private List<AddressEntity> lv_show = new ArrayList<AddressEntity>();
 	private boolean isLogined, isUpdate, isSuccess;
@@ -72,13 +74,40 @@ public class MyAddressActivity extends BaseActivity {
 		rl_store_pickup.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(mContext, StorePickupActivity.class));
+				if (StringUtil.isNull(phoneStr)) {
+					showEditDialog();
+				} else {
+					startStorePickupActivity();
+				}
 			}
 		});
 		if (showTop) {
 			rl_store_pickup.setVisibility(View.VISIBLE);
 		}
 		setAdapter();
+	}
+
+	private void showEditDialog() {
+		showEditDialog(getString(R.string.address_store_pickup_phone),
+				InputType.TYPE_CLASS_PHONE, true, new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+					case BaseActivity.DIALOG_CANCEL_CLICK:
+						break;
+					default:
+						phoneStr = (String) msg.obj;
+						if (!StringUtil.isNull(phoneStr)) {
+							postUserPhone();
+						}
+						break;
+				}
+			}
+		});
+	}
+
+	private void startStorePickupActivity() {
+		startActivity(new Intent(mContext, StorePickupActivity.class));
 	}
 	
 	private void setAdapter() {
@@ -137,6 +166,11 @@ public class MyAddressActivity extends BaseActivity {
 	private void requestDeleteAddress() {
 		startAnimation();
 		request(AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE);
+	}
+
+	private void postUserPhone() {
+		startAnimation();
+		request(AppConfig.REQUEST_SV_POST_EDIT_USER_INFO_CODE);
 	}
 
 	@Override
@@ -210,6 +244,11 @@ public class MyAddressActivity extends BaseActivity {
 			uri = AppConfig.URL_COMMON_USER_URL + "?act=drop_address";
 			params.add(new MyNameValuePair("id", String.valueOf(data.getAddressId())));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE, uri, params, HttpUtil.METHOD_POST);
+
+		case AppConfig.REQUEST_SV_POST_EDIT_USER_INFO_CODE:
+			uri = AppConfig.URL_COMMON_USER_URL + "?act=edit_profile";
+			params.add(new MyNameValuePair("mobile", phoneStr));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_EDIT_USER_INFO_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;
 	}
@@ -219,50 +258,64 @@ public class MyAddressActivity extends BaseActivity {
 		if (instance == null) return;
 		super.onSuccess(requestCode, result);
 		switch (requestCode) {
-		case AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE:
-			stopAnimation();
-			if (result != null) {
-				AddressEntity mainEn = (AddressEntity) result;
-				if (mainEn.getMainLists() != null) {
-					isSuccess = true;
-					lv_show.clear();
-					lv_show.addAll(mainEn.getMainLists());
-				}
-				updateListView();
-			}else {
-				showServerBusy();
-			}
-			break;
-		case AppConfig.REQUEST_SV_POST_SELECT_ADDRESS_CODE:
-			stopAnimation();
-			if (result != null) {
-				BaseEntity baseEn = (BaseEntity) result;
-				if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-					updateListView();
-					updateActivityData(9);
-					finish();
-				}else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
-					// 登入超时，交BaseActivity处理
-				}else {
-					if (StringUtil.isNull(baseEn.getErrInfo())) {
-						showServerBusy();
-					}else {
-						CommonTools.showToast(baseEn.getErrInfo(), 2000);
-					}
-				}
-			}else {
-				showServerBusy();
-			}
-			break;
-		case AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE:
-			if (result != null && ((BaseEntity) result).getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
-				getSVDatas();
-				updateActivityData(9);
-			}else {
+			case AppConfig.REQUEST_SV_GET_ADDRESS_LIST_CODE:
 				stopAnimation();
-				showServerBusy();
-			}
-			break;
+				if (result != null) {
+					AddressEntity mainEn = (AddressEntity) result;
+					if (mainEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
+						phoneStr = mainEn.getPhone();
+						if (mainEn.getMainLists() != null) {
+							isSuccess = true;
+							lv_show.clear();
+							lv_show.addAll(mainEn.getMainLists());
+						}
+						updateListView();
+					} else if (mainEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
+						showTimeOutDialog(TAG);
+					} else {
+						showServerBusy();
+					}
+				} else {
+					showServerBusy();
+				}
+				break;
+			default:
+				if (result != null) {
+					BaseEntity baseEn = (BaseEntity) result;
+					if (baseEn.getErrCode() == AppConfig.ERROR_CODE_SUCCESS) {
+						switch (requestCode) {
+							case AppConfig.REQUEST_SV_POST_SELECT_ADDRESS_CODE:
+								stopAnimation();
+								updateListView();
+								updateActivityData(9);
+								finish();
+								break;
+							case AppConfig.REQUEST_SV_POST_DELETE_ADDRESS_CODE:
+								getSVDatas();
+								updateActivityData(9);
+								break;
+							case AppConfig.REQUEST_SV_POST_EDIT_USER_INFO_CODE:
+								CommonTools.showToast(getString(R.string.submit_success), 1000);
+								phoneStr = "";
+								getSVDatas();
+								break;
+						}
+					} else if (baseEn.getErrCode() == AppConfig.ERROR_CODE_LOGOUT) {
+						stopAnimation();
+						// 登入超时，交BaseActivity处理
+					} else {
+						stopAnimation();
+						if (StringUtil.isNull(baseEn.getErrInfo())) {
+							showServerBusy();
+						} else {
+							CommonTools.showToast(baseEn.getErrInfo(), 2000);
+						}
+					}
+				} else {
+					stopAnimation();
+					showServerBusy();
+				}
+				break;
 		}
 	}
 

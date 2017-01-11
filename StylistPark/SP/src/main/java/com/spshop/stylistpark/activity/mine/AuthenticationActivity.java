@@ -88,6 +88,13 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 			et_auth_name_id.setBackground(getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
 			et_auth_name_id.setEnabled(false);
 		}
+		phoneStr = UserManager.getInstance().getUserPhone();
+		if (!StringUtil.isNull(phoneStr)) {
+			et_auth_phone.setText(phoneStr);
+			et_auth_phone.setTextColor(getResources().getColor(R.color.debar_text_color));
+			et_auth_phone.setBackground(getResources().getDrawable(R.drawable.shape_frame_white_dfdfdf_4));
+			et_auth_phone.setEnabled(false);
+		}
 		emailStr = UserManager.getInstance().getUserEmail();
 		if (!StringUtil.isNull(emailStr)) {
 			et_auth_email.setText(emailStr);

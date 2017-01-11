@@ -204,7 +204,8 @@
 
                 <RelativeLayout
                     android:id="@+id/fragment_five_rl_coupon"
-                    style="@style/setting_lay_item" >
+                    style="@style/setting_lay_item"
+                    android:visibility="gone" >
 
                     <ImageView
                         style="@style/set_line_horizontal_bg"

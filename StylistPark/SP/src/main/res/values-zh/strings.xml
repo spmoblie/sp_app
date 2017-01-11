@@ -215,10 +215,10 @@
     <string name="order_logistics_name">物流公司：%1$s</string>
     <string name="order_logistics_no">物流單號：%1$s</string>
     <string name="order_goods_lists">商品列表</string>
-    <string name="order_support_pay">支持支付方式</string>
+    <string name="order_support_pay">支付方式</string>
     <string name="order_balance_pay">余額支付</string>
-    <string name="order_use_coupon">使用優惠抵用</string>
-    <string name="order_use_balance">使用余額支付</string>
+    <string name="order_use_coupon">優惠編碼</string>
+    <string name="order_use_balance">可用余額</string>
     <string name="order_invoice_name">開票信息：</string>
     <string name="order_invoice_hint">開票擡頭</string>
     <string name="order_buyer_name">訂單備注：</string>
@@ -391,6 +391,7 @@
 
     <!-- Address -->
     <string name="address_store_pickup">上門自取</string>
+    <string name="address_store_pickup_phone">請輸入本人聯系電話</string>
     <string name="address_free_postage">免郵費</string>
     <string name="address_default">設爲默認地址</string>
     <string name="address_consignee">收貨人</string>

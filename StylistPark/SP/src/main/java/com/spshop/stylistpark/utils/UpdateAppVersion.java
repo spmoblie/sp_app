@@ -130,10 +130,10 @@ public class UpdateAppVersion {
 				} else {
 					isUpdate = compareVersionCode(version);
 				}
-				if (isForce) { //是否强制更新
-					appDialog.forceUpdateVersion(address, description);
-				} else {
-					if (isUpdate) { //检测到新版本
+				if (isUpdate) { //检测到新版本
+					if (isForce) { //是否强制更新
+						appDialog.forceUpdateVersion(address, description);
+					} else {
 						long newTime = System.currentTimeMillis();
 						long oldTime = shared.getLong(AppConfig.KEY_UPDATE_VERSION_LAST_TIME, 0);
 						if (newTime - oldTime > 86400000) { //设置首页检测版本的频率为一天
@@ -144,10 +144,10 @@ public class UpdateAppVersion {
 								appDialog.foundNewVersion(address, description);
 							}
 						}
-					} else {
-						if (!isHomeIndex) {
-							appDialog.showStatus(mContext.getString(R.string.dialog_version_new)); //提示已是最新版本
-						}
+					}
+				} else {
+					if (!isHomeIndex) {
+						appDialog.showStatus(mContext.getString(R.string.dialog_version_new)); //提示已是最新版本
 					}
 				}
 			} else {

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface.OnKeyListener;
 import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +13,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -186,6 +188,56 @@ public class DialogManager {
 			public void onClick(View v) {
 				if (handler != null) { //确定
 					handler.sendEmptyMessage(BaseActivity.DIALOG_CONFIRM_CLICK);
+				}
+				mDialog.dismiss();
+			}
+		});
+		// 显示对话框
+		mDialog.show();
+	}
+
+	/**
+	 * 弹出带输入框的对话框
+	 */
+	public void showEditDialog(String titleStr, int width, int inputType, boolean isVanish, final Handler handler){
+		// 销毁旧对话框
+		dismiss();
+		// 创建新对话框
+		mDialog =  new Dialog(mContext, R.style.MyDialog);
+		mDialog.setCanceledOnTouchOutside(isVanish);
+		mDialog.setContentView(R.layout.dialog_edit);
+		// 设置对话框的坐标及宽高
+		LayoutParams lp = mDialog.getWindow().getAttributes();
+		lp.width = width;
+		mDialog.getWindow().setAttributes(lp);
+		// 初始化对话框中的子控件
+		final TextView title = (TextView) mDialog.findViewById(R.id.dialog_title);
+		if (!StringUtil.isNull(titleStr)) {
+			title.setText(titleStr);
+			title.setVisibility(View.VISIBLE);
+		}
+		final EditText et_password = (EditText) mDialog.findViewById(R.id.dialog_et_password);
+		et_password.setInputType(inputType);
+		final Button left = (Button)mDialog.findViewById(R.id.dialog_button_cancel);
+		left.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (handler != null) { //取消
+					handler.sendEmptyMessage(BaseActivity.DIALOG_CANCEL_CLICK);
+				}
+				mDialog.dismiss();
+			}
+		});
+		final Button right = (Button)mDialog.findViewById(R.id.dialog_button_confirm);
+		right.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String passStr = et_password.getText().toString();
+				if (passStr.isEmpty()) return;
+				if (handler != null) { //确定
+					Message msg = Message.obtain();
+					msg.obj = passStr;
+					handler.sendMessage(msg);
 				}
 				mDialog.dismiss();
 			}

@@ -1193,6 +1193,10 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		dm.showTwoBtnDialog(null, content, positiveBtnStr, negativeBtnStr, width, isCenter, isVanish, handler);
 	}
 
+	protected void showEditDialog(String title, int inputType, boolean isVanish, final Handler handler) {
+		dm.showEditDialog(title, dialogWidth, inputType, isVanish, handler);
+	}
+
 	protected void showListDialog(int contentResId, CharSequence[] items, boolean isCenter, final Handler handler) {
 		showListDialog(contentResId, items, dialogWidth, isCenter, handler);
 	}

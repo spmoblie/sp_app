@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical"
+    android:padding="0dp" >
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/screen_margin_default"
+        android:gravity="center"
+        android:paddingLeft="@dimen/screen_margin_default"
+        android:paddingRight="@dimen/screen_margin_default"
+        android:textColor="@color/conte_text_color"
+        android:textSize="@dimen/text_size_18"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/dialog_et_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/screen_margin_default"
+        android:layout_marginTop="@dimen/screen_margin_default"
+        android:layout_marginRight="@dimen/screen_margin_default"
+        android:gravity="center"
+        android:padding="@dimen/screen_margin_default"
+        android:background="@drawable/shape_frame_bg_app_hollow_4"
+        android:textColor="@color/conte_text_color"
+        android:textSize="@dimen/text_size_16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/dialog_button_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/screen_margin_default"
+            android:background="@drawable/shape_frame_white_999999_2"
+            android:gravity="center"
+            android:padding="@dimen/margin_padding_8"
+            android:text="@string/cancel"
+            android:textColor="@color/conte_text_color"
+            android:textSize="@dimen/text_size_14" />
+
+        <Button
+            android:id="@+id/dialog_button_confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/screen_margin_default"
+            android:background="@drawable/shape_frame_bg_app_buttom_2"
+            android:gravity="center"
+            android:padding="@dimen/margin_padding_8"
+            android:text="@string/confirm"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
+
+</LinearLayout>

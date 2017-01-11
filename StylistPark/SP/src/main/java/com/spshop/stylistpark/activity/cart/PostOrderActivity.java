@@ -33,6 +33,7 @@ import com.spshop.stylistpark.entity.MyNameValuePair;
 import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.entity.ProductListEntity;
 import com.spshop.stylistpark.entity.SelectListEntity;
+import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
 import com.spshop.stylistpark.utils.StringUtil;
@@ -51,11 +52,11 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	private static final int PAY_TYPE_3 = 3; //余额支付
 	public static PostOrderActivity instance = null;
 
-	private TextView tv_name, tv_phone, tv_address, tv_address_hint;
+	private TextView tv_name, tv_phone, tv_address, tv_address_hint, tv_coupon_post;
 	private TextView tv_pay_type, tv_coupon_num, tv_balance_num, tv_goods_total, tv_total_curr, tv_pay_total;
 	private TextView tv_total, tv_fee, tv_charges, tv_coupon, tv_discount, tv_cashback, tv_balance, tv_pay, tv_pay_now;
 	private ImageView iv_go_pay_select, iv_invoice_select, iv_balance_pay;
-	private EditText et_invoice, et_buyer;
+	private EditText et_invoice, et_buyer, et_coupon_code;
 	private LinearLayout ll_main, ll_goods_lists;
 	private RelativeLayout rl_address_main, rl_pay_type, rl_coupon_use, rl_balance_use;
 	private RelativeLayout rl_charges, rl_coupon, rl_discount, rl_cashback, rl_balance;
@@ -65,7 +66,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	private int payTypeCode;
 	private int payType = PAY_TYPE_1;
 	private int selectPayType = PAY_TYPE_1;
-	private String couponId, invoiceStr, buyerStr, balanceStr, balancePay, pricePay, orderAmount;
+	private String couponId, couponNumStr, invoiceStr, buyerStr, balanceStr, balancePay, pricePay, orderAmount;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		tv_address_hint = (TextView) findViewById(R.id.post_order_tv_address_hint);
 		tv_pay_type = (TextView) findViewById(R.id.post_order_tv_pay_type);
 		tv_coupon_num = (TextView) findViewById(R.id.post_order_tv_coupon_num);
+		tv_coupon_post = (TextView) findViewById(R.id.post_order_tv_coupon_post);
 		tv_balance_num = (TextView) findViewById(R.id.post_order_tv_balance_num);
 		tv_goods_total = (TextView) findViewById(R.id.post_order_tv_order_goods_total);
 		tv_total = (TextView) findViewById(R.id.post_order_tv_price_total);
@@ -115,6 +117,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		iv_balance_pay = (ImageView) findViewById(R.id.post_order_iv_balance_pay);
 		et_invoice = (EditText) findViewById(R.id.post_order_et_invoice);
 		et_buyer = (EditText) findViewById(R.id.post_order_et_buyer);
+		et_coupon_code = (EditText) findViewById(R.id.post_order_et_coupon_code);
 		ll_main = (LinearLayout) findViewById(R.id.post_order_ll_main);
 		ll_goods_lists = (LinearLayout) findViewById(R.id.post_order_ll_goods_lists);
 	}
@@ -125,6 +128,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		rl_pay_type.setOnClickListener(this);
 		rl_coupon_use.setOnClickListener(this);
 		iv_balance_pay.setOnClickListener(this);
+		tv_coupon_post.setOnClickListener(this);
 		tv_pay_now.setOnClickListener(this);
 	}
 
@@ -325,6 +329,16 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 		request(AppConfig.REQUEST_SV_POST_USE_BALANCE_CODE);
 	}
 
+	private void postCouponNum() {
+		couponNumStr = et_coupon_code.getText().toString();
+		if (couponNumStr.isEmpty()) {
+			CommonTools.showToast(getString(R.string.coupon_input_error), 1000);
+			return;
+		}
+		startAnimation();
+		request(AppConfig.REQUEST_SV_POST_COUPON_NO_CODE);
+	}
+
 	private void postConfirmOrderData() {
 		invoiceStr = et_invoice.getText().toString();
 		buyerStr = et_buyer.getText().toString();
@@ -368,6 +382,9 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			}
 			isBalance = !isBalance;
 			postUseBalancePay();
+			break;
+		case R.id.post_order_tv_coupon_post:
+			postCouponNum();
 			break;
 		case R.id.post_order_tv_pay_now:
 			if (!addressOk) return;
@@ -471,6 +488,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	private void updateAllData() {
 		if (isUpdate) {
         	isUpdate = false;
+			et_coupon_code.setText("");
         	getSVData();
 		}
 	}
@@ -544,6 +562,11 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			params.add(new MyNameValuePair("payment", String.valueOf(selectPayType)));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE, uri, params, HttpUtil.METHOD_POST);
 
+		case AppConfig.REQUEST_SV_POST_COUPON_NO_CODE:
+			uri = AppConfig.URL_COMMON_FLOW_URL + "?step=validate_bonus";
+			params.add(new MyNameValuePair("bonus_sn", couponNumStr));
+			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_COUPON_NO_CODE, uri, params, HttpUtil.METHOD_POST);
+
 		case AppConfig.REQUEST_SV_POST_USE_BALANCE_CODE:
 			uri = AppConfig.URL_COMMON_FLOW_URL + "?step=change_surplus";
 			params.add(new MyNameValuePair("surplus", balancePay));
@@ -583,6 +606,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case AppConfig.REQUEST_SV_POST_SELECT_PAYMENT_CODE:
+		case AppConfig.REQUEST_SV_POST_COUPON_NO_CODE:
 		case AppConfig.REQUEST_SV_POST_USE_BALANCE_CODE:
 			if (result != null) {
 				BaseEntity baseEn = (BaseEntity) result;
@@ -594,9 +618,15 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 					// 登入超时，交BaseActivity处理
 					stopAnimation();
 				}else {
-					showServerBusy();
+					stopAnimation();
+					if (StringUtil.isNull(baseEn.getErrInfo())) {
+						showServerBusy();
+					}else {
+						CommonTools.showToast(baseEn.getErrInfo(), 2000);
+					}
 				}
 			}else {
+				stopAnimation();
 				showServerBusy();
 			}
 			break;

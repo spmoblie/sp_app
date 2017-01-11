@@ -100,13 +100,15 @@
                 android:layout_marginTop="@dimen/margin_padding_10" >
 
                 <TextView
+                    android:id="@+id/post_order_tv_pay_type_title"
                     style="@style/address_order_text"
                     android:text="@string/order_support_pay" />
                 
                 <TextView
                     android:id="@+id/post_order_tv_pay_type"
                     style="@style/address_order_text"
-                    android:layout_toLeftOf="@+id/post_order_iv_go_pay_select"
+                    android:layout_marginLeft="@dimen/margin_padding_10"
+                    android:layout_toRightOf="@+id/post_order_tv_pay_type_title"
                     android:text="@string/pay_title" />
                 
                 <ImageView 
@@ -124,7 +126,8 @@
             <RelativeLayout
                 android:id="@+id/post_order_rl_coupon_use"
                 style="@style/common_vertical_item_layout"
-                android:layout_marginTop="@dimen/margin_padding_10" >
+                android:layout_marginTop="@dimen/margin_padding_10"
+                android:visibility="gone" >
 
                 <TextView
                     style="@style/address_order_text"
@@ -146,6 +149,33 @@
                     android:src="@drawable/common_go_right"
                     android:contentDescription="@string/desc" />
             </RelativeLayout>
+
+            <LinearLayout
+                style="@style/common_vertical_item_layout"
+                android:layout_marginTop="@dimen/margin_padding_10"
+                android:orientation="horizontal" >
+
+                <TextView
+                    style="@style/Order_TextView_Title"
+                    android:text="@string/order_use_coupon" />
+
+                <EditText
+                    android:id="@+id/post_order_et_coupon_code"
+                    style="@style/Address_EditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="0dp"
+                    android:hint="@string/coupon_input_error"
+                    android:textSize="@dimen/text_size_12"
+                    android:textColor="@color/conte_text_color" />
+
+                <TextView
+                    android:id="@+id/post_order_tv_coupon_post"
+                    style="@style/common_text_bg_frame"
+                    android:layout_marginRight="@dimen/margin_padding_3"
+                    android:text="@string/confirm" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/post_order_rl_balance_use"

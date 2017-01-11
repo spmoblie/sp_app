@@ -675,6 +675,7 @@ public class JsonParser {
 		JSONObject jsonObject = new JSONObject(jsonStr);
 		AddressEntity mainEn = new AddressEntity();
 		getCommonKeyValue(mainEn, jsonObject);
+		mainEn.setPhone(jsonObject.getString("mobile"));
 
 		if (StringUtil.notNull(jsonObject, keyStr)) {
 			JSONArray data = jsonObject.getJSONArray(keyStr);

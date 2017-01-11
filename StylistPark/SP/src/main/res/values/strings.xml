@@ -215,10 +215,10 @@
     <string name="order_logistics_name">Company：%1$s</string>
     <string name="order_logistics_no">Logistic No：%1$s</string>
     <string name="order_goods_lists">Goods lists</string>
-    <string name="order_support_pay">Support pay type</string>
+    <string name="order_support_pay">Pay Type</string>
     <string name="order_balance_pay">Balance pay</string>
-    <string name="order_use_coupon">Use coupon arrived with</string>
-    <string name="order_use_balance">Use balance to pay</string>
+    <string name="order_use_coupon">Coupon Code</string>
+    <string name="order_use_balance">Usable Balance</string>
     <string name="order_invoice_name">Invoice:</string>
     <string name="order_invoice_hint">Invoice Head</string>
     <string name="order_buyer_name">Remark:</string>
@@ -391,6 +391,7 @@
 
     <!-- Address -->
     <string name="address_store_pickup">Store pickup</string>
+    <string name="address_store_pickup_phone">Please enter your mobile</string>
     <string name="address_free_postage">Free postage</string>
     <string name="address_default">Default address</string>
     <string name="address_consignee">Consignee</string>

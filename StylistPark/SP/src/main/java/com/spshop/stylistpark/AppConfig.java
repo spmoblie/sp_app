@@ -10,7 +10,7 @@ public class AppConfig {
 	 */
 
 	// 是否正式发布
-	public static final boolean IS_PUBLISH = false;
+	public static final boolean IS_PUBLISH = true;
 	// 网络传输协议http
 	public final static String APP_HTTP = "http://";
 	// 网络传输协议https
