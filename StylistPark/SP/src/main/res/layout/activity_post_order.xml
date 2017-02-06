@@ -43,7 +43,7 @@
                     android:layout_toLeftOf="@+id/post_order_iv_go_address"
                     android:layout_marginTop="@dimen/margin_padding_10"
                     android:layout_marginRight="@dimen/margin_padding_5" />
-                
+
                 <TextView
                     android:id="@+id/post_order_tv_address_hint"
                     style="@style/address_order_text"
@@ -51,8 +51,8 @@
                     android:padding="@dimen/margin_padding_15"
                     android:text="@string/address_error_no_select"
                     android:visibility="gone" />
-                
-                <ImageView 
+
+                <ImageView
                     android:id="@+id/post_order_iv_go_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
             <RelativeLayout
                 style="@style/common_vertical_item_layout"
                 android:layout_marginTop="@dimen/margin_padding_10" >
-                
+
                 <TextView
                     style="@style/Order_TextView_Title"
                     android:text="@string/order_goods_lists" />
@@ -93,36 +93,33 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
             </LinearLayout>
-            
+
             <RelativeLayout
-                android:id="@+id/post_order_rl_pay_type"
+                android:id="@+id/post_order_rl_delivery_type"
                 style="@style/common_vertical_item_layout"
                 android:layout_marginTop="@dimen/margin_padding_10" >
 
                 <TextView
-                    android:id="@+id/post_order_tv_pay_type_title"
                     style="@style/address_order_text"
                     android:text="@string/order_support_pay" />
-                
+
                 <TextView
-                    android:id="@+id/post_order_tv_pay_type"
+                    android:id="@+id/post_order_tv_shipping_name"
                     style="@style/address_order_text"
-                    android:layout_marginLeft="@dimen/margin_padding_10"
-                    android:layout_toRightOf="@+id/post_order_tv_pay_type_title"
-                    android:text="@string/pay_title" />
-                
-                <ImageView 
-                    android:id="@+id/post_order_iv_go_pay_select"
+                    android:layout_toLeftOf="@+id/post_order_iv_delivery_type_go"
+                    android:text="@string/order_domestic_express" />
+
+                <ImageView
+                    android:id="@+id/post_order_iv_delivery_type_go"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_padding_10"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/common_go_right"
-                    android:contentDescription="@string/desc"
-                    android:visibility="invisible" />
+                    android:contentDescription="@string/desc" />
             </RelativeLayout>
-            
+
             <RelativeLayout
                 android:id="@+id/post_order_rl_coupon_use"
                 style="@style/common_vertical_item_layout"
@@ -132,14 +129,14 @@
                 <TextView
                     style="@style/address_order_text"
                     android:text="@string/order_use_coupon" />
-                
+
                 <TextView
                     android:id="@+id/post_order_tv_coupon_num"
                     style="@style/address_order_text"
                     android:layout_toLeftOf="@+id/post_order_iv_go_coupon"
                     android:textColor="@color/tv_color_status" />
-                
-                <ImageView 
+
+                <ImageView
                     android:id="@+id/post_order_iv_go_coupon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -208,18 +205,18 @@
                     android:src="@drawable/selector_btn_push_control" />
             </RelativeLayout>
 
-            <LinearLayout 
+            <LinearLayout
                 style="@style/common_vertical_item_layout"
                 android:layout_marginTop="@dimen/margin_padding_10"
                 android:orientation="horizontal"
                 android:visibility="gone" >
-                
-                <TextView 
+
+                <TextView
                     android:id="@+id/post_order_tv_invoice"
                     style="@style/Order_TextView_Title"
                     android:text="@string/order_invoice_name" />
-                
-                <EditText 
+
+                <EditText
                     android:id="@+id/post_order_et_invoice"
                     style="@style/Address_EditText"
                     android:layout_width="0dp"
@@ -232,27 +229,27 @@
                     android:hint="@string/order_invoice_hint"
                     android:textSize="@dimen/text_size_12"
                     android:textColor="@color/conte_text_color" />
-                
-                <ImageView 
+
+                <ImageView
                     android:id="@+id/post_order_iv_invoice_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_img_select_hook"
                     android:contentDescription="@string/desc" />
             </LinearLayout>
-            
-            <LinearLayout 
+
+            <LinearLayout
                 style="@style/common_vertical_item_layout"
                 android:layout_marginTop="@dimen/margin_padding_10"
                 android:orientation="horizontal"
                 android:visibility="gone" >
-                
-                <TextView 
+
+                <TextView
                     android:id="@+id/post_order_tv_buyer"
                     style="@style/Order_TextView_Title"
                     android:text="@string/order_buyer_name" />
-                
-                <EditText 
+
+                <EditText
                     android:id="@+id/post_order_et_buyer"
                     style="@style/Address_EditText"
                     android:paddingTop="0dp"
@@ -261,74 +258,74 @@
                     android:textSize="@dimen/text_size_12"
                     android:textColor="@color/conte_text_color" />
             </LinearLayout>
-            
-            <LinearLayout 
+
+            <LinearLayout
                 style="@style/common_vertical_item_layout"
                 android:layout_marginTop="@dimen/margin_padding_10"
                 android:orientation="vertical" >
-                
-                <RelativeLayout 
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_total_name"
                         style="@style/Order_TextView_Title"
                         android:text="@string/order_total_name" />
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_total"
                         style="@style/Order_TextView_Title"
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
-                
+
                 <RelativeLayout
                     android:id="@+id/post_order_rl_price_fee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_padding_10" >
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_fee_name"
                         style="@style/Order_TextView_Title"
                         android:text="@string/order_fee_name" />
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_fee"
                         style="@style/Order_TextView_Title"
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
-                
-                <RelativeLayout 
+
+                <RelativeLayout
                     android:id="@+id/post_order_rl_price_charges"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_padding_10"
                     android:visibility="gone" >
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_charges_name"
                         style="@style/Order_TextView_Title"
                         android:text="@string/order_charges_name" />
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_charges"
                         style="@style/Order_TextView_Title"
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
-                
+
                 <RelativeLayout
                     android:id="@+id/post_order_rl_price_coupon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_padding_10" >
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_coupon_name"
                         style="@style/Order_TextView_Title"
                         android:text="@string/order_coupon_name" />
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_coupon"
                         style="@style/Order_TextView_Title"
                         android:layout_alignParentRight="true" />
@@ -339,13 +336,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_padding_10" >
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_discount_name"
                         style="@style/Order_TextView_Title"
                         android:text="@string/order_discount_name" />
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_discount"
                         style="@style/Order_TextView_Title"
                         android:layout_alignParentRight="true" />
@@ -367,19 +364,19 @@
                         style="@style/Order_TextView_Title"
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
-                
+
                 <RelativeLayout
                     android:id="@+id/post_order_rl_price_balance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_padding_10" >
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_balance_pay_name"
                         style="@style/Order_TextView_Title"
                         android:text="@string/order_balance_name" />
-                    
-                    <TextView 
+
+                    <TextView
                         android:id="@+id/post_order_tv_price_balance"
                         style="@style/Order_TextView_Title"
                         android:layout_alignParentRight="true" />
@@ -403,7 +400,7 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    
+
     <ImageView
             style="@style/set_line_horizontal_bg"
             android:contentDescription="@string/desc" />
@@ -440,7 +437,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView 
+        <TextView
             android:id="@+id/post_order_tv_pay_now"
             style="@style/common_text_bg_frame"
             android:layout_alignParentRight="true"

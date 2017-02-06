@@ -14,6 +14,7 @@ import com.spshop.stylistpark.adapter.AddressListAdapter;
 import com.spshop.stylistpark.entity.AddressEntity;
 import com.spshop.stylistpark.entity.BaseEntity;
 import com.spshop.stylistpark.entity.MyNameValuePair;
+import com.spshop.stylistpark.entity.OrderEntity;
 import com.spshop.stylistpark.utils.CommonTools;
 import com.spshop.stylistpark.utils.HttpUtil;
 import com.spshop.stylistpark.utils.LogUtil;
@@ -34,6 +35,7 @@ public class StorePickupActivity extends BaseActivity {
 	private AdapterCallback ap_callback;
 	private AddressListAdapter lv_adapter;
 
+	private OrderEntity orderEn;
 	private AddressEntity data;
 	private List<AddressEntity> lv_show = new ArrayList<AddressEntity>();
 	private boolean isLogined, isUpdate, isSuccess;
@@ -44,7 +46,10 @@ public class StorePickupActivity extends BaseActivity {
 		setContentView(R.layout.activity_my_address);
 
 		instance = this;
-
+		orderEn = (OrderEntity) getIntent().getExtras().get("data");
+		if (orderEn != null && orderEn.getAddLists() != null) {
+			lv_show.addAll(orderEn.getAddLists());
+		}
 		findViewById();
 		initView();
 	}
@@ -55,7 +60,7 @@ public class StorePickupActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		setTitle(R.string.address_store_pickup);
+		setTitle(R.string.order_support_pay);
 		setAdapter();
 	}
 	
@@ -97,7 +102,7 @@ public class StorePickupActivity extends BaseActivity {
 		LogUtil.i(TAG, "onResume");
 		// 页面开始
 		AppApplication.onPageStart(this, TAG);
-		checkLogin();
+		//checkLogin();
 		super.onResume();
 	}
 
@@ -149,8 +154,12 @@ public class StorePickupActivity extends BaseActivity {
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_GET_PICKUP_LIST_CODE, uri, params, HttpUtil.METHOD_GET);
 
 		case AppConfig.REQUEST_SV_POST_SELECT_ADDRESS_CODE:
-			uri = AppConfig.URL_COMMON_USER_URL + "?act=is_address";
-			params.add(new MyNameValuePair("id", String.valueOf(data.getAddressId())));
+			// 提交默认地址
+			//uri = AppConfig.URL_COMMON_USER_URL + "?act=is_address";
+			//params.add(new MyNameValuePair("id", String.valueOf(data.getAddressId())));
+			 // 提交配送方式
+			uri = AppConfig.URL_COMMON_FLOW_URL + "?step=select_shipping";
+			params.add(new MyNameValuePair("shipping_id", String.valueOf(data.getAddressId())));
 			return sc.loadServerDatas(TAG, AppConfig.REQUEST_SV_POST_SELECT_ADDRESS_CODE, uri, params, HttpUtil.METHOD_POST);
 		}
 		return null;

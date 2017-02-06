@@ -159,10 +159,15 @@ public class OrderEntity extends BaseEntity {
 	private String payType;
 	
 	/**
-	 * 支付方式编码
+	 * 配送方式编码
 	 */
-	private int payTypeCode;
-	
+	private int shippingCode;
+
+	/**
+	 * 配送方式名称
+	 */
+	private String shippingName;
+
 	/**
 	 * 发票信息名称
 	 */
@@ -227,6 +232,11 @@ public class OrderEntity extends BaseEntity {
 	 * 商品集合
 	 */
 	private ArrayList<ProductListEntity> goodsLists;
+
+	/**
+	 * 配送列表
+	 */
+	private ArrayList<AddressEntity> addLists;
 
 	/**
 	 * 传输数据集
@@ -546,16 +556,21 @@ public class OrderEntity extends BaseEntity {
 		this.payType = payType;
 	}
 
-
-	public int getPayTypeCode() {
-		return payTypeCode;
+	public int getShippingCode() {
+		return shippingCode;
 	}
 
-
-	public void setPayTypeCode(int payTypeCode) {
-		this.payTypeCode = payTypeCode;
+	public void setShippingCode(int shippingCode) {
+		this.shippingCode = shippingCode;
 	}
 
+	public String getShippingName() {
+		return shippingName;
+	}
+
+	public void setShippingName(String shippingName) {
+		this.shippingName = shippingName;
+	}
 
 	public String getInvoiceName() {
 		return invoiceName;
@@ -684,6 +699,13 @@ public class OrderEntity extends BaseEntity {
 		this.goodsLists = goodsLists;
 	}
 
+	public ArrayList<AddressEntity> getAddLists() {
+		return addLists;
+	}
+
+	public void setAddLists(ArrayList<AddressEntity> addLists) {
+		this.addLists = addLists;
+	}
 
 	public List<OrderEntity> getMainLists() {
 		return mainLists;

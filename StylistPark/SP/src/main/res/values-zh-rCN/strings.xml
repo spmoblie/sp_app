@@ -215,7 +215,8 @@
     <string name="order_logistics_name">物流公司：%1$s</string>
     <string name="order_logistics_no">物流单号：%1$s</string>
     <string name="order_goods_lists">商品列表</string>
-    <string name="order_support_pay">支付方式</string>
+    <string name="order_support_pay">配送方式</string>
+    <string name="order_domestic_express">國內快遞</string>
     <string name="order_balance_pay">余额支付</string>
     <string name="order_use_coupon">优惠编码</string>
     <string name="order_use_balance">可用余额</string>

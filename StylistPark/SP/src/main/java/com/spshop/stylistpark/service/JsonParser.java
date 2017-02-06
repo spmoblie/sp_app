@@ -633,10 +633,26 @@ public class JsonParser {
 			mainEn.setAddressEn(addressEn);
 		}
 
+		if (StringUtil.notNull(jsonObject, "shipping_list")) {
+			JSONArray data = jsonObject.getJSONArray("shipping_list");
+			AddressEntity addrEn;
+			ArrayList<AddressEntity> mainLists = new ArrayList<AddressEntity>();
+			for (int i = 0; i < data.length(); i++) {
+				JSONObject item = data.getJSONObject(i);
+				addrEn = new AddressEntity();
+				addrEn.setAddressId(StringUtil.getInteger(item.getString("shipping_id")));
+				addrEn.setName(item.getString("shipping_name"));
+				addrEn.setAddress(item.getString("shipping_desc"));
+				mainLists.add(addrEn);
+			}
+			mainEn.setAddLists(mainLists);
+		}
+
 		if (StringUtil.notNull(jsonObject, "total")) {
 			JSONObject data = jsonObject.getJSONObject("total");
 			mainEn.setPayId(StringUtil.getInteger(data.getString("pay_id")));
-			mainEn.setPayTypeCode(StringUtil.getInteger(data.getString("shipping_id")));
+			mainEn.setShippingCode(StringUtil.getInteger(data.getString("shipping_id")));
+			mainEn.setShippingName(data.getString("shipping_name"));
 			mainEn.setGoodsTotal(StringUtil.getInteger(data.getString("real_goods_count")));
 			mainEn.setPriceTotal(data.getString("goods_price"));
 			mainEn.setPriceFee(data.getString("shipping_fee"));
@@ -758,8 +774,8 @@ public class JsonParser {
 			mainEn.setUserRankCode(StringUtil.getInteger(data.getString("rank_code")));
 			mainEn.setUserRankName(data.getString("user_rank"));
 			mainEn.setUserRankTime(data.getString("rank_time"));
-			mainEn.setRankType1(data.getString("label_member"));
-			mainEn.setRankType2(data.getString("member_affiliate"));
+			//mainEn.setRankType1(data.getString("label_member"));
+			//mainEn.setRankType2(data.getString("member_affiliate"));
 			mainEn.setOrder_1(StringUtil.getInteger(data.getString("order_1")));
 			mainEn.setOrder_2(StringUtil.getInteger(data.getString("order_2")));
 			mainEn.setOrder_3(StringUtil.getInteger(data.getString("order_3")));

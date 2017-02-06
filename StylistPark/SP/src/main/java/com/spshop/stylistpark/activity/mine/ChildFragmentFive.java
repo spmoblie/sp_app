@@ -121,6 +121,8 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	}
 
 	private void initView() {
+		rankType1 = getString(R.string.mine_my_member, getString(R.string.mine_member));
+		rankType2 = getString(R.string.mine_member_order, getString(R.string.mine_member));
 		setMemberType(rankType1, rankType2);
 		iv_setting.setOnClickListener(this);
 		iv_avatar.setOnClickListener(this);
@@ -148,13 +150,13 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 			order_2 = infoEn.getOrder_2();
 			order_3 = infoEn.getOrder_3();
 			order_4 = infoEn.getOrder_4();
-			rankType1 = infoEn.getRankType1();
-			rankType2 = infoEn.getRankType2();
+			//rankType1 = infoEn.getRankType1();
+			//rankType2 = infoEn.getRankType2();
 			BaseActivity.updateCartTotal(infoEn.getCartTotal());
 		}else {
 			order_1 = order_2 = order_3 = order_4 = 0;
-			rankType1 = getString(R.string.mine_my_member, getString(R.string.mine_member));
-			rankType2 = getString(R.string.mine_member_order, getString(R.string.mine_member));
+			//rankType1 = getString(R.string.mine_my_member, getString(R.string.mine_member));
+			//rankType2 = getString(R.string.mine_member_order, getString(R.string.mine_member));
 		}
 		if (order_1 > 0) { //待付款
 			if (order_1 > 99) {
@@ -192,7 +194,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 		}else {
 			tv_return_num.setVisibility(View.GONE);
 		}
-		setMemberType(rankType1, rankType2);
+		//setMemberType(rankType1, rankType2);
 		updateUserMoney();
 		if (isUpdateAvatar) {
 			if (StringUtil.isNull(userAvatar)) {
@@ -206,10 +208,10 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 
 	private void setMemberType(String type1, String type2) {
 		if (StringUtil.isNull(type1)) {
-			type1 = getString(R.string.mine_my_member, getString(R.string.mine_member));
+			type1 = getString(R.string.mine_my_member, getString(R.string.mine_customer));
 		}
 		if (StringUtil.isNull(type2)) {
-			type2 = getString(R.string.mine_member_order, getString(R.string.mine_member));
+			type2 = getString(R.string.mine_member_order, getString(R.string.mine_customer));
 		}
 		tv_my_member.setText(type1);
 		tv_member_order.setText(type2);
