@@ -42,20 +42,20 @@
             android:textSize="@dimen/text_size_12" />
 
         <TextView
-            android:id="@+id/item_list_order_member_tv_total_user"
-            style="@style/setting_lay_text_title"
-            android:layout_centerVertical="false"
-            android:layout_alignParentRight="true"
-            android:textSize="@dimen/text_size_12"
-            android:textColor="@color/tv_color_status" />
-
-        <TextView
             android:id="@+id/item_list_order_member_tv_order_status"
             style="@style/setting_lay_text_title"
             android:layout_centerVertical="false"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/item_list_order_member_tv_total_user"
             android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:id="@+id/item_list_order_member_tv_total_user"
+            style="@style/setting_lay_text_title"
+            android:layout_centerVertical="false"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/item_list_order_member_tv_order_status"
+            android:textSize="@dimen/text_size_12"
+            android:textColor="@color/tv_color_status" />
     </RelativeLayout>
 
     <ImageView

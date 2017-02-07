@@ -260,10 +260,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 				tv_call.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent(mContext, OnlineServiceActivity.class);
-						intent.putExtra("title", getString(R.string.mine_call));
-						intent.putExtra("lodUrl", AppConfig.API_CUSTOMER_SERVICE);
-						startActivity(intent);
+						openOnlineServiceActivity();
 					}
 				});
 				tv_collection = (TextView) findViewById(R.id.bottom_bar_base_tv_collection);
@@ -576,6 +573,16 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 		headGONE = null;
 		headVISIBLE = null;
 		super.onDestroy();
+	}
+
+	/**
+	 * 联系客服
+	 */
+	protected void openOnlineServiceActivity(){
+		Intent intent = new Intent(mContext, OnlineServiceActivity.class);
+		intent.putExtra("title", getString(R.string.mine_call));
+		intent.putExtra("lodUrl", AppConfig.API_CUSTOMER_SERVICE);
+		startActivity(intent);
 	}
 
 	protected void openLoginActivity(){

@@ -34,23 +34,23 @@
                     android:orientation="horizontal" >
 
                     <RelativeLayout
-                        android:id="@+id/fragment_five_rl_my_member"
+                        android:id="@+id/fragment_five_rl_head_left"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/ui_bg_color_percent_08" >
 
                         <TextView
-                            android:id="@+id/fragment_five_tv_my_member"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
+                            android:text="@string/mine_collection"
                             android:textColor="@color/text_color_white"
                             android:textSize="@dimen/text_size_14" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/fragment_five_rl_member_order"
+                        android:id="@+id/fragment_five_rl_head_right"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/margin_padding_1"
@@ -58,10 +58,10 @@
                         android:background="@color/ui_bg_color_percent_08" >
 
                         <TextView
-                            android:id="@+id/fragment_five_tv_member_order"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
+                            android:text="@string/mine_history"
                             android:textColor="@color/text_color_white"
                             android:textSize="@dimen/text_size_14" />
                     </RelativeLayout>
@@ -106,65 +106,61 @@
                     android:orientation="horizontal" >
 
                     <FrameLayout
-                        android:id="@+id/fragment_five_fl_wait_pay"
+                        android:id="@+id/fragment_five_fl_order_1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" >
 
                         <TextView
-                            android:id="@+id/fragment_five_tv_wait_pay"
                             style="@style/Order_Type_TextView"
                             android:drawableTop="@drawable/profile_icon_order_pay"
                             android:text="@string/mine_wait_pay" />
 
                         <TextView
-                            android:id="@+id/fragment_five_tv_wait_pay_num"
+                            android:id="@+id/fragment_five_tv_order_num_1"
                             style="@style/commom_warn_red_number_text" />
                     </FrameLayout>
 
                     <FrameLayout
-                        android:id="@+id/fragment_five_fl_wait_delivery"
+                        android:id="@+id/fragment_five_fl_order_2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" >
 
                         <TextView
-                            android:id="@+id/fragment_five_tv_wait_delivery"
                             style="@style/Order_Type_TextView"
                             android:drawableTop="@drawable/profile_icon_order_delivery"
                             android:text="@string/mine_wait_delivery" />
 
                         <TextView
-                            android:id="@+id/fragment_five_tv_wait_delivery_num"
+                            android:id="@+id/fragment_five_tv_order_num_2"
                             style="@style/commom_warn_red_number_text" />
                     </FrameLayout>
 
                     <FrameLayout
-                        android:id="@+id/fragment_five_fl_wait_receive"
+                        android:id="@+id/fragment_five_fl_order_3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" >
 
                         <TextView
-                            android:id="@+id/fragment_five_tv_wait_receive"
                             style="@style/Order_Type_TextView"
                             android:drawableTop="@drawable/profile_icon_order_receive"
                             android:text="@string/mine_wait_receive" />
 
                         <TextView
-                            android:id="@+id/fragment_five_tv_wait_receive_num"
+                            android:id="@+id/fragment_five_tv_order_num_3"
                             style="@style/commom_warn_red_number_text" />
                     </FrameLayout>
 
                     <FrameLayout
-                        android:id="@+id/fragment_five_fl_wait_return"
+                        android:id="@+id/fragment_five_fl_order_4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingRight="@dimen/margin_padding_10" >
 
                         <TextView
-                            android:id="@+id/fragment_five_tv_wait_return"
                             style="@style/Order_Type_TextView"
                             android:drawableTop="@drawable/profile_icon_order_return"
                             android:ellipsize="end"
@@ -172,7 +168,7 @@
                             android:text="@string/mine_repair_return" />
 
                         <TextView
-                            android:id="@+id/fragment_five_tv_wait_return_num"
+                            android:id="@+id/fragment_five_tv_order_num_4"
                             style="@style/commom_warn_red_number_text" />
                     </FrameLayout>
                 </LinearLayout>
@@ -182,7 +178,7 @@
                     android:contentDescription="@string/desc" />
 
                 <RelativeLayout
-                    android:id="@+id/fragment_five_rl_wallet"
+                    android:id="@+id/fragment_five_rl_item_1"
                     style="@style/setting_lay_item"
                     android:layout_marginTop="@dimen/margin_padding_10" >
 
@@ -196,14 +192,14 @@
                         android:text="@string/mine_account_money" />
 
                     <TextView
-                        android:id="@+id/fragment_five_tv_money"
+                        android:id="@+id/fragment_five_tv_item_right_1"
                         style="@style/setting_lay_text_content"
                         android:text="@string/price_00"
                         android:textColor="@color/price_text_color" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/fragment_five_rl_coupon"
+                    android:id="@+id/fragment_five_rl_item_2"
                     style="@style/setting_lay_item"
                     android:visibility="gone" >
 
@@ -217,12 +213,48 @@
                         android:text="@string/mine_coupon" />
 
                     <TextView
-                        android:id="@+id/fragment_five_tv_coupon"
+                        android:id="@+id/fragment_five_tv_item_right_2"
                         style="@style/setting_lay_text_content" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/fragment_five_rl_address"
+                    android:id="@+id/fragment_five_rl_item_3"
+                    style="@style/setting_lay_item" >
+
+                    <ImageView
+                        style="@style/set_line_horizontal_bg"
+                        android:contentDescription="@string/desc" />
+
+                    <TextView
+                        android:id="@+id/fragment_five_tv_item_left_3"
+                        style="@style/setting_lay_text_title"
+                        android:drawableLeft="@drawable/profile_icon_member" />
+
+                    <TextView
+                        android:id="@+id/fragment_five_tv_item_right_3"
+                        style="@style/setting_lay_text_content" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_five_rl_item_4"
+                    style="@style/setting_lay_item" >
+
+                    <ImageView
+                        style="@style/set_line_horizontal_bg"
+                        android:contentDescription="@string/desc" />
+
+                    <TextView
+                        android:id="@+id/fragment_five_tv_item_left_4"
+                        style="@style/setting_lay_text_title"
+                        android:drawableLeft="@drawable/profile_icon_order_member" />
+
+                    <TextView
+                        android:id="@+id/fragment_five_tv_item_right_4"
+                        style="@style/setting_lay_text_content" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_five_rl_item_5"
                     style="@style/setting_lay_item" >
 
                     <ImageView
@@ -240,43 +272,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/fragment_five_rl_collection"
-                    style="@style/setting_lay_item" >
-
-                    <ImageView
-                        style="@style/set_line_horizontal_bg"
-                        android:contentDescription="@string/desc" />
-
-                    <TextView
-                        style="@style/setting_lay_text_title"
-                        android:drawableLeft="@drawable/profile_icon_collection"
-                        android:text="@string/mine_collection" />
-
-                    <TextView
-                        android:id="@+id/fragment_five_tv_collection"
-                        style="@style/setting_lay_text_content" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/fragment_five_rl_history"
-                    style="@style/setting_lay_item" >
-
-                    <ImageView
-                        style="@style/set_line_horizontal_bg"
-                        android:contentDescription="@string/desc" />
-
-                    <TextView
-                        style="@style/setting_lay_text_title"
-                        android:drawableLeft="@drawable/profile_icon_history"
-                        android:text="@string/mine_history" />
-
-                    <TextView
-                        android:id="@+id/fragment_five_tv_history"
-                        style="@style/setting_lay_text_content" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/fragment_five_rl_call"
+                    android:id="@+id/fragment_five_rl_item_6"
                     style="@style/setting_lay_item" >
 
                     <ImageView
@@ -289,7 +285,6 @@
                         android:text="@string/mine_call" />
 
                     <TextView
-                        android:id="@+id/fragment_five_tv_call"
                         style="@style/setting_lay_text_content" />
 
                     <ImageView

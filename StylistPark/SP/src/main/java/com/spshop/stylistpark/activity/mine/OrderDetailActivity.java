@@ -47,8 +47,8 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	private TextView tv_total_name, tv_total, tv_fee_name, tv_fee;
 	private TextView tv_coupon_name, tv_coupon, tv_discount_name, tv_discount;
 	private TextView tv_cashback_name, tv_cashback, tv_balance_name, tv_balance;
-	private TextView tv_pay_name, tv_pay, tv_pay_now, tv_order_cacel;
-	private RelativeLayout rl_pay_type, rl_coupon, rl_discount, rl_cashback, rl_balance;
+	private TextView tv_pay_name, tv_pay, tv_call, tv_pay_now, tv_order_cacel;
+	private RelativeLayout rl_pay_type, rl_fee, rl_coupon, rl_discount, rl_cashback, rl_balance;
 	private LinearLayout ll_logistics, ll_goods_lists, ll_order_edit;
 	
 	private OrderEntity orderEn;
@@ -99,9 +99,11 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		tv_balance = (TextView) findViewById(R.id.order_detail_tv_price_balance);
 		tv_pay_name = (TextView) findViewById(R.id.order_detail_tv_price_pay_name);
 		tv_pay = (TextView) findViewById(R.id.order_detail_tv_price_pay);
+		tv_call = (TextView) findViewById(R.id.order_detail_tv_call);
 		tv_pay_now = (TextView) findViewById(R.id.order_detail_tv_pay_now);
 		tv_order_cacel = (TextView) findViewById(R.id.order_detail_tv_cacel_order);
 		rl_pay_type = (RelativeLayout) findViewById(R.id.order_detail_rl_pay_type);
+		rl_fee = (RelativeLayout) findViewById(R.id.order_detail_rl_price_fee);
 		rl_coupon = (RelativeLayout) findViewById(R.id.order_detail_rl_price_coupon);
 		rl_discount = (RelativeLayout) findViewById(R.id.order_detail_rl_price_discount);
 		rl_cashback = (RelativeLayout) findViewById(R.id.order_detail_rl_price_cashback);
@@ -113,6 +115,7 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 
 	private void initView() {
 		setTitle(R.string.title_order_detail);
+		tv_call.setOnClickListener(this);
 		tv_pay_now.setOnClickListener(this);
 		tv_order_cacel.setOnClickListener(this);
 	}
@@ -121,8 +124,8 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 		if (orderEn != null) {
 			String signStr = getString(R.string.sign_semicolon);
 			tv_order_no.setText(getString(R.string.order_order_no, orderEn.getOrderNo()));
-			//String addTime = TimeUtil.getFormatedDateTime("yyyy-MM-dd HH:mm:ss", orderEn.getCreateTime());
-			tv_order_date.setText(getString(R.string.order_order_date, orderEn.getAddTime()));
+			String addTime = TimeUtil.getFormatedDateTime("yyyy-MM-dd HH:mm", orderEn.getCreateTime());
+			tv_order_date.setText(getString(R.string.order_order_date, addTime));
 			tv_order_status.setText(orderEn.getStatusName());
 			tv_logistics_name.setText(getString(R.string.order_logistics_name, orderEn.getLogisticsName()));
 			tv_logistics_no.setText(getString(R.string.order_logistics_no, orderEn.getLogisticsNo()));
@@ -133,8 +136,14 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 			tv_pay_type.setText(getString(R.string.order_pay_type, orderEn.getPayType()));
 			tv_total_name.setText(orderEn.getPriceTotalName() + signStr);
 			tv_total.setText(currStr + orderEn.getPriceTotal());
-			tv_fee_name.setText(orderEn.getPriceFeeName() + signStr);
-			tv_fee.setText("+ " + currStr + orderEn.getPriceFee());
+			// 邮费
+			if (StringUtil.priceIsNull(orderEn.getPriceFee())) {
+				rl_fee.setVisibility(View.GONE);
+			} else {
+				rl_fee.setVisibility(View.VISIBLE);
+				tv_fee_name.setText(orderEn.getPriceFeeName() + signStr);
+				tv_fee.setText("+ " + currStr + orderEn.getPriceFee());
+			}
 			// 优惠抵用
 			if (StringUtil.priceIsNull(orderEn.getPriceCoupon())) {
 				rl_coupon.setVisibility(View.GONE);
@@ -285,6 +294,9 @@ public class OrderDetailActivity extends BaseActivity implements OnClickListener
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.order_detail_tv_call:
+			openOnlineServiceActivity();
+			break;
 		case R.id.order_detail_tv_pay_now:
 			if (orderEn != null) {
 				switch (orderEn.getStatus()) {

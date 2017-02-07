@@ -39,7 +39,7 @@
             <RelativeLayout
                 android:id="@+id/setting_rl_currency"
                 style="@style/setting_lay_item"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/setting_tv_currency_title"

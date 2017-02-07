@@ -197,6 +197,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/order_detail_rl_price_fee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_padding_10">
@@ -306,6 +307,12 @@
         android:gravity="center_vertical|right"
         android:orientation="horizontal"
         android:visibility="gone">
+
+        <TextView
+            android:id="@+id/order_detail_tv_call"
+            style="@style/common_text_bg_frame"
+            android:text="@string/mine_call"
+            android:textSize="@dimen/text_size_14" />
 
         <TextView
             android:id="@+id/order_detail_tv_pay_now"

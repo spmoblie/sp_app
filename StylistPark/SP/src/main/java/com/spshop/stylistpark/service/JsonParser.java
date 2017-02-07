@@ -783,8 +783,8 @@ public class JsonParser {
 			mainEn.setCartTotal(StringUtil.getInteger(data.getString("cart")));
 			mainEn.setMoney(data.getString("money"));
 			//mainEn.setCoupon(data.getString("bonus"));
-			//mainEn.setMemberNum(data.getString("member"));
-			//mainEn.setMemberOrder(data.getString("share"));
+			mainEn.setMemberNum(data.getString("member"));
+			mainEn.setMemberOrder(data.getString("member_order"));
 		}
 		return mainEn;
 	}
@@ -932,6 +932,7 @@ public class JsonParser {
 			/*long createTime = StringUtil.getLong(data.getString("add_time"))*1000;
 			mainEn.setCreateTime(createTime);
 			mainEn.setValidTime(createTime + 1800000); //有效时间30分钟*/
+			mainEn.setCreateTime(StringUtil.getLong(data.getString("add_time"))*1000);
 			mainEn.setAddTime(data.getString("add_time"));
 
 			AddressEntity addrEn = new AddressEntity();
