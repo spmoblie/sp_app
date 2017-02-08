@@ -209,7 +209,7 @@ public class UserManager {
 	}
 
 	public void saveUserMoney(String userMoney){
-		editor.putString(AppConfig.KEY_USER_MONEY, userMoney).apply();
+		editor.putString(AppConfig.KEY_USER_MONEY, userMoney).commit();
 		mUserMoney = userMoney;
 	}
 
