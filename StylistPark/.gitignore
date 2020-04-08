@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 *.bat
+=======
+>>>>>>> e8f4941e5f97cf146f6dbc497ed93f699b74bc61
 *.iml
 *.properties
 
@@ -6,8 +9,15 @@
 .idea
 .DS_Store
 .externalNativeBuild
+<<<<<<< HEAD
 gradlew
 /build
 */build
+=======
+/gradlew
+/gradlew.bat
+*/build
+/build
+>>>>>>> e8f4941e5f97cf146f6dbc497ed93f699b74bc61
 /gradle
 /captures
