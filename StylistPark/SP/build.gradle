@@ -7,6 +7,8 @@ android {
         applicationId "com.spshop.stylistpark"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
+        versionCode app_version.version_code
+        versionName app_version.version_name
 
         multiDexEnabled true
     }
