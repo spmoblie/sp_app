@@ -189,7 +189,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 		// 设置App字体不随系统字体变化
 		AppApplication.initDisplayMetrics();
 
-		if (!UserManager.getInstance().checkIsLogined()) {
+		if (!UserManager.getInstance().checkIsLogin()) {
 			openLoginActivity(TAG); //强制登入
 		}
 
@@ -274,7 +274,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			img_three_warn.setVisibility(View.GONE);
 			break;
 		case 3:
-			if (!UserManager.getInstance().checkIsLogined()) {
+			if (!UserManager.getInstance().checkIsLogin()) {
 				openLoginActivity(TAG);
 				return;
 			}
@@ -310,7 +310,7 @@ public class HomeFragmentActivity extends FragmentActivity implements OnClickLis
 			break;
 		case R.id.home_fragment_fl_four:
 			if (current_index == 3) return;
-			if (!UserManager.getInstance().checkIsLogined()) {
+			if (!UserManager.getInstance().checkIsLogin()) {
 				openLoginActivity(TAG);
 				return;
 			}

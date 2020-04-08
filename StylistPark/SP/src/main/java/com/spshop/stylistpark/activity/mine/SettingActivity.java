@@ -269,7 +269,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void checkLogin() {
-		isLogined = UserManager.getInstance().checkIsLogined();
+		isLogined = UserManager.getInstance().checkIsLogin();
 		if (isLogined) {
 			tv_logout.setText(getString(R.string.setting_logout));
 		}else {

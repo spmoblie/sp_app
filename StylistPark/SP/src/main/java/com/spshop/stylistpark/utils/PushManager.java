@@ -120,7 +120,7 @@ public class PushManager {
 	 * 注册账户信息
 	 */
 	public void registerPush(){
-		if (getPushStatus() && um.checkIsLogined()) {
+		if (getPushStatus() && um.checkIsLogin()) {
 			try {
 				// 设置用户别名
 				pa.setExclusiveAlias(um.getUserId(), ALIAS_TYPE);
@@ -148,7 +148,7 @@ public class PushManager {
 	 * 注销账户信息
 	 */
 	public void unregisterPush(){
-		if (getPushStatus() && um.checkIsLogined()) {
+		if (getPushStatus() && um.checkIsLogin()) {
 			try {
 				// 移除用户别名
 				pa.deleteAlias(um.getUserId(), ALIAS_TYPE);

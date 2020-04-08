@@ -267,7 +267,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 				tv_collection.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if (!UserManager.getInstance().checkIsLogined()) {
+						if (!UserManager.getInstance().checkIsLogin()) {
 							openLoginActivity();
 							return;
 						}
@@ -278,7 +278,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 				tv_cart.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if (!UserManager.getInstance().checkIsLogined()) {
+						if (!UserManager.getInstance().checkIsLogin()) {
 							openLoginActivity();
 							return;
 						}
@@ -291,7 +291,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 				tv_add_cart.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if (!UserManager.getInstance().checkIsLogined()) {
+						if (!UserManager.getInstance().checkIsLogin()) {
 							openLoginActivity();
 							return;
 						}
@@ -1104,7 +1104,7 @@ public  class BaseActivity extends FragmentActivity implements OnDataListener,
 			if (mShareView.isShowing()) {
 				mShareView.showShareLayer(false);
 			} else {
-				if (!UserManager.getInstance().checkIsLogined()) {
+				if (!UserManager.getInstance().checkIsLogin()) {
 					openLoginActivity();
 					return;
 				}

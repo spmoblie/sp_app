@@ -1,20 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        debug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file('D:/evan/apk/debug.keystore')
-            storePassword 'android'
-        }
-    }
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion versions.support
     defaultConfig {
         applicationId "com.spshop.stylistpark"
-        minSdkVersion 16
-        targetSdkVersion 22
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
 
         multiDexEnabled true
     }
@@ -43,27 +35,36 @@ allprojects {
     }
 }
 
+android {
+    useLibrary 'org.apache.http.legacy'
+}
+
 dependencies {
-    compile project(':weiboSDK')
-    compile project(':rangeBar')
-    compile project(':main')
-    compile project(':PushSDK')
-    compile project(':gPUImageLib')
-    compile files('libs/alipaySdk-20160825.jar')
-    compile files('libs/core-3.1.0.jar')
-    compile files('libs/FlurryAgent.jar')
-    compile files('libs/libammsdk.jar')
-    compile files('libs/okhttp-3.2.0.jar')
-    compile files('libs/open_sdk_r5509.jar')
-    compile files('libs/twowayviewcore.jar')
-    compile files('libs/twowayviewlayout.jar')
-    compile files('libs/universal-image-loader-1.9.3.jar')
-    compile files('libs/UPPayAssistEx.jar')
-    compile files('libs/UPPayPluginExPro.jar')
-    compile(name: 'PayPalAndroidSDK-2.14.4', ext: 'aar')
-    compile 'com.facebook.android:facebook-android-sdk:4.10.1'
-    compile 'com.linsea:universalvideoview:1.0.2@aar'
-    compile 'com.umeng.analytics:analytics:latest.integration'
-    compile 'com.android.support:appcompat-v7:22+'
-    compile 'com.android.support:recyclerview-v7:22+'
+    androidTestCompile(deps.support.app_compat) {
+        force = true
+    }
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation deps.support.app_compat
+    implementation deps.support.recyclerview
+
+    implementation project(':weiboSDK')
+    implementation project(':rangeBar')
+    implementation project(':main')
+    implementation project(':PushSDK')
+    implementation project(':gPUImageLib')
+    implementation files('libs/alipaySdk-20160825.jar')
+    implementation files('libs/core-3.1.0.jar')
+    implementation files('libs/FlurryAgent.jar')
+    implementation files('libs/libammsdk.jar')
+    implementation files('libs/okhttp-3.2.0.jar')
+    implementation files('libs/open_sdk_r5509.jar')
+    implementation files('libs/twowayviewcore.jar')
+    implementation files('libs/twowayviewlayout.jar')
+    implementation files('libs/universal-image-loader-1.9.3.jar')
+    implementation files('libs/UPPayAssistEx.jar')
+    implementation files('libs/UPPayPluginExPro.jar')
+    implementation (name: 'PayPalAndroidSDK-2.14.4', ext: 'aar')
+    implementation 'com.facebook.android:facebook-android-sdk:4.10.1'
+    implementation 'com.linsea:universalvideoview:1.0.2@aar'
+    implementation 'com.umeng.analytics:analytics:latest.integration'
 }

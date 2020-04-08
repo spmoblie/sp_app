@@ -213,7 +213,7 @@ public class CommentActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void sendCommentTxt(){
-		if (!UserManager.getInstance().checkIsLogined()) {
+		if (!UserManager.getInstance().checkIsLogin()) {
 			openLoginActivity(TAG);
 			return;
 		}

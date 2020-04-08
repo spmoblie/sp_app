@@ -382,7 +382,7 @@ public class ChildFragmentOne extends Fragment implements OnClickListener, OnDat
 				}
 
 			});
-			viewPager.setOnPageChangeListener(new OnPageChangeListener(){
+			viewPager.addOnPageChangeListener(new OnPageChangeListener(){
 
 				@Override
 				public void onPageSelected(final int arg0){

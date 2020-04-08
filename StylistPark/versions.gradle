@@ -1,0 +1,46 @@
+ext.deps = [:]
+
+def versions = [:]
+versions.android_gradle_plugin = "3.0.1"
+versions.support = "26.0.2"
+ext.versions = versions
+
+//支持库依赖
+def support = [:]
+support.annotations = "com.android.support:support-annotations:$versions.support"
+support.app_compat = "com.android.support:appcompat-v7:$versions.support"
+support.v4 = "com.android.support:support-v4:$versions.support"
+support.v13 = "com.android.support:support-v13:$versions.support"
+support.percent = "com.android.support:percent:$versions.support"
+support.cardview = "com.android.support:cardview-v7:$versions.support"
+support.recyclerview = "com.android.support:recyclerview-v7:$versions.support"
+support.design = "com.android.support:design:$versions.support"
+support.core_utils = "com.android.support:support-core-utils:$versions.support"
+deps.support = support
+
+def build_versions = [:]
+build_versions.min_sdk = 19
+build_versions.target_sdk = 26
+ext.build_versions = build_versions
+
+def app_version = [:]
+app_version.version_code = 1
+app_version.version_name = "1.1.6"
+ext.app_version = app_version
+
+
+def addRepos(RepositoryHandler handler) {
+    //handler.mavenLocal()
+    handler.google()
+    handler.jcenter()
+    handler.mavenCentral()
+    //Add the JitPack repository
+    //handler.maven { url "https://jitpack.io" }
+    //handler.maven { url 'https://maven.google.com/' }
+    //handler.maven { url 'https://dl.bintray.com/umsdk/release' } //UM
+    //handler.maven { url "https://dl.bintray.com/thelasterstar/maven/" } //WB
+    //handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' } //AL
+    //handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/releases/' } //AL
+}
+
+ext.addRepos = this.&addRepos

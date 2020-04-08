@@ -341,7 +341,7 @@ public class CartActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void checkLogin() {
-		isLogined = UserManager.getInstance().checkIsLogined();
+		isLogined = UserManager.getInstance().checkIsLogin();
 		if (isLogined) {
 			requestProductLists();
 		}else {

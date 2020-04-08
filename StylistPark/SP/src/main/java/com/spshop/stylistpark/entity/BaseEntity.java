@@ -26,7 +26,7 @@ public class BaseEntity implements Serializable {
 
     public String getEntityId() {
         return "";
-    };
+    }
 
     public int getErrCode() {
         return errCode;

@@ -189,7 +189,7 @@ public class MyAddressActivity extends BaseActivity {
 	}
 
 	private void checkLogin() {
-		isLogined = UserManager.getInstance().checkIsLogined();
+		isLogined = UserManager.getInstance().checkIsLogin();
 		if (isLogined) {
 			if (!isSuccess) {
 				updateData();

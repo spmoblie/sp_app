@@ -240,7 +240,7 @@ public class ChildFragmentFive extends Fragment implements OnClickListener, OnDa
 	}
 
 	private void checkLogin() {
-		isLogined = UserManager.getInstance().checkIsLogined();
+		isLogined = UserManager.getInstance().checkIsLogin();
 		LogUtil.i("isLogined", isLogined);
 		if (isLogined) {
 			requestGetUserInfo();

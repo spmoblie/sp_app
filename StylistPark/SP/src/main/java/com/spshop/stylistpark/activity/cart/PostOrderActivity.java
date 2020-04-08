@@ -479,7 +479,7 @@ public class PostOrderActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void checkLogin() {
-		isLogined = UserManager.getInstance().checkIsLogined();
+		isLogined = UserManager.getInstance().checkIsLogin();
 		if (isLogined) {
 			if (!isSuccess) {
 				updateData();

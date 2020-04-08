@@ -337,8 +337,9 @@ public class UserManager {
 	/**
 	 * 判定是否登录
 	 */
-	public boolean checkIsLogined(){
-		return !StringUtil.isNull(getUserId()) && !getUserId().equals("0");
+	public boolean checkIsLogin(){
+		return true;
+		//return !StringUtil.isNull(getUserId()) && !getUserId().equals("0");
 	}
 
 	/**

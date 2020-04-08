@@ -362,7 +362,7 @@ public class ChildFragmentFour extends Fragment implements OnClickListener, OnDa
 	}
 
 	private void checkLogin() {
-		isLogined = UserManager.getInstance().checkIsLogined();
+		isLogined = UserManager.getInstance().checkIsLogin();
 		if (isLogined) {
 			requestProductLists();
 		}

@@ -123,7 +123,7 @@ public class SplashActivity extends BaseActivity {
 				if (result != null && ((BaseEntity) result).getErrCode() == AppConfig.ERROR_CODE_LOGOUT) { //登录失效
 					AppApplication.AppLogout(false);
 				}else {
-					if (!UserManager.getInstance().checkIsLogined()) {
+					if (!UserManager.getInstance().checkIsLogin()) {
 						AppApplication.AppLogout(true);
 					}
 				}
